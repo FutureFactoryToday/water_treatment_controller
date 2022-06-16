@@ -1,0 +1,52 @@
+Removed Member From Class: ClassName=wtc Member=DA2
+Change Component Comment : Designator=DA4 Old Comment=LM1117 New Comment=LM1117-3,3V_FIX
+Change Component Comment : Designator=DA3 Old Comment=LM1117 New Comment=LM1117-5V_FIX
+Added Component: Designator=C3(TANTAL_B)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C4(TANTAL_D)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C5(TANTAL_D)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C6(TANTAL_B)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C3-2
+Added Pin To Net: NetName=NetC1_2 Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C4-2
+Added Pin To Net: NetName=GND Pin=C5-2
+Added Pin To Net: NetName=NetC1_2 Pin=C6-1
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=GND Pin=DA3-1
+Added Pin To Net: NetName=NetC1_2 Pin=DA3-3
+Added Pin To Net: NetName=NetC1_2 Pin=DA3-3
+Added Pin To Net: NetName=GND Pin=DA4-1
+Added Pin To Net: NetName=NetC1_2 Pin=DA4-2
+Added Pin To Net: NetName=GND Pin=X4-2
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=NetC3_1 Pin=DA3-2
+Added Pin To Net: NetName=NetC3_1 Pin=VD1-1
+Added Pin To Net: NetName=NetC3_1 Pin=X4-1
+Added Net: Name=NetC3_1
+Added Pin To Net: NetName=NetC5_1 Pin=C5-1
+Added Pin To Net: NetName=NetC5_1 Pin=DA4-3
+Added Pin To Net: NetName=NetC5_1 Pin=DA4-3
+Added Net: Name=NetC5_1
+Added Member To Class: ClassName=wtc_sh2 Member=Component C3 10uF
+Added Member To Class: ClassName=wtc_sh2 Member=Component C4 100uF
+Added Member To Class: ClassName=wtc_sh2 Member=Component C5 22uF
+Added Member To Class: ClassName=wtc_sh2 Member=Component C6 10uF

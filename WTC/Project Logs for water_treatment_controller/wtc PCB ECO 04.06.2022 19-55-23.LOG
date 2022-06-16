@@ -1,0 +1,58 @@
+Added Component: Designator=BF1(BUZ: AI-1223-TWT-3V-2-R)
+Add component (AddParameter): Name = "ComponentKind"; Value = "Internally Driven"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.digikey.com/product-detail/en/pui-audio-inc/AI-1223-TWT-3V-2-R/668-1456-ND/5011391"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "PUI Audio, Inc."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "AI-1223-TWT-3V-2-R"; VariantName = "[No Variations]"
+Added Component: Designator=C7(CH0402C)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C8(CH0402C)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C9(CH0402C)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C10(CH0402C)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=X5(CON: 300-03P-5.0)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=GND Pin=C8-2
+Added Pin To Net: NetName=NetC5_1 Pin=C9-1
+Added Pin To Net: NetName=GND Pin=C9-2
+Added Pin To Net: NetName=GND Pin=C10-1
+Added Pin To Net: NetName=NetC5_1 Pin=C10-2
+Added Pin To Net: NetName=NetC5_1 Pin=DD2-19
+Added Pin To Net: NetName=NetC5_1 Pin=DD2-32
+Added Pin To Net: NetName=NetC5_1 Pin=DD2-48
+Added Pin To Net: NetName=NetC5_1 Pin=DD2-64
+Added Pin To Net: NetName=NetC7_2 Pin=C7-2
+Added Pin To Net: NetName=NetC7_2 Pin=DD2-4
+Added Pin To Net: NetName=NetC7_2 Pin=Z1-1
+Added Net: Name=NetC7_2
+Added Pin To Net: NetName=NetC8_1 Pin=C8-1
+Added Pin To Net: NetName=NetC8_1 Pin=DD2-3
+Added Pin To Net: NetName=NetC8_1 Pin=Z1-2
+Added Net: Name=NetC8_1
+Added Member To Class: ClassName=wtc Member=Component BF1 AI-1223-TWT-3V-2-R
+Added Member To Class: ClassName=wtc Member=Component C7 22pF
+Added Member To Class: ClassName=wtc Member=Component C8 22pF
+Added Member To Class: ClassName=wtc Member=Component C9 400nF
+Added Member To Class: ClassName=wtc Member=Component C10 4,7uF
+Added Member To Class: ClassName=wtc_sh2 Member=Component X5 *

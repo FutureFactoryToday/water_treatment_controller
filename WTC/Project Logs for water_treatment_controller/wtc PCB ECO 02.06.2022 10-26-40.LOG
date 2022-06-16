@@ -1,0 +1,56 @@
+Removed Pin From Net: NetName=GND Pin=C1-1
+Removed Pin From Net: NetName=GND Pin=C2-1
+Removed Pin From Net: NetName=GND Pin=DD1-6
+Removed Pin From Net: NetName=GND Pin=DD1-13
+Removed Pin From Net: NetName=GND Pin=DD1-13
+Removed Member From Class: ClassName=wtc Member=C1
+Removed Member From Class: ClassName=wtc Member=C2
+Removed Member From Class: ClassName=wtc Member=DD1
+Removed Member From Class: ClassName=wtc Member=VD1
+Removed Member From Class: ClassName=wtc Member=X1
+Removed Member From Class: ClassName=wtc Member=X2
+Removed Member From Class: ClassName=wtc Member=X3
+Removed Member From Class: ClassName=wtc Member=X4
+Added Component: Designator=C?(C_0603)
+Added Component: Designator=C?(C_0603)
+Added Component: Designator=DA?(SOT223_123)
+Added Component: Designator=VD?(SMA)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=X?(CON: CWF-2)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=X?(CON: CWF-2)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=X?(CON: CWF-2)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=X?(CON: CWF-2)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C?-1
+Added Pin To Net: NetName=GND Pin=C?-1
+Added Pin To Net: NetName=NetC?_2 Pin=C?-2
+Added Net: Name=NetC?_2
+Added Pin To Net: NetName=NetDD?_2 Pin=X?-1
+Added Net: Name=NetDD?_2
+Added Pin To Net: NetName=NetDD?_3 Pin=X?-2
+Added Net: Name=NetDD?_3
+Added Net: Name=NetDD?_7
+Added Net: Name=NetDD?_8
+Added Net: Name=NetDD?_11
+Added Pin To Net: NetName=NetVD?_1 Pin=VD?-1
+Added Net: Name=NetVD?_1
+Added Class: Name=wtc_sh2
+Added Member To Class: ClassName=wtc Member=Component DA? LM1117
