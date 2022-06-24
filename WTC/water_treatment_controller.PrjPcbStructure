@@ -1,3 +1,4 @@
-Record=TopLevelDocument|FileName=wtc.SchDoc|SheetNumber=1
-Record=NoMainPathDocument|SourceDocument=wtc.SchDoc|FileName=wtc_sh2.SchDoc|SheetNumber=2
-Record=NoMainPathDocument|SourceDocument=wtc.SchDoc|FileName=wtc_sh3.SchDoc|SheetNumber=3
+Record=TopLevelDocument|FileName=1_uC.SchDoc|SheetNumber=1
+Record=NoMainPathDocument|SourceDocument=1_uC.SchDoc|FileName=2_PowerPerif.SchDoc|SheetNumber=2
+Record=NoMainPathDocument|SourceDocument=1_uC.SchDoc|FileName=3_InfoPerif.SchDoc|SheetNumber=3
+Record=NoMainPathDocument|SourceDocument=1_uC.SchDoc|FileName=4_PowerSupplie.SchDoc|SheetNumber=4
