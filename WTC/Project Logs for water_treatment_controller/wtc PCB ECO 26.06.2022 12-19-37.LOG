@@ -1,0 +1,50 @@
+Removed Member From Class: ClassName=1_uC Member=R?
+Change Component Designator: OldDesignator=C? NewDesignator=C27
+Change Component Designator: OldDesignator=C? NewDesignator=C28
+Change Component Designator: OldDesignator=R? NewDesignator=R55
+Change Component Designator: OldDesignator=R? NewDesignator=R56
+Change Component Designator: OldDesignator=VD? NewDesignator=VD22
+Change Component Designator: OldDesignator=Z? NewDesignator=Z2
+Added Component: Designator=X7(DS1023-34)
+Added Pin To Net: NetName=T_CLK Pin=X7-1
+Added Pin To Net: NetName=T_CS Pin=X7-2
+Added Pin To Net: NetName=FCS Pin=X7-3
+Added Pin To Net: NetName=T_IRQ Pin=X7-4
+Added Pin To Net: NetName=T_MOSI Pin=X7-5
+Added Pin To Net: NetName=T_MISO Pin=X7-6
+Added Pin To Net: NetName=GND Pin=X7-8
+Added Pin To Net: NetName=GND Pin=X7-9
+Added Pin To Net: NetName=+3.3V Pin=X7-10
+Added Pin To Net: NetName=+3.3V Pin=X7-11
+Added Pin To Net: NetName=BACK_LIGHT Pin=X7-12
+Added Pin To Net: NetName=SD_CS Pin=X7-13
+Added Pin To Net: NetName=DB15 Pin=X7-14
+Added Pin To Net: NetName=DB14 Pin=X7-15
+Added Pin To Net: NetName=DB13 Pin=X7-16
+Added Pin To Net: NetName=DB12 Pin=X7-17
+Added Pin To Net: NetName=DB11 Pin=X7-18
+Added Pin To Net: NetName=DB10 Pin=X7-19
+Added Pin To Net: NetName=DB9 Pin=X7-20
+Added Pin To Net: NetName=DB8 Pin=X7-21
+Added Pin To Net: NetName=DB7 Pin=X7-22
+Added Pin To Net: NetName=DB6 Pin=X7-23
+Added Pin To Net: NetName=DB5 Pin=X7-24
+Added Pin To Net: NetName=DB4 Pin=X7-25
+Added Pin To Net: NetName=DB3 Pin=X7-26
+Added Pin To Net: NetName=DB2 Pin=X7-27
+Added Pin To Net: NetName=DB1 Pin=X7-28
+Added Pin To Net: NetName=DB0 Pin=X7-29
+Added Pin To Net: NetName=D_RES Pin=X7-30
+Added Pin To Net: NetName=DATA/COMM Pin=X7-31
+Added Pin To Net: NetName=WR_DATA Pin=X7-32
+Added Pin To Net: NetName=READ_DATA Pin=X7-33
+Added Pin To Net: NetName=D_COM_EN Pin=X7-34
+Change Net Name : Old Net Name=NetC?_2 New Net Name=NetC28_2
+Added Pin To Net: NetName=NetC27_2 Pin=C27-2
+Added Pin To Net: NetName=NetC27_2 Pin=DD2-6
+Added Pin To Net: NetName=NetC27_2 Pin=Z2-1
+Added Pin To Net: NetName=NetC27_2 Pin=Z2-1
+Added Net: Name=NetC27_2
+Added Member To Class: ClassName=1_uC Member=Component C27 8pF
+Added Member To Class: ClassName=1_uC Member=Component R55 330
+Added Member To Class: ClassName=3_InfoPerif Member=Component X7

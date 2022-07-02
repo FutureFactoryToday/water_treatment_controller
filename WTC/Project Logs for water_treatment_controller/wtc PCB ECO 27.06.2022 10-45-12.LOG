@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=OBSTACLE_MODE Pin=VT3-2
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Removed Pin From Net: NetName=GND Pin=VT3-3
+Change Component Footprint: Designator=VT3 Old Footprint=8-HSOF New Footprint=TEMT1000
+Change component parameters: Designator = "VT3" ("VT3"); Footprint = "8-HSOF"; UniqueID = "\GWRBGKWB" ("\GWRBGKWB")
+Added Pin To Net: NetName=OBSTACLE_MODE Pin=VT3-1
+Added Pin To Net: NetName=GND Pin=VT3-2

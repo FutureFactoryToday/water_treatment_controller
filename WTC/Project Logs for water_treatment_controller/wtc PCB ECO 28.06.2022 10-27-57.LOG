@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=Vbat Pin=X11-1
+Removed Pin From Net: NetName=GND Pin=X11-2
+Removed Member From Class: ClassName=4_PowerSupplie Member=X11
+Added Component: Designator=B1(CR2032)
+Added Pin To Net: NetName=Vbat Pin=B1-1
+Added Pin To Net: NetName=Vbat Pin=B1-1
+Added Pin To Net: NetName=GND Pin=B1-2
+Added Member To Class: ClassName=4_PowerSupplie Member=Component B1 CR2032
