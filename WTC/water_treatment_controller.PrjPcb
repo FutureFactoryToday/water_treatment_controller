@@ -126,18 +126,22 @@ GenerateClassCluster=0
 DocumentUniqueId=UNOFTWTO
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for water_treatment_controller\wtc.EXTREP
+DocumentPath=Project Outputs for water_treatment_controller\Design Rule Check - wtc.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for water_treatment_controller\wtc.REP
+DocumentPath=Project Outputs for water_treatment_controller\wtc.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for water_treatment_controller\wtc.RUL
+DocumentPath=Project Outputs for water_treatment_controller\wtc.REP
 DItemRevisionGUID=
 
 [GeneratedDocument4]
+DocumentPath=Project Outputs for water_treatment_controller\wtc.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument5]
 DocumentPath=Project Outputs for water_treatment_controller\wtc_Profile.gbr
 DItemRevisionGUID=
 
