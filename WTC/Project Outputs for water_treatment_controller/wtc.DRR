@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------------------------------------
-NCDrill File Report For: wtc.PcbDoc   07.07.2022  12:22:03
+NCDrill File Report For: wtc.PcbDoc   07.07.2022  14:47:29
 ----------------------------------------------------------------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -7,7 +7,7 @@ ASCII RoundHoles File : wtc.TXT
 
 Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
 ----------------------------------------------------------------------------------------------------------------------------------
-T1      0.2mm (8mil)                                              Round             147       PTH        573.57mm (22.58inch)
+T1      0.2mm (8mil)                                              Round             147       PTH        573.34mm (22.57inch)
 T2      0.3mm (12mil)                                             Round             32        PTH        198.52mm (7.82inch)
 T3      0.4mm (16mil)                                             Round             21        PTH        249.25mm (9.81inch)
 T4      0.5mm (20mil)                                             Round             20        PTH        420.68mm (16.56inch)
