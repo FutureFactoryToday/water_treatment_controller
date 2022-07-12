@@ -1,8 +1,0 @@
-Added Component: Designator=VD2(IK_LED_3mm)
-Added Component: Designator=VD3(PHOTO_LED_3mm)
-Added Pin To Net: NetName=NetR3_2 Pin=VD2-1
-Added Pin To Net: NetName=NetC1_2 Pin=VD2-2
-Added Pin To Net: NetName=NetDA1_3 Pin=VD3-1
-Added Pin To Net: NetName=NetC1_2 Pin=VD3-2
-Added Member To Class: ClassName=wtc Member=Component VD2 =value
-Added Member To Class: ClassName=wtc Member=Component VD3 =value

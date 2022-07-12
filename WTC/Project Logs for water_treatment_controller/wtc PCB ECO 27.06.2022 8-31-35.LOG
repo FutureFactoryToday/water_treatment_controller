@@ -1,5 +1,0 @@
-Change Component Footprint: Designator=VD10 Old Footprint=CH0603LB New Footprint=TSML1000
-Change Component Designator: OldDesignator=DA? NewDesignator=DA1
-Change component parameters: Designator = "VD10" ("VD10"); Footprint = "CH0603LB"; UniqueID = "\BANVNTPN" ("\BANVNTPN")
-Change Net Name : Old Net Name=NetDA?_2 New Net Name=NetDA1_2
-Change Net Name : Old Net Name=NetDA?_4 New Net Name=NetDA1_4

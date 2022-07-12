@@ -1,7 +1,0 @@
-Change Component Comment : Designator=VD10 Old Comment=TSML1000 New Comment=TMSL1000
-Change component parameters: Designator = "VD10" ("VD10"); Footprint = "TSML1000"; UniqueID = "\HNZGSSID" ("\HNZGSSID")
-Change component parameters (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
-Change component parameters (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
-Change component parameters (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
-Change component parameters (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
-Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
