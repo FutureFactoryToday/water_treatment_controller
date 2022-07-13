@@ -1,5 +1,0 @@
-Removed Member From Class: ClassName=4_PowerSupplie Member=R55
-Change Component Footprint: Designator=X9 Old Footprint=CON: PLS-4 New Footprint=DS1023-4
-Change Component Footprint: Designator=X8 Old Footprint=CON: PLS-14 New Footprint=DS1024-14
-Added Member To Class: ClassName=1_uC Member=Component C28 8pF
-Added Member To Class: ClassName=4_PowerSupplie Member=Component R56 10k
