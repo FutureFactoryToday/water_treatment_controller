@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32F103RC</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.3.0</PackID>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x08000000,0x40000) IRAM(0x20000000,0xC000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -185,6 +185,8 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -351,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>13</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -484,7 +486,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>15</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -596,7 +598,7 @@
                 <NoWarn>2</NoWarn>
                 <uSurpInc>2</uSurpInc>
                 <useXO>2</useXO>
-                <uClangAs>2</uClangAs>
+                <ClangAsOpt>15</ClangAsOpt>
                 <VariousControls>
                   <MiscControls></MiscControls>
                   <Define></Define>
@@ -631,7 +633,7 @@
       <file attr="config" category="header" name="RTE_Driver\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\STM32F103RC\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.7.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.4.0"/>
         <targetInfos>
           <targetInfo excluded="1" name="QD-TFT"/>
         </targetInfos>
@@ -639,7 +641,7 @@
       <file attr="config" category="source" condition="STM32F1xx HD ARMCC" name="Device\Source\ARM\startup_stm32f10x_hd.s" version="1.0.0">
         <instance index="0">RTE\Device\STM32F103RC\startup_stm32f10x_hd.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.7.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.4.0"/>
         <targetInfos>
           <targetInfo excluded="1" name="QD-TFT"/>
         </targetInfos>
@@ -647,7 +649,7 @@
       <file attr="config" category="source" name="Device\Source\system_stm32f10x.c" version="1.0.0">
         <instance index="0">RTE\Device\STM32F103RC\system_stm32f10x.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.7.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.4.0"/>
         <targetInfos>
           <targetInfo excluded="1" name="QD-TFT"/>
         </targetInfos>

@@ -67,25 +67,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	int Pin = 0x021C;
-	int Code1 = 3100;
-	int Code2 = 540;
-	int Max1 = 0x618;
-	int Max2 = 0x7FFF;
 	
-	int Koef = 32768*(Max2-Max1)/(Code2-Code1);
-	int Smesh = Max1 - Koef * Code1/32768;
-	
-	int Pout_i = 0;
-	float Pout_f = 0;
-	while (1){
-		Pout_i = Pin*Koef/32768 + Smesh;
-		if (Pout_i < 5*32767/105)
-			Pout_i = Max1;
-		if (Pout_i > 32767)
-			Pout_i = Max2;
-		Pout_f = Pout_i*105.0/32767;
-	}
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -123,7 +105,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */

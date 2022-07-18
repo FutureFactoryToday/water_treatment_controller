@@ -52,6 +52,7 @@ extern "C" {
 #include "Settings.h"
 #include "TFT/TFT.h"
 #include "SPI/SPI_Handler.h"
+#include "WTC_Logic.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

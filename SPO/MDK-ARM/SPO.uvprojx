@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,USE_FULL_ASSERT=1U,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core;../libs</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Core;..\MidLevel;..\Drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>1</ClangAsOpt>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -614,17 +614,22 @@
             <File>
               <FileName>TFT.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libs\TFT\TFT.c</FilePath>
+              <FilePath>..\Drivers\TFT\TFT.c</FilePath>
             </File>
             <File>
               <FileName>SPI_Handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libs\SPI\SPI_Handler.c</FilePath>
+              <FilePath>..\MidLevel\SPI\SPI_Handler.c</FilePath>
             </File>
             <File>
               <FileName>FIFO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libs\SPI\FIFO.c</FilePath>
+              <FilePath>..\MidLevel\SPI\FIFO.c</FilePath>
+            </File>
+            <File>
+              <FileName>WTC_Logic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\WTC_Logic.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -701,39 +706,29 @@
           </GroupOption>
           <Files>
             <File>
-              <FileName>I2C_LL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libs\I2C\I2C_LL.c</FilePath>
-            </File>
-            <File>
               <FileName>I2C_Handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libs\I2C\I2C_Handler.c</FilePath>
+              <FilePath>..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_Handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2C_LL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_LL.c</FilePath>
+            </File>
+            <File>
+              <FileName>filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\IronSolder\SolderSPO\libs\Filter\filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssd1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\IronSolder\SolderSPO\libs\SSD1306\ssd1306.c</FilePath>
             </File>
             <File>
               <FileName>MCP3421.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libs\MCP3421\MCP3421.c</FilePath>
-            </File>
-            <File>
-              <FileName>ADT7320.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libs\ADT7320\ADT7320.c</FilePath>
-            </File>
-            <File>
-              <FileName>fifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\SolderSPO\Src\fifo.c</FilePath>
-            </File>
-            <File>
-              <FileName>LinkedList.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\SolderSPO\libs\Map\LinkedList.c</FilePath>
-            </File>
-            <File>
-              <FileName>map.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\SolderSPO\libs\Map\map.c</FilePath>
+              <FilePath>..\..\..\IronSolder\SolderSPO\libs\MCP3421\MCP3421.c</FilePath>
             </File>
           </Files>
         </Group>

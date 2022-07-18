@@ -147,7 +147,7 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>82</LineNumber>
+          <LineNumber>41</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -156,7 +156,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>../Core/Src/main.c</Filename>
+          <Filename>&lt;1&gt;..\Core\Inc\main.h</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -167,7 +167,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -205,7 +205,7 @@
       <pMultCmdsp></pMultCmdsp>
       <DebugDescription>
         <Enable>1</Enable>
-        <EnableFlashSeq>1</EnableFlashSeq>
+        <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
         <DbgClock>10000000</DbgClock>
@@ -255,7 +255,7 @@
       <GroupNumber>2</GroupNumber>
       <FileNumber>3</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>../Core/Src/gpio.c</PathWithFileName>
@@ -506,7 +506,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\TFT\TFT.c</PathWithFileName>
+      <PathWithFileName>..\Drivers\TFT\TFT.c</PathWithFileName>
       <FilenameWithoutPath>TFT.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -518,7 +518,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\SPI\SPI_Handler.c</PathWithFileName>
+      <PathWithFileName>..\MidLevel\SPI\SPI_Handler.c</PathWithFileName>
       <FilenameWithoutPath>SPI_Handler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -527,11 +527,23 @@
       <GroupNumber>6</GroupNumber>
       <FileNumber>23</FileNumber>
       <FileType>1</FileType>
+      <tvExp>1</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\MidLevel\SPI\FIFO.c</PathWithFileName>
+      <FilenameWithoutPath>FIFO.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>24</FileNumber>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\SPI\FIFO.c</PathWithFileName>
-      <FilenameWithoutPath>FIFO.c</FilenameWithoutPath>
+      <PathWithFileName>..\Core\Src\WTC_Logic.c</PathWithFileName>
+      <FilenameWithoutPath>WTC_Logic.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -545,24 +557,12 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>24</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\I2C\I2C_LL.c</PathWithFileName>
-      <FilenameWithoutPath>I2C_LL.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>7</GroupNumber>
       <FileNumber>25</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\I2C\I2C_Handler.c</PathWithFileName>
+      <PathWithFileName>..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_Handler.c</PathWithFileName>
       <FilenameWithoutPath>I2C_Handler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -574,8 +574,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\MCP3421\MCP3421.c</PathWithFileName>
-      <FilenameWithoutPath>MCP3421.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_LL.c</PathWithFileName>
+      <FilenameWithoutPath>I2C_LL.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -586,8 +586,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\libs\ADT7320\ADT7320.c</PathWithFileName>
-      <FilenameWithoutPath>ADT7320.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\IronSolder\SolderSPO\libs\Filter\filter.c</PathWithFileName>
+      <FilenameWithoutPath>filter.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -598,8 +598,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\SolderSPO\Src\fifo.c</PathWithFileName>
-      <FilenameWithoutPath>fifo.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\IronSolder\SolderSPO\libs\SSD1306\ssd1306.c</PathWithFileName>
+      <FilenameWithoutPath>ssd1306.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -610,20 +610,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\SolderSPO\libs\Map\LinkedList.c</PathWithFileName>
-      <FilenameWithoutPath>LinkedList.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>7</GroupNumber>
-      <FileNumber>30</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\SolderSPO\libs\Map\map.c</PathWithFileName>
-      <FilenameWithoutPath>map.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\IronSolder\SolderSPO\libs\MCP3421\MCP3421.c</PathWithFileName>
+      <FilenameWithoutPath>MCP3421.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

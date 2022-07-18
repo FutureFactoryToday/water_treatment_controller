@@ -3,12 +3,12 @@ spo/gpio.o: ..\Core\Src\gpio.c ..\Core\Inc\gpio.h ..\Core\Inc\main.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h \
   ..\Drivers\CMSIS\Include\core_cm3.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\Bogdanov\keil_v537\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_version.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  D:\Bogdanov\keil_v537\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\Bogdanov\keil_v537\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h \
@@ -23,5 +23,6 @@ spo/gpio.o: ..\Core\Src\gpio.c ..\Core\Inc\gpio.h ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h \
   ..\Core\Inc\stm32_assert.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Settings.h \
-  ..\libs\TFT\TFT.h ..\libs\SPI\SPI_Handler.h ..\libs\SPI\FIFO.h
+  D:\Bogdanov\keil_v537\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\Core\Settings.h ..\Drivers\TFT\TFT.h ..\MidLevel\SPI\SPI_Handler.h \
+  ..\MidLevel\SPI\FIFO.h ..\Core\Inc\WTC_Logic.h
