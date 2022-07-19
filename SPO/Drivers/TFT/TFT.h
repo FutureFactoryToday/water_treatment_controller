@@ -16,12 +16,15 @@
 #include "main.h"
 
 /*Public defines */
+
 /* Настройки */
+
 //Каналы SPI для дисплея и контроллера сенсорного дисплея
 	#define TFT_SPI SPI2
 	#define TOUCH_SPI SPI1
 //Разрешение применения DMA
 	#define ALLOW_TFT_DMA
+	
 //Настройки DMA
 #ifdef ALLOW_TFT_DMA
 //Минимальный объем данных для отправки и приема через DMA
@@ -38,6 +41,8 @@
 	#define TOUCH_DMA DMA2
 #endif
 
+/* Настройки дисплея */
+#define RESET_DELAY_MS 1
 /*
 Структура состояния дисплея:
 1. Статус иниацилизации;
