@@ -53,11 +53,11 @@ void MX_GPIO_Init(void)
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
+                          |TFT_RD_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
                           |BIN1_Pin|DRV_MODE_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|WR_DATA_Pin|TOUCH_CS_Pin
+  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin|TOUCH_CS_Pin
                           |BIN2_Pin|ILED_Pin);
 
   /**/
@@ -71,7 +71,7 @@ void MX_GPIO_Init(void)
 
   /**/
   GPIO_InitStruct.Pin = RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
+                          |TFT_RD_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
                           |BIN1_Pin|DRV_MODE_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -79,7 +79,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|WR_DATA_Pin|TOUCH_CS_Pin
+  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin|TOUCH_CS_Pin
                           |BIN2_Pin|ILED_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;

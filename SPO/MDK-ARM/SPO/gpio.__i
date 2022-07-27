@@ -1,0 +1,8 @@
+-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c
+-fno-rtti -funsigned-char -fshort-enums -fshort-wchar
+-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers
+-I./RTE/_SPO
+-IC:/Keil_v5/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include
+-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE
+-o spo/gpio.o -MD "../Core/Src/gpio.c"

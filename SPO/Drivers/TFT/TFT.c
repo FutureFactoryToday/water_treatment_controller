@@ -141,12 +141,30 @@ void disableTFTCommunication(void){
 Выбор типа данных на шине: Данные (D/CX low)
 */
 void selectData (void){
-	LL_GPIO_SetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin);
+	LL_GPIO_SetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
 }
 
 /*
 Выбор типа данных на шине: Команда(D/CX high)
 */
 void selectCommand (void){
-	LL_GPIO_SetOutputPin(TFT_DATA_,TFT_COM_EN_Pin);
+	LL_GPIO_ResetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
+}
+
+/*
+Строб для записи данных
+*/
+void writeStrobe (void){
+	LL_GPIO_ResetOutputPin(TFT_WR_GPIO_Port,TFT_WR_Pin);
+	__ASM("nop");
+	LL_GPIO_SetOutputPin(TFT_WR_GPIO_Port,TFT_WR_Pin);
+}
+
+/*
+Строб для записи данных
+*/
+void readStrobe (void){
+	LL_GPIO_ResetOutputPin(TFT_RD_GPIO_Port,TFT_RD_Pin);
+	__ASM("nop");
+	LL_GPIO_SetOutputPin(TFT_RD_GPIO_Port,TFT_RD_Pin);
 }

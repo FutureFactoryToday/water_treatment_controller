@@ -53,7 +53,7 @@ void MX_GPIO_Init(void)
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
+                          |TFT_RD_DATA_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
                           |BIN1_Pin|DRV_MODE_Pin);
 
   /**/
@@ -71,7 +71,7 @@ void MX_GPIO_Init(void)
 
   /**/
   GPIO_InitStruct.Pin = RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
+                          |TFT_RD_DATA_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
                           |BIN1_Pin|DRV_MODE_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
