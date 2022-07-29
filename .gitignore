@@ -1,5 +1,11 @@
 WTC/History/*
 WTC/__Previews/*
 WTC/Project Logs for water_treatment_controller/*
+WTC/Project*
 *.pdsbak
 *.DsnWrk
+WTC/Driver/DiscrDriver/History/
+
+WTC/Driver/DiscrDriver/Project Logs for DiscrDriver/
+
+WTC/Driver/DiscrDriver/__Previews/
