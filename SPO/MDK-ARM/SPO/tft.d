@@ -25,4 +25,5 @@ spo/tft.o: ..\Drivers\TFT\TFT.c ..\Core\Inc\main.h \
   ..\Core\Inc\stm32_assert.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Settings.h \
   ..\Drivers\TFT\TFT.h ..\MidLevel\SPI\SPI_Handler.h \
-  ..\MidLevel\SPI\FIFO.h ..\Core\Inc\WTC_Logic.h
+  ..\MidLevel\SPI\FIFO.h ..\Core\Inc\WTC_Logic.h \
+  ..\Drivers\TFT\TFT_Commands.h

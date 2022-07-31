@@ -27,4 +27,3 @@ SET CPU_CLOCK=0x007A1200
 "C:\Keil_v5\ARM\ARMCLANG\Bin\ArmClang.exe" @"spo\fifo.__i"
 "C:\Keil_v5\ARM\ARMCLANG\Bin\ArmClang.exe" @"spo\wtc_logic.__i"
 "C:\Keil_v5\ARM\ARMCLANG\Bin\ArmLink" --Via "SPO\SPO.lnp"
-"C:\Keil_v5\ARM\ARMCLANG\Bin\fromelf.exe" "SPO\SPO.axf" --i32combined --output "SPO\SPO.hex"

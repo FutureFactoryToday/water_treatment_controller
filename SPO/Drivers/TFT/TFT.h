@@ -18,6 +18,8 @@
 /*Public defines */
 
 /* Настройки */
+//Порт для параллельного дисплея
+	#define TFT_PATAL_PORT GPIOB
 
 //Каналы SPI для дисплея и контроллера сенсорного дисплея
 	#define TFT_SPI SPI2
@@ -42,7 +44,7 @@
 #endif
 
 /* Настройки дисплея */
-#define RESET_DELAY_MS 1
+#define RESET_DELAY_MS 10
 /*
 Структура состояния дисплея:
 1. Статус иниацилизации;
@@ -55,12 +57,41 @@
 typedef struct {
 	unsigned inited:1;
 	unsigned type:2;
-} tftStatus;
+	unsigned busy:1;
+} tftDriverStatus_t;
+
+enum{
+	NO_DISP = 0,
+	SPI,
+	PARAL
+};
+
+/*Тип данных для отправки*/
+enum {
+	DATA = 1,
+	COMMAND
+};
+
+/*Структура внутреннего состояния дисплея*/
+//typedef struct {
+//	unsigned reserved:5;
+//	unsigned 
+//} tftStatus_t;
+
+
+/*Структура пикселя*/
+typedef struct {
+	uint8_t red;
+	uint8_t green;
+	uint8_t blue;
+} pixel_t;
+
 /*Global params*/
+extern tftDriverStatus_t tftStatus;
 
 /*Prototypes */
-tftStatus initTFT (void);
-uint32_t sendData (uint16_t *dataBuf, uint32_t dataSize);
-uint16_t* receiveData (uint16_t *dataBuf, uint32_t dataSize);
+tftDriverStatus_t initTFT (void);
+uint32_t sendData (uint16_t *dataBuf, uint16_t dataSize);
+uint16_t* receiveData (uint16_t *dataBuf, uint16_t dataSize);
 #endif /* __TFT_H__ */
 

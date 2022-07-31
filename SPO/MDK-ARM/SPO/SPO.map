@@ -598,25 +598,67 @@ Section Cross References
     system_stm32f1xx.o(.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.data.SystemCoreClock) for SystemCoreClock
     system_stm32f1xx.o(.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.rodata.AHBPrescTable) for AHBPrescTable
     system_stm32f1xx.o(.ARM.exidx.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.text.SystemCoreClockUpdate) for [Anonymous Symbol]
+    tft.o(.text.spiManualSend) refers to tft.o(.bss.tftStatus) for tftStatus
+    tft.o(.text.spiManualSend) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.spiManualSend) refers to tft.o(.text.LL_SPI_TransmitData8) for LL_SPI_TransmitData8
+    tft.o(.text.spiManualSend) refers to tft.o(.text.LL_SPI_IsActiveFlag_BSY) for LL_SPI_IsActiveFlag_BSY
+    tft.o(.text.spiManualSend) refers to tft.o(.text.disableTFTCommunication) for disableTFTCommunication
     tft.o(.ARM.exidx.text.spiManualSend) refers to tft.o(.text.spiManualSend) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.dmaSend) refers to tft.o(.text.dmaSend) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.itSend) refers to tft.o(.text.itSend) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.manualReceive) refers to tft.o(.text.manualReceive) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.dmaReceive) refers to tft.o(.text.dmaReceive) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.itReceive) refers to tft.o(.text.itReceive) for [Anonymous Symbol]
+    tft.o(.text.enableTFTCommunication) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.ARM.exidx.text.enableTFTCommunication) refers to tft.o(.text.enableTFTCommunication) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.LL_SPI_TransmitData8) refers to tft.o(.text.LL_SPI_TransmitData8) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.LL_SPI_IsActiveFlag_BSY) refers to tft.o(.text.LL_SPI_IsActiveFlag_BSY) for [Anonymous Symbol]
+    tft.o(.text.disableTFTCommunication) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
+    tft.o(.ARM.exidx.text.disableTFTCommunication) refers to tft.o(.text.disableTFTCommunication) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiDMASend) refers to tft.o(.text.spiDMASend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiITSend) refers to tft.o(.text.spiITSend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiManualReceive) refers to tft.o(.text.spiManualReceive) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiDMAReceive) refers to tft.o(.text.spiDMAReceive) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiITReceive) refers to tft.o(.text.spiITReceive) for [Anonymous Symbol]
+    tft.o(.text.manualParalRead) refers to tft.o(.bss.tftStatus) for tftStatus
+    tft.o(.text.manualParalRead) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.manualParalRead) refers to tft.o(.text.selectData) for selectData
+    tft.o(.text.manualParalRead) refers to tft.o(.text.selectCommand) for selectCommand
+    tft.o(.text.manualParalRead) refers to tft.o(.text.disableTFTCommunication) for disableTFTCommunication
+    tft.o(.text.manualParalRead) refers to tft.o(.text.SetParalPortInput) for SetParalPortInput
+    tft.o(.text.manualParalRead) refers to tft.o(.text.writeStrobe) for writeStrobe
+    tft.o(.text.manualParalRead) refers to tft.o(.text.LL_GPIO_ReadInputPort) for LL_GPIO_ReadInputPort
+    tft.o(.ARM.exidx.text.manualParalRead) refers to tft.o(.text.manualParalRead) for [Anonymous Symbol]
+    tft.o(.text.selectData) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
+    tft.o(.ARM.exidx.text.selectData) refers to tft.o(.text.selectData) for [Anonymous Symbol]
+    tft.o(.text.selectCommand) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.ARM.exidx.text.selectCommand) refers to tft.o(.text.selectCommand) for [Anonymous Symbol]
+    tft.o(.text.SetParalPortInput) refers to stm32f1xx_ll_gpio.o(.text.LL_GPIO_Init) for LL_GPIO_Init
+    tft.o(.ARM.exidx.text.SetParalPortInput) refers to tft.o(.text.SetParalPortInput) for [Anonymous Symbol]
+    tft.o(.text.writeStrobe) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.text.writeStrobe) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
+    tft.o(.ARM.exidx.text.writeStrobe) refers to tft.o(.text.writeStrobe) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.LL_GPIO_ReadInputPort) refers to tft.o(.text.LL_GPIO_ReadInputPort) for [Anonymous Symbol]
+    tft.o(.text.manualParalSend) refers to tft.o(.bss.tftStatus) for tftStatus
+    tft.o(.text.manualParalSend) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.manualParalSend) refers to tft.o(.text.selectData) for selectData
+    tft.o(.text.manualParalSend) refers to tft.o(.text.selectCommand) for selectCommand
+    tft.o(.text.manualParalSend) refers to tft.o(.text.disableTFTCommunication) for disableTFTCommunication
+    tft.o(.text.manualParalSend) refers to tft.o(.text.SetParalPortOutput) for SetParalPortOutput
+    tft.o(.text.manualParalSend) refers to tft.o(.text.LL_GPIO_WriteOutputPort) for LL_GPIO_WriteOutputPort
+    tft.o(.text.manualParalSend) refers to tft.o(.text.writeStrobe) for writeStrobe
+    tft.o(.ARM.exidx.text.manualParalSend) refers to tft.o(.text.manualParalSend) for [Anonymous Symbol]
+    tft.o(.text.SetParalPortOutput) refers to stm32f1xx_ll_gpio.o(.text.LL_GPIO_Init) for LL_GPIO_Init
+    tft.o(.ARM.exidx.text.SetParalPortOutput) refers to tft.o(.text.SetParalPortOutput) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.LL_GPIO_WriteOutputPort) refers to tft.o(.text.LL_GPIO_WriteOutputPort) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.paralItSend) refers to tft.o(.text.paralItSend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.paralDMASend) refers to tft.o(.text.paralDMASend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.paralItRead) refers to tft.o(.text.paralItRead) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.paralDMARead) refers to tft.o(.text.paralDMARead) for [Anonymous Symbol]
     tft.o(.text.rebootTFT) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
     tft.o(.text.rebootTFT) refers to stm32f1xx_ll_utils.o(.text.LL_mDelay) for LL_mDelay
     tft.o(.text.rebootTFT) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
     tft.o(.ARM.exidx.text.rebootTFT) refers to tft.o(.text.rebootTFT) for [Anonymous Symbol]
     tft.o(.ARM.exidx.text.LL_GPIO_ResetOutputPin) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for [Anonymous Symbol]
     tft.o(.ARM.exidx.text.LL_GPIO_SetOutputPin) refers to tft.o(.text.LL_GPIO_SetOutputPin) for [Anonymous Symbol]
-    tft.o(.text.enableTFTCommunication) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
-    tft.o(.ARM.exidx.text.enableTFTCommunication) refers to tft.o(.text.enableTFTCommunication) for [Anonymous Symbol]
-    tft.o(.text.disableTFTCommunication) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
-    tft.o(.ARM.exidx.text.disableTFTCommunication) refers to tft.o(.text.disableTFTCommunication) for [Anonymous Symbol]
-    tft.o(.text.selectData) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
-    tft.o(.ARM.exidx.text.selectData) refers to tft.o(.text.selectData) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.selectCommand) refers to tft.o(.text.selectCommand) for [Anonymous Symbol]
+    tft.o(.text.readStrobe) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.text.readStrobe) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
+    tft.o(.ARM.exidx.text.readStrobe) refers to tft.o(.text.readStrobe) for [Anonymous Symbol]
     __main.o(!!!main) refers to __rtentry.o(.ARM.Collect$$rtentry$$00000000) for __rt_entry
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry2.o(.ARM.Collect$$rtentry$$0000000A) for __rt_entry_li
     __rtentry.o(.ARM.Collect$$rtentry$$00000000) refers (Special) to __rtentry2.o(.ARM.Collect$$rtentry$$0000000D) for __rt_entry_main
@@ -1111,37 +1153,66 @@ Removing Unused input sections from the image.
     Removing system_stm32f1xx.o(.text.SystemCoreClockUpdate), (290 bytes).
     Removing system_stm32f1xx.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
     Removing tft.o(.text), (0 bytes).
-    Removing tft.o(.text.spiManualSend), (12 bytes).
+    Removing tft.o(.text.spiManualSend), (190 bytes).
     Removing tft.o(.ARM.exidx.text.spiManualSend), (8 bytes).
-    Removing tft.o(.text.dmaSend), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.dmaSend), (8 bytes).
-    Removing tft.o(.text.itSend), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.itSend), (8 bytes).
-    Removing tft.o(.text.manualReceive), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.manualReceive), (8 bytes).
-    Removing tft.o(.text.dmaReceive), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.dmaReceive), (8 bytes).
-    Removing tft.o(.text.itReceive), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.itReceive), (8 bytes).
+    Removing tft.o(.text.enableTFTCommunication), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.enableTFTCommunication), (8 bytes).
+    Removing tft.o(.text.LL_SPI_TransmitData8), (26 bytes).
+    Removing tft.o(.ARM.exidx.text.LL_SPI_TransmitData8), (8 bytes).
+    Removing tft.o(.text.LL_SPI_IsActiveFlag_BSY), (16 bytes).
+    Removing tft.o(.ARM.exidx.text.LL_SPI_IsActiveFlag_BSY), (8 bytes).
+    Removing tft.o(.text.disableTFTCommunication), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.disableTFTCommunication), (8 bytes).
+    Removing tft.o(.text.spiDMASend), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiDMASend), (8 bytes).
+    Removing tft.o(.text.spiITSend), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiITSend), (8 bytes).
+    Removing tft.o(.text.spiManualReceive), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiManualReceive), (8 bytes).
+    Removing tft.o(.text.spiDMAReceive), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiDMAReceive), (8 bytes).
+    Removing tft.o(.text.spiITReceive), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiITReceive), (8 bytes).
+    Removing tft.o(.text.manualParalRead), (194 bytes).
+    Removing tft.o(.ARM.exidx.text.manualParalRead), (8 bytes).
+    Removing tft.o(.text.selectData), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.selectData), (8 bytes).
+    Removing tft.o(.text.selectCommand), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.selectCommand), (8 bytes).
+    Removing tft.o(.text.SetParalPortInput), (48 bytes).
+    Removing tft.o(.ARM.exidx.text.SetParalPortInput), (8 bytes).
+    Removing tft.o(.text.writeStrobe), (38 bytes).
+    Removing tft.o(.ARM.exidx.text.writeStrobe), (8 bytes).
+    Removing tft.o(.text.LL_GPIO_ReadInputPort), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.LL_GPIO_ReadInputPort), (8 bytes).
+    Removing tft.o(.text.manualParalSend), (230 bytes).
+    Removing tft.o(.ARM.exidx.text.manualParalSend), (8 bytes).
+    Removing tft.o(.text.SetParalPortOutput), (50 bytes).
+    Removing tft.o(.ARM.exidx.text.SetParalPortOutput), (8 bytes).
+    Removing tft.o(.text.LL_GPIO_WriteOutputPort), (16 bytes).
+    Removing tft.o(.ARM.exidx.text.LL_GPIO_WriteOutputPort), (8 bytes).
+    Removing tft.o(.text.paralItSend), (14 bytes).
+    Removing tft.o(.ARM.exidx.text.paralItSend), (8 bytes).
+    Removing tft.o(.text.paralDMASend), (14 bytes).
+    Removing tft.o(.ARM.exidx.text.paralDMASend), (8 bytes).
+    Removing tft.o(.text.paralItRead), (14 bytes).
+    Removing tft.o(.ARM.exidx.text.paralItRead), (8 bytes).
+    Removing tft.o(.text.paralDMARead), (14 bytes).
+    Removing tft.o(.ARM.exidx.text.paralDMARead), (8 bytes).
     Removing tft.o(.text.rebootTFT), (42 bytes).
     Removing tft.o(.ARM.exidx.text.rebootTFT), (8 bytes).
     Removing tft.o(.text.LL_GPIO_ResetOutputPin), (18 bytes).
     Removing tft.o(.ARM.exidx.text.LL_GPIO_ResetOutputPin), (8 bytes).
     Removing tft.o(.text.LL_GPIO_SetOutputPin), (18 bytes).
     Removing tft.o(.ARM.exidx.text.LL_GPIO_SetOutputPin), (8 bytes).
-    Removing tft.o(.text.enableTFTCommunication), (20 bytes).
-    Removing tft.o(.ARM.exidx.text.enableTFTCommunication), (8 bytes).
-    Removing tft.o(.text.disableTFTCommunication), (20 bytes).
-    Removing tft.o(.ARM.exidx.text.disableTFTCommunication), (8 bytes).
-    Removing tft.o(.text.selectData), (20 bytes).
-    Removing tft.o(.ARM.exidx.text.selectData), (8 bytes).
-    Removing tft.o(.text.selectCommand), (2 bytes).
-    Removing tft.o(.ARM.exidx.text.selectCommand), (8 bytes).
+    Removing tft.o(.text.readStrobe), (38 bytes).
+    Removing tft.o(.ARM.exidx.text.readStrobe), (8 bytes).
+    Removing tft.o(.bss.tftStatus), (4 bytes).
     Removing spi_handler.o(.text), (0 bytes).
     Removing fifo.o(.text), (0 bytes).
     Removing wtc_logic.o(.text), (0 bytes).
 
-412 unused section(s) (total 15848 bytes) removed from the image.
+441 unused section(s) (total 16884 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1769,63 +1840,63 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000130   Data   RO            3    RESET               startup_stm32f103xe.o
-    0x08000130   0x08000130   0x00000008   Code   RO          690  * !!!main             c_w.l(__main.o)
-    0x08000138   0x08000138   0x00000034   Code   RO          855    !!!scatter          c_w.l(__scatter.o)
-    0x0800016c   0x0800016c   0x0000001a   Code   RO          857    !!handler_copy      c_w.l(__scatter_copy.o)
+    0x08000130   0x08000130   0x00000008   Code   RO          719  * !!!main             c_w.l(__main.o)
+    0x08000138   0x08000138   0x00000034   Code   RO          884    !!!scatter          c_w.l(__scatter.o)
+    0x0800016c   0x0800016c   0x0000001a   Code   RO          886    !!handler_copy      c_w.l(__scatter_copy.o)
     0x08000186   0x08000186   0x00000002   PAD
-    0x08000188   0x08000188   0x0000001c   Code   RO          859    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x080001a4   0x080001a4   0x00000002   Code   RO          717    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          724    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          726    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          728    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          731    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          733    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          735    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          738    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          740    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          742    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          744    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          746    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          748    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          750    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          752    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          754    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          756    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          758    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          762    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          764    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          766    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          768    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000002   Code   RO          769    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
-    0x080001a8   0x080001a8   0x00000002   Code   RO          791    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          806    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          808    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          811    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          814    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          816    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO          819    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000002   Code   RO          820    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x080001ac   0x080001ac   0x00000000   Code   RO          692    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x080001ac   0x080001ac   0x00000000   Code   RO          694    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x080001ac   0x080001ac   0x00000006   Code   RO          706    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO          696    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x080001b2   0x080001b2   0x00000004   Code   RO          697    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x080001b6   0x080001b6   0x00000000   Code   RO          699    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x080001b6   0x080001b6   0x00000008   Code   RO          700    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x080001be   0x080001be   0x00000002   Code   RO          721    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x080001c0   0x080001c0   0x00000000   Code   RO          771    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x080001c0   0x080001c0   0x00000004   Code   RO          772    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x080001c4   0x080001c4   0x00000006   Code   RO          773    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x08000188   0x08000188   0x0000001c   Code   RO          888    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x080001a4   0x080001a4   0x00000002   Code   RO          746    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          753    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          755    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          757    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          760    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          762    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          764    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          767    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          769    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          771    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          773    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          775    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          777    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          779    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          781    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          783    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          785    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          787    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          791    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          793    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          795    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          797    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000002   Code   RO          798    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
+    0x080001a8   0x080001a8   0x00000002   Code   RO          820    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          835    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          837    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          840    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          843    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          845    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO          848    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000002   Code   RO          849    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x080001ac   0x080001ac   0x00000000   Code   RO          721    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x080001ac   0x080001ac   0x00000000   Code   RO          723    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x080001ac   0x080001ac   0x00000006   Code   RO          735    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO          725    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x080001b2   0x080001b2   0x00000004   Code   RO          726    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x080001b6   0x080001b6   0x00000000   Code   RO          728    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x080001b6   0x080001b6   0x00000008   Code   RO          729    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x080001be   0x080001be   0x00000002   Code   RO          750    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x080001c0   0x080001c0   0x00000000   Code   RO          800    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x080001c0   0x080001c0   0x00000004   Code   RO          801    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x080001c4   0x080001c4   0x00000006   Code   RO          802    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x080001ca   0x080001ca   0x00000002   PAD
     0x080001cc   0x080001cc   0x00000040   Code   RO            4    .text               startup_stm32f103xe.o
-    0x0800020c   0x0800020c   0x0000004e   Code   RO          686    .text               c_w.l(rt_memclr_w.o)
-    0x0800025a   0x0800025a   0x00000006   Code   RO          688    .text               c_w.l(heapauxi.o)
-    0x08000260   0x08000260   0x0000004a   Code   RO          708    .text               c_w.l(sys_stackheap_outer.o)
-    0x080002aa   0x080002aa   0x00000012   Code   RO          710    .text               c_w.l(exit.o)
-    0x080002bc   0x080002bc   0x00000008   Code   RO          718    .text               c_w.l(libspace.o)
-    0x080002c4   0x080002c4   0x0000000c   Code   RO          781    .text               c_w.l(sys_exit.o)
-    0x080002d0   0x080002d0   0x00000002   Code   RO          796    .text               c_w.l(use_no_semi.o)
-    0x080002d2   0x080002d2   0x00000000   Code   RO          798    .text               c_w.l(indicate_semi.o)
+    0x0800020c   0x0800020c   0x0000004e   Code   RO          715    .text               c_w.l(rt_memclr_w.o)
+    0x0800025a   0x0800025a   0x00000006   Code   RO          717    .text               c_w.l(heapauxi.o)
+    0x08000260   0x08000260   0x0000004a   Code   RO          737    .text               c_w.l(sys_stackheap_outer.o)
+    0x080002aa   0x080002aa   0x00000012   Code   RO          739    .text               c_w.l(exit.o)
+    0x080002bc   0x080002bc   0x00000008   Code   RO          747    .text               c_w.l(libspace.o)
+    0x080002c4   0x080002c4   0x0000000c   Code   RO          810    .text               c_w.l(sys_exit.o)
+    0x080002d0   0x080002d0   0x00000002   Code   RO          825    .text               c_w.l(use_no_semi.o)
+    0x080002d2   0x080002d2   0x00000000   Code   RO          827    .text               c_w.l(indicate_semi.o)
     0x080002d2   0x080002d2   0x00000002   PAD
     0x080002d4   0x080002d4   0x00000004   Code   RO          182    .text.BusFault_Handler  stm32f1xx_it.o
     0x080002d8   0x080002d8   0x00000002   Code   RO          188    .text.DebugMon_Handler  stm32f1xx_it.o
@@ -2036,7 +2107,7 @@ Memory Map of the image
     0x08003135   0x08003135   0x00000037   Data   RO          465    .rodata.str1.1      stm32f1xx_ll_spi.o
     0x0800316c   0x0800316c   0x00000037   Data   RO          591    .rodata.str1.1      stm32f1xx_ll_tim.o
     0x080031a3   0x080031a3   0x00000039   Data   RO          627    .rodata.str1.1      stm32f1xx_ll_usart.o
-    0x080031dc   0x080031dc   0x00000020   Data   RO          854    Region$$Table       anon$$obj.o
+    0x080031dc   0x080031dc   0x00000020   Data   RO          883    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003200, Size: 0x00000668, Max: 0x0000c000, ABSOLUTE)
@@ -2045,7 +2116,7 @@ Memory Map of the image
 
     0x20000000   0x08003200   0x00000004   Data   RW          639    .data.SystemCoreClock  system_stm32f1xx.o
     0x20000004   0x08003204   0x00000004   PAD
-    0x20000008        -       0x00000060   Zero   RW          719    .bss                c_w.l(libspace.o)
+    0x20000008        -       0x00000060   Zero   RW          748    .bss                c_w.l(libspace.o)
     0x20000068        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f103xe.o
     0x20000268        -       0x00000400   Zero   RW            1    STACK               startup_stm32f103xe.o
 

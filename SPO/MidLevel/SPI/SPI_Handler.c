@@ -19,11 +19,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 
-typedef struct spi_perif_node_t{
-	SPI_TypeDef *SPIx;
-	fifo_t* msgBuf;
-	struct spi_perif_node_t* next;
-} spi_perif_node_t;
+
 /* Private define ------------------------------------------------------------*/
 
 /* Private macro -------------------------------------------------------------*/
@@ -31,5 +27,13 @@ typedef struct spi_perif_node_t{
 /* Private variables ---------------------------------------------------------*/
 	
 /* Private function prototypes -----------------------------------------------*/
+void	interruptSend (spi_handler_t *handler);
+void dmaSend(spi_handler_t *handler);
 
 /* Private user code ---------------------------------------------------------*/
+
+void initHandler(spi_handler_t *handler){
+	
+}
+void sendMsg (spi_handler_t *handler, spi_msg_t *msg);
+void receiveMsg (spi_handler_t *handler, spi_msg_t *msg);

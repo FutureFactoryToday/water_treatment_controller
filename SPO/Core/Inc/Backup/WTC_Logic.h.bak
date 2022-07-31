@@ -20,7 +20,7 @@
 
 /* Структура состояния периферии МК и устройства*/
 typedef struct {
-	tftStatus tft;
+	tftStatus_t tft;
 } HardwareStatus;
 /*Global params*/
 

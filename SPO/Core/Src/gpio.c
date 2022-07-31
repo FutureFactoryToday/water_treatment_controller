@@ -149,4 +149,5 @@ void INIT_SPI_LCD(void){
 void INIT_PARAL_LCD(void){
 	
 }
+
 /* USER CODE END 2 */
