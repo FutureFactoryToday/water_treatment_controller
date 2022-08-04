@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    FIFOh
+  * @file    FIFO.h
   * @brief   This file contains all the function prototypes for
   *          the FIFO.c file
   ******************************************************************************
@@ -20,7 +20,7 @@
 
 /* Структура состояния периферии МК и устройства*/
 typedef struct {
-	tftStatus_t tft;
+	tftDriverStatus_t tft;
 } HardwareStatus;
 /*Global params*/
 

@@ -41,7 +41,7 @@
 #define WAIT_TRANSMIT while (LL_SPI_IsActiveFlag_BSY(TFT_SPI));
 
 /* Private variables ---------------------------------------------------------*/
-tftStatus_t tftStatus;
+tftDriverStatus_t tftStatus;
 /* Private function prototypes -----------------------------------------------*/
 uint32_t spiManualSend (uint32_t size, uint8_t *data);
 uint32_t spiDMASend (uint32_t size, uint8_t *data);
@@ -59,6 +59,77 @@ void writeStrobe (void);
 void SetParalPortOutput(void);
 void SetParalPortInput(void);
 /* Private user code ---------------------------------------------------------*/
+
+//Определяем ситуацию
+	//1. SPI свободен - загружаем новое сообщение
+	if (spiHandler->status.bits.BUSY == 0){
+		spiHandler->curMsg = pop(&spiHandler->msgFifo);
+		if (spiHandler->curMsg != NULL){
+			return procNewMsg(spiHandler->curMsg);
+		} else {
+			return NO_DATA;
+		}
+	} else {
+	//2. SPI занят (в процессе)
+		//2.1. Нас вызвало прерывание
+		if (spiHandler->status.bits.INT == 1){
+			spi_data_t* processingData = spiHandler->curMsg->data;
+			if (spiHandler->status.bits.SEND == 1){
+				//2.1.1. Пытаемся отправить новый байт
+					//Отправили все данные?
+				if (processingData->cnt < processingData->dataSize){
+					//Если нет, отправляем
+					spiHandler->interruptSend((*processingData->data)++);
+					processingData->cnt++;
+				} else {
+					//Если да, заканчиваем передачу
+					spiHandler->finishTransmision();
+					spiHandler->status.bits.BUSY = 0;
+				}
+			}
+			if (spiHandler->status.bits.RCV == 1){
+				//2.1.2. Пытаемся получить новой байт
+					//Получили все данные?
+				if (processingData->cnt < processingData->dataSize){
+					//Если нет, получаем
+					(*processingData->data) = spiHandler->interruptReceive();
+					(*processingData->data)++;
+					processingData->cnt++;
+				} else {
+					//Если да, заканчиваем передачу
+					spiHandler->finishTransmision();
+					spiHandler->status.bits.BUSY = 0;
+				}
+			}
+			//Если передача закончена, проверим можно ли отключать периферию
+			if (spiHandler->status.bits.BUSY == 0 && isEmpty(spiHandler->msgFifo)){
+				stopHandler(spiHandler);
+			}
+		}
+		//2.2. Нас вызвало DMA - заканчиваем передачу
+		if (spiHandler->status.bits.DMA == 1){
+			spiHandler->finishTransmision();
+		}
+	}
+	return ERR;
+}
+
+result_t procNewMsg(spi_handler_t *handler){
+	spiHandler->startTransmision();
+	return ERR;
+}
+result_t intSendNewByte (spi_msg_t* msg){
+	
+	return ERR;
+}
+result_t intRcvNewByte (spi_msg_t* msg){
+	
+	return ERR;
+}
+result_t finishTransmission(spi_handler_t* handler){
+	
+	return ERR;
+}
 
 /******* Функции для SPI дисплея *******/
 

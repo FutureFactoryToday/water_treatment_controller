@@ -18,25 +18,68 @@
 /*Public defines */
 
 typedef struct {
-	void* buf;
-	int dataSize;
-	int msgSize;
+	uint8_t* data;
+	uint32_t dataSize;
+	uint32_t cnt;
+} spi_data_t;
+
+typedef struct {
+	unsigned BUSY:1;
+	unsigned DMA:1;
+	unsigned INT:1;
+	unsigned SEND:1;
+	unsigned RCV:1;
+} spi_handler_status_bits_t;
+
+typedef union {
+	spi_handler_status_bits_t bits;
+	uint8_t all;
+} spi_handler_status_t;
+
+typedef enum {
+	ERR = 0,
+	OK = 1,
+	RETRY, 
+	NO_DATA,
+	COMPLETE
+} result_t;
+
+typedef enum {
+	SEND,
+	RCV
+} dir_t;
+
+typedef struct {
+	spi_data_t* data;
+	dir_t dir;
 } spi_msg_t;
 
-typedef struct spi_perif_node_t{
-	SPI_TypeDef *SPIx;
-	fifo_t* msgBuf;
+typedef struct {
+	SPI_TypeDef *SPI;
+	spi_handler_status_t status;
+	fifo_t* msgFifo;
+	spi_msg_t* curMsg;
+	void* next;
+	void (*interruptSend) (uint8_t data);
+	void (*dmaSend) (uint8_t *data, uint32_t dataSize);
+	uint8_t (*interruptReceive) (void);
+	uint8_t (*dmaReceive) (uint8_t *inputBuffer, uint32_t dataSize);
+	void (*startTransmision) (void);
+	void (*finishTransmision) (void);
 } spi_handler_t;
 
 /*Global params*/
 
 /*Prototypes */
-void initHandler(spi_handler_t *handler);
-void sendMsg (spi_handler_t *handler, spi_msg_t *msg);
-void receiveMsg (spi_handler_t *handler, spi_msg_t *msg);
+result_t registerHandler(spi_handler_t handler);
+result_t sendMsg (SPI_TypeDef *SPI, spi_data_t *data);
+result_t receiveMsg (SPI_TypeDef *SPI, spi_data_t *data);
 
 /*DO NOT USE */
-void handler (spi_handler_t *handler);
+result_t handler (SPI_TypeDef *SPI);
+
+/*Tests*/
+void testSPIHandler (void);
 /*************/
 #endif /* __SPI_Handler_H__ */
 
