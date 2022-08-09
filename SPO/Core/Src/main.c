@@ -67,9 +67,11 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	#ifdef TESTS
 	/*TEST*/
 	testFifo();
 	testSPIHandler();
+	#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

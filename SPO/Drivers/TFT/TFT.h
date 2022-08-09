@@ -14,7 +14,7 @@
 
 /*Includes */
 #include "main.h"
-
+#include "SPI/SPI_Handler.h"
 /*Public defines */
 
 /* Настройки */
@@ -58,6 +58,7 @@ typedef struct {
 	unsigned inited:1;
 	unsigned type:2;
 	unsigned busy:1;
+	unsigned error:1;
 } tftDriverStatus_t;
 
 enum{
@@ -67,11 +68,22 @@ enum{
 };
 
 /*Тип данных для отправки*/
-enum {
+typedef enum {
 	DATA = 1,
 	COMMAND
-};
+}dataType_t;
 
+/*Направление данных*/
+typedef enum {
+	SEND = 1,
+	RCV
+}dirType_t;
+
+/*Тип передачи*/
+typedef enum {
+	DMA = 1,
+	INT
+}perifType_t;
 /*Структура внутреннего состояния дисплея*/
 //typedef struct {
 //	unsigned reserved:5;
@@ -91,7 +103,8 @@ extern tftDriverStatus_t tftStatus;
 
 /*Prototypes */
 tftDriverStatus_t initTFT (void);
-uint32_t sendData (uint16_t *dataBuf, uint16_t dataSize);
-uint16_t* receiveData (uint16_t *dataBuf, uint16_t dataSize);
+
+
+result_t tftSpiHandler(void);
 #endif /* __TFT_H__ */
 

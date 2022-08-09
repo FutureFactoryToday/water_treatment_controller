@@ -21,11 +21,6 @@
 typedef struct{
 	void* data;
 	void* next;
-} fifo_list_t;
-
-typedef struct {
-	fifo_list_t* fifo;
-	uint8_t depth;
 }fifo_t;
 /*Global params*/
 

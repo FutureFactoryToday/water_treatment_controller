@@ -37,9 +37,9 @@ void* pop (fifo_t** fifo){
 	if ((*fifo) == NULL) {
 		 return NULL;
 	}
-	void* data = (*fifo)->fifo->data;  //Получаем данные
+	void* data = (*fifo)->data;  //Получаем данные
 	fifo_t* buf = *fifo;         //Сохраняем указатель на первый элемент очереди
-	*fifo = (*fifo)->fifo->next;       //Делаем второй элемент первым
+	*fifo = (*fifo)->next;       //Делаем второй элемент первым
 	free(buf);                   //Удаляем бывший первый элемент
 	return data;
 }
@@ -52,40 +52,40 @@ fifo_t* push (fifo_t** fifo, void* data){
 	if (*fifo == NULL)	{        //Если не хватило памяти,
 		return NULL; 	             //выходим с ошибкой
 	}
-	if ((*fifo)->fifo->data == NULL){  //Если это первый элемент и он пустой,
-		(*fifo)->fifo->data = data;      //добавляем данные
+	if ((*fifo)->data == NULL){  //Если это первый элемент и он пустой,
+		(*fifo)->data = data;      //добавляем данные
 	} 
 	else {
 		fifo_t* newNode = (fifo_t*)malloc(sizeof(fifo_t)); //Создаем новый элемент очереди
-		newNode->fifo->data = data;                              //добавляем данные
-		newNode->fifo->next = NULL;
+		newNode->data = data;                              //добавляем данные
+		newNode->next = NULL;
 		fifo_t* tail = findTail(*fifo);                    //вставляем в конец очереди
-		tail->fifo->next = newNode;
+		tail->next = newNode;
 	}
 	return *fifo;
 }
 
 /*Иниацилизация очереди*/
 fifo_t* initFifo(void){
-	fifo_t* fifo = (fifo_t*)malloc(MIN_FIFO*sizeof(fifo_t));      //Выделяем место для очереди
+	fifo_t* fifo = (fifo_t*)malloc(sizeof(fifo_t));      //Выделяем место для очереди
 	if (fifo == NULL) {                                  //Если не получилось, 
 		return NULL;                                       //возвращаем ошибку
 	}
-	fifo->fifo->data = NULL;                                   //Чистим данные
-	fifo->fifo->next = NULL;
+	fifo->data = NULL;                                   //Чистим данные
+	fifo->next = NULL;
 	return fifo;
 }
 
 /*Поиск конца очереди*/
 fifo_t* findTail (fifo_t* fifo){
-	while(fifo->fifo->next != NULL){
+	while(fifo->next != NULL){
 		fifo++;
 	}
 	return fifo;
 }
 
 uint8_t isEmpty(fifo_t* fifo){
-	return (fifo == NULL) || (fifo->fifo->data == NULL);
+	return (fifo == NULL) || (fifo->data == NULL);
 }
 /* Tests*/
 void testFifo (void){

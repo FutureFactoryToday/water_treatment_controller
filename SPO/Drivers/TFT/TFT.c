@@ -36,19 +36,40 @@
 	#endif
 #endif
 /* Private define ------------------------------------------------------------*/
-
+typedef struct {
+	dataType_t dataType;
+	uint8_t *dataBuf;
+	uint16_t bufSize;
+	dirType_t dir;
+} msg_t;
 /* Private macro -------------------------------------------------------------*/
 #define WAIT_TRANSMIT while (LL_SPI_IsActiveFlag_BSY(TFT_SPI));
+#define checkNull(a) do {if (a == NULL) return NULL;} while (0);
 
 /* Private variables ---------------------------------------------------------*/
 tftDriverStatus_t tftStatus;
+result_t transResult;
+msg_t *curMsg;
+fifo_t* msgFifo;
+uint16_t curEl;
+perifType_t type;
 /* Private function prototypes -----------------------------------------------*/
+
+
+perifType_t sendCommand (uint8_t *cmdBuf, uint8_t bufSize);
+perifType_t sendData (uint8_t *dataBuf, uint16_t bufSize);
+perifType_t receiveData (uint8_t *dataBuf, uint16_t bufSize);
+perifType_t send (uint8_t *dataBuf, uint16_t bufSize);
+perifType_t receive (uint8_t *dataBuf, uint16_t bufSize);
+uint8_t processMsg(uint8_t *cmdBuf, uint8_t cmdBufSize, uint8_t *dataBuf, uint16_t bufSize, dirType_t dir);
+uint8_t transNewMsg(void);
 uint32_t spiManualSend (uint32_t size, uint8_t *data);
 uint32_t spiDMASend (uint32_t size, uint8_t *data);
 uint32_t spiITSend (uint32_t size, uint8_t *data);
 uint16_t* spiManualReceive (uint32_t size, uint8_t *data);
 uint16_t* spiDMAReceive (uint32_t size, uint8_t *data);
 uint16_t* spiITReceive (uint32_t size, uint8_t *data);
+
 void rebootTFT (void);
 void enableTFTCommunication(void);
 void disableTFTCommunication(void);
@@ -59,76 +80,171 @@ void writeStrobe (void);
 void SetParalPortOutput(void);
 void SetParalPortInput(void);
 /* Private user code ---------------------------------------------------------*/
+tftDriverStatus_t initTFT(void){
+	msgFifo = initFifo();
+	
+	return tftStatus;
+}
+
+uint8_t processMsg(uint8_t *cmdBuf, uint8_t cmdBufSize, uint8_t *dataBuf, uint16_t bufSize, uint8_t dir){
+	uint8_t result = 0;
+  if (cmdBufSize != 0){
+		msg_t* cmdMsg = (msg_t*)malloc(sizeof(msg_t));
+		checkNull(cmdMsg);
+		cmdMsg->dataType = COMMAND;
+		cmdMsg->bufSize = cmdBufSize;
+		cmdMsg->dataBuf = cmdBuf;
+		cmdMsg->dir = SEND;
+		push(&msgFifo,cmdMsg);
+		result = 1;
+	}
+	if (bufSize != 0){
+		msg_t* dataMsg = (msg_t*)malloc(sizeof(msg_t));
+		checkNull(dataMsg);
+		dataMsg->dataType = DATA;
+		dataMsg->bufSize = bufSize;
+		dataMsg->dataBuf = dataBuf;
+		dataMsg->dir = dir;
+		push(&msgFifo,dataMsg);
+		result = 1;
+	}
+	if (result) {
+		registerHandler(TFT_SPI, tftSpiHandler);
+	}
+	return result;
+}
 
 //Определяем ситуацию
 	//1. SPI свободен - загружаем новое сообщение
-	if (spiHandler->status.bits.BUSY == 0){
-		spiHandler->curMsg = pop(&spiHandler->msgFifo);
-		if (spiHandler->curMsg != NULL){
-			return procNewMsg(spiHandler->curMsg);
+result_t tftSpiHandler(void){
+	
+	//Еще не запускались
+	if (transResult.FREE == 1){
+		if (!transNewMsg()){
+			transResult.ERR = 1;
+			transResult.FREE = 1;
+		}
+		if (type == DMA){
+			transResult.DMA = 1;
+			transResult.INT = 0;
+			transResult.FREE = 0;
+		} else if (type == INT){
+			transResult.DMA = 0;
+			transResult.INT = 1;
+			transResult.FREE = 0;
 		} else {
-			return NO_DATA;
+			transResult.ERR = 1;
+			transResult.FREE = 1;
 		}
-	} else {
-	//2. SPI занят (в процессе)
-		//2.1. Нас вызвало прерывание
-		if (spiHandler->status.bits.INT == 1){
-			spi_data_t* processingData = spiHandler->curMsg->data;
-			if (spiHandler->status.bits.SEND == 1){
-				//2.1.1. Пытаемся отправить новый байт
-					//Отправили все данные?
-				if (processingData->cnt < processingData->dataSize){
-					//Если нет, отправляем
-					spiHandler->interruptSend((*processingData->data)++);
-					processingData->cnt++;
-				} else {
-					//Если да, заканчиваем передачу
-					spiHandler->finishTransmision();
-					spiHandler->status.bits.BUSY = 0;
-				}
-			}
-			if (spiHandler->status.bits.RCV == 1){
-				//2.1.2. Пытаемся получить новой байт
-					//Получили все данные?
-				if (processingData->cnt < processingData->dataSize){
-					//Если нет, получаем
-					(*processingData->data) = spiHandler->interruptReceive();
-					(*processingData->data)++;
-					processingData->cnt++;
-				} else {
-					//Если да, заканчиваем передачу
-					spiHandler->finishTransmision();
-					spiHandler->status.bits.BUSY = 0;
-				}
-			}
-			//Если передача закончена, проверим можно ли отключать периферию
-			if (spiHandler->status.bits.BUSY == 0 && isEmpty(spiHandler->msgFifo)){
-				stopHandler(spiHandler);
-			}
-		}
-		//2.2. Нас вызвало DMA - заканчиваем передачу
-		if (spiHandler->status.bits.DMA == 1){
-			spiHandler->finishTransmision();
-		}
+		return transResult;
 	}
-	return ERR;
+	//Еще в процессе
+	else {
+		if (curMsg->dir == SEND){
+			if (curEl < curMsg->bufSize){
+				uint8_t el = *(curMsg->dataBuf + curEl);
+				curEl++;
+				LL_SPI_TransmitData8(TFT_SPI, el);
+			} else {
+				transNewMsg();
+			}
+		} else {
+			if (curMsg->dir == SEND){
+				uint8_t el = LL_SPI_ReceiveData8(TFT_SPI);
+				*(curMsg->dataBuf + curEl) = el;
+				curEl++;
+				LL_SPI_TransmitData8(TFT_SPI, 0xFF);	
+				} else {	
+			
+			}
+	return transResult;
+		}
 }
 
-result_t procNewMsg(spi_handler_t *handler){
-	spiHandler->startTransmision();
-	return ERR;
+
+uint8_t transNewMsg(void){
+	curMsg = pop(&msgFifo);
+	checkNull(curMsg);
+	if (curMsg->dir == SEND){
+		if (curMsg->dataType == DATA){
+			type = sendData(curMsg->dataBuf,curMsg->bufSize);
+		}
+		if (curMsg->dataType == COMMAND){
+			type = sendCommand(curMsg->dataBuf,curMsg->bufSize);
+		}	
+	} else if (curMsg->dir == RCV){
+			perifType_t type = receiveData(curMsg->dataBuf,curMsg->bufSize);
+		} else {
+			return NULL;
+		}
+	return 1;
 }
-result_t intSendNewByte (spi_msg_t* msg){
+//result_t procNewMsg(spi_handler_t *handler){
+//	spiHandler->startTransmision();
+//	return ERR;
+//}
+//result_t intSendNewByte (spi_msg_t* msg){
+//	
+//	return ERR;
+//}
+//result_t intRcvNewByte (spi_msg_t* msg){
+//	
+//	return ERR;
+//}
 	
-	return ERR;
-}
-result_t intRcvNewByte (spi_msg_t* msg){
-	
-	return ERR;
-}
 result_t finishTransmission(spi_handler_t* handler){
 	
 	return ERR;
+}
+
+perifType_t sendCommand (uint8_t *cmdBuf, uint8_t bufSize){
+	enableTFTCommunication();
+	selectCommand();	
+	return send (cmdBuf,bufSize);
+}
+
+perifType_t sendData (uint8_t *dataBuf, uint16_t bufSize){
+	enableTFTCommunication();
+	selectData();
+	return send (dataBuf, bufSize);
+}
+
+perifType_t receiveData (uint8_t *dataBuf, uint16_t bufSize){
+	enableTFTCommunication();
+	selectData();
+	return receive(dataBuf, bufSize);
+}
+
+perifType_t send (uint8_t *dataBuf, uint16_t bufSize){
+	curEl = 0;
+	#ifdef ALLOW_TFT_DMA
+	if (bufSize > DMA_MIN_SIZE){
+		spiDMASend(bufSize, dataBuf);
+		return DMA;
+	} else {
+		spiITSend(bufSize, dataBuf);
+		return INT;
+	}
+	#elif
+	spiITSend(bufSize, dataBuf);
+	return INT;
+	#endif
+}
+
+perifType_t receive (uint8_t *dataBuf, uint16_t bufSize){
+	curEl = 0;
+	#ifdef ALLOW_TFT_DMA
+	if (bufSize > DMA_MIN_SIZE){
+		spiDMAReceive(bufSize, dataBuf);
+		return DMA;
+	} else {
+		spiITReceive(bufSize, dataBuf);
+		return INT;
+	}
+	#elif
+	spiITReceive(bufSize, dataBuf);
+	return INT;
+	#endif
 }
 
 /******* Функции для SPI дисплея *******/

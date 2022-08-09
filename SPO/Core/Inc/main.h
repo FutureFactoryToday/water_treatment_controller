@@ -165,7 +165,8 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
-
+#define TRUE 1
+#define FALSE 0
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

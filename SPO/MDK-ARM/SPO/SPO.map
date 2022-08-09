@@ -600,23 +600,62 @@ Section Cross References
     system_stm32f1xx.o(.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.data.SystemCoreClock) for SystemCoreClock
     system_stm32f1xx.o(.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.rodata.AHBPrescTable) for AHBPrescTable
     system_stm32f1xx.o(.ARM.exidx.text.SystemCoreClockUpdate) refers to system_stm32f1xx.o(.text.SystemCoreClockUpdate) for [Anonymous Symbol]
+    tft.o(.text.initTFT) refers to fifo.o(.text.initFifo) for initFifo
+    tft.o(.text.initTFT) refers to tft.o(.bss.msgFifo) for msgFifo
+    tft.o(.text.initTFT) refers to tft.o(.bss.tftStatus) for tftStatus
+    tft.o(.ARM.exidx.text.initTFT) refers to tft.o(.text.initTFT) for [Anonymous Symbol]
+    tft.o(.text.processMsg) refers to h1_alloc.o(.text) for malloc
+    tft.o(.text.processMsg) refers to tft.o(.bss.msgFifo) for msgFifo
+    tft.o(.text.processMsg) refers to fifo.o(.text.push) for push
+    tft.o(.text.processMsg) refers to tft.o(.text.tftSpiHandler) for tftSpiHandler
+    tft.o(.text.processMsg) refers to spi_handler.o(.text.registerHandler) for registerHandler
+    tft.o(.ARM.exidx.text.processMsg) refers to tft.o(.text.processMsg) for [Anonymous Symbol]
+    tft.o(.text.tftSpiHandler) refers to tft.o(.bss.transResult) for transResult
+    tft.o(.text.tftSpiHandler) refers to tft.o(.bss.msgFifo) for msgFifo
+    tft.o(.text.tftSpiHandler) refers to fifo.o(.text.pop) for pop
+    tft.o(.text.tftSpiHandler) refers to tft.o(.bss.curMsg) for curMsg
+    tft.o(.text.tftSpiHandler) refers to tft.o(.text.sendCommand) for sendCommand
+    tft.o(.text.tftSpiHandler) refers to tft.o(.text.receiveData) for receiveData
+    tft.o(.ARM.exidx.text.tftSpiHandler) refers to tft.o(.text.tftSpiHandler) for [Anonymous Symbol]
+    tft.o(.text.sendCommand) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.sendCommand) refers to tft.o(.text.selectCommand) for selectCommand
+    tft.o(.text.sendCommand) refers to tft.o(.text.send) for send
+    tft.o(.ARM.exidx.text.sendCommand) refers to tft.o(.text.sendCommand) for [Anonymous Symbol]
+    tft.o(.text.receiveData) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.receiveData) refers to tft.o(.text.selectData) for selectData
+    tft.o(.text.receiveData) refers to tft.o(.text.receive) for receive
+    tft.o(.ARM.exidx.text.receiveData) refers to tft.o(.text.receiveData) for [Anonymous Symbol]
+    tft.o(.text.enableTFTCommunication) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.ARM.exidx.text.enableTFTCommunication) refers to tft.o(.text.enableTFTCommunication) for [Anonymous Symbol]
+    tft.o(.text.selectCommand) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
+    tft.o(.ARM.exidx.text.selectCommand) refers to tft.o(.text.selectCommand) for [Anonymous Symbol]
+    tft.o(.text.send) refers to tft.o(.text.spiDMASend) for spiDMASend
+    tft.o(.text.send) refers to tft.o(.text.spiITSend) for spiITSend
+    tft.o(.ARM.exidx.text.send) refers to tft.o(.text.send) for [Anonymous Symbol]
+    tft.o(.text.sendData) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
+    tft.o(.text.sendData) refers to tft.o(.text.selectData) for selectData
+    tft.o(.text.sendData) refers to tft.o(.text.send) for send
+    tft.o(.ARM.exidx.text.sendData) refers to tft.o(.text.sendData) for [Anonymous Symbol]
+    tft.o(.text.selectData) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
+    tft.o(.ARM.exidx.text.selectData) refers to tft.o(.text.selectData) for [Anonymous Symbol]
+    tft.o(.text.receive) refers to tft.o(.text.spiDMAReceive) for spiDMAReceive
+    tft.o(.text.receive) refers to tft.o(.text.spiITReceive) for spiITReceive
+    tft.o(.ARM.exidx.text.receive) refers to tft.o(.text.receive) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiDMASend) refers to tft.o(.text.spiDMASend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiITSend) refers to tft.o(.text.spiITSend) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiDMAReceive) refers to tft.o(.text.spiDMAReceive) for [Anonymous Symbol]
+    tft.o(.ARM.exidx.text.spiITReceive) refers to tft.o(.text.spiITReceive) for [Anonymous Symbol]
     tft.o(.text.spiManualSend) refers to tft.o(.bss.tftStatus) for tftStatus
     tft.o(.text.spiManualSend) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
     tft.o(.text.spiManualSend) refers to tft.o(.text.LL_SPI_TransmitData8) for LL_SPI_TransmitData8
     tft.o(.text.spiManualSend) refers to tft.o(.text.LL_SPI_IsActiveFlag_BSY) for LL_SPI_IsActiveFlag_BSY
     tft.o(.text.spiManualSend) refers to tft.o(.text.disableTFTCommunication) for disableTFTCommunication
     tft.o(.ARM.exidx.text.spiManualSend) refers to tft.o(.text.spiManualSend) for [Anonymous Symbol]
-    tft.o(.text.enableTFTCommunication) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
-    tft.o(.ARM.exidx.text.enableTFTCommunication) refers to tft.o(.text.enableTFTCommunication) for [Anonymous Symbol]
     tft.o(.ARM.exidx.text.LL_SPI_TransmitData8) refers to tft.o(.text.LL_SPI_TransmitData8) for [Anonymous Symbol]
     tft.o(.ARM.exidx.text.LL_SPI_IsActiveFlag_BSY) refers to tft.o(.text.LL_SPI_IsActiveFlag_BSY) for [Anonymous Symbol]
     tft.o(.text.disableTFTCommunication) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
     tft.o(.ARM.exidx.text.disableTFTCommunication) refers to tft.o(.text.disableTFTCommunication) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.spiDMASend) refers to tft.o(.text.spiDMASend) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.spiITSend) refers to tft.o(.text.spiITSend) for [Anonymous Symbol]
     tft.o(.ARM.exidx.text.spiManualReceive) refers to tft.o(.text.spiManualReceive) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.spiDMAReceive) refers to tft.o(.text.spiDMAReceive) for [Anonymous Symbol]
-    tft.o(.ARM.exidx.text.spiITReceive) refers to tft.o(.text.spiITReceive) for [Anonymous Symbol]
     tft.o(.text.manualParalRead) refers to tft.o(.bss.tftStatus) for tftStatus
     tft.o(.text.manualParalRead) refers to tft.o(.text.enableTFTCommunication) for enableTFTCommunication
     tft.o(.text.manualParalRead) refers to tft.o(.text.selectData) for selectData
@@ -626,10 +665,6 @@ Section Cross References
     tft.o(.text.manualParalRead) refers to tft.o(.text.writeStrobe) for writeStrobe
     tft.o(.text.manualParalRead) refers to tft.o(.text.LL_GPIO_ReadInputPort) for LL_GPIO_ReadInputPort
     tft.o(.ARM.exidx.text.manualParalRead) refers to tft.o(.text.manualParalRead) for [Anonymous Symbol]
-    tft.o(.text.selectData) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
-    tft.o(.ARM.exidx.text.selectData) refers to tft.o(.text.selectData) for [Anonymous Symbol]
-    tft.o(.text.selectCommand) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
-    tft.o(.ARM.exidx.text.selectCommand) refers to tft.o(.text.selectCommand) for [Anonymous Symbol]
     tft.o(.text.SetParalPortInput) refers to stm32f1xx_ll_gpio.o(.text.LL_GPIO_Init) for LL_GPIO_Init
     tft.o(.ARM.exidx.text.SetParalPortInput) refers to tft.o(.text.SetParalPortInput) for [Anonymous Symbol]
     tft.o(.text.writeStrobe) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
@@ -661,38 +696,43 @@ Section Cross References
     tft.o(.text.readStrobe) refers to tft.o(.text.LL_GPIO_ResetOutputPin) for LL_GPIO_ResetOutputPin
     tft.o(.text.readStrobe) refers to tft.o(.text.LL_GPIO_SetOutputPin) for LL_GPIO_SetOutputPin
     tft.o(.ARM.exidx.text.readStrobe) refers to tft.o(.text.readStrobe) for [Anonymous Symbol]
-    spi_handler.o(.text.sendMsg) refers to spi_handler.o(.text.findOrCreateHandler) for findOrCreateHandler
-    spi_handler.o(.text.sendMsg) refers to h1_alloc.o(.text) for malloc
-    spi_handler.o(.text.sendMsg) refers to fifo.o(.text.push) for push
-    spi_handler.o(.text.sendMsg) refers to spi_handler.o(.text.handler) for handler
-    spi_handler.o(.ARM.exidx.text.sendMsg) refers to spi_handler.o(.text.sendMsg) for [Anonymous Symbol]
+    spi_handler.o(.ARM.exidx.text.initHandler) refers to spi_handler.o(.text.initHandler) for [Anonymous Symbol]
+    spi_handler.o(.text.findHandler) refers to spi_handler.o(.bss.handlerList) for handlerList
+    spi_handler.o(.ARM.exidx.text.findHandler) refers to spi_handler.o(.text.findHandler) for [Anonymous Symbol]
     spi_handler.o(.text.findOrCreateHandler) refers to spi_handler.o(.bss.handlerList) for handlerList
     spi_handler.o(.text.findOrCreateHandler) refers to spi_handler.o(.text.createHandler) for createHandler
     spi_handler.o(.ARM.exidx.text.findOrCreateHandler) refers to spi_handler.o(.text.findOrCreateHandler) for [Anonymous Symbol]
-    spi_handler.o(.text.handler) refers to spi_handler.o(.text.findOrCreateHandler) for findOrCreateHandler
-    spi_handler.o(.text.handler) refers to fifo.o(.text.pop) for pop
-    spi_handler.o(.text.handler) refers to spi_handler.o(.text.procNewMsg) for procNewMsg
-    spi_handler.o(.text.handler) refers to spi_handler.o(.text.intRcvNewByte) for intRcvNewByte
-    spi_handler.o(.text.handler) refers to spi_handler.o(.text.finishTransmission) for finishTransmission
-    spi_handler.o(.ARM.exidx.text.handler) refers to spi_handler.o(.text.handler) for [Anonymous Symbol]
-    spi_handler.o(.text.receiveMsg) refers to spi_handler.o(.text.findOrCreateHandler) for findOrCreateHandler
-    spi_handler.o(.text.receiveMsg) refers to h1_alloc.o(.text) for malloc
-    spi_handler.o(.text.receiveMsg) refers to fifo.o(.text.push) for push
-    spi_handler.o(.text.receiveMsg) refers to spi_handler.o(.text.handler) for handler
-    spi_handler.o(.ARM.exidx.text.receiveMsg) refers to spi_handler.o(.text.receiveMsg) for [Anonymous Symbol]
-    spi_handler.o(.ARM.exidx.text.initHandler) refers to spi_handler.o(.text.initHandler) for [Anonymous Symbol]
     spi_handler.o(.text.createHandler) refers to h1_alloc.o(.text) for malloc
     spi_handler.o(.text.createHandler) refers to fifo.o(.text.initFifo) for initFifo
     spi_handler.o(.ARM.exidx.text.createHandler) refers to spi_handler.o(.text.createHandler) for [Anonymous Symbol]
-    spi_handler.o(.ARM.exidx.text.procNewMsg) refers to spi_handler.o(.text.procNewMsg) for [Anonymous Symbol]
-    spi_handler.o(.ARM.exidx.text.intRcvNewByte) refers to spi_handler.o(.text.intRcvNewByte) for [Anonymous Symbol]
-    spi_handler.o(.ARM.exidx.text.finishTransmission) refers to spi_handler.o(.text.finishTransmission) for [Anonymous Symbol]
-    spi_handler.o(.ARM.exidx.text.intSendNewByte) refers to spi_handler.o(.text.intSendNewByte) for [Anonymous Symbol]
+    spi_handler.o(.text.spiInterruptHandler) refers to spi_handler.o(.text.findHandler) for findHandler
+    spi_handler.o(.text.spiInterruptHandler) refers to spi_handler.o(.text.finishTransaction) for finishTransaction
+    spi_handler.o(.text.spiInterruptHandler) refers to fifo.o(.text.pop) for pop
+    spi_handler.o(.ARM.exidx.text.spiInterruptHandler) refers to spi_handler.o(.text.spiInterruptHandler) for [Anonymous Symbol]
+    spi_handler.o(.text.finishTransaction) refers to spi_handler.o(.text.LL_SPI_DisableIT_ERR) for LL_SPI_DisableIT_ERR
+    spi_handler.o(.text.finishTransaction) refers to spi_handler.o(.text.LL_SPI_DisableIT_RXNE) for LL_SPI_DisableIT_RXNE
+    spi_handler.o(.text.finishTransaction) refers to spi_handler.o(.text.LL_SPI_DisableIT_TXE) for LL_SPI_DisableIT_TXE
+    spi_handler.o(.ARM.exidx.text.finishTransaction) refers to spi_handler.o(.text.finishTransaction) for [Anonymous Symbol]
+    spi_handler.o(.text.registerHandler) refers to spi_handler.o(.text.findOrCreateHandler) for findOrCreateHandler
+    spi_handler.o(.text.registerHandler) refers to fifo.o(.text.push) for push
+    spi_handler.o(.ARM.exidx.text.registerHandler) refers to spi_handler.o(.text.registerHandler) for [Anonymous Symbol]
+    spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_ERR) refers to spi_handler.o(.text.LL_SPI_DisableIT_ERR) for [Anonymous Symbol]
+    spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_RXNE) refers to spi_handler.o(.text.LL_SPI_DisableIT_RXNE) for [Anonymous Symbol]
+    spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_TXE) refers to spi_handler.o(.text.LL_SPI_DisableIT_TXE) for [Anonymous Symbol]
     spi_handler.o(.text.testSPIHandler) refers to spi_handler.o(.text.testHandlerList) for testHandlerList
+    spi_handler.o(.text.testSPIHandler) refers to spi_handler.o(.text.testRegistration) for testRegistration
     spi_handler.o(.ARM.exidx.text.testSPIHandler) refers to spi_handler.o(.text.testSPIHandler) for [Anonymous Symbol]
     spi_handler.o(.text.testHandlerList) refers to spi_handler.o(.text.findOrCreateHandler) for findOrCreateHandler
     spi_handler.o(.text.testHandlerList) refers to main.o(.text.Error_Handler) for Error_Handler
+    spi_handler.o(.text.testHandlerList) refers to h1_free.o(.text) for free
     spi_handler.o(.ARM.exidx.text.testHandlerList) refers to spi_handler.o(.text.testHandlerList) for [Anonymous Symbol]
+    spi_handler.o(.text.testRegistration) refers to spi_handler.o(.text.mockHandlerFunc) for mockHandlerFunc
+    spi_handler.o(.text.testRegistration) refers to spi_handler.o(.text.registerHandler) for registerHandler
+    spi_handler.o(.text.testRegistration) refers to spi_handler.o(.bss.cnt) for cnt
+    spi_handler.o(.text.testRegistration) refers to main.o(.text.Error_Handler) for Error_Handler
+    spi_handler.o(.ARM.exidx.text.testRegistration) refers to spi_handler.o(.text.testRegistration) for [Anonymous Symbol]
+    spi_handler.o(.text.mockHandlerFunc) refers to spi_handler.o(.bss.cnt) for cnt
+    spi_handler.o(.ARM.exidx.text.mockHandlerFunc) refers to spi_handler.o(.text.mockHandlerFunc) for [Anonymous Symbol]
     fifo.o(.text.pop) refers to h1_free.o(.text) for free
     fifo.o(.ARM.exidx.text.pop) refers to fifo.o(.text.pop) for [Anonymous Symbol]
     fifo.o(.text.push) refers to fifo.o(.text.initFifo) for initFifo
@@ -702,6 +742,7 @@ Section Cross References
     fifo.o(.text.initFifo) refers to h1_alloc.o(.text) for malloc
     fifo.o(.ARM.exidx.text.initFifo) refers to fifo.o(.text.initFifo) for [Anonymous Symbol]
     fifo.o(.ARM.exidx.text.findTail) refers to fifo.o(.text.findTail) for [Anonymous Symbol]
+    fifo.o(.ARM.exidx.text.isEmpty) refers to fifo.o(.text.isEmpty) for [Anonymous Symbol]
     fifo.o(.text.testFifo) refers to fifo.o(.text.initFifo) for initFifo
     fifo.o(.text.testFifo) refers to main.o(.text.Error_Handler) for Error_Handler
     fifo.o(.text.testFifo) refers to fifo.o(.text.push) for push
@@ -1289,32 +1330,48 @@ Removing Unused input sections from the image.
     Removing system_stm32f1xx.o(.text.SystemCoreClockUpdate), (290 bytes).
     Removing system_stm32f1xx.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
     Removing tft.o(.text), (0 bytes).
-    Removing tft.o(.text.spiManualSend), (190 bytes).
-    Removing tft.o(.ARM.exidx.text.spiManualSend), (8 bytes).
+    Removing tft.o(.text.initTFT), (36 bytes).
+    Removing tft.o(.ARM.exidx.text.initTFT), (8 bytes).
+    Removing tft.o(.text.processMsg), (250 bytes).
+    Removing tft.o(.ARM.exidx.text.processMsg), (8 bytes).
+    Removing tft.o(.text.tftSpiHandler), (404 bytes).
+    Removing tft.o(.ARM.exidx.text.tftSpiHandler), (8 bytes).
+    Removing tft.o(.text.sendCommand), (32 bytes).
+    Removing tft.o(.ARM.exidx.text.sendCommand), (8 bytes).
+    Removing tft.o(.text.receiveData), (32 bytes).
+    Removing tft.o(.ARM.exidx.text.receiveData), (8 bytes).
     Removing tft.o(.text.enableTFTCommunication), (20 bytes).
     Removing tft.o(.ARM.exidx.text.enableTFTCommunication), (8 bytes).
+    Removing tft.o(.text.selectCommand), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.selectCommand), (8 bytes).
+    Removing tft.o(.text.send), (64 bytes).
+    Removing tft.o(.ARM.exidx.text.send), (8 bytes).
+    Removing tft.o(.text.sendData), (32 bytes).
+    Removing tft.o(.ARM.exidx.text.sendData), (8 bytes).
+    Removing tft.o(.text.selectData), (20 bytes).
+    Removing tft.o(.ARM.exidx.text.selectData), (8 bytes).
+    Removing tft.o(.text.receive), (64 bytes).
+    Removing tft.o(.ARM.exidx.text.receive), (8 bytes).
+    Removing tft.o(.text.spiDMASend), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiDMASend), (8 bytes).
+    Removing tft.o(.text.spiITSend), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiITSend), (8 bytes).
+    Removing tft.o(.text.spiDMAReceive), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiDMAReceive), (8 bytes).
+    Removing tft.o(.text.spiITReceive), (12 bytes).
+    Removing tft.o(.ARM.exidx.text.spiITReceive), (8 bytes).
+    Removing tft.o(.text.spiManualSend), (190 bytes).
+    Removing tft.o(.ARM.exidx.text.spiManualSend), (8 bytes).
     Removing tft.o(.text.LL_SPI_TransmitData8), (26 bytes).
     Removing tft.o(.ARM.exidx.text.LL_SPI_TransmitData8), (8 bytes).
     Removing tft.o(.text.LL_SPI_IsActiveFlag_BSY), (16 bytes).
     Removing tft.o(.ARM.exidx.text.LL_SPI_IsActiveFlag_BSY), (8 bytes).
     Removing tft.o(.text.disableTFTCommunication), (20 bytes).
     Removing tft.o(.ARM.exidx.text.disableTFTCommunication), (8 bytes).
-    Removing tft.o(.text.spiDMASend), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.spiDMASend), (8 bytes).
-    Removing tft.o(.text.spiITSend), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.spiITSend), (8 bytes).
     Removing tft.o(.text.spiManualReceive), (12 bytes).
     Removing tft.o(.ARM.exidx.text.spiManualReceive), (8 bytes).
-    Removing tft.o(.text.spiDMAReceive), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.spiDMAReceive), (8 bytes).
-    Removing tft.o(.text.spiITReceive), (12 bytes).
-    Removing tft.o(.ARM.exidx.text.spiITReceive), (8 bytes).
     Removing tft.o(.text.manualParalRead), (194 bytes).
     Removing tft.o(.ARM.exidx.text.manualParalRead), (8 bytes).
-    Removing tft.o(.text.selectData), (20 bytes).
-    Removing tft.o(.ARM.exidx.text.selectData), (8 bytes).
-    Removing tft.o(.text.selectCommand), (20 bytes).
-    Removing tft.o(.ARM.exidx.text.selectCommand), (8 bytes).
     Removing tft.o(.text.SetParalPortInput), (48 bytes).
     Removing tft.o(.ARM.exidx.text.SetParalPortInput), (8 bytes).
     Removing tft.o(.text.writeStrobe), (38 bytes).
@@ -1343,39 +1400,46 @@ Removing Unused input sections from the image.
     Removing tft.o(.ARM.exidx.text.LL_GPIO_SetOutputPin), (8 bytes).
     Removing tft.o(.text.readStrobe), (38 bytes).
     Removing tft.o(.ARM.exidx.text.readStrobe), (8 bytes).
+    Removing tft.o(.bss.msgFifo), (4 bytes).
     Removing tft.o(.bss.tftStatus), (4 bytes).
+    Removing tft.o(.bss.transResult), (4 bytes).
+    Removing tft.o(.bss.curMsg), (4 bytes).
+    Removing tft.o(.bss.curEl), (2 bytes).
     Removing spi_handler.o(.text), (0 bytes).
-    Removing spi_handler.o(.text.sendMsg), (102 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.sendMsg), (8 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.findOrCreateHandler), (8 bytes).
-    Removing spi_handler.o(.text.handler), (226 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.handler), (8 bytes).
-    Removing spi_handler.o(.text.receiveMsg), (102 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.receiveMsg), (8 bytes).
     Removing spi_handler.o(.text.initHandler), (8 bytes).
     Removing spi_handler.o(.ARM.exidx.text.initHandler), (8 bytes).
+    Removing spi_handler.o(.text.findHandler), (82 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.findHandler), (8 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.findOrCreateHandler), (8 bytes).
     Removing spi_handler.o(.ARM.exidx.text.createHandler), (8 bytes).
-    Removing spi_handler.o(.text.procNewMsg), (10 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.procNewMsg), (8 bytes).
-    Removing spi_handler.o(.text.intRcvNewByte), (10 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.intRcvNewByte), (8 bytes).
-    Removing spi_handler.o(.text.finishTransmission), (10 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.finishTransmission), (8 bytes).
-    Removing spi_handler.o(.text.intSendNewByte), (10 bytes).
-    Removing spi_handler.o(.ARM.exidx.text.intSendNewByte), (8 bytes).
+    Removing spi_handler.o(.text.spiInterruptHandler), (158 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.spiInterruptHandler), (8 bytes).
+    Removing spi_handler.o(.text.finishTransaction), (34 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.finishTransaction), (8 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.registerHandler), (8 bytes).
+    Removing spi_handler.o(.text.LL_SPI_DisableIT_ERR), (18 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_ERR), (8 bytes).
+    Removing spi_handler.o(.text.LL_SPI_DisableIT_RXNE), (18 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_RXNE), (8 bytes).
+    Removing spi_handler.o(.text.LL_SPI_DisableIT_TXE), (18 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.LL_SPI_DisableIT_TXE), (8 bytes).
     Removing spi_handler.o(.ARM.exidx.text.testSPIHandler), (8 bytes).
     Removing spi_handler.o(.ARM.exidx.text.testHandlerList), (8 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.testRegistration), (8 bytes).
+    Removing spi_handler.o(.ARM.exidx.text.mockHandlerFunc), (8 bytes).
     Removing fifo.o(.text), (0 bytes).
     Removing fifo.o(.ARM.exidx.text.pop), (8 bytes).
     Removing fifo.o(.ARM.exidx.text.push), (8 bytes).
     Removing fifo.o(.ARM.exidx.text.initFifo), (8 bytes).
     Removing fifo.o(.ARM.exidx.text.findTail), (8 bytes).
+    Removing fifo.o(.text.isEmpty), (38 bytes).
+    Removing fifo.o(.ARM.exidx.text.isEmpty), (8 bytes).
     Removing fifo.o(.ARM.exidx.text.testFifo), (8 bytes).
     Removing fifo.o(.rodata..L__const.testFifo.fBuf), (5 bytes).
     Removing fifo.o(.rodata..L__const.testFifo.tBuf), (6 bytes).
     Removing wtc_logic.o(.text), (0 bytes).
 
-467 unused section(s) (total 17495 bytes) removed from the image.
+490 unused section(s) (total 18407 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1796,31 +1860,34 @@ Image Symbol Table
     [Anonymous Symbol]                       0x0800320c   Section        0  main.o(.text.__NVIC_SetPriorityGrouping)
     [Anonymous Symbol]                       0x08003248   Section        0  main.o(.text.assert_failed)
     [Anonymous Symbol]                       0x08003254   Section        0  spi_handler.o(.text.createHandler)
-    [Anonymous Symbol]                       0x08003298   Section        0  spi_handler.o(.text.findOrCreateHandler)
-    [Anonymous Symbol]                       0x08003328   Section        0  fifo.o(.text.findTail)
-    [Anonymous Symbol]                       0x08003344   Section        0  fifo.o(.text.initFifo)
-    [Anonymous Symbol]                       0x08003374   Section        0  main.o(.text.main)
-    [Anonymous Symbol]                       0x080033d4   Section        0  fifo.o(.text.pop)
-    [Anonymous Symbol]                       0x08003410   Section        0  fifo.o(.text.push)
-    [Anonymous Symbol]                       0x08003480   Section        0  fifo.o(.text.testFifo)
-    [Anonymous Symbol]                       0x080035ac   Section        0  spi_handler.o(.text.testHandlerList)
-    [Anonymous Symbol]                       0x08003680   Section        0  spi_handler.o(.text.testSPIHandler)
-    OFFSET_TAB_CCMRx                         0x080036a0   Data           7  tim.o(.rodata.OFFSET_TAB_CCMRx)
-    [Anonymous Symbol]                       0x080036a0   Section        0  tim.o(.rodata.OFFSET_TAB_CCMRx)
-    SHIFT_TAB_OCxx                           0x080036a7   Data           7  tim.o(.rodata.SHIFT_TAB_OCxx)
-    [Anonymous Symbol]                       0x080036a7   Section        0  tim.o(.rodata.SHIFT_TAB_OCxx)
-    .L.str                                   0x080036ae   Data          56  stm32f1xx_ll_gpio.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080036ae   Section        0  stm32f1xx_ll_gpio.o(.rodata.str1.1)
-    .L.str                                   0x080036e6   Data          55  stm32f1xx_ll_rtc.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080036e6   Section        0  stm32f1xx_ll_rtc.o(.rodata.str1.1)
-    .L.str                                   0x0800371d   Data          56  stm32f1xx_ll_exti.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800371d   Section        0  stm32f1xx_ll_exti.o(.rodata.str1.1)
-    .L.str                                   0x08003755   Data          55  stm32f1xx_ll_spi.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x08003755   Section        0  stm32f1xx_ll_spi.o(.rodata.str1.1)
-    .L.str                                   0x0800378c   Data          55  stm32f1xx_ll_tim.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800378c   Section        0  stm32f1xx_ll_tim.o(.rodata.str1.1)
-    .L.str                                   0x080037c3   Data          57  stm32f1xx_ll_usart.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080037c3   Section        0  stm32f1xx_ll_usart.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08003290   Section        0  spi_handler.o(.text.findOrCreateHandler)
+    [Anonymous Symbol]                       0x08003320   Section        0  fifo.o(.text.findTail)
+    [Anonymous Symbol]                       0x0800333c   Section        0  fifo.o(.text.initFifo)
+    [Anonymous Symbol]                       0x0800336c   Section        0  main.o(.text.main)
+    [Anonymous Symbol]                       0x080033cc   Section        0  spi_handler.o(.text.mockHandlerFunc)
+    [Anonymous Symbol]                       0x080033f0   Section        0  fifo.o(.text.pop)
+    [Anonymous Symbol]                       0x0800342c   Section        0  fifo.o(.text.push)
+    [Anonymous Symbol]                       0x0800349c   Section        0  spi_handler.o(.text.registerHandler)
+    [Anonymous Symbol]                       0x08003510   Section        0  fifo.o(.text.testFifo)
+    [Anonymous Symbol]                       0x0800363c   Section        0  spi_handler.o(.text.testHandlerList)
+    [Anonymous Symbol]                       0x08003724   Section        0  spi_handler.o(.text.testRegistration)
+    [Anonymous Symbol]                       0x080037d4   Section        0  spi_handler.o(.text.testSPIHandler)
+    OFFSET_TAB_CCMRx                         0x080037f8   Data           7  tim.o(.rodata.OFFSET_TAB_CCMRx)
+    [Anonymous Symbol]                       0x080037f8   Section        0  tim.o(.rodata.OFFSET_TAB_CCMRx)
+    SHIFT_TAB_OCxx                           0x080037ff   Data           7  tim.o(.rodata.SHIFT_TAB_OCxx)
+    [Anonymous Symbol]                       0x080037ff   Section        0  tim.o(.rodata.SHIFT_TAB_OCxx)
+    .L.str                                   0x08003806   Data          56  stm32f1xx_ll_gpio.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08003806   Section        0  stm32f1xx_ll_gpio.o(.rodata.str1.1)
+    .L.str                                   0x0800383e   Data          55  stm32f1xx_ll_rtc.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800383e   Section        0  stm32f1xx_ll_rtc.o(.rodata.str1.1)
+    .L.str                                   0x08003875   Data          56  stm32f1xx_ll_exti.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08003875   Section        0  stm32f1xx_ll_exti.o(.rodata.str1.1)
+    .L.str                                   0x080038ad   Data          55  stm32f1xx_ll_spi.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080038ad   Section        0  stm32f1xx_ll_spi.o(.rodata.str1.1)
+    .L.str                                   0x080038e4   Data          55  stm32f1xx_ll_tim.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080038e4   Section        0  stm32f1xx_ll_tim.o(.rodata.str1.1)
+    .L.str                                   0x0800391b   Data          57  stm32f1xx_ll_usart.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800391b   Section        0  stm32f1xx_ll_usart.o(.rodata.str1.1)
     .bss                                     0x20000008   Section       96  libspace.o(.bss)
     Heap_Mem                                 0x20000070   Data         512  startup_stm32f103xe.o(HEAP)
     HEAP                                     0x20000070   Section      512  startup_stm32f103xe.o(HEAP)
@@ -2051,24 +2118,28 @@ Image Symbol Table
     SystemInit                               0x080031b1   Thumb Code     2  system_stm32f1xx.o(.text.SystemInit)
     UsageFault_Handler                       0x080031b5   Thumb Code     4  stm32f1xx_it.o(.text.UsageFault_Handler)
     assert_failed                            0x08003249   Thumb Code    10  main.o(.text.assert_failed)
-    createHandler                            0x08003255   Thumb Code    68  spi_handler.o(.text.createHandler)
-    findOrCreateHandler                      0x08003299   Thumb Code   142  spi_handler.o(.text.findOrCreateHandler)
-    findTail                                 0x08003329   Thumb Code    28  fifo.o(.text.findTail)
-    initFifo                                 0x08003345   Thumb Code    46  fifo.o(.text.initFifo)
-    main                                     0x08003375   Thumb Code    96  main.o(.text.main)
-    pop                                      0x080033d5   Thumb Code    60  fifo.o(.text.pop)
-    push                                     0x08003411   Thumb Code   112  fifo.o(.text.push)
-    testFifo                                 0x08003481   Thumb Code   298  fifo.o(.text.testFifo)
-    testHandlerList                          0x080035ad   Thumb Code   212  spi_handler.o(.text.testHandlerList)
-    testSPIHandler                           0x08003681   Thumb Code     8  spi_handler.o(.text.testSPIHandler)
-    AHBPrescTable                            0x08003688   Data          16  system_stm32f1xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x08003698   Data           8  system_stm32f1xx.o(.rodata.APBPrescTable)
-    Region$$Table$$Base                      0x080037fc   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800381c   Number         0  anon$$obj.o(Region$$Table)
+    createHandler                            0x08003255   Thumb Code    58  spi_handler.o(.text.createHandler)
+    findOrCreateHandler                      0x08003291   Thumb Code   142  spi_handler.o(.text.findOrCreateHandler)
+    findTail                                 0x08003321   Thumb Code    28  fifo.o(.text.findTail)
+    initFifo                                 0x0800333d   Thumb Code    46  fifo.o(.text.initFifo)
+    main                                     0x0800336d   Thumb Code    96  main.o(.text.main)
+    mockHandlerFunc                          0x080033cd   Thumb Code    34  spi_handler.o(.text.mockHandlerFunc)
+    pop                                      0x080033f1   Thumb Code    60  fifo.o(.text.pop)
+    push                                     0x0800342d   Thumb Code   112  fifo.o(.text.push)
+    registerHandler                          0x0800349d   Thumb Code   114  spi_handler.o(.text.registerHandler)
+    testFifo                                 0x08003511   Thumb Code   298  fifo.o(.text.testFifo)
+    testHandlerList                          0x0800363d   Thumb Code   230  spi_handler.o(.text.testHandlerList)
+    testRegistration                         0x08003725   Thumb Code   176  spi_handler.o(.text.testRegistration)
+    testSPIHandler                           0x080037d5   Thumb Code    12  spi_handler.o(.text.testSPIHandler)
+    AHBPrescTable                            0x080037e0   Data          16  system_stm32f1xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x080037f0   Data           8  system_stm32f1xx.o(.rodata.APBPrescTable)
+    Region$$Table$$Base                      0x08003954   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08003974   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f1xx.o(.data.SystemCoreClock)
     __libspace_start                         0x20000008   Data          96  libspace.o(.bss)
     __temporary_stack_top$libspace           0x20000068   Data           0  libspace.o(.bss)
-    handlerList                              0x20000068   Data           4  spi_handler.o(.bss.handlerList)
+    cnt                                      0x20000068   Data           1  spi_handler.o(.bss.cnt)
+    handlerList                              0x2000006c   Data           4  spi_handler.o(.bss.handlerList)
 
 
 
@@ -2078,85 +2149,85 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00003828, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00003980, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000381c, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00003974, Max: 0x00040000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000130   Data   RO            3    RESET               startup_stm32f103xe.o
-    0x08000130   0x08000130   0x00000008   Code   RO          830  * !!!main             c_w.l(__main.o)
-    0x08000138   0x08000138   0x00000034   Code   RO         1039    !!!scatter          c_w.l(__scatter.o)
-    0x0800016c   0x0800016c   0x0000001a   Code   RO         1041    !!handler_copy      c_w.l(__scatter_copy.o)
+    0x08000130   0x08000130   0x00000008   Code   RO          857  * !!!main             c_w.l(__main.o)
+    0x08000138   0x08000138   0x00000034   Code   RO         1066    !!!scatter          c_w.l(__scatter.o)
+    0x0800016c   0x0800016c   0x0000001a   Code   RO         1068    !!handler_copy      c_w.l(__scatter_copy.o)
     0x08000186   0x08000186   0x00000002   PAD
-    0x08000188   0x08000188   0x0000001c   Code   RO         1043    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x080001a4   0x080001a4   0x00000002   Code   RO          974    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          863    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          865    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO          867    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000008   Code   RO          868    .ARM.Collect$$libinit$$00000007  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          870    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          872    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          874    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          877    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          879    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          881    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          883    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          885    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          887    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          889    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          891    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          893    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          895    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          897    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          901    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          903    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          905    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO          907    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
-    0x080001ae   0x080001ae   0x00000002   Code   RO          908    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
-    0x080001b0   0x080001b0   0x00000002   Code   RO         1036    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO          990    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO          992    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO          995    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO          998    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO         1000    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO         1003    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x080001b2   0x080001b2   0x00000002   Code   RO         1004    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x080001b4   0x080001b4   0x00000000   Code   RO          834    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x080001b4   0x080001b4   0x00000000   Code   RO          917    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x080001b4   0x080001b4   0x00000006   Code   RO          929    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x080001ba   0x080001ba   0x00000000   Code   RO          919    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x080001ba   0x080001ba   0x00000004   Code   RO          920    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x080001be   0x080001be   0x00000000   Code   RO          922    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x080001be   0x080001be   0x00000008   Code   RO          923    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x080001c6   0x080001c6   0x00000002   Code   RO          979    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x080001c8   0x080001c8   0x00000000   Code   RO         1010    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x080001c8   0x080001c8   0x00000004   Code   RO         1011    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x080001cc   0x080001cc   0x00000006   Code   RO         1012    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x08000188   0x08000188   0x0000001c   Code   RO         1070    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x080001a4   0x080001a4   0x00000002   Code   RO         1001    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          890    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          892    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO          894    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000008   Code   RO          895    .ARM.Collect$$libinit$$00000007  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          897    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          899    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          901    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          904    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          906    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          908    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          910    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          912    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          914    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          916    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          918    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          920    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          922    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          924    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          928    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          930    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          932    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO          934    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
+    0x080001ae   0x080001ae   0x00000002   Code   RO          935    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
+    0x080001b0   0x080001b0   0x00000002   Code   RO         1063    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1017    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1019    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1022    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1025    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1027    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1030    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x080001b2   0x080001b2   0x00000002   Code   RO         1031    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x080001b4   0x080001b4   0x00000000   Code   RO          861    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x080001b4   0x080001b4   0x00000000   Code   RO          944    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x080001b4   0x080001b4   0x00000006   Code   RO          956    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x080001ba   0x080001ba   0x00000000   Code   RO          946    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x080001ba   0x080001ba   0x00000004   Code   RO          947    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x080001be   0x080001be   0x00000000   Code   RO          949    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x080001be   0x080001be   0x00000008   Code   RO          950    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x080001c6   0x080001c6   0x00000002   Code   RO         1006    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x080001c8   0x080001c8   0x00000000   Code   RO         1037    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x080001c8   0x080001c8   0x00000004   Code   RO         1038    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x080001cc   0x080001cc   0x00000006   Code   RO         1039    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x080001d2   0x080001d2   0x00000002   PAD
     0x080001d4   0x080001d4   0x00000040   Code   RO            4    .text               startup_stm32f103xe.o
-    0x08000214   0x08000214   0x0000005e   Code   RO          768    .text               c_w.l(h1_alloc.o)
-    0x08000272   0x08000272   0x0000004e   Code   RO          770    .text               c_w.l(h1_free.o)
-    0x080002c0   0x080002c0   0x0000004e   Code   RO          826    .text               c_w.l(rt_memclr_w.o)
-    0x0800030e   0x0800030e   0x00000006   Code   RO          828    .text               c_w.l(heapauxi.o)
-    0x08000314   0x08000314   0x00000008   Code   RO          838    .text               c_w.l(rt_heap_descriptor_intlibspace.o)
-    0x0800031c   0x0800031c   0x00000004   Code   RO          840    .text               c_w.l(hguard.o)
-    0x08000320   0x08000320   0x0000008a   Code   RO          842    .text               c_w.l(init_alloc.o)
-    0x080003aa   0x080003aa   0x0000000e   Code   RO          846    .text               c_w.l(h1_init.o)
-    0x080003b8   0x080003b8   0x00000008   Code   RO          913    .text               c_w.l(libspace.o)
-    0x080003c0   0x080003c0   0x00000000   Code   RO          933    .text               c_w.l(maybetermalloc1.o)
-    0x080003c0   0x080003c0   0x00000034   Code   RO          935    .text               c_w.l(h1_extend.o)
-    0x080003f4   0x080003f4   0x0000000e   Code   RO          939    .text               c_w.l(defsig_rtmem_outer.o)
-    0x08000402   0x08000402   0x00000002   Code   RO          950    .text               c_w.l(use_no_semi.o)
-    0x08000404   0x08000404   0x00000000   Code   RO          952    .text               c_w.l(indicate_semi.o)
-    0x08000404   0x08000404   0x0000004a   Code   RO          953    .text               c_w.l(sys_stackheap_outer.o)
-    0x0800044e   0x0800044e   0x00000012   Code   RO          959    .text               c_w.l(exit.o)
-    0x08000460   0x08000460   0x0000000a   Code   RO          961    .text               c_w.l(defsig_exit.o)
+    0x08000214   0x08000214   0x0000005e   Code   RO          795    .text               c_w.l(h1_alloc.o)
+    0x08000272   0x08000272   0x0000004e   Code   RO          797    .text               c_w.l(h1_free.o)
+    0x080002c0   0x080002c0   0x0000004e   Code   RO          853    .text               c_w.l(rt_memclr_w.o)
+    0x0800030e   0x0800030e   0x00000006   Code   RO          855    .text               c_w.l(heapauxi.o)
+    0x08000314   0x08000314   0x00000008   Code   RO          865    .text               c_w.l(rt_heap_descriptor_intlibspace.o)
+    0x0800031c   0x0800031c   0x00000004   Code   RO          867    .text               c_w.l(hguard.o)
+    0x08000320   0x08000320   0x0000008a   Code   RO          869    .text               c_w.l(init_alloc.o)
+    0x080003aa   0x080003aa   0x0000000e   Code   RO          873    .text               c_w.l(h1_init.o)
+    0x080003b8   0x080003b8   0x00000008   Code   RO          940    .text               c_w.l(libspace.o)
+    0x080003c0   0x080003c0   0x00000000   Code   RO          960    .text               c_w.l(maybetermalloc1.o)
+    0x080003c0   0x080003c0   0x00000034   Code   RO          962    .text               c_w.l(h1_extend.o)
+    0x080003f4   0x080003f4   0x0000000e   Code   RO          966    .text               c_w.l(defsig_rtmem_outer.o)
+    0x08000402   0x08000402   0x00000002   Code   RO          977    .text               c_w.l(use_no_semi.o)
+    0x08000404   0x08000404   0x00000000   Code   RO          979    .text               c_w.l(indicate_semi.o)
+    0x08000404   0x08000404   0x0000004a   Code   RO          980    .text               c_w.l(sys_stackheap_outer.o)
+    0x0800044e   0x0800044e   0x00000012   Code   RO          986    .text               c_w.l(exit.o)
+    0x08000460   0x08000460   0x0000000a   Code   RO          988    .text               c_w.l(defsig_exit.o)
     0x0800046a   0x0800046a   0x00000002   PAD
-    0x0800046c   0x0800046c   0x00000050   Code   RO          963    .text               c_w.l(defsig_rtmem_inner.o)
-    0x080004bc   0x080004bc   0x0000000c   Code   RO          975    .text               c_w.l(sys_exit.o)
-    0x080004c8   0x080004c8   0x00000032   Code   RO          987    .text               c_w.l(defsig_general.o)
-    0x080004fa   0x080004fa   0x0000000e   Code   RO         1005    .text               c_w.l(sys_wrch.o)
+    0x0800046c   0x0800046c   0x00000050   Code   RO          990    .text               c_w.l(defsig_rtmem_inner.o)
+    0x080004bc   0x080004bc   0x0000000c   Code   RO         1002    .text               c_w.l(sys_exit.o)
+    0x080004c8   0x080004c8   0x00000032   Code   RO         1014    .text               c_w.l(defsig_general.o)
+    0x080004fa   0x080004fa   0x0000000e   Code   RO         1032    .text               c_w.l(sys_wrch.o)
     0x08000508   0x08000508   0x00000004   Code   RO          182    .text.BusFault_Handler  stm32f1xx_it.o
     0x0800050c   0x0800050c   0x00000002   Code   RO          188    .text.DebugMon_Handler  stm32f1xx_it.o
     0x0800050e   0x0800050e   0x00000002   PAD
@@ -2357,41 +2428,49 @@ Memory Map of the image
     0x0800320c   0x0800320c   0x0000003c   Code   RO           17    .text.__NVIC_SetPriorityGrouping  main.o
     0x08003248   0x08003248   0x0000000a   Code   RO           71    .text.assert_failed  main.o
     0x08003252   0x08003252   0x00000002   PAD
-    0x08003254   0x08003254   0x00000044   Code   RO          721    .text.createHandler  spi_handler.o
-    0x08003298   0x08003298   0x0000008e   Code   RO          713    .text.findOrCreateHandler  spi_handler.o
-    0x08003326   0x08003326   0x00000002   PAD
-    0x08003328   0x08003328   0x0000001c   Code   RO          749    .text.findTail      fifo.o
-    0x08003344   0x08003344   0x0000002e   Code   RO          747    .text.initFifo      fifo.o
-    0x08003372   0x08003372   0x00000002   PAD
-    0x08003374   0x08003374   0x00000060   Code   RO           11    .text.main          main.o
-    0x080033d4   0x080033d4   0x0000003c   Code   RO          743    .text.pop           fifo.o
-    0x08003410   0x08003410   0x00000070   Code   RO          745    .text.push          fifo.o
-    0x08003480   0x08003480   0x0000012a   Code   RO          751    .text.testFifo      fifo.o
-    0x080035aa   0x080035aa   0x00000002   PAD
-    0x080035ac   0x080035ac   0x000000d4   Code   RO          733    .text.testHandlerList  spi_handler.o
-    0x08003680   0x08003680   0x00000008   Code   RO          731    .text.testSPIHandler  spi_handler.o
-    0x08003688   0x08003688   0x00000010   Data   RO          640    .rodata.AHBPrescTable  system_stm32f1xx.o
-    0x08003698   0x08003698   0x00000008   Data   RO          641    .rodata.APBPrescTable  system_stm32f1xx.o
-    0x080036a0   0x080036a0   0x00000007   Data   RO          152    .rodata.OFFSET_TAB_CCMRx  tim.o
-    0x080036a7   0x080036a7   0x00000007   Data   RO          153    .rodata.SHIFT_TAB_OCxx  tim.o
-    0x080036ae   0x080036ae   0x00000038   Data   RO          219    .rodata.str1.1      stm32f1xx_ll_gpio.o
-    0x080036e6   0x080036e6   0x00000037   Data   RO          279    .rodata.str1.1      stm32f1xx_ll_rtc.o
-    0x0800371d   0x0800371d   0x00000038   Data   RO          429    .rodata.str1.1      stm32f1xx_ll_exti.o
-    0x08003755   0x08003755   0x00000037   Data   RO          465    .rodata.str1.1      stm32f1xx_ll_spi.o
-    0x0800378c   0x0800378c   0x00000037   Data   RO          591    .rodata.str1.1      stm32f1xx_ll_tim.o
-    0x080037c3   0x080037c3   0x00000039   Data   RO          627    .rodata.str1.1      stm32f1xx_ll_usart.o
-    0x080037fc   0x080037fc   0x00000020   Data   RO         1038    Region$$Table       anon$$obj.o
+    0x08003254   0x08003254   0x0000003a   Code   RO          737    .text.createHandler  spi_handler.o
+    0x0800328e   0x0800328e   0x00000002   PAD
+    0x08003290   0x08003290   0x0000008e   Code   RO          735    .text.findOrCreateHandler  spi_handler.o
+    0x0800331e   0x0800331e   0x00000002   PAD
+    0x08003320   0x08003320   0x0000001c   Code   RO          774    .text.findTail      fifo.o
+    0x0800333c   0x0800333c   0x0000002e   Code   RO          772    .text.initFifo      fifo.o
+    0x0800336a   0x0800336a   0x00000002   PAD
+    0x0800336c   0x0800336c   0x00000060   Code   RO           11    .text.main          main.o
+    0x080033cc   0x080033cc   0x00000022   Code   RO          757    .text.mockHandlerFunc  spi_handler.o
+    0x080033ee   0x080033ee   0x00000002   PAD
+    0x080033f0   0x080033f0   0x0000003c   Code   RO          768    .text.pop           fifo.o
+    0x0800342c   0x0800342c   0x00000070   Code   RO          770    .text.push          fifo.o
+    0x0800349c   0x0800349c   0x00000072   Code   RO          743    .text.registerHandler  spi_handler.o
+    0x0800350e   0x0800350e   0x00000002   PAD
+    0x08003510   0x08003510   0x0000012a   Code   RO          778    .text.testFifo      fifo.o
+    0x0800363a   0x0800363a   0x00000002   PAD
+    0x0800363c   0x0800363c   0x000000e6   Code   RO          753    .text.testHandlerList  spi_handler.o
+    0x08003722   0x08003722   0x00000002   PAD
+    0x08003724   0x08003724   0x000000b0   Code   RO          755    .text.testRegistration  spi_handler.o
+    0x080037d4   0x080037d4   0x0000000c   Code   RO          751    .text.testSPIHandler  spi_handler.o
+    0x080037e0   0x080037e0   0x00000010   Data   RO          640    .rodata.AHBPrescTable  system_stm32f1xx.o
+    0x080037f0   0x080037f0   0x00000008   Data   RO          641    .rodata.APBPrescTable  system_stm32f1xx.o
+    0x080037f8   0x080037f8   0x00000007   Data   RO          152    .rodata.OFFSET_TAB_CCMRx  tim.o
+    0x080037ff   0x080037ff   0x00000007   Data   RO          153    .rodata.SHIFT_TAB_OCxx  tim.o
+    0x08003806   0x08003806   0x00000038   Data   RO          219    .rodata.str1.1      stm32f1xx_ll_gpio.o
+    0x0800383e   0x0800383e   0x00000037   Data   RO          279    .rodata.str1.1      stm32f1xx_ll_rtc.o
+    0x08003875   0x08003875   0x00000038   Data   RO          429    .rodata.str1.1      stm32f1xx_ll_exti.o
+    0x080038ad   0x080038ad   0x00000037   Data   RO          465    .rodata.str1.1      stm32f1xx_ll_spi.o
+    0x080038e4   0x080038e4   0x00000037   Data   RO          591    .rodata.str1.1      stm32f1xx_ll_tim.o
+    0x0800391b   0x0800391b   0x00000039   Data   RO          627    .rodata.str1.1      stm32f1xx_ll_usart.o
+    0x08003954   0x08003954   0x00000020   Data   RO         1065    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003820, Size: 0x00000670, Max: 0x0000c000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003978, Size: 0x00000670, Max: 0x0000c000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08003820   0x00000004   Data   RW          639    .data.SystemCoreClock  system_stm32f1xx.o
-    0x20000004   0x08003824   0x00000004   PAD
-    0x20000008        -       0x00000060   Zero   RW          914    .bss                c_w.l(libspace.o)
-    0x20000068        -       0x00000004   Zero   RW          735    .bss.handlerList    spi_handler.o
-    0x2000006c   0x08003824   0x00000004   PAD
+    0x20000000   0x08003978   0x00000004   Data   RW          639    .data.SystemCoreClock  system_stm32f1xx.o
+    0x20000004   0x0800397c   0x00000004   PAD
+    0x20000008        -       0x00000060   Zero   RW          941    .bss                c_w.l(libspace.o)
+    0x20000068        -       0x00000001   Zero   RW          760    .bss.cnt            spi_handler.o
+    0x20000069   0x0800397c   0x00000003   PAD
+    0x2000006c        -       0x00000004   Zero   RW          759    .bss.handlerList    spi_handler.o
     0x20000070        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f103xe.o
     0x20000270        -       0x00000400   Zero   RW            1    STACK               startup_stm32f103xe.o
 
@@ -2403,30 +2482,30 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       544          0          0          0          0       1911   fifo.o
-       576          0          0          0          0       2765   gpio.o
-      1098          0          0          0          0       7764   main.o
-       210          0          0          0          0       2147   rtc.o
-       368          0          0          0          0       2380   spi.o
-       430          0          0          0          4       4320   spi_handler.o
-        64         26        304          0       1536        804   startup_stm32f103xe.o
-        28          0          0          0          0       1014   stm32f1xx_it.o
-       614          0         56          0          0       2844   stm32f1xx_ll_exti.o
-       758          0         56          0          0       3254   stm32f1xx_ll_gpio.o
-       466          0          0          0          0       4556   stm32f1xx_ll_rcc.o
-      1456          0         55          0          0       7101   stm32f1xx_ll_rtc.o
-       712          0         55          0          0       4564   stm32f1xx_ll_spi.o
-      3418          0         55          0          0       9053   stm32f1xx_ll_tim.o
-       826          0         57          0          0       4301   stm32f1xx_ll_usart.o
-        94          0          0          0          0       6181   stm32f1xx_ll_utils.o
-         2          0         24          4          0       1569   system_stm32f1xx.o
-       700          0         14          0          0       3927   tim.o
-       240          0          0          0          0       2199   usart.o
+       544          0          0          0          0       2027   fifo.o
+       576          0          0          0          0       2766   gpio.o
+      1098          0          0          0          0       7765   main.o
+       210          0          0          0          0       2148   rtc.o
+       368          0          0          0          0       2381   spi.o
+       766          0          0          0          5       4176   spi_handler.o
+        64         26        304          0       1536        784   startup_stm32f103xe.o
+        28          0          0          0          0        995   stm32f1xx_it.o
+       614          0         56          0          0       2845   stm32f1xx_ll_exti.o
+       758          0         56          0          0       3255   stm32f1xx_ll_gpio.o
+       466          0          0          0          0       4557   stm32f1xx_ll_rcc.o
+      1456          0         55          0          0       7102   stm32f1xx_ll_rtc.o
+       712          0         55          0          0       4565   stm32f1xx_ll_spi.o
+      3418          0         55          0          0       9054   stm32f1xx_ll_tim.o
+       826          0         57          0          0       4302   stm32f1xx_ll_usart.o
+        94          0          0          0          0       6182   stm32f1xx_ll_utils.o
+         2          0         24          4          0       1570   system_stm32f1xx.o
+       700          0         14          0          0       3928   tim.o
+       240          0          0          0          0       2200   usart.o
 
     ----------------------------------------------------------------------
-     12736         26        708          4       1548      72654   Object Totals
+     13080         26        708          4       1548      72602   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-       132          0          0          0          8          0   (incl. Padding)
+       140          0          0          0          7          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -2487,15 +2566,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     13656        104        708          4       1644      73214   Grand Totals
-     13656        104        708          4       1644      73214   ELF Image Totals
-     13656        104        708          4          0          0   ROM Totals
+     14000        104        708          4       1644      73162   Grand Totals
+     14000        104        708          4       1644      73162   ELF Image Totals
+     14000        104        708          4          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                14364 (  14.03kB)
+    Total RO  Size (Code + RO Data)                14708 (  14.36kB)
     Total RW  Size (RW Data + ZI Data)              1648 (   1.61kB)
-    Total ROM Size (Code + RO Data + RW Data)      14368 (  14.03kB)
+    Total ROM Size (Code + RO Data + RW Data)      14712 (  14.37kB)
 
 ==============================================================================
 
