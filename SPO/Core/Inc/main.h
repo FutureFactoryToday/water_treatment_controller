@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 
+#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_system.h"
@@ -35,7 +36,6 @@ extern "C" {
 #include "stm32f1xx_ll_cortex.h"
 #include "stm32f1xx_ll_utils.h"
 #include "stm32f1xx_ll_pwr.h"
-#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rtc.h"
 #include "stm32f1xx_ll_spi.h"
 #include "stm32f1xx_ll_tim.h"
@@ -53,6 +53,7 @@ extern "C" {
 #include "TFT/TFT.h"
 #include "SPI/SPI_Handler.h"
 #include "WTC_Logic.h"
+#include "..\..\GUI\Logo\LOGO_MAIN.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -62,7 +63,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+	extern uint32_t _1ms_cnt;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -167,6 +168,16 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define TRUE 1
 #define FALSE 0
+
+#define TFT_SPI_CS_Pin TFT_COM_EN_Pin
+#define TFT_SPI_MISO_Pin LL_GPIO_PIN_14
+#define TFT_SPI_MOSI_Pin LL_GPIO_PIN_15
+#define TFT_SPI_SCK_Pin LL_GPIO_PIN_13
+
+#define TFT_SPI_CS_Port TFT_COM_EN_GPIO_Port
+#define TFT_SPI_MISO_Port GPIOB
+#define TFT_SPI_MOSI_Port GPIOB
+#define TFT_SPI_SCK_Port GPIOB
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

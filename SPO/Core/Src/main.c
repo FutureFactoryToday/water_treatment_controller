@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -46,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+	uint32_t _1ms_cnt;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,10 +68,26 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	_1ms_cnt = 0;
+	fifo_t* fifo= initFifo();
+	uint8_t a = 10;
+	uint8_t b = 15;
+	push(&fifo,&a);
+	push(&fifo,&b);
+	uint8_t* pA = pop(&fifo);
+	uint8_t* pB = pop(&fifo);
+	
+	if (fifo == NULL){
+		fifo = initFifo();
+	}
+	fifo = initFifo();
 	#ifdef TESTS
+	
 	/*TEST*/
 	testFifo();
 	testSPIHandler();
+	
+	
 	#endif
   /* USER CODE END 1 */
 
@@ -103,16 +120,35 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_TIM3_Init();
+  //MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_RTC_Init();
+  //MX_RTC_Init();
   /* USER CODE BEGIN 2 */
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
 	
+	LL_SYSTICK_EnableIT();
+	__enable_irq();
 	
+	initTFT();
+	//uint32_t tftID  = manIDRead();
+//	initTFT();
+//	uint8_t ID[4] = {0};
+//	readResult_t res;
+//	res.dataBuf = ID;
+//	res.result = 0;
+//	readID(&res);
+//	while (res.result != FINISH);
 	
-	
+	//uint32_t tftID = (ID[3]<<24) + (ID[2]<<16) + (ID[1]<<8);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -144,22 +180,22 @@ void SystemClock_Config(void)
 
   }
   LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
-  }
-  LL_RCC_LSE_Enable();
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_ForceBackupDomainReset();
+//    LL_RCC_ReleaseBackupDomainReset();
+//  }
+//  LL_RCC_LSE_Enable();
 
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
+//   /* Wait till LSE is ready */
+//  while(LL_RCC_LSE_IsReady() != 1)
+//  {
 
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
+//  }
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+//  }
   LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();

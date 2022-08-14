@@ -18,11 +18,12 @@
 /*Public defines */
 
 typedef struct {
+	unsigned cnt: 8;
 	unsigned ERR: 1;
 	unsigned FREE: 1;
 	unsigned DMA: 1;
 	unsigned INT: 1;
-} result_t;
+} handlerStatus_t;
 
 typedef struct {
 	unsigned BUSY: 1;
@@ -31,17 +32,17 @@ typedef struct {
 typedef struct {
 	SPI_TypeDef *SPI;
 	fifo_t* handlerFifo;
-	result_t (*curHandler)(void);
+	handlerStatus_t (*curHandler)(void);
 	void* next;
 	spi_handler_status_t status;
-	result_t lastResult;
+	handlerStatus_t lastResult;
 } spi_handler_t;
 
 /*Global params*/
 
 /*Prototypes */
 
-uint8_t registerHandler(SPI_TypeDef *SPI, result_t (*handlerFunc)(void));
+uint8_t registerHandler(SPI_TypeDef *SPI, handlerStatus_t (*handlerFunc)(void));
 
 /*DO NOT USE */
 uint8_t spiInterruptHandler (SPI_TypeDef *SPI);

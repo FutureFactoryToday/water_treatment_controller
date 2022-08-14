@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'SPO' 
- * Target:  'Release' 
+ * Target:  'RELEASE' 
  */
 
 #ifndef RTE_COMPONENTS_H

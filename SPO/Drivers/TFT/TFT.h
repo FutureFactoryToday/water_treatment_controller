@@ -15,81 +15,8 @@
 /*Includes */
 #include "main.h"
 #include "SPI/SPI_Handler.h"
+#include "TFT/TFT_LL.h"
 /*Public defines */
-
-/* Настройки */
-//Порт для параллельного дисплея
-	#define TFT_PATAL_PORT GPIOB
-
-//Каналы SPI для дисплея и контроллера сенсорного дисплея
-	#define TFT_SPI SPI2
-	#define TOUCH_SPI SPI1
-//Разрешение применения DMA
-	#define ALLOW_TFT_DMA
-	
-//Настройки DMA
-#ifdef ALLOW_TFT_DMA
-//Минимальный объем данных для отправки и приема через DMA
-	#define DMA_MIN_SIZE 3
-	#define TFT_DMA DMA1
-	#define TOUCH_DMA DMA2
-#endif
-
-#define ALLOW_TOUCH_DMA
-#ifdef ALLOW_TOUCH_DMA
-//Минимальный объем данных для отправки и приема через DMA
-	#define DMA_MIN_SIZE 3
-	#define TFT_DMA DMA1
-	#define TOUCH_DMA DMA2
-#endif
-
-/* Настройки дисплея */
-#define RESET_DELAY_MS 10
-/*
-Структура состояния дисплея:
-1. Статус иниацилизации;
-2. Тип интерфейса дисплея:
-	0 - дисплей не найден;
-	1 - SPI;
-	2 - параллельный;
-	
-*/
-typedef struct {
-	unsigned inited:1;
-	unsigned type:2;
-	unsigned busy:1;
-	unsigned error:1;
-} tftDriverStatus_t;
-
-enum{
-	NO_DISP = 0,
-	SPI,
-	PARAL
-};
-
-/*Тип данных для отправки*/
-typedef enum {
-	DATA = 1,
-	COMMAND
-}dataType_t;
-
-/*Направление данных*/
-typedef enum {
-	SEND = 1,
-	RCV
-}dirType_t;
-
-/*Тип передачи*/
-typedef enum {
-	DMA = 1,
-	INT
-}perifType_t;
-/*Структура внутреннего состояния дисплея*/
-//typedef struct {
-//	unsigned reserved:5;
-//	unsigned 
-//} tftStatus_t;
-
 
 /*Структура пикселя*/
 typedef struct {
@@ -99,12 +26,13 @@ typedef struct {
 } pixel_t;
 
 /*Global params*/
-extern tftDriverStatus_t tftStatus;
+extern uint32_t TFT_ID;
 
 /*Prototypes */
-tftDriverStatus_t initTFT (void);
-
-
-result_t tftSpiHandler(void);
+uint8_t initTFT(void);
+uint8_t readID(readResult_t *result);
+uint8_t placePic(uint32_t coordX, uint32_t coordY, uint32_t hight, uint32_t width, uint8_t* pic); 
+uint8_t drawPixel(uint32_t coordX, uint32_t coordY, pixel_t* pix);
+uint8_t drawLine (uint32_t coordX1, uint32_t coordY1, uint32_t coordX2, uint32_t coordY2, pixel_t pix);
 #endif /* __TFT_H__ */
 

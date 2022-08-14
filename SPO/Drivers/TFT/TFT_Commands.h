@@ -63,7 +63,7 @@
 #define ILI_RD_ID1 0xDA
 #define ILI_RD_ID2 0xDB
 #define ILI_RD_ID3 0xDC
-
+#define ILI_WR_IntModeCtrl 0xB0
 
 
 #endif /* __TFT_Commands_H__ */

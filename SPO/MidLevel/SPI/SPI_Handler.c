@@ -27,54 +27,35 @@
 #define checkNull(a) do {if (a == NULL) return NULL;} while (0);
 /* Private variables ---------------------------------------------------------*/
 	spi_handler_t* handlerList = NULL;
-
+	uint8_t spiStep = 0;
+uint8_t hCnt = 0;
 /* Private function prototypes -----------------------------------------------*/
 void interruptSend (spi_handler_t *handler);
 void dmaSend(spi_handler_t *handler);
 void initHandler(spi_handler_t *handler);
 spi_handler_t* findOrCreateHandler (SPI_TypeDef* SPI);
 spi_handler_t* createHandler (SPI_TypeDef* SPI);
-result_t procNewMsg(spi_handler_t *handler);
-//result_t intSendNewByte (spi_msg_t* msg);
-//result_t intRcvNewByte (spi_msg_t* msg);
-result_t finishTransmission(spi_handler_t* handler);
-result_t stopHandler (spi_handler_t* handler);
+handlerStatus_t procNewMsg(spi_handler_t *handler);
+//handlerStatus_t intSendNewByte (spi_msg_t* msg);
+//handlerStatus_t intRcvNewByte (spi_msg_t* msg);
+handlerStatus_t finishTransmission(spi_handler_t* handler);
+handlerStatus_t stopHandler (spi_handler_t* handler);
 spi_handler_t* findHandler (SPI_TypeDef* SPI);
-void finishTransaction(spi_handler_t* handler);
+
 #ifdef TESTS
 /*Inner Tests*/
 uint8_t cnt = 0;
 void testHandlerList (void);
 void testRegistration(void);
-result_t mockHandlerFunc(void);
+handlerStatus_t mockHandlerFunc(void);
 #endif
 /* Private user code ---------------------------------------------------------*/
 /*Outter functions*/
-//result_t sendMsg (SPI_TypeDef* SPI, spi_data_t *data){
-//	spi_handler_t* spiHandler = findOrCreateHandler(SPI);
-//	checkNull(spiHandler);
-//	spi_msg_t* newMsg = (spi_msg_t*)malloc(sizeof(spi_msg_t));
-//	checkNull(newMsg);
-//	newMsg->dir = SEND;
-//	newMsg->data = data;
-//	push(&(spiHandler->msgFifo),newMsg);
-//	return handler(SPI);
-//}
-
-//result_t receiveMsg (SPI_TypeDef *SPI, spi_data_t *data){
-//	spi_handler_t* spiHandler = findOrCreateHandler(SPI);
-//	checkNull(spiHandler);
-//	spi_msg_t* newMsg = (spi_msg_t*)malloc(sizeof(spi_msg_t));
-//	checkNull(newMsg);
-//	newMsg->dir = RCV;
-//	newMsg->data = data;
-//	push(&(spiHandler->msgFifo),newMsg);
-//	return handler(SPI);
-//}
 
 /*Inner functions*/
 void initHandler(spi_handler_t *handler){
 }
+
 spi_handler_t* findHandler (SPI_TypeDef* SPI){
 		//lets find handler 
 	spi_handler_t* result = handlerList;
@@ -131,44 +112,61 @@ spi_handler_t* createHandler (SPI_TypeDef* SPI){
 }
 
 uint8_t spiInterruptHandler (SPI_TypeDef *SPI){
+	hCnt++;
+	spiStep = 5;
 	//Находим нужный обработчик
 	spi_handler_t* spiHandler = findHandler(SPI);
 	checkNull(spiHandler);
 	if (spiHandler->lastResult.ERR == 1) {
-		finishTransaction(spiHandler);
 		return NULL;
 	}
 	
 	if (spiHandler->lastResult.FREE == 1){
-		finishTransaction(spiHandler);
+		spiStep = 6;
 		spiHandler->curHandler = pop(&spiHandler->handlerFifo);
 		if (spiHandler->curHandler == NULL){
+			if (LL_SPI_IsActiveFlag_TXE(SPI) && LL_SPI_IsEnabledIT_TXE(SPI)){
+				LL_SPI_DisableIT_TXE(SPI);
+			}
+			if (LL_SPI_IsActiveFlag_RXNE(SPI) && LL_SPI_IsEnabledIT_RXNE(SPI)){
+				LL_SPI_DisableIT_RXNE(SPI);
+			}
 			spiHandler->status.BUSY = 0;
+			return 1;
 		}
+		spiHandler->lastResult.FREE = 0;
+		spiStep = 7;
 		spiHandler->lastResult = spiHandler->curHandler();
 	} else {
+		spiHandler->lastResult.FREE = 0;
+		spiStep = 8;
 		spiHandler->lastResult = spiHandler->curHandler();
+	}
+	if (spiHandler->lastResult.FREE == 1) {
+		spiStep = 8;
+		spiHandler->status.BUSY = 0;
+		spiInterruptHandler(SPI);
 	}
 	return 1;
 }
 
-uint8_t registerHandler(SPI_TypeDef *SPI, result_t (*handlerFunc)(void)){
+uint8_t registerHandler(SPI_TypeDef *SPI, handlerStatus_t (*handlerFunc)(void)){
+	spiStep = 1;
 	spi_handler_t* spiHandler = findOrCreateHandler(SPI);
+	spiStep = 2;
 	checkNull(spiHandler);
 	if (spiHandler->curHandler == NULL && spiHandler->status.BUSY == 0){
 		spiHandler->status.BUSY = 1;
 		spiHandler->curHandler = handlerFunc;
+		spiStep = 3;
+		spiHandler->lastResult.FREE = 0;
+		spiHandler->lastResult.ERR = 0;
 		spiHandler->lastResult = spiHandler->curHandler();
 	} else {
+		spiStep = 4;
 		push(&spiHandler->handlerFifo, handlerFunc);
 	}
 	return 1;
-}
-
-void finishTransaction(spi_handler_t* handler){
-	LL_SPI_DisableIT_ERR(handler->SPI);
-	LL_SPI_DisableIT_RXNE(handler->SPI);
-	LL_SPI_DisableIT_TXE(handler->SPI);
 }
 
 #ifdef TESTS
@@ -176,6 +174,7 @@ void finishTransaction(spi_handler_t* handler){
 void testSPIHandler (void){
 	testHandlerList();
 	testRegistration();
+	handlerList = NULL;
 }
 void testHandlerList (void){
 	SPI_TypeDef* n1SPI = (void*)0x20000001;
@@ -221,9 +220,9 @@ void testRegistration(void){
 	if (cnt != 3) Error_Handler();
 }
 
-result_t mockHandlerFunc(void){
+handlerStatus_t mockHandlerFunc(void){
 	cnt++;
-	result_t result;
+	handlerStatus_t result;
 	result.FREE = 1;
 	return result;
 }

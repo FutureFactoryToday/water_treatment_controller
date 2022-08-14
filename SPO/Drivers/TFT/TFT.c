@@ -17,517 +17,178 @@
 #include "main.h"
 /* Private includes ----------------------------------------------------------*/
 #include "Settings.h"
+#include "TFT_LL.h"
 #include "TFT_Commands.h"
 /* Private typedef -----------------------------------------------------------*/
-#ifndef TFT_SPI 
-#error "SPI for TFT Display not specified"
-#endif
-#ifndef TOUCH_SPI 
-#error "SPI for Touch controller not specified"
-#endif
-#ifdef ALLOW_TFT_DMA
-	#ifndef TFT_DMA 
-	#error "DMA for TFT Display not specified"
-	#endif
-#endif
-#ifdef ALLOW_TOUCH_DMA
-	#ifndef TOUCH_DMA 
-	#error "DMA for Touch controller not specified"
-	#endif
-#endif
+
 /* Private define ------------------------------------------------------------*/
-typedef struct {
-	dataType_t dataType;
-	uint8_t *dataBuf;
-	uint16_t bufSize;
-	dirType_t dir;
-} msg_t;
+
 /* Private macro -------------------------------------------------------------*/
-#define WAIT_TRANSMIT while (LL_SPI_IsActiveFlag_BSY(TFT_SPI));
-#define checkNull(a) do {if (a == NULL) return NULL;} while (0);
+
 
 /* Private variables ---------------------------------------------------------*/
-tftDriverStatus_t tftStatus;
-result_t transResult;
-msg_t *curMsg;
-fifo_t* msgFifo;
-uint16_t curEl;
-perifType_t type;
+	uint32_t TFT_ID;
 /* Private function prototypes -----------------------------------------------*/
-
-
-perifType_t sendCommand (uint8_t *cmdBuf, uint8_t bufSize);
-perifType_t sendData (uint8_t *dataBuf, uint16_t bufSize);
-perifType_t receiveData (uint8_t *dataBuf, uint16_t bufSize);
-perifType_t send (uint8_t *dataBuf, uint16_t bufSize);
-perifType_t receive (uint8_t *dataBuf, uint16_t bufSize);
-uint8_t processMsg(uint8_t *cmdBuf, uint8_t cmdBufSize, uint8_t *dataBuf, uint16_t bufSize, dirType_t dir);
-uint8_t transNewMsg(void);
-uint32_t spiManualSend (uint32_t size, uint8_t *data);
-uint32_t spiDMASend (uint32_t size, uint8_t *data);
-uint32_t spiITSend (uint32_t size, uint8_t *data);
-uint16_t* spiManualReceive (uint32_t size, uint8_t *data);
-uint16_t* spiDMAReceive (uint32_t size, uint8_t *data);
-uint16_t* spiITReceive (uint32_t size, uint8_t *data);
-
-void rebootTFT (void);
-void enableTFTCommunication(void);
-void disableTFTCommunication(void);
-void selectData (void);
-void selectCommand (void);
-void readStrobe (void);
-void writeStrobe (void);
-void SetParalPortOutput(void);
-void SetParalPortInput(void);
+	uint8_t setColumnAdress(uint8_t column);
+	uint8_t setPageAdress(uint8_t page);
+	void LCD_WR_REG (uint8_t data, uint8_t hold);
+	void LCD_WR_DATA (uint8_t data, uint8_t hold);
 /* Private user code ---------------------------------------------------------*/
-tftDriverStatus_t initTFT(void){
-	msgFifo = initFifo();
+void LCD_WR_REG (uint8_t data, uint8_t hold){
+	readResult_t msg;
+	msg.dataBuf = &data;
+	msg.result = 0;
 	
-	return tftStatus;
-}
-
-uint8_t processMsg(uint8_t *cmdBuf, uint8_t cmdBufSize, uint8_t *dataBuf, uint16_t bufSize, uint8_t dir){
-	uint8_t result = 0;
-  if (cmdBufSize != 0){
-		msg_t* cmdMsg = (msg_t*)malloc(sizeof(msg_t));
-		checkNull(cmdMsg);
-		cmdMsg->dataType = COMMAND;
-		cmdMsg->bufSize = cmdBufSize;
-		cmdMsg->dataBuf = cmdBuf;
-		cmdMsg->dir = SEND;
-		push(&msgFifo,cmdMsg);
-		result = 1;
-	}
-	if (bufSize != 0){
-		msg_t* dataMsg = (msg_t*)malloc(sizeof(msg_t));
-		checkNull(dataMsg);
-		dataMsg->dataType = DATA;
-		dataMsg->bufSize = bufSize;
-		dataMsg->dataBuf = dataBuf;
-		dataMsg->dir = dir;
-		push(&msgFifo,dataMsg);
-		result = 1;
-	}
-	if (result) {
-		registerHandler(TFT_SPI, tftSpiHandler);
-	}
-	return result;
-}
-
-//Определяем ситуацию
-	//1. SPI свободен - загружаем новое сообщение
-result_t tftSpiHandler(void){
+	processMsg(&msg,1,COMMAND,SEND,hold);
+	while(msg.result != FINISH);
 	
-	//Еще не запускались
-	if (transResult.FREE == 1){
-		if (!transNewMsg()){
-			transResult.ERR = 1;
-			transResult.FREE = 1;
-		}
-		if (type == DMA){
-			transResult.DMA = 1;
-			transResult.INT = 0;
-			transResult.FREE = 0;
-		} else if (type == INT){
-			transResult.DMA = 0;
-			transResult.INT = 1;
-			transResult.FREE = 0;
-		} else {
-			transResult.ERR = 1;
-			transResult.FREE = 1;
-		}
-		return transResult;
+}
+	void LCD_WR_DATA (uint8_t data, uint8_t hold){
+	readResult_t msg;
+	msg.dataBuf = &data;
+	msg.result = 0;
+	
+	processMsg(&msg,1,DATA,SEND,hold);
+	while(msg.result != FINISH);
 	}
-	//Еще в процессе
-	else {
-		if (curMsg->dir == SEND){
-			if (curEl < curMsg->bufSize){
-				uint8_t el = *(curMsg->dataBuf + curEl);
-				curEl++;
-				LL_SPI_TransmitData8(TFT_SPI, el);
-			} else {
-				transNewMsg();
-			}
-		} else {
-			if (curMsg->dir == SEND){
-				uint8_t el = LL_SPI_ReceiveData8(TFT_SPI);
-				*(curMsg->dataBuf + curEl) = el;
-				curEl++;
-				LL_SPI_TransmitData8(TFT_SPI, 0xFF);	
-				} else {	
-			
-			}
-	return transResult;
-		}
-}
-
-
-uint8_t transNewMsg(void){
-	curMsg = pop(&msgFifo);
-	checkNull(curMsg);
-	if (curMsg->dir == SEND){
-		if (curMsg->dataType == DATA){
-			type = sendData(curMsg->dataBuf,curMsg->bufSize);
-		}
-		if (curMsg->dataType == COMMAND){
-			type = sendCommand(curMsg->dataBuf,curMsg->bufSize);
-		}	
-	} else if (curMsg->dir == RCV){
-			perifType_t type = receiveData(curMsg->dataBuf,curMsg->bufSize);
-		} else {
-			return NULL;
-		}
-	return 1;
-}
-//result_t procNewMsg(spi_handler_t *handler){
-//	spiHandler->startTransmision();
-//	return ERR;
-//}
-//result_t intSendNewByte (spi_msg_t* msg){
+/*** Главные функции ***/
+uint8_t initTFT(void){
+	uint32_t ID;
+	initTFT_LL(SPI);
+	rebootTFT();
+	
+	LCD_WR_REG(0XF1, TRUE);
+	LCD_WR_DATA(0x36, TRUE);
+	LCD_WR_DATA(0x04, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_DATA(0x3C, TRUE);
+	LCD_WR_DATA(0X0F, TRUE);
+	LCD_WR_DATA(0x8F, TRUE);
+	LCD_WR_REG(0XF2, TRUE);
+	LCD_WR_DATA(0x18, TRUE);
+	LCD_WR_DATA(0xA3, TRUE);
+	LCD_WR_DATA(0x12, TRUE);
+	LCD_WR_DATA(0x02, TRUE);
+	LCD_WR_DATA(0XB2, TRUE);
+	LCD_WR_DATA(0x12, TRUE);
+	LCD_WR_DATA(0xFF, TRUE);
+	LCD_WR_DATA(0x10, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_REG(0XF8, TRUE);
+	LCD_WR_DATA(0x21, TRUE);
+	LCD_WR_DATA(0x04, TRUE);
+	LCD_WR_REG(0XF9, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_DATA(0x08, TRUE);
+	LCD_WR_REG(0x36, TRUE);
+	LCD_WR_DATA(0x08, TRUE);
+	LCD_WR_REG(0xB4, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_REG(0xC1, TRUE);
+	LCD_WR_DATA(0x47, TRUE); //0x41
+	LCD_WR_REG(0xC5, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_DATA(0xAF, TRUE); //0x91
+	LCD_WR_DATA(0x80, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_REG(0xE0, TRUE);
+	LCD_WR_DATA(0x0F, TRUE);
+	LCD_WR_DATA(0x1F, TRUE);
+	LCD_WR_DATA(0x1C, TRUE);
+	LCD_WR_DATA(0x0C, TRUE);
+	LCD_WR_DATA(0x0F, TRUE);
+	LCD_WR_DATA(0x08, TRUE);
+	LCD_WR_DATA(0x48, TRUE);
+	LCD_WR_DATA(0x98, TRUE);
+	LCD_WR_DATA(0x37, TRUE);
+	LCD_WR_DATA(0x0A, TRUE);
+	LCD_WR_DATA(0x13, TRUE);
+	LCD_WR_DATA(0x04, TRUE);
+	LCD_WR_DATA(0x11, TRUE);
+	LCD_WR_DATA(0x0D, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_REG(0xE1, TRUE);
+	LCD_WR_DATA(0x0F, TRUE);
+	LCD_WR_DATA(0x32, TRUE);
+	LCD_WR_DATA(0x2E, TRUE);
+	LCD_WR_DATA(0x0B, TRUE);
+	LCD_WR_DATA(0x0D, TRUE);
+	LCD_WR_DATA(0x05, TRUE);
+	LCD_WR_DATA(0x47, TRUE);
+	LCD_WR_DATA(0x75, TRUE);
+	LCD_WR_DATA(0x37, TRUE);
+	LCD_WR_DATA(0x06, TRUE);
+	LCD_WR_DATA(0x10, TRUE);
+	LCD_WR_DATA(0x03, TRUE);
+	LCD_WR_DATA(0x24, TRUE);
+	LCD_WR_DATA(0x20, TRUE);
+	LCD_WR_DATA(0x00, TRUE);
+	LCD_WR_REG(0x3A, TRUE);
+	LCD_WR_DATA(0x66, TRUE);
+	LCD_WR_REG(0x11, TRUE);
+	LCD_WR_REG(0x36, TRUE);
+	LCD_WR_DATA(0x28, TRUE);
+	LL_mDelay(120);
+	LCD_WR_REG(0x29, TRUE);
+	
+//  LCD_direction(USE_HORIZONTAL);//ЙиЦГLCDПФКѕ·ЅПт
+//	LCD_LED=1;//µгББ±і№в	 
+//	LCD_Clear(WHITE);//ЗеИ«ЖБ°ЧЙ«
+	
+//	readResult_t readRes;
+//	uint8_t readResBuf[4] = {0};
+//	readRes.dataBuf = readResBuf;
+//	readRes.result = 0;
+//	readID(&readRes);
+//	uint8_t waitTime = _1ms_cnt + 500; //Ждем 500 мс
+//	while (readRes.result != FINISH || _1ms_cnt != waitTime);
+//	if (readRes.result == FINISH) {
+//		TFT_ID = (readResBuf[3]<<26) + (readResBuf[2]<<16)+ (readResBuf[1]<<8);
+//		return 1;
+//	}
 //	
-//	return ERR;
-//}
-//result_t intRcvNewByte (spi_msg_t* msg){
-//	
-//	return ERR;
-//}
-	
-result_t finishTransmission(spi_handler_t* handler){
-	
-	return ERR;
-}
-
-perifType_t sendCommand (uint8_t *cmdBuf, uint8_t bufSize){
-	enableTFTCommunication();
-	selectCommand();	
-	return send (cmdBuf,bufSize);
-}
-
-perifType_t sendData (uint8_t *dataBuf, uint16_t bufSize){
-	enableTFTCommunication();
-	selectData();
-	return send (dataBuf, bufSize);
-}
-
-perifType_t receiveData (uint8_t *dataBuf, uint16_t bufSize){
-	enableTFTCommunication();
-	selectData();
-	return receive(dataBuf, bufSize);
-}
-
-perifType_t send (uint8_t *dataBuf, uint16_t bufSize){
-	curEl = 0;
-	#ifdef ALLOW_TFT_DMA
-	if (bufSize > DMA_MIN_SIZE){
-		spiDMASend(bufSize, dataBuf);
-		return DMA;
-	} else {
-		spiITSend(bufSize, dataBuf);
-		return INT;
-	}
-	#elif
-	spiITSend(bufSize, dataBuf);
-	return INT;
-	#endif
-}
-
-perifType_t receive (uint8_t *dataBuf, uint16_t bufSize){
-	curEl = 0;
-	#ifdef ALLOW_TFT_DMA
-	if (bufSize > DMA_MIN_SIZE){
-		spiDMAReceive(bufSize, dataBuf);
-		return DMA;
-	} else {
-		spiITReceive(bufSize, dataBuf);
-		return INT;
-	}
-	#elif
-	spiITReceive(bufSize, dataBuf);
-	return INT;
-	#endif
-}
-
-/******* Функции для SPI дисплея *******/
-
-/*
-	Отправка данных с помощью SPI с ожиданием окончания в цикле
-	size - размер данных для отправки
-	*data - буфер с данными для отправки
-*/
-uint32_t spiManualSend (uint32_t size, uint8_t *data){
-	
-	if (tftStatus.busy == 0 && 
-		tftStatus.inited == 1 && 
-		tftStatus.type == SPI)
-	{
-		enableTFTCommunication();
-		tftStatus.busy = 1;
-		for(uint32_t i = 0; i < size; i++){
-			LL_SPI_TransmitData8(TFT_SPI,*data++);
-			WAIT_TRANSMIT;
-		}
-		disableTFTCommunication();
-		tftStatus.busy = 0;
-		return 1;
-	}
-	else {
-		return 0;
-	}
-}
-
-/*
-	Отправка данных с помощью SPI через DMA
-	size - размер данных для отправки
-	*data - буфер с данными для отправки
-*/
-uint32_t spiDMASend (uint32_t size, uint8_t *data){
-	
+//	initTFT_LL(PARAL);
+//	readRes.result = 0;
+//	for(uint8_t i = 0; i< sizeof(readResBuf);i++){
+//		readResBuf[i] = 0;
+//	}
+//	readID(&readRes);
+//	waitTime = _1ms_cnt + 500; //Ждем 500 мс
+//	while (readRes.result != FINISH || _1ms_cnt != waitTime);
+//	if (readRes.result == FINISH) {
+//		TFT_ID = (readResBuf[3]<<26) + (readResBuf[2]<<16)+ (readResBuf[1]<<8);
+//		return 1;
+//	}
 	return 0;
 }
 
-/*
-	Отправка данных с помощью SPI через прерывания
-	size - размер данных для получения
-	*data - буфер с данными для получения
-*/
-uint32_t spiITSend (uint32_t size, uint8_t *data){
+uint8_t readID(readResult_t *result){
+	readResult_t cmdBuf;
+	uint8_t cmd = ILI_READ_ID;
+	cmdBuf.result = 0;
+	cmdBuf.dataBuf = &cmd;
+	uint8_t res = processMsg(&cmdBuf,1, COMMAND, SEND, TRUE);
+	res &= processMsg(result, 4,DATA,RCV,FALSE);
+	return res;
+}
+
+uint8_t placePic(uint32_t coordX, uint32_t coordY, uint32_t hight, uint32_t width, uint8_t* pic){
 	
-	return 0;
 }
 
-/*
-	Получение данных с помощью SPI с ожиданием окончания в цикле
-	size - размер данных для получения
-	*data - буфер с данными для получения
-*/
-uint16_t* spiManualReceive (uint32_t size, uint8_t *data){
+uint8_t drawPixel(uint32_t coordX, uint32_t coordY, pixel_t* pix){
 	
+}
+
+uint8_t drawLine (uint32_t coordX1, uint32_t coordY1, uint32_t coordX2, uint32_t coordY2, pixel_t pix){
 	
-	return NULL;
 }
 
-/*
-	Получение данных с помощью SPI через DMA
-	size - размер данных для получения
-	*data - буфер с данными для получения
-*/
-uint16_t* spiDMAReceive (uint32_t size, uint8_t *data){
+/*** Внутренние функции  ***/
+uint8_t setColumnAdress(uint8_t column){
 	
-	return NULL;
 }
 
-/*
-	Получение данных с помощью SPI через прерывания
-	size - размер данных для получения
-	*data - буфер с данными для получения
-*/
-uint16_t* spiITReceive (uint32_t size, uint8_t *data){
+uint8_t setPageAdress(uint8_t page){
 	
-	return NULL;
-}
-
-/******* Функции для параллельного дисплея *******/
-/*
-	Чтение данных/команд через параллельный порт
-	size - размер данных на передачу
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-uint32_t manualParalRead(uint32_t size, uint8_t *data, uint8_t dataType){
-	if (tftStatus.busy == 0 &&
-			tftStatus.inited == 1 &&
-			tftStatus.type == PARAL){
-		enableTFTCommunication();
-		if (dataType == DATA){
-			selectData();
-		} 
-		if (dataType == COMMAND){
-			selectCommand();
-		} else {
-			disableTFTCommunication();
-			return 0;
-		}
-		SetParalPortInput();
-		for (uint32_t i = 0; i <size; i++){
-			writeStrobe();
-			*data = LL_GPIO_ReadInputPort(TFT_PATAL_PORT);
-			data++;
-		}
-		disableTFTCommunication();
-		return 1;
-	}
-	else{
-		
-		return 0;
-	}
-}
-/*
-	Отправка данных/команд через параллельный порт
-	size - размер данных на прием
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-uint32_t manualParalSend (uint32_t size, uint8_t *data, uint8_t dataType){
-	if (tftStatus.busy == 0 &&
-			tftStatus.inited == 1 &&
-			tftStatus.type == PARAL){
-		enableTFTCommunication();
-		if (dataType == DATA){
-			selectData();
-		} 
-		if (dataType == COMMAND){
-			selectCommand();
-		} else {
-			disableTFTCommunication();
-			return 0;
-		}
-		SetParalPortOutput();
-		for (uint32_t i = 0; i <size; i= i+2){
-			uint16_t tempData = (*data++) << 8;
-			tempData &= 0xFF00;
-			tempData |= *data++;
-			LL_GPIO_WriteOutputPort(TFT_PATAL_PORT, tempData);
-			writeStrobe();
-		}
-		disableTFTCommunication();
-		return 1;
-	}
-	else{
-		
-		return 0;
-	}
-}
-/*
-	Отправка данных через параллельную шину с помощью прерывания (TIM2 или TIM5)
-	size - размер данных на передачу
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-uint32_t paralItSend (uint32_t size, uint8_t *data, uint32_t dataType){
-	
-	return 0;
-}
-
-/*
-	Отправка данных через параллельную шину с помощью DMA и прерывания (TIM2 или TIM5)
-	size - размер данных на передачу
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-uint32_t paralDMASend (uint32_t size, uint8_t *data, uint32_t dataType){
-	
-	return 0;
-}
-/*
-	Чтение данных через параллельную шину с помощью прерывания (TIM2 или TIM5)
-	size - размер данных на прием
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-
-uint32_t paralItRead (uint32_t size, uint8_t *data, uint32_t dataType){
-	
-	return 0;
-}
-
-/*
-	Чтение данных через параллельную шину с помощью DMA и прерывания (TIM2 или TIM5)
-	size - размер данных на прием
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
-*/
-uint32_t paralDMARead (uint32_t size, uint8_t *data, uint32_t dataType){
-	
-	return 0;
-}
-
-void SetParalPortOutput(void){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                          |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-													|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                          |DB9_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(TFT_PATAL_PORT, &GPIO_InitStruct);
-}
-
-void SetParalPortInput(){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                          |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-													|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                          |DB9_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  LL_GPIO_Init(TFT_PATAL_PORT, &GPIO_InitStruct);
-}
-/******* Общие функции *******/
-
-/*
-	Перезапуск дисплея
-*/
-void rebootTFT (void){
-	LL_GPIO_ResetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin);
-	LL_mDelay(RESET_DELAY_MS);
-	LL_GPIO_SetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin);
-}
-
-/*
-	Включение обмена с дисплеем (пин CSX low)
-*/
-void enableTFTCommunication(void){
-	LL_GPIO_ResetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin);
-}
-
-/*
-	Отключения обмена с дисплеем (пин CSX high)
-*/
-void disableTFTCommunication(void){
-	LL_GPIO_SetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin);
-}
-
-/*
-Выбор типа данных на шине: Данные (D/CX low)
-*/
-void selectData (void){
-	LL_GPIO_SetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
-}
-
-/*
-Выбор типа данных на шине: Команда(D/CX high)
-*/
-void selectCommand (void){
-	LL_GPIO_ResetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
-}
-
-/*
-Строб для записи данных
-*/
-void writeStrobe (void){
-	LL_GPIO_ResetOutputPin(TFT_WR_GPIO_Port,TFT_WR_Pin);
-	__ASM("nop");
-	LL_GPIO_SetOutputPin(TFT_WR_GPIO_Port,TFT_WR_Pin);
-}
-
-/*
-Строб для записи данных
-*/
-void readStrobe (void){
-	LL_GPIO_ResetOutputPin(TFT_RD_GPIO_Port,TFT_RD_Pin);
-	__ASM("nop");
-	LL_GPIO_SetOutputPin(TFT_RD_GPIO_Port,TFT_RD_Pin);
 }
