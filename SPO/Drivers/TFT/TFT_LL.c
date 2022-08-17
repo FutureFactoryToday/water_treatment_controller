@@ -92,7 +92,7 @@ void initPerifTFT(perifType_t type);
 /* Private user code ---------------------------------------------------------*/
 /*** Главные функции ***/
 tftDriverStatus_t initTFT_LL(perifType_t type){
-	msgFifo = initFifo();
+	msgFifo = initFifo(TFT_LL_FIFO_SIZE, sizeof(msg_t*));
 	curMsg = NULL;
 	curEl = 0;
 	firstByte = 0;
@@ -117,7 +117,7 @@ uint8_t processMsg(readResult_t *result, uint8_t bufSize, dataType_t type, uint8
 	step = 1;
   if (bufSize != 0){
 		msg_t* msg = (msg_t*)malloc(sizeof(msg_t));
-		checkNull(msg);
+ 		checkNull(msg);
 		msg->dataType = type;
 		msg->bufSize = bufSize;
 		msg->result = result;
@@ -322,6 +322,8 @@ void finishTransmission(void){
 	handlerStatus.DMA = 0;
 	handlerStatus.INT = 0;
 	curMsg->result->result = FINISH;
+	free(curMsg);
+	disableTFTCommunication();
 }
 
 void initDMA(void){
@@ -637,9 +639,13 @@ void SetParalPortInput(){
 */
 void rebootTFT (void){
 	LL_GPIO_ResetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin);
+	#ifndef SIM
 	LL_mDelay(RESET_DELAY_MS);
+	#endif
 	LL_GPIO_SetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin);
+	#ifndef SIM
 	LL_mDelay(RESET_DELAY_MS);
+	#endif
 }
 
 /*
@@ -692,6 +698,7 @@ void initPerifTFT(perifType_t type){
 	if (type == SPI){
 		deInitParal_TFT();
 		MX_SPI2_Init();
+		initSPI_TFT();
 	} else { 
 		LL_SPI_DeInit(TFT_SPI);
 		deInitSPI_TFT();

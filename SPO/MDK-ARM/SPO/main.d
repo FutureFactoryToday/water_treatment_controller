@@ -27,5 +27,7 @@ spo/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Drivers\TFT\TFT.h ..\MidLevel\SPI\SPI_Handler.h \
   ..\MidLevel\SPI\FIFO.h ..\Drivers\TFT\TFT_LL.h ..\Core\Inc\spi.h \
   ..\Core\Inc\gpio.h ..\Core\Inc\WTC_Logic.h \
-  ..\Core\..\..\GUI\Logo\LOGO_MAIN.h ..\Core\Inc\dma.h ..\Core\Inc\rtc.h \
-  ..\Core\Inc\tim.h ..\Core\Inc\usart.h
+  ..\Core\..\..\GUI\Logo\LOGO_MAIN.h \
+  ..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\test.h \
+  ..\Core\Inc\dma.h ..\Core\Inc\rtc.h ..\Core\Inc\tim.h \
+  ..\Core\Inc\usart.h

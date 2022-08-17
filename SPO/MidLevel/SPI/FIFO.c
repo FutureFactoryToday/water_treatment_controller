@@ -29,6 +29,7 @@
 /* Private function prototypes -----------------------------------------------*/
 /*Поиск конца очереди*/
 fifo_t* findTail (fifo_t* fifo);
+uint32_t getEmptySize(fifo_t** fifo);
 /* Private user code ---------------------------------------------------------*/
 
 /*Получение данных из очереди*/
@@ -37,59 +38,80 @@ void* pop (fifo_t** fifo){
 	if ((*fifo) == NULL) {
 		 return NULL;
 	}
-	void* data = (*fifo)->data;  //Получаем данные
-	fifo_t* buf = *fifo;         //Сохраняем указатель на первый элемент очереди
-	*fifo = (*fifo)->next;       //Делаем второй элемент первым
-	free(buf);                   //Удаляем бывший первый элемент
+	//Очередь пуста
+	if ((*fifo)->emptyElement == (*fifo)->firstElement 
+		&& *(*fifo)->firstElement == NULL){
+			return NULL;
+	}
+		
+	void* data = *(*fifo)->firstElement;
+	*(*fifo)->firstElement = NULL;
+	(*fifo)->firstElement++;
+	
+	void** lastElement = (*fifo)->buf + ((*fifo)->size - 1);
+	
+	if ((*fifo)->firstElement > lastElement){
+		(*fifo)->firstElement = (*fifo)->buf;
+	}
 	return data;
 }
-
+ 
 /*Добавление данных в очередь*/
-fifo_t* push (fifo_t** fifo, void* data){
+void* push (fifo_t** fifo, void* data){
 	if (*fifo == NULL) {         //Если очередь не иниацилизирована,
-		 *fifo = initFifo();       //иниацилизируем
+		return NULL;       //ошибка
 	}
-	if (*fifo == NULL)	{        //Если не хватило памяти,
-		return NULL; 	             //выходим с ошибкой
+
+	//Очередь полна
+	if ((*fifo)->emptyElement == (*fifo)->firstElement 
+		&& *(*fifo)->firstElement != NULL){
+			return NULL;
 	}
-	if ((*fifo)->data == NULL){  //Если это первый элемент и он пустой,
-		(*fifo)->data = data;      //добавляем данные
-	} 
-	else {
-		fifo_t* newNode = (fifo_t*)malloc(sizeof(fifo_t)); //Создаем новый элемент очереди
-		newNode->data = data;                              //добавляем данные
-		newNode->next = NULL;
-		fifo_t* tail = findTail(*fifo);                    //вставляем в конец очереди
-		tail->next = newNode;
+		
+	*(*fifo)->emptyElement = data;
+	
+	(*fifo)->emptyElement++;
+	
+	void** lastElement = (*fifo)->buf + ((*fifo)->size - 1);
+	
+	if ((*fifo)->emptyElement > lastElement){
+		(*fifo)->emptyElement = (*fifo)->buf;
 	}
+	
 	return *fifo;
 }
 
 /*Иниацилизация очереди*/
-fifo_t* initFifo(void){
+fifo_t* initFifo(const uint32_t size, uint32_t dataSize){
 	fifo_t* fifo = (fifo_t*)malloc(sizeof(fifo_t));      //Выделяем место для очереди
-	if (fifo == NULL) {                                  //Если не получилось, 
-		return NULL;                                       //возвращаем ошибку
+	if (fifo == NULL) {                                 //Если не получилось, 
+		return NULL;                                      //возвращаем ошибку
 	}
-	fifo->data = NULL;                                   //Чистим данные
-	fifo->next = NULL;
+	void* buf = (void*)malloc (size*dataSize);
+	for(uint32_t i=0; i< size; i++){
+		(*((uint32_t*)buf+i)) = NULL;
+	}
+	if (buf == NULL){
+		free(fifo);
+		return NULL;
+	}
+	
+	fifo->buf = buf;																	//Чистим данные
+	fifo->emptyElement = buf; 
+	fifo->firstElement = buf;                                   
+	fifo->size = size;
+	fifo->step = dataSize;
 	return fifo;
 }
 
-/*Поиск конца очереди*/
-fifo_t* findTail (fifo_t* fifo){
-	while(fifo->next != NULL){
-		fifo++;
-	}
-	return fifo;
-}
 
 uint8_t isEmpty(fifo_t* fifo){
-	return (fifo == NULL) || (fifo->data == NULL);
+	return (fifo == NULL) || (fifo->emptyElement - fifo->firstElement == 0);
 }
 /* Tests*/
 void testFifo (void){
-	fifo_t* spiFifo = initFifo();
+	uint8_t bufSize = 5;
+	fifo_t* spiFifo = initFifo(bufSize, sizeof(uint8_t*));
 	if (spiFifo == NULL)
 	{
 		Error_Handler();
@@ -119,6 +141,24 @@ void testFifo (void){
 	if(!(newBuf3 == fBuf)) Error_Handler();
 	
 	newBuf1 = pop(&spiFifo);
-	
 	if(!(newBuf1 == NULL)) Error_Handler();
+	
+	void* res = 0;
+	
+	for(uint8_t i = 0; i < bufSize; i++){
+		res = push(&spiFifo, fBuf);
+		if (res == NULL) Error_Handler();
+	}
+	
+		res = push(&spiFifo, fBuf);
+		if (res != NULL) Error_Handler();
+	
+	for(uint32_t i = 0; i < 1000; i++){
+		push(&spiFifo, fBuf);
+		newBuf1 = pop (&spiFifo);
+		if (newBuf1 != fBuf) Error_Handler();
+	}
+	
+	free(spiFifo->buf);
+	free(spiFifo);
 }

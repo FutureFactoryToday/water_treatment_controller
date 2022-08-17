@@ -210,8 +210,7 @@ void deInitSPI_TFT(void){
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	LL_GPIO_StructInit(&GPIO_InitStruct);
 	
-	GPIO_InitStruct.Pin = TFT_SPI_CS_Pin|
-												TFT_SPI_MISO_Pin|
+	GPIO_InitStruct.Pin = TFT_SPI_MISO_Pin|
 												TFT_SPI_MOSI_Pin|
 												TFT_SPI_SCK_Pin;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -221,10 +220,10 @@ void deInitParal_TFT(void){
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	LL_GPIO_StructInit(&GPIO_InitStruct);
 	/**/
-  LL_GPIO_ResetOutputPin(GPIOC, TFT_RD_Pin|TFT_DATA_COM_Pin);
+  LL_GPIO_ResetOutputPin(GPIOC, TFT_RD_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin);
+  LL_GPIO_ResetOutputPin(GPIOA, TFT_WR_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
@@ -233,11 +232,11 @@ void deInitParal_TFT(void){
                           |DB9_Pin);
 
   /**/
-  GPIO_InitStruct.Pin = TFT_RD_Pin|TFT_DATA_COM_Pin;
+  GPIO_InitStruct.Pin = TFT_RD_Pin;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin;
+  GPIO_InitStruct.Pin = TFT_WR_Pin;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	
 	GPIO_InitStruct.Pin = DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin

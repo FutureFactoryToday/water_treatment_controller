@@ -24,6 +24,8 @@
 "spo\fifo.o"
 "spo\wtc_logic.o"
 "spo\tft_ll.o"
+"spo\test.o"
+"spo\gui.o"
 "spo\logo_main.o"
 --strict --scatter "SPO\SPO.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

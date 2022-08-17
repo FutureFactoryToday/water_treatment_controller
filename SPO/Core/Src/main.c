@@ -69,25 +69,10 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-	fifo_t* fifo= initFifo();
-	uint8_t a = 10;
-	uint8_t b = 15;
-	push(&fifo,&a);
-	push(&fifo,&b);
-	uint8_t* pA = pop(&fifo);
-	uint8_t* pB = pop(&fifo);
-	
-	if (fifo == NULL){
-		fifo = initFifo();
-	}
-	fifo = initFifo();
 	#ifdef TESTS
-	
 	/*TEST*/
 	testFifo();
 	testSPIHandler();
-	
-	
 	#endif
   /* USER CODE END 1 */
 
@@ -112,8 +97,9 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
+	#ifndef SIM
   SystemClock_Config();
-
+	#endif
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -155,6 +141,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		main_test(); 		//测试主界面
+		Test_Color();  		//简单刷屏填充测试
+		Test_FillRec();		//GUI矩形绘图测试
+		Test_Circle(); 		//GUI画圆测试
+		Test_Triangle();    //GUI三角形绘图测试
+		English_Font_test();//英文字体示例测试
+		Chinese_Font_test();//中文字体示例测试
+		Pic_test();			//图片显示示例测试
+		Rotate_Test();   //旋转显示测试
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

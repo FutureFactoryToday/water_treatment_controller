@@ -16,7 +16,7 @@
 #include "main.h"
 #include "FIFO.h"
 /*Public defines */
-
+#define SPI_H_FIFO_SIZE 2
 typedef struct {
 	unsigned cnt: 8;
 	unsigned ERR: 1;

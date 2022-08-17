@@ -19,8 +19,11 @@
 #define MIN_FIFO 2
 
 typedef struct{
-	void* data;
-	void* next;
+	void** buf;
+	void** emptyElement;
+	void** firstElement;
+	uint32_t size;
+	uint32_t step;
 }fifo_t;
 /*Global params*/
 
@@ -33,7 +36,7 @@ typedef struct{
 			либо
 		NULL (если нет свободной памяти)
 */
-fifo_t* initFifo(void);
+fifo_t* initFifo(uint32_t size, uint32_t dataSize);
 
 /*
 	Добавления новых данных в очередь.
@@ -44,7 +47,7 @@ fifo_t* initFifo(void);
 			либо
 		NULL
 */
-fifo_t* push (fifo_t** fifo, void* data);
+void* push (fifo_t** fifo, void* data);
 
 /*
 	Получение данных из очереди.

@@ -107,7 +107,7 @@ spi_handler_t* createHandler (SPI_TypeDef* SPI){
 		//init inner structure
 		newHandler->SPI = SPI;
 		newHandler->next = NULL;
-		newHandler->handlerFifo = initFifo();
+		newHandler->handlerFifo = initFifo(SPI_H_FIFO_SIZE, sizeof(uint32_t*));
 		return newHandler;
 }
 
@@ -209,15 +209,6 @@ void testRegistration(void){
 	SPI_TypeDef* n1SPI = (void*)0x20000001;
 	SPI_TypeDef* n2SPI = (void*)0x20000005;
 	SPI_TypeDef* n3SPI = (void*)0x20000009;
-	
-	registerHandler(n1SPI, mockHandlerFunc);
-	if (cnt != 1) Error_Handler();
-	registerHandler(n2SPI, mockHandlerFunc);
-	if (cnt != 2) Error_Handler();
-	registerHandler(n3SPI, mockHandlerFunc);
-	if (cnt != 3) Error_Handler();
-	registerHandler(n1SPI, mockHandlerFunc);
-	if (cnt != 3) Error_Handler();
 }
 
 handlerStatus_t mockHandlerFunc(void){

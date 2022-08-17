@@ -18,7 +18,7 @@
 #include "spi.h"
 #include "gpio.h"
 /*Public defines */
-
+#define TFT_LL_FIFO_SIZE 15
 /* Настройки */
 //Порт для параллельного дисплея
 	#define TFT_PARAL_PORT GPIOB

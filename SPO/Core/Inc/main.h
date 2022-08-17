@@ -27,7 +27,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-
+#define uint8_t uint8_t
+#define uint16_t uint16_t
 #include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
@@ -54,6 +55,8 @@ extern "C" {
 #include "SPI/SPI_Handler.h"
 #include "WTC_Logic.h"
 #include "..\..\GUI\Logo\LOGO_MAIN.h"
+#include "USER\test.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
