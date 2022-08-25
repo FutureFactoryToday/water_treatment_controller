@@ -97,9 +97,8 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
-	#ifndef SIM
   SystemClock_Config();
-	#endif
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -109,9 +108,9 @@ int main(void)
   MX_DMA_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
-  //MX_TIM3_Init();
+  MX_TIM3_Init();
   MX_USART1_UART_Init();
-  //MX_RTC_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
@@ -124,6 +123,7 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	__enable_irq();
 	
+	//MOT_TEST();
 	initTFT();
 	//uint32_t tftID  = manIDRead();
 //	initTFT();
@@ -141,15 +141,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		main_test(); 		//≤‚ ‘÷˜ΩÁ√Ê
-		Test_Color();  		//ºÚµ•À¢∆¡ÃÓ≥‰≤‚ ‘
-		Test_FillRec();		//GUIæÿ–ŒªÊÕº≤‚ ‘
-		Test_Circle(); 		//GUIª≠‘≤≤‚ ‘
-		Test_Triangle();    //GUI»˝Ω«–ŒªÊÕº≤‚ ‘
-		English_Font_test();//”¢Œƒ◊÷ÃÂ æ¿˝≤‚ ‘
-		Chinese_Font_test();//÷–Œƒ◊÷ÃÂ æ¿˝≤‚ ‘
-		Pic_test();			//Õº∆¨œ‘ æ æ¿˝≤‚ ‘
-		Rotate_Test();   //–˝◊™œ‘ æ≤‚ ‘
+	
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -175,22 +167,22 @@ void SystemClock_Config(void)
 
   }
   LL_PWR_EnableBkUpAccess();
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_ForceBackupDomainReset();
-//    LL_RCC_ReleaseBackupDomainReset();
-//  }
-//  LL_RCC_LSE_Enable();
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_ForceBackupDomainReset();
+    LL_RCC_ReleaseBackupDomainReset();
+  }
+  LL_RCC_LSE_Enable();
 
-//   /* Wait till LSE is ready */
-//  while(LL_RCC_LSE_IsReady() != 1)
-//  {
+   /* Wait till LSE is ready */
+  while(LL_RCC_LSE_IsReady() != 1)
+  {
 
-//  }
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-//  }
+  }
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+  }
   LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();

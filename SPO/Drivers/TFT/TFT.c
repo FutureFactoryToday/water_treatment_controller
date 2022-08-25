@@ -19,6 +19,7 @@
 #include "Settings.h"
 #include "TFT_LL.h"
 #include "TFT_Commands.h"
+
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
@@ -37,6 +38,8 @@ uint16_t POINT_COLOR = 0x0000,BACK_COLOR = 0xFFFF;
 	uint8_t setPageAdress(uint8_t page);
 	void LCD_WR_REG (uint8_t data, uint8_t hold);
 	void LCD_WR_DATA (uint8_t data, uint8_t hold);
+	void LCD_WR_DATA_PIX (uint8_t* data, uint8_t hold);
+	
 /* Private user code ---------------------------------------------------------*/
 void LCD_WR_REG (uint8_t data, uint8_t hold){
 	readResult_t msg;
@@ -53,6 +56,15 @@ void LCD_WR_REG (uint8_t data, uint8_t hold){
 	msg.result = 0;
 	
 	processMsg(&msg,1,DATA,SEND,hold);
+	while(msg.result != FINISH);
+	}
+	
+	void LCD_WR_DATA_PIX (uint8_t* data, uint8_t hold){
+	readResult_t msg;
+	msg.dataBuf = data;
+	msg.result = 0;
+	
+	processMsg(&msg,3,DATA,SEND,hold);
 	while(msg.result != FINISH);
 	}
 /*** √Î‡‚Ì˚Â ÙÛÌÍˆËË ***/
@@ -75,6 +87,7 @@ uint8_t initTFT(void){
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x8F, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0XF2, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x18, TRUE);
@@ -95,30 +108,36 @@ uint8_t initTFT(void){
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0XF8, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x21, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x04, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0XF9, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x08, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0x36, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x08, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0xB4, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0xC1, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x47, TRUE); //0x41
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0xC5, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
@@ -129,6 +148,7 @@ uint8_t initTFT(void){
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0xE0, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x0F, TRUE);
@@ -161,6 +181,7 @@ uint8_t initTFT(void){
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0xE1, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x0F, TRUE);
@@ -193,48 +214,36 @@ uint8_t initTFT(void){
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x00, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0x3A, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x66, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0x11, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
+	
 	LCD_WR_REG(0x36, TRUE);
 	LL_mDelay(TFT_INIT_DEL);
 	LCD_WR_DATA(0x28, TRUE);
+	
 	#ifndef SIM
 	LL_mDelay(120);
 	#endif
 	LCD_WR_REG(0x29, FALSE);
 	LL_mDelay(TFT_INIT_DEL);
-//  LCD_direction(USE_HORIZONTAL);//…Ë÷√LCDœ‘ æ∑ΩœÚ
-//	LCD_LED=1;//µ„¡¡±≥π‚	 
-//	LCD_Clear(WHITE);//«Â»´∆¡∞◊…´
+  LCD_direction(USE_VERTICAL);//…Ë÷√LCDœ‘ æ∑ΩœÚ
 	
-//	readResult_t readRes;
-//	uint8_t readResBuf[4] = {0};
-//	readRes.dataBuf = readResBuf;
-//	readRes.result = 0;
-//	readID(&readRes);
-//	uint8_t waitTime = _1ms_cnt + 500; //∆‰ÂÏ 500 ÏÒ
-//	while (readRes.result != FINISH || _1ms_cnt != waitTime);
-//	if (readRes.result == FINISH) {
-//		TFT_ID = (readResBuf[3]<<26) + (readResBuf[2]<<16)+ (readResBuf[1]<<8);
-//		return 1;
-//	}
-//	
-//	initTFT_LL(PARAL);
-//	readRes.result = 0;
-//	for(uint8_t i = 0; i< sizeof(readResBuf);i++){
-//		readResBuf[i] = 0;
-//	}
-//	readID(&readRes);
-//	waitTime = _1ms_cnt + 500; //∆‰ÂÏ 500 ÏÒ
-//	while (readRes.result != FINISH || _1ms_cnt != waitTime);
-//	if (readRes.result == FINISH) {
-//		TFT_ID = (readResBuf[3]<<26) + (readResBuf[2]<<16)+ (readResBuf[1]<<8);
-//		return 1;
-//	}
+	LCD_Clear(WHITE);
+	LL_mDelay(100);
+	//Pic_test();
+	//LL_mDelay(1000);
+	//Rotate_Test();
+	//LL_mDelay(1000);
+	//LCD_Clear(WHITE);
+	uint8_t x_cent = (480 - 150)/2;
+	uint8_t y_cent = (320-150)/2;
+	Gui_Drawbmp16(x_cent,y_cent ,150,150,&gImage_LOGO_MAIN2);
 	return 0;
 }
 
@@ -293,7 +302,7 @@ void LCD_SetWindows(uint16_t xStar, uint16_t yStar,uint16_t xEnd,uint16_t yEnd)
 	LCD_WR_DATA(0x00FF&yEnd,TRUE);
 
 	LCD_WriteRAM_Prepare();	//ø™ º–¥»ÎGRAM		
-	LCD_WR_REG(ILI_NOP, FALSE);
+//	LCD_WR_REG(ILI_NOP, FALSE);
 }   
 
 /*****************************************************************************
@@ -370,9 +379,11 @@ void LCD_WriteRAM_Prepare(void)
 void Lcd_WriteData_16Bit(uint16_t Data)
 {	
   //18Bit	
-	LCD_WR_DATA((Data>>8)&0xF8,TRUE);//RED
-	LCD_WR_DATA((Data>>3)&0xFC,TRUE);//GREEN
-	LCD_WR_DATA(Data<<3,FALSE);//BLUE
+	uint8_t tempBuf[3];
+	tempBuf[0] = (Data>>8)&0xF8;
+	tempBuf[1] = (Data>>3)&0xFC;
+	tempBuf[2] = Data<<3&0xF8;
+	LCD_WR_DATA_PIX(tempBuf,TRUE);//RED
 }
 
 /*****************************************************************************
@@ -407,7 +418,7 @@ void LCD_Clear(uint16_t Color)
 			Lcd_WriteData_16Bit(Color);
 		}
 	}
-	LCD_WR_REG(ILI_NOP,FALSE);
+//	LCD_WR_REG(ILI_NOP,FALSE);
 } 
 void LCD_WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue)
 {	

@@ -39,8 +39,10 @@ extern "C" {
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void INIT_SPI_LCD(void);
-void INIT_PARAL_LCD(void);
+void initSPI_TFT(void);
+void initParal_TFT(void);
+void deInitSPI_TFT(void);
+void deInitParal_TFT(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

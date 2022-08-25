@@ -16,9 +16,11 @@
 #include "main.h"
 #include "SPI/SPI_Handler.h"
 #include "TFT/TFT_LL.h"
+#include "..\..\GUI\Logo\LOGO_MAIN.h"
 /*Public defines */
 #define TFT_INIT_DEL 10
 
+extern const unsigned char gImage_LOGO_MAIN2;
 typedef struct  
 {										    
 	uint16_t width;			//LCD 宽度
@@ -34,7 +36,9 @@ typedef struct
 extern _lcd_dev lcddev;	//管理LCD重要参数
 /////////////////////////////////////用户配置区///////////////////////////////////	 
 #define USE_HORIZONTAL  	 0//定义液晶屏顺时针旋转方向 	0-0度旋转，1-90度旋转，2-180度旋转，3-270度旋转
-
+#define USE_VERTICAL 1
+#define USE_HORISONTAL_180 2
+#define USE_VERTICAL_180 3
 //////////////////////////////////////////////////////////////////////////////////	  
 //定义LCD的尺寸
 #define LCD_W 320

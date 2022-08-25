@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>RELEASE</TargetName>
+      <TargetName>SPO</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
@@ -323,14 +323,14 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
+            <wLevel>1</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
-            <v6LangP>5</v6LangP>
+            <v6LangP>0</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,STM32F103xE,USE_FULL_ASSERT=1U,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core;../MidLevel;../Drivers;..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core;../MidLevel;../Drivers;../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI;..\..\GUI\Logo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -752,6 +752,16 @@
               <FileName>GUI.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Motor\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>LOGO_MAIN2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1605,6 +1615,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
             </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Motor\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>LOGO_MAIN2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2456,6 +2476,16 @@
               <FileName>GUI.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Motor\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>LOGO_MAIN2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
             </File>
           </Files>
         </Group>

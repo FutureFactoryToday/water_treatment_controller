@@ -18,13 +18,4 @@
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
-  <project>
-    <PathAndName>..\info\datasheets\4.0inch_16BIT_Module_ILI9486_MRB3952_V1.0\1-Demo\Demo_STM32\Demo_Mini_STM32F103RCT6_16_BIT_IO_Simulation\PROJECT\TOUCH.uvprojx</PathAndName>
-  </project>
-
-  <project>
-    <PathAndName>..\info\datasheets\4.0inch_16BIT_Module_ILI9486_MRB3952_V1.0\1-Demo\Demo_STM32\Demo_WarShip_V3_STM32F103ZET6_16_BIT_FSMC\PROJECT\TOUCH.uvprojx</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
-  </project>
-
 </ProjectWorkspace>

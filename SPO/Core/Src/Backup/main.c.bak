@@ -47,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+	uint32_t _1ms_cnt;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,32 +68,38 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	_1ms_cnt = 0;
 	#ifdef TESTS
 	/*TEST*/
 	testFifo();
 	testSPIHandler();
-	uint8_t ID[4] = {0};
-	readResult_t res;
-	res.dataBuf = ID;
-	res.result = 0;
-	initTFT();
-	readID(&res);
-	while (res.result == 0){};
 	#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
+
+  /* System interrupt init*/
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+
+  /* SysTick_IRQn interrupt configuration */
+  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+
+  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
+  */
+  LL_GPIO_AF_Remap_SWJ_NOJTAG();
 
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
 
   /* Configure the system clock */
+	#ifndef SIM
   SystemClock_Config();
-
+	#endif
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -103,20 +109,47 @@ int main(void)
   MX_DMA_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_TIM3_Init();
+  //MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_RTC_Init();
+  //MX_RTC_Init();
   /* USER CODE BEGIN 2 */
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
 	
+	LL_SYSTICK_EnableIT();
+	__enable_irq();
 	
+	initTFT();
+	//uint32_t tftID  = manIDRead();
+//	initTFT();
+//	uint8_t ID[4] = {0};
+//	readResult_t res;
+//	res.dataBuf = ID;
+//	res.result = 0;
+//	readID(&res);
+//	while (res.result != FINISH);
 	
-	
+	//uint32_t tftID = (ID[3]<<24) + (ID[2]<<16) + (ID[1]<<8);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		main_test(); 		//²âÊÔÖ÷½çÃæ
+		Test_Color();  		//¼òµ¥Ë¢ÆÁÌî³ä²âÊÔ
+		Test_FillRec();		//GUI¾ØÐÎ»æÍ¼²âÊÔ
+		Test_Circle(); 		//GUI»­Ô²²âÊÔ
+		Test_Triangle();    //GUIÈý½ÇÐÎ»æÍ¼²âÊÔ
+		English_Font_test();//Ó¢ÎÄ×ÖÌåÊ¾Àý²âÊÔ
+		Chinese_Font_test();//ÖÐÎÄ×ÖÌåÊ¾Àý²âÊÔ
+		Pic_test();			//Í¼Æ¬ÏÔÊ¾Ê¾Àý²âÊÔ
+		Rotate_Test();   //Ðý×ªÏÔÊ¾²âÊÔ
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -142,22 +175,22 @@ void SystemClock_Config(void)
 
   }
   LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
-  }
-  LL_RCC_LSE_Enable();
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_ForceBackupDomainReset();
+//    LL_RCC_ReleaseBackupDomainReset();
+//  }
+//  LL_RCC_LSE_Enable();
 
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
+//   /* Wait till LSE is ready */
+//  while(LL_RCC_LSE_IsReady() != 1)
+//  {
 
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
+//  }
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+//  }
   LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
@@ -177,8 +210,8 @@ void SystemClock_Config(void)
   {
 
   }
+  LL_Init1msTick(72000000);
   LL_SetSystemCoreClock(72000000);
-
 }
 
 /* USER CODE BEGIN 4 */

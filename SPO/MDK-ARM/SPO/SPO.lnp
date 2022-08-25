@@ -26,7 +26,9 @@
 "spo\tft_ll.o"
 "spo\test.o"
 "spo\gui.o"
-"spo\logo_main.o"
+"spo\motor.o"
+"spo\logo_main2.o"
+"spo\logo_main_1.o"
 --strict --scatter "SPO\SPO.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
