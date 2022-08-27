@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+	uint32_t _1ms_cnt;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,7 +67,12 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	_1ms_cnt = 0;
+	#ifdef TESTS
+	/*TEST*/
+	testFifo();
+	testSPIHandler();
+	#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -105,13 +110,38 @@ int main(void)
   MX_USART1_UART_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
+//	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+//	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
+//  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+//	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
+	
+	LL_SYSTICK_EnableIT();
+	__enable_irq();
+	initOptic();
+	initMot();
+	initGUI();
+	//MOT_TEST();
 
+	//uint32_t tftID  = manIDRead();
+//	initTFT();
+//	uint8_t ID[4] = {0};
+//	readResult_t res;
+//	res.dataBuf = ID;
+//	res.result = 0;
+//	readID(&res);
+//	while (res.result != FINISH);
+	
+	//uint32_t tftID = (ID[3]<<24) + (ID[2]<<16) + (ID[1]<<8);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		//redrawGUI();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

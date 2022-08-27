@@ -41,7 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+	uint8_t itCnt = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -183,7 +183,13 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+	if (touchDelay)
+		touchDelay--;
+	
+	_1ms_cnt++; 
+	if (_1ms_cnt%500 == 0){
+		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+	}
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -197,6 +203,88 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f1xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles EXTI line3 interrupt.
+  */
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    /* USER CODE BEGIN LL_EXTI_LINE_3 */
+		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
+			redraw = 1;
+		}
+		
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    /* USER CODE END LL_EXTI_LINE_3 */
+  }
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SPI1 global interrupt.
+  */
+void SPI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN SPI1_IRQn 0 */
+
+	//spiInterruptHandler(SPI1);
+  /* USER CODE END SPI1_IRQn 0 */
+  /* USER CODE BEGIN SPI1_IRQn 1 */
+
+  /* USER CODE END SPI1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SPI2 global interrupt.
+  */
+void SPI2_IRQHandler(void)
+{
+  /* USER CODE BEGIN SPI2_IRQn 0 */
+	itCnt++;
+	//spiInterruptHandler(SPI2);
+  /* USER CODE END SPI2_IRQn 0 */
+  /* USER CODE BEGIN SPI2_IRQn 1 */
+
+  /* USER CODE END SPI2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line[15:10] interrupts.
+  */
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
+    /* USER CODE BEGIN LL_EXTI_LINE_11 */
+		if (!LL_GPIO_IsInputPinSet(OPT_SENS_GPIO_Port,OPT_SENS_Pin)){
+			opticInterrupt();
+			redraw = 1;
+		}
+    /* USER CODE END LL_EXTI_LINE_11 */
+  }
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
+    /* USER CODE BEGIN LL_EXTI_LINE_15 */
+
+    /* USER CODE END LL_EXTI_LINE_15 */
+  }
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+  /* USER CODE END EXTI15_10_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

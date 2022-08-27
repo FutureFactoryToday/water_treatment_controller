@@ -16,9 +16,7 @@
 
 
 //SPI для дисплея
-#define TFT_SPI SPI2
 
-#define TOUCH_SPI SPI1
 
 
 #endif /* __SETTINGS_H__ */
