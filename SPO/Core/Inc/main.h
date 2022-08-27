@@ -28,7 +28,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_system.h"
@@ -36,6 +35,7 @@ extern "C" {
 #include "stm32f1xx_ll_cortex.h"
 #include "stm32f1xx_ll_utils.h"
 #include "stm32f1xx_ll_pwr.h"
+#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rtc.h"
 #include "stm32f1xx_ll_spi.h"
 #include "stm32f1xx_ll_tim.h"
@@ -50,13 +50,19 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "stdlib.h"
 #include "Settings.h"
-#include "TFT/TFT.h"
-#include "SPI/SPI_Handler.h"
-#include "WTC_Logic.h"
-#include "..\..\GUI\Logo\LOGO_MAIN.h"
-#include "USER\test.h"
+//#include "TFT/TFT.h"
+//#include "SPI/SPI_Handler.h"
+//#include "WTC_Logic.h"
+//#include "..\..\GUI\Logo\LOGO_MAIN.h"
+//#include "USER\test.h"
 #include "Motor\Motor.h"
-#include "USER\GUI.h"
+#include "TFT\stm32_adafruit_lcd.h"
+#include "TFT\stm32_adafruit_ts.h"
+#include "TFT\bmp.h"
+#include "GUI\GUI.h"
+#include "TFT/lcd/ili9486/ili9486.h"
+#include "Optic\Optic.h"
+//#include "USER\GUI.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -67,6 +73,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 	extern uint32_t _1ms_cnt;
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -98,6 +105,7 @@ void Error_Handler(void);
 #define TFT_WR_GPIO_Port GPIOA
 #define TOUCH_INT_Pin LL_GPIO_PIN_3
 #define TOUCH_INT_GPIO_Port GPIOA
+#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
 #define TOUCH_CS_Pin LL_GPIO_PIN_4
 #define TOUCH_CS_GPIO_Port GPIOA
 #define TFT_RD_Pin LL_GPIO_PIN_4
@@ -130,8 +138,9 @@ void Error_Handler(void);
 #define BIN1_GPIO_Port GPIOC
 #define BIN2_Pin LL_GPIO_PIN_8
 #define BIN2_GPIO_Port GPIOA
-#define DP_SW_Pin LL_GPIO_PIN_11
-#define DP_SW_GPIO_Port GPIOA
+#define OPT_SENS_Pin LL_GPIO_PIN_11
+#define OPT_SENS_GPIO_Port GPIOA
+#define OPT_SENS_EXTI_IRQn EXTI15_10_IRQn
 #define ILED_Pin LL_GPIO_PIN_12
 #define ILED_GPIO_Port GPIOA
 #define METER_INP_Pin LL_GPIO_PIN_10

@@ -24,10 +24,5 @@ spo/spi_handler.o: ..\MidLevel\SPI\SPI_Handler.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h \
   ..\Core\Inc\stm32_assert.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Settings.h \
-  ..\Drivers\TFT\TFT.h ..\MidLevel\SPI\SPI_Handler.h \
-  ..\MidLevel\SPI\FIFO.h ..\Drivers\TFT\TFT_LL.h ..\Core\Inc\spi.h \
-  ..\Core\Inc\gpio.h ..\Core\..\..\GUI\Logo\LOGO_MAIN.h \
-  ..\Core\Inc\WTC_Logic.h \
-  ..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\test.h \
-  ..\Drivers\Motor\Motor.h \
-  ..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.h
+  ..\MidLevel\SPI\SPI_Handler.h ..\MidLevel\SPI\FIFO.h \
+  ..\Core\Inc\WTC_Logic.h ..\Drivers\Motor\Motor.h

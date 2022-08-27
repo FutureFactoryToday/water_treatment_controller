@@ -101,11 +101,6 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = DP_SW_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  LL_GPIO_Init(DP_SW_GPIO_Port, &GPIO_InitStruct);
-
-  /**/
   GPIO_InitStruct.Pin = METER_INP_Pin|PB_SENS_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -121,13 +116,23 @@ void MX_GPIO_Init(void)
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE3);
 
   /**/
+  LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE11);
+
+  /**/
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE15);
 
   /**/
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
+  LL_EXTI_Init(&EXTI_InitStruct);
+
+  /**/
+  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_11;
+  EXTI_InitStruct.LineCommand = ENABLE;
+  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /**/
@@ -141,113 +146,20 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(TOUCH_INT_GPIO_Port, TOUCH_INT_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
+  LL_GPIO_SetPinMode(OPT_SENS_GPIO_Port, OPT_SENS_Pin, LL_GPIO_MODE_FLOATING);
+
+  /**/
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_15, LL_GPIO_MODE_FLOATING);
+
+  /* EXTI interrupt init*/
+  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
+  NVIC_EnableIRQ(EXTI3_IRQn);
+  NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
+  NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
 /* USER CODE BEGIN 2 */
-void initSPI_TFT(void){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	/**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin);
-	/**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	/**/
-	GPIO_InitStruct.Pin = TFT_SPI_SCK_Pin|TFT_SPI_MOSI_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	/**/
-  GPIO_InitStruct.Pin = TFT_SPI_MISO_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  LL_GPIO_Init(TFT_SPI_MISO_Port, &GPIO_InitStruct);
-	LL_GPIO_SetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin);
-}
-
-void initParal_TFT(void){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	
-	/**/
-  LL_GPIO_ResetOutputPin(GPIOC, TFT_RD_Pin|TFT_DATA_COM_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(GPIOB, DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                          |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-													|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                          |DB9_Pin);
-
-  /**/
-  GPIO_InitStruct.Pin = TFT_RD_Pin|TFT_DATA_COM_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	
-	GPIO_InitStruct.Pin = DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                        |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-												|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                        |DB9_Pin;
-												
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  LL_GPIO_Init(TFT_PARAL_PORT, &GPIO_InitStruct);
-	LL_GPIO_SetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin);
-	
-}
-
-void deInitSPI_TFT(void){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	LL_GPIO_StructInit(&GPIO_InitStruct);
-	
-	GPIO_InitStruct.Pin = TFT_SPI_MISO_Pin|
-												TFT_SPI_MOSI_Pin|
-												TFT_SPI_SCK_Pin;
-  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-}
-
-void deInitParal_TFT(void){
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-	LL_GPIO_StructInit(&GPIO_InitStruct);
-	/**/
-  LL_GPIO_ResetOutputPin(GPIOC, TFT_RD_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_WR_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(GPIOB, DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                          |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-													|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                          |DB9_Pin);
-
-  /**/
-  GPIO_InitStruct.Pin = TFT_RD_Pin;
-  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /**/
-  GPIO_InitStruct.Pin = TFT_WR_Pin;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	
-	GPIO_InitStruct.Pin = DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
-                        |DB11_Pin|DB12_Pin|DB13_Pin|DB14_Pin|DB15_Pin
-												|DB3_Pin|DB4_Pin|DB5_Pin|DB6_Pin|DB7_Pin|DB8_Pin
-                        |DB9_Pin;
-  LL_GPIO_Init(TFT_PARAL_PORT, &GPIO_InitStruct);
-}
+//
 
 /* USER CODE END 2 */

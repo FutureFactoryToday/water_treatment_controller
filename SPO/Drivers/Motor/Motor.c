@@ -25,9 +25,12 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+mot_status_t status;
 
 /* Private function prototypes -----------------------------------------------*/
-
+void MOT_FORWARD(void);
+void MOT_BRAKE(void);
+void MOT_REVERSE(void);
 /* Private user code ---------------------------------------------------------*/
 void MOT_FORWARD(void){
 	LL_GPIO_SetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
@@ -49,7 +52,37 @@ void MOT_REVERSE(void){
 	LL_GPIO_SetOutputPin(BIN1_GPIO_Port, BIN1_Pin);
 }
 
-
+void MOT_START(void){
+	if (status.START == 0){
+		if (status.DIR == 0){
+			MOT_FORWARD();
+		} else {
+			MOT_REVERSE();
+		}
+		status.START = 1;
+	}
+}
+void MOT_STOP(void){
+	if (status.START == 1){
+		MOT_BRAKE();
+		status.START = 0;
+	}
+}
+void MOT_CHANGE_DIR(void){
+	if (status.DIR == 0){
+		status.DIR = 1;
+	} else {
+		status.DIR = 0;
+	}
+	if (status.START == 1){
+		MOT_STOP();
+		MOT_START();
+	}
+}
+void initMot(void){
+	status.DIR = 0;
+	status.START = 0;
+}
 void MOT_TEST(void){
 	MOT_BRAKE();
 	LL_mDelay(100);

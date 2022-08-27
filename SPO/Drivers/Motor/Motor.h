@@ -18,11 +18,15 @@
 /*Public defines */
 
 /*Global params*/
-
+typedef struct {
+	unsigned START:1;
+	unsigned DIR:1;
+} mot_status_t;
 /*Prototypes */
-void MOT_FORWARD(void);
-void MOT_BRAKE(void);
-void MOT_REVERSE(void);
+void MOT_START(void);
+void MOT_STOP(void);
+void MOT_CHANGE_DIR(void);
+void initMot(void);
 
 void MOT_TEST(void);
 #endif /* __MOTOR_H__ */

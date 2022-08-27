@@ -141,7 +141,7 @@
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
-          <pFcarmGrp></pFcarmGrp>
+          <pFcarmGrp>Application/MDK-ARM</pFcarmGrp>
           <pFcArmRoot></pFcArmRoot>
           <FcArmLst>0</FcArmLst>
         </Utilities>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,STM32F103xE,USE_FULL_ASSERT=1U,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,HSI_VALUE=8000000,LSI_VALUE=40000,VDD_VALUE=3300,PREFETCH_ENABLE=1</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core;../MidLevel;../Drivers;../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI;..\..\GUI\Logo</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core;../MidLevel;../Drivers;../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI;../../GUI/Logo;../UpperLevel</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,62 +403,6 @@
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/dma.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>2</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>rtc.c</FileName>
@@ -547,11 +491,6 @@
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_ll_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c</FilePath>
@@ -626,6 +565,11 @@
               <FileName>stm32f1xx_ll_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_ll_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_ll_pwr.c</FileName>
@@ -719,16 +663,6 @@
           <GroupName>Libs</GroupName>
           <Files>
             <File>
-              <FileName>TFT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPI_Handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MidLevel\SPI\SPI_Handler.c</FilePath>
-            </File>
-            <File>
               <FileName>FIFO.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MidLevel\SPI\FIFO.c</FilePath>
@@ -739,29 +673,14 @@
               <FilePath>..\Core\Src\WTC_Logic.c</FilePath>
             </File>
             <File>
-              <FileName>TFT_LL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT_LL.c</FilePath>
-            </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\test.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
-            </File>
-            <File>
               <FileName>Motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\Motor\Motor.c</FilePath>
             </File>
             <File>
-              <FileName>LOGO_MAIN2.c</FileName>
+              <FileName>Optic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+              <FilePath>..\Drivers\Optic\Optic.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -962,9 +881,74 @@
           <GroupName>GUI</GroupName>
           <Files>
             <File>
-              <FileName>LOGO_MAIN.c</FileName>
+              <FileName>LOGO_MAIN2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN.c</FilePath>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+            </File>
+            <File>
+              <FileName>font8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font8.c</FilePath>
+            </File>
+            <File>
+              <FileName>font12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font12.c</FilePath>
+            </File>
+            <File>
+              <FileName>font16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font16.c</FilePath>
+            </File>
+            <File>
+              <FileName>font20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font20.c</FilePath>
+            </File>
+            <File>
+              <FileName>font24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font24.c</FilePath>
+            </File>
+            <File>
+              <FileName>smallLogo_16b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\smallLogo_16b.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\GUI.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LCD</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32_adafruit_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_adafruit_ts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_ts.c</FilePath>
+            </File>
+            <File>
+              <FileName>ili9486.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\lcd\ili9486\ili9486.c</FilePath>
+            </File>
+            <File>
+              <FileName>ts_xpt2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\ts_xpt2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\lcd_io_spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1369,11 +1353,6 @@
               <FilePath>../Core/Src/gpio.c</FilePath>
             </File>
             <File>
-              <FileName>dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/dma.c</FilePath>
-            </File>
-            <File>
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/rtc.c</FilePath>
@@ -1460,11 +1439,6 @@
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_ll_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c</FilePath>
@@ -1541,6 +1515,11 @@
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f1xx_ll_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f1xx_ll_pwr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c</FilePath>
@@ -1581,16 +1560,6 @@
           <GroupName>Libs</GroupName>
           <Files>
             <File>
-              <FileName>TFT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPI_Handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MidLevel\SPI\SPI_Handler.c</FilePath>
-            </File>
-            <File>
               <FileName>FIFO.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MidLevel\SPI\FIFO.c</FilePath>
@@ -1601,29 +1570,14 @@
               <FilePath>..\Core\Src\WTC_Logic.c</FilePath>
             </File>
             <File>
-              <FileName>TFT_LL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT_LL.c</FilePath>
-            </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\test.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
-            </File>
-            <File>
               <FileName>Motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\Motor\Motor.c</FilePath>
             </File>
             <File>
-              <FileName>LOGO_MAIN2.c</FileName>
+              <FileName>Optic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+              <FilePath>..\Drivers\Optic\Optic.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1824,9 +1778,74 @@
           <GroupName>GUI</GroupName>
           <Files>
             <File>
-              <FileName>LOGO_MAIN.c</FileName>
+              <FileName>LOGO_MAIN2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN.c</FilePath>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+            </File>
+            <File>
+              <FileName>font8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font8.c</FilePath>
+            </File>
+            <File>
+              <FileName>font12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font12.c</FilePath>
+            </File>
+            <File>
+              <FileName>font16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font16.c</FilePath>
+            </File>
+            <File>
+              <FileName>font20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font20.c</FilePath>
+            </File>
+            <File>
+              <FileName>font24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font24.c</FilePath>
+            </File>
+            <File>
+              <FileName>smallLogo_16b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\smallLogo_16b.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\GUI.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LCD</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32_adafruit_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_adafruit_ts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_ts.c</FilePath>
+            </File>
+            <File>
+              <FileName>ili9486.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\lcd\ili9486\ili9486.c</FilePath>
+            </File>
+            <File>
+              <FileName>ts_xpt2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\ts_xpt2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\lcd_io_spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2231,11 +2250,6 @@
               <FilePath>../Core/Src/gpio.c</FilePath>
             </File>
             <File>
-              <FileName>dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/dma.c</FilePath>
-            </File>
-            <File>
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/rtc.c</FilePath>
@@ -2322,11 +2336,6 @@
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f1xx_ll_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f1xx_ll_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c</FilePath>
@@ -2403,6 +2412,11 @@
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f1xx_ll_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f1xx_ll_pwr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c</FilePath>
@@ -2443,16 +2457,6 @@
           <GroupName>Libs</GroupName>
           <Files>
             <File>
-              <FileName>TFT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPI_Handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MidLevel\SPI\SPI_Handler.c</FilePath>
-            </File>
-            <File>
               <FileName>FIFO.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MidLevel\SPI\FIFO.c</FilePath>
@@ -2463,29 +2467,14 @@
               <FilePath>..\Core\Src\WTC_Logic.c</FilePath>
             </File>
             <File>
-              <FileName>TFT_LL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\TFT\TFT_LL.c</FilePath>
-            </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\test.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\info\datasheets\4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0\1-Demo\Demo_STM32\Demo_STM32F103RCT6_Hardware_SPI\USER\GUI.c</FilePath>
-            </File>
-            <File>
               <FileName>Motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\Motor\Motor.c</FilePath>
             </File>
             <File>
-              <FileName>LOGO_MAIN2.c</FileName>
+              <FileName>Optic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+              <FilePath>..\Drivers\Optic\Optic.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2686,9 +2675,74 @@
           <GroupName>GUI</GroupName>
           <Files>
             <File>
-              <FileName>LOGO_MAIN.c</FileName>
+              <FileName>LOGO_MAIN2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\GUI\Logo\LOGO_MAIN.c</FilePath>
+              <FilePath>..\..\GUI\Logo\LOGO_MAIN2.c</FilePath>
+            </File>
+            <File>
+              <FileName>font8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font8.c</FilePath>
+            </File>
+            <File>
+              <FileName>font12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font12.c</FilePath>
+            </File>
+            <File>
+              <FileName>font16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font16.c</FilePath>
+            </File>
+            <File>
+              <FileName>font20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font20.c</FilePath>
+            </File>
+            <File>
+              <FileName>font24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\Fonts\font24.c</FilePath>
+            </File>
+            <File>
+              <FileName>smallLogo_16b.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\GUI\Logo\smallLogo_16b.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\GUI.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LCD</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32_adafruit_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_adafruit_ts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32_adafruit_ts.c</FilePath>
+            </File>
+            <File>
+              <FileName>ili9486.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\lcd\ili9486\ili9486.c</FilePath>
+            </File>
+            <File>
+              <FileName>ts_xpt2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\ts_xpt2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\TFT\stm32f1xx\lcd_io_spi.c</FilePath>
             </File>
           </Files>
         </Group>

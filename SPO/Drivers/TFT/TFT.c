@@ -15,6 +15,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "TFT.h"
+
 /* Private includes ----------------------------------------------------------*/
 #include "Settings.h"
 #include "TFT_LL.h"
