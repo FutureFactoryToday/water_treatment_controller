@@ -1,0 +1,4013 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/ -->
+<html id="XF" lang="en-US" dir="LTR" data-app="public" data-template="xa_ubs_blog_entry_view" data-container-key="ubsCategory-79" data-content-key="" data-logged-in="false" data-cookie-prefix="xf_" data-csrf="1658784497,e9ce5124f650feceecb6cc76f939acb7" class="has-js template-xa_ubs_blog_entry_view XenBase layout-classic style-light sidebar-rightside xb-toggle-default xb-sidebar-show has-no-touchevents has-passiveeventlisteners has-no-hiddenscroll has-overflowanchor has-os-windows has-browser-chrome has-pointer-nav"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+		<link rel="stylesheet" type="text/css" href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/wtwh-lytics-custom.css"><link rel="stylesheet" type="text/css" href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/wtwh-lytics-custom.css"><link rel="amphtml" href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/?amp=1">
+	
+
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google-site-verification" content="DV7LDR5buufweuAKIWGLTviodipCG_pt1IC6lBYZc_s">
+	<!-- Google Tag Manager for Global Container-->
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/733025426752641" async=""></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/fbevents.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/config.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/config.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/pathfora.min.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/pathfora.min.js.Без названия"></script><script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/tag.aspx"></script><script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/tag.aspx"></script><script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/tag.aspx"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/latest.min.js.Без названия"></script><script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/analytics.js.Без названия"></script><script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/js"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/latest.min.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/gtm.js.Без названия"></script><script async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/gtm.js(1).Без названия"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MMC9PJ9');</script>
+<!-- End Google Tag Manager -->
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CSQHWF');</script>
+<!-- End Google Tag Manager -->
+	
+	<!--Google ads code. Added 02/09/2020 -DM -->
+	
+<script async="" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>
+window.googletag = window.googletag || {cmd: []};
+googletag.cmd.push(function() {
+var pathParts = window.location.pathname.substr(1).split('/');
+var mapLeaderboard = googletag.sizeMapping()
+.addSize([1024, 200], [728, 90])
+.addSize([0, 0], [300, 250])
+.build();
+var mapInterstitial = googletag.sizeMapping()
+.addSize([1024, 200], [640, 480])
+.addSize([0, 0], [])
+.build();
+var mapWallpaper = googletag.sizeMapping()
+.addSize([1024, 200], [1, 1])
+.addSize([0, 0], [])
+.build();
+
+var gptSlots = [];
+
+googletag.defineSlot('/5272491/ee_network/eda_customsearchbox', [300, 90], 'div-gpt-eda_customsearchbox').addService(googletag.pubads());
+gptSlots[0] = googletag.defineSlot('/5272491/ee_network/eda_header', [728, 90], 'div-gpt-eda-header').defineSizeMapping(mapLeaderboard).addService(googletag.pubads());
+gptSlots[1] = googletag.defineSlot('/5272491/ee_network/eda_thread1', [728, 90], 'div-gpt-eda_thread1').defineSizeMapping(mapLeaderboard).addService(googletag.pubads());
+gptSlots[2] = googletag.defineSlot('/5272491/ee_network/eda_thread2', [728, 90], 'div-gpt-eda_thread2').defineSizeMapping(mapLeaderboard).addService(googletag.pubads());
+googletag.defineSlot('/5272491/ee_network/eda_thread3', [[728, 90]], 'div-gpt-eda_thread3').addService(googletag.pubads());
+gptSlots[3] = googletag.defineSlot('/5272491/ee_network/eda_interstitial', [640, 480], 'div-gpt-eda_interstitial').defineSizeMapping(mapInterstitial).addService(googletag.pubads());
+gptSlots[4] = googletag.defineSlot('/5272491/ee_network/eda_wallpaper', [1, 1], 'div-gpt-eda_wallpaper').defineSizeMapping(mapWallpaper).addService(googletag.pubads());
+googletag.defineSlot('/5272491/ee_network/eda_sidebar1', [[300, 250], [300, 600]], 'div-gpt-eda_sidebar1').addService(googletag.pubads());
+googletag.defineSlot('/5272491/ee_network/eda_sidebarbottom', [[300, 250], [300, 600]], 'div-gpt-eda_sidebarbottom').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.pubads().setTargeting('articletitle', pathParts[0] ? pathParts[0] : 'home-page');
+googletag.enableServices();
+});
+</script>
+	
+	<!--End of Google ads code. Added 02/09/2020 -DM  -->
+	
+	
+	
+
+	<title>[Keil][VSCode] Keil integration into VSCode | Forum for Electronics</title>
+
+	<link rel="manifest" href="https://www.edaboard.com/webmanifest.php">
+	
+		<meta name="theme-color" content="#003300">
+	
+
+	<meta name="apple-mobile-web-app-title" content="Forum for Electronics">
+	
+
+	
+		
+		<meta property="og:title" content="[Keil][VSCode] Keil integration into VSCode">
+		<meta property="twitter:title" content="[Keil][VSCode] Keil integration into VSCode">
+	
+	
+		
+		<meta name="description" content="VSCode Keil">
+		<meta property="og:description" content="VSCode Keil">
+		<meta property="twitter:description" content="VSCode Keil">
+	
+	
+		<meta property="og:type" content="article">
+	
+		<meta property="og:url" content="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/">
+	
+		<link rel="canonical" href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/">
+	
+		
+		<meta property="og:image" content="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/cover-image">
+		<meta property="twitter:image" content="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/cover-image">
+		<meta property="twitter:card" content="summary_large_image">
+	
+	
+
+	
+		
+	
+	
+	<meta property="og:site_name" content="Forum for Electronics">
+
+
+	
+	
+	
+	
+	
+	
+
+	
+	
+	<link href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/css2" rel="stylesheet">
+
+
+	
+	
+	
+
+	
+
+
+	<link rel="preload" href="https://www.edaboard.com/styles/fonts/fa/fa-light-300.woff2?_v=5.15.3" as="font" type="font/woff2" crossorigin="anonymous">
+
+
+	<link rel="preload" href="https://www.edaboard.com/styles/fonts/fa/fa-solid-900.woff2?_v=5.15.3" as="font" type="font/woff2" crossorigin="anonymous">
+
+
+<link rel="preload" href="https://www.edaboard.com/styles/fonts/fa/fa-brands-400.woff2?_v=5.15.3" as="font" type="font/woff2" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/css.php">
+
+	
+
+<link rel="stylesheet" href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/css(1).php">
+
+	
+		<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/preamble.min.js.Без названия"></script>
+	
+
+
+	
+		<link rel="icon" type="image/png" href="https://www.edaboard.com/favicon.ico" sizes="32x32">
+	
+	
+	
+
+	
+	
+		
+	
+
+
+<script type="text/javascript" async="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/MathJax.js.Без названия"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/roundtrip.js.Без названия"></script><style type="text/css">[data-pftrigger], [data-pfrecommend]{ display: none; }</style><link rel="stylesheet" type="text/css" href="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/pathfora.min.css"><meta http-equiv="origin-trial" content="A41wt2Lsq30A9Ox/WehogvJckPI4aY9RoSxhb8FMtVnqaUle1AtI6Yf7Wk+7+Wm0AfDDOkMX+Wn6wnDpBWYgWwYAAAB8eyJvcmlnaW4iOiJodHRwczovL2Fkcm9sbC5jb206NDQzIiwiZmVhdHVyZSI6IkludGVyZXN0Q29ob3J0QVBJIiwiZXhwaXJ5IjoxNjI2MjIwNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><script id="adroll_scr_exp" onerror="window.adroll_exp_list = [];" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/index.js.Без названия"></script><script type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/fpconsent.js.Без названия"></script><script type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/index.js(1).Без названия"></script><script type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/H6QSRTNYTVH7HE3332AG6H"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><script async="true" type="text/javascript" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/SLD62WUEQVGMFKFQ4GL5PT"></script><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(1)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(2)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(3)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(5)"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(6)"></div><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(4)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(7)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(8)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(9)">
+<img height="1" width="1" style="border-style:none;" alt="" src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/out(10)">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://d.adroll.com/cm/g/out?adroll_fpc=4a91351613a7c7728d5461953d45e3c3-1658784931342&amp;arrfrr=https%3A%2F%2Fwww.edaboard.com%2Fblog%2Fkeil-vscode-keil-integration-into-vscode.2103%2F&amp;advertisable=H6QSRTNYTVH7HE3332AG6H&amp;google_nid=adroll4">
+</div></head>
+<body data-template="xa_ubs_blog_entry_view"><div id="MathJax_Message" style="display: none;"></div>
+			<!-- Google Tag Manager (noscript) Global -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMC9PJ9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+		<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CSQHWF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="p-pageWrapper" id="top">
+
+<div class="p-pageWrapper--helper"></div>
+
+
+
+<div class="xb-page-wrapper xb-canvas-menuActive">
+	
+	
+	<div class="xb-page-wrapper--helper"></div>
+	
+	
+
+
+<header class="p-header" id="header">
+	<div class="p-header-inner">
+		<div class="p-header-content">
+
+			<div class="p-header-logo p-header-logo--image">
+				<a href="https://www.edaboard.com/">
+						
+					<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/edaboard-logo-ot-253w.png" srcset="/styles/images/edaboard-logo-ot-retina-506w.png 2x" alt="Forum for Electronics" width="253" height="34">
+					
+				</a>
+			</div>
+
+			
+			
+			
+			
+				
+	
+	
+		
+		<div class="xb-searchWrapper" id="xb-searchWrapper" tabindex="0">
+			<form action="https://www.edaboard.com/search/search" id="xbSearch" data-xf-init="quick-search" data-autocomplete-filter="null" class="xb-search" method="post" data-no-auto-focus="true">
+				<input type="text" class="input" name="keywords" placeholder="Search…" aria-label="Search" autocomplete="off">
+					<div class="menu menu--structural menu--search" aria-hidden="true">
+						<div class="menu-content">
+								
+									<div class="menu-row">
+										
+
+
+	
+
+
+
+			<select name="constraints" class="js-quickSearch-constraint input" aria-label="Search within" style="width: 136px; flex-grow: 0; flex-shrink: 0;">
+				<option value="">Everywhere</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;}">Blogs</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;,&quot;c&quot;:{&quot;blogs&quot;:[219]}}">This blog</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;,&quot;c&quot;:{&quot;categories&quot;:[79],&quot;child_categories&quot;:1}}" selected="selected">This category</option>
+
+			</select>
+		
+									</div>
+								
+
+
+	
+		<div class="menu-row">
+			
+				
+	
+		
+		
+
+		
+			<label class="iconic"><input type="checkbox" name="c[container_only]" value="1"><i aria-hidden="true"></i><span class="iconic-label">Search only containers</span></label>
+
+		
+	
+
+			
+		</div>
+	
+
+								
+								<div class="menu-row">
+									<label class="iconic"><input type="checkbox" name="c[title_only]" value="1"><i aria-hidden="true"></i><span class="iconic-label">Search titles only</span></label>
+
+								</div>
+								
+								<div class="menu-row">
+									<div class="inputGroup">
+										<span class="inputGroup-text" id="ctrl_search_menu_by_member">By:</span>
+										<input type="text" class="input" name="c[users]" data-xf-init="auto-complete" placeholder="Member" aria-labelledby="ctrl_search_menu_by_member" autocomplete="off">
+									</div>
+								</div>
+								<div class="menu-footer">
+									<span class="menu-footer-controls">
+										<button type="submit" class="button--primary button button--icon button--icon--search"><span class="button-text">Search</span></button>
+										<a href="https://www.edaboard.com/search/" class="button"><span class="button-text">Advanced search…</span></a>
+									</span>
+								</div>
+
+								<input type="hidden" name="_xfToken" value="1658784497,e9ce5124f650feceecb6cc76f939acb7">
+										
+				</div>
+			</div>
+			</form>	
+		</div>
+
+	
+
+			
+		</div>
+	</div>
+</header>
+
+		
+
+<div class="xb-content-wrapper">
+	<div class="navigation-helper"></div>
+
+
+
+
+	<div class="p-navSticky p-navSticky--primary is-sticky" data-xf-init="sticky-header">
+		
+	<div class="p-nav--wrapper">
+	<nav class="p-nav">
+		<div class="p-nav-inner">
+			<button type="button" class="button--plain p-nav-menuTrigger button" data-xf-click="off-canvas" data-menu=".js-headerOffCanvasMenu" tabindex="0" aria-label="Menu"><span class="button-text">
+				<i aria-hidden="true"></i>
+			</span></button>
+
+			<div class="p-nav-smallLogo">
+				<a href="https://www.edaboard.com/">
+							
+					<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/edaboard-logo-ot-253w.png" srcset="" alt="Forum for Electronics" width="253" height="34">
+					
+					
+				</a>
+			</div>
+
+			<div class="p-nav-scroller hScroller" data-xf-init="h-scroller" data-auto-scroll=".p-navEl.is-selected">
+				<div class="hScroller-scroll is-calculated" style="margin-bottom: -47px;">
+					<ul class="p-nav-list js-offCanvasNavSource">
+					
+						<li class="navforums">
+							
+
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/" class="p-navEl-link p-navEl-link--splitMenu " data-nav-id="forums">Forums</a>
+
+
+			<a data-xf-key="1" data-xf-click="menu" data-menu-pos-ref="&lt; .p-navEl" class="p-navEl-splitTrigger" role="button" tabindex="0" aria-label="Toggle expanded" aria-expanded="false" aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/posts/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="newPosts">New posts</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/search/?type=post" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="searchForums">Search forums</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navbestanswers">
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/topanswers" class="p-navEl-link " data-xf-key="2" data-nav-id="bestanswers">Best Answers</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navwhatsNew">
+							
+
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/whats-new/" class="p-navEl-link p-navEl-link--splitMenu " data-nav-id="whatsNew">What's new</a>
+
+
+			<a data-xf-key="3" data-xf-click="menu" data-menu-pos-ref="&lt; .p-navEl" class="p-navEl-splitTrigger" role="button" tabindex="0" aria-label="Toggle expanded" aria-expanded="false" aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/posts/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="whatsNewPosts">New posts</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/media/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xfmgWhatsNewNewMedia">New media</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/media-comments/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xfmgWhatsNewMediaComments">New media comments</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/resources/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xfrmNewResources">New resources</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-blog-entries/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xaUbsWhatsNewNewBlogEntries">New blog entries</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/profile-posts/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="whatsNewProfilePosts">New profile posts</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-comments/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xaUbsWhatsNewBlogEntryComments">New blog entry comments</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/latest-activity" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="latestActivity">Latest activity</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navxfmg">
+							
+
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/media/" class="p-navEl-link p-navEl-link--splitMenu " data-nav-id="xfmg">Media</a>
+
+
+			<a data-xf-key="4" data-xf-click="menu" data-menu-pos-ref="&lt; .p-navEl" class="p-navEl-splitTrigger" role="button" tabindex="0" aria-label="Toggle expanded" aria-expanded="false" aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/media/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xfmgNewMedia">New media</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/media-comments/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xfmgNewComments">New comments</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/search/?type=xfmg_media" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="xfmgSearchMedia">Search media</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navxa_ubs">
+							
+
+	<div class="p-navEl is-selected" data-has-children="true">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/blog/" class="p-navEl-link p-navEl-link--splitMenu " data-nav-id="xa_ubs">Blogs</a>
+
+
+			<a data-xf-key="5" data-xf-click="menu" data-menu-pos-ref="&lt; .p-navEl" class="p-navEl-splitTrigger" role="button" tabindex="0" aria-label="Toggle expanded" aria-expanded="false" aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-blog-entries/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xa_ubsNewBlogEntries">New entries</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-comments/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " rel="nofollow" data-nav-id="xa_ubsNewComments">New comments</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/blog/blog/" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="xa_ubsBlogList">Blog list</a>
+
+	
+
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/search/?type=ubs_blog_entry" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="xa_ubsSearchBlogs">Search blogs</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navtl_groups">
+							
+
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/groups/" class="p-navEl-link p-navEl-link--splitMenu " data-nav-id="tl_groups">Groups</a>
+
+
+			<a data-xf-key="6" data-xf-click="menu" data-menu-pos-ref="&lt; .p-navEl" class="p-navEl-splitTrigger" role="button" tabindex="0" aria-label="Toggle expanded" aria-expanded="false" aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="https://www.edaboard.com/search/?type=tl_group" class="menu-linkRow u-indentDepth0 js-offCanvasCopy " data-nav-id="tl_groups_search">Search groups</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navhelp">
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/help" class="p-navEl-link " data-xf-key="7" data-nav-id="help">Help</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navrules">
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/help/terms/" class="p-navEl-link " data-xf-key="8" data-nav-id="rules">Rules</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li class="navdbtechCredits">
+							
+
+
+						</li>
+					
+					</ul>
+				</div><i class="hScroller-action hScroller-action--end is-active" aria-hidden="true"></i><i class="hScroller-action hScroller-action--start" aria-hidden="true"></i>
+			</div>
+
+			
+			
+			<div class="p-nav-opposite">
+				<div class="p-navgroup p-account p-navgroup--guest">
+					
+						<a href="https://www.edaboard.com/login/" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--logIn" data-xf-click="overlay" data-follow-redirects="on">
+							<span class="p-navgroup-linkText">Log in</span>
+						</a>
+						
+							<a href="https://www.edaboard.com/register/" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--register" data-xf-click="overlay" data-follow-redirects="on">
+								<span class="p-navgroup-linkText">Register</span>
+							</a>
+						
+					
+					
+					
+				</div>
+
+				<div class="p-navgroup p-discovery">
+					<a href="https://www.edaboard.com/whats-new/" class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--whatsnew" aria-label="What&#39;s new" title="What&#39;s new">
+						<i aria-hidden="true"></i>
+						<span class="p-navgroup-linkText">What's new</span>
+					</a>
+
+					
+						<a href="https://www.edaboard.com/search/" class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--search" data-xf-click="menu" data-xf-key="/" aria-label="Search" aria-expanded="false" aria-haspopup="true" title="Search">
+							<i aria-hidden="true"></i>
+							<span class="p-navgroup-linkText">Search</span>
+						</a>
+						<div class="menu menu--structural menu--wide" data-menu="menu" aria-hidden="true">
+							<form action="https://www.edaboard.com/search/search" method="post" class="menu-content" data-xf-init="quick-search" data-autocomplete-filter="[&quot;resource&quot;,&quot;post&quot;]">
+
+								<h3 class="menu-header">Search</h3>
+								
+								<div class="menu-row">
+									
+										<div class="inputGroup inputGroup--joined">
+											<input type="text" class="input" name="keywords" placeholder="Search…" aria-label="Search" data-menu-autofocus="true" autocomplete="off">
+											
+
+
+	
+
+
+
+			<select name="constraints" class="js-quickSearch-constraint input" aria-label="Search within" style="width: 136px; flex-grow: 0; flex-shrink: 0;">
+				<option value="">Everywhere</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;}">Blogs</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;,&quot;c&quot;:{&quot;blogs&quot;:[219]}}">This blog</option>
+<option value="{&quot;search_type&quot;:&quot;ubs_blog_entry&quot;,&quot;c&quot;:{&quot;categories&quot;:[79],&quot;child_categories&quot;:1}}" selected="selected">This category</option>
+
+			</select>
+		
+										</div>
+									
+								</div>
+
+
+	
+		<div class="menu-row">
+			
+				
+	
+		
+		
+
+		
+			<label class="iconic"><input type="checkbox" name="c[container_only]" value="1"><i aria-hidden="true"></i><span class="iconic-label">Search only containers</span></label>
+
+		
+	
+
+			
+		</div>
+	
+
+								
+								<div class="menu-row">
+									<label class="iconic"><input type="checkbox" name="c[title_only]" value="1"><i aria-hidden="true"></i><span class="iconic-label">Search titles only</span></label>
+
+								</div>
+								
+								<div class="menu-row">
+									<div class="inputGroup">
+										<span class="inputGroup-text" id="ctrl_search_menu_by_member">By:</span>
+										<input type="text" class="input" name="c[users]" data-xf-init="auto-complete" placeholder="Member" aria-labelledby="ctrl_search_menu_by_member" autocomplete="off">
+									</div>
+								</div>
+								<div class="menu-footer">
+									<span class="menu-footer-controls">
+										<button type="submit" class="button--primary button button--icon button--icon--search"><span class="button-text">Search</span></button>
+										<a href="https://www.edaboard.com/search/" class="button"><span class="button-text">Advanced search…</span></a>
+									</span>
+								</div>
+
+								<input type="hidden" name="_xfToken" value="1658784497,e9ce5124f650feceecb6cc76f939acb7">
+							</form>
+						</div>
+					
+				</div>
+			</div>
+				
+
+		</div>
+	</nav>
+	</div>
+
+	</div>
+	
+	
+		<div class="p-sectionLinks--wrapper">
+		<div class="p-sectionLinks">
+			<div class="p-sectionLinks-inner">
+				<div class="hScroller" data-xf-init="h-scroller">
+				<div class="hScroller-scroll is-calculated" style="margin-bottom: -47px;">
+					<ul class="p-sectionLinks-list">
+					
+						<li>
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-blog-entries/" class="p-navEl-link " rel="nofollow" data-xf-key="alt+1" data-nav-id="xa_ubsNewBlogEntries">New entries</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li>
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/whats-new/ubs-comments/" class="p-navEl-link " rel="nofollow" data-xf-key="alt+2" data-nav-id="xa_ubsNewComments">New comments</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li>
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/blog/blog/" class="p-navEl-link " data-xf-key="alt+3" data-nav-id="xa_ubsBlogList">Blog list</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+						<li>
+							
+
+	<div class="p-navEl ">
+		
+
+			
+	
+	<a href="https://www.edaboard.com/search/?type=ubs_blog_entry" class="p-navEl-link " data-xf-key="alt+4" data-nav-id="xa_ubsSearchBlogs">Search blogs</a>
+
+
+			
+
+		
+		
+	</div>
+
+
+						</li>
+					
+					</ul>
+				</div><i class="hScroller-action hScroller-action--end" aria-hidden="true"></i><i class="hScroller-action hScroller-action--start" aria-hidden="true"></i>
+				</div>
+			<div class="p-sectionLinks-right">
+				
+				
+			</div>
+			</div>
+		</div>
+		</div>
+	
+
+
+
+<div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" aria-hidden="true" data-ocm-builder="navigation">
+	<div class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+	<div class="offCanvasMenu-content">
+		<div class="offCanvasMenu-content--inner">
+		
+		<div class="offCanvasMenu-header">
+			Menu
+			<a class="offCanvasMenu-closer" data-menu-close="true" role="button" tabindex="0" aria-label="Close"></a>
+		</div>
+		
+			<div class="p-offCanvasRegisterLink">
+				<div class="offCanvasMenu-linkHolder">
+					<a href="https://www.edaboard.com/login/" class="offCanvasMenu-link" data-xf-click="overlay" data-menu-close="true">
+						Log in
+					</a>
+				</div>
+				<hr class="offCanvasMenu-separator">
+				
+					<div class="offCanvasMenu-linkHolder">
+						<a href="https://www.edaboard.com/register/" class="offCanvasMenu-link" data-xf-click="overlay" data-menu-close="true">
+							Register
+						</a>
+					</div>
+					<hr class="offCanvasMenu-separator">
+				
+			</div>
+		
+		<div class="offCanvasMenu-subHeader">Navigation</div>
+		<div class="js-offCanvasNavTarget"></div>
+		<div class="offCanvasMenu-installBanner js-installPromptContainer" style="display: none;" data-xf-init="install-prompt">
+			<div class="offCanvasMenu-installBanner-header">Install the app</div>
+			<button type="button" class="js-installPromptButton button"><span class="button-text">Install</span></button>
+		</div>
+
+			<div class="offCanvasMenu-subHeader">More options</div>
+					
+			
+			
+				
+					<div class="offCanvasMenu-linkHolder">
+						<a href="https://www.edaboard.com/misc/contact" class="offCanvasMenu-link" data-menu-close="true" data-nav-id="contactUs" data-xf-click="overlay">Contact us</a>
+					</div>
+				
+			
+			<div class="offCanvasMenu-linkHolder">
+				<a class="offCanvasMenu-link" data-menu-close="true" data-nav-id="closeMenu" role="button" tabindex="0" aria-label="Close">Close Menu</a>
+			</div>
+			
+		</div>
+
+	</div>
+</div>
+
+	
+	
+<div class="p-body">
+	<div class="p-body-inner">
+		
+			
+
+<div class="xb-welcome-notice" style="display: block;">
+	<div class="xb-welcome-notice--mask">
+		<div class="xb-welcome-notice--inner">
+			<div class="xb-welcome-notice--title">
+			
+				<h3>Welcome to EDAboard.com</h3>
+			
+			
+				<h4>Welcome to our site! EDAboard.com is an international Electronics Discussion Forum focused on EDA software, circuits, schematics, books, theory, papers, asic, pld, 8051, DSP, Network, RF, Analog Design, PCB, Service Manuals... and a whole lot more! To participate you need to register. Registration is free. Click here to register now.</h4>
+			
+			</div>
+			<div class="xb-welcome-notice--buttons">
+			
+			<a href="https://www.edaboard.com/register/" class="button" data-xf-click="overlay" data-follow-redirects="on"><span class="button-text">Register</span></a>
+			
+
+			<a href="https://www.edaboard.com/login/" class="button--cta button" rel="nofollow" data-xf-click="overlay" data-menu-close="true">
+				<span class="button-text">Log in</span>
+			</a>
+			</div>
+		</div>
+		</div>
+</div>
+
+		
+		<!--XF:EXTRA_OUTPUT-->
+
+		
+
+		
+
+		 
+		
+
+	
+
+		
+		<div class="deskContent"><center><div id="div-gpt-eda-header">
+			<script>
+		    googletag.cmd.push(function() { googletag.display('div-gpt-eda-header'); });
+		  </script>
+		</div>
+		</center></div>
+
+	
+
+
+		
+	
+		<ul class="p-breadcrumbs " itemscope="" itemtype="https://schema.org/BreadcrumbList">
+		
+			
+
+			
+			
+
+			
+
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/" itemprop="item">
+			<span itemprop="name">Blogs</span>
+		</a>
+		<meta itemprop="position" content="1">
+	</li>
+
+			
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/categories/uncategorized.79/" itemprop="item">
+			<span itemprop="name">Uncategorized</span>
+		</a>
+		<meta itemprop="position" content="2">
+	</li>
+
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/blog/nicikis-blog.219/" itemprop="item">
+			<span itemprop="name">niciki's Blog</span>
+		</a>
+		<meta itemprop="position" content="3">
+	</li>
+
+			
+
+		
+		</ul>
+	
+
+		
+		
+
+		
+	
+
+		
+	
+
+
+		
+		 
+			
+		
+			<div class="p-body-header">
+				
+		<div class="contentRow contentRow--hideFigureNarrow">
+			<div class="contentRow-main">
+				<div class="p-title">
+					<h1 class="p-title-value">
+						
+							
+							
+							[Keil][VSCode] Keil integration into VSCode
+						
+					</h1>
+				</div>
+				
+					<div class="p-description">
+						
+							<ul class="listInline listInline--bullet">
+								<li>
+									<i class="fa--xf fal fa-user" aria-hidden="true" title="Author"></i>
+									<span class="u-srOnly">Author</span>
+									<a href="https://www.edaboard.com/members/niciki.604754/" class="username  u-concealed" dir="auto" data-user-id="604754" data-xf-init="member-tooltip" id="js-XFUniqueId1">niciki</a>
+								</li>
+								
+								<li>
+									<i class="fa--xf fal fa-clock" aria-hidden="true" title="Create date"></i>
+									<span class="u-srOnly">Create date</span>
+
+									<a href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/" class="u-concealed"><time class="u-dt" dir="auto" datetime="2020-11-19T23:51:08+0000" data-time="1605829868" data-date-string="Nov 19, 2020" data-time-string="11:51 PM" title="Nov 19, 2020 at 11:51 PM">Nov 19, 2020</time></a>
+								</li>
+								
+																
+								
+							</ul>
+						
+					</div>
+				
+
+				
+
+	
+
+			</div>
+		</div>
+	
+			</div>
+		
+		
+		
+
+		<div class="p-body-main p-body-main--withSidebar ">
+			
+			<div class="p-body-contentCol"></div>
+			
+				<div class="p-body-sidebarCol"></div>
+			
+
+			
+
+			<div class="p-body-content">
+				
+				
+						
+				
+
+	
+
+		
+		<!-- wall paper -->
+		<div id="div-gpt-eda_wallpaper">
+			<script>
+		    googletag.cmd.push(function() { googletag.display('div-gpt-eda_wallpaper'); });
+		  </script>
+		</div>
+
+	
+
+
+				<div class="p-body-pageContent">
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+	
+
+	
+
+
+
+
+	
+
+
+
+	
+		<div class="tabs tabs--standalone">
+			<div class="hScroller" data-xf-init="h-scroller">
+				<span class="hScroller-scroll is-calculated" style="margin-bottom: -47px;">
+					<a class="tabs-tab is-active" href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/">Blog entry</a>
+					
+						
+						
+													
+						
+							<a class="tabs-tab " href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/gallery">Gallery </a>
+						
+						
+							<a class="tabs-tab " href="https://www.edaboard.com/threads/keil-vscode-keil-integration-into-vscode.395758/">Discussion </a>
+						
+					
+				</span><i class="hScroller-action hScroller-action--end" aria-hidden="true"></i><i class="hScroller-action hScroller-action--start" aria-hidden="true"></i>
+			</div>
+		</div>
+	
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+	
+		
+	
+	
+	
+
+
+	
+
+
+
+
+
+
+
+	
+		
+		
+
+		
+			
+		
+		
+	
+
+
+<div class="block">
+	
+
+	
+
+	
+	
+	<div class="block-container">
+		<div class="block-body lbContainer js-blogEntryBody" data-xf-init="lightbox" data-lb-id="blog-entry-2103" data-lb-caption-desc="niciki · Nov 19, 2020 at 11:51 PM" id="js-blogEntryBody-2103">
+
+			<div class="blogEntryBody">
+				<article class="blogEntryBody-main js-lbContainer">
+					
+						
+
+	
+
+					
+
+					
+						
+
+						<div class="bbWrapper"><b><span style="font-size: 18px">The background:</span></b><br>
+I have to use Keil in my job and honestly - I don't like it much.<br>
+The debug is great, but the editor is lacking in many features compared to other IDEs.<br>
+<br>
+I was trying to find a working extension to VSCode to integrate Keil's toolchain (build/rebuild/clean) and parse all errors/warnings/infos into VSCode.<br>
+I couldn't find a sufficient solution, so I decided to make it by myself!<br>
+The main purpose of this blog entry is to make the VSCode to be a front-end for the Keil's toolchain.<br>
+<br>
+<b><span style="font-size: 18px">The solution:<br>
+<div class="bbImageWrapper  js-lbImage" title="1638919342512.png" data-src="https://www.edaboard.com/attachments/1638919342512-png.173217/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638919342512.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638919342512.png" title="1638919342512.png" width="611" height="309" loading="lazy">
+	</div></span><br>
+<span style="font-size: 15px"><b>NOTE</b>:</span></b><span style="font-size: 15px"> It is assumed that UV4.exe and fromelf.exe (both are in Keil's folders) are in the PATH of your Windows.</span><br>
+<br>
+The solution is on gitlab:<br>
+
+	
+
+	<div class="bbCodeBlock bbCodeBlock--unfurl js-unfurl fauxBlockLink mathjax-skip" data-unfurl="true" data-result-id="1629" data-url="https://gitlab.com/niciki/keil_integration_with_vscode" data-host="gitlab.com" data-pending="false">
+		<div class="contentRow">
+			
+				<div class="contentRow-figure contentRow-figure--fixedSmall js-unfurl-figure">
+					
+						<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/gitlab_logo-7ae504fe4f68fdebb3c2034e36621930cd36ea87924c11ff65dbcb8ed50dca58.png" alt="gitlab.com" data-onerror="hide-parent">
+					
+				</div>
+			
+			<div class="contentRow-main">
+				<h3 class="contentRow-header js-unfurl-title">
+					<a href="https://gitlab.com/niciki/keil_integration_with_vscode" class="link link--external fauxBlockLink-blockLink" target="_blank" rel="nofollow ugc noopener" data-proxy-href="">
+						Daniel N / Keil_integration_into_VSCode_and_STM32CubeIDE
+					</a>
+				</h3>
+
+				<div class="contentRow-snippet js-unfurl-desc">Bunch of scripts that integrate Keil's project and toolchain into VSCode and STM32CubeIDE.</div>
+
+				<div class="contentRow-minor contentRow-minor--hideLinks">
+					<span class="js-unfurl-favicon">
+						
+							<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png" alt="gitlab.com" class="bbCodeBlockUnfurl-icon" data-onerror="hide-parent">
+						
+					</span>
+					gitlab.com
+				</div>
+			</div>
+		</div>
+	</div>
+<br>
+There is a bunch of scripts that integrates Keil's toolchain.<br>
+It builds project and parses errors/warnings/infos into VSCode - that is what I wanted.<br>
+<br>
+<b><span style="font-size: 18px">Usage:</span></b><br>
+1.  Copy <b>.vscode</b> and <b>Scripts</b> folders from that repo into the root folder of your Keil's project (with Src, Inc and perhaps MDK-ARM subfolders);<br>
+2.  Open root folder of your Keil's project by <b>Open with Code</b> context menu;<br>
+<div class="bbImageWrapper  js-lbImage" title="1621468420514.png" data-src="https://www.edaboard.com/attachments/1621468420514-png.169594/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1621468420514.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1621468420514.png" title="1621468420514.png" width="533" height="440" loading="lazy">
+	</div><br>
+<br>
+<b>NOTE:</b> If you are missing <b>Open with Code</b> option in Context Menu, then reinstall VSCode and make sure that you have checked these options:<br>
+<div class="bbImageWrapper  js-lbImage" title="1638921361777.png" data-src="https://www.edaboard.com/attachments/1638921361777-png.173228/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638921361777.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638921361777.png" title="1638921361777.png" width="494" height="374" loading="lazy">
+	</div><br>
+<br>
+<b>In VSCode:</b><br>
+3.   Navigate to your Keil's project file (.uvproj or .uvprojx) and open it;<br>
+4.  Hit F1 and start typing <b>Run Build Task...</b> Hit Enter and choose from the list <b>Import settings from Keil's v4 or v5 project</b> - that will import includes, defines and output paths for all project's targets from opened project file;<br>
+VSCode should look similar to the example below:<br>
+<div class="bbImageWrapper  js-lbImage" title="1638919803161.png" data-src="https://www.edaboard.com/attachments/1638919803161-png.173218/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638919803161.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638919803161.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638919803161.png" title="1638919803161.png" width="1662" height="796" loading="lazy">
+	</div><br>
+<br>
+After executing <b>Import settings from Keil's v4 or v5 project</b> task, terminal tab should look like as follows:<br>
+<div class="bbImageWrapper  js-lbImage" title="1638920109855.png" data-src="https://www.edaboard.com/attachments/1638920109855-png.173220/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920109855.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638920109855.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638920109855.png" title="1638920109855.png" width="1533" height="264" loading="lazy">
+	</div><br>
+<br>
+5.  Choose Keil's project target by <b>C/C++: Select a Configuration...</b> command in VSCode - as before hit F1 and start typing <b>C/C++: Select a Configuration...</b><br>
+I have set my custom shortcut Ctrl+T for this command - it is not a default shortcut BTW.<br>
+Hit Enter and choose your target.<br>
+<b><span style="font-size: 15px"><b>NOTE</b>:</span></b> If you don't see this command, then probably you are missing a C/C++ plugin.<br>
+<div class="bbImageWrapper  js-lbImage" title="1638920276239.png" data-src="https://www.edaboard.com/attachments/1638920276239-png.173221/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638920276239.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638920276239.png" title="1638920276239.png" width="711" height="141" loading="lazy">
+	</div><br>
+<br>
+Choose yours Keil's project target. My example targets are as below:<br>
+<div class="bbImageWrapper  js-lbImage" title="1638921243483.png" data-src="https://www.edaboard.com/attachments/1638921243483-png.173226/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638921243483.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638921243483.png" title="1638921243483.png" width="627" height="144" loading="lazy">
+	</div><br>
+<br>
+6.  Run again <b>Run Build Task...</b> and choose desired feature, e.g. build/rebuild/clean.<br>
+<div class="bbImageWrapper  js-lbImage" title="1638920478154.png" data-src="https://www.edaboard.com/attachments/1638920478154-png.173223/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920478154.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638920478154.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638920478154.png" title="1638920478154.png" width="1530" height="682" loading="lazy">
+	</div><br>
+<br>
+<b>NOTE</b>: It works because I prepared ".vscode/tasks.json" in a way that it calls proper scripts and parses build log for errors/warnings/infos - check out tasks.json file if you like.<br>
+<div class="bbImageWrapper  js-lbImage" title="1638920755277.png" data-src="https://www.edaboard.com/attachments/1638920755277-png.173224/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920755277.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638920755277.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638920755277.png" title="1638920755277.png" width="1920" height="968" loading="lazy">
+	</div><br>
+<div class="bbImageWrapper  js-lbImage" title="1638920872287.png" data-src="https://www.edaboard.com/attachments/1638920872287-png.173225/" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920872287.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/1638920872287.png" data-url="" class="bbImage" data-zoom-target="1" style="" alt="1638920872287.png" title="1638920872287.png" width="1553" height="518" loading="lazy">
+	</div><br>
+<br>
+<hr><b><span style="font-size: 18px">Available features:</span></b><br>
+<br>
+<span style="font-size: 18px"><b>Init:</b></span><br>
+<ul>
+<li data-xf-list-type="ul"><b>Import settings from Keil's v4 or v5 project</b> - imports includes, defines and output paths for all project's targets</li>
+</ul><br>
+<span style="font-size: 18px"><b>Building:</b></span><br>
+<ul>
+<li data-xf-list-type="ul"><b>Build by Keil</b> - builds Keil's project for a chosen target</li>
+<li data-xf-list-type="ul"><b>ALL build by Keil</b> - builds Keil's project for all targets (make sure that all targets have different output paths in Keil's project)</li>
+<li data-xf-list-type="ul"><b>[DBG] ALL build by Keil</b> - builds Keil's project for all targets that name starts with "[DBG]..."</li>
+<li data-xf-list-type="ul"><b>[REL] ALL build by Keil</b> - builds Keil's project for all targets that name starts with "[REL]..."</li>
+</ul><br>
+<span style="font-size: 18px"><b>Rebuilding:</b></span><br>
+<ul>
+<li data-xf-list-type="ul"><b>Rebuild by Keil</b> - rebuilds Keil's project for a chosen target</li>
+<li data-xf-list-type="ul"><b>[DBG] ALL rebuild by Keil</b> - rebuilds Keil's project for all targets that name starts with "[DBG]..."</li>
+<li data-xf-list-type="ul"><b>[REL] ALL rebuild by Keil</b> - rebuilds Keil's project for all targets that name starts with "[REL]..."</li>
+<li data-xf-list-type="ul"><b>ALL rebuild by Keil</b> - rebuilds Keil's project for all targets (make sure that all targets have different output paths in Keil's project)</li>
+</ul><br>
+<span style="font-size: 18px"><b>Cleaning:</b></span><br>
+<ul>
+<li data-xf-list-type="ul"><b>ALL clean by Keil</b> - cleans Keil's output files for all targets</li>
+</ul><br>
+<b><span style="font-size: 18px">Programming:</span></b><br>
+<ul>
+<li data-xf-list-type="ul"><b>Program Flash by Keil</b> - downloads the application to Flash using Keil's settings of a chosen target and available programming device</li>
+</ul><br>
+<b><span style="font-size: 18px">Opening in Keil:</span></b><br>
+<ul>
+<li data-xf-list-type="ul"><b>Open project in Keil</b> - opens Keil's project in native IDE</li>
+</ul><br>
+<hr><b><span style="font-size: 18px">Customisable summary in Python:</span></b><br>
+<br>
+
+	
+
+	
+	
+		
+		
+
+		
+		
+	
+
+
+	<div class="bbImageWrapper  js-lbImage" title="customisable_summary.png" data-src="https://gitlab.com/niciki/keil_integration_with_vscode/-/raw/master/customisable_summary.png" data-lb-sidebar-href="" data-lb-caption-extra-html="" data-single-image="1" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;customisable_summary.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+		<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/customisable_summary.png" data-url="https://gitlab.com/niciki/keil_integration_with_vscode/-/raw/master/customisable_summary.png" class="bbImage" data-zoom-target="1" style="" alt="customisable_summary.png" title="" width="" height="" loading="lazy">
+	</div>
+
+
+<br>
+<br>
+Now the VSCode has the Keil's toolchain. You can also add a debug configuration, if you like.<br>
+Debug configuration steps for VSCode are described in <a href="https://www.edaboard.com/blog/debug-keil-vscode-how-to-debug-keil-project-in-vscode.2128/" class="link link--internal">this blog entry</a>.<br>
+<br>
+------------------------------------------------------<br>
+Is this blog entry helpful or does it need an improvement?<br>
+Please leave the comment below.</div>
+					
+
+					
+						
+
+	
+
+					
+
+					
+
+					
+
+					
+						
+							
+							<ul class="attachmentList blogEntryBody-attachments" style="display:none;">
+								
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-165777"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1605829450079-png.165777/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1605829450079.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/95810-54b01656300555e8d6fc46d86cfe6132.jpg" alt="1605829450079.png" width="150" height="74" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1605829450079.png">1605829450079.png</span>
+				<div class="file-meta">
+					18.9 KB
+					
+					· Views: 1,317
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168702"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/08-png.168702/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;08.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98735-a2c88aec610a4a3dbb63c074308c9cc3.jpg" alt="08.png" width="109" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="08.png">08.png</span>
+				<div class="file-meta">
+					45.4 KB
+					
+					· Views: 436
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168703"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/09-png.168703/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;09.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98736-9109d5c9e59d11379e3f216b7cef4d55.jpg" alt="09.png" width="150" height="74" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="09.png">09.png</span>
+				<div class="file-meta">
+					161.6 KB
+					
+					· Views: 435
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168704"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/10-png.168704/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;10.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98737-402de126fffe4ff2b9b99cf8744ac436.jpg" alt="10.png" width="150" height="83" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="10.png">10.png</span>
+				<div class="file-meta">
+					251.5 KB
+					
+					· Views: 430
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168705"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/13-png.168705/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;13.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98738-6d047e347bf185e343d09dc0dd31c5a8.jpg" alt="13.png" width="150" height="80" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="13.png">13.png</span>
+				<div class="file-meta">
+					149.6 KB
+					
+					· Views: 403
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168706"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/14-png.168706/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;14.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98739-89da43e162ecdce6a6f296f321f99394.jpg" alt="14.png" width="150" height="80" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="14.png">14.png</span>
+				<div class="file-meta">
+					191.7 KB
+					
+					· Views: 396
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-168707"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/15-png.168707/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;15.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/98740-8ee3a621b95da3e510b460f5b813812f.jpg" alt="15.png" width="150" height="80" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="15.png">15.png</span>
+				<div class="file-meta">
+					112.4 KB
+					
+					· Views: 383
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169307"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1620336030266-png.169307/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1620336030266.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99340-3ff83723e6aa62b230f7938d3524ed9e.jpg" alt="1620336030266.png" width="198" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1620336030266.png">1620336030266.png</span>
+				<div class="file-meta">
+					24.9 KB
+					
+					· Views: 1,624
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169416"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1620855942370-png.169416/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1620855942370.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99449-444df9178efc305632db870fa2d4f0b1.jpg" alt="1620855942370.png" width="289" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1620855942370.png">1620855942370.png</span>
+				<div class="file-meta">
+					19.9 KB
+					
+					· Views: 211
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169417"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1620856098931-png.169417/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1620856098931.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99450-4f55f4bfe63b9a594ba4f44a432fc150.jpg" alt="1620856098931.png" width="288" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1620856098931.png">1620856098931.png</span>
+				<div class="file-meta">
+					19 KB
+					
+					· Views: 1,768
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169595"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1621468431555-png.169595/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1621468431555.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99628-56a26aa2271e261a19faef5dd56e5f00.jpg" alt="1621468431555.png" width="307" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1621468431555.png">1621468431555.png</span>
+				<div class="file-meta">
+					161.4 KB
+					
+					· Views: 1,559
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169596"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1621468441744-png.169596/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1621468441744.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99629-eb66c0e2bf21ddbd48cbfd804ddd2e20.jpg" alt="1621468441744.png" width="275" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1621468441744.png">1621468441744.png</span>
+				<div class="file-meta">
+					257.2 KB
+					
+					· Views: 1,517
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169597"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1621468459607-png.169597/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1621468459607.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99630-42a2032a3dbe96a439bb6256658a3f62.jpg" alt="1621468459607.png" width="283" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1621468459607.png">1621468459607.png</span>
+				<div class="file-meta">
+					149.2 KB
+					
+					· Views: 1,456
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169598"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1621468475152-png.169598/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1621468475152.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99631-ed832f669d4c6cad2cc97fc7c1cde72d.jpg" alt="1621468475152.png" width="283" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1621468475152.png">1621468475152.png</span>
+				<div class="file-meta">
+					189.5 KB
+					
+					· Views: 1,388
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-169599"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1621468486177-png.169599/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1621468486177.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/99632-198fe2d2996cc992b3b229a8dc5f962d.jpg" alt="1621468486177.png" width="283" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1621468486177.png">1621468486177.png</span>
+				<div class="file-meta">
+					112.5 KB
+					
+					· Views: 1,365
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-172331"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1633732761765-png.172331/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1633732761765.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/102364-930f5dab3ba6e417c55bebfd35d78100.jpg" alt="1633732761765.png" width="206" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1633732761765.png">1633732761765.png</span>
+				<div class="file-meta">
+					9.5 KB
+					
+					· Views: 504
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-172332"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1633732768858-png.172332/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1633732768858.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/102365-8306b018a5f6c2738aa3013dbb3d667c.jpg" alt="1633732768858.png" width="202" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1633732768858.png">1633732768858.png</span>
+				<div class="file-meta">
+					13.4 KB
+					
+					· Views: 110
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-172333"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1633732786545-png.172333/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1633732786545.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/102366-8306b018a5f6c2738aa3013dbb3d667c.jpg" alt="1633732786545.png" width="202" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1633732786545.png">1633732786545.png</span>
+				<div class="file-meta">
+					13.4 KB
+					
+					· Views: 500
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-173219"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1638920057034-png.173219/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920057034.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/103252-da473aac387f34680d3088de09f0b07f.jpg" alt="1638920057034.png" width="1082" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1638920057034.png">1638920057034.png</span>
+				<div class="file-meta">
+					27.8 KB
+					
+					· Views: 78
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-173222"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1638920446144-png.173222/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638920446144.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/103255-1cc167609fe8a8d84e2e064f7f5002da.jpg" alt="1638920446144.png" width="323" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1638920446144.png">1638920446144.png</span>
+				<div class="file-meta">
+					100.5 KB
+					
+					· Views: 75
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+										
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-173227"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/1638921313367-png.173227/" target="_blank" data-fancybox="lb-undefined" data-caption="&lt;h4&gt;1638921313367.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;&quot; class=&quot;js-lightboxCloser&quot;&gt;&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/103260-e08f62f48524659604a633deebca8c92.jpg" alt="1638921313367.png" width="199" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="1638921313367.png">1638921313367.png</span>
+				<div class="file-meta">
+					24.9 KB
+					
+					· Views: 158
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+									
+								
+							</ul>
+						
+					
+
+					
+
+					
+
+					<div class="reactionsBar js-reactionsList is-active">
+						
+	
+	
+		<ul class="reactionSummary">
+		
+			<li><span class="reaction reaction--small reaction--1" data-reaction-id="1"><i aria-hidden="true"></i><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="reaction-sprite js-reaction" alt="Like" title="Like"></span></li>
+		
+		</ul>
+	
+
+
+<span class="u-srOnly">Reactions:</span>
+<a class="reactionsBar-link" href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/reactions" data-xf-click="overlay" data-cache="false" rel="nofollow"><bdi>FlyingDutch</bdi></a>
+					</div>
+
+					<div class="js-historyTarget toggleTarget" data-href="trigger-href"></div>
+				</article>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+	<div class="block">
+		<div class="blockMessage blockMessage--none">
+			
+				
+
+	
+		
+
+		<div class="shareButtons shareButtons--iconic" data-xf-init="share-buttons" data-page-url="" data-page-title="" data-page-desc="" data-page-image="">
+			
+				<span class="shareButtons-label">Share:</span>
+			
+
+			<div class="shareButtons-buttons">
+				
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--facebook" data-href="https://www.facebook.com/sharer.php?u={url}" id="js-XFUniqueId2">
+							<i aria-hidden="true"></i>
+							<span>Facebook</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--twitter" data-href="https://twitter.com/intent/tweet?url={url}&amp;text={title}" id="js-XFUniqueId3">
+							<i aria-hidden="true"></i>
+							<span>Twitter</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--reddit" data-href="https://reddit.com/submit?url={url}&amp;title={title}" id="js-XFUniqueId4">
+							<i aria-hidden="true"></i>
+							<span>Reddit</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--pinterest" data-href="https://pinterest.com/pin/create/bookmarklet/?url={url}&amp;description={title}&amp;media={image}" id="js-XFUniqueId5">
+							<i aria-hidden="true"></i>
+							<span>Pinterest</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--tumblr" data-href="https://www.tumblr.com/widgets/share/tool?canonicalUrl={url}&amp;title={title}" id="js-XFUniqueId6">
+							<i aria-hidden="true"></i>
+							<span>Tumblr</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--whatsApp" data-href="https://api.whatsapp.com/send?text={title} {url}" id="js-XFUniqueId7">
+							<i aria-hidden="true"></i>
+							<span>WhatsApp</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--email" data-href="mailto:?subject={title}&amp;body={url}" id="js-XFUniqueId8">
+							<i aria-hidden="true"></i>
+							<span>Email</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--share is-hidden" data-xf-init="web-share" data-title="" data-text="" data-url="" data-hide=".shareButtons-button:not(.shareButtons-button--share)" id="js-XFUniqueId9">
+
+							<i aria-hidden="true"></i>
+							<span>Share</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--link" data-clipboard="{url}" id="js-XFUniqueId10">
+							<i aria-hidden="true"></i>
+							<span>Link</span>
+						</a>
+					
+				
+			</div>
+		</div>
+	
+
+
+				
+			
+		</div>
+	</div>	
+
+
+
+
+
+
+
+
+
+	<div class="columnContainer" data-xf-init="lightbox" data-lb-id="blog-entry-2103" data-lb-universal="0">
+
+		<span class="u-anchorTarget" id="comments"></span>		
+		
+		<div class="columnContainer-comments">
+			
+	
+
+	<div class="block block--messages" data-xf-init="" data-type="ubs_comment" data-href="/inline-mod/">
+
+		
+	
+
+
+		<div class="block-outer"></div>
+
+		<div class="block-container" data-xf-init="select-to-quote" data-message-selector=".js-comment">
+
+			<h3 class="block-header">Comments</h3>
+			<div class="block-body js-replyNewCommentContainer">
+				
+					<span class="u-anchorTarget" id="comments"></span>
+					
+						
+							
+	
+
+	<article class="message message--simple message--comment js-comment js-inlineModContainer" data-author="ShelbyGH" data-content="ubs-comment-564" id="js-comment-564">
+
+		<span class="u-anchorTarget" id="ubs-comment-564"></span>
+
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+				
+	<header itemscope="" itemtype="https://schema.org/Person" class="message-user">
+		<meta itemprop="name" content="ShelbyGH">
+		<div class="message-avatar">
+			<div class="message-avatar-wrapper">
+				<a href="https://www.edaboard.com/members/shelbygh.665618/" class="avatar avatar--s" data-user-id="665618" data-xf-init="member-tooltip" id="js-XFUniqueId11">
+			<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/041e69543e7e64096ab9c8c8da918688.jpeg" srcset="https://secure.gravatar.com/avatar/041e69543e7e64096ab9c8c8da918688?s=96 2x" alt="ShelbyGH" class="avatar-u665618-s" width="48" height="48" loading="lazy" itemprop="image"> 
+		</a>
+			</div>
+		</div>
+		<span class="message-userArrow"></span>
+	</header>
+
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="js-quickEditTarget">
+					<div class="message-content js-messageContent">
+						<header class="message-attribution message-attribution--plain">
+							<ul class="listInline listInline--bullet">
+								<li class="message-attribution-user">
+									<a href="https://www.edaboard.com/members/shelbygh.665618/" class="avatar avatar--xxs" data-user-id="665618" data-xf-init="member-tooltip" id="js-XFUniqueId12">
+			<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/041e69543e7e64096ab9c8c8da918688.jpeg" alt="ShelbyGH" class="avatar-u665618-s" width="48" height="48" loading="lazy"> 
+		</a>
+									<h4 class="attribution"><a href="https://www.edaboard.com/members/shelbygh.665618/" class="username " dir="auto" data-user-id="665618" data-xf-init="member-tooltip" id="js-XFUniqueId13">ShelbyGH</a></h4>
+								</li>
+								<li>
+									<a href="https://www.edaboard.com/blog/comments/564/" class="u-concealed"><time class="u-dt" dir="auto" datetime="2022-02-11T11:00:32+0000" data-time="1644577232" data-date-string="Feb 11, 2022" data-time-string="11:00 AM" title="Feb 11, 2022 at 11:00 AM">Feb 11, 2022</time></a>
+								</li>
+							</ul>
+						</header>
+
+						
+						
+						
+
+						<div class="message-userContent lbContainer js-lbContainer" data-lb-id="ubs_comment-564" data-lb-caption-desc="ShelbyGH · Feb 11, 2022 at 11:00 AM">
+
+							<article class="message-body js-selectToQuote">
+								<div class="bbWrapper">hello! many thanks for the work done! I can't figure out how to make a summary output. I have these fields blank.<br>
+The _summary.bat file is not working correctly in my experience</div>
+								<div class="js-selectToQuoteEnd">&nbsp;</div>
+							</article>
+
+							
+								
+	
+		
+		<section class="message-attachments">
+			<h4 class="block-textHeader">Attachments</h4>
+			<ul class="attachmentList">
+				
+					
+						
+	<li class="file file--linked">
+		<a class="u-anchorTarget" id="attachment-174354"></a>
+		
+			
+	
+		
+		
+
+		
+		
+	
+
+
+			
+<a class="file-preview js-lbImage" data-lb-sidebar-href="" data-lb-caption-extra-html="" href="https://www.edaboard.com/attachments/2022-02-11_13-59-51-png.174354/" target="_blank" data-fancybox="lb-ubs_comment-564" data-caption="&lt;h4&gt;2022-02-11_13-59-51.png&lt;/h4&gt;&lt;p&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;www.edaboard.com&amp;#x2F;blog&amp;#x2F;keil-vscode-keil-integration-into-vscode.2103&amp;#x2F;#ubs_comment-564&quot; class=&quot;js-lightboxCloser&quot;&gt;ShelbyGH · Feb 11, 2022 at 11:00 AM&lt;/a&gt;&lt;/p&gt;" style="cursor: pointer;">
+				<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/104387-a9f100add80b1700f3e80ee001dd8bd9.jpg" alt="2022-02-11_13-59-51.png" width="526" height="150" loading="lazy">
+			</a>
+		
+
+		<div class="file-content">
+			<div class="file-info">
+				<span class="file-name" title="2022-02-11_13-59-51.png">2022-02-11_13-59-51.png</span>
+				<div class="file-meta">
+					9.5 KB
+					
+					· Views: 77
+					
+				</div>
+			</div>
+		</div>
+	</li>
+
+					
+				
+			</ul>
+		</section>
+	
+
+							
+						</div>
+
+						
+
+						
+							
+	
+
+						
+					</div>
+
+					<footer class="message-footer">
+						
+
+						<div class="reactionsBar js-reactionsList ">
+							
+						</div>
+					</footer>
+
+					<div class="js-historyTarget toggleTarget" data-href="trigger-href"></div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+						
+					
+						
+							
+	
+
+	<article class="message message--simple message--comment js-comment js-inlineModContainer" data-author="niciki" data-content="ubs-comment-565" id="js-comment-565">
+
+		<span class="u-anchorTarget" id="ubs-comment-565"></span>
+
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+				
+	<header itemscope="" itemtype="https://schema.org/Person" class="message-user">
+		<meta itemprop="name" content="niciki">
+		<div class="message-avatar">
+			<div class="message-avatar-wrapper">
+				<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--s avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId14">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+			</div>
+		</div>
+		<span class="message-userArrow"></span>
+	</header>
+
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="js-quickEditTarget">
+					<div class="message-content js-messageContent">
+						<header class="message-attribution message-attribution--plain">
+							<ul class="listInline listInline--bullet">
+								<li class="message-attribution-user">
+									<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId15">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+									<h4 class="attribution"><a href="https://www.edaboard.com/members/niciki.604754/" class="username " dir="auto" data-user-id="604754" data-xf-init="member-tooltip" id="js-XFUniqueId16">niciki</a></h4>
+								</li>
+								<li>
+									<a href="https://www.edaboard.com/blog/comments/565/" class="u-concealed"><time class="u-dt" dir="auto" datetime="2022-03-18T20:46:54+0000" data-time="1647636414" data-date-string="Mar 18, 2022" data-time-string="8:46 PM" title="Mar 18, 2022 at 8:46 PM">Mar 18, 2022</time></a>
+								</li>
+							</ul>
+						</header>
+
+						
+						
+						
+
+						<div class="message-userContent lbContainer js-lbContainer" data-lb-id="ubs_comment-565" data-lb-caption-desc="niciki · Mar 18, 2022 at 8:46 PM">
+
+							<article class="message-body js-selectToQuote">
+								<div class="bbWrapper">Thank you ShelbyGH for sharing your experience and reporting the issue.<br>
+<br>
+This was already fixed and answered here:<br>
+
+	
+
+	<div class="bbCodeBlock bbCodeBlock--unfurl js-unfurl fauxBlockLink mathjax-skip" data-unfurl="true" data-result-id="113159" data-url="https://gitlab.com/niciki/keil_integration_with_vscode/-/issues/19" data-host="gitlab.com" data-pending="false">
+		<div class="contentRow">
+			
+				<div class="contentRow-figure contentRow-figure--fixedSmall js-unfurl-figure">
+					
+						<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/gitlab_logo-7ae504fe4f68fdebb3c2034e36621930cd36ea87924c11ff65dbcb8ed50dca58(1).png" alt="gitlab.com" data-onerror="hide-parent">
+					
+				</div>
+			
+			<div class="contentRow-main">
+				<h3 class="contentRow-header js-unfurl-title">
+					<a href="https://gitlab.com/niciki/keil_integration_with_vscode/-/issues/19" class="link link--external fauxBlockLink-blockLink" target="_blank" rel="nofollow ugc noopener" data-proxy-href="">
+						_summary.bat (#19) · Issues · Daniel "Thready" Nitecki / Keil_integration_into_VSCode_and_STM32CubeIDE
+					</a>
+				</h3>
+
+				<div class="contentRow-snippet js-unfurl-desc">hello! many thanks for the work done! I can't figure out how to make a summary output. I have these fields blank. The _summary.bat file is not working...</div>
+
+				<div class="contentRow-minor contentRow-minor--hideLinks">
+					<span class="js-unfurl-favicon" style="display: none;">
+						
+							<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/saved_resource" alt="gitlab.com" class="bbCodeBlockUnfurl-icon" data-onerror="hide-parent">
+						
+					</span>
+					gitlab.com
+				</div>
+			</div>
+		</div>
+	</div></div>
+								<div class="js-selectToQuoteEnd">&nbsp;</div>
+							</article>
+
+							
+						</div>
+
+						
+
+						
+							
+	
+
+						
+					</div>
+
+					<footer class="message-footer">
+						
+
+						<div class="reactionsBar js-reactionsList ">
+							
+						</div>
+					</footer>
+
+					<div class="js-historyTarget toggleTarget" data-href="trigger-href"></div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+						
+					
+				
+			</div>
+		</div>
+
+		<div class="block-outer block-outer--after">
+			
+			
+		</div>
+
+		
+	
+
+	</div>
+
+	
+	
+	
+
+
+		</div>
+	</div>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+	
+
+
+
+	
+</div>
+				
+				
+			</div>
+
+			
+				<div class="p-sidebarWrapper">
+					
+				<div class="p-body-sidebar">
+					
+					
+					
+					
+						<div class="block">
+		<div class="block-container" data-widget-id="46" data-widget-key="right_search_top" data-widget-definition="html">
+			
+				<h3 class="block-minorHeader">Part and Inventory Search</h3>
+			
+			<div class="block-body block-row">
+				<center><div id="div-gpt-eda_customsearchbox">
+	<script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-eda_customsearchbox'); });
+  </script>
+</div>
+	</center>
+			</div>
+		</div>
+	</div>
+					
+						<div class="block">
+		<div class="block-container">
+			<h3 class="block-minorHeader">Blog entry information</h3>
+			<div class="block-body block-row block-row--minor">
+				<dl class="pairs pairs--justified">
+					<dt>Author</dt>
+					<dd><a href="https://www.edaboard.com/members/niciki.604754/" class="username " dir="auto" data-user-id="604754" data-xf-init="member-tooltip" id="js-XFUniqueId17">niciki</a></dd>
+				</dl>
+				
+					<dl class="pairs pairs--justified">
+						<dt>Views</dt>
+						<dd>8,440</dd>
+					</dl>
+				
+				
+					<dl class="pairs pairs--justified">
+						<dt>Comments</dt>
+						<dd>2</dd>
+					</dl>
+				
+				
+				
+					<dl class="pairs pairs--justified">
+						<dt>Last update</dt>
+						<dd><time class="u-dt" dir="auto" datetime="2020-11-19T23:51:08+0000" data-time="1605829868" data-date-string="Nov 19, 2020" data-time-string="11:51 PM" title="Nov 19, 2020 at 11:51 PM">Nov 19, 2020</time></dd>
+					</dl>
+				
+								
+				
+
+				
+			</div>
+		</div>
+	</div>
+					
+						<div class="block">
+			<div class="block-container">
+				
+					
+						<a href="https://www.edaboard.com/threads/keil-vscode-keil-integration-into-vscode.395758/" class="button--fullWidth button"><span class="button-text">Join the discussion</span></a>
+					
+				
+			</div>
+		</div>
+					
+						<div class="block">
+			<div class="block-container">
+				<h3 class="block-minorHeader"><a href="https://www.edaboard.com/blog/categories/uncategorized.79/">More entries in Uncategorized</a></h3>
+				<div class="block-body block-row">
+					<ul class="blogEntrySidebarList">
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/arnab1233.668742/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="668742" data-xf-init="member-tooltip" style="background-color: #5cd699; color: #1a6640" id="js-XFUniqueId18">
+			<span class="avatar-u668742-s" role="img" aria-label="Arnab1233">A</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/need-help-for-op-amp-in-bgr.2163/">NEED HELP FOR OP-AMP IN BGR</a>
+
+			
+
+			<div class="contentRow-lesser">
+				Before asking the question I would like to attach the image of the BGR...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/mhoulroyd.585514/" class="avatar avatar--xxs" data-user-id="585514" data-xf-init="member-tooltip" id="js-XFUniqueId19">
+			<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/585514.jpg" alt="mhoulroyd" class="avatar-u585514-s" width="48" height="48" loading="lazy"> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/micromachined-spring-probe-components.2133/">Micromachined Spring Probe Components</a>
+
+			
+
+			<div class="contentRow-lesser">
+				Small is a relative term.  In the 1990's a small PC socket was a leaded...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId20">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/debug-keil-stm32cubeide-how-to-debug-keils-stm32-project-in-stm32cubeide.2132/">[Debug][Keil][STM32CubeIDE] How to debug Keil's STM32 project in STM32CubeIDE?</a>
+
+			
+
+			<div class="contentRow-lesser">
+				The background:
+I have found a way to debug a Keil's project using...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId21">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/debug-keil-vscode-how-to-debug-keils-stm32-project-in-vscode.2128/">[Debug][Keil][VSCode] How to debug Keil's STM32 project in VSCode?</a>
+
+			
+
+			<div class="contentRow-lesser">
+				Assumptions:
+
+STM32CubeIDE needs to be installed. At the time of...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/mhoulroyd.585514/" class="avatar avatar--xxs" data-user-id="585514" data-xf-init="member-tooltip" id="js-XFUniqueId22">
+			<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/585514.jpg" alt="mhoulroyd" class="avatar-u585514-s" width="48" height="48" loading="lazy"> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/pcb-pad-design-for-machined-interconnects.2126/">PCB pad design for machined interconnects</a>
+
+			
+
+			<div class="contentRow-lesser">
+				Introduction: 
+Specifying the correct printed circuit board pad, land...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+		</div>
+					
+						<div class="block">
+			<div class="block-container">
+				<h3 class="block-minorHeader"><a href="https://www.edaboard.com/blog/authors/niciki.604754/">More entries from niciki</a></h3>
+				<div class="block-body block-row">
+					<ul class="blogEntrySidebarList">
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId23">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/codewars-like-website-but-for-verilog.2165/">Codewars like website, but for Verilog!</a>
+
+			
+
+			<div class="contentRow-lesser">
+				I have found a nice website to learn Verilog: https://hdlbits.01xz.net...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId24">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/keil-stm32cubeide-keil-integration-into-stm32cubeide.2116/">[Keil][STM32CubeIDE] Keil integration into STM32CubeIDE</a>
+
+			
+
+			<div class="contentRow-lesser">
+				The background:
+I have to use Keil in my job and honestly - I don't...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId25">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/keil-stm32cubeide-how-to-create-stm32cubeide-project-from-keils-project-source-files.2121/">[Keil][STM32CubeIDE] How to create STM32CubeIDE project from Keil's project source files?</a>
+
+			
+
+			<div class="contentRow-lesser">
+				The background:
+I have to use Keil in my job and honestly - I don't...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId26">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/embedded-project-embedded-project-structure.2120/">[Embedded project] Embedded project structure</a>
+
+			
+
+			<div class="contentRow-lesser">
+				The background:
+Standards in general are useful as far as they are not...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<a href="https://www.edaboard.com/members/niciki.604754/" class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="604754" data-xf-init="member-tooltip" style="background-color: #6629a3; color: #bf99e6" id="js-XFUniqueId27">
+			<span class="avatar-u604754-s" role="img" aria-label="niciki">N</span> 
+		</a>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<a href="https://www.edaboard.com/blog/eclipse-useful-plugins-and-additions-for-eclipse-vhdl-verilog-tcl.2118/">[Eclipse] Useful plugins and additions for Eclipse (VHDL/Verilog/TCL)</a>
+
+			
+
+			<div class="contentRow-lesser">
+				The background:
+In this blog entry I have shown one way to get a...
+			</div>
+			
+		</div>
+	</div>
+
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+		</div>
+					
+						<div class="block">
+				<div class="block-container">
+					
+						<h3 class="block-minorHeader">Share this entry</h3>
+						
+							<div class="block-body block-row block-row--separated">
+								
+									
+
+	
+		
+
+		<div class="shareButtons shareButtons--iconic" data-xf-init="share-buttons" data-page-url="" data-page-title="" data-page-desc="" data-page-image="">
+			
+
+			<div class="shareButtons-buttons">
+				
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--facebook" data-href="https://www.facebook.com/sharer.php?u={url}" id="js-XFUniqueId28">
+							<i aria-hidden="true"></i>
+							<span>Facebook</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--twitter" data-href="https://twitter.com/intent/tweet?url={url}&amp;text={title}" id="js-XFUniqueId29">
+							<i aria-hidden="true"></i>
+							<span>Twitter</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--reddit" data-href="https://reddit.com/submit?url={url}&amp;title={title}" id="js-XFUniqueId30">
+							<i aria-hidden="true"></i>
+							<span>Reddit</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--pinterest" data-href="https://pinterest.com/pin/create/bookmarklet/?url={url}&amp;description={title}&amp;media={image}" id="js-XFUniqueId31">
+							<i aria-hidden="true"></i>
+							<span>Pinterest</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--tumblr" data-href="https://www.tumblr.com/widgets/share/tool?canonicalUrl={url}&amp;title={title}" id="js-XFUniqueId32">
+							<i aria-hidden="true"></i>
+							<span>Tumblr</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--whatsApp" data-href="https://api.whatsapp.com/send?text={title} {url}" id="js-XFUniqueId33">
+							<i aria-hidden="true"></i>
+							<span>WhatsApp</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--email" data-href="mailto:?subject={title}&amp;body={url}" id="js-XFUniqueId34">
+							<i aria-hidden="true"></i>
+							<span>Email</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--share is-hidden" data-xf-init="web-share" data-title="" data-text="" data-url="" data-hide=".shareButtons-button:not(.shareButtons-button--share)" id="js-XFUniqueId35">
+
+							<i aria-hidden="true"></i>
+							<span>Share</span>
+						</a>
+					
+
+					
+						<a class="shareButtons-button shareButtons-button--link" data-clipboard="{url}" id="js-XFUniqueId36">
+							<i aria-hidden="true"></i>
+							<span>Link</span>
+						</a>
+					
+				
+			</div>
+		</div>
+	
+
+								
+							</div>
+						
+						
+							<div class="block-body block-row block-row--separated">
+								
+									
+	
+
+	
+
+	<div class="shareInput" data-xf-init="share-input" data-success-text="">
+		
+			<label class="shareInput-label" for="_xfUid-1-1658784497">Copy URL BB code</label>
+		
+		<div class="inputGroup inputGroup--joined">
+			<div class="shareInput-button inputGroup-text js-shareButton" data-xf-init="tooltip" data-original-title="Copy to clipboard" aria-label="Copy to clipboard" id="js-XFUniqueId37">
+
+				<i aria-hidden="true"></i>
+			</div>
+			<input type="text" class="input shareInput-input js-shareInput" readonly="readonly" value="[URL=&quot;https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/&quot;][Keil][VSCode] Keil integration into VSCode[/URL]" id="_xfUid-1-1658784497">
+		</div>
+	</div>
+
+
+									
+	
+
+	
+
+	<div class="shareInput" data-xf-init="share-input" data-success-text="">
+		
+			<label class="shareInput-label" for="_xfUid-2-1658784497">Copy UBS BB code</label>
+		
+		<div class="inputGroup inputGroup--joined">
+			<div class="shareInput-button inputGroup-text js-shareButton" data-xf-init="tooltip" data-original-title="Copy to clipboard" aria-label="Copy to clipboard" id="js-XFUniqueId38">
+
+				<i aria-hidden="true"></i>
+			</div>
+			<input type="text" class="input shareInput-input js-shareInput" readonly="readonly" value="[UBS=entry, 2103][/UBS]" id="_xfUid-2-1658784497">
+		</div>
+	</div>
+
+								
+							</div>
+						
+					
+				</div>
+			</div>
+					
+					
+					</div>
+				</div>
+			
+		</div>
+
+		
+		
+		
+	
+		<ul class="p-breadcrumbs p-breadcrumbs--bottom" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+		
+			
+
+			
+			
+
+			
+
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/" itemprop="item">
+			<span itemprop="name">Blogs</span>
+		</a>
+		<meta itemprop="position" content="1">
+	</li>
+
+			
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/categories/uncategorized.79/" itemprop="item">
+			<span itemprop="name">Uncategorized</span>
+		</a>
+		<meta itemprop="position" content="2">
+	</li>
+
+			
+				
+				
+	<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+		<a href="https://www.edaboard.com/blog/blog/nicikis-blog.219/" itemprop="item">
+			<span itemprop="name">niciki's Blog</span>
+		</a>
+		<meta itemprop="position" content="3">
+	</li>
+
+			
+
+		
+		</ul>
+	
+
+		
+
+	
+
+		
+		
+				<div id="div-gpt-eda_interstitial">
+			<script>
+		    googletag.cmd.push(function() { googletag.display('div-gpt-eda_interstitial'); });
+		  </script>
+		</div>
+			
+
+	
+
+
+		
+		
+	</div>
+</div>
+
+</div> <!-- closing xb-content-wrapper -->
+<footer class="p-footer" id="footer" style="margin-bottom: 67px;">
+	<div class="p-footer--container footer-stretched">
+
+	
+	
+	
+		
+			<div class="p-footer-custom">
+	<div class="p-footer-inner">
+
+		
+
+		<div class="xb-footer--wrapper">
+
+			
+				<div class="xb-footer-block xb-footer-block-1">
+					
+					
+	
+			
+			<div class="p-header-logo p-header-logo--image">
+<img src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/edaboard-logo-ot-253w.png" alt="edaboard.com" class="logo-desktop" srcset="/styles/images/edaboard-logo-ot-253w.png">
+</div>
+			
+
+					
+						
+	
+
+	
+		<div class="p-socialDescription"><h3>Connect with us</h3></div>
+	
+	
+	<div class="shareButtons shareButtons--iconic">
+		
+
+			
+				<a class="shareButtons-button shareButtons-button--brand shareButtons-button--facebook" href="https://www.facebook.com/EDABoard/" target="_blank" rel="noopener">
+					<i aria-hidden="true"></i>
+					<span>Facebook</span>
+				</a>
+			
+
+			
+				<a class="shareButtons-button shareButtons-button--brand shareButtons-button--twitter" href="https://twitter.com/EDAboard" target="_blank" rel="noopener">
+					<i aria-hidden="true"></i>
+					<span>Twitter</span>
+				</a>
+			
+			
+			
+			
+			
+
+			
+			
+			
+			
+			
+						
+			
+			
+			
+			
+			
+						
+			
+						
+			
+			
+			
+					
+			
+				
+			
+				<a class="shareButtons-button shareButtons-button--email" href="https://www.edaboard.com/misc/contact" data-xf-click="overlay">
+					<i></i>
+					<span>Contact us</span>
+				</a>
+			
+
+			
+			
+		
+	</div>
+
+					
+				</div>
+			
+
+			
+				<div class="xb-footer-block xb-footer-block-2">
+					
+					
+	
+			
+				<div class="block" data-widget-id="0" data-widget-key="" data-widget-definition="online_statistics">
+	<div class="block-container">
+		<h3 class="block-minorHeader">Online statistics</h3>
+		<div class="block-body block-row">
+			<dl class="pairs pairs--justified">
+				<dt>Members online</dt>
+				<dd>7</dd>
+			</dl>
+
+			<dl class="pairs pairs--justified">
+				<dt>Guests online</dt>
+				<dd>308</dd>
+			</dl>
+
+			<dl class="pairs pairs--justified">
+				<dt>Total visitors</dt>
+				<dd>315</dd>
+			</dl>
+		</div>
+		<div class="block-footer">
+			Totals may include hidden visitors.
+		</div>
+	</div>
+</div>
+			
+
+					
+				</div>
+			
+
+			
+				<div class="xb-footer-block xb-footer-block-3">
+					
+					
+	
+			
+				<div class="block" data-widget-id="0" data-widget-key="" data-widget-definition="forum_statistics">
+	<div class="block-container">
+		<h3 class="block-minorHeader">Forum statistics</h3>
+		<div class="block-body block-row">
+			<dl class="pairs pairs--justified">
+				<dt>Threads</dt>
+				<dd>379,362</dd>
+			</dl>
+
+			<dl class="pairs pairs--justified">
+				<dt>Messages</dt>
+				<dd>1,666,029</dd>
+			</dl>
+
+			<dl class="pairs pairs--justified">
+				<dt>Members</dt>
+				<dd>598,580</dd>
+			</dl>
+
+			<dl class="pairs pairs--justified">
+				<dt>Latest member</dt>
+				<dd><a href="https://www.edaboard.com/members/anubhavkmr20.669210/" class="username " dir="auto" data-user-id="669210" data-xf-init="member-tooltip" id="js-XFUniqueId39">Anubhavkmr20</a></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+			
+
+					
+				</div>
+			
+
+			
+				<div class="xb-footer-block xb-footer-block-4">
+					
+					
+	
+			
+				
+	<h3><a class=" " href="https://www.edaboard.com/whats-new/">What's new</a></h3>
+	<ul class="footerList">
+	
+	<li><i class="fa--xf fal fa-caret-right" aria-hidden="true"></i> <a class=" " href="https://www.edaboard.com/whats-new/posts/" rel="nofollow">New posts</a></li>
+	
+	
+		<li><i class="fa--xf fal fa-caret-right" aria-hidden="true"></i> <a class=" " href="https://www.edaboard.com/whats-new/profile-posts/" rel="nofollow">New profile posts</a></li>
+	
+	
+	
+		
+
+		<li><i class="fa--xf fal fa-caret-right" aria-hidden="true"></i> <a class=" " href="https://www.edaboard.com/whats-new/latest-activity" rel="nofollow">Latest activity</a></li>
+	
+	</ul>
+
+			
+
+					
+				</div>
+			
+			
+			
+
+		</div>
+
+		
+
+	</div>
+</div>
+
+
+
+
+
+
+		
+
+		
+			<div class="p-footer-copyright">
+				<div class="p-footer-inner">
+					<div class="p-footer-copyright--flex">
+						
+							
+								<div class="copyright-left">
+									
+										
+				
+
+										Copyright © <script type="text/javascript">d = new Date();y = d.getFullYear();document.write(y);</script>2022 WTWH Media, LLC. All Rights Reserved.
+									
+								</div>
+							
+								
+							
+								<div class="copyright-right">	
+									
+									
+											
+	<div class="p-footer-default">
+	<div class="p-footer-inner">
+		<div class="p-footer-row">	
+			
+				<div class="p-footer-row-main">
+					<ul class="p-footer-linkList">
+					
+						
+							<li class="p-linkList-changeStyle"><a href="https://www.edaboard.com/misc/style" data-xf-click="overlay" data-xf-init="tooltip" rel="nofollow" data-original-title="Style: Green Nova Style" id="js-XFUniqueId40">
+								Style chooser
+							</a></li>
+						
+						
+						
+							<li class="p-linkList-changeWidth"><a class="pageWidthToggle  xb-toggle-default" role="button" tabindex="0" data-xf-click="toggle" data-target="html" data-active-class="xb-toggle-default" data-xf-init="toggle-storage" data-storage-type="cookie" data-storage-expiry="31556926" data-storage-key="_xb-width">
+								Change width
+								</a></li>
+						
+						
+						
+					
+					</ul>
+				</div>
+			
+			<div class="p-footer-row-opposite">
+				<ul class="p-footer-linkList">
+					
+					
+						
+							<li><a href="https://www.edaboard.com/misc/contact" data-xf-click="overlay">Contact us</a></li>
+						
+					
+
+					
+						<li><a href="https://www.edaboard.com/help/terms/">Terms and rules</a></li>
+					
+
+					
+						<li><a href="https://www.edaboard.com/help/privacy-policy/">Privacy policy</a></li>
+					
+
+					
+						<li><a href="https://www.edaboard.com/help/">Help</a></li>
+					
+
+					
+						<li><a href="https://www.edaboard.com/">Home</a></li>
+					
+
+					
+					<li><a href="https://www.edaboard.com/forums/-/index.rss" target="_blank" class="p-footer-rssLink" title="RSS"><span aria-hidden="true"><i class="fa--xf fal fa-rss" aria-hidden="true"></i><span class="u-srOnly">RSS</span></span></a></li>
+					
+				</ul>
+			</div>
+		</div>
+		</div>
+	</div>
+	
+									
+									
+								</div>
+							
+						
+					</div>
+				</div>
+			</div>
+		
+
+		
+	</div>
+</footer>
+
+</div> <!-- closing p-pageWrapper -->
+
+	
+</div> <!-- closing xb-pageWrapper -->
+<div class="u-bottomFixer js-bottomFixTarget">
+	
+	
+		
+	
+		
+		
+		
+
+		<ul class="notices notices--bottom_fixer js-notices" data-xf-init="notices" data-type="bottom_fixer" data-scroll-interval="6">
+
+			
+				
+	<li class="notice js-notice notice--primary notice--cookie" data-notice-id="-1" data-delay-duration="0" data-display-duration="0" data-auto-dismiss="0" data-visibility="">
+
+		
+		<div class="notice-content">
+			
+			<div class="u-alignCenter">
+	This site uses cookies to help personalise content, tailor your experience and to keep you logged in if you register.<br>
+By continuing to use this site, you are consenting to our use of cookies.
+</div>
+
+<div class="u-inputSpacer u-alignCenter">
+	<a href="https://www.edaboard.com/account/dismiss-notice" class="js-noticeDismiss button--notice button button--icon button--icon--confirm"><span class="button-text">Accept</span></a>
+	<a href="https://www.edaboard.com/help/cookies" class="button--notice button"><span class="button-text">Learn more…</span></a>
+</div>
+		</div>
+	</li>
+
+			
+		</ul>
+	
+
+	
+</div>
+
+
+	<div class="u-scrollButtons js-scrollButtons" data-trigger-type="up">
+		<a href="https://www.edaboard.com/blog/keil-vscode-keil-integration-into-vscode.2103/#top" class="button--scroll button" data-xf-click="scroll-to"><span class="button-text"><i class="fa--xf fal fa-arrow-up" aria-hidden="true"></i><span class="u-srOnly">Top</span></span></a>
+		
+		
+	</div>
+
+
+
+	<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/jquery-3.5.1.min.js.Без названия"></script>
+	<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/vendor-compiled.js.Без названия"></script>
+	<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/core-compiled.js.Без названия"></script>
+	
+
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/lightbox-compiled.js.Без названия"></script>
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/structure.min.js.Без названия"></script>
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/notice.min.js.Без названия"></script>
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/preview-observer.min.js.Без названия"></script>
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/selector-resolver.min.js.Без названия"></script>
+<script>
+					
+	$(".xb-searchWrapper").on("click", function(event) {
+		$(".xb-searchWrapper").addClass("is-active");
+		event.stopPropagation();
+	});
+	$(".xb-searchWrapper").on("click", function(event) {
+		event.stopPropagation();
+	});
+	$(document).on("click", function(event) {
+		$(".xb-searchWrapper").removeClass("is-active");
+	});	
+	
+</script>
+
+
+<script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Config({
+  	// CMTV_Math_MathJax_CONFIG_START
+    
+	tex2jax: {
+		processClass: 	"mathjax-proceed",
+		ignoreClass:	"mathjax-skip"
+	},
+	asciimath2jax: {
+		processClass: 	"mathjax-proceed",
+		ignoreClass:	"mathjax-skip"
+	},
+	
+  	showMathMenu:  1,
+  	messageStyle: "none",
+	displayAlign: "center",
+	
+	// CMTV_Math_MathJax_CONFIG_END
+  });
+</script>
+
+<script class="js-CMTV_Math_renderOptions" type="application/json">{"where":"everywhere","positions":false}</script>
+<script class="js-CMTV_Math_customRenderSelectors" type="application/json">[]</script>
+<script class="js-CMTV_Math_customSkipSelectors" type="application/json">[]</script>
+
+<script class="js-CMTV_Math_predefinedSelectors" type="application/json">
+	{
+		"titles": [
+			".p-title-value",
+			".contentRow-title",
+			".p-body-sidebar .contentRow-main > a",
+			".resourceSidebarList .contentRow-main > a",
+			".node-extra-title",
+			".structItem-title"
+		],
+		
+		"content": [
+			".message-body",
+			".contentRow-snippet",
+			".tooltip-content",
+			".resourceBody-main",
+			".structItem-resourceTagLine",
+			".bbCodePreview-content",
+			".comment-body",
+			"[data-widget-definition='new_profile_posts'] .contentRow-faderContent"
+		],
+		
+		"pages": [
+			"[data-template='help_page'] .p-body-pageContent",
+			"[data-template='help_page'] .p-body-sideNavContent",
+			"[data-template='help_index'] .p-body-pageContent",
+			"[data-template='help_index'] .p-body-sideNavContent"
+		],
+		
+		"signatures": [
+			".message-signature",
+			"[data-template=member_view] .block-row:contains(Signature)"
+		],
+		
+		"about": [
+			"[data-template=member_view] .block-row:first-of-type"
+		],
+		
+		"skipDefault": [
+			".bbCodeBlock",
+			".bbCodeInline",
+			".fr-box"
+		]
+	}
+</script>
+
+
+<script>CMTV_Math.SResolver.resolve();</script>
+
+
+
+
+	
+
+
+
+
+<script src="./[Keil][VSCode] Keil integration into VSCode _ Forum for Electronics_files/latest.js.Без названия" async=""></script>
+	<script>
+		jQuery.extend(true, XF.config, {
+			// 
+			userId: 0,
+			enablePush: true,
+			pushAppServerKey: 'BKKFDMIGuQhT+FucnXpcckaVtjefcMcAhtdcMRkFayTHEULDzVOJ9IS3izqQsL46077bdYSFHODSJubMG4mQatY=',
+			url: {
+				fullBase: 'https://www.edaboard.com/',
+				basePath: '/',
+				css: '/css.php?css=__SENTINEL__&s=9&l=1&d=1656072608',
+				keepAlive: '/login/keep-alive'
+			},
+			cookie: {
+				path: '/',
+				domain: '',
+				prefix: 'xf_',
+				secure: true
+			},
+			cacheKey: '52f32b99ee0f48a2005304c8a83e4966',
+			csrf: '1658784497,e9ce5124f650feceecb6cc76f939acb7',
+			js: {"\/js\/xf\/lightbox-compiled.js?_v=cd5016d9":true,"\/js\/sv\/ese\/xf\/structure.min.js?_v=cd5016d9":true,"\/js\/xf\/notice.min.js?_v=cd5016d9":true,"\/js\/CMTV\/Math\/preview-observer.min.js?_v=cd5016d9":true,"\/js\/CMTV\/Math\/selector-resolver.min.js?_v=cd5016d9":true},
+			css: {"public:CMTV_Math.less":true,"public:attachments.less":true,"public:bb_code.less":true,"public:lightbox.less":true,"public:notices.less":true,"public:share_controls.less":true,"public:svESE_autocomplete.less":true,"public:xa_ubs.less":true,"public:xa_ubs_comment.less":true,"public:xb.less":true,"public:xb_search.less":true,"public:xb_welcome.less":true,"public:extra.less":true},
+			time: {
+				now: 1658784497,
+				today: 1658703600,
+				todayDow: 1,
+				tomorrow: 1658790000,
+				yesterday: 1658617200,
+				week: 1658185200
+			},
+			borderSizeFeature: '3px',
+			fontAwesomeWeight: 'l',
+			enableRtnProtect: true,
+			
+			enableFormSubmitSticky: true,
+			uploadMaxFilesize: 268435456,
+			allowedVideoExtensions: ["m4v","mov","mp4","mp4v","mpeg","mpg","ogv","webm"],
+			allowedAudioExtensions: ["mp3","opus","ogg","wav"],
+			shortcodeToEmoji: true,
+			visitorCounts: {
+				conversations_unread: '0',
+				alerts_unviewed: '0',
+				total_unread: '0',
+				title_count: true,
+				icon_indicator: true
+			},
+			jsState: {},
+			publicMetadataLogoUrl: '',
+			publicPushBadgeUrl: 'https://www.edaboard.com/styles/default/xenforo/bell.png'
+		});
+
+		jQuery.extend(XF.phrases, {
+			// 
+			date_x_at_time_y: "{date} at {time}",
+			day_x_at_time_y:  "{day} at {time}",
+			yesterday_at_x:   "Yesterday at {time}",
+			x_minutes_ago:    "{minutes} minutes ago",
+			one_minute_ago:   "1 minute ago",
+			a_moment_ago:     "A moment ago",
+			today_at_x:       "Today at {time}",
+			in_a_moment:      "In a moment",
+			in_a_minute:      "In a minute",
+			in_x_minutes:     "In {minutes} minutes",
+			later_today_at_x: "Later today at {time}",
+			tomorrow_at_x:    "Tomorrow at {time}",
+
+			day0: "Sunday",
+			day1: "Monday",
+			day2: "Tuesday",
+			day3: "Wednesday",
+			day4: "Thursday",
+			day5: "Friday",
+			day6: "Saturday",
+
+			dayShort0: "Sun",
+			dayShort1: "Mon",
+			dayShort2: "Tue",
+			dayShort3: "Wed",
+			dayShort4: "Thu",
+			dayShort5: "Fri",
+			dayShort6: "Sat",
+
+			month0: "January",
+			month1: "February",
+			month2: "March",
+			month3: "April",
+			month4: "May",
+			month5: "June",
+			month6: "July",
+			month7: "August",
+			month8: "September",
+			month9: "October",
+			month10: "November",
+			month11: "December",
+
+			active_user_changed_reload_page: "The active user has changed. Reload the page for the latest version.",
+			server_did_not_respond_in_time_try_again: "The server did not respond in time. Please try again.",
+			oops_we_ran_into_some_problems: "Oops! We ran into some problems.",
+			oops_we_ran_into_some_problems_more_details_console: "Oops! We ran into some problems. Please try again later. More error details may be in the browser console.",
+			file_too_large_to_upload: "The file is too large to be uploaded.",
+			uploaded_file_is_too_large_for_server_to_process: "The uploaded file is too large for the server to process.",
+			files_being_uploaded_are_you_sure: "Files are still being uploaded. Are you sure you want to submit this form?",
+			attach: "Attach files",
+			rich_text_box: "Rich text box",
+			close: "Close",
+			link_copied_to_clipboard: "Link copied to clipboard.",
+			text_copied_to_clipboard: "Text copied to clipboard.",
+			loading: "Loading…",
+			you_have_exceeded_maximum_number_of_selectable_items: "You have exceeded the maximum number of selectable items.",
+
+			processing: "Processing",
+			'processing...': "Processing…",
+
+			showing_x_of_y_items: "Showing {count} of {total} items",
+			showing_all_items: "Showing all items",
+			no_items_to_display: "No items to display",
+
+			number_button_up: "Increase",
+			number_button_down: "Decrease",
+
+			push_enable_notification_title: "Push notifications enabled successfully at Forum for Electronics",
+			push_enable_notification_body: "Thank you for enabling push notifications!"
+		,
+			"svStandardLib_time.day": "{count} day",
+			"svStandardLib_time.days": "{count} days",
+			"svStandardLib_time.hour": "{count} hour",
+			"svStandardLib_time.hours": "{count} hours",
+			"svStandardLib_time.minute": "{count} minutes",
+			"svStandardLib_time.minutes": "{count} minutes",
+			"svStandardLib_time.month": "{count} month",
+			"svStandardLib_time.months": "{count} months",
+			"svStandardLib_time.second": "{count} second",
+			"svStandardLib_time.seconds": "{count} seconds",
+			"svStandardLib_time.week": "time.week",
+			"svStandardLib_time.weeks": "{count} weeks",
+			"svStandardLib_time.year": "{count} year",
+			"svStandardLib_time.years": "{count} years"
+
+		});
+	</script>
+
+	<form style="display:none" hidden="hidden">
+		<input type="text" name="_xfClientLoadTime" value="" id="_xfClientLoadTime" title="_xfClientLoadTime" tabindex="-1">
+	</form>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+<!-- XenBase Version: 2.1.5 -->
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "CreativeWorkSeries",
+		"@id": "https:\/\/www.edaboard.com\/blog\/keil-vscode-keil-integration-into-vscode.2103\/",
+		"name": "[Keil][VSCode] Keil integration into VSCode",
+		
+			"headline": "[Keil][VSCode] Keil integration into VSCode",
+		
+		
+			"alternativeHeadline": "[Keil][VSCode] Keil integration into VSCode",
+		
+		"description": "VSCode Keil",
+		
+			"thumbnailUrl": "https:\/\/www.edaboard.com\/data\/attachments\/95\/95810-54b01656300555e8d6fc46d86cfe6132.jpg",
+		
+		"dateCreated": "2020-11-19T23:51:08+00:00",
+		"dateModified": "2020-11-19T23:51:08+00:00",
+		
+		
+			"discussionUrl": "https:\/\/www.edaboard.com\/threads\/keil-vscode-keil-integration-into-vscode.395758\/",
+		
+		"author": {
+			"@type": "Person",
+			"name": "niciki"
+		}
+	}
+	</script>
+
+
+<script>
+$(function(){
+	var notice = $('.xb-welcome-notice');
+	if(notice.length){
+		var cookie = XF.Cookie.get('hide_welcome_notice');	
+		if(!cookie){
+			XF.Cookie.set('hide_welcome_notice', Date.now());
+			notice.show();	
+		} else if ((Date.now() - cookie) > 8.64e+7){			
+			XF.Cookie.set('hide_welcome_notice', Date.now());
+			notice.show();
+			
+		} else {
+			notice.hide();
+		}		
+	}
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+<script type="text/javascript" id="">!function(){function c(d){e[d]=function(){for(var b=arguments.length,f=Array(b),a=0;a<b;a++)f[a]=arguments[a];g.push([d,f])}}var e=window.jstag||(window.jstag={}),g=[];c("send");c("mock");c("identify");c("pageView");c("unblock");c("getid");c("setid");c("loadEntity");c("getEntity");c("on");c("once");c("call");e.loadScript=function(d,b,f){var a=document.createElement("script");a.async=!0;a.src=d;a.onload=b;a.onerror=f;d=(b=document.getElementsByTagName("script")[0])&&b.parentNode||document.head||document.body;
+b=b||d.lastChild;return null!=b?d.insertBefore(a,b):d.appendChild(a),this};e.init=function f(b){return this.config=b,this.loadScript(b.src,function(){if(e.init===f)throw Error("Load error!");e.init(e.config);for(var a=0;a<g.length;a++){var h=g[a][0],k=g[a][1];e[h].apply(e,k)}g=void 0}),this}}();jstag.init({src:"https://c.lytics.io/api/tag/29a292ff0c468198153eeecb63d02097/latest.min.js"});jstag.pageView();</script><script type="text/javascript" id="">(function(){try{var a="",b=document.querySelector('[id^\x3d"gform_submit_button_"]');b.addEventListener("click",function(c){emailContainer=document.getElementsByClassName("ginput_container ginput_container_email")[0].getElementsByTagName("input")[0];a=emailContainer.value;jstag.send({email:a})})}catch(c){}})();</script><script type="text/javascript" id="">function setup(){var e=!1;setTimeout(function(){e||(console.log("JS tag not set, adding bombora"),bombora())},1E3);jstag.call("once","cookies.written",function(){e=!0;jstag.getid(function(b){console.log("Bombora Tag Set!");bombora(b)})})}
+function bombora(e){(function(b,a,c){var f=decodeURIComponent;var d="||";var h=";;",g="split",k="length",n="indexOf",l="localStorage",m="_ccmdt";b[c]=b[c]||{};b[c].us={};a=b[l]?b[l][m]||"":(a=a.cookie.match(m+"\x3d([^;]*)"))&&a[1]||"";f=f(a)[g](d);a=f[k];if(0<a)for(;a--;)d=f[a][g]("\x3d"),1<d[k]&&(-1<d[1][n](h)?(b[c].us[d[0]]=d[1][g](h),b[c].us[d[0]].pop()):b[c].us[d[0]]=d[1])})(window,document,"_ml");(function(){_ml=window._ml||{};_ml.eid="65569";e&&(_ml.fp=e);_ml.informer={callback:function(f,d){"undefined"==
+typeof dataLayer||_ml.isEmptyObj(_ml.us)||dataLayer.push({event:"Bombora_Informer",Bombora_Topic:_ml.us.tp&&0<_ml.us.tp.length?_ml.us.tp[0]:"",Bombora_Company_Revenue:_ml.us.cr,Bombora_Company_Size:_ml.us.cs,Bombora_Domain:_ml.us.dm,Bombora_Seniority:_ml.us.sn,Bombora_Predictive_Category:_ml.us.pc&&0<_ml.us.pc.length?_ml.us.pc[0]:"",Bombora_Decision_Maker:_ml.us.dcm,Bombora_Functional_Area:_ml.us.fa&&0<_ml.us.fa.length?_ml.us.fa[0]:"",Bombora_Install_Data:_ml.us.ins&&0<_ml.us.ins.length?_ml.us.ins[0]:
+"",Bombora_Professional_Group:_ml.us.pg&&0<_ml.us.pg.length?_ml.us.pg[0]:"",Bombora_Education:_ml.us.edu,Bombora_Industry:_ml.us.ind})},enable:!0};var b=document.getElementsByTagName("script")[0],a=new Date,c=document.createElement("script");c.type="text/javascript";c.async=!0;c.src="https://ml314.com/tag.aspx?"+a.getDate()+a.getMonth()+a.getFullYear();b.parentNode.insertBefore(c,b)})()}setup();</script><script type="text/javascript" id="">adroll_adv_id="H6QSRTNYTVH7HE3332AG6H";adroll_pix_id="SLD62WUEQVGMFKFQ4GL5PT";(function(){var b=window.onload;window.onload=function(){__adroll_loaded=!0;var a=document.createElement("script"),c="https:"==document.location.protocol?"https://s.adroll.com":"http://a.adroll.com";a.setAttribute("async","true");a.type="text/javascript";a.src=c+"/j/roundtrip.js";((document.getElementsByTagName("head")||[null])[0]||document.getElementsByTagName("script")[0].parentNode).appendChild(a);b&&b()}})();</script>
+<script type="text/javascript" id="">!function(){function c(d){e[d]=function(){for(var b=arguments.length,f=Array(b),a=0;a<b;a++)f[a]=arguments[a];g.push([d,f])}}var e=window.jstag||(window.jstag={}),g=[];c("send");c("mock");c("identify");c("pageView");c("unblock");c("getid");c("setid");c("loadEntity");c("getEntity");c("on");c("once");c("call");e.loadScript=function(d,b,f){var a=document.createElement("script");a.async=!0;a.src=d;a.onload=b;a.onerror=f;d=(b=document.getElementsByTagName("script")[0])&&b.parentNode||document.head||document.body;
+b=b||d.lastChild;return null!=b?d.insertBefore(a,b):d.appendChild(a),this};e.init=function f(b){return this.config=b,this.loadScript(b.src,function(){if(e.init===f)throw Error("Load error!");e.init(e.config);for(var a=0;a<g.length;a++){var h=g[a][0],k=g[a][1];e[h].apply(e,k)}g=void 0}),this}}();jstag.init({src:"https://c.lytics.io/api/tag/29a292ff0c468198153eeecb63d02097/latest.min.js"});jstag.pageView();</script><script type="text/javascript" id="">(function(b,a,c){var e=decodeURIComponent;var d="||";var g=";;",f="split",h="length",m="indexOf",k="localStorage",l="_ccmdt";b[c]=b[c]||{};b[c].us={};a=b[k]?b[k][l]||"":(a=a.cookie.match(l+"\x3d([^;]*)"))&&a[1]||"";e=e(a)[f](d);a=e[h];if(0<a)for(;a--;)d=e[a][f]("\x3d"),1<d[h]&&(-1<d[1][m](g)?(b[c].us[d[0]]=d[1][f](g),b[c].us[d[0]].pop()):b[c].us[d[0]]=d[1])})(window,document,"_ml");
+(function(){_ml=window._ml||{};_ml.eid="65569";_ml.informer={callback:function(e,d){"undefined"==typeof dataLayer||_ml.isEmptyObj(_ml.us)||dataLayer.push({event:"Bombora_Informer",Bombora_Topic:_ml.us.tp&&0<_ml.us.tp.length?_ml.us.tp[0]:"",Bombora_Company_Revenue:_ml.us.cr,Bombora_Company_Size:_ml.us.cs,Bombora_Domain:_ml.us.dm,Bombora_Seniority:_ml.us.sn,Bombora_Predictive_Category:_ml.us.pc&&0<_ml.us.pc.length?_ml.us.pc[0]:"",Bombora_Decision_Maker:_ml.us.dcm,Bombora_Functional_Area:_ml.us.fa&&
+0<_ml.us.fa.length?_ml.us.fa[0]:"",Bombora_Install_Data:_ml.us.ins&&0<_ml.us.ins.length?_ml.us.ins[0]:"",Bombora_Professional_Group:_ml.us.pg&&0<_ml.us.pg.length?_ml.us.pg[0]:"",Bombora_Education:_ml.us.edu,Bombora_Industry:_ml.us.ind})},enable:!0};var b=document.getElementsByTagName("script")[0],a=new Date,c=document.createElement("script");c.type="text/javascript";c.async=!0;c.src="https://ml314.com/tag.aspx?"+a.getDate()+a.getMonth()+a.getFullYear();b.parentNode.insertBefore(c,b)})();</script></body></html>

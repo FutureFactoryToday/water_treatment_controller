@@ -50,8 +50,19 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "stdlib.h"
 #include "Settings.h"
-#include "TFT/TFT.h"
-#include "SPI/SPI_Handler.h"
+//#include "TFT/TFT.h"
+//#include "SPI/SPI_Handler.h"
+//#include "WTC_Logic.h"
+//#include "..\..\GUI\Logo\LOGO_MAIN.h"
+//#include "USER\test.h"
+#include "Motor\Motor.h"
+#include "TFT\stm32_adafruit_lcd.h"
+#include "TFT\stm32_adafruit_ts.h"
+#include "TFT\bmp.h"
+#include "GUI\GUI.h"
+#include "TFT/lcd/ili9486/ili9486.h"
+#include "Optic\Optic.h"
+//#include "USER\GUI.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -61,6 +72,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+	extern uint32_t _1ms_cnt;
 
 /* USER CODE END EC */
 
@@ -89,16 +101,17 @@ void Error_Handler(void);
 #define TFT_RES_GPIO_Port GPIOA
 #define TFT_COM_EN_Pin LL_GPIO_PIN_1
 #define TFT_COM_EN_GPIO_Port GPIOA
-#define WR_DATA_Pin LL_GPIO_PIN_2
-#define WR_DATA_GPIO_Port GPIOA
+#define TFT_WR_Pin LL_GPIO_PIN_2
+#define TFT_WR_GPIO_Port GPIOA
 #define TOUCH_INT_Pin LL_GPIO_PIN_3
 #define TOUCH_INT_GPIO_Port GPIOA
+#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
 #define TOUCH_CS_Pin LL_GPIO_PIN_4
 #define TOUCH_CS_GPIO_Port GPIOA
-#define RD_DATA_Pin LL_GPIO_PIN_4
-#define RD_DATA_GPIO_Port GPIOC
-#define DATA_COM_Pin LL_GPIO_PIN_5
-#define DATA_COM_GPIO_Port GPIOC
+#define TFT_RD_Pin LL_GPIO_PIN_4
+#define TFT_RD_GPIO_Port GPIOC
+#define TFT_DATA_COM_Pin LL_GPIO_PIN_5
+#define TFT_DATA_COM_GPIO_Port GPIOC
 #define DB0_Pin LL_GPIO_PIN_0
 #define DB0_GPIO_Port GPIOB
 #define DB1_Pin LL_GPIO_PIN_1
@@ -125,8 +138,9 @@ void Error_Handler(void);
 #define BIN1_GPIO_Port GPIOC
 #define BIN2_Pin LL_GPIO_PIN_8
 #define BIN2_GPIO_Port GPIOA
-#define DP_SW_Pin LL_GPIO_PIN_11
-#define DP_SW_GPIO_Port GPIOA
+#define OPT_SENS_Pin LL_GPIO_PIN_11
+#define OPT_SENS_GPIO_Port GPIOA
+#define OPT_SENS_EXTI_IRQn EXTI15_10_IRQn
 #define ILED_Pin LL_GPIO_PIN_12
 #define ILED_GPIO_Port GPIOA
 #define METER_INP_Pin LL_GPIO_PIN_10
@@ -164,7 +178,18 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
+#define TRUE 1
+#define FALSE 0
 
+#define TFT_SPI_CS_Pin TFT_COM_EN_Pin
+#define TFT_SPI_MISO_Pin LL_GPIO_PIN_14
+#define TFT_SPI_MOSI_Pin LL_GPIO_PIN_15
+#define TFT_SPI_SCK_Pin LL_GPIO_PIN_13
+
+#define TFT_SPI_CS_Port TFT_COM_EN_GPIO_Port
+#define TFT_SPI_MISO_Port GPIOB
+#define TFT_SPI_MOSI_Port GPIOB
+#define TFT_SPI_SCK_Port GPIOB
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

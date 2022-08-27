@@ -55,6 +55,10 @@ void MX_SPI1_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /* SPI1 interrupt Init */
+  NVIC_SetPriority(SPI1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(SPI1_IRQn);
+
   /* USER CODE BEGIN SPI1_Init 1 */
 
   /* USER CODE END SPI1_Init 1 */
@@ -70,7 +74,7 @@ void MX_SPI1_Init(void)
   SPI_InitStruct.CRCPoly = 10;
   LL_SPI_Init(SPI1, &SPI_InitStruct);
   /* USER CODE BEGIN SPI1_Init 2 */
-
+	LL_SPI_Enable(SPI1);
   /* USER CODE END SPI1_Init 2 */
 
 }
@@ -105,6 +109,10 @@ void MX_SPI2_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(DB14_GPIO_Port, &GPIO_InitStruct);
 
+  /* SPI2 interrupt Init */
+  NVIC_SetPriority(SPI2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(SPI2_IRQn);
+
   /* USER CODE BEGIN SPI2_Init 1 */
 
   /* USER CODE END SPI2_Init 1 */
@@ -120,7 +128,7 @@ void MX_SPI2_Init(void)
   SPI_InitStruct.CRCPoly = 10;
   LL_SPI_Init(SPI2, &SPI_InitStruct);
   /* USER CODE BEGIN SPI2_Init 2 */
-
+	LL_SPI_Enable(SPI2);
   /* USER CODE END SPI2_Init 2 */
 
 }

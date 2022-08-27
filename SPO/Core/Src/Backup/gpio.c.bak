@@ -52,13 +52,8 @@ void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
-                          |BIN1_Pin|DRV_MODE_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|WR_DATA_Pin|TOUCH_CS_Pin
-                          |BIN2_Pin|ILED_Pin);
+  LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|AIN1_Pin
+                          |AIN2_Pin|BIN1_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
@@ -67,11 +62,20 @@ void MX_GPIO_Init(void)
                           |DB9_Pin);
 
   /**/
+  LL_GPIO_ResetOutputPin(GPIOA, BIN2_Pin|ILED_Pin);
+
+  /**/
   LL_GPIO_ResetOutputPin(SOUND_ON_GPIO_Port, SOUND_ON_Pin);
 
   /**/
+  LL_GPIO_SetOutputPin(GPIOC, SD_CS_Pin|TFT_RD_Pin|TFT_DATA_COM_Pin|DRV_MODE_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin|TOUCH_CS_Pin);
+
+  /**/
   GPIO_InitStruct.Pin = RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |RD_DATA_Pin|DATA_COM_Pin|AIN1_Pin|AIN2_Pin
+                          |TFT_RD_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
                           |BIN1_Pin|DRV_MODE_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -79,7 +83,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|WR_DATA_Pin|TOUCH_CS_Pin
+  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin|TOUCH_CS_Pin
                           |BIN2_Pin|ILED_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -97,11 +101,6 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = DP_SW_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
-  LL_GPIO_Init(DP_SW_GPIO_Port, &GPIO_InitStruct);
-
-  /**/
   GPIO_InitStruct.Pin = METER_INP_Pin|PB_SENS_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -117,13 +116,23 @@ void MX_GPIO_Init(void)
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE3);
 
   /**/
+  LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE11);
+
+  /**/
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE15);
 
   /**/
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
+  LL_EXTI_Init(&EXTI_InitStruct);
+
+  /**/
+  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_11;
+  EXTI_InitStruct.LineCommand = ENABLE;
+  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /**/
@@ -137,16 +146,20 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(TOUCH_INT_GPIO_Port, TOUCH_INT_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
+  LL_GPIO_SetPinMode(OPT_SENS_GPIO_Port, OPT_SENS_Pin, LL_GPIO_MODE_FLOATING);
+
+  /**/
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_15, LL_GPIO_MODE_FLOATING);
+
+  /* EXTI interrupt init*/
+  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(EXTI3_IRQn);
+  NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
 /* USER CODE BEGIN 2 */
-void INIT_SPI_LCD(void){
-	
-}
+//
 
-void INIT_PARAL_LCD(void){
-	
-}
 /* USER CODE END 2 */

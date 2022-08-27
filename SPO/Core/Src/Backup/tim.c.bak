@@ -59,7 +59,7 @@ void MX_TIM3_Init(void)
   LL_TIM_SetTriggerOutput(TIM3, LL_TIM_TRGO_RESET);
   LL_TIM_DisableMasterSlaveMode(TIM3);
   /* USER CODE BEGIN TIM3_Init 2 */
-
+	
   /* USER CODE END TIM3_Init 2 */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
     /**TIM3 GPIO Configuration

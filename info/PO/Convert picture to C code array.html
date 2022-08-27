@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0057)https://www.digole.com/tools/PicturetoC_Hex_converter.php -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Convert picture to C code array</title>
+</head>
+
+<body>
+<form id="form1" name="form1" enctype="multipart/form-data" method="post" action="https://www.digole.com/tools/PicturetoC_Hex_converter.php">
+  <table width="80%" border="0" align="center">
+    <tbody><tr>
+      <td colspan="5" bgcolor="#FFFFCC">
+		  <p align="center">If you looking for Serial (UART,I2C,SPI) displays to speed up development, view <a href="https://www.digole.com/" target="_blank">Digole</a></p>
+     <p><font color="#993333">This tool will not be maintained in future, please try our <a href="https://www.digole.com/tools/digole-emu.php" target="_blank">online emulator</a> instead</font></p>
+     <p>This tool is converting your .gif/.jpg/.jpeg/.png image file to embedded C/C++ code style array or string: {HEX: \x..,0x..} and binary file for download, the data format is compatible for all Digole serial modules.<br>
+       You can resize the image to fit your requirement, if you only input "width" or "height", the software will calculate other side automatically, if you input both fields, the software will strech the shorter side. 
+       <br>
+     </p></td>
+    </tr>
+    <tr>
+      <td>Browser your image file</td>
+      <td><input type="file" name="bmpfile" id="bmpfile"></td>
+      <td width="20">&nbsp;</td>
+      <td>Resize to</td>
+      <td>Width
+        <input name="w" type="text" size="3" maxlength="3">
+        Height:
+        <input name="h" type="text" size="3" maxlength="3">
+      (Note: leave one field blank will lock the ratio) </td>
+    </tr>
+    <tr>
+      <td align="right">Code format:</td>
+      <td><select name="format" id="format">
+        <option value="0x">HEX:0x</option>
+        <option value="\x">HEX:\x</option>
+        <option value="DEC">DEC</option>
+      </select></td>
+      <td width="20">&nbsp;</td>
+      <td>Used for</td>
+      <td><select name="dir" id="dir">
+          <option value="0">Black/White, for "DIM"</option>
+          <option value="6">256 Color(1 byte/pixel:RRRGGGBB, for "EDIM1")</option>
+           <option value="7">65K Color(2 bytes/pixel:RRRRRGGG GGGBBBBB, for "EDIM2")</option>
+         <option value="8">262K Color(3 bytes/pixel:00XXXXXX, for Digole "EDIM3" &amp; 1.8" COLED "VIDEO")</option>
+         <option value="9">262K Color(3 bytes/pixel:0XXXXXX0, for 2.6" IPS "VIDEO")</option>
+          <option value="10">262K Color(3 bytes/pixel:XXXXXX00, for all other display "VIDEO")</option>
+         <!--    <option value="1" >LSB Horizontal</option> -->
+          <option value="4">24064 B/W LCD Welcome Screen</option>
+          <option value="2">0.96/1.3" 12864 B/W OLED Welcome Screen for FW older than 3.3</option>
+          <option value="5">Other 12864 LCD&amp;Universal Adapter Welcome Screen for FW older than 3.3</option>
+          <!--    <option value="3" >LSB Vertical</option> -->
+      </select></td>
+    </tr>
+    <tr>
+      <td align="right">Display position</td>
+      <td>X<input name="x" type="text" size="3" maxlength="3" value="0">
+Y<input name="y" type="text" size="3" maxlength="3" value="0">
+      </td><td width="20">&nbsp;</td>
+      <td>Address in Flash</td>
+      <td><input name="addr" type="text" size="8" maxlength="8" value="0"></td>
+    </tr>
+    <tr>
+      <td colspan="5" align="center"><input type="submit" name="submit" id="submit" value="Get C string"></td>
+    </tr>
+  </tbody></table>
+</form>
+
+</body></html>

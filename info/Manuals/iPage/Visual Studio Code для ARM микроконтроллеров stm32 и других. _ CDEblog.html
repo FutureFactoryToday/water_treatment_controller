@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://cdeblog.ru/vscode-stm32 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Include HTML meta tags -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visual Studio Code для ARM микроконтроллеров stm32 и других. | CDEblog</title>
+<meta name="description" content="Это даже не руководство, а небольшое описание и собственные ощущения о переходе с Keil&#39;а на VSCode. Здесь нет рассказа от том, как настроить систему сборки, только немного о настройках самого редактора.">
+<link rel="icon" href="https://cdeblog.ru/bl-themes/logdark/img/favicon.png" type="image/png">
+<!--[if lt IE 8]><script  src="https://cdeblog.ru/bl-themes/logdark/assets/js/ie/html5shiv.js?version=3.13.1"></script>
+<![endif]--><link rel="stylesheet" type="text/css" href="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/main.css">
+<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="https://cdeblog.ru/bl-themes/logdark/assets/css/ie9.css?version=3.13.1">
+<![endif]--><!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="https://cdeblog.ru/bl-themes/logdark/assets/css/ie8.css?version=3.13.1">
+<![endif]--><link rel="stylesheet" type="text/css" href="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/bludit.css">
+<link rel="stylesheet" type="text/css" href="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/all.css">
+<link rel="canonical" href="https://cdeblog.ru/vscode-stm32">
+
+
+<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+<script async="" src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/tag.js.Без названия"></script><script type="text/javascript">
+window.cookieconsent_options = {"message":"На этом сайте используются файлы cookie для хранения статистики и входa в систему, если вы зарегистрированы. Продолжая использовать этот сайт, вы соглашаетесь на использование файлов cookie.","dismiss":"Принять","learnMore":"","link":"","theme":"light-bottom"};
+</script>
+<script async="" src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/cookieconsent.latest.min.js.Без названия"></script>
+<!-- End Cookie Consent plugin -->
+<link rel="stylesheet" href="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/vs.min.css"><meta name="msvalidate.01" content="BF773CC86D065971761185E6C5441B95">
+<meta name="google-site-verification" content="oKQts-0s_80T2QlwK-BxOXawB6x9pLXdWJfEtdIFrmI">
+<meta name="yandex-verification" content="9da2a69e8cd9f87d">
+<meta name="wmail-verification" content="6886e9c470e154f7be82970cc5c91c61">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(76463731, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/76463731" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Robots plugin -->
+<link rel="alternate" type="application/rss+xml" href="https://cdeblog.ru/rss.xml" title="RSS Feed">
+<link rel="alternate" type="application/rss+xml" href="https://cdeblog.ru/turbo.xml" title="Yandex Turbo Feed">
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/embed.js.Без названия" data-timestamp="1658784981918"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.63860eb743c7d9d2adf0fa435788abe7.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.33bc87b2c4f9324203cc85b7dd1d0492.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.9b518beab1152bdf1e977ba26e38a6db.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><link rel="stylesheet" type="text/css" href="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/light-bottom.css"></head>
+<body class=""><div class="cc_banner-wrapper "><div class="cc_banner cc_container cc_container--open"><a href="https://cdeblog.ru/vscode-stm32#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">Принять</a><p class="cc_message">На этом сайте используются файлы cookie для хранения статистики и входa в систему, если вы зарегистрированы. Продолжая использовать этот сайт, вы соглашаетесь на использование файлов cookie. </p><a class="cc_logo" target="_blank" href="http://silktide.com/cookieconsent">Cookie Consent plugin for the EU cookie law</a></div></div>
+	
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<h1><a href="https://cdeblog.ru/">CDEblog</a></h1>
+			<nav class="links">
+				<ul>
+				<li><a href="https://cdeblog.ru/about">О блоге</a></li>				</ul>
+			</nav>
+			<nav class="main">
+				<ul>
+					<li class="menu"><a class="fa-bars" href="https://cdeblog.ru/vscode-stm32#menu">Menu</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Menu -->
+		
+
+		<!-- Main -->
+		<div id="main">
+		<article class="post">
+
+	<!-- Plugins Page Begin -->
+	
+	<!-- Post's header -->
+	<header>
+		<div class="title">
+			<h1>Visual Studio Code для ARM микроконтроллеров stm32 и других.</h1>
+			<p>Это даже не руководство, а небольшое описание и собственные ощущения о переходе с Keil'а на VSCode. Здесь нет рассказа от том, как настроить систему сборки, только немного о настройках самого редактора.</p>
+		</div>
+	</header>
+
+	<!-- Cover Image -->
+	<a href="https://cdeblog.ru/vscode-stm32" class="image featured"><img src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/1200px-Visual_Studio_Code_1.35_icon.png" alt="Cover Image"></a>
+	<!-- Post's content, the first part if has pagebrake -->
+	<p>Небольшая заметка о том, как я решил отказаться от keil и перешел на visual studio code.</p>
+<p>Давно я собирался это сделать, но никак не мог решиться. Больше всего в vscode привлекал удобный редактор с его плюшками, до которого keil'у, да и многим другим IDE расти и расти.</p>
+<p>Основной проблемой было то, как настроить сборку, как выполнять загрузку и отладку. "У страха глаза велики" - это правда, на деле всё оказалось куда проще. Даже этот текст, который вы читаете, написан в vscode.</p>
+<p>Если стало интересно - читайте дальше.</p>
+<!-- pagebreak -->
+<h4>Установка VS Code и расширений</h4>
+<p>Установка самого редактора тривиальна, скачать можно по ссылке: <a href="https://code.visualstudio.com/">https://code.visualstudio.com</a></p>
+<p>Для разработки приложений на языке Си для микроконтроллеров ARM будем использовать несколько плагинов:</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug">Cortex-Debug</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">C/C++ for Visual Studio Code</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=austin.code-gnu-global">C/C++ Intellisense</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=dan-c-underwood.arm">ARM assembly highlighting for Visual Studio Code</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen">Doxygen Documentation Generator</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments">Better Comments</a></li>
+</ul>
+<p>Основные - это верхние три, остальные это лишь небольшие улучшения и дополнения, хотя в принципе достаточно и первых двух.</p>
+<h4>Настройка среды</h4>
+<p>Вся настройка производится в файлах <code>json</code>.</p>
+<p>Файл <code>.vscode\launch.json</code> соделжит конфигурации запуска и отладки.</p>
+<p>Пример моей конфигурации:</p>
+<pre><code class="language-json hljs">{
+    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"0.2.0"</span>,
+    <span class="hljs-attr">"configurations"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"cortex-debug"</span>,
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"APP"</span>,
+            <span class="hljs-attr">"cwd"</span>: <span class="hljs-string">"${workspaceRoot}"</span>,
+            <span class="hljs-attr">"device"</span>: <span class="hljs-string">"Cortex-M0"</span>,
+            <span class="hljs-attr">"executable"</span>: <span class="hljs-string">"./build/smart_relay.elf"</span>,
+            <span class="hljs-attr">"servertype"</span>: <span class="hljs-string">"jlink"</span>,
+            <span class="hljs-attr">"interface"</span>: <span class="hljs-string">"swd"</span>,
+            <span class="hljs-attr">"request"</span>: <span class="hljs-string">"launch"</span>,
+            <span class="hljs-attr">"rtos"</span>: <span class="hljs-string">"FreeRTOS"</span>,
+            <span class="hljs-attr">"svdFile"</span>: <span class="hljs-string">"./JLink/STM32F042x.svd"</span>,
+        }
+    ]
+}</code></pre>
+<p>Это конфигурация для плагина Cortex-Debug, в которой указаны параметры типа ядра, путь к elf файлу, ипя конфигурации для отладки, интерфейс, тип операционной системы, тип отладчика, путь к файлу описания регистров микроконтроллера (SVD файл), его можно найти в папке с файлами поддержки семейства микроконтроллеров для STM32CubeMx, например для <code>STM32F0</code> здесь</p>
+<p><a href="https://github.com/STMicroelectronics/STM32CubeF0.git">https://github.com/STMicroelectronics/STM32CubeF0.git</a></p>
+<p>Следующий файл - <code>.vscode\settings.json</code>, - настройки рабочего пространства, у меня выглядят примерно так.</p>
+<pre><code class="language-json hljs">{
+    <span class="hljs-attr">"cortex-debug.JLinkGDBServerPath"</span>: <span class="hljs-string">"JLinkGDBServerCL.exe"</span>,
+    <span class="hljs-attr">"cortex-debug.armToolchainPath"</span>: <span class="hljs-string">"c:\\gcc-arm\\bin"</span>,
+    <span class="hljs-attr">"project_mcu"</span>: <span class="hljs-string">"STM32F042K6"</span>
+}</code></pre>
+<p>Указаны лишь три настройки, могут быть и другие, но эти важны для нашего проекта.</p>
+<p>Теперь приступим к настройкам нашего проекта, а именно укажем пути к заголовочным файлам, дефайны и настройки стандарта языка, это всё нужно не для сборки проекта, а для работы системы IntelliSense. Главное быть внимательным, так как эти настройки должны быть максимально синхронны с настройками при компилировании файлов, вплоть до указания предопределенных макросов типа <code>__GNU__</code> и подобных. Иначе можно получить весьма неожиданный результат, на экране будет одно, а по факту проект будет собираться уже по другом из-за вмешательства препроцессора и раскрытия макросов.</p>
+<pre><code class="language-json hljs">{
+    <span class="hljs-attr">"configurations"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Smart Relay App"</span>,
+            <span class="hljs-attr">"compilerPath"</span>: <span class="hljs-string">"${PATH}/arm-none-eabi-gcc.exe"</span>,
+            <span class="hljs-attr">"compilerArgs"</span>: [<span class="hljs-string">"--target=arm-arm-none-eabi"</span>, <span class="hljs-string">"-mcpu=Cortex-M0"</span>],
+            <span class="hljs-attr">"includePath"</span>: [
+                <span class="hljs-string">"c:/gcc-arm/lib/gcc/arm-none-eabi/9.2.1/include"</span>,
+                <span class="hljs-string">"c:/gcc-arm/lib/gcc/arm-none-eabi/9.2.1/include-fixed"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/FreeRTOS-Kernel/include"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/FreeRTOS-Kernel/portable/GCC/ARM_CM0"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/STM32CubeF0_HAL/Drivers/CMSIS/Core/Include"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/STM32CubeF0_HAL/Drivers/CMSIS/Device/ST/STM32F0xx/Include"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/STM32CubeF0_HAL/Drivers/CMSIS/Include"</span>,
+                <span class="hljs-string">"${workspaceRoot}/libs/STM32CubeF0_HAL/Drivers/STM32F0xx_HAL_Driver/Inc"</span>,
+                <span class="hljs-string">"${workspaceRoot}"</span>,
+                <span class="hljs-string">"${workspaceRoot}/src"</span>,
+                <span class="hljs-string">"${workspaceRoot}/src/drivers"</span>,
+                <span class="hljs-string">"${workspaceRoot}/src/app"</span>
+            ],
+            <span class="hljs-attr">"defines"</span>: [
+                <span class="hljs-string">"STM32F042x6"</span>, <span class="hljs-string">"USE_HAL_DRIVER"</span>, <span class="hljs-string">"_RTE_"</span>, <span class="hljs-string">"USE_FULL_ASSERT"</span>
+            ],
+            <span class="hljs-attr">"cStandard"</span>: <span class="hljs-string">"c11"</span>,
+            <span class="hljs-attr">"cppStandard"</span>: <span class="hljs-string">"c++17"</span>,
+            <span class="hljs-attr">"intelliSenseMode"</span>: <span class="hljs-string">"${default}"</span>
+        }
+    ],
+    <span class="hljs-attr">"version"</span>: <span class="hljs-number">4</span>
+}</code></pre>
+<p>Из названия настроек всё понятно: имя конфигурации, путь к компилятору, его аргументы, пути к заголовочным файлам, опеределения макросов и указание стандарта языка. Более подробно об этих параметрах можно почитать в официальной документации.</p>
+<p>В принципе все основные настройки готовы, осталось определелить несколько задач для сборки и загрузки прошивки в микроконтроллер. Для этого их необходимо описать в файле <code>.vscode\tasks.json</code>.</p>
+<pre><code class="language-json hljs">{
+    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"2.0.0"</span>,
+    <span class="hljs-attr">"tasks"</span>: [
+        {
+            <span class="hljs-attr">"label"</span>: <span class="hljs-string">"Build"</span>,
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"shell"</span>,
+            <span class="hljs-attr">"command"</span>: <span class="hljs-string">"make -s -j 8 app"</span>,
+            <span class="hljs-attr">"options"</span>: {
+                <span class="hljs-attr">"cwd"</span>: <span class="hljs-string">"${workspaceRoot}"</span>,
+                <span class="hljs-attr">"shell"</span>: {
+                    <span class="hljs-attr">"executable"</span>: <span class="hljs-string">"cmd.exe"</span>,
+                    <span class="hljs-attr">"args"</span>: [ <span class="hljs-string">"/C"</span> ]
+                }
+            },
+            <span class="hljs-attr">"group"</span>: {
+                <span class="hljs-attr">"kind"</span>: <span class="hljs-string">"build"</span>,
+                <span class="hljs-attr">"isDefault"</span>: <span class="hljs-literal">true</span>
+            },
+            <span class="hljs-attr">"problemMatcher"</span>: [
+                <span class="hljs-string">"$go"</span>
+            ]
+        },
+        {
+            <span class="hljs-attr">"label"</span>: <span class="hljs-string">"Download"</span>,
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"shell"</span>,
+            <span class="hljs-attr">"command"</span>: <span class="hljs-string">"JLink.exe -Device STM32F042K6 -If SWD -Speed 4000 JLink\\FlashMCU.jlink"</span>,
+            <span class="hljs-attr">"options"</span>: {
+                <span class="hljs-attr">"cwd"</span>: <span class="hljs-string">"${workspaceRoot}"</span>,
+                <span class="hljs-attr">"shell"</span>: {
+                    <span class="hljs-attr">"executable"</span>: <span class="hljs-string">"cmd.exe"</span>,
+                    <span class="hljs-attr">"args"</span>: [ <span class="hljs-string">"/C"</span> ]
+                }
+            },
+            <span class="hljs-attr">"group"</span>: {
+                <span class="hljs-attr">"kind"</span>: <span class="hljs-string">"test"</span>,
+                <span class="hljs-attr">"isDefault"</span>: <span class="hljs-literal">true</span>
+            },
+            <span class="hljs-attr">"problemMatcher"</span>: []
+        }
+    ]
+}</code></pre>
+<p>Первая задача <code>Build</code> - задача сборки, о чем намекает параметр <code>"kind": "build"</code>, именно её редактор будет предлагать к выбору при выборе меню <code>Терминал -&gt; Запустить задачу сборки...</code>, либо при нажатии кнопок <code>CTRL+SHIFT+B</code>.</p>
+<p>Команда которая будет выполняться написана в параметре <code>command</code>.</p>
+<p>В первой задаче это запуск утилиты <code>make</code> с параметрами.</p>
+<p>Во второй это запуск утилиты <code>jlink</code> для записи файла прошивки в микроконтроллер. Видно, что здесь указаны тип устройства, интерфейс и скорость соединения и скрипт прошивки. Скрипт выглядит следующим образом:</p>
+<pre><code class="hljs properties"><span class="hljs-attr">r</span>
+<span class="hljs-attr">loadfile</span> <span class="hljs-string">.\build\smart_relay.hex</span>
+<span class="hljs-attr">r</span>
+<span class="hljs-attr">g</span>
+<span class="hljs-attr">q</span></code></pre>
+<p>Другие команды, для чтения, очистки и сброса можно посмотреть в документации к <code>jlink</code>.</p>
+<p>Ну вот и всё, Вам же осталось только написать свой код, написать <code>Makefile</code> и пользоваться средой.</p>
+<h4>Немного об ощущениях</h4>
+<p>Плюсы:</p>
+<ul>
+<li>Превосходный редактор с отличным функционалом;</li>
+<li>Можно переходить к определнию функции по клику с нажатым <code>CTRL</code>;</li>
+<li>куча расширений функционала редактора.</li>
+</ul>
+<p>Минусы:</p>
+<ul>
+<li>Немного непривычная отладка: значения регистров и переменных в десятичном формате;</li>
+<li>Отладка без дизассемблера;</li>
+<li>Возможность отстрелить ногу с предопределенными компилятором макросами (то, о чем я писал выше);</li>
+<li>Много ручной работы по настройке проекта и системы сборки;</li>
+<li>GCC вместо ARM Compiler 6.</li>
+</ul>
+<p>На первый взгляд кажется что минусов больше, но на самом деле удобство работы в редакторе кода компенсирует многое. А расширение функции отладки скорее всего дело будущих версий этого плагина.</p>
+<h4>PS</h4>
+<p>Как всегда хорошего кодинга и меньше багов.</p>
+	<ul class="actions pagination">
+
+				<li><a href="https://cdeblog.ru/multithreading-arm-asm" class="previous"> Немного про ARM ассемблер. Пишем многопоточную программу.</a></li>
+    
+
+				<li><a href="https://cdeblog.ru/clang-llvm-stm32" class="next">Собираем проект для STM32 с помощью Clang/LLVM </a></li>
+    
+	</ul>
+
+
+	<!-- Plugins Page End -->
+	<!-- Disqus plugin -->
+<div id="disqus_thread"><iframe id="dsq-app5959" name="dsq-app5959" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 394px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script>
+
+	var disqus_config = function () {
+		this.page.url = 'https://cdeblog.ru/vscode-stm32';
+		this.page.identifier = '47bb92018e67f83b8af43de452073e94';
+	};
+
+	(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://ua414893452.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!-- /Disqus plugin -->
+</article>
+
+
+		</div>
+
+		<!-- Sidebar -->
+		<section id="sidebar">
+		<!-- Intro -->
+<section id="intro">
+	<header>
+		<h2><a href="https://cdeblog.ru/">CDEblog</a></h2>
+		<p>Блог инженера-схемотехника, конструктора и немного программиста</p>
+	</header>
+</section>
+
+<div class="plugin plugin-navigation"><h2 class="plugin-label">Последние публикации</h2><div class="plugin-content"><ul><li><a href="https://cdeblog.ru/include-binary-file-to-firmware">Включение бинарных файлов в прошивку</a></li><li><a href="https://cdeblog.ru/altium-designed-mylib-dblib">Библиотека для Altium Designed. Как использовать библиотеку в виде базы данных.</a></li><li><a href="https://cdeblog.ru/printf-clang-gcclib">printf в микроконтроллерах STM32. Часть 2: Clang/LLVM</a></li><li><a href="https://cdeblog.ru/clang-llvm-stm32">Собираем проект для STM32 с помощью Clang/LLVM</a></li><li><a href="https://cdeblog.ru/vscode-stm32">Visual Studio Code для ARM микроконтроллеров stm32 и других.</a></li></ul></div></div><div class="plugin plugin-tags"><h2 class="plugin-label">Теги</h2><div class="plugin-content"><div style="width: 90%; word-wrap: normal;"><a href="https://cdeblog.ru/tag/C" title="3" style="font-size:0.9em;">C</a> <a href="https://cdeblog.ru/tag/Keil" title="3" style="font-size:0.9em;">Keil</a> <a href="https://cdeblog.ru/tag/PCB" title="2" style="font-size:0.9em;">PCB</a> <a href="https://cdeblog.ru/tag/STM32" title="1" style="font-size:0.9em;">STM32</a> <a href="https://cdeblog.ru/tag/Tutorial" title="6" style="font-size:1.0em;">Tutorial</a> <a href="https://cdeblog.ru/tag/ad" title="3" style="font-size:0.9em;">AD</a> <a href="https://cdeblog.ru/tag/arm" title="1" style="font-size:0.9em;">ARM</a> <a href="https://cdeblog.ru/tag/asm" title="4" style="font-size:0.9em;">ASM</a> <a href="https://cdeblog.ru/tag/bludit" title="1" style="font-size:0.9em;">bludit</a> <a href="https://cdeblog.ru/tag/c" title="10" style="font-size:1.0em;">C</a> <a href="https://cdeblog.ru/tag/clang" title="2" style="font-size:0.9em;">clang</a> <a href="https://cdeblog.ru/tag/cli" title="1" style="font-size:0.9em;">CLI</a> <a href="https://cdeblog.ru/tag/cortex-m3" title="4" style="font-size:0.9em;">Cortex-M3</a> <a href="https://cdeblog.ru/tag/diy" title="2" style="font-size:0.9em;">DIY</a> <a href="https://cdeblog.ru/tag/dos" title="1" style="font-size:0.9em;">DOS</a> <a href="https://cdeblog.ru/tag/driver" title="2" style="font-size:0.9em;">Driver</a> <a href="https://cdeblog.ru/tag/dsp" title="1" style="font-size:0.9em;">DSP</a> <a href="https://cdeblog.ru/tag/freertos" title="4" style="font-size:0.9em;">FreeRTOS</a> <a href="https://cdeblog.ru/tag/gcc" title="1" style="font-size:0.9em;">gcc</a> <a href="https://cdeblog.ru/tag/gcc-make-asm" title="1" style="font-size:0.9em;">gcc make asm</a> <a href="https://cdeblog.ru/tag/keil" title="8" style="font-size:1.0em;">Keil</a> <a href="https://cdeblog.ru/tag/library" title="6" style="font-size:1.0em;">Library</a> <a href="https://cdeblog.ru/tag/llvm" title="1" style="font-size:0.9em;">llvm</a> <a href="https://cdeblog.ru/tag/milandr" title="1" style="font-size:0.9em;">Миландр</a> <a href="https://cdeblog.ru/tag/pcb" title="4" style="font-size:0.9em;">PCB</a> <a href="https://cdeblog.ru/tag/printf" title="1" style="font-size:0.9em;">printf</a> <a href="https://cdeblog.ru/tag/rtos" title="5" style="font-size:0.9em;">RTOS</a> <a href="https://cdeblog.ru/tag/stm32" title="14" style="font-size:1.1em;">stm32</a> <a href="https://cdeblog.ru/tag/syscalls" title="1" style="font-size:0.9em;">syscalls</a> <a href="https://cdeblog.ru/tag/tools" title="1" style="font-size:0.9em;">tools</a> <a href="https://cdeblog.ru/tag/tutorial" title="11" style="font-size:1.1em;">Tutorial</a> <a href="https://cdeblog.ru/tag/vscode" title="1" style="font-size:0.9em;">vscode</a> <a href="https://cdeblog.ru/tag/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B" title="2" style="font-size:0.9em;">Инструменты</a> <a href="https://cdeblog.ru/tag/%D0%9C%D0%B8%D0%BB%D0%B0%D0%BD%D0%B4%D1%80" title="2" style="font-size:0.9em;">Миландр</a> <a href="https://cdeblog.ru/tag/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5" title="5" style="font-size:0.9em;">Разное</a> <a href="https://cdeblog.ru/tag/%D0%A3%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B" title="1" style="font-size:0.9em;">Утилиты</a> <a href="https://cdeblog.ru/tag/%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B" title="8" style="font-size:1.0em;">Инструменты</a> <a href="https://cdeblog.ru/tag/%D0%BC%D0%B8%D0%BB%D0%B0%D0%BD%D0%B4%D1%80" title="5" style="font-size:0.9em;">Миландр</a> <a href="https://cdeblog.ru/tag/%D1%80%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5" title="9" style="font-size:1.0em;">Разное</a> <a href="https://cdeblog.ru/tag/%D1%83%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B" title="2" style="font-size:0.9em;">Утилиты</a> <a href="https://cdeblog.ru/tag/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0" title="3" style="font-size:0.9em;">Электроника</a> </div></div></div><div class="plugin plugin-pages"><h2 class="plugin-label">Полезные ссылки</h2><div class="plugin-content"><ul><li><a href="https://gitlab.com/devprodest/periph-drivers">Пак для Keil</a></li><li><a href="https://gitlab.com/devprodest/altium-library">Библиотека для Altium</a></li><li><a href="https://cdeblog.ru/typical-errors-pcb-trace">Типовые ошибки трассировки печатных плат</a></li></ul></div></div>
+<!-- Footer -->
+<section id="footer">
+	<ul class="icons">
+    <li><a href="https://www.youtube.com/channel/UCRPjDA6kKRQz_AWLkfw11sg" class="fa-youtube"><span class="label">YouTube</span></a></li>
+	<li><a href="https://t.me/cdeblog" class="fa-telegram"><span class="label">Telegram</span></a></li>
+	<li><a href="https://gitlab.com/devprodest" class="fa-gitlab"><span class="label">GitLab</span></a></li><li><a href="https://cdeblog.ru/rss.xml" class="fa-rss"><span class="label">RSS</span></a></li><li><a href="https://cdeblog.ru/sitemap.xml" class="fa-sitemap"><span class="label">Sitemap</span></a></li>	</ul>
+	<p class="copyright">Copyright © 2020 | <a href="http://www.bludit.com/">BLUDIT</a></p>
+</section>
+		</section>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/jquery.min.js.Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/skel.min.js.Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/util.js.Без названия"></script>
+<!--[if lt IE 8]><script  src="https://cdeblog.ru/bl-themes/logdark/assets/js/ie/respond.min.js?version=3.13.1"></script>
+<![endif]--><script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/main.js.Без названия"></script>
+
+	
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/highlight.pack.js.Без названия"></script><script>hljs.initHighlightingOnLoad();</script><!-- Javascripts files for Sequence Diagram plugin -->
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/jquery.min.js(1).Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/webfont.js.Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/snap.svg-min.js.Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/underscore-min.js.Без названия"></script>
+<script src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/sequence-diagram-min.js.Без названия"></script>
+<script> $(".diagram").sequenceDiagram({theme: "simple"}); </script>
+
+
+<section id="menu">
+
+			<!-- Links -->
+			<section>
+				<ul class="links">
+				<li><a href="https://cdeblog.ru/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><h3>Домашняя страница</h3><p>Circuit designer engineer blog</p></a></li><li><a href="https://cdeblog.ru/about" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><h3>О блоге</h3><p>Контактная информация и описание деятельности. Разработка схемотехники. Трассировка печатных плат. Разработка встраиваемого программного обеспечения. Работа на заказ.</p></a></li>				</ul>
+			</section>
+
+			<!-- Actions -->
+			<section>
+				<ul class="actions vertical">
+					<li><a href="https://cdeblog.ru/admin/" class="button big fit" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Вход</a></li>
+				</ul>
+			</section>
+
+		</section><iframe style="display: none;" src="./Visual Studio Code для ARM микроконтроллеров stm32 и других. _ CDEblog_files/saved_resource(1).html"></iframe></body></html>

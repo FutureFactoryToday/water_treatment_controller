@@ -1,5 +1,5 @@
-spo/tft.o: ..\libs\TFT\TFT.c ..\Core\Inc\main.h \
-  ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h \
+spo/tft.o: ..\Drivers\TFT\TFT.c ..\Core\Inc\main.h \
+  ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h \
   ..\Drivers\CMSIS\Include\core_cm3.h \
@@ -10,13 +10,13 @@ spo/tft.o: ..\libs\TFT\TFT.c ..\Core\Inc\main.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h \
+  ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h \
-  ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h \
@@ -24,4 +24,7 @@ spo/tft.o: ..\libs\TFT\TFT.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h \
   ..\Core\Inc\stm32_assert.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Settings.h \
-  ..\libs\TFT\TFT.h ..\libs\SPI\SPI_Handler.h ..\libs\SPI\FIFO.h
+  ..\MidLevel\SPI\SPI_Handler.h ..\MidLevel\SPI\FIFO.h \
+  ..\Drivers\Motor\Motor.h ..\Drivers\TFT\TFT.h ..\Drivers\TFT\TFT_LL.h \
+  ..\Core\Inc\spi.h ..\Core\Inc\gpio.h \
+  ..\Core\..\..\GUI\Logo\LOGO_MAIN.h ..\Drivers\TFT\TFT_Commands.h

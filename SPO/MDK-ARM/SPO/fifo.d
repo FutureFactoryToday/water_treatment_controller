@@ -1,4 +1,4 @@
-spo/fifo.o: ..\libs\SPI\FIFO.c ..\Core\Inc\main.h \
+spo/fifo.o: ..\MidLevel\SPI\FIFO.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h \
@@ -24,4 +24,8 @@ spo/fifo.o: ..\libs\SPI\FIFO.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h \
   ..\Core\Inc\stm32_assert.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Settings.h \
-  ..\libs\TFT\TFT.h ..\libs\SPI\SPI_Handler.h ..\libs\SPI\FIFO.h
+  ..\Drivers\Motor\Motor.h ..\Drivers\TFT\stm32_adafruit_lcd.h \
+  ..\Drivers\TFT\lcd.h ..\Drivers\TFT\Fonts\fonts.h \
+  ..\Drivers\TFT\stm32_adafruit_ts.h ..\Drivers\TFT\bmp.h \
+  ..\UpperLevel\GUI\GUI.h ..\Drivers\TFT\lcd\ili9486\ili9486.h \
+  ..\Drivers\Optic\Optic.h ..\MidLevel\SPI\fifo.h
