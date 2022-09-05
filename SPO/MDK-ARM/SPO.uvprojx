@@ -924,6 +924,51 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\TFT\Fonts\Oxygen_Mono.c</FilePath>
             </File>
+            <File>
+              <FileName>dropButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>returnArrowImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\returnArrowImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowUpImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowUpImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowDownImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowDownImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>dropButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImgRect.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1825,6 +1870,51 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\TFT\Fonts\Oxygen_Mono.c</FilePath>
             </File>
+            <File>
+              <FileName>dropButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>returnArrowImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\returnArrowImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowUpImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowUpImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowDownImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowDownImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>dropButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImgRect.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2725,6 +2815,51 @@
               <FileName>Oxygen_Mono.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\TFT\Fonts\Oxygen_Mono.c</FilePath>
+            </File>
+            <File>
+              <FileName>dropButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>returnArrowImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\returnArrowImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowUpImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowUpImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>arrowDownImg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arrowDownImg.c</FilePath>
+            </File>
+            <File>
+              <FileName>dropButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dropButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>wrenchButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\wrenchButImgRect.c</FilePath>
+            </File>
+            <File>
+              <FileName>pageButImgRect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pageButImgRect.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -712,6 +712,7 @@ Section Cross References
     gui_1.o(.text.initGUI) refers to gui_1.o(.bss.dropBut) for dropBut
     gui_1.o(.text.initGUI) refers to gui_1.o(.bss.wrenchBut) for wrenchBut
     gui_1.o(.text.initGUI) refers to gui_1.o(.bss.pageBut) for pageBut
+    gui_1.o(.text.initGUI) refers to gui_1.o(.bss.frame) for frame
     gui_1.o(.ARM.exidx.text.initGUI) refers to gui_1.o(.text.initGUI) for [Anonymous Symbol]
     gui_1.o(.text.DrawButton) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_SetTextColor) for BSP_LCD_SetTextColor
     gui_1.o(.text.DrawButton) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_SetBackColor) for BSP_LCD_SetBackColor
@@ -723,6 +724,7 @@ Section Cross References
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.bss.tsState) for tsState
     gui_1.o(.text.redrawGUI) refers to stm32_adafruit_ts.o(.text.BSP_TS_GetState) for BSP_TS_GetState
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.bss.touchDelay) for touchDelay
+    gui_1.o(.text.redrawGUI) refers to gui_1.o(.bss.frame) for frame
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.text.isInRectangle) for isInRectangle
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.bss.dropBut) for dropBut
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.rodata.str1.1) for .L.str.4
@@ -736,16 +738,15 @@ Section Cross References
     gui_1.o(.text.redrawGUI) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_SetBackColor) for BSP_LCD_SetBackColor
     gui_1.o(.text.redrawGUI) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_DrawRect) for BSP_LCD_DrawRect
     gui_1.o(.text.redrawGUI) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_DisplayStringAt) for BSP_LCD_DisplayStringAt
+    gui_1.o(.text.redrawGUI) refers to smalllogo_16b.o(.rodata.gImage_SMALL_LOGO) for gImage_SMALL_LOGO
+    gui_1.o(.text.redrawGUI) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_DrawBitmap) for BSP_LCD_DrawBitmap
+    gui_1.o(.text.redrawGUI) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_Clear) for BSP_LCD_Clear
     gui_1.o(.text.redrawGUI) refers to optic.o(.bss.opticCnt) for opticCnt
     gui_1.o(.text.redrawGUI) refers to gui_1.o(.text.intToStr) for intToStr
     gui_1.o(.ARM.exidx.text.redrawGUI) refers to gui_1.o(.text.redrawGUI) for [Anonymous Symbol]
     gui_1.o(.ARM.exidx.text.isInRectangle) refers to gui_1.o(.text.isInRectangle) for [Anonymous Symbol]
     gui_1.o(.text.intToStr) refers to gui_1.o(.bss.numBuf) for numBuf
     gui_1.o(.ARM.exidx.text.intToStr) refers to gui_1.o(.text.intToStr) for [Anonymous Symbol]
-    gui_1.o(.text.DrawOpticStatus) refers to optic.o(.data.opticStatus) for opticStatus
-    gui_1.o(.text.DrawOpticStatus) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_SetTextColor) for BSP_LCD_SetTextColor
-    gui_1.o(.text.DrawOpticStatus) refers to stm32_adafruit_lcd.o(.text.BSP_LCD_FillCircle) for BSP_LCD_FillCircle
-    gui_1.o(.ARM.exidx.text.DrawOpticStatus) refers to gui_1.o(.text.DrawOpticStatus) for [Anonymous Symbol]
     oxygen_mono.o(.data.Oxygen_Mono) refers to oxygen_mono.o(.rodata.FONT_NAME) for FONT_NAME
     stm32_adafruit_lcd.o(.text.BSP_LCD_Init) refers to ili9486.o(.data.lcd_drv) for lcd_drv
     stm32_adafruit_lcd.o(.text.BSP_LCD_Init) refers to stm32_adafruit_lcd.o(.bss.DrawProp) for DrawProp
@@ -1797,11 +1798,27 @@ Removing Unused input sections from the image.
     Removing gui_1.o(.ARM.exidx.text.redrawGUI), (8 bytes).
     Removing gui_1.o(.ARM.exidx.text.isInRectangle), (8 bytes).
     Removing gui_1.o(.ARM.exidx.text.intToStr), (8 bytes).
-    Removing gui_1.o(.text.DrawOpticStatus), (58 bytes).
-    Removing gui_1.o(.ARM.exidx.text.DrawOpticStatus), (8 bytes).
     Removing oxygen_mono.o(.text), (0 bytes).
     Removing oxygen_mono.o(.rodata.FONT_NAME), (4096 bytes).
     Removing oxygen_mono.o(.data.Oxygen_Mono), (8 bytes).
+    Removing dropbutimg.o(.text), (0 bytes).
+    Removing dropbutimg.o(.rodata.gImage_DROPBUT), (54 bytes).
+    Removing wrenchbutimg.o(.text), (0 bytes).
+    Removing wrenchbutimg.o(.rodata.gImage_WRENCHBUT), (54 bytes).
+    Removing pagebutimg.o(.text), (0 bytes).
+    Removing pagebutimg.o(.rodata.gImage_PAGEBUT), (54 bytes).
+    Removing returnarrowimg.o(.text), (0 bytes).
+    Removing returnarrowimg.o(.rodata.gImage_RETURNARROW), (54 bytes).
+    Removing arrowupimg.o(.text), (0 bytes).
+    Removing arrowupimg.o(.rodata.gImage_ARROWUP), (54 bytes).
+    Removing arrowdownimg.o(.text), (0 bytes).
+    Removing arrowdownimg.o(.rodata.gImage_ARROWDOWN), (54 bytes).
+    Removing dropbutimgrect.o(.text), (0 bytes).
+    Removing dropbutimgrect.o(.rodata.gImage_DROPBUTRECT), (54 bytes).
+    Removing wrenchbutimgrect.o(.text), (0 bytes).
+    Removing wrenchbutimgrect.o(.rodata.gImage_WRENCHBUTRECT), (54 bytes).
+    Removing pagebutimgrect.o(.text), (0 bytes).
+    Removing pagebutimgrect.o(.rodata.gImage_PAGEBUTRECT), (54 bytes).
     Removing stm32_adafruit_lcd.o(.text), (0 bytes).
     Removing stm32_adafruit_lcd.o(.ARM.exidx.text.BSP_LCD_Init), (8 bytes).
     Removing stm32_adafruit_lcd.o(.ARM.exidx.text.BSP_LCD_Clear), (8 bytes).
@@ -1951,7 +1968,7 @@ Removing Unused input sections from the image.
     Removing lcd_io_spi.o(.text.LCD_IO_ReadCmd16MultipleData24to16), (82 bytes).
     Removing lcd_io_spi.o(.ARM.exidx.text.LCD_IO_ReadCmd16MultipleData24to16), (8 bytes).
 
-622 unused section(s) (total 36748 bytes) removed from the image.
+638 unused section(s) (total 37168 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2054,7 +2071,11 @@ Image Symbol Table
     Optic.c                                  0x00000000   Number         0  optic.o ABSOLUTE
     Oxygen_Mono.c                            0x00000000   Number         0  oxygen_mono.o ABSOLUTE
     WTC_Logic.c                              0x00000000   Number         0  wtc_logic.o ABSOLUTE
+    arrowDownImg.c                           0x00000000   Number         0  arrowdownimg.o ABSOLUTE
+    arrowUpImg.c                             0x00000000   Number         0  arrowupimg.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    dropButImg.c                             0x00000000   Number         0  dropbutimg.o ABSOLUTE
+    dropButImgRect.c                         0x00000000   Number         0  dropbutimgrect.o ABSOLUTE
     font12.c                                 0x00000000   Number         0  font12.o ABSOLUTE
     font16.c                                 0x00000000   Number         0  font16.o ABSOLUTE
     font20.c                                 0x00000000   Number         0  font20.o ABSOLUTE
@@ -2064,6 +2085,9 @@ Image Symbol Table
     ili9486.c                                0x00000000   Number         0  ili9486.o ABSOLUTE
     lcd_io_spi.c                             0x00000000   Number         0  lcd_io_spi.o ABSOLUTE
     main.c                                   0x00000000   Number         0  main.o ABSOLUTE
+    pageButImg.c                             0x00000000   Number         0  pagebutimg.o ABSOLUTE
+    pageButImgRect.c                         0x00000000   Number         0  pagebutimgrect.o ABSOLUTE
+    returnArrowImg.c                         0x00000000   Number         0  returnarrowimg.o ABSOLUTE
     rtc.c                                    0x00000000   Number         0  rtc.o ABSOLUTE
     smallLogo_16b.c                          0x00000000   Number         0  smalllogo_16b.o ABSOLUTE
     spi.c                                    0x00000000   Number         0  spi.o ABSOLUTE
@@ -2085,6 +2109,8 @@ Image Symbol Table
     tim.c                                    0x00000000   Number         0  tim.o ABSOLUTE
     ts_xpt2046.c                             0x00000000   Number         0  ts_xpt2046.o ABSOLUTE
     usart.c                                  0x00000000   Number         0  usart.o ABSOLUTE
+    wrenchButImg.c                           0x00000000   Number         0  wrenchbutimg.o ABSOLUTE
+    wrenchButImgRect.c                       0x00000000   Number         0  wrenchbutimgrect.o ABSOLUTE
     RESET                                    0x08000000   Section      304  startup_stm32f103xe.o(RESET)
     !!!main                                  0x08000130   Section        8  __main.o(!!!main)
     !!!scatter                               0x08000138   Section       52  __scatter.o(!!!scatter)
@@ -2436,44 +2462,48 @@ Image Symbol Table
     [Anonymous Symbol]                       0x08004d84   Section        0  ili9486.o(.text.ili9486_ts_GetXY)
     [Anonymous Symbol]                       0x08004db0   Section        0  ili9486.o(.text.ili9486_ts_Init)
     [Anonymous Symbol]                       0x08004de4   Section        0  gui_1.o(.text.initGUI)
-    [Anonymous Symbol]                       0x08004f24   Section        0  motor.o(.text.initMot)
-    [Anonymous Symbol]                       0x08004f40   Section        0  optic.o(.text.initOptic)
-    [Anonymous Symbol]                       0x08004f5c   Section        0  gui_1.o(.text.intToStr)
-    [Anonymous Symbol]                       0x08005068   Section        0  gui_1.o(.text.isInRectangle)
-    [Anonymous Symbol]                       0x080050e0   Section        0  main.o(.text.main)
-    [Anonymous Symbol]                       0x08005178   Section        0  optic.o(.text.opticInterrupt)
-    [Anonymous Symbol]                       0x080051e8   Section        0  gui_1.o(.text.redrawGUI)
-    .L.str                                   0x080053e6   Data           2  ili9486.o(.rodata..L.str)
-    .L.str.2                                 0x080053e8   Data           5  ili9486.o(.rodata..L.str.2)
-    OFFSET_TAB_CCMRx                         0x080071b5   Data           7  tim.o(.rodata.OFFSET_TAB_CCMRx)
-    [Anonymous Symbol]                       0x080071b5   Section        0  tim.o(.rodata.OFFSET_TAB_CCMRx)
-    SHIFT_TAB_OCxx                           0x080071bc   Data           7  tim.o(.rodata.SHIFT_TAB_OCxx)
-    [Anonymous Symbol]                       0x080071bc   Section        0  tim.o(.rodata.SHIFT_TAB_OCxx)
-    .L.str.3                                 0x080071c3   Data          16  ili9486.o(.rodata.cst16)
-    .L.str.4                                 0x080071d3   Data          16  ili9486.o(.rodata.cst16)
-    .L.str                                   0x080135a6   Data          56  stm32f1xx_ll_gpio.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080135a6   Section        0  stm32f1xx_ll_gpio.o(.rodata.str1.1)
-    .L.str                                   0x080135de   Data          56  stm32f1xx_ll_exti.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080135de   Section        0  stm32f1xx_ll_exti.o(.rodata.str1.1)
-    .L.str                                   0x08013616   Data          55  stm32f1xx_ll_spi.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x08013616   Section        0  stm32f1xx_ll_spi.o(.rodata.str1.1)
-    .L.str                                   0x0801364d   Data          55  stm32f1xx_ll_tim.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0801364d   Section        0  stm32f1xx_ll_tim.o(.rodata.str1.1)
-    .L.str                                   0x08013684   Data          57  stm32f1xx_ll_usart.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x08013684   Section        0  stm32f1xx_ll_usart.o(.rodata.str1.1)
-    .L.str.7                                 0x080136bd   Data           8  gui_1.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080136bd   Section        0  gui_1.o(.rodata.str1.1)
-    .L.str.3                                 0x080136c5   Data           5  gui_1.o(.rodata.str1.1)
-    .L.str                                   0x080136ca   Data          16  gui_1.o(.rodata.str1.1)
-    .L.str.2                                 0x080136da   Data           7  gui_1.o(.rodata.str1.1)
-    .L.str.6                                 0x080136e1   Data           6  gui_1.o(.rodata.str1.1)
-    .L.str.1                                 0x080136e7   Data           5  gui_1.o(.rodata.str1.1)
-    .L.str.4                                 0x080136ec   Data           5  gui_1.o(.rodata.str1.1)
-    .L.str.5                                 0x080136f1   Data           4  gui_1.o(.rodata.str1.1)
-    .L.str.1                                 0x080136f5   Data           2  ili9486.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x080136f5   Section        0  ili9486.o(.rodata.str1.1)
-    .L.str.6                                 0x080136f7   Data           2  ili9486.o(.rodata.str1.1)
-    .L.str.5                                 0x080136f9   Data           2  ili9486.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08004f2c   Section        0  motor.o(.text.initMot)
+    [Anonymous Symbol]                       0x08004f48   Section        0  optic.o(.text.initOptic)
+    [Anonymous Symbol]                       0x08004f64   Section        0  gui_1.o(.text.intToStr)
+    [Anonymous Symbol]                       0x08005070   Section        0  gui_1.o(.text.isInRectangle)
+    [Anonymous Symbol]                       0x080050e8   Section        0  main.o(.text.main)
+    [Anonymous Symbol]                       0x08005180   Section        0  optic.o(.text.opticInterrupt)
+    [Anonymous Symbol]                       0x080051f0   Section        0  gui_1.o(.text.redrawGUI)
+    .L.str                                   0x08005698   Data           2  ili9486.o(.rodata..L.str)
+    .L.str.2                                 0x0800569a   Data           5  ili9486.o(.rodata..L.str.2)
+    OFFSET_TAB_CCMRx                         0x08007467   Data           7  tim.o(.rodata.OFFSET_TAB_CCMRx)
+    [Anonymous Symbol]                       0x08007467   Section        0  tim.o(.rodata.OFFSET_TAB_CCMRx)
+    SHIFT_TAB_OCxx                           0x0800746e   Data           7  tim.o(.rodata.SHIFT_TAB_OCxx)
+    [Anonymous Symbol]                       0x0800746e   Section        0  tim.o(.rodata.SHIFT_TAB_OCxx)
+    .L.str.3                                 0x08007475   Data          16  ili9486.o(.rodata.cst16)
+    .L.str.4                                 0x08007485   Data          16  ili9486.o(.rodata.cst16)
+    .L.str                                   0x08013856   Data          56  stm32f1xx_ll_gpio.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08013856   Section        0  stm32f1xx_ll_gpio.o(.rodata.str1.1)
+    .L.str                                   0x0801388e   Data          56  stm32f1xx_ll_exti.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0801388e   Section        0  stm32f1xx_ll_exti.o(.rodata.str1.1)
+    .L.str                                   0x080138c6   Data          55  stm32f1xx_ll_spi.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080138c6   Section        0  stm32f1xx_ll_spi.o(.rodata.str1.1)
+    .L.str                                   0x080138fd   Data          55  stm32f1xx_ll_tim.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080138fd   Section        0  stm32f1xx_ll_tim.o(.rodata.str1.1)
+    .L.str                                   0x08013934   Data          57  stm32f1xx_ll_usart.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08013934   Section        0  stm32f1xx_ll_usart.o(.rodata.str1.1)
+    .L.str.7                                 0x0801396d   Data           8  gui_1.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0801396d   Section        0  gui_1.o(.rodata.str1.1)
+    .L.str.11                                0x08013975   Data           5  gui_1.o(.rodata.str1.1)
+    .L.str.3                                 0x0801397a   Data           5  gui_1.o(.rodata.str1.1)
+    .L.str                                   0x0801397f   Data          16  gui_1.o(.rodata.str1.1)
+    .L.str.9                                 0x0801398f   Data          10  gui_1.o(.rodata.str1.1)
+    .L.str.1                                 0x08013997   Data           2  gui_1.o(.rodata.str1.1)
+    .L.str.2                                 0x08013999   Data           7  gui_1.o(.rodata.str1.1)
+    .L.str.6                                 0x080139a0   Data           6  gui_1.o(.rodata.str1.1)
+    .L.str.8                                 0x080139a6   Data          13  gui_1.o(.rodata.str1.1)
+    .L.str.1                                 0x080139b3   Data           5  gui_1.o(.rodata.str1.1)
+    .L.str.4                                 0x080139b8   Data           5  gui_1.o(.rodata.str1.1)
+    .L.str.10                                0x080139bd   Data           2  gui_1.o(.rodata.str1.1)
+    .L.str.5                                 0x080139bf   Data           4  gui_1.o(.rodata.str1.1)
+    .L.str.6                                 0x080139c3   Data           2  ili9486.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080139c3   Section        0  ili9486.o(.rodata.str1.1)
+    .L.str.5                                 0x080139c5   Data           2  ili9486.o(.rodata.str1.1)
     .bss                                     0x20000090   Section       96  libspace.o(.bss)
     Is_ili9486_Initialized                   0x200000fc   Data           1  ili9486.o(.bss.Is_ili9486_Initialized)
     [Anonymous Symbol]                       0x200000fc   Section        0  ili9486.o(.bss.Is_ili9486_Initialized)
@@ -2769,22 +2799,22 @@ Image Symbol Table
     ili9486_ts_DetectTouch                   0x08004c85   Thumb Code   256  ili9486.o(.text.ili9486_ts_DetectTouch)
     ili9486_ts_GetXY                         0x08004d85   Thumb Code    42  ili9486.o(.text.ili9486_ts_GetXY)
     ili9486_ts_Init                          0x08004db1   Thumb Code    52  ili9486.o(.text.ili9486_ts_Init)
-    initGUI                                  0x08004de5   Thumb Code   318  gui_1.o(.text.initGUI)
-    initMot                                  0x08004f25   Thumb Code    26  motor.o(.text.initMot)
-    initOptic                                0x08004f41   Thumb Code    26  optic.o(.text.initOptic)
-    intToStr                                 0x08004f5d   Thumb Code   268  gui_1.o(.text.intToStr)
-    isInRectangle                            0x08005069   Thumb Code   120  gui_1.o(.text.isInRectangle)
-    main                                     0x080050e1   Thumb Code   152  main.o(.text.main)
-    opticInterrupt                           0x08005179   Thumb Code   110  optic.o(.text.opticInterrupt)
-    redrawGUI                                0x080051e9   Thumb Code   510  gui_1.o(.text.redrawGUI)
-    AHBPrescTable                            0x080053ed   Data          16  system_stm32f1xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x080053fd   Data           8  system_stm32f1xx.o(.rodata.APBPrescTable)
-    Font24_Table                             0x08005405   Data        6840  font24.o(.rodata.Font24_Table)
-    Font8_Table                              0x08006ebd   Data         760  font8.o(.rodata.Font8_Table)
-    gImage_LOGO_MAIN                         0x080071e8   Data       45054  logo_main2.o(.rodata.gImage_LOGO_MAIN)
-    gImage_SMALL_LOGO                        0x080121e8   Data        5054  smalllogo_16b.o(.rodata.gImage_SMALL_LOGO)
-    Region$$Table$$Base                      0x080136fc   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0801371c   Number         0  anon$$obj.o(Region$$Table)
+    initGUI                                  0x08004de5   Thumb Code   328  gui_1.o(.text.initGUI)
+    initMot                                  0x08004f2d   Thumb Code    26  motor.o(.text.initMot)
+    initOptic                                0x08004f49   Thumb Code    26  optic.o(.text.initOptic)
+    intToStr                                 0x08004f65   Thumb Code   268  gui_1.o(.text.intToStr)
+    isInRectangle                            0x08005071   Thumb Code   120  gui_1.o(.text.isInRectangle)
+    main                                     0x080050e9   Thumb Code   152  main.o(.text.main)
+    opticInterrupt                           0x08005181   Thumb Code   110  optic.o(.text.opticInterrupt)
+    redrawGUI                                0x080051f1   Thumb Code  1192  gui_1.o(.text.redrawGUI)
+    AHBPrescTable                            0x0800569f   Data          16  system_stm32f1xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x080056af   Data           8  system_stm32f1xx.o(.rodata.APBPrescTable)
+    Font24_Table                             0x080056b7   Data        6840  font24.o(.rodata.Font24_Table)
+    Font8_Table                              0x0800716f   Data         760  font8.o(.rodata.Font8_Table)
+    gImage_LOGO_MAIN                         0x08007498   Data       45054  logo_main2.o(.rodata.gImage_LOGO_MAIN)
+    gImage_SMALL_LOGO                        0x08012498   Data        5054  smalllogo_16b.o(.rodata.gImage_SMALL_LOGO)
+    Region$$Table$$Base                      0x080139c8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080139e8   Number         0  anon$$obj.o(Region$$Table)
     Font24                                   0x20000000   Data           8  font24.o(.data.Font24)
     Font8                                    0x20000008   Data           8  font8.o(.data.Font8)
     SystemCoreClock                          0x20000010   Data           4  system_stm32f1xx.o(.data.SystemCoreClock)
@@ -2801,6 +2831,7 @@ Image Symbol Table
     bX                                       0x20000214   Data           4  stm32_adafruit_ts.o(.bss.bX)
     bY                                       0x20000218   Data           4  stm32_adafruit_ts.o(.bss.bY)
     dropBut                                  0x20000582   Data           1  gui_1.o(.bss.dropBut)
+    frame                                    0x20000583   Data           1  gui_1.o(.bss.frame)
     itCnt                                    0x2000058d   Data           1  stm32f1xx_it.o(.bss.itCnt)
     kX                                       0x20000590   Data           4  stm32_adafruit_ts.o(.bss.kX)
     kY                                       0x20000594   Data           4  stm32_adafruit_ts.o(.bss.kY)
@@ -2823,135 +2854,135 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000137b0, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00013a78, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0001371c, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000139e8, Max: 0x00040000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000130   Data   RO            3    RESET               startup_stm32f103xe.o
-    0x08000130   0x08000130   0x00000008   Code   RO         1160  * !!!main             c_w.l(__main.o)
-    0x08000138   0x08000138   0x00000034   Code   RO         1386    !!!scatter          c_w.l(__scatter.o)
-    0x0800016c   0x0800016c   0x0000001a   Code   RO         1388    !!handler_copy      c_w.l(__scatter_copy.o)
+    0x08000130   0x08000130   0x00000008   Code   RO         1213  * !!!main             c_w.l(__main.o)
+    0x08000138   0x08000138   0x00000034   Code   RO         1439    !!!scatter          c_w.l(__scatter.o)
+    0x0800016c   0x0800016c   0x0000001a   Code   RO         1441    !!handler_copy      c_w.l(__scatter_copy.o)
     0x08000186   0x08000186   0x00000002   PAD
-    0x08000188   0x08000188   0x0000001c   Code   RO         1390    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x080001a4   0x080001a4   0x00000002   Code   RO         1321    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1207    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1209    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1212    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1214    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1216    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1219    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1221    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1223    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1225    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1227    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1229    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1231    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1233    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1235    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1237    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1239    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1243    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1245    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1247    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000000   Code   RO         1249    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x080001a6   0x080001a6   0x00000002   Code   RO         1250    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
-    0x080001a8   0x080001a8   0x00000002   Code   RO         1383    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1337    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1339    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1342    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1345    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1347    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         1350    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x080001aa   0x080001aa   0x00000002   Code   RO         1351    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x080001ac   0x080001ac   0x00000000   Code   RO         1178    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x080001ac   0x080001ac   0x00000000   Code   RO         1264    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x080001ac   0x080001ac   0x00000006   Code   RO         1276    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x080001b2   0x080001b2   0x00000000   Code   RO         1266    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x080001b2   0x080001b2   0x00000004   Code   RO         1267    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x080001b6   0x080001b6   0x00000000   Code   RO         1269    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x080001b6   0x080001b6   0x00000008   Code   RO         1270    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x080001be   0x080001be   0x00000002   Code   RO         1326    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x080001c0   0x080001c0   0x00000000   Code   RO         1357    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x080001c0   0x080001c0   0x00000004   Code   RO         1358    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x080001c4   0x080001c4   0x00000006   Code   RO         1359    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x08000188   0x08000188   0x0000001c   Code   RO         1443    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x080001a4   0x080001a4   0x00000002   Code   RO         1374    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1260    .ARM.Collect$$libinit$$00000002  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1262    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1265    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1267    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1269    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1272    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1274    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1276    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1278    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1280    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1282    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1284    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1286    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1288    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1290    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1292    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1296    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1298    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1300    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000000   Code   RO         1302    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x080001a6   0x080001a6   0x00000002   Code   RO         1303    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
+    0x080001a8   0x080001a8   0x00000002   Code   RO         1436    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1390    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1392    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1395    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1398    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1400    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         1403    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x080001aa   0x080001aa   0x00000002   Code   RO         1404    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x080001ac   0x080001ac   0x00000000   Code   RO         1231    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x080001ac   0x080001ac   0x00000000   Code   RO         1317    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x080001ac   0x080001ac   0x00000006   Code   RO         1329    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x080001b2   0x080001b2   0x00000000   Code   RO         1319    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x080001b2   0x080001b2   0x00000004   Code   RO         1320    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x080001b6   0x080001b6   0x00000000   Code   RO         1322    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x080001b6   0x080001b6   0x00000008   Code   RO         1323    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x080001be   0x080001be   0x00000002   Code   RO         1379    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x080001c0   0x080001c0   0x00000000   Code   RO         1410    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x080001c0   0x080001c0   0x00000004   Code   RO         1411    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x080001c4   0x080001c4   0x00000006   Code   RO         1412    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x080001ca   0x080001ca   0x00000002   PAD
     0x080001cc   0x080001cc   0x00000040   Code   RO            4    .text               startup_stm32f103xe.o
-    0x0800020c   0x0800020c   0x0000004e   Code   RO         1156    .text               c_w.l(rt_memclr_w.o)
-    0x0800025a   0x0800025a   0x00000006   Code   RO         1158    .text               c_w.l(heapauxi.o)
-    0x08000260   0x08000260   0x00000008   Code   RO         1260    .text               c_w.l(libspace.o)
-    0x08000268   0x08000268   0x00000002   Code   RO         1297    .text               c_w.l(use_no_semi.o)
-    0x0800026a   0x0800026a   0x00000000   Code   RO         1299    .text               c_w.l(indicate_semi.o)
-    0x0800026a   0x0800026a   0x0000004a   Code   RO         1300    .text               c_w.l(sys_stackheap_outer.o)
-    0x080002b4   0x080002b4   0x00000012   Code   RO         1306    .text               c_w.l(exit.o)
+    0x0800020c   0x0800020c   0x0000004e   Code   RO         1209    .text               c_w.l(rt_memclr_w.o)
+    0x0800025a   0x0800025a   0x00000006   Code   RO         1211    .text               c_w.l(heapauxi.o)
+    0x08000260   0x08000260   0x00000008   Code   RO         1313    .text               c_w.l(libspace.o)
+    0x08000268   0x08000268   0x00000002   Code   RO         1350    .text               c_w.l(use_no_semi.o)
+    0x0800026a   0x0800026a   0x00000000   Code   RO         1352    .text               c_w.l(indicate_semi.o)
+    0x0800026a   0x0800026a   0x0000004a   Code   RO         1353    .text               c_w.l(sys_stackheap_outer.o)
+    0x080002b4   0x080002b4   0x00000012   Code   RO         1359    .text               c_w.l(exit.o)
     0x080002c6   0x080002c6   0x00000002   PAD
-    0x080002c8   0x080002c8   0x0000000c   Code   RO         1322    .text               c_w.l(sys_exit.o)
-    0x080002d4   0x080002d4   0x0000003a   Code   RO          815    .text.BSP_LCD_Clear  stm32_adafruit_lcd.o
+    0x080002c8   0x080002c8   0x0000000c   Code   RO         1375    .text               c_w.l(sys_exit.o)
+    0x080002d4   0x080002d4   0x0000003a   Code   RO          868    .text.BSP_LCD_Clear  stm32_adafruit_lcd.o
     0x0800030e   0x0800030e   0x00000002   PAD
-    0x08000310   0x08000310   0x00000046   Code   RO          837    .text.BSP_LCD_DisplayChar  stm32_adafruit_lcd.o
+    0x08000310   0x08000310   0x00000046   Code   RO          890    .text.BSP_LCD_DisplayChar  stm32_adafruit_lcd.o
     0x08000356   0x08000356   0x00000002   PAD
-    0x08000358   0x08000358   0x00000138   Code   RO          841    .text.BSP_LCD_DisplayStringAt  stm32_adafruit_lcd.o
-    0x08000490   0x08000490   0x0000007c   Code   RO          861    .text.BSP_LCD_DrawBitmap  stm32_adafruit_lcd.o
-    0x0800050c   0x0800050c   0x0000008a   Code   RO          847    .text.BSP_LCD_DrawHLine  stm32_adafruit_lcd.o
+    0x08000358   0x08000358   0x00000138   Code   RO          894    .text.BSP_LCD_DisplayStringAt  stm32_adafruit_lcd.o
+    0x08000490   0x08000490   0x0000007c   Code   RO          914    .text.BSP_LCD_DrawBitmap  stm32_adafruit_lcd.o
+    0x0800050c   0x0800050c   0x0000008a   Code   RO          900    .text.BSP_LCD_DrawHLine  stm32_adafruit_lcd.o
     0x08000596   0x08000596   0x00000002   PAD
-    0x08000598   0x08000598   0x00000040   Code   RO          845    .text.BSP_LCD_DrawPixel  stm32_adafruit_lcd.o
-    0x080005d8   0x080005d8   0x0000006c   Code   RO          853    .text.BSP_LCD_DrawRect  stm32_adafruit_lcd.o
-    0x08000644   0x08000644   0x0000008a   Code   RO          849    .text.BSP_LCD_DrawVLine  stm32_adafruit_lcd.o
+    0x08000598   0x08000598   0x00000040   Code   RO          898    .text.BSP_LCD_DrawPixel  stm32_adafruit_lcd.o
+    0x080005d8   0x080005d8   0x0000006c   Code   RO          906    .text.BSP_LCD_DrawRect  stm32_adafruit_lcd.o
+    0x08000644   0x08000644   0x0000008a   Code   RO          902    .text.BSP_LCD_DrawVLine  stm32_adafruit_lcd.o
     0x080006ce   0x080006ce   0x00000002   PAD
-    0x080006d0   0x080006d0   0x0000004a   Code   RO          835    .text.BSP_LCD_FillRect  stm32_adafruit_lcd.o
+    0x080006d0   0x080006d0   0x0000004a   Code   RO          888    .text.BSP_LCD_FillRect  stm32_adafruit_lcd.o
     0x0800071a   0x0800071a   0x00000002   PAD
-    0x0800071c   0x0800071c   0x00000012   Code   RO          817    .text.BSP_LCD_GetXSize  stm32_adafruit_lcd.o
+    0x0800071c   0x0800071c   0x00000012   Code   RO          870    .text.BSP_LCD_GetXSize  stm32_adafruit_lcd.o
     0x0800072e   0x0800072e   0x00000002   PAD
-    0x08000730   0x08000730   0x00000012   Code   RO          819    .text.BSP_LCD_GetYSize  stm32_adafruit_lcd.o
+    0x08000730   0x08000730   0x00000012   Code   RO          872    .text.BSP_LCD_GetYSize  stm32_adafruit_lcd.o
     0x08000742   0x08000742   0x00000002   PAD
-    0x08000744   0x08000744   0x00000048   Code   RO          813    .text.BSP_LCD_Init  stm32_adafruit_lcd.o
-    0x0800078c   0x0800078c   0x00000018   Code   RO          827    .text.BSP_LCD_SetBackColor  stm32_adafruit_lcd.o
-    0x080007a4   0x080007a4   0x00000014   Code   RO          829    .text.BSP_LCD_SetFont  stm32_adafruit_lcd.o
-    0x080007b8   0x080007b8   0x00000018   Code   RO          825    .text.BSP_LCD_SetTextColor  stm32_adafruit_lcd.o
-    0x080007d0   0x080007d0   0x0000012e   Code   RO          898    .text.BSP_TS_GetState  stm32_adafruit_ts.o
+    0x08000744   0x08000744   0x00000048   Code   RO          866    .text.BSP_LCD_Init  stm32_adafruit_lcd.o
+    0x0800078c   0x0800078c   0x00000018   Code   RO          880    .text.BSP_LCD_SetBackColor  stm32_adafruit_lcd.o
+    0x080007a4   0x080007a4   0x00000014   Code   RO          882    .text.BSP_LCD_SetFont  stm32_adafruit_lcd.o
+    0x080007b8   0x080007b8   0x00000018   Code   RO          878    .text.BSP_LCD_SetTextColor  stm32_adafruit_lcd.o
+    0x080007d0   0x080007d0   0x0000012e   Code   RO          951    .text.BSP_TS_GetState  stm32_adafruit_ts.o
     0x080008fe   0x080008fe   0x00000002   PAD
-    0x08000900   0x08000900   0x000000c2   Code   RO          896    .text.BSP_TS_Init   stm32_adafruit_ts.o
+    0x08000900   0x08000900   0x000000c2   Code   RO          949    .text.BSP_TS_Init   stm32_adafruit_ts.o
     0x080009c2   0x080009c2   0x00000002   PAD
     0x080009c4   0x080009c4   0x00000004   Code   RO          185    .text.BusFault_Handler  stm32f1xx_it.o
-    0x080009c8   0x080009c8   0x000000d0   Code   RO         1030    .text.DMA1_Channel4_IRQHandler  lcd_io_spi.o
-    0x08000a98   0x08000a98   0x00000098   Code   RO         1022    .text.DMA1_Channel5_IRQHandler  lcd_io_spi.o
+    0x080009c8   0x080009c8   0x000000d0   Code   RO         1083    .text.DMA1_Channel4_IRQHandler  lcd_io_spi.o
+    0x08000a98   0x08000a98   0x00000098   Code   RO         1075    .text.DMA1_Channel5_IRQHandler  lcd_io_spi.o
     0x08000b30   0x08000b30   0x00000002   Code   RO          191    .text.DebugMon_Handler  stm32f1xx_it.o
     0x08000b32   0x08000b32   0x00000002   PAD
     0x08000b34   0x08000b34   0x000000ca   Code   RO          781    .text.DrawButton    gui_1.o
     0x08000bfe   0x08000bfe   0x00000002   PAD
-    0x08000c00   0x08000c00   0x000001be   Code   RO          839    .text.DrawChar      stm32_adafruit_lcd.o
+    0x08000c00   0x08000c00   0x000001be   Code   RO          892    .text.DrawChar      stm32_adafruit_lcd.o
     0x08000dbe   0x08000dbe   0x00000002   PAD
     0x08000dc0   0x08000dc0   0x00000058   Code   RO          211    .text.EXTI15_10_IRQHandler  stm32f1xx_it.o
     0x08000e18   0x08000e18   0x0000003e   Code   RO          199    .text.EXTI3_IRQHandler  stm32f1xx_it.o
     0x08000e56   0x08000e56   0x00000002   PAD
     0x08000e58   0x08000e58   0x00000004   Code   RO          181    .text.HardFault_Handler  stm32f1xx_it.o
-    0x08000e5c   0x08000e5c   0x00000010   Code   RO         1040    .text.LCD_Delay     lcd_io_spi.o
-    0x08000e6c   0x08000e6c   0x0000002e   Code   RO         1042    .text.LCD_IO_Bl_OnOff  lcd_io_spi.o
+    0x08000e5c   0x08000e5c   0x00000010   Code   RO         1093    .text.LCD_Delay     lcd_io_spi.o
+    0x08000e6c   0x08000e6c   0x0000002e   Code   RO         1095    .text.LCD_IO_Bl_OnOff  lcd_io_spi.o
     0x08000e9a   0x08000e9a   0x00000002   PAD
-    0x08000e9c   0x08000e9c   0x00000016   Code   RO         1006    .text.LCD_IO_Delay  lcd_io_spi.o
+    0x08000e9c   0x08000e9c   0x00000016   Code   RO         1059    .text.LCD_IO_Delay  lcd_io_spi.o
     0x08000eb2   0x08000eb2   0x00000002   PAD
-    0x08000eb4   0x08000eb4   0x0000012c   Code   RO         1044    .text.LCD_IO_Init   lcd_io_spi.o
-    0x08000fe0   0x08000fe0   0x00000046   Code   RO         1074    .text.LCD_IO_ReadCmd8MultipleData24to16  lcd_io_spi.o
+    0x08000eb4   0x08000eb4   0x0000012c   Code   RO         1097    .text.LCD_IO_Init   lcd_io_spi.o
+    0x08000fe0   0x08000fe0   0x00000046   Code   RO         1127    .text.LCD_IO_ReadCmd8MultipleData24to16  lcd_io_spi.o
     0x08001026   0x08001026   0x00000002   PAD
-    0x08001028   0x08001028   0x00000046   Code   RO         1070    .text.LCD_IO_ReadCmd8MultipleData8  lcd_io_spi.o
+    0x08001028   0x08001028   0x00000046   Code   RO         1123    .text.LCD_IO_ReadCmd8MultipleData8  lcd_io_spi.o
     0x0800106e   0x0800106e   0x00000002   PAD
-    0x08001070   0x08001070   0x00000074   Code   RO         1032    .text.LCD_IO_ReadMultiData  lcd_io_spi.o
-    0x080010e4   0x080010e4   0x000001b0   Code   RO         1038    .text.LCD_IO_ReadMultiData16to24  lcd_io_spi.o
-    0x08001294   0x08001294   0x00000082   Code   RO         1034    .text.LCD_IO_ReadMultiData8  lcd_io_spi.o
+    0x08001070   0x08001070   0x00000074   Code   RO         1085    .text.LCD_IO_ReadMultiData  lcd_io_spi.o
+    0x080010e4   0x080010e4   0x000001b0   Code   RO         1091    .text.LCD_IO_ReadMultiData16to24  lcd_io_spi.o
+    0x08001294   0x08001294   0x00000082   Code   RO         1087    .text.LCD_IO_ReadMultiData8  lcd_io_spi.o
     0x08001316   0x08001316   0x00000002   PAD
-    0x08001318   0x08001318   0x00000034   Code   RO         1050    .text.LCD_IO_WriteCmd8  lcd_io_spi.o
-    0x0800134c   0x0800134c   0x00000046   Code   RO         1058    .text.LCD_IO_WriteCmd8DataFill16  lcd_io_spi.o
+    0x08001318   0x08001318   0x00000034   Code   RO         1103    .text.LCD_IO_WriteCmd8  lcd_io_spi.o
+    0x0800134c   0x0800134c   0x00000046   Code   RO         1111    .text.LCD_IO_WriteCmd8DataFill16  lcd_io_spi.o
     0x08001392   0x08001392   0x00000002   PAD
-    0x08001394   0x08001394   0x00000040   Code   RO         1062    .text.LCD_IO_WriteCmd8MultipleData16  lcd_io_spi.o
-    0x080013d4   0x080013d4   0x0000003a   Code   RO         1060    .text.LCD_IO_WriteCmd8MultipleData8  lcd_io_spi.o
+    0x08001394   0x08001394   0x00000040   Code   RO         1115    .text.LCD_IO_WriteCmd8MultipleData16  lcd_io_spi.o
+    0x080013d4   0x080013d4   0x0000003a   Code   RO         1113    .text.LCD_IO_WriteCmd8MultipleData8  lcd_io_spi.o
     0x0800140e   0x0800140e   0x00000002   PAD
-    0x08001410   0x08001410   0x00000038   Code   RO         1056    .text.LCD_IO_WriteData16  lcd_io_spi.o
-    0x08001448   0x08001448   0x00000034   Code   RO         1054    .text.LCD_IO_WriteData8  lcd_io_spi.o
-    0x0800147c   0x0800147c   0x00000094   Code   RO         1024    .text.LCD_IO_WriteMultiData  lcd_io_spi.o
-    0x08001510   0x08001510   0x00000106   Code   RO         1028    .text.LCD_IO_WriteMultiData16  lcd_io_spi.o
+    0x08001410   0x08001410   0x00000038   Code   RO         1109    .text.LCD_IO_WriteData16  lcd_io_spi.o
+    0x08001448   0x08001448   0x00000034   Code   RO         1107    .text.LCD_IO_WriteData8  lcd_io_spi.o
+    0x0800147c   0x0800147c   0x00000094   Code   RO         1077    .text.LCD_IO_WriteMultiData  lcd_io_spi.o
+    0x08001510   0x08001510   0x00000106   Code   RO         1081    .text.LCD_IO_WriteMultiData16  lcd_io_spi.o
     0x08001616   0x08001616   0x00000002   PAD
-    0x08001618   0x08001618   0x000000ac   Code   RO         1026    .text.LCD_IO_WriteMultiData8  lcd_io_spi.o
+    0x08001618   0x08001618   0x000000ac   Code   RO         1079    .text.LCD_IO_WriteMultiData8  lcd_io_spi.o
     0x080016c4   0x080016c4   0x00000022   Code   RO           15    .text.LL_APB1_GRP1_EnableClock  main.o
     0x080016e6   0x080016e6   0x00000002   PAD
     0x080016e8   0x080016e8   0x00000022   Code   RO          128    .text.LL_APB1_GRP1_EnableClock  spi.o
@@ -3071,14 +3102,14 @@ Memory Map of the image
     0x08002c06   0x08002c06   0x00000002   PAD
     0x08002c08   0x08002c08   0x0000004a   Code   RO          367    .text.LL_mDelay     stm32f1xx_ll_utils.o
     0x08002c52   0x08002c52   0x00000002   PAD
-    0x08002c54   0x08002c54   0x0000004a   Code   RO         1012    .text.LcdCmdWrite8  lcd_io_spi.o
+    0x08002c54   0x08002c54   0x0000004a   Code   RO         1065    .text.LcdCmdWrite8  lcd_io_spi.o
     0x08002c9e   0x08002c9e   0x00000002   PAD
-    0x08002ca0   0x08002ca0   0x0000007c   Code   RO         1002    .text.LcdDirRead    lcd_io_spi.o
-    0x08002d1c   0x08002d1c   0x0000007a   Code   RO         1004    .text.LcdDirWrite   lcd_io_spi.o
+    0x08002ca0   0x08002ca0   0x0000007c   Code   RO         1055    .text.LcdDirRead    lcd_io_spi.o
+    0x08002d1c   0x08002d1c   0x0000007a   Code   RO         1057    .text.LcdDirWrite   lcd_io_spi.o
     0x08002d96   0x08002d96   0x00000002   PAD
-    0x08002d98   0x08002d98   0x00000032   Code   RO         1014    .text.LcdWrite16    lcd_io_spi.o
+    0x08002d98   0x08002d98   0x00000032   Code   RO         1067    .text.LcdWrite16    lcd_io_spi.o
     0x08002dca   0x08002dca   0x00000002   PAD
-    0x08002dcc   0x08002dcc   0x00000032   Code   RO         1008    .text.LcdWrite8     lcd_io_spi.o
+    0x08002dcc   0x08002dcc   0x00000032   Code   RO         1061    .text.LcdWrite8     lcd_io_spi.o
     0x08002dfe   0x08002dfe   0x00000002   PAD
     0x08002e00   0x08002e00   0x0000021c   Code   RO           68    .text.MX_GPIO_Init  gpio.o
     0x0800301c   0x0800301c   0x000000ba   Code   RO          112    .text.MX_SPI1_Init  spi.o
@@ -3111,7 +3142,7 @@ Memory Map of the image
     0x08003fa0   0x08003fa0   0x00000010   Code   RO          209    .text.SPI2_IRQHandler  stm32f1xx_it.o
     0x08003fb0   0x08003fb0   0x00000002   Code   RO          189    .text.SVC_Handler   stm32f1xx_it.o
     0x08003fb2   0x08003fb2   0x00000002   PAD
-    0x08003fb4   0x08003fb4   0x0000004a   Code   RO          863    .text.SetDisplayWindow  stm32_adafruit_lcd.o
+    0x08003fb4   0x08003fb4   0x0000004a   Code   RO          916    .text.SetDisplayWindow  stm32_adafruit_lcd.o
     0x08003ffe   0x08003ffe   0x00000002   PAD
     0x08004000   0x08004000   0x00000062   Code   RO          195    .text.SysTick_Handler  stm32f1xx_it.o
     0x08004062   0x08004062   0x00000002   PAD
@@ -3119,20 +3150,20 @@ Memory Map of the image
     0x080040ee   0x080040ee   0x00000002   PAD
     0x080040f0   0x080040f0   0x00000002   Code   RO          655    .text.SystemInit    system_stm32f1xx.o
     0x080040f2   0x080040f2   0x00000002   PAD
-    0x080040f4   0x080040f4   0x00000016   Code   RO          976    .text.TS_IO_Delay   ts_xpt2046.o
+    0x080040f4   0x080040f4   0x00000016   Code   RO         1029    .text.TS_IO_Delay   ts_xpt2046.o
     0x0800410a   0x0800410a   0x00000002   PAD
-    0x0800410c   0x0800410c   0x0000004a   Code   RO          992    .text.TS_IO_DetectToch  ts_xpt2046.o
+    0x0800410c   0x0800410c   0x0000004a   Code   RO         1045    .text.TS_IO_DetectToch  ts_xpt2046.o
     0x08004156   0x08004156   0x00000002   PAD
-    0x08004158   0x08004158   0x00000030   Code   RO          984    .text.TS_IO_GetX    ts_xpt2046.o
-    0x08004188   0x08004188   0x00000030   Code   RO          986    .text.TS_IO_GetY    ts_xpt2046.o
-    0x080041b8   0x080041b8   0x0000008c   Code   RO          982    .text.TS_IO_Init    ts_xpt2046.o
-    0x08004244   0x08004244   0x00000070   Code   RO          980    .text.TsRead16      ts_xpt2046.o
-    0x080042b4   0x080042b4   0x00000040   Code   RO          978    .text.TsWrite8      ts_xpt2046.o
+    0x08004158   0x08004158   0x00000030   Code   RO         1037    .text.TS_IO_GetX    ts_xpt2046.o
+    0x08004188   0x08004188   0x00000030   Code   RO         1039    .text.TS_IO_GetY    ts_xpt2046.o
+    0x080041b8   0x080041b8   0x0000008c   Code   RO         1035    .text.TS_IO_Init    ts_xpt2046.o
+    0x08004244   0x08004244   0x00000070   Code   RO         1033    .text.TsRead16      ts_xpt2046.o
+    0x080042b4   0x080042b4   0x00000040   Code   RO         1031    .text.TsWrite8      ts_xpt2046.o
     0x080042f4   0x080042f4   0x00000004   Code   RO          187    .text.UsageFault_Handler  stm32f1xx_it.o
-    0x080042f8   0x080042f8   0x00000014   Code   RO         1020    .text.WaitForDmaEnd  lcd_io_spi.o
+    0x080042f8   0x080042f8   0x00000014   Code   RO         1073    .text.WaitForDmaEnd  lcd_io_spi.o
     0x0800430c   0x0800430c   0x00000030   Code   RO           86    .text.__NVIC_EnableIRQ  gpio.o
     0x0800433c   0x0800433c   0x00000030   Code   RO          122    .text.__NVIC_EnableIRQ  spi.o
-    0x0800436c   0x0800436c   0x00000030   Code   RO         1048    .text.__NVIC_EnableIRQ  lcd_io_spi.o
+    0x0800436c   0x0800436c   0x00000030   Code   RO         1101    .text.__NVIC_EnableIRQ  lcd_io_spi.o
     0x0800439c   0x0800439c   0x00000010   Code   RO           23    .text.__NVIC_GetPriorityGrouping  main.o
     0x080043ac   0x080043ac   0x00000010   Code   RO           84    .text.__NVIC_GetPriorityGrouping  gpio.o
     0x080043bc   0x080043bc   0x00000010   Code   RO          120    .text.__NVIC_GetPriorityGrouping  spi.o
@@ -3142,130 +3173,129 @@ Memory Map of the image
     0x08004452   0x08004452   0x00000002   PAD
     0x08004454   0x08004454   0x00000042   Code   RO          116    .text.__NVIC_SetPriority  spi.o
     0x08004496   0x08004496   0x00000002   PAD
-    0x08004498   0x08004498   0x00000042   Code   RO         1046    .text.__NVIC_SetPriority  lcd_io_spi.o
+    0x08004498   0x08004498   0x00000042   Code   RO         1099    .text.__NVIC_SetPriority  lcd_io_spi.o
     0x080044da   0x080044da   0x00000002   PAD
     0x080044dc   0x080044dc   0x0000003c   Code   RO           17    .text.__NVIC_SetPriorityGrouping  main.o
     0x08004518   0x08004518   0x0000000a   Code   RO           57    .text.assert_failed  main.o
     0x08004522   0x08004522   0x00000002   PAD
-    0x08004524   0x08004524   0x00000010   Code   RO          919    .text.ili9486_DisplayOff  ili9486.o
-    0x08004534   0x08004534   0x00000010   Code   RO          917    .text.ili9486_DisplayOn  ili9486.o
-    0x08004544   0x08004544   0x0000003e   Code   RO          937    .text.ili9486_DrawBitmap  ili9486.o
+    0x08004524   0x08004524   0x00000010   Code   RO          972    .text.ili9486_DisplayOff  ili9486.o
+    0x08004534   0x08004534   0x00000010   Code   RO          970    .text.ili9486_DisplayOn  ili9486.o
+    0x08004544   0x08004544   0x0000003e   Code   RO          990    .text.ili9486_DrawBitmap  ili9486.o
     0x08004582   0x08004582   0x00000002   PAD
-    0x08004584   0x08004584   0x00000088   Code   RO          929    .text.ili9486_DrawHLine  ili9486.o
-    0x0800460c   0x0800460c   0x00000042   Code   RO          939    .text.ili9486_DrawRGBImage  ili9486.o
+    0x08004584   0x08004584   0x00000088   Code   RO          982    .text.ili9486_DrawHLine  ili9486.o
+    0x0800460c   0x0800460c   0x00000042   Code   RO          992    .text.ili9486_DrawRGBImage  ili9486.o
     0x0800464e   0x0800464e   0x00000002   PAD
-    0x08004650   0x08004650   0x00000088   Code   RO          931    .text.ili9486_DrawVLine  ili9486.o
-    0x080046d8   0x080046d8   0x000000ac   Code   RO          941    .text.ili9486_FillRect  ili9486.o
-    0x08004784   0x08004784   0x00000006   Code   RO          935    .text.ili9486_GetLcdPixelHeight  ili9486.o
+    0x08004650   0x08004650   0x00000088   Code   RO          984    .text.ili9486_DrawVLine  ili9486.o
+    0x080046d8   0x080046d8   0x000000ac   Code   RO          994    .text.ili9486_FillRect  ili9486.o
+    0x08004784   0x08004784   0x00000006   Code   RO          988    .text.ili9486_GetLcdPixelHeight  ili9486.o
     0x0800478a   0x0800478a   0x00000002   PAD
-    0x0800478c   0x0800478c   0x00000006   Code   RO          933    .text.ili9486_GetLcdPixelWidth  ili9486.o
+    0x0800478c   0x0800478c   0x00000006   Code   RO          986    .text.ili9486_GetLcdPixelWidth  ili9486.o
     0x08004792   0x08004792   0x00000002   PAD
-    0x08004794   0x08004794   0x00000142   Code   RO          913    .text.ili9486_Init  ili9486.o
+    0x08004794   0x08004794   0x00000142   Code   RO          966    .text.ili9486_Init  ili9486.o
     0x080048d6   0x080048d6   0x00000002   PAD
-    0x080048d8   0x080048d8   0x0000003e   Code   RO          915    .text.ili9486_ReadID  ili9486.o
+    0x080048d8   0x080048d8   0x0000003e   Code   RO          968    .text.ili9486_ReadID  ili9486.o
     0x08004916   0x08004916   0x00000002   PAD
-    0x08004918   0x08004918   0x00000092   Code   RO          925    .text.ili9486_ReadPixel  ili9486.o
+    0x08004918   0x08004918   0x00000092   Code   RO          978    .text.ili9486_ReadPixel  ili9486.o
     0x080049aa   0x080049aa   0x00000002   PAD
-    0x080049ac   0x080049ac   0x00000068   Code   RO          943    .text.ili9486_ReadRGBImage  ili9486.o
-    0x08004a14   0x08004a14   0x000000f0   Code   RO          945    .text.ili9486_Scroll  ili9486.o
-    0x08004b04   0x08004b04   0x0000005c   Code   RO          921    .text.ili9486_SetCursor  ili9486.o
-    0x08004b60   0x08004b60   0x000000b4   Code   RO          927    .text.ili9486_SetDisplayWindow  ili9486.o
-    0x08004c14   0x08004c14   0x0000006e   Code   RO          923    .text.ili9486_WritePixel  ili9486.o
+    0x080049ac   0x080049ac   0x00000068   Code   RO          996    .text.ili9486_ReadRGBImage  ili9486.o
+    0x08004a14   0x08004a14   0x000000f0   Code   RO          998    .text.ili9486_Scroll  ili9486.o
+    0x08004b04   0x08004b04   0x0000005c   Code   RO          974    .text.ili9486_SetCursor  ili9486.o
+    0x08004b60   0x08004b60   0x000000b4   Code   RO          980    .text.ili9486_SetDisplayWindow  ili9486.o
+    0x08004c14   0x08004c14   0x0000006e   Code   RO          976    .text.ili9486_WritePixel  ili9486.o
     0x08004c82   0x08004c82   0x00000002   PAD
-    0x08004c84   0x08004c84   0x00000100   Code   RO          949    .text.ili9486_ts_DetectTouch  ili9486.o
-    0x08004d84   0x08004d84   0x0000002a   Code   RO          951    .text.ili9486_ts_GetXY  ili9486.o
+    0x08004c84   0x08004c84   0x00000100   Code   RO         1002    .text.ili9486_ts_DetectTouch  ili9486.o
+    0x08004d84   0x08004d84   0x0000002a   Code   RO         1004    .text.ili9486_ts_GetXY  ili9486.o
     0x08004dae   0x08004dae   0x00000002   PAD
-    0x08004db0   0x08004db0   0x00000034   Code   RO          947    .text.ili9486_ts_Init  ili9486.o
-    0x08004de4   0x08004de4   0x0000013e   Code   RO          779    .text.initGUI       gui_1.o
-    0x08004f22   0x08004f22   0x00000002   PAD
-    0x08004f24   0x08004f24   0x0000001a   Code   RO          705    .text.initMot       motor.o
-    0x08004f3e   0x08004f3e   0x00000002   PAD
-    0x08004f40   0x08004f40   0x0000001a   Code   RO          717    .text.initOptic     optic.o
-    0x08004f5a   0x08004f5a   0x00000002   PAD
-    0x08004f5c   0x08004f5c   0x0000010c   Code   RO          787    .text.intToStr      gui_1.o
-    0x08005068   0x08005068   0x00000078   Code   RO          785    .text.isInRectangle  gui_1.o
-    0x080050e0   0x080050e0   0x00000098   Code   RO           11    .text.main          main.o
-    0x08005178   0x08005178   0x0000006e   Code   RO          719    .text.opticInterrupt  optic.o
-    0x080051e6   0x080051e6   0x00000002   PAD
-    0x080051e8   0x080051e8   0x000001fe   Code   RO          783    .text.redrawGUI     gui_1.o
-    0x080053e6   0x080053e6   0x00000002   Data   RO          956    .rodata..L.str      ili9486.o
-    0x080053e8   0x080053e8   0x00000005   Data   RO          958    .rodata..L.str.2    ili9486.o
-    0x080053ed   0x080053ed   0x00000010   Data   RO          660    .rodata.AHBPrescTable  system_stm32f1xx.o
-    0x080053fd   0x080053fd   0x00000008   Data   RO          661    .rodata.APBPrescTable  system_stm32f1xx.o
-    0x08005405   0x08005405   0x00001ab8   Data   RO          766    .rodata.Font24_Table  font24.o
-    0x08006ebd   0x08006ebd   0x000002f8   Data   RO          738    .rodata.Font8_Table  font8.o
-    0x080071b5   0x080071b5   0x00000007   Data   RO          155    .rodata.OFFSET_TAB_CCMRx  tim.o
-    0x080071bc   0x080071bc   0x00000007   Data   RO          156    .rodata.SHIFT_TAB_OCxx  tim.o
-    0x080071c3   0x080071c3   0x00000020   Data   RO          959    .rodata.cst16       ili9486.o
-    0x080071e3   0x080071e3   0x00000005   PAD
-    0x080071e8   0x080071e8   0x0000affe   Data   RO          732    .rodata.gImage_LOGO_MAIN  logo_main2.o
-    0x080121e6   0x080121e6   0x00000002   PAD
-    0x080121e8   0x080121e8   0x000013be   Data   RO          773    .rodata.gImage_SMALL_LOGO  smalllogo_16b.o
-    0x080135a6   0x080135a6   0x00000038   Data   RO          239    .rodata.str1.1      stm32f1xx_ll_gpio.o
-    0x080135de   0x080135de   0x00000038   Data   RO          449    .rodata.str1.1      stm32f1xx_ll_exti.o
-    0x08013616   0x08013616   0x00000037   Data   RO          485    .rodata.str1.1      stm32f1xx_ll_spi.o
-    0x0801364d   0x0801364d   0x00000037   Data   RO          611    .rodata.str1.1      stm32f1xx_ll_tim.o
-    0x08013684   0x08013684   0x00000039   Data   RO          647    .rodata.str1.1      stm32f1xx_ll_usart.o
-    0x080136bd   0x080136bd   0x00000038   Data   RO          793    .rodata.str1.1      gui_1.o
-    0x080136f5   0x080136f5   0x00000006   Data   RO          957    .rodata.str1.1      ili9486.o
-    0x080136fb   0x080136fb   0x00000001   PAD
-    0x080136fc   0x080136fc   0x00000020   Data   RO         1385    Region$$Table       anon$$obj.o
+    0x08004db0   0x08004db0   0x00000034   Code   RO         1000    .text.ili9486_ts_Init  ili9486.o
+    0x08004de4   0x08004de4   0x00000148   Code   RO          779    .text.initGUI       gui_1.o
+    0x08004f2c   0x08004f2c   0x0000001a   Code   RO          705    .text.initMot       motor.o
+    0x08004f46   0x08004f46   0x00000002   PAD
+    0x08004f48   0x08004f48   0x0000001a   Code   RO          717    .text.initOptic     optic.o
+    0x08004f62   0x08004f62   0x00000002   PAD
+    0x08004f64   0x08004f64   0x0000010c   Code   RO          787    .text.intToStr      gui_1.o
+    0x08005070   0x08005070   0x00000078   Code   RO          785    .text.isInRectangle  gui_1.o
+    0x080050e8   0x080050e8   0x00000098   Code   RO           11    .text.main          main.o
+    0x08005180   0x08005180   0x0000006e   Code   RO          719    .text.opticInterrupt  optic.o
+    0x080051ee   0x080051ee   0x00000002   PAD
+    0x080051f0   0x080051f0   0x000004a8   Code   RO          783    .text.redrawGUI     gui_1.o
+    0x08005698   0x08005698   0x00000002   Data   RO         1009    .rodata..L.str      ili9486.o
+    0x0800569a   0x0800569a   0x00000005   Data   RO         1011    .rodata..L.str.2    ili9486.o
+    0x0800569f   0x0800569f   0x00000010   Data   RO          660    .rodata.AHBPrescTable  system_stm32f1xx.o
+    0x080056af   0x080056af   0x00000008   Data   RO          661    .rodata.APBPrescTable  system_stm32f1xx.o
+    0x080056b7   0x080056b7   0x00001ab8   Data   RO          766    .rodata.Font24_Table  font24.o
+    0x0800716f   0x0800716f   0x000002f8   Data   RO          738    .rodata.Font8_Table  font8.o
+    0x08007467   0x08007467   0x00000007   Data   RO          155    .rodata.OFFSET_TAB_CCMRx  tim.o
+    0x0800746e   0x0800746e   0x00000007   Data   RO          156    .rodata.SHIFT_TAB_OCxx  tim.o
+    0x08007475   0x08007475   0x00000020   Data   RO         1012    .rodata.cst16       ili9486.o
+    0x08007495   0x08007495   0x00000003   PAD
+    0x08007498   0x08007498   0x0000affe   Data   RO          732    .rodata.gImage_LOGO_MAIN  logo_main2.o
+    0x08012496   0x08012496   0x00000002   PAD
+    0x08012498   0x08012498   0x000013be   Data   RO          773    .rodata.gImage_SMALL_LOGO  smalllogo_16b.o
+    0x08013856   0x08013856   0x00000038   Data   RO          239    .rodata.str1.1      stm32f1xx_ll_gpio.o
+    0x0801388e   0x0801388e   0x00000038   Data   RO          449    .rodata.str1.1      stm32f1xx_ll_exti.o
+    0x080138c6   0x080138c6   0x00000037   Data   RO          485    .rodata.str1.1      stm32f1xx_ll_spi.o
+    0x080138fd   0x080138fd   0x00000037   Data   RO          611    .rodata.str1.1      stm32f1xx_ll_tim.o
+    0x08013934   0x08013934   0x00000039   Data   RO          647    .rodata.str1.1      stm32f1xx_ll_usart.o
+    0x0801396d   0x0801396d   0x00000056   Data   RO          792    .rodata.str1.1      gui_1.o
+    0x080139c3   0x080139c3   0x00000004   Data   RO         1010    .rodata.str1.1      ili9486.o
+    0x080139c7   0x080139c7   0x00000001   PAD
+    0x080139c8   0x080139c8   0x00000020   Data   RO         1438    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08013720, Size: 0x00000bc8, Max: 0x0000c000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080139e8, Size: 0x00000bc8, Max: 0x0000c000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08013720   0x00000008   Data   RW          767    .data.Font24        font24.o
-    0x20000008   0x08013728   0x00000008   Data   RW          739    .data.Font8         font8.o
-    0x20000010   0x08013730   0x00000004   Data   RW          659    .data.SystemCoreClock  system_stm32f1xx.o
-    0x20000014   0x08013734   0x00000044   Data   RW          953    .data.ili9486_drv   ili9486.o
-    0x20000058   0x08013778   0x00000028   Data   RW          963    .data.ili9486_ts_drv  ili9486.o
-    0x20000080   0x080137a0   0x00000004   Data   RW          954    .data.lcd_drv       ili9486.o
-    0x20000084   0x080137a4   0x00000001   Data   RW          724    .data.opticStatus   optic.o
-    0x20000085   0x080137a5   0x00000003   PAD
-    0x20000088   0x080137a8   0x00000004   Data   RW          964    .data.ts_drv        ili9486.o
-    0x2000008c   0x080137ac   0x00000004   PAD
-    0x20000090        -       0x00000060   Zero   RW         1261    .bss                c_w.l(libspace.o)
-    0x200000f0        -       0x0000000c   Zero   RW          887    .bss.DrawProp       stm32_adafruit_lcd.o
-    0x200000fc        -       0x00000001   Zero   RW          955    .bss.Is_ili9486_Initialized  ili9486.o
-    0x200000fd   0x080137ac   0x00000003   PAD
-    0x20000100        -       0x00000004   Zero   RW         1082    .bss.LCD_IO_DmaTransferStatus  lcd_io_spi.o
-    0x20000104   0x080137ac   0x00000004   PAD
-    0x20000108        -       0x00000100   Zero   RW         1085    .bss.LCD_IO_ReadMultiData16to24.dmadata  lcd_io_spi.o
-    0x20000208        -       0x00000002   Zero   RW         1084    .bss.LCD_IO_WriteMultiData16.d16s  lcd_io_spi.o
-    0x2000020a        -       0x00000001   Zero   RW         1083    .bss.LCD_IO_WriteMultiData8.d8s  lcd_io_spi.o
-    0x2000020b        -       0x00000001   Zero   RW          994    .bss.TS_IO_DetectToch.ts_inited  ts_xpt2046.o
-    0x2000020c        -       0x00000002   Zero   RW          900    .bss.TsXBoundary    stm32_adafruit_ts.o
-    0x2000020e        -       0x00000002   Zero   RW          901    .bss.TsYBoundary    stm32_adafruit_ts.o
+    0x20000000   0x080139e8   0x00000008   Data   RW          767    .data.Font24        font24.o
+    0x20000008   0x080139f0   0x00000008   Data   RW          739    .data.Font8         font8.o
+    0x20000010   0x080139f8   0x00000004   Data   RW          659    .data.SystemCoreClock  system_stm32f1xx.o
+    0x20000014   0x080139fc   0x00000044   Data   RW         1006    .data.ili9486_drv   ili9486.o
+    0x20000058   0x08013a40   0x00000028   Data   RW         1016    .data.ili9486_ts_drv  ili9486.o
+    0x20000080   0x08013a68   0x00000004   Data   RW         1007    .data.lcd_drv       ili9486.o
+    0x20000084   0x08013a6c   0x00000001   Data   RW          724    .data.opticStatus   optic.o
+    0x20000085   0x08013a6d   0x00000003   PAD
+    0x20000088   0x08013a70   0x00000004   Data   RW         1017    .data.ts_drv        ili9486.o
+    0x2000008c   0x08013a74   0x00000004   PAD
+    0x20000090        -       0x00000060   Zero   RW         1314    .bss                c_w.l(libspace.o)
+    0x200000f0        -       0x0000000c   Zero   RW          940    .bss.DrawProp       stm32_adafruit_lcd.o
+    0x200000fc        -       0x00000001   Zero   RW         1008    .bss.Is_ili9486_Initialized  ili9486.o
+    0x200000fd   0x08013a74   0x00000003   PAD
+    0x20000100        -       0x00000004   Zero   RW         1135    .bss.LCD_IO_DmaTransferStatus  lcd_io_spi.o
+    0x20000104   0x08013a74   0x00000004   PAD
+    0x20000108        -       0x00000100   Zero   RW         1138    .bss.LCD_IO_ReadMultiData16to24.dmadata  lcd_io_spi.o
+    0x20000208        -       0x00000002   Zero   RW         1137    .bss.LCD_IO_WriteMultiData16.d16s  lcd_io_spi.o
+    0x2000020a        -       0x00000001   Zero   RW         1136    .bss.LCD_IO_WriteMultiData8.d8s  lcd_io_spi.o
+    0x2000020b        -       0x00000001   Zero   RW         1047    .bss.TS_IO_DetectToch.ts_inited  ts_xpt2046.o
+    0x2000020c        -       0x00000002   Zero   RW          953    .bss.TsXBoundary    stm32_adafruit_ts.o
+    0x2000020e        -       0x00000002   Zero   RW          954    .bss.TsYBoundary    stm32_adafruit_ts.o
     0x20000210        -       0x00000004   Zero   RW           59    .bss._1ms_cnt       main.o
-    0x20000214        -       0x00000004   Zero   RW          904    .bss.bX             stm32_adafruit_ts.o
-    0x20000218        -       0x00000004   Zero   RW          905    .bss.bY             stm32_adafruit_ts.o
-    0x2000021c        -       0x00000366   Zero   RW          888    .bss.bitmap         stm32_adafruit_lcd.o
-    0x20000582        -       0x00000001   Zero   RW          794    .bss.dropBut        gui_1.o
-    0x20000583   0x080137ac   0x00000001   PAD
-    0x20000584        -       0x00000008   Zero   RW          962    .bss.ili9486_Scroll.scrparam  ili9486.o
-    0x2000058c        -       0x00000001   Zero   RW          966    .bss.ili9486_ts_DetectTouch.ret  ili9486.o
+    0x20000214        -       0x00000004   Zero   RW          957    .bss.bX             stm32_adafruit_ts.o
+    0x20000218        -       0x00000004   Zero   RW          958    .bss.bY             stm32_adafruit_ts.o
+    0x2000021c        -       0x00000366   Zero   RW          941    .bss.bitmap         stm32_adafruit_lcd.o
+    0x20000582        -       0x00000001   Zero   RW          793    .bss.dropBut        gui_1.o
+    0x20000583        -       0x00000001   Zero   RW          791    .bss.frame          gui_1.o
+    0x20000584        -       0x00000008   Zero   RW         1015    .bss.ili9486_Scroll.scrparam  ili9486.o
+    0x2000058c        -       0x00000001   Zero   RW         1019    .bss.ili9486_ts_DetectTouch.ret  ili9486.o
     0x2000058d        -       0x00000001   Zero   RW          213    .bss.itCnt          stm32f1xx_it.o
-    0x2000058e   0x080137ac   0x00000002   PAD
-    0x20000590        -       0x00000004   Zero   RW          902    .bss.kX             stm32_adafruit_ts.o
-    0x20000594        -       0x00000004   Zero   RW          903    .bss.kY             stm32_adafruit_ts.o
-    0x20000598        -       0x0000000b   Zero   RW          791    .bss.numBuf         gui_1.o
-    0x200005a3   0x080137ac   0x00000001   PAD
+    0x2000058e   0x08013a74   0x00000002   PAD
+    0x20000590        -       0x00000004   Zero   RW          955    .bss.kX             stm32_adafruit_ts.o
+    0x20000594        -       0x00000004   Zero   RW          956    .bss.kY             stm32_adafruit_ts.o
+    0x20000598        -       0x0000000b   Zero   RW          789    .bss.numBuf         gui_1.o
+    0x200005a3   0x08013a74   0x00000001   PAD
     0x200005a4        -       0x00000004   Zero   RW          723    .bss.opticCnt       optic.o
-    0x200005a8        -       0x00000001   Zero   RW          796    .bss.pageBut        gui_1.o
-    0x200005a9        -       0x00000001   Zero   RW          792    .bss.redraw         gui_1.o
-    0x200005aa   0x080137ac   0x00000002   PAD
+    0x200005a8        -       0x00000001   Zero   RW          795    .bss.pageBut        gui_1.o
+    0x200005a9        -       0x00000001   Zero   RW          790    .bss.redraw         gui_1.o
+    0x200005aa   0x08013a74   0x00000002   PAD
     0x200005ac        -       0x00000004   Zero   RW          709    .bss.status         motor.o
-    0x200005b0        -       0x00000004   Zero   RW          798    .bss.touchDelay     gui_1.o
-    0x200005b4        -       0x00000008   Zero   RW          797    .bss.tsState        gui_1.o
-    0x200005bc        -       0x00000002   Zero   RW          967    .bss.tx             ili9486.o
-    0x200005be        -       0x00000002   Zero   RW          968    .bss.ty             ili9486.o
-    0x200005c0        -       0x00000001   Zero   RW          795    .bss.wrenchBut      gui_1.o
-    0x200005c1   0x080137ac   0x00000001   PAD
-    0x200005c2        -       0x00000002   Zero   RW          961    .bss.yEnd           ili9486.o
-    0x200005c4        -       0x00000002   Zero   RW          960    .bss.yStart         ili9486.o
-    0x200005c6   0x080137ac   0x00000002   PAD
+    0x200005b0        -       0x00000004   Zero   RW          797    .bss.touchDelay     gui_1.o
+    0x200005b4        -       0x00000008   Zero   RW          796    .bss.tsState        gui_1.o
+    0x200005bc        -       0x00000002   Zero   RW         1020    .bss.tx             ili9486.o
+    0x200005be        -       0x00000002   Zero   RW         1021    .bss.ty             ili9486.o
+    0x200005c0        -       0x00000001   Zero   RW          794    .bss.wrenchBut      gui_1.o
+    0x200005c1   0x08013a74   0x00000001   PAD
+    0x200005c2        -       0x00000002   Zero   RW         1014    .bss.yEnd           ili9486.o
+    0x200005c4        -       0x00000002   Zero   RW         1013    .bss.yStart         ili9486.o
+    0x200005c6   0x08013a74   0x00000002   PAD
     0x200005c8        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f103xe.o
     0x200007c8        -       0x00000400   Zero   RW            1    STACK               startup_stm32f103xe.o
 
@@ -3280,8 +3310,8 @@ Image component sizes
          0          0       6840          8          0        711   font24.o
          0          0        760          8          0        707   font8.o
        956          0          0          0          0       5935   gpio.o
-      1418          0         56          0         27       2760   gui_1.o
-      2222          0         45        116         18       6496   ili9486.o
+      2110          0         86          0         28       2882   gui_1.o
+      2222          0         43        116         18       6496   ili9486.o
       3050          0          0          0        263      11712   lcd_io_spi.o
          0          0      45054          0          0       1175   logo_main2.o
        938          0          0          0          4       7139   main.o
@@ -3306,9 +3336,9 @@ Image component sizes
        240          0          0          0          0       2180   usart.o
 
     ----------------------------------------------------------------------
-     20818         26      58470        140       2780     109618   Object Totals
+     21508         26      58496        140       2780     109740   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-       184          0          8          3         20          0   (incl. Padding)
+       182          0          6          3         19          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -3356,15 +3386,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     21174         42      58470        140       2876     109702   Grand Totals
-     21174         42      58470        140       2876     109702   ELF Image Totals
-     21174         42      58470        140          0          0   ROM Totals
+     21864         42      58496        140       2876     109824   Grand Totals
+     21864         42      58496        140       2876     109824   ELF Image Totals
+     21864         42      58496        140          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                79644 (  77.78kB)
+    Total RO  Size (Code + RO Data)                80360 (  78.48kB)
     Total RW  Size (RW Data + ZI Data)              3016 (   2.95kB)
-    Total ROM Size (Code + RO Data + RW Data)      79784 (  77.91kB)
+    Total ROM Size (Code + RO Data + RW Data)      80500 (  78.61kB)
 
 ==============================================================================
 
