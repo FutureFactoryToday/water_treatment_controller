@@ -30,6 +30,7 @@
 "spo\font24.o"
 "spo\smalllogo_16b.o"
 "spo\gui_1.o"
+"spo\oxygen_mono.o"
 "spo\stm32_adafruit_lcd.o"
 "spo\stm32_adafruit_ts.o"
 "spo\ili9486.o"

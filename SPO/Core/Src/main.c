@@ -109,7 +109,7 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_RTC_Init();
+ // MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 //	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 //	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
@@ -172,24 +172,24 @@ void SystemClock_Config(void)
   {
 
   }
-  LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
-  }
-  LL_RCC_LSE_Enable();
+//  LL_PWR_EnableBkUpAccess();
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_ForceBackupDomainReset();
+//    LL_RCC_ReleaseBackupDomainReset();
+//  }
+//  LL_RCC_LSE_Enable();
 
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
+//   /* Wait till LSE is ready */
+//  while(LL_RCC_LSE_IsReady() != 1)
+//  {
 
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
-  LL_RCC_EnableRTC();
+//  }
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+//  }
+//  LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 

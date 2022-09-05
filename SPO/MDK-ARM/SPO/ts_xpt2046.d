@@ -29,4 +29,4 @@ spo/ts_xpt2046.o: ..\Drivers\TFT\stm32f1xx\ts_xpt2046.c \
   ..\Drivers\TFT\Fonts\fonts.h ..\Drivers\TFT\stm32_adafruit_ts.h \
   ..\Drivers\TFT\bmp.h ..\UpperLevel\GUI\GUI.h \
   ..\Drivers\TFT\lcd\ili9486\ili9486.h ..\Drivers\Optic\Optic.h \
-  ..\Drivers\TFT\stm32f1xx\ts_xpt2046.h
+  ..\Drivers\TFT\lcd.h ..\Drivers\TFT\stm32f1xx\ts_xpt2046.h

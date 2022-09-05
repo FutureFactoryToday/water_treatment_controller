@@ -29,4 +29,5 @@ spo/lcd_io_spi.o: ..\Drivers\TFT\stm32f1xx\lcd_io_spi.c \
   ..\Drivers\TFT\lcd.h ..\Drivers\TFT\Fonts\fonts.h \
   ..\Drivers\TFT\stm32_adafruit_ts.h ..\Drivers\TFT\bmp.h \
   ..\UpperLevel\GUI\GUI.h ..\Drivers\TFT\lcd\ili9486\ili9486.h \
-  ..\Drivers\Optic\Optic.h ..\Drivers\TFT\stm32f1xx\lcd_io_spi.h
+  ..\Drivers\Optic\Optic.h ..\Drivers\TFT\lcd.h \
+  ..\Drivers\TFT\stm32f1xx\lcd_io_spi.h

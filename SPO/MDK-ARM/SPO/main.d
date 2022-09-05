@@ -28,5 +28,6 @@ spo/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Drivers\TFT\lcd.h ..\Drivers\TFT\Fonts\fonts.h \
   ..\Drivers\TFT\stm32_adafruit_ts.h ..\Drivers\TFT\bmp.h \
   ..\UpperLevel\GUI\GUI.h ..\Drivers\TFT\lcd\ili9486\ili9486.h \
-  ..\Drivers\Optic\Optic.h ..\Core\Inc\rtc.h ..\Core\Inc\spi.h \
-  ..\Core\Inc\tim.h ..\Core\Inc\usart.h ..\Core\Inc\gpio.h
+  ..\Drivers\Optic\Optic.h ..\Core\Inc\rtc.h ..\Core\Inc\main.h \
+  ..\Core\Inc\spi.h ..\Core\Inc\tim.h ..\Core\Inc\usart.h \
+  ..\Core\Inc\gpio.h

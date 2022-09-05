@@ -29,4 +29,5 @@ spo/stm32_adafruit_ts.o: ..\Drivers\TFT\stm32_adafruit_ts.c \
   ..\Drivers\TFT\lcd.h ..\Drivers\TFT\Fonts\fonts.h \
   ..\Drivers\TFT\stm32_adafruit_ts.h ..\Drivers\TFT\bmp.h \
   ..\UpperLevel\GUI\GUI.h ..\Drivers\TFT\lcd\ili9486\ili9486.h \
-  ..\Drivers\Optic\Optic.h ..\Drivers\TFT\ts.h
+  ..\Drivers\Optic\Optic.h ..\Drivers\TFT\ts.h \
+  ..\Drivers\TFT\stm32_adafruit_ts.h
