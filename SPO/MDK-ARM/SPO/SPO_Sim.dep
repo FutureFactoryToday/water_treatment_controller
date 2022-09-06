@@ -1,643 +1,839 @@
 Dependencies for Project 'SPO', Target 'Sim': (DO NOT MODIFY !)
 CompilerVersion: 6180000::V6.18::ARMCLANG
-F (startup_stm32f103xe.s)(0x62F4133E)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g-ID:\Dissertation\J\Prog\Keil_v5\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include--pd "__UVISION_VERSION SETA 537"--pd "STM32F10X_HD SETA 1"--list startup_stm32f103xe.lst--xref -o spo\startup_stm32f103xe.o--depend spo\startup_stm32f103xe.d)
-F (../Core/Src/main.c)(0x62FA4936)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/main.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+F (startup_stm32f103xe.s)(0x6312F12D)(--cpu Cortex-M3 -g-IC:\Keil_v5\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include--pd "__UVISION_VERSION SETA 537"--pd "STM32F10X_HD SETA 1"--list startup_stm32f103xe.lst--xref -o spo\startup_stm32f103xe.o--depend spo\startup_stm32f103xe.d)
+F (../Core/Src/main.c)(0x631359B8)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/main.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-I (..\Core\Inc\dma.h)(0x62F2B81A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
 I (..\Core\Inc\rtc.h)(0x62C98F00)
+I (..\Core\Inc\spi.h)(0x630A8101)
 I (..\Core\Inc\tim.h)(0x62C87FFC)
 I (..\Core\Inc\usart.h)(0x62C87FFD)
-F (../Core/Src/gpio.c)(0x62F5E052)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/gpio.o -MD)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Core\Inc\gpio.h)(0x630A8101)
+F (../Core/Src/gpio.c)(0x6312F098)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/gpio.o -MD)
+I (..\Core\Inc\gpio.h)(0x630A8101)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
-I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/dma.c)(0x62F4D3DF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/dma.o -MD)
-I (..\Core\Inc\dma.h)(0x62F2B81A)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/rtc.c)(0x62C98F00)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/rtc.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (../Core/Src/rtc.c)(0x6312F127)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/rtc.o -MD)
 I (..\Core\Inc\rtc.h)(0x62C98F00)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/spi.c)(0x62F4F4CB)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/spi.o -MD)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (../Core/Src/spi.c)(0x6312F09B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/spi.o -MD)
+I (..\Core\Inc\spi.h)(0x630A8101)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/tim.c)(0x62F5ECD3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/tim.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (../Core/Src/tim.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/tim.o -MD)
 I (..\Core\Inc\tim.h)(0x62C87FFC)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/usart.c)(0x62C87FFD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/usart.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (../Core/Src/usart.c)(0x62C87FFD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/usart.o -MD)
 I (..\Core\Inc\usart.h)(0x62C87FFD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (../Core/Src/stm32f1xx_it.c)(0x62F945D8)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_it.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (../Core/Src/stm32f1xx_it.c)(0x6312F128)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_it.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-I (..\Core\Inc\stm32f1xx_it.h)(0x62F2B8B5)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_gpio.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\Core\Inc\stm32f1xx_it.h)(0x6312F128)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_gpio.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_dma.o -MD)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_rtc.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_rtc.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_rcc.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_rcc.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_utils.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_utils.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_exti.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_exti.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_spi.o -MD)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_spi.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_pwr.o -MD)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_tim.o -MD)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/stm32f1xx_ll_usart.o -MD)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-F (../Core/Src/system_stm32f1xx.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/system_stm32f1xx.o -MD)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
-I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
-I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
-I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
-I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-F (..\Core\Settings.h)(0x62F2B0EE)()
-F (..\Drivers\TFT\TFT.c)(0x62FA4A93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/tft.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_dma.o -MD)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-I (..\Drivers\TFT\TFT_Commands.h)(0x62F5EE96)
-F (..\MidLevel\SPI\SPI_Handler.c)(0x62F96748)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/spi_handler.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_pwr.o -MD)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_tim.o -MD)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+F (../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32f1xx_ll_usart.o -MD)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+F (../Core/Src/system_stm32f1xx.c)(0x61730D93)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/system_stm32f1xx.o -MD)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+F (..\Core\Settings.h)(0x63133B0A)()
+F (..\MidLevel\SPI\FIFO.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/fifo.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (..\MidLevel\SPI\FIFO.c)(0x62FA48DA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/fifo.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\MidLevel\SPI\fifo.h)(0x630A8101)
+F (..\Core\Src\WTC_Logic.c)(0x630A7D40)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/wtc_logic.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (..\Core\Src\WTC_Logic.c)(0x62F2B0EE)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/wtc_logic.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (..\Drivers\Motor\Motor.c)(0x631359B8)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/motor.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
-F (..\Drivers\TFT\TFT_LL.c)(0x62FA4ABA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/tft_ll.o -MD)
-I (..\Core\Inc\main.h)(0x62F4EFA8)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (..\Drivers\Optic\Optic.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/optic.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
 I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
 I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
 I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
 I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
-I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
 I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
-I (D:\Dissertation\J\Prog\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
-I (..\Core\Settings.h)(0x62F2B0EE)
-I (..\Drivers\TFT\TFT.h)(0x62F5DEC8)
-I (..\MidLevel\SPI\SPI_Handler.h)(0x62F96748)
-I (..\MidLevel\SPI\FIFO.h)(0x62F9E8A5)
-I (..\Drivers\TFT\TFT_LL.h)(0x62F967AA)
-I (..\Core\Inc\spi.h)(0x62F4F4CB)
-I (..\Core\Inc\gpio.h)(0x62F4F614)
-I (..\Core\Inc\WTC_Logic.h)(0x62F2B0EE)
-I (..\Core\..\..\GUI\Logo\LOGO_MAIN.h)(0x62F415ED)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
 F (..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_Handler.c)(0x62C74B53)()
 F (..\..\..\IronSolder\SolderSPO\libs\I2C\I2C_LL.c)(0x625EE77F)()
 F (..\..\..\IronSolder\SolderSPO\libs\Filter\filter.c)(0x62617B83)()
 F (..\..\..\IronSolder\SolderSPO\libs\SSD1306\ssd1306.c)(0x62617B83)()
 F (..\..\..\IronSolder\SolderSPO\libs\MCP3421\MCP3421.c)(0x62C74B53)()
 F (..\..\..\IronSolder\SolderSPO\libs\ADT7320\ADT7320.c)(0x62617B83)()
-F (..\..\..\SolderSPO\Src\dma.c)(0x00000000)()
-F (..\..\..\SolderSPO\Src\stm32f0xx_it.c)(0x00000000)()
+F (..\..\..\SolderSPO\Src\dma.c)(0x62617B1B)()
+F (..\..\..\SolderSPO\Src\stm32f0xx_it.c)(0x62617B1B)()
 F (..\..\info\datasheets\ILI9486_Datasheet.pdf)(0x62AF7A0C)()
-F (..\..\GUI\Logo\LOGO_MAIN.c)(0x62F2B0E7)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers-ID:/Dissertation/J/Prog/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSTM32F103xE -DTESTS -DSIM-o spo/logo_main.o -MD)
+F (..\..\GUI\Logo\LOGO_MAIN2.c)(0x630A80FF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/logo_main2.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+F (..\Drivers\TFT\Fonts\font8.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/font8.o -MD)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+F (..\Drivers\TFT\Fonts\font12.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/font12.o -MD)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+F (..\Drivers\TFT\Fonts\font16.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/font16.o -MD)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+F (..\Drivers\TFT\Fonts\font20.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/font20.o -MD)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+F (..\Drivers\TFT\Fonts\font24.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/font24.o -MD)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+F (..\..\GUI\Logo\smallLogo_16b.c)(0x630A80FF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/smalllogo_16b.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+F (..\UpperLevel\GUI\GUI.c)(0x6312EB11)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/gui_1.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+F (..\Drivers\TFT\stm32_adafruit_lcd.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32_adafruit_lcd.o -MD)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+F (..\Drivers\TFT\stm32_adafruit_ts.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/stm32_adafruit_ts.o -MD)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\Drivers\TFT\ts.h)(0x630A8101)
+F (..\Drivers\TFT\lcd\ili9486\ili9486.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/ili9486.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6252A726)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\Drivers\TFT\ts.h)(0x630A8101)
+F (..\Drivers\TFT\stm32f1xx\ts_xpt2046.c)(0x630A8101)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/ts_xpt2046.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6252A726)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\Drivers\TFT\stm32f1xx\ts_xpt2046.h)(0x630A8101)
+F (..\Drivers\TFT\stm32f1xx\lcd_io_spi.c)(0x630CD4B7)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/lcd_io_spi.o -MD)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
+I (..\Drivers\TFT\stm32f1xx\lcd_io_spi.h)(0x630A8101)
+F (..\Drivers\TFT\stm32f1xx\lcd_io_gpio16.c)(0x630CD522)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -ffunction-sections -w -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core -I ../MidLevel -I ../Drivers -I ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI -I ../../GUI/Logo -I ../UpperLevel-IC:/Keil_v5/Packs/Keil/STM32F1xx_DFP/2.4.0/Device/Include-D__UVISION_VERSION="537" -DSTM32F10X_HD -DUSE_FULL_LL_DRIVER -DSTM32F103xE -DUSE_FULL_ASSERT="1U" -DHSE_VALUE="8000000" -DHSE_STARTUP_TIMEOUT="100" -DLSE_STARTUP_TIMEOUT="5000" -DLSE_VALUE="32768" -DHSI_VALUE="8000000" -DLSI_VALUE="40000" -DVDD_VALUE="3300" -DPREFETCH_ENABLE="1" -DSIM-o spo/lcd_io_gpio16.o -MD)
+I (..\Core\Settings.h)(0x63133B0A)
+I (..\Core\Inc\main.h)(0x6312F09C)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h)(0x61730D93)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h)(0x61730D93)
+I (..\Drivers\CMSIS\Include\core_cm3.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252A728)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x61730D78)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x61730D78)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x6252A726)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6252A726)
+I (..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rtc.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_spi.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usart.h)(0x61730D93)
+I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h)(0x61730D93)
+I (..\Core\Inc\stm32_assert.h)(0x62C87FFE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252A726)
+I (..\Drivers\Motor\Motor.h)(0x63133219)
+I (..\Drivers\TFT\stm32_adafruit_lcd.h)(0x630A8101)
+I (..\Drivers\TFT\lcd.h)(0x630A8101)
+I (..\Drivers\TFT\Fonts\fonts.h)(0x630A8101)
+I (..\Drivers\TFT\stm32_adafruit_ts.h)(0x630A8101)
+I (..\Drivers\TFT\bmp.h)(0x630A8101)
+I (..\UpperLevel\GUI\GUI.h)(0x630A8101)
+I (..\Drivers\TFT\lcd\ili9486\ili9486.h)(0x630A8101)
+I (..\Drivers\Optic\Optic.h)(0x630A8101)
