@@ -15,6 +15,8 @@
   *
   ******************************************************************************
   */
+	
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -100,7 +102,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -122,10 +124,31 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	__enable_irq();
 	LL_mDelay(500);
-	initOptic();
-	initMot();
-	//MOT_TEST();
+	#ifdef TESTS
+	MOT_TEST();
+	#endif
 	initGUI();
+//	PC_GoToPoz(500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(1500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(0);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+
+	
 	//MOT_TEST();
 
 	//uint32_t tftID  = manIDRead();

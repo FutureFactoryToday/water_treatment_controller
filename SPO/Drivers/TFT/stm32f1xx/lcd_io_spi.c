@@ -7,6 +7,9 @@
  * - 3 modes (only TX, half duplex, full duplex)
 */
 
+#include "Settings.h"
+#ifdef SPI_LCD
+
 //-----------------------------------------------------------------------------
 #include "main.h"
 #include "TFT\lcd.h"
@@ -1350,3 +1353,5 @@ void LCD_IO_ReadCmd16MultipleData24to16(uint16_t Cmd, uint16_t *pData, uint32_t 
 }
 
 #endif // #else LCD_SPI_MODE == 0
+
+#endif //SPI_LCD

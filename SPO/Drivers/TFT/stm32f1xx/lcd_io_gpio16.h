@@ -5,35 +5,35 @@
 
 //=============================================================================
 /* Lcd controll pins (A..K, 0..15) (if LCD_RST not used -> X, 0) */
-#define LCD_CS            X, 0
-#define LCD_RS            X, 0
-#define LCD_WR            X, 0
-#define LCD_RD            X, 0  /* If not used leave it that way */
-#define LCD_RST           X, 0  /* If not used leave it that way */
+#define LCD_CS            A, 1
+#define LCD_RS            C, 4
+#define LCD_WR            A, 2
+#define LCD_RD            C, 5  /* If not used leave it that way */
+#define LCD_RST           A, 0  /* If not used leave it that way */
 
 /* Lcd data pins (A..K, 0..15) */
-#define LCD_D0            X, 0
-#define LCD_D1            X, 0
-#define LCD_D2            X, 0
-#define LCD_D3            X, 0
-#define LCD_D4            X, 0
-#define LCD_D5            X, 0
-#define LCD_D6            X, 0
-#define LCD_D7            X, 0
-#define LCD_D8            X, 0
-#define LCD_D9            X, 0
-#define LCD_D10           X, 0
-#define LCD_D11           X, 0
-#define LCD_D12           X, 0
-#define LCD_D13           X, 0
-#define LCD_D14           X, 0
-#define LCD_D15           X, 0
+#define LCD_D0            B, 0
+#define LCD_D1            B, 1
+#define LCD_D2            B, 2
+#define LCD_D3            B, 3
+#define LCD_D4            B, 4
+#define LCD_D5            B, 5
+#define LCD_D6            B, 6
+#define LCD_D7            B, 7
+#define LCD_D8            B, 8
+#define LCD_D9            B, 9
+#define LCD_D10           B, 10
+#define LCD_D11           B, 11
+#define LCD_D12           B, 12
+#define LCD_D13           B, 13
+#define LCD_D14           B, 14
+#define LCD_D15           B, 15
 
 /* Backlight pin
    - BL: A..K, 0..15 (if not used -> X, 0)
    - BL_ON: 0 -> backlight on = low level, 1 -> backlight on = high level */
-#define LCD_BL            X, 0  /* If not used leave it that way */
-#define LCD_BLON          0
+#define LCD_BL            C, 6  /* If not used leave it that way */
+#define LCD_BLON          1
 
 /* A few nsec delay at LCD write and read operations
    first, set it to 10 and 20, then reduce it until the display works well.
