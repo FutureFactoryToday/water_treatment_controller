@@ -15,6 +15,8 @@
   *
   ******************************************************************************
   */
+	
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -100,7 +102,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -109,7 +111,7 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
-  MX_RTC_Init();
+ // MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 //	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 //	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
@@ -122,10 +124,31 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	__enable_irq();
 	LL_mDelay(500);
-	initOptic();
-	initMot();
-	//MOT_TEST();
+	#ifdef TESTS
+	MOT_TEST();
+	#endif
 	initGUI();
+//	PC_GoToPoz(500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(1500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(500);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+//	LL_mDelay(2000);
+//	PC_GoToPoz(0);
+//	while(PC_GetStatus() != PC_COMPLETE){
+//		
+//	}
+
+	
 	//MOT_TEST();
 
 	//uint32_t tftID  = manIDRead();
@@ -145,7 +168,7 @@ int main(void)
   while (1)
   {
 		if (redraw){
-			redrawGUI();
+			translateMessage();
 			redraw = 0;
 		}
     /* USER CODE END WHILE */
@@ -172,24 +195,24 @@ void SystemClock_Config(void)
   {
 
   }
-  LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
-  }
-  LL_RCC_LSE_Enable();
+//  LL_PWR_EnableBkUpAccess();
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_ForceBackupDomainReset();
+//    LL_RCC_ReleaseBackupDomainReset();
+//  }
+//  LL_RCC_LSE_Enable();
 
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
+//   /* Wait till LSE is ready */
+//  while(LL_RCC_LSE_IsReady() != 1)
+//  {
 
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
-  LL_RCC_EnableRTC();
+//  }
+//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+//  {
+//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+//  }
+//  LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 

@@ -41,6 +41,10 @@ void MX_RTC_Init(void)
   /* Peripheral clock enable */
   LL_RCC_EnableRTC();
 
+  /* RTC interrupt Init */
+  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+  NVIC_EnableIRQ(RTC_IRQn);
+
   /* USER CODE BEGIN RTC_Init 1 */
 
   /* USER CODE END RTC_Init 1 */

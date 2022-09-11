@@ -16,8 +16,10 @@
 
 
 //SPI для дисплея
+#define SPI_LCD
+//#define PARAL_LCD
 
-
+#define MOT_TIM TIM8
 
 #endif /* __SETTINGS_H__ */
 
