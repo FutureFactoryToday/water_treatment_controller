@@ -15,7 +15,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "PistonControl\PistonControl.h"
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,6 +31,7 @@ uint8_t startBut;
 uint8_t dirBut;
 uint8_t numBuf[11] = {0};
 uint8_t redraw = 0;
+extern uint32_t curPoz;
 /* Private function prototypes -----------------------------------------------*/
 void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text);
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
@@ -52,10 +53,10 @@ void initGUI(void){
 	BSP_LCD_FillRect(0,BSP_LCD_GetYSize() - TOP_BOT_LINE_WIDTH,BSP_LCD_GetXSize(),TOP_BOT_LINE_WIDTH);
 	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
 	
-	DrawButton(START_BUT_X, START_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, START_BUT_FIRST_TEXT);
+	DrawButton(START_BUT_X, START_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, "+500");
 	startBut = 0;
 	
-	DrawButton(DIR_BUT_X, DIR_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, DIR_BUT_FIRST_TEXT);
+	DrawButton(DIR_BUT_X, DIR_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, "-500");
 	dirBut = 0;
 	
 	BSP_LCD_SetFont(&Font16);
@@ -63,62 +64,54 @@ void initGUI(void){
 	
 	BSP_LCD_DisplayStringAt(SENS_STATUS_TEXT_X,SENS_STATUS_TEXT_Y,"Sensor",LEFT_MODE);
 	
-	DrawOpticStatus();
+	//DrawOpticStatus();
 	 
 	BSP_LCD_DisplayStringAt(SENS_CNT_X,SENS_CNT_Y,"Cnt",LEFT_MODE);
 	
-	intToStr(opticCnt);
+	intToStr(curPoz);
 	BSP_LCD_DisplayStringAt(SENS_CNT_TEXT_X,SENS_CNT_TEXT_Y,numBuf,LEFT_MODE);
 	
 }
+uint32_t neededPoz = 0;
 
 void redrawGUI(void){
 	BSP_TS_GetState(&tsState);
 	if (touchDelay == 0 && tsState.TouchDetected == 1){
 		touchDelay = 300;
 		if (isInRectangle(tsState.X,tsState.Y,START_BUT_X,START_BUT_Y,START_BUT_X + START_BUT_X_SIZE,START_BUT_Y + START_BUT_Y_SIZE) ){
-			if (startBut == 0)
-			{
-				MOT_START();
-				DrawButton(START_BUT_X, START_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, START_BUT_SECOND_TEXT);
-				startBut = 1;
-			} else {
-				MOT_STOP();
-				DrawButton(START_BUT_X, START_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, START_BUT_FIRST_TEXT);
-				startBut = 0;
-			}
+			if (neededPoz < UINT32_MAX - 100)
+				neededPoz += 500;
+				
 		}
 		if (isInRectangle(tsState.X,tsState.Y,DIR_BUT_X,DIR_BUT_Y,DIR_BUT_X + START_BUT_X_SIZE,DIR_BUT_Y + START_BUT_Y_SIZE) ){
 			
-				MOT_CHANGE_DIR();
-				if (!dirBut) {
-					DrawButton(DIR_BUT_X, DIR_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, DIR_BUT_SECOND_TEXT);
-				} else {
-					DrawButton(DIR_BUT_X, DIR_BUT_Y, START_BUT_X_SIZE, START_BUT_Y_SIZE, 1, DIR_BUT_FIRST_TEXT);
+				if (neededPoz >= 100){
+					neededPoz -= 500;
 				}
-					dirBut = !dirBut;
-			}
 		}
-	
-	intToStr(opticCnt);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+		
+	if (PC_GetCurPoz() != neededPoz) {
+		PC_GoToPoz(neededPoz);
+	}
+}
+	intToStr(curPoz);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_FillRect(SENS_CNT_TEXT_X, SENS_CNT_TEXT_Y,100, 25);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(SENS_CNT_TEXT_X, SENS_CNT_TEXT_Y, numBuf,LEFT_MODE);
 	
-	DrawOpticStatus();
+	//DrawOpticStatus();
+	
 }
-
-void DrawOpticStatus(void){
-	if (opticStatus == 1){
-		BSP_LCD_SetTextColor(LCD_COLOR_RED);
-	} else {
-		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-	}
-	BSP_LCD_FillCircle(SENS_STATUS_CIRC_X, SENS_STATUS_CIRC_Y,10);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-}
+//void DrawOpticStatus(void){
+//	if (opticStatus == 1){
+//		BSP_LCD_SetTextColor(LCD_COLOR_RED);
+//	} else {
+//		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+//	}
+//	BSP_LCD_FillCircle(SENS_STATUS_CIRC_X, SENS_STATUS_CIRC_Y,10);
+//	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//}
 
 uint8_t* intToStr (uint32_t num){
 	for(int i = 0; i <sizeof(numBuf); i++){

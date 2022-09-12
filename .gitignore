@@ -25,3 +25,15 @@ SPO.rar
 *.d
 
 *.o
+
+DataConverter.iml
+
+*.rar
+
+DataConvertor/.idea/
+
+*.iml
+
+*.uvoptx
+
+*.uvprojx

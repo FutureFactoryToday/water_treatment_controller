@@ -149,7 +149,7 @@ int main(void)
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
 //	}
-	MOT_Start();
+//	MOT_Start();
 	uint8_t speed = 100;
 	
 	//MOT_TEST();

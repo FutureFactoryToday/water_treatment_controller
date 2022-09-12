@@ -50,7 +50,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "stdlib.h"
 #include "Settings.h"
-#include "FlashParams\FlashParams.h"
+//#include "FlashParams\FlashParams.h"
 //#include "TFT/TFT.h"
 //#include "SPI/SPI_Handler.h"
 //#include "WTC_Logic.h"
