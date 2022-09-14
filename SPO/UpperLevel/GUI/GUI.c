@@ -15,7 +15,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "PistonControl\PistonControl.h"
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,6 +64,7 @@ void initGUI(void){
     itemIndex = 0;
     redraw = 1;
 }
+uint32_t neededPoz = 0;
 
 void translateMessage(void){
 	BSP_TS_GetState(&tsState);
@@ -493,6 +494,15 @@ void refresh(void)
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(TIME_POS_X + 16,TIME_POS_Y + 18,intToStr(frame),CENTER_MODE);
 }
+//void DrawOpticStatus(void){
+//	if (opticStatus == 1){
+//		BSP_LCD_SetTextColor(LCD_COLOR_RED);
+//	} else {
+//		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+//	}
+//	BSP_LCD_FillCircle(SENS_STATUS_CIRC_X, SENS_STATUS_CIRC_Y,10);
+//	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//}
 
 //void DrawOpticStatus(void){
 //	if (opticStatus == 1){

@@ -54,13 +54,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "lcd.h"
-#include "Fonts/fonts.h"
+#include "TFT/Fonts/wtc_fonts.h" 
 
 //-----------------------------------------------------------------------------
 /* Config section (you can change this defines) */
 
 /* LCD default font (Font8 or Font12 or Font16 or Font20 or Font24) */
-#define LCD_DEFAULT_FONT         Font8
+#define LCD_DEFAULT_FONT         Oxygen_Mono_8
 
 /* LCD default colors */
 #define LCD_DEFAULT_BACKCOLOR    LCD_COLOR_WHITE
@@ -70,16 +70,16 @@
 #define LCD_INIT_CLEAR           1
 
 /* some colors */
-#define LCD_COLOR_BLACK         RC(0x0000)
-#define LCD_COLOR_GRAY          RC(0xF7DE)
-#define LCD_COLOR_LIGHTGRAY     RC(0xF7BE)
-#define LCD_COLOR_BLUE          RC(0x001F)
-#define LCD_COLOR_RED           RC(0xF800)
-#define LCD_COLOR_GREEN         RC(0x07E0)
-#define LCD_COLOR_CYAN          RC(0x07FF)
-#define LCD_COLOR_MAGENTA       RC(0xF81F)
-#define LCD_COLOR_YELLOW        RC(0xFFE0)
-#define LCD_COLOR_WHITE         RC(0xFFFF)
+#define LCD_COLOR_BLACK         0x0000
+#define LCD_COLOR_GRAY          0xF7DE
+#define LCD_COLOR_LIGHTGRAY     0xF7BE
+#define LCD_COLOR_BLUE          0x001F
+#define LCD_COLOR_RED           0xF800
+#define LCD_COLOR_GREEN         0x07E0
+#define LCD_COLOR_CYAN          0x07FF
+#define LCD_COLOR_MAGENTA       0xF81F
+#define LCD_COLOR_YELLOW        0xFFE0
+#define LCD_COLOR_WHITE         0xFFFF
   
 //-----------------------------------------------------------------------------
 /* Interface section (no modify) */   
@@ -91,7 +91,7 @@ typedef struct
 { 
   uint32_t TextColor;
   uint32_t BackColor;
-  sFONT    *pFont; 
+  WTC_FONT_t* pFont; 
 }LCD_DrawPropTypeDef;
 
 /** 
@@ -101,7 +101,7 @@ typedef struct
 {
   int16_t X;
   int16_t Y;
-}Point, * pPoint;
+}Point, *pPoint;
 
 /** 
   * @brief  Line mode structures definition
@@ -131,7 +131,7 @@ typedef enum
 /** 
   * @brief  LCD color  
   */
-#define LCD_COLOR(r, g, b)      RC((r & 0xF8) << 8 | (g & 0xFC) << 3 | (b & 0xF8) >> 3)
+#define LCD_COLOR(r, g, b)      (r & 0xF8) << 8 | (g & 0xFC) << 3 | (b & 0xF8) >> 3)
 
 /** @defgroup STM32_ADAFRUIT_LCD_Exported_Functions
   * @{
@@ -144,14 +144,14 @@ uint16_t BSP_LCD_GetTextColor(void);
 uint16_t BSP_LCD_GetBackColor(void);
 void     BSP_LCD_SetTextColor(__IO uint16_t Color);
 void     BSP_LCD_SetBackColor(__IO uint16_t Color);
-void     BSP_LCD_SetFont(sFONT *fonts);
-sFONT    *BSP_LCD_GetFont(void);
+void     BSP_LCD_SetFont(WTC_FONT_t *fonts);
+WTC_FONT_t    *BSP_LCD_GetFont(void);
 
 void     BSP_LCD_Clear(uint16_t Color);
 void     BSP_LCD_ClearStringLine(uint16_t Line);
 void     BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr);
 void     BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode);
-void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii);
+void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii);
 
 void     BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGB_Code);
 void     BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length);

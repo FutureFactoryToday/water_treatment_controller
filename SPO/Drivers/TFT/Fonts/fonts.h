@@ -65,20 +65,27 @@
 /** @defgroup FONTS_Exported_Types
   * @{
   */ 
+	typedef struct {
+	uint8_t w_px;
+	uint32_t glyph_index;
+} lv_font_glyph_dsc_t;
+	
 typedef struct _tFont
 {    
   const uint8_t *table;
   uint16_t Width;
   uint16_t Height;
-    
-} sFONT;
+  lv_font_glyph_dsc_t* dsc; 
+} WTC_FONT;
 
-extern sFONT Font24;
-extern sFONT Font20;
-extern sFONT Font16;
-extern sFONT Font12;
-extern sFONT Font8;
-extern sFONT Oxygen_Mono;
+extern WTC_FONT Font24;
+extern WTC_FONT Font20;
+extern WTC_FONT Font16;
+extern WTC_FONT Font12;
+extern WTC_FONT Font8;
+extern WTC_FONT Oxygen_Mono;
+
+
 /**
   * @}
   */ 
@@ -86,7 +93,7 @@ extern sFONT Oxygen_Mono;
 /** @defgroup FONTS_Exported_Constants
   * @{
   */ 
-#define LINE(x) ((x) * (((sFONT *)BSP_LCD_GetFont())->Height))
+#define LINE(x) ((x) * (((WTC_FONT *)BSP_LCD_GetFont())->Height))
 
 /**
   * @}

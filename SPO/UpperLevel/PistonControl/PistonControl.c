@@ -16,6 +16,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "Motor/Motor.h"
+#include <math.h>
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
@@ -30,6 +31,7 @@ typedef struct {
 uint32_t curPoz;
 uint32_t destination;
 pc_status_t status;
+extern uint8_t redraw;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
@@ -45,7 +47,7 @@ void PC_GoToPoz (uint32_t dest){
 	} else {
 		MOT_SetDir(IN);
 	}
-	MOT_SetSpeed(100);
+	MOT_SetSpeed(MAX_SPEED);
 	status = PC_IN_PROCESS;
 	MOT_Start();
 }
@@ -69,6 +71,7 @@ void PC_Init(void){
 	MOT_Init(PWM,MOT_TIM);
 }
 void PC_OpticSensInterrupt(void){
+	redraw = 1;
 	uint32_t delt = 0;
 	if (MOT_GetControl().DIR == OUT){
 		curPoz++;
@@ -78,7 +81,7 @@ void PC_OpticSensInterrupt(void){
 		delt = curPoz - destination;
 	}
 	
-	if (delt < 10){
+	if (delt < 20){
 		MOT_SetSpeed(80);
 		MOT_Start();
 	}
@@ -91,5 +94,5 @@ void PC_OpticSensInterrupt(void){
 		MOT_Stop();
 		status = PC_ERROR;
 	}
-	
+	redraw = 1;
 }

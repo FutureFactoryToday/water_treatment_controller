@@ -210,7 +210,8 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-
+	RTC_Interrupt();
+	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
 

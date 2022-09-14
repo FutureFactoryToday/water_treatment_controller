@@ -1,6 +1,7 @@
 #include "main.h"
 #include "ts.h"
 #include "stm32_adafruit_ts.h"
+#include "lcd\ili9486\ili9486.h"
 
 extern TS_DrvTypeDef     *ts_drv;
 extern int32_t            ts_cindex[];
@@ -63,9 +64,16 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
 		uint32_t kY = TsYBoundary*MOD/(Y_MAX-Y_MIN);
 		uint32_t bX = kX*X_MIN;
 		uint32_t bY = kY*Y_MIN;
+		
+		#if ILI9486_ORIENTATION == 3
 		x2 = x1*kX/MOD - bX/MOD;
 		y2 = y1*kY/MOD - bY/MOD;
+		#endif
 		
+		#if ILI9486_ORIENTATION == 1
+		x2 = 480 - x1*kX/MOD - bX/MOD;
+		y2 = 320 - y1*kY/MOD - bY/MOD;
+		#endif
     if(x2 < 0)
       x2 = 0;
     else if(x2 >= TsXBoundary)

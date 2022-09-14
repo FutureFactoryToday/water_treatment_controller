@@ -26,12 +26,32 @@ SPO.rar
 
 *.o
 
-*.dep
+DataConverter.iml
 
-*.htm
+*.rar
 
-*.axf
+DataConvertor/.idea/
+
+*.iml
+
+*.uvoptx
+
+*.uvprojx
+
+SPO/.idea/
 
 SPO/MDK-ARM/SPO.uvguix.Alexandr
 
 SPO/MP.uvmpw.uvgui.Alexandr
+
+SPO/MDK-ARM/SPO/SPO_SPO.dep
+
+SPO/MDK-ARM/SPO/SPO.axf
+
+SPO/MDK-ARM/SPO/SPO.build_log.htm
+
+SPO/MDK-ARM/SPO/SPO.htm
+
+SPO/MDK-ARM/SPO/SPO.lnp
+
+SPO/MDK-ARM/SPO/SPO.map

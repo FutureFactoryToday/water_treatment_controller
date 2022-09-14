@@ -1,106 +1,21 @@
-/*
- * Modify: Roberto Benjami
- * date: 2019.11
- *
- * - BSP_LCD_DrawCircle : delete the BSP_LCD_SetFont(&LCD_DEFAULT_FONT); (interesting bug)
- * - BSP_LCD_Init : DrawProp.pFont = &Font24 change to DrawProp.pFont = &LCD_DEFAULT_FONT
- * - FillTriangle -> BSP_LCD_FillTriangle, change to public, changed to fast algorythm
- * - Add : BSP_LCD_ReadID
- * - Add : BSP_LCD_ReadPixel
- * - Add : BSP_LCD_DrawRGB16Image
- * - Add : BSP_LCD_ReadRGB16Image
- * - Add : BSP_LCD_FillTriangle (faster algorithm)
- * - Modify : BSP_LCD_Init (default font from header file, default colors from header file, otptional clear from header file)
- * */
 
-/**
-  ******************************************************************************
-  * @file    stm32_adafruit_lcd.c
-  * @author  MCD Application Team
-  * @brief   This file includes the driver for Liquid Crystal Display (LCD) module
-  *          mounted on the Adafruit 1.8" TFT LCD shield (reference ID 802), 
-  *          that is used with the STM32 Nucleo board through SPI interface.     
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */ 
-
-/* File Info : -----------------------------------------------------------------
-                                   User NOTES
-1. How To use this driver:
---------------------------
-   - The LCD st7735 component driver MUST be included with this driver.  
-
-2. Driver description:
----------------------
-  + Initialization steps:
-     o Initialize the LCD using the BSP_LCD_Init() function.
-  
-  + Display on LCD
-     o Clear the whole LCD using the BSP_LCD_Clear() function or only one specified 
-       string line using the BSP_LCD_ClearStringLine() function.
-     o Display a character on the specified line and column using the BSP_LCD_DisplayChar()
-       function or a complete string line using the BSP_LCD_DisplayStringAtLine() function.
-     o Display a string line on the specified position (x,y in pixel) and align mode
-       using the BSP_LCD_DisplayStringAtLine() function.          
-     o Draw and fill a basic shapes (dot, line, rectangle, circle, ellipse, ..) 
-       on LCD using a set of functions.    
- 
-------------------------------------------------------------------------------*/
-
-/* Dependencies
-- fonts.h
-- font24.c
-- font20.c
-- font16.c
-- font12.c
-- font8.c"
-EndDependencies */
-    
 /* Includes ------------------------------------------------------------------*/
 #include "lcd.h"
 #include "stm32_adafruit_lcd.h"
-#include "Fonts/fonts.h"
+#include "Fonts/wtc_fonts.h"
+#include "main.h"
 
-/* @defgroup STM32_ADAFRUIT_LCD_Private_Defines */
 #define POLY_X(Z)             ((int32_t)((Points + (Z))->X))
 #define POLY_Y(Z)             ((int32_t)((Points + (Z))->Y))
-#define NULL                  (void *)0
 
-#define MAX_HEIGHT_FONT       17
-#define MAX_WIDTH_FONT        24
-#define OFFSET_BITMAP         54
+#define MAX_HEIGHT_FONT       35
+#define MAX_WIDTH_FONT        35
 
-/* @defgroup STM32_ADAFRUIT_LCD_Private_Macros */
+
 #define ABS(X) ((X) > 0 ? (X) : -(X))
 #define SWAP16(a, b) {uint16_t t = a; a = b; b = t;}
 
-/* @defgroup STM32_ADAFRUIT_LCD_Private_Variables */ 
+
 LCD_DrawPropTypeDef DrawProp;
 
 extern LCD_DrvTypeDef  *lcd_drv;
@@ -112,6 +27,9 @@ static uint8_t bitmap[MAX_HEIGHT_FONT * MAX_WIDTH_FONT * 2 + OFFSET_BITMAP] = {0
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *c);
 static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
   
+uint32_t getStringWidth (uint8_t* str);
+uint8_t getCharIndex(uint8_t ch);
+
 /**
   * @brief  Initializes the LCD.
   * @param  None
@@ -204,7 +122,7 @@ void BSP_LCD_SetBackColor(uint16_t Color)
   * @param  fonts: Font to be used
   * @retval None
   */
-void BSP_LCD_SetFont(sFONT *pFonts)
+void BSP_LCD_SetFont(WTC_FONT_t *pFonts)
 {
   DrawProp.pFont = pFonts;
 }
@@ -214,7 +132,7 @@ void BSP_LCD_SetFont(sFONT *pFonts)
   * @param  None
   * @retval Used font
   */
-sFONT *BSP_LCD_GetFont(void)
+WTC_FONT_t *BSP_LCD_GetFont(void)
 {
   return DrawProp.pFont;
 }
@@ -244,7 +162,7 @@ void BSP_LCD_ClearStringLine(uint16_t Line)
   DrawProp.TextColor = DrawProp.BackColor;;
     
   /* Draw a rectangle with background color */
-  BSP_LCD_FillRect(0, (Line * DrawProp.pFont->Height), BSP_LCD_GetXSize(), DrawProp.pFont->Height);
+  BSP_LCD_FillRect(0, (Line * DrawProp.pFont->height), BSP_LCD_GetXSize(), DrawProp.pFont->height);
   
   DrawProp.TextColor = color_backup;
   BSP_LCD_SetTextColor(DrawProp.TextColor);
@@ -258,10 +176,9 @@ void BSP_LCD_ClearStringLine(uint16_t Line)
   *           This parameter must be a number between Min_Data = 0x20 and Max_Data = 0x7E 
   * @retval None
   */
-void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii)
+void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii)
 {
-  DrawChar(Xpos, Ypos, &DrawProp.pFont->table[(Ascii-' ') *\
-    DrawProp.pFont->Height * ((DrawProp.pFont->Width + 7) / 8)]);
+	DrawChar(Xpos, Ypos, DrawProp.pFont->glyph[getCharIndex(Ascii)]);
 }
 
 /**
@@ -279,20 +196,22 @@ void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii)
 void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode)
 {
   uint16_t refcolumn = 1, i = 0;
-  uint32_t size = 0, xsize = 0; 
+  uint32_t chCnt = 0, xsize = 0, size = 0; 
   uint8_t  *ptr = Text;
-  
+	
+  size = getStringWidth(ptr);
   /* Get the text size */
-  while (*ptr++) size ++ ;
+  while (*ptr++) chCnt ++ ;
+	
   
   /* Characters number per line */
-  xsize = (BSP_LCD_GetXSize()/DrawProp.pFont->Width);
+  xsize = (BSP_LCD_GetXSize()/size/chCnt);
   
   switch (Mode)
   {
   case CENTER_MODE:
     {
-      refcolumn = Xpos - (size* DrawProp.pFont->Width) / 2;
+      refcolumn = Xpos - size/ 2;
       break;
     }
   case LEFT_MODE:
@@ -302,7 +221,7 @@ void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_M
     }
   case RIGHT_MODE:
     {
-      refcolumn =  - Xpos + ((xsize - size)*DrawProp.pFont->Width);
+      refcolumn =  - Xpos + size;
       break;
     }    
   default:
@@ -311,17 +230,18 @@ void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_M
       break;
     }
   }
-  
+  uint16_t chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
   /* Send the string character by character on lCD */
-  while ((*Text != 0) & (((BSP_LCD_GetXSize() - (i*DrawProp.pFont->Width)) & 0xFFFF) >= DrawProp.pFont->Width))
+  while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= chWidth))
   {
     /* Display one character on LCD */
     BSP_LCD_DisplayChar(refcolumn, Ypos, *Text);
     /* Decrement the column position by 16 */
-    refcolumn += DrawProp.pFont->Width;
+    refcolumn += chWidth;
     /* Point on the next character */
     Text++;
     i++;
+		chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
   }
 }
 
@@ -339,7 +259,7 @@ void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_M
   */
 void BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr)
 {
-  BSP_LCD_DisplayStringAt(0, LINE(Line), ptr, LEFT_MODE);
+ // BSP_LCD_DisplayStringAt(0, LINE(Line), ptr, LEFT_MODE);
 }
 
 /**
@@ -609,14 +529,15 @@ void BSP_LCD_DrawEllipse(uint16_t Xpos, uint16_t Ypos, uint16_t XRadius, uint16_
   */
 void BSP_LCD_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pBmp)
 {
-  uint32_t height = 0;
-  uint32_t width  = 0;
+  uint16_t height = 0;
+  uint16_t width  = 0;
   
+	BITMAPINFOHEADER *ptr = pBmp;
   /* Read bitmap width */
-  width = pBmp[18] + (pBmp[19] << 8) + (pBmp[20] << 16)  + (pBmp[21] << 24);
+  width = ptr->biWidth;
 
   /* Read bitmap height */
-  height = pBmp[22] + (pBmp[23] << 8) + (pBmp[24] << 16)  + (pBmp[25] << 24);
+  height = ptr->biHeight;
   
   SetDisplayWindow(Xpos, Ypos, width, height);
   
@@ -821,62 +742,53 @@ void BSP_LCD_DisplayOff(void)
   */
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *pChar)
 {
-  uint32_t counterh = 0, counterw = 0, index = 0;
   uint16_t height = 0, width = 0;
-  uint8_t offset = 0;
-  uint8_t *pchar = NULL;
-  uint32_t line = 0;
-  
-  height = DrawProp.pFont->Height;
-  width  = DrawProp.pFont->Width;
+    
+  height = DrawProp.pFont->height;
+
+	glyph_t *gl = (glyph_t*)pChar;
+  width  = gl->width;
   
   /* Fill bitmap header*/
-  *(uint16_t *) (bitmap + 2) = (uint16_t)(height*width*2+OFFSET_BITMAP);
-  *(uint16_t *) (bitmap + 4) = (uint16_t)((height*width*2+OFFSET_BITMAP)>>16);
-  *(uint16_t *) (bitmap + 10) = OFFSET_BITMAP;
-  *(uint16_t *) (bitmap + 18) = (uint16_t)(width);
-  *(uint16_t *) (bitmap + 20) = (uint16_t)((width)>>16);
-  *(uint16_t *) (bitmap + 22) = (uint16_t)(height);
-  *(uint16_t *) (bitmap + 24) = (uint16_t)((height)>>16);
-  
-  offset =  8 *((width + 7)/8) - width ;
-  
-  for(counterh = 0; counterh < height; counterh++)
-  {
-    pchar = ((uint8_t *)pChar + (width + 7)/8 * counterh);
-    
-    if(((width + 7)/8) == 3)
-    {
-      line =  (pchar[0]<< 16) | (pchar[1]<< 8) | pchar[2];
-    }
-    
-    if(((width + 7)/8) == 2)
-    {
-      line =  (pchar[0]<< 8) | pchar[1];
-    }
-    
-    if(((width + 7)/8) == 1)
-    {
-      line =  pchar[0];
-    }    
-    
-    for (counterw = 0; counterw < width; counterw++)
-    {
-      /* Image in the bitmap is written from the bottom to the top */
-      /* Need to invert image in the bitmap */
-      index = (((counterh-1)*width)+(counterw))*2+56;
-      if(line & (1 << (width- counterw + offset- 1))) 
-      {
-        bitmap[index] = (uint8_t)DrawProp.TextColor;
-        bitmap[index+1] = (uint8_t)(DrawProp.TextColor >> 8);
-      }
-      else
-      {
-        bitmap[index] = (uint8_t)DrawProp.BackColor;
-        bitmap[index+1] = (uint8_t)(DrawProp.BackColor >> 8);
-      } 
-    }
-  }
+	BITMAPINFOHEADER *ptr = bitmap;
+	ptr->biHeight = height;
+	ptr->biWidth = width;
+	ptr->dataSize = (uint32_t)(width*height);
+		
+  int bit = 128;
+  int col = 0, row = 0;
+  int newW = width/8;
+  if (width%8 != 0){
+            newW++;
+        }
+        uint8_t bt = gl->bitsArray[row*newW + col++];
+        for (int i = 0; i < height*width*2; i=i+2){
+            if ((bt & bit) != 0){
+              bitmap[OFFSET_BITMAP + i+1] = (DrawProp.TextColor & 0xFF00)>>8;
+							bitmap[OFFSET_BITMAP + i] = DrawProp.TextColor & 0xFF;
+            } else {
+							uint8_t low = (DrawProp.BackColor & 0xFF00)>>8;
+							uint8_t high = DrawProp.BackColor & 0xFF;
+							bitmap[OFFSET_BITMAP + i+1] = low;
+							bitmap[OFFSET_BITMAP + i] = high;
+            }
+            
+            bit = bit>>1;
+            if (bit == 0 || (i/2+1)%width == 0){
+                if (col == newW){
+                    col = 0;
+                    row++;
+                    if (row == height){
+                        break;
+                    }
+                }
+                bit = 128;
+                if (row >= height){
+                    break;
+                }
+                bt = gl->bitsArray[row*newW + col++];
+            }
+        }
   BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
 }
 
@@ -1055,4 +967,22 @@ void BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
   lcd_drv->Scroll(Scroll, TopFix, BottonFix);
 }
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+uint32_t getStringWidth (uint8_t* str){
+	uint32_t size = 0;
+	while(*str != 0){
+		size += DrawProp.pFont->glyph[getCharIndex(*str)]->width;
+		str++;
+	}
+	return size;
+}
+
+uint8_t getCharIndex(uint8_t ch){
+	if (ch< ' '){
+		return 0;
+	}
+	if (ch>= ' ' && ch <= '~'){
+		return ch - ' ';
+	}
+	
+	return 0;
+}
