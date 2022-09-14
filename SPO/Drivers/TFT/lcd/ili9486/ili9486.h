@@ -1,10 +1,16 @@
+#include "Settings.h"
 /* Orientation
    - 0: 240x320 portrait 0'
    - 1: 320x240 landscape 90'
    - 2: 240x320 portrait 180'
    - 3: 320x240 landscape 270'
 */
+#ifdef SPI_LCD
 #define  ILI9486_ORIENTATION      3
+#endif
+#ifdef PARAL_LCD
+#define  ILI9486_ORIENTATION      1
+#endif
 
 /* Color mode
    - 0: RGB565 (R:bit15..11, G:bit10..5, B:bit4..0)

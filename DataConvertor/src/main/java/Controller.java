@@ -36,7 +36,7 @@ public class Controller implements Initializable {
     File lastSaveDir, lastLoadDir;
     public CheckBox prop;
     public Button txt;
-    public ChoiceBox<String> fonts;
+    public ComboBox<String> fonts;
     public Label txtLbl;
     private final Stage stage = App.getStage();
 
@@ -85,7 +85,6 @@ public class Controller implements Initializable {
         Graphics2D g = temp.createGraphics();
         g.drawImage(rImg, 0, 0, rImg.getWidth(), rImg.getHeight(), null);
         g.dispose();
-        boolean res = ImageIO.write(temp, "bmp", file);
 
         NewBMP glBMP = new NewBMP(tempFile);
 
@@ -97,6 +96,27 @@ public class Controller implements Initializable {
     public void previewGlyphs() throws IOException {
 
         try {
+            initPic.getGraphicsContext2D().clearRect(0,0, initPic.getWidth(),initPic.getHeight());
+            int initH = h = Integer.parseInt(fontHeight.getText());
+            int initW = w = h;
+            initPic.getGraphicsContext2D().setFont(Font.font(AutoComplete.getComboBoxValue(fonts), FontWeight.NORMAL, h));
+
+            for (char i = engStart; i <= engEnd; i++){
+                initPic.getGraphicsContext2D().fillText(String.valueOf(i),w,h);
+                w += initW;
+                if (w > initPic.getWidth() - initW){
+                    h+=initH;
+                    w = 0;
+                }
+            }
+            for (char i = rusStart; i <= rusEnd; i++){
+                initPic.getGraphicsContext2D().fillText(String.valueOf(i),w,h);
+                w += initW;
+                if (w > initPic.getWidth() - initW){
+                    h+=initH;
+                    w = 0;
+                }
+            }
             addAllGlyphs();
             drawGlyphs(glyphs);
 
@@ -118,7 +138,7 @@ public class Controller implements Initializable {
         glyphs = new ArrayList<>();
 
         double h = Double.parseDouble(fontHeight.getText());
-        modChar.setFont(Font.font(fonts.getValue(), FontWeight.NORMAL, h));
+        modChar.setFont(Font.font(AutoComplete.getComboBoxValue(fonts), FontWeight.NORMAL, h));
 
         for (char i = engStart; i <= engEnd; i++) {
             addGlyph(i);
@@ -236,16 +256,24 @@ public class Controller implements Initializable {
     }
 
     public void previewPic() throws IOException {
-        if (initImg == null) {
-            return;
+        try {
+            if (initImg == null) {
+                return;
+            }
+            bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue());
+            drawBMP(bmpPic);
+        }catch (Exception e){
+            e.printStackTrace();
+            log("Ошибка открытия файла.");
         }
-        bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue());
-        drawBMP(bmpPic);
     }
 
     public void fontChange (){
         if(isInited) {
-            fontSaveName.setText(fonts.getValue().replace(" ", "_") + "_" + fontHeight.getText());
+            String font = fonts.getValue();
+            if (font != null && !font.isEmpty()) {
+                fontSaveName.setText(fonts.getValue().replace(" ", "_") + "_" + fontHeight.getText());
+            }
         }
     }
     public void savePic() throws IOException {
@@ -266,11 +294,13 @@ public class Controller implements Initializable {
             }
             BMPSaver.saveToFile(saveFile.getAbsolutePath(), arrayName.getText(), bmpPic);
             bmpPic = null;
+            log("Картинка сохранена " + saveFile.getAbsolutePath());
         }
+
     }
 
     private void drawBMP(NewBMP bmp, int x, int y) {
-        System.out.println("Drawing " + bmp);
+
         for (h = 0; h < bmp.getH(); h++) {
             for (w = 0; w < bmp.getW(); w++) {
                 drawPixel(x + w, y + h, bmp.getMass().get(h * bmp.getW() + w));
@@ -311,7 +341,10 @@ public class Controller implements Initializable {
             if (fontTab.isSelected()) {
                 if (fontSaveName.getText().isEmpty())
                 {
-                    fontSaveName.setText(fonts.getValue().replace(" ","_")+"_"+fontHeight.getText());
+                    String font = AutoComplete.getComboBoxValue(fonts);
+                    if (font != null && !font.isEmpty()) {
+                        fontSaveName.setText(font.replace(" ", "_") + "_" + fontHeight.getText());
+                    }
                 }
             }
         }
@@ -323,12 +356,15 @@ public class Controller implements Initializable {
         List<String> avFonts = Font.getFontNames();
         if (avFonts != null) {
             fonts.getItems().addAll(avFonts);
-            System.out.println(fonts.getItems().size());
+            System.out.println("Fonts loaded: " + fonts.getItems().size());
+
         }
+        AutoComplete.autoCompleteComboBoxPlus(fonts, (typedText, itemToCompare) -> itemToCompare.contains(typedText));
         fonts.setValue("Oxygen Mono");
         rotCh.getItems().addAll(0, 90, 180, 270);
         rotCh.setValue(rotCh.getItems().get(0));
         fontHeight.setText("8");
         isInited = true;
+        log("Готов к работе");
     }
 }

@@ -16,11 +16,11 @@
 #include "main.h"
 #include "SPI/SPI_Handler.h"
 #include "TFT/TFT_LL.h"
-#include "..\..\GUI\Logo\LOGO_MAIN.h"
+//#include "..\..\GUI\Logo\LOGO_MAIN.h"
 /*Public defines */
 #define TFT_INIT_DEL 10
 
-extern const unsigned char gImage_LOGO_MAIN2;
+//extern const unsigned char gImage_LOGO_MAIN2;
 typedef struct  
 {										    
 	uint16_t width;			//LCD ¿í¶È

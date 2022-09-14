@@ -48,14 +48,16 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdbool.h>
 #include "stdlib.h"
 #include "Settings.h"
-//#include "FlashParams\FlashParams.h"
+#include "FlashParams\FlashParam.h"
 //#include "TFT/TFT.h"
 //#include "SPI/SPI_Handler.h"
 //#include "WTC_Logic.h"
 //#include "..\..\GUI\Logo\LOGO_MAIN.h"
 //#include "USER\test.h"
+#include "TFT/Fonts/wtc_fonts.h"
 #include "Motor\Motor.h"
 #include "TFT\stm32_adafruit_lcd.h"
 #include "TFT\stm32_adafruit_ts.h"
@@ -63,6 +65,7 @@ extern "C" {
 #include "GUI\GUI.h"
 #include "TFT/lcd/ili9486/ili9486.h"
 #include "PistonControl\PistonControl.h"
+#include "Time\Time.h"
 //#include "USER\GUI.h"
 /* USER CODE END Includes */
 
@@ -74,7 +77,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 	extern uint32_t _1ms_cnt;
-
+  extern uint8_t* errorCause;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

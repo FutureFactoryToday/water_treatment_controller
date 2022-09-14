@@ -9,7 +9,7 @@ public class BMPSaver {
         try {
             Files.deleteIfExists(path);
             Files.writeString(path, "#include <stdint.h>\n", StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-            Files.writeString(path, "#include \"bmp.h\" \n", StandardOpenOption.APPEND);
+            Files.writeString(path, "#include \"TFT/bmp.h\" \n", StandardOpenOption.APPEND);
             Files.writeString(path, "#define   WIDTH   " + bmp.getW() + "\n", StandardOpenOption.APPEND);
             Files.writeString(path, "#define   HEIGHT  " + bmp.getH() + "\n", StandardOpenOption.APPEND);
             Files.writeString(path, "#define   SIZE  " + bmp.getMass().size() + "\n", StandardOpenOption.APPEND);

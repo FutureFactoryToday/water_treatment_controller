@@ -49,6 +49,8 @@
 
 /* USER CODE BEGIN PV */
 	uint32_t _1ms_cnt;
+	uint8_t* errorCause;
+	
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,7 +72,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-
+	
 	#ifdef TESTS
 	/*TEST*/
 	testFifo();
@@ -112,8 +114,9 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_RTC_Init();
-  //MX_TIM8_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+	
 //	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 //	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
 //  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
@@ -121,11 +124,12 @@ int main(void)
 //  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 //  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 //	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
-	
+
+	initTime();
+	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
 	__enable_irq();
 	LL_mDelay(500);
-	PC_Init();
 	#ifdef TESTS
 	MOT_TEST();
 	#endif
@@ -149,8 +153,7 @@ int main(void)
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
 //	}
-//	MOT_Start();
-	uint8_t speed = 100;
+
 	
 	//MOT_TEST();
 
@@ -170,7 +173,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		MOT_SetSpeed(speed);
 		if (redraw){
 			redrawGUI();
 			redraw = 0;

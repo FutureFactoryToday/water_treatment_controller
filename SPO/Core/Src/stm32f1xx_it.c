@@ -210,7 +210,8 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-
+	RTC_Interrupt();
+	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
 
@@ -282,7 +283,7 @@ void EXTI15_10_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
 		if (!LL_GPIO_IsInputPinSet(OPT_SENS_GPIO_Port,OPT_SENS_Pin)){
-			PC_OpticSensInterrupt();
+			//PC_OpticSensInterrupt();
 			redraw = 1;
 		}
     /* USER CODE END LL_EXTI_LINE_11 */

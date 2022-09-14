@@ -53,7 +53,7 @@
                             <HBox prefHeight="100.0" prefWidth="200.0">
                                 <VBox prefHeight="321.0" prefWidth="256.0">
                                     <Label fx:id="txtLbl" text="Выберете шрифт" />
-                                    <ChoiceBox fx:id="fonts" onAction="#fontChange" prefWidth="150.0" />
+                                    <ComboBox fx:id="fonts" onAction="#fontChange" prefWidth="150.0" />
                                     <Label text="Выберете высоту шрифта" />
                                     <TextField fx:id="fontHeight" maxWidth="50.0" minWidth="10.0" onAction="#fontChange" onKeyTyped="#fontChange" prefWidth="10.0" />
                                     <Label text="Введите названия шрифта" />
