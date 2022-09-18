@@ -56,7 +56,7 @@ void initGUI(void){
 	BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&gImage_LOGO_MAIN);
 	//LL_mDelay(1000);
     
-    BSP_LCD_SetFont(&Font24);
+    BSP_LCD_SetFont(&Oxygen_Mono_24);
     
     frame = 0;
     wasScroll = 0;
