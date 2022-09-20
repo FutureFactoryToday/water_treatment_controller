@@ -26,7 +26,7 @@ const BITMAPSTRUCT gImage_PAGEBUT __attribute__((aligned)) =
     WIDTH,
     HEIGHT,
   
-    WIDTH * HEIGHT * 2,
+    WIDTH * HEIGHT,
     
   {0XFFFF, 
 0XFFFF, 
