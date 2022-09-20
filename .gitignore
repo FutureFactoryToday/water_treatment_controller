@@ -61,3 +61,6 @@ SPO/MDK-ARM/SPO/SPO.map
 *.Андрей
 
 SPO/MDK-ARM/SPO/SPO.hex
+
+*__Previews/*
+*/History/*
