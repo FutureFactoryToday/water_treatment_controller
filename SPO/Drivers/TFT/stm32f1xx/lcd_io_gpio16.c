@@ -6,8 +6,11 @@
 /* Author: Roberto Benjami
    version:  2020.05.27
 */
+#include "Settings.h"
+#ifdef PARAL_LCD
+
 #include "main.h"
-#include "lcd.h"
+#include "TFT/lcd.h"
 #include "lcd_io_gpio16.h"
 
 /* Link function for LCD peripheral */
@@ -282,7 +285,7 @@ void LCD_IO_Delay(uint32_t c)
 //-----------------------------------------------------------------------------
 void LCD_Delay(uint32_t Delay)
 {
-  HAL_Delay(Delay);
+  LL_mDelay(Delay);
 }
 
 //-----------------------------------------------------------------------------
@@ -622,3 +625,5 @@ void LCD_IO_ReadCmd16MultipleData8(uint16_t Cmd, uint8_t *pData, uint32_t Size, 
 void LCD_IO_ReadCmd16MultipleData16(uint16_t Cmd, uint16_t *pData, uint32_t Size, uint32_t DummySize) { }
 void LCD_IO_ReadCmd16MultipleData24to16(uint16_t Cmd, uint16_t *pData, uint32_t Size, uint32_t DummySize) { }
 #endif
+
+#endif //PARAL_LCD

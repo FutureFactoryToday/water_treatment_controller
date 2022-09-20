@@ -509,12 +509,11 @@ void ili9486_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysi
 void ili9486_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
 {
   uint32_t index, size;
+	BITMAPINFOHEADER *ptr = pbmp;
   /* Read bitmap size */
-  size = ((BITMAPSTRUCT *)pbmp)->fileHeader.bfSize;
+  size = ptr->dataSize;
   /* Get bitmap data address offset */
-  index = ((BITMAPSTRUCT *)pbmp)->fileHeader.bfOffBits;
-  size = (size - index) / 2;
-  pbmp += index;
+  pbmp += sizeof(BITMAPINFOHEADER);
 
   ILI9486_LCDMUTEX_PUSH();
 //  LCD_IO_WriteCmd8(ILI9486_MADCTL); LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_UP);
