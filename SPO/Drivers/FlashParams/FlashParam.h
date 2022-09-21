@@ -22,17 +22,23 @@
 #define USER_FLASH_PAGE 
 /*Global params*/
 typedef struct {
+	uint32_t loadFlag;
 	uint32_t hours;
 	uint32_t minutes;
 	uint32_t seconds;
+	sys_param_t sysPar;
+	stored_ts_conf_t ts_conf;
 } stored_params_t;
 
 typedef struct {
 	bool isLoaded;
+	bool needToSave;
 	stored_params_t params;
 }flash_params_t;
 
-#define FIRST_ELEMENT hours
+extern flash_params_t* fp;
+	
+#define FIRST_ELEMENT loadFlag
 /*Prototypes */
 flash_params_t* FP_GetParam(void);
 uint8_t FP_SaveParam(void);

@@ -27,7 +27,8 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-volatile static flash_params_t fp ={0};
+volatile static flash_params_t flashParams ={0};
+flash_params_t* fp = &flashParams;
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);
 void unlockFlash(void);
@@ -36,24 +37,32 @@ void lockFlash(void);
 /* Private user code ---------------------------------------------------------*/
 
 flash_params_t* FP_GetParam(void){
-	if (!fp.isLoaded){
+	if (!flashParams.isLoaded){
 		loadParams();
 	}
-	return &fp;
+	return &flashParams;
 }
 
 void loadParams(void){
 	__disable_irq();
 	
 	uint32_t *temp = 0;
-	uint32_t *ptr = &fp.params.FIRST_ELEMENT;
+	uint32_t *ptr = &flashParams.params.FIRST_ELEMENT;
 	uint32_t paramSize = sizeof(flash_params_t)/sizeof(uint32_t);
+	flashParams.params.loadFlag = 0;
 	for(uint32_t parNum = 0; parNum < paramSize; parNum++){
 		temp = (uint32_t*)(USER_FLASH_START + 4*parNum);
 		*ptr = *temp;
 		ptr++;
+		
 	}
-	fp.isLoaded = true;	
+	if (flashParams.params.loadFlag == 0x1234ABCD) {
+		flashParams.isLoaded = true;
+	} else {
+		flashParams.params.loadFlag = 0x1234ABCD;
+		flashParams.needToSave = 1;
+		flashParams.isLoaded = false;
+	}
 	__enable_irq();
 	
 }
@@ -69,7 +78,7 @@ uint8_t FP_SaveParam(void){
 		FLASH->SR |= FLASH_SR_EOP;
 	}
 		FLASH->CR |= FLASH_CR_PG;
-	uint16_t *ptr = (uint16_t*)&fp.params;
+	uint16_t *ptr = (uint16_t*)&flashParams.params;
 	uint32_t paramSize = sizeof(stored_params_t)/sizeof(uint32_t);
 	for(uint8_t i = 0; i < paramSize*2; i++){
 		*(volatile uint16_t*)(USER_FLASH_START+2*i) = 	*ptr;
@@ -86,6 +95,7 @@ uint8_t FP_SaveParam(void){
 	}
 	FLASH->CR &= ~FLASH_CR_PG;
 	lockFlash();
+	flashParams.needToSave = false;
 	__enable_irq();
 	return 1;
 }
@@ -107,7 +117,7 @@ uint8_t FP_DeleteParam(void){
 	__enable_irq();
 	return 1;
 }
-//uint8_t FP_SaveOneParam(uint32_t data, uint32_t adr){
+//uint8_t flashParams_SaveOneParam(uint32_t data, uint32_t adr){
 //	__disable_irq();
 //	while (FLASH->SR & FLASH_SR_BSY);
 //	unlockFlash();

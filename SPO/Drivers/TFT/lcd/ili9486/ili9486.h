@@ -7,9 +7,11 @@
 */
 #ifdef SPI_LCD
 #define  ILI9486_ORIENTATION      3
+#define LCD_TYPE 1
 #endif
 #ifdef PARAL_LCD
 #define  ILI9486_ORIENTATION      1
+#define COMPILED_LCD_TYPE 2
 #endif
 
 /* Color mode
