@@ -59,3 +59,7 @@ SPO/MDK-ARM/SPO/SPO.map
 *.uvmpw
 
 *.Андрей
+
+*.__i
+
+SPO/MDK-ARM/SPO/startup_stm32f103xe._ia

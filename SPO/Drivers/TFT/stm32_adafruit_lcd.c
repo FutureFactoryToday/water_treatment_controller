@@ -53,7 +53,6 @@ uint8_t BSP_LCD_Init(void)
   #endif
   
   ret = LCD_OK;
-  
   return ret;
 }
 
