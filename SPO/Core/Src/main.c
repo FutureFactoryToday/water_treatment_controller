@@ -136,6 +136,7 @@ int main(void)
 	#endif
 	initGUI();
 	FP_SaveParam();
+
 //	PC_GoToPoz(500);
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
