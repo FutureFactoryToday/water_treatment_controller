@@ -60,6 +60,10 @@ SPO/MDK-ARM/SPO/SPO.map
 
 *.Андрей
 
+*.__i
+
+SPO/MDK-ARM/SPO/startup_stm32f103xe._ia
+
 SPO/MDK-ARM/SPO/SPO.hex
 
 *__Previews/*

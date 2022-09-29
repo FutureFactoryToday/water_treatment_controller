@@ -30,7 +30,6 @@ uint32_t touchDelay;
 uint8_t dropBut;
 uint8_t wrenchBut;
 uint8_t pageBut;
-uint8_t numBuf[11] = {0};
 uint8_t redraw = 0;
 uint8_t frame = 0;
 uint8_t wasScroll = 0;
@@ -43,9 +42,7 @@ char* ITEM_MENU_SERVICE[] = { "ADJUSTMENT", "FEED RAPID", "CALIBRATE" };
 char* ITEM_MENU_REGENERATION[] = { "BACKWASH", "RINSE", "DOWNFLOW BRINE", "UPFLOW BRINE", "FILL/REGENERANT REFILL", "SOFTENING/FILTERING" };
 char* ITEM_MENU_FILTERING[] = { "aaa", "sss", "ddd" };
 /* Private function prototypes -----------------------------------------------*/
-void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text);
-uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
-uint8_t* intToStr (uint32_t num);
+
 void DrawOpticStatus(void);
 /* Private user code ---------------------------------------------------------*/
 void initGUI(void){
@@ -53,6 +50,7 @@ void initGUI(void){
 	redraw = 0;
 	BSP_LCD_Init();
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&gImage_LOGO_MAIN);
 	//LL_mDelay(1000);
     
@@ -514,71 +512,39 @@ void refresh(void)
 //	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 //}
 
-uint8_t* intToStr (uint32_t num){
-	for(int i = 0; i <sizeof(numBuf); i++){
-		numBuf[i] = 0;
-	}
-	uint32_t modNum = num;
-	uint8_t ch = 0;
-	uint32_t mod = 1000000000;
-	if (num == 0){
-		numBuf[0] = 48;
-		return numBuf;
-	}
-	uint8_t i = 0;
-	while(modNum < mod){
-		mod /= 10;
-	}
-	if (mod == 0) {
-		mod = 1;
-	}
-	
-	while (modNum > 0 || mod > 0){
-		while (modNum>=mod){
-			ch++;
-			modNum -= mod;
-		}
-		numBuf[i++] = ch + 48;
-		ch = 0;
-		mod /= 10;
-//		if (mod == 0) {
-//		mod = 1;
-//		}
-	}
-	return numBuf;
-}
 
-uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE){
+
+uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xSize, uint16_t ySize){
 	
-	return x < xE && x > xS && y < yE && y > yS;
+	return x < xS+xSize && x > xS && y < yS+ySize && y > yS;
 }
 void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text){
-//	if (isPushed == 1)
-//	{
-//		BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-//		BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-//	}
-//	else 
-//    {
-//		BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-//		BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-//	}
-//	BSP_LCD_FillRect(x,y,xSize,ySize);
-//	
-//	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//	BSP_LCD_SetFont(&Font24);
-//	
-//	uint32_t size = 0, xsize = 0; 
-//    uint8_t  *ptr = text;
-//  
-//  /* Get the text size */
-//  while (*ptr++) size ++ ;
-//	
-//	uint16_t xTextStart = xSize/2+x;
-//	uint16_t yTextStart = ySize/2+(y-12);
-//	
-//	//SP_LCD_DrawPixel(xTextStart, yTextStart, LCD_COLOR_RED);
-//	//BSP_LCD_DrawPixel(xSize/2+x, ySize/2+y, LCD_COLOR_RED);
-//	
-//	//BSP_LCD_DisplayStringAt(xTextStart,yTextStart,text,CENTER_MODE);
+	if (isPushed == 1)
+	{
+		BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+		BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+	}
+	else 
+    {
+		BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+		BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+	}
+	BSP_LCD_FillRect(x,y,xSize,ySize);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetFont(&Oxygen_Mono_8);
+	
+	uint32_t size = 0, xsize = 0; 
+    uint8_t  *ptr = text;
+  
+  /* Get the text size */
+  while (*ptr++) size ++ ;
+	
+	uint16_t xTextStart = xSize/2+x;
+	uint16_t yTextStart = ySize/2+(y-12);
+	
+	//SP_LCD_DrawPixel(xTextStart, yTextStart, LCD_COLOR_RED);
+	//BSP_LCD_DrawPixel(xSize/2+x, ySize/2+y, LCD_COLOR_RED);
+	
+	BSP_LCD_DisplayStringAt(xTextStart,yTextStart,text,CENTER_MODE);
 }

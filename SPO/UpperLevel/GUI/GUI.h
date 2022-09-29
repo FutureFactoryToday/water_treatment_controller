@@ -290,6 +290,8 @@ extern char* ITEM_MENU_PAGE[];
 extern char* ITEM_MENU_SERVICE[];
 extern char* ITEM_MENU_REGENERATION[];
 extern char* ITEM_MENU_FILERING[];
+
+
 //struct message
 //{
 //    uint8_t frame = 0;
@@ -299,6 +301,7 @@ extern char* ITEM_MENU_FILERING[];
 void initGUI(void);
 void translateMessage(void);
 void refresh(void);
-
+void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text);
+uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
 #endif /* __GUI_H__ */
 

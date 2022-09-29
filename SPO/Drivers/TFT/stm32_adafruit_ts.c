@@ -6,10 +6,11 @@
 extern TS_DrvTypeDef     *ts_drv;
 extern int32_t            ts_cindex[];
 static uint16_t          TsXBoundary, TsYBoundary;
-		uint32_t kX;
-		uint32_t kY;
-		uint32_t bX;
-		uint32_t bY;
+
+int16_t kX;
+int16_t kY;
+int16_t bX;
+int16_t bY;
 
 /**
   * @brief  Initializes and configures the touch screen functionalities and 
@@ -26,11 +27,20 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   TsXBoundary = XSize;
   TsYBoundary = YSize;
 
+	if (fp->isLoaded != 1){
+		
+		SERV_TS_CALIB();
+	} else {
+		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
+			SERV_TS_CALIB();
+		} else {
+			kX = (int16_t)fp->params.ts_conf.kX;
+			bX = (int16_t)fp->params.ts_conf.bX;
+			kY = (int16_t)fp->params.ts_conf.kY;
+			bY = (int16_t)fp->params.ts_conf.bY;
+		}
+	}
 	
-		kX = TsXBoundary*MOD/(X_MAX-X_MIN);
-		kY = TsYBoundary*MOD/(Y_MAX-Y_MIN);
-		bX = kX*X_MIN;
-		bY = kY*Y_MIN;
 	
   if(ts_drv)
     ret = TS_OK;
@@ -52,18 +62,19 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
 {
   uint16_t x, y;
   int32_t  x1, y1, x2, y2;
-  
+  for (uint8_t i = 0; i < TS_RESCAN_TIME; i++){
+		TsState->TouchDetected = ts_drv->DetectTouch(0);
+		LL_mDelay(10);
+	}
   TsState->TouchDetected = ts_drv->DetectTouch(0);
   if(TsState->TouchDetected)
   {
     ts_drv->GetXY(0, &x, &y);
     x1 = x; y1 = y;
+		TsState->X_t = x1;
+		TsState->Y_t = y1;
 //    x2 = (ts_cindex[1] * x1 + ts_cindex[2] * y1 + ts_cindex[3]) / ts_cindex[0];
 //    y2 = (ts_cindex[4] * x1 + ts_cindex[5] * y1 + ts_cindex[6]) / ts_cindex[0];
-		uint32_t kX = TsXBoundary*MOD/(X_MAX-X_MIN);
-		uint32_t kY = TsYBoundary*MOD/(Y_MAX-Y_MIN);
-		uint32_t bX = kX*X_MIN;
-		uint32_t bY = kY*Y_MIN;
 		
 		#if ILI9486_ORIENTATION == 3
 		x2 = x1*kX/MOD - bX/MOD;
@@ -71,8 +82,8 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
 		#endif
 		
 		#if ILI9486_ORIENTATION == 1
-		x2 = 480 - x1*kX/MOD - bX/MOD;
-		y2 = 320 - y1*kY/MOD - bY/MOD;
+		x2 = (x1*kX)/MOD + bX;
+		y2 = (y1*kY)/MOD + bY;
 		#endif
     if(x2 < 0)
       x2 = 0;
@@ -87,4 +98,11 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
     TsState->X = x2;
     TsState->Y = y2;
   }
+}
+
+void BSP_TS_SetCalibCoef(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
+		kX = kXe;
+		kY = kYe;
+		bX = bXe;
+		bY = bYe;
 }

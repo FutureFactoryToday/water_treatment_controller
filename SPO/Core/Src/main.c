@@ -124,8 +124,9 @@ int main(void)
 //  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
 //  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 //	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
-
-	initTime();
+	FP_GetParam();
+	System_init();
+	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
 	__enable_irq();
@@ -134,6 +135,8 @@ int main(void)
 	MOT_TEST();
 	#endif
 	initGUI();
+	FP_SaveParam();
+
 //	PC_GoToPoz(500);
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
