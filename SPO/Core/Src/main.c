@@ -173,16 +173,18 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-		if (redraw){
-			translateMessage();
-			redraw = 0;
-		}
-    /* USER CODE END WHILE */
+  redraw = 1;
+  ShowMainFrame();
+//  while (1)
+//  {
+//		if (redraw){
+//			translateMessage();
+//			redraw = 0;
+//		}
+//    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-  }
+//    /* USER CODE BEGIN 3 */
+//  }
   /* USER CODE END 3 */
 }
 
@@ -203,24 +205,24 @@ void SystemClock_Config(void)
   {
 
   }
-//  LL_PWR_EnableBkUpAccess();
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_ForceBackupDomainReset();
-//    LL_RCC_ReleaseBackupDomainReset();
-//  }
-//  LL_RCC_LSE_Enable();
+  LL_PWR_EnableBkUpAccess();
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_ForceBackupDomainReset();
+    LL_RCC_ReleaseBackupDomainReset();
+  }
+  LL_RCC_LSE_Enable();
 
-//   /* Wait till LSE is ready */
-//  while(LL_RCC_LSE_IsReady() != 1)
-//  {
+   /* Wait till LSE is ready */
+  while(LL_RCC_LSE_IsReady() != 1)
+  {
 
-//  }
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-//  }
-//  LL_RCC_EnableRTC();
+  }
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+  }
+  LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 
