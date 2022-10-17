@@ -16,7 +16,7 @@
 #include "main.h"
 
 /*Public defines */
-#define USER_FLASH_START 0x0800FC00
+#define USER_FLASH_START 0x08040000
 //#define FL_KEY1 0x45670123
 //#define FL_KEY2 0xCDEF89AB
 #define USER_FLASH_PAGE 
