@@ -30,14 +30,42 @@
 #define OK_X 430
 #define OK_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 13
 
+
 //Public defines main window sizers
 #define MAIN_WINDOW_POS_X 0
 #define MAIN_WINDOW_POS_Y BSP_LCD_GetYSize() - TOP_BOT_LINE_WIDTH - MED_LINE_WIDTH
 #define MAIN_WINDOW_SIZE_X BSP_LCD_GetXSize()
 #define MAIN_WINDOW_SIZE_Y MED_LINE_WIDTH
 
-uint8_t ShowKeyboardFrame(void);
+
+//Public defines cursor sizers
+#define TEXT_CTRL_POS_X 0
+#define TEXT_CTRL_POS_Y TOP_BOT_LINE_WIDTH
+#define TEXT_CTRL_SIZE_X BSP_LCD_GetXSize()
+#define TEXT_CTRL_SIZE_Y TOP_BOT_LINE_WIDTH
+
+
+//Public defines cursor sizers
+#define CURSOR_POS_X 10
+#define CURSOR_POS_Y TOP_BOT_LINE_WIDTH + 10
+#define CURSOR_SIZE_X 2
+#define CURSOR_SIZE_Y 40
+
+//Public defines keys sizers
+////Public defines number keys sizers
+#define NUM_KEYS_POS_X 25
+#define NUM_KEYS_POS_Y (TOP_BOT_LINE_WIDTH * 2) + 5
+
+int32_t ShowKeyboardFrame(void);
 
 void RefreshKeyboardFrame(void);
+
+void RefreshCursor(uint8_t dx);
+
+void RefreshKeys(void);
+
+uint8_t KeyClick(void);
+
+void PrintResultFromKeyboard();
 
 void TranslateKeyboardFrameMSG(void);

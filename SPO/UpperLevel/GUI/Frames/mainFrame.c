@@ -2,9 +2,11 @@
 uint8_t* FormatTime = "hh:mm";
 uint8_t* TimeStr;
 
+uint8_t hwndMainFrameControl = 0;
+
 void ShowMainFrame(void)
 {
-    
+    hwndMainFrameControl = 0;
     while(1)
     {
         if(redraw)
@@ -13,6 +15,10 @@ void ShowMainFrame(void)
             redraw = 0;
         }
         TranslateMainFrameMSG();
+        
+        if(hwndMainFrameControl == 1)
+            ShowMenuFrame();
+        hwndMainFrameControl = 0;
     }
 }
 
@@ -77,7 +83,7 @@ void TranslateMainFrameMSG (void)
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )
         {
-           ShowMenuFrame();
+           hwndMainFrameControl = 1;
         }        
     }
 }
