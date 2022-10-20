@@ -17,17 +17,24 @@
 
 /*Public defines */
 #define USER_FLASH_START 0x08040000
+#define START_FP_FLAG 0x12345678
+#define END_FP_FLAG 0x87654321
+
 //#define FL_KEY1 0x45670123
 //#define FL_KEY2 0xCDEF89AB
 #define USER_FLASH_PAGE 
 /*Global params*/
 typedef struct {
-	uint32_t loadFlag;
+	uint32_t startLoadFlag;
+	
 	uint32_t hours;
 	uint32_t minutes;
 	uint32_t seconds;
 	sys_param_t sysPar;
 	stored_ts_conf_t ts_conf;
+	
+	uint32_t endLoadFlag;
+	
 } stored_params_t;
 
 typedef struct {
@@ -38,7 +45,7 @@ typedef struct {
 
 extern flash_params_t* fp;
 	
-#define FIRST_ELEMENT loadFlag
+#define FIRST_ELEMENT startLoadFlag
 /*Prototypes */
 flash_params_t* FP_GetParam(void);
 uint8_t FP_SaveParam(void);

@@ -49,17 +49,19 @@ void loadParams(void){
 	uint32_t *temp = 0;
 	uint32_t *ptr = &flashParams.params.FIRST_ELEMENT;
 	uint32_t paramSize = sizeof(flash_params_t)/sizeof(uint32_t);
-	flashParams.params.loadFlag = 0;
+	flashParams.params.startLoadFlag = 0;
+	flashParams.params.endLoadFlag = 0;
 	for(uint32_t parNum = 0; parNum < paramSize; parNum++){
 		temp = (uint32_t*)(USER_FLASH_START + 4*parNum);
 		*ptr = *temp;
 		ptr++;
 		
 	}
-	if (flashParams.params.loadFlag == 0x1234ABCD) {
+	if (flashParams.params.startLoadFlag == START_FP_FLAG && flashParams.params.endLoadFlag == END_FP_FLAG) {
 		flashParams.isLoaded = true;
 	} else {
-		flashParams.params.loadFlag = 0x1234ABCD;
+		flashParams.params.startLoadFlag = START_FP_FLAG;
+		flashParams.params.endLoadFlag = END_FP_FLAG;
 		flashParams.needToSave = 1;
 		flashParams.isLoaded = false;
 	}

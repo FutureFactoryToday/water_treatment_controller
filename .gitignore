@@ -63,3 +63,11 @@ SPO/MDK-ARM/SPO/SPO.map
 *.__i
 
 SPO/MDK-ARM/SPO/startup_stm32f103xe._ia
+
+SPO/MDK-ARM/SPO/SPO.hex
+
+__Previews/*
+PCB_v2/WTC_SPI_v2/History
+PCB_v2/WTC_SPI_v2/Project Logs for WTC_SPI_v2/
+
+PCB_v2/WTC_SPI_v2/__Previews/
