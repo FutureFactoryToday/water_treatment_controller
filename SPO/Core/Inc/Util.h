@@ -22,7 +22,7 @@ extern uint8_t numBuf[11];
 /*Prototypes */
 
 /*Возведение в степень*/
-uint16_t POWC(uint8_t a,uint8_t b);
+uint16_t POWC(uint32_t a,uint8_t b);
 /*Возврат строкового аналога числа (от 0 до 9)*/
 uint8_t intToChar(uint8_t num);
 

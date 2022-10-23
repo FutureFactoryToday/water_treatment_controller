@@ -24,9 +24,6 @@
 #define TSF_UPBAR_SIZE_X BSP_LCD_GetXSize()
 #define TSF_UPBAR_SIZE_Y MED_LINE_WIDTH
 
-#define TSF_UPBAR_STATUS_TEXT_X 55
-#define TSF_UPBAR_STATUS_TEXT_Y 10
-
 
 #define MONTH_GRID_X1 10
 #define MONTH_GRID_Y1 TOP_BOT_LINE_WIDTH
@@ -39,11 +36,7 @@
 #define COL_GAP 3
 
 #define UP_MONTH_BUT
-#define CLOCK_X BSP_LCD_GetXSize() - 5 * 15 
-#define CLOCK_Y STATUSBAR_POS_Y + 10
-#define HOUR_X CLOCK_X
-#define MINUTE_X CLOCK_X + 2 * 15 + 10
-#define DIV_X CLOCK_X + 2 * 15
+
 
 #define CHANGE_TEXT_X BSP_LCD_GetXSize()/2 + 10 
 

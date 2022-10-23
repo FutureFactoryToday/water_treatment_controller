@@ -89,7 +89,7 @@ uint8_t setTimeButtonLength;
 bool editBoxesShow = 0;
 uint32_t rightButX;
 /* Private function prototypes -----------------------------------------------*/
-void refresh();
+uint8_t refreshFrame();
 uint8_t touchHandler();
 void createFrame();
 void drawMonth(void);
@@ -117,12 +117,14 @@ void TSF_showFrame(){
 				drawClock();
 			} 
 			if (touchHandler()){
-					refresh();
+					if (refreshFrame()){
+						return;
+					}
 			}		
     }
 }
 
-void refresh(){
+uint8_t refreshFrame(){
 	/*Кнопка Установки времени*/
 	if (isInRectangle(tsState.X,tsState.Y,CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y,setTimeButtonLength + 5,Oxygen_Mono_20.height+3))
   {
@@ -201,27 +203,34 @@ void refresh(){
 			drawEditBoxes(*getTime());
 			editBoxesShow = 1;
 		}	
+		
+		
 	}
 
-if (isInRectangle(tsState.X,tsState.Y,MONTH_GRID_X1, MONTH_GRID_Y1 +  5,leftArowImg.infoHeader.biWidth,leftArowImg.infoHeader.biHeight))
-  {
-		displayedTime.month -= 1;
-		if (displayedTime.month < 1){
-			displayedTime.month = 12;
-			displayedTime.year -= 1;
+	if (isInRectangle(tsState.X,tsState.Y,MONTH_GRID_X1, MONTH_GRID_Y1 +  5,leftArowImg.infoHeader.biWidth,leftArowImg.infoHeader.biHeight))
+		{
+			displayedTime.month -= 1;
+			if (displayedTime.month < 1){
+				displayedTime.month = 12;
+				displayedTime.year -= 1;
+			}
+			drawMonth();
 		}
-		drawMonth();
-	}
-if (isInRectangle(tsState.X,tsState.Y,rightButX - rightArowImg.infoHeader.biWidth, MONTH_GRID_Y1 + 5,rightArowImg.infoHeader.biWidth,rightArowImg.infoHeader.biHeight))
-  {
-		displayedTime.month += 1;
-		if (displayedTime.month > 12){
-			displayedTime.month = 1;
-			displayedTime.year += 1;
+	if (isInRectangle(tsState.X,tsState.Y,rightButX - rightArowImg.infoHeader.biWidth, MONTH_GRID_Y1 + 5,rightArowImg.infoHeader.biWidth,rightArowImg.infoHeader.biHeight))
+		{
+			displayedTime.month += 1;
+			if (displayedTime.month > 12){
+				displayedTime.month = 1;
+				displayedTime.year += 1;
+			}
+			drawMonth();
 		}
-		drawMonth();
+		//Кнопка "Назад"
+	if (isInRectangle(tsState.X,tsState.Y,10, 10,gImage_RETURNARROW.infoHeader.biWidth,gImage_RETURNARROW.infoHeader.biHeight))
+  {
+		return 1;
 	}
-	
+	return 0;
 }
 int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
 	return ShowKeyboardFrame();
@@ -256,7 +265,7 @@ void createFrame(){
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
 		BSP_LCD_SetFont(&Oxygen_Mono_24);
-		BSP_LCD_DisplayStringAt(TSF_UPBAR_STATUS_TEXT_X, TSF_UPBAR_STATUS_TEXT_Y, (*(frameText + MAIN_TEXT)), LEFT_MODE);
+		BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(frameText + MAIN_TEXT)), LEFT_MODE);
 			
 		
 		drawMonth();
@@ -273,6 +282,8 @@ void createFrame(){
 		if (editBoxesShow){
 			drawEditBoxes(editedTime);
 		}
+		
+		BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
 }
 
 void drawEditBoxes(time_t editTime){
@@ -307,18 +318,6 @@ void drawEditBoxes(time_t editTime){
 	DrawButton(CHANGE_TEXT_X, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + BACK_TEXT)),&SETTINGS_FONT);
 	
 	
-}
-void drawClock(void){
-	BSP_LCD_SetFont(&Oxygen_Mono_20);
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
-	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
-	if (getTime()->second % 2){
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
-		
-	} else {
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
-	}
 }
 
 void drawMonth(void){

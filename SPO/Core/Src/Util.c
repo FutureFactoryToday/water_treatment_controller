@@ -28,9 +28,11 @@ uint8_t numBuf[11] = {0};
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
-uint16_t POWC (uint8_t a, uint8_t b){
-	while(b !=0){a = a*a; b--;}
-	return a;
+uint16_t POWC (uint32_t a, uint8_t b){
+	uint32_t res = a;
+	if (b == 0) return 1;
+	while(b !=1){b--; res = res*a; }
+	return res;
 }
 
 uint8_t intToChar(uint8_t num){
