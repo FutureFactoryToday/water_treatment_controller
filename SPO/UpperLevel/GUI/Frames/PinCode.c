@@ -34,7 +34,7 @@ char* pinRuText[] = {
 	"¬ведите число"
 };
 char* pinEnText[] = {
-	"Service pin-code",
+	"SERVICE PASSWORD",
 	"Enter pin-code",
 	"ENTER",
 	"Enter number"
@@ -51,6 +51,10 @@ void drawPinBoxes(uint8_t* pin);
 int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
+    enteredPin[0] = 0;
+    enteredPin[1] = 0;
+    enteredPin[2] = 0;
+    enteredPin[3] = 0;
 	if (sysParam.lang == ENGLISH){
 		pinFrameText = &pinEnText;
 	} else {

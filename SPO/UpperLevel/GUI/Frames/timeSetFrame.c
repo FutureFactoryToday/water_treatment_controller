@@ -264,26 +264,27 @@ void createFrame(){
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-		BSP_LCD_SetFont(&Oxygen_Mono_24);
-		BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(frameText + MAIN_TEXT)), LEFT_MODE);
-			
-		
-		drawMonth();
-		
-		drawClock();
-		
-		BSP_LCD_SetFont(&Oxygen_Mono_20);
-		BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-		setTimeButtonLength = BSP_LCD_DisplayStringAt(CLOCK_EDIT_BUT_X + 3,CLOCK_EDIT_BUT_Y + 3,(*(frameText + EDIT_TEXT)),LEFT_MODE);
-		BSP_LCD_DrawRect(CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y ,setTimeButtonLength + 5, Oxygen_Mono_20.height+3);
-		
-		BSP_LCD_DrawVLine( BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y, BSP_LCD_GetYSize() - MAINBAR_SIZE_Y - STATUSBAR_SIZE_Y);
-		
-		if (editBoxesShow){
-			drawEditBoxes(editedTime);
-		}
-		
-		BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
+    BSP_LCD_SetFont(&Oxygen_Mono_24);
+    BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(frameText + MAIN_TEXT)), LEFT_MODE);
+        
+    
+    drawMonth();
+    
+    drawClock();
+    
+    BSP_LCD_SetFont(&Oxygen_Mono_20);
+    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+    setTimeButtonLength = BSP_LCD_DisplayStringAt(CLOCK_EDIT_BUT_X + 3,CLOCK_EDIT_BUT_Y + 3,(*(frameText + EDIT_TEXT)),LEFT_MODE);
+    BSP_LCD_DrawRect(CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y ,setTimeButtonLength + 5, Oxygen_Mono_20.height+3);
+    
+    BSP_LCD_DrawVLine( BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y, BSP_LCD_GetYSize() - MAINBAR_SIZE_Y - STATUSBAR_SIZE_Y);
+    
+    if (editBoxesShow){
+        drawEditBoxes(editedTime);
+    }
+    
+    BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
+        
 }
 
 void drawEditBoxes(time_t editTime){
@@ -317,7 +318,7 @@ void drawEditBoxes(time_t editTime){
 	DrawButton(BSP_LCD_GetXSize() - 8*10 - 10, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + SAVE_TEXT)),&SETTINGS_FONT);
 	DrawButton(CHANGE_TEXT_X, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + BACK_TEXT)),&SETTINGS_FONT);
 	
-	
+
 }
 
 void drawMonth(void){
@@ -338,8 +339,7 @@ void drawMonth(void){
 		BSP_LCD_DrawVLine(FIRST_COL_X + tableLength, curY ,7 * BSP_LCD_GetFont()->height);
 		tableLength += COL_GAP;
 		rowS = FIRST_COL_X + tableLength;
-		tableLength += BSP_LCD_DisplayStringAt (FIRST_COL_X + tableLength, 
-																					curY, dateName->dayShortName[i], LEFT_MODE);
+		tableLength += BSP_LCD_DisplayStringAt (FIRST_COL_X + tableLength, curY, dateName->dayShortName[i], LEFT_MODE);
 		tableLength += COL_GAP;
 		rowE = FIRST_COL_X + tableLength;
 		rowMid[i] = rowS + (rowE - rowS)/2;

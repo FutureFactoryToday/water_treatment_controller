@@ -36,6 +36,7 @@ void RefreshKeyboardFrame(void)
     //Static refresh
     if(qwertyResult == 0)
     {
+        BSP_LCD_SetFont(&Oxygen_Mono_24);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
         BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
         BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);

@@ -27,6 +27,7 @@ void ShowMenuFrame(void)
         if(hwndMenuFrameControl == 0)
         {
             TSF_showFrame();
+            BSP_LCD_SetFont(&Oxygen_Mono_24);
             startMenuFrame = 1;
         }
         if(hwndMenuFrameControl == 1)
@@ -51,7 +52,12 @@ void ShowMenuFrame(void)
         }
         if(hwndMenuFrameControl == 5)
         {
-            ShowServiceFrame();
+            if(PIN_showFrame() == 1)
+            {
+                BSP_LCD_SetFont(&Oxygen_Mono_24);
+                ShowServiceFrame();
+            }
+            BSP_LCD_SetFont(&Oxygen_Mono_24);
             startMenuFrame = 1;
         }
         

@@ -123,7 +123,7 @@
 
 
 //Clock defines
-#define CLOCK_X BSP_LCD_GetXSize() - 5 * 15 
+#define CLOCK_X 370
 #define CLOCK_Y STATUSBAR_POS_Y + 10
 #define HOUR_X CLOCK_X
 #define MINUTE_X CLOCK_X + 2 * 15 + 10

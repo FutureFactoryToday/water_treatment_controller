@@ -504,7 +504,7 @@ void translateMessage(void){
 //}
 
 void drawClock(void){
-	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
 	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
 	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
 	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
