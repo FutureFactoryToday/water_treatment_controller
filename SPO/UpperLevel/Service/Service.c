@@ -44,6 +44,8 @@ void SERV_PRINT_TOUCH_INFO(void);
 void SERV_TS_CALIB(void){
 	bool exit = 0;
 	
+	WTC_FONT_t *oldFont;
+	stored_ts_conf_t newConf = {0};
 	int32_t kX;
 	int32_t kY;
 	int32_t bX;
@@ -56,8 +58,8 @@ void SERV_TS_CALIB(void){
 	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	
-	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
-	BSP_LCD_SetFont(&Oxygen_Mono_8);
+	oldFont = BSP_LCD_GetFont();
+	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_8);
 	SERV_PRINT_TOUCH_INFO();
 	
 	BSP_LCD_DrawHLine(calibCross[step].x-CROSS_WIDTH/2,calibCross[step].y,CROSS_WIDTH);
@@ -65,8 +67,7 @@ void SERV_TS_CALIB(void){
 	
 	while (!exit){
 		LL_mDelay(10);
-		BSP_TS_GetState(&tsState);
-		
+		BSP_TS_GetState(&tsState);	
 		if (touchDelay == 0 && tsState.TouchDetected == 1 ){
 			touchDelay = 300;
 			SERV_PRINT_TOUCH_INFO();
@@ -103,7 +104,7 @@ void SERV_TS_CALIB(void){
 				case (1): {
 					BSP_TS_SetCalibCoef((int16_t)kX, (int16_t)kY, (int16_t)bX, (int16_t)bY);
 
-					stored_ts_conf_t newConf = {0};
+					
 					newConf.bX = (uint32_t) bX;
 					newConf.kX = (uint32_t) kX;
 					newConf.bY = (uint32_t) bY;
@@ -129,11 +130,11 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
 	uint16_t oldBCol = BSP_LCD_GetBackColor();
 	uint16_t oldTCol = BSP_LCD_GetTextColor();
 	
-	BSP_LCD_SetFont(&Oxygen_Mono_12);
+	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_12);
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	DrawButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY"); 
-	DrawButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE"); 
-	DrawButton(BSP_LCD_GetXSize()/2 + 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT");
+	DrawButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY",&Oxygen_Mono_8); 
+	DrawButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE",&Oxygen_Mono_8); 
+	DrawButton(BSP_LCD_GetXSize()/2 + 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT",&Oxygen_Mono_8);
 	SERV_PRINT_TOUCH_INFO();
 	
 	

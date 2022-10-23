@@ -18,10 +18,13 @@
 #include <stdbool.h>
 
 /*Public defines */
-#define DEFAULT_TIME {2000, 1, 1,12,0,0}
+#define DEFAULT_TIME {2022, 10, 22,12,0,0}
+#define DAYS_NUM 7
+#define MONTHS_NUM 12
 
 //Макс длина строки: 4 цифры года, 9 букв месяца, 11 букв дня, 5 знака препинания, 1конец строки
 #define FORMATED_STRING_LENGTH 4 + 9 + 11 + 5 + 1
+
 typedef struct {
 	uint16_t year;
 	uint8_t month;
@@ -31,17 +34,25 @@ typedef struct {
 	uint8_t second;
 	bool isSecondSecHalf;
 } time_t;
+
+typedef struct {
+	char** monthName;
+	char** monthShortName;
+	char** dayName;
+	char** dayShortName;
+} date_name_t;
 /*Global params*/
 
 /*Prototypes */
-void Time_init();
+void Time_init(void);
+
 //Установка вереми. Формат BIN (обычный)
 void setTime (time_t time);
 
 //Возвращает указатель на системное время
-time_t* getTime ();
+time_t* getTime (void);
 //Прерывание для работы часов
-void RTC_Interrupt();
+void RTC_Interrupt(void);
 
 /*
 	Функция для вывода времени на экран
@@ -88,8 +99,14 @@ void RTC_Interrupt();
 */
 uint8_t* getFormatedTime(uint8_t* fStr);
 
-uint8_t* getTimeString();
+uint8_t* getFormatedTimeFromSource(uint8_t* fStr, time_t *source);
 
-uint8_t timeTest ();
+uint8_t* getTimeString(void);
+
+uint8_t maxDayInMonth(uint8_t month);
+
+uint8_t getDayNameByDate(time_t *date);
+
+uint8_t timeTest (void);
 #endif /* __TIME_H__ */
 

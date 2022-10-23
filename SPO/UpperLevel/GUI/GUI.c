@@ -51,7 +51,7 @@ void initGUI(void){
 	BSP_LCD_Init();
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&gImage_LOGO_MAIN);
+	BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&LOGO);
 	//LL_mDelay(1000);
     
     BSP_LCD_SetFont(&Oxygen_Mono_24);
@@ -505,7 +505,7 @@ uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_
 	
 	return x < xS+xSize && x > xS && y < yS+ySize && y > yS;
 }
-void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text){
+void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font){
 	if (isPushed == 1)
 	{
 		BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -519,7 +519,7 @@ void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t 
 	BSP_LCD_FillRect(x,y,xSize,ySize);
 	
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_SetFont(&Oxygen_Mono_8);
+	BSP_LCD_SetFont(font);
 	
 	uint32_t size = 0, xsize = 0; 
     uint8_t  *ptr = text;

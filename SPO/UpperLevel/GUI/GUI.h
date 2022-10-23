@@ -121,7 +121,7 @@
 
 
 /*Global params*/
-extern const BITMAPSTRUCT gImage_LOGO_MAIN;
+extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;
 extern const BITMAPSTRUCT gImage_ARROWUP;
 extern const BITMAPSTRUCT gImage_ARROWDOWN;
@@ -130,6 +130,9 @@ extern const BITMAPSTRUCT gImage_RETURNARROW;
 extern const BITMAPSTRUCT gImage_DROPBUT;
 extern const BITMAPSTRUCT gImage_WRENCHBUT;
 extern const BITMAPSTRUCT gImage_PAGEBUT;
+
+extern const BITMAPSTRUCT leftArowImg;
+extern const BITMAPSTRUCT rightArowImg;
 extern uint32_t touchDelay;
 extern uint8_t redraw;
 extern uint8_t frame;
@@ -153,7 +156,7 @@ extern char* ITEM_MENU_FILERING[];
 void initGUI(void);
 void translateMessage(void);
 void refresh(void);
-void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text);
+void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font);
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
 #endif /* __GUI_H__ */
 
