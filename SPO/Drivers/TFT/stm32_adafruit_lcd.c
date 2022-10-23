@@ -996,15 +996,17 @@ uint32_t getStringWidth (uint8_t* str){
 //	return 0;
 //}
 uint8_t getCharIndex(uint8_t ch){
+	unsigned int ch1 = '¿'; 
+	
   if (ch< ' '){
     return 0;
   }
   if (ch>= ' ' && ch <= '~'){
     return ch - ' ';
   }
-  //uint32_t testCh = "–ê";
-//  if (ch>='–ê'&& ch <= '—è') {
-//    return ch - '–ê' + '~' - ' ' + 1;
-  //}
+ 
+  if (ch>='¿'&& ch <= 'ˇ') {
+    return ch - '¿' + '~' - ' ' + 1;
+  }
   return 0;
 }
