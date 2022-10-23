@@ -19,6 +19,7 @@
 #define DEF_SYST_CONFIG_LANG ENGLISH
 #define DEF_SYST_CONFIG_LCD_TYPE 1
 #define DEF_SYST_CONFIG_LCD_ROTATION 1
+#define DEF_SERVIVE_CODE 1234
 
 typedef enum{
 	ENGLISH,
@@ -29,6 +30,7 @@ typedef struct{
 	uint32_t lang;
 	uint32_t LCD_TYPE;
 	uint32_t LCD_ROTATION;
+	uint32_t SERVIVE_CODE;
 } sys_param_t;
 
 extern sys_param_t sysParam;

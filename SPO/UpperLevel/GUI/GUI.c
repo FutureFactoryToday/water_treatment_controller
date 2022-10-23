@@ -499,6 +499,18 @@ void translateMessage(void){
 //	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 //}
 
+void drawClock(void){
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
+	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
+	if (getTime()->second % 2){
+		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
+		
+	} else {
+		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
+	}
+}
 
 
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xSize, uint16_t ySize){

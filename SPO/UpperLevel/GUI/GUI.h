@@ -29,6 +29,9 @@
 
 #define TOP_BOT_LINE_WIDTH 60
 
+#define FRAME_NAME_TEXT_X 55
+#define FRAME_NAME_TEXT_Y 10
+
 #define DROP_BUT_X 20
 #define DROP_BUT_Y TOP_BOT_LINE_WIDTH + 32
 #define DROP_BUT_X_SIZE 134
@@ -119,6 +122,12 @@
 //Public defines items menu
 
 
+//Clock defines
+#define CLOCK_X BSP_LCD_GetXSize() - 5 * 15 
+#define CLOCK_Y STATUSBAR_POS_Y + 10
+#define HOUR_X CLOCK_X
+#define MINUTE_X CLOCK_X + 2 * 15 + 10
+#define DIV_X CLOCK_X + 2 * 15
 
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
@@ -158,5 +167,6 @@ void translateMessage(void);
 void refresh(void);
 void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font);
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
+void drawClock(void);
 #endif /* __GUI_H__ */
 

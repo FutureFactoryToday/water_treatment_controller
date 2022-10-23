@@ -34,6 +34,7 @@ void System_init(void){
 		sysParam.lang = DEF_SYST_CONFIG_LANG;
 		sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
 		sysParam.LCD_ROTATION = ILI9486_ORIENTATION;
+		sysParam.SERVIVE_CODE = DEF_SERVIVE_CODE;
 		fp->needToSave = true;
 		fp->params.sysPar = sysParam;
 	} else {
