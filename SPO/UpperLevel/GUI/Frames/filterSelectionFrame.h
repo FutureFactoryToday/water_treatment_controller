@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define MODE_CUSTOMER "CUSTOMER"
-extern char* ITEM_MENU[];
+#define MODE_FILTER_SELECTION "FILTER SELECTION"
+extern char* ITEM_FILTER_SELECTION[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
@@ -88,15 +88,14 @@ extern char* ITEM_MENU[];
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_X TOP_BOT_LINE_WIDTH - 10
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_Y 5
 
-void ShowMenuFrame(void);
+void ShowFilterSelectionFrame(void);
 
-void RefreshMenuFrame(void);
+void RefreshFilterSelectionFrame(void);
 
-void RefreshScrollBarMenuFrame(void);
+void RefreshScrollBarFilterSelectionFrame(void);
 
-void AnimateScrollBarKeysMenuFrame(void);
+void AnimateScrollBarKeysFilterSelectionFrame(void);
 
-void AnimateTimeMenuFrame(void);
+void AnimateTimeFilterSelectionFrame(void);
 
-void TranslateMenuFrameMSG(void);
-
+void TranslateFilterSelectionFrameMSG(void);

@@ -34,6 +34,10 @@ uint8_t redraw = 0;
 uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
+
+uint8_t* hour = "hh";
+uint8_t* minute = "mm";
+
 char* ITEM_MENU_DROP[] = { "SERVICE", "REGENERATION", "FILTERING" };
 char* ITEM_MENU_WRENCH[] = { "LANGUAGE", "SET TIME", "RESET" };
 char* ITEM_MENU_PAGE[] = { "ERROR LIST", "DIAGRAM", "COUNTER" };

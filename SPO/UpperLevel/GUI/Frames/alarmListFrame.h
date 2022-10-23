@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define MODE_CUSTOMER "CUSTOMER"
-extern char* ITEM_MENU[];
+#define MODE_ALARM_LIST "ALARM LIST"
+//extern char* ITEM_ALARM_LIST[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
@@ -88,15 +88,14 @@ extern char* ITEM_MENU[];
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_X TOP_BOT_LINE_WIDTH - 10
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_Y 5
 
-void ShowMenuFrame(void);
+void ShowAlarmListFrame(void);
 
-void RefreshMenuFrame(void);
+void RefreshAlarmListFrame(void);
 
-void RefreshScrollBarMenuFrame(void);
+void RefreshScrollBarAlarmListFrame(void);
 
-void AnimateScrollBarKeysMenuFrame(void);
+void AnimateScrollBarKeysAlarmListFrame(void);
 
-void AnimateTimeMenuFrame(void);
+void AnimateTimeAlarmListFrame(void);
 
-void TranslateMenuFrameMSG(void);
-
+void TranslateAlarmListFrameMSG(void);

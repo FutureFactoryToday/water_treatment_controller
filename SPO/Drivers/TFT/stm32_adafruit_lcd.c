@@ -985,15 +985,25 @@ uint32_t getStringWidth (uint8_t* str){
 	return size;
 }
 
+//uint8_t getCharIndex(uint8_t ch){
+//	if (ch< ' '){
+//		return 0;
+//	}
+//	if (ch>= ' ' && ch <= '~'){
+//		return ch - ' ';
+//	}
+//	
+//	return 0;
+//}
 uint8_t getCharIndex(uint8_t ch){
-	if (ch< ' '){
-		return 0;
-	}
-	if (ch>= ' ' && ch <= '~'){
-		return ch - ' ';
-	}
-	if (ch>='¿'&& ch <= 'ˇ') {
-		return ch - '¿' + '~' - ' ' + 1;
-	}
-	return 0;
+  if (ch< ' '){
+    return 0;
+  }
+  if (ch>= ' ' && ch <= '~'){
+    return ch - ' ';
+  }
+  if (ch>='–ê'&& ch <= '—è') {
+    return ch - '–ê' + '~' - ' ' + 1;
+  }
+  return 0;
 }

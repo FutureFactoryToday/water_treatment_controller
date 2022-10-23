@@ -2,7 +2,8 @@
 
 //Public defines
 #define MODE_SOFTENING_CYCLE "SOFTENING CYCLE"
-#define MODE_MENU "MODE"
+#define MODE_MENU "–≈∆»Ã"
+//#define MODE_MENU "MODE"
 #define DELAY_REGEN "DELAY REGEN"
 #define SPEED "SPEED"
 #define TIME "TIME"
@@ -94,6 +95,8 @@
 void ShowMainFrame(void);
 
 void RefreshMainFrame(void);
+
+void AnimateTimeMainFrame(void);
 
 void TranslateMainFrameMSG (void);
 

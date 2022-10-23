@@ -133,8 +133,12 @@
 extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;
 extern const BITMAPSTRUCT gImage_ARROWUP;
+//extern const BITMAPSTRUCT gImage_ARROWUP_ghost;
 extern const BITMAPSTRUCT gImage_ARROWDOWN;
 extern const BITMAPSTRUCT gImage_RETURNARROW;
+extern const BITMAPSTRUCT day;
+extern const BITMAPSTRUCT night;
+extern const BITMAPSTRUCT list;
 
 extern const BITMAPSTRUCT gImage_DROPBUT;
 extern const BITMAPSTRUCT gImage_WRENCHBUT;
@@ -146,6 +150,9 @@ extern uint32_t touchDelay;
 extern uint8_t redraw;
 extern uint8_t frame;
 extern TS_StateTypeDef tsState;
+
+extern uint8_t* hour;
+extern uint8_t* minute;
 
 extern char* ITEM_MENU_DROP[];
 extern char* ITEM_MENU_WRENCH[];

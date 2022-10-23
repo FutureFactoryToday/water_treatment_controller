@@ -42,7 +42,7 @@ extern char* ITEM_SERVICE_MENU[];
 
 //Public defines lists sizers
 #define FIRST_CURSOR_POS_X 0
-#define FIRST_CURSOR_POS_Y TOP_BOT_LINE_WIDTH
+#define FIRST_CURSOR_POS_Y TOP_BOT_LINE_WIDTH - 1                   /////////////
 #define FIRST_CURSOR_SIZE_X 420
 #define FIRST_CURSOR_SIZE_Y 50
 
@@ -59,7 +59,7 @@ extern char* ITEM_SERVICE_MENU[];
 #define FOURTH_CURSOR_POS_X 0
 #define FOURTH_CURSOR_POS_Y THRID_CURSOR_POS_Y + 50
 #define FOURTH_CURSOR_SIZE_X FIRST_CURSOR_SIZE_X
-#define FOURTH_CURSOR_SIZE_Y FIRST_CURSOR_SIZE_Y
+#define FOURTH_CURSOR_SIZE_Y FIRST_CURSOR_SIZE_Y + 2                /////////////
 
 
 //Public defines scroll sizers
@@ -74,9 +74,9 @@ extern char* ITEM_SERVICE_MENU[];
 #define DOWN_ARROW_SIZE_Y UP_ARROW_SIZE_Y - 2
 
 #define SCROLLBAR_POS_X 420
-#define SCROLLBAR_POS_Y TOP_BOT_LINE_WIDTH
+#define SCROLLBAR_POS_Y TOP_BOT_LINE_WIDTH - 1                      /////////////
 #define SCROLLBAR_SIZE_X TOP_BOT_LINE_WIDTH
-#define SCROLLBAR_SIZE_Y 200
+#define SCROLLBAR_SIZE_Y 202                                        /////////////
 
 #define SCROLLBAR_CURSOR_POS_X 420
 #define SCROLLBAR_CURSOR_POS_Y TOP_BOT_LINE_WIDTH + UP_ARROW_SIZE_Y - 2
@@ -91,5 +91,11 @@ extern char* ITEM_SERVICE_MENU[];
 void ShowServiceMenuFrame(void);
 
 void RefreshServiceMenuFrame(void);
+
+void RefreshScrollBarServiceMenuFrame(void);
+
+void AnimateScrollBarKeysServiceMenuFrame(void);
+
+void AnimateTimeServiceMenuFrame(void);
 
 void TranslateServiceMenuFrameMSG(void);

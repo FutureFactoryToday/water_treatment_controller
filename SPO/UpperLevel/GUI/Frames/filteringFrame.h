@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define MODE_CUSTOMER "CUSTOMER"
-extern char* ITEM_MENU[];
+#define MODE_FILTERING "FILTERING"
+extern char* ITEM_FILTERING[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
@@ -29,8 +29,8 @@ extern char* ITEM_MENU[];
 #define STATUSBAR_SIZE_X BSP_LCD_GetXSize()
 #define STATUSBAR_SIZE_Y TOP_BOT_LINE_WIDTH
 
-#define TIME_X 370
-#define TIME_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 13
+#define SAVE_X 400
+#define SAVE_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 13
 
 
 //Public defines main window sizers
@@ -44,23 +44,32 @@ extern char* ITEM_MENU[];
 #define FIRST_CURSOR_POS_X 0
 #define FIRST_CURSOR_POS_Y TOP_BOT_LINE_WIDTH - 1                   /////////////
 #define FIRST_CURSOR_SIZE_X 420
-#define FIRST_CURSOR_SIZE_Y 50
+#define FIRST_CURSOR_SIZE_Y 68
 
 #define SECOND_CURSOR_POS_X 0
-#define SECOND_CURSOR_POS_Y FIRST_CURSOR_POS_Y + 50
+#define SECOND_CURSOR_POS_Y FIRST_CURSOR_POS_Y + 68
 #define SECOND_CURSOR_SIZE_X FIRST_CURSOR_SIZE_X
 #define SECOND_CURSOR_SIZE_Y FIRST_CURSOR_SIZE_Y
 
 #define THRID_CURSOR_POS_X 0
-#define THRID_CURSOR_POS_Y SECOND_CURSOR_POS_Y + 50
+#define THRID_CURSOR_POS_Y SECOND_CURSOR_POS_Y + 68
 #define THRID_CURSOR_SIZE_X FIRST_CURSOR_SIZE_X
 #define THRID_CURSOR_SIZE_Y FIRST_CURSOR_SIZE_Y
 
-#define FOURTH_CURSOR_POS_X 0
-#define FOURTH_CURSOR_POS_Y THRID_CURSOR_POS_Y + 50
-#define FOURTH_CURSOR_SIZE_X FIRST_CURSOR_SIZE_X
-#define FOURTH_CURSOR_SIZE_Y FIRST_CURSOR_SIZE_Y + 2                /////////////
+#define FIRST_CURSOR_VALUE_BOX_X 210
+#define FIRST_CURSOR_VALUE_BOX_Y TOP_BOT_LINE_WIDTH
+#define FIRST_CURSOR_VALUE_BOX_SIZE_X 130
+#define FIRST_CURSOR_VALUE_BOX_SIZE_Y 66
 
+#define SECOND_CURSOR_VALUE_BOX_X 210
+#define SECOND_CURSOR_VALUE_BOX_Y FIRST_CURSOR_VALUE_BOX_Y + 68
+#define SECOND_CURSOR_VALUE_BOX_SIZE_X FIRST_CURSOR_VALUE_BOX_SIZE_X
+#define SECOND_CURSOR_VALUE_BOX_SIZE_Y FIRST_CURSOR_VALUE_BOX_SIZE_Y 
+
+#define THRID_CURSOR_VALUE_BOX_X 210
+#define THRID_CURSOR_VALUE_BOX_Y SECOND_CURSOR_VALUE_BOX_Y + 68
+#define THRID_CURSOR_VALUE_BOX_SIZE_X FIRST_CURSOR_VALUE_BOX_SIZE_X
+#define THRID_CURSOR_VALUE_BOX_SIZE_Y FIRST_CURSOR_VALUE_BOX_SIZE_Y - 2
 
 //Public defines scroll sizers
 #define UP_ARROW_POS_X 420
@@ -88,15 +97,13 @@ extern char* ITEM_MENU[];
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_X TOP_BOT_LINE_WIDTH - 10
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_Y 5
 
-void ShowMenuFrame(void);
+void ShowFilteringFrame(void);
 
-void RefreshMenuFrame(void);
+void RefreshFilteringFrame(void);
 
-void RefreshScrollBarMenuFrame(void);
+void RefreshScrollBarFilteringFrame(void);
 
-void AnimateScrollBarKeysMenuFrame(void);
+void AnimateScrollBarKeysFilteringFrame(void);
 
-void AnimateTimeMenuFrame(void);
-
-void TranslateMenuFrameMSG(void);
+void TranslateMenuFilteringMSG(void);
 

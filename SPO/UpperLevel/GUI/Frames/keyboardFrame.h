@@ -40,7 +40,7 @@
 
 //Public defines cursor sizers
 #define TEXT_CTRL_POS_X 0
-#define TEXT_CTRL_POS_Y TOP_BOT_LINE_WIDTH
+#define TEXT_CTRL_POS_Y TOP_BOT_LINE_WIDTH + 1
 #define TEXT_CTRL_SIZE_X BSP_LCD_GetXSize()
 #define TEXT_CTRL_SIZE_Y TOP_BOT_LINE_WIDTH
 
