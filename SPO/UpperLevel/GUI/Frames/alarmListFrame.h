@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_ALARM_LIST "ALARM LIST"
+//#define MODE_ALARM_LIST "ALARM LIST"
+#define MODE_ALARM_LIST "—œ»—Œ  Œÿ»¡Œ "
 //extern char* ITEM_ALARM_LIST[];
 
 //Public defines sizers

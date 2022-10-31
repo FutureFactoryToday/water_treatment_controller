@@ -41,7 +41,7 @@ void RefreshForcedRegenCustFrame(void)
     BSP_LCD_FillRect(KEY_REGEN_X,KEY_REGEN_Y,KEY_REGEN_SIZE_X, KEY_REGEN_SIZE_Y);
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(KEY_REGEN_TEXT_X, KEY_REGEN_TEXT_Y, "REGEN", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(KEY_REGEN_TEXT_X, KEY_REGEN_TEXT_Y, "пецем.", LEFT_MODE);
 }
 
 void AnimateTimeForcedRegenCustFrame(void)

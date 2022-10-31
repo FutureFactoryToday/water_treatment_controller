@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_WASHING_TIME_SET "WASHING TIME SET"
+//#define MODE_WASHING_TIME_SET "WASHING TIME SET"
+#define MODE_WASHING_TIME_SET "сярюмнбйю бпелемх пецем."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
@@ -20,6 +21,14 @@
 
 #define MODE_STATUS_TEXT_X 65
 #define MODE_STATUS_TEXT_Y 13
+
+#define WASHING_TIME_VALUE_BOX_X 30
+#define WASHING_TIME_VALUE_BOX_Y TOP_BOT_LINE_WIDTH + 70 
+#define WASHING_TIME_VALUE_BOX_SIZE_X 120
+#define WASHING_TIME_VALUE_BOX_SIZE_Y 60
+
+#define WASHING_TIME_VALUE_X WASHING_TIME_VALUE_BOX_X + 20
+#define WASHING_TIME_VALUE_Y WASHING_TIME_VALUE_BOX_Y + 13
 
 
 //Public defines statusbar sizers

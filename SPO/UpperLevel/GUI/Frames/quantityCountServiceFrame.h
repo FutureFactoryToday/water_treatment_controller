@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_QUANTITY_COUNT "QUANTITY COUNT"
+//#define MODE_QUANTITY_COUNT "QUANTITY COUNT"
+#define MODE_QUANTITY_COUNT "яв╗рвхй бндш"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

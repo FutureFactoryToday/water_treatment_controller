@@ -1002,9 +1002,9 @@ uint8_t getCharIndex(uint8_t ch){
   if (ch>= ' ' && ch <= '~'){
     return ch - ' ';
   }
-  //uint32_t testCh = "–ê";
-//  if (ch>='–ê'&& ch <= '—è') {
-//    return ch - '–ê' + '~' - ' ' + 1;
-  //}
+  uint32_t testCh = "¿";
+  if (ch>='¿'&& ch <= 'ˇ') {
+    return ch - '¿' + '~' - ' ' + 1;
+  }
   return 0;
 }

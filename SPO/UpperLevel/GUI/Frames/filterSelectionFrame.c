@@ -6,7 +6,8 @@ uint8_t filter_selection_frame_was_Scroll = 0;
 int8_t hwndFilterSelectionFrameControl = 0;
 int8_t startFilterSelectionFrame = 0;
 
-char* ITEM_FILTER_SELECTION[] = { "FILTERING", "SOFTENING" };
+//char* ITEM_FILTER_SELECTION[] = { "FILTERING", "SOFTENING" };
+char* ITEM_FILTER_SELECTION[] = { "‘»À‹“–¿÷»ﬂ", "”Ãﬂ√◊≈Õ»≈" };
 
 void ShowFilterSelectionFrame(void)
 {

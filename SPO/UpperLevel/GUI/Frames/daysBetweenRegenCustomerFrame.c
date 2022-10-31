@@ -44,12 +44,12 @@ void RefreshDaysBetweenRegenCustFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, intToStr(2), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, intToStr(regenPeriod), LEFT_MODE);
     
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DBR_VALUE_X + 80, DBR_VALUE_Y, "Дней между регенерациями", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(DBR_VALUE_X + 80, DBR_VALUE_Y, "ДНЕЙ МЕЖДУ РЕГЕНЕРАЦИЯМИ", LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 

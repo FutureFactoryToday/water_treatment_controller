@@ -6,7 +6,8 @@ uint8_t service_menu_frame_was_Scroll = 0;
 int8_t hwndServiceMenuFrameControl = 0;
 int8_t startServiceMenuFrame = 0;
 
-char* ITEM_SERVICE_MENU[] = { "FILTER SELECTION", "REGEN PERIOD", "WASHING TIME", "QUANTITY COUNT", "REGEN", "ALARM NOTIFICATION" };
+//char* ITEM_SERVICE_MENU[] = { "FILTER SELECTION", "REGEN PERIOD", "WASHING TIME", "QUANTITY COUNT", "REGEN", "ALARM NOTIFICATION" };
+char* ITEM_SERVICE_MENU[] = { "¬€¡Œ– ‘»À‹“–¿", "œ≈–»Œƒ –≈√≈Õ", "¬–≈Ãﬂ œ–ŒÃ€¬ »", "—◊≈“◊»  ¬Œƒ€", "–≈√≈Õ≈–¿÷»ﬂ", "–≈√”À»–Œ¬ ¿  À¿œ¿Õ¿", "”¬≈ƒŒÃÀ≈Õ»≈ Œ¡—À”∆»¬¿Õ»ﬂ" };
 
 void ShowServiceFrame(void)
 {
@@ -51,6 +52,11 @@ void ShowServiceFrame(void)
             startServiceMenuFrame = 1;
         }
         if(hwndServiceMenuFrameControl == 5)
+        {
+            ShowAdjustmentFrame();
+            startServiceMenuFrame = 1;
+        }
+        if(hwndServiceMenuFrameControl == 6)
         {
             ShowAlarmNotiServiceFrame();
             startServiceMenuFrame = 1;
@@ -98,9 +104,9 @@ void RefreshServiceMenuFrame(void)
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
         
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+        BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
         
         startServiceMenuFrame = 0;
     }
@@ -132,9 +138,9 @@ void AnimateScrollBarKeysServiceMenuFrame(void)
     BSP_LCD_FillRect(SCROLLBAR_POS_X + 1,SCROLLBAR_POS_Y + 51,SCROLLBAR_SIZE_X - 2,SCROLLBAR_SIZE_Y - 99);
     
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
+    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (service_menu_frame_Scroll_cnt == 0 ? 0 : service_menu_frame_Scroll_cnt * 25), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
     
     service_menu_frame_was_Scroll = 0;
 }
@@ -180,7 +186,7 @@ void TranslateServiceMenuFrameMSG(void)
         }
         if (isInRectangle(tsState.X,tsState.Y,DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y))
         {
-            if(service_menu_frame_Scroll_cnt < 2) service_menu_frame_Scroll_cnt++;
+            if(service_menu_frame_Scroll_cnt < 3) service_menu_frame_Scroll_cnt++;
             service_menu_frame_was_Scroll = 2;
         }
         

@@ -37,21 +37,30 @@ void RefreshWashTimCustFrame(void)
         BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
         
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
+                
+        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        BSP_LCD_DisplayStringAt(MODE_WASH_TIME_X, MODE_WASH_TIME_Y ,MODE_WASHING_TIME,LEFT_MODE);
+        
         //BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
         //BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
         //BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
         //BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
         
-        BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "DAY", LEFT_MODE);
-        
-        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(MODE_WASH_TIME_X, MODE_WASH_TIME_Y ,MODE_WASHING_TIME,LEFT_MODE);
-
-        BSP_LCD_DrawBitmap(190, 90, &day);
-        //BSP_LCD_DrawBitmap(190, 90, &night);
+        if(washingTime == 1)
+        {
+            BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+            BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
+            BSP_LCD_DrawBitmap(190, 90, &day);
+        }
+        if(washingTime == 2)
+        {
+            BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+            BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+            //BSP_LCD_DrawBitmap(190, 90, &night);
+        }
         startWashTimCustFrame = 0;
     }
 }

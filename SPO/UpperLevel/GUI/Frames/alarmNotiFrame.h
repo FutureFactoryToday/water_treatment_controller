@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_ALARM_NOTI "ALARM NOTIFICATION"
+//#define MODE_ALARM_NOTI "ALARM NOTIFICATION"
+#define MODE_ALARM_NOTI "сбеднлкемхе наяксфхбюмхъ"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

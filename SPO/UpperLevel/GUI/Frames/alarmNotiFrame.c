@@ -53,8 +53,8 @@ void RefreshAlarmNotiServiceFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(75, 100, "For service, you need to contact the", LEFT_MODE);
-    BSP_LCD_DisplayStringAt(85, 130, "service department of LLC Sarmat", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(75, 100, "Для сервисного обслуживания необходимо", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(85, 130, "связяться с ООО САРМАТ", LEFT_MODE);
     BSP_LCD_DisplayStringAt(135, 160, "+7 (495) 189 - 71 - 78", LEFT_MODE);
     BSP_LCD_DisplayStringAt(140, 190, "info@sarmatwater.ru", LEFT_MODE);
     

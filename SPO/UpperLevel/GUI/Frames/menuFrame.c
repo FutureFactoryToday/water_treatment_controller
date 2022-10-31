@@ -5,7 +5,8 @@ uint8_t menu_frame_was_Scroll = 0;
 int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
-char* ITEM_MENU[] = { "TIME/DATE", "WASHING TIME", "FORCED REGEN", "DELAYED REGEN", "DBR", "SERVICE" };
+//char* ITEM_MENU[] = { "TIME/DATE", "WASHING TIME", "FORCED REGEN", "DELAYED REGEN", "DBR", "SERVICE" };
+char* ITEM_MENU[] = { "бпелъ/дюрю", "бпелъ опнлшбйх", "опхмсдхрекэмюъ пец.", "нркнфеммюъ пец.", "дмеи лефдс пец.", "яепбхя" };
 
 void ShowMenuFrame(void)
 {

@@ -35,6 +35,9 @@ uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
 
+int8_t regenPeriod = 0;
+int8_t washingTime = 1;
+
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
 

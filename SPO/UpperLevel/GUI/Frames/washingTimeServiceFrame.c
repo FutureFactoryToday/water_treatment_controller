@@ -36,6 +36,43 @@ void RefreshWashingTimeServiceFrame(void)
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_WASHING_TIME_SET,LEFT_MODE);
+    
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+    BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+    
+
+    if(washingTime == 1)
+    {
+        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+        BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+        BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+        BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
+    }
+    if(washingTime == 2)
+    {
+        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+        BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+        BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+        BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
+        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+    }
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 150, WASHING_TIME_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 250, WASHING_TIME_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+    
+
+    //BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 
 void AnimateTimeWashingTimeServiceFrame(void)
@@ -71,6 +108,14 @@ void TranslateWashingTimeServiceFrameMSG(void)
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
         {
             hwndWashingTimeServiceFrameControl = 20;
+        }
+        if (isInRectangle(tsState.X,tsState.Y,WASHING_TIME_VALUE_X + 100,WASHING_TIME_VALUE_Y, WASHING_TIME_VALUE_X + 250,WASHING_TIME_VALUE_Y + 50)) 
+        {
+            washingTime = 2;
+        }
+        if (isInRectangle(tsState.X,tsState.Y,WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, WASHING_TIME_VALUE_X + 150,WASHING_TIME_VALUE_Y + 50)) 
+        {
+            washingTime = 1;
         }
     }
 }

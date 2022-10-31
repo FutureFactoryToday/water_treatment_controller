@@ -6,7 +6,8 @@ int32_t qwertyFilBWASH = 0;
 int32_t qwertyFilDFLUSH = 0;
 int8_t hwndFilteringFrameControl = 0;
 int8_t startFilteringFrame = 0;
-char* ITEM_FILTERING[] = { "BWASH", "DFLUSH" };
+//char* ITEM_FILTERING[] = { "BWASH", "DFLUSH" };
+char* ITEM_FILTERING[] = { "Œ¡–.œ–ŒÃ.", "œ–ﬂÃ.œ–ŒÃ." };
 
 void ShowFilteringFrame(void)
 {
@@ -60,7 +61,7 @@ void RefreshFilteringFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_FILTERING,LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"SAVE",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"—Œ’–.",LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -81,8 +82,8 @@ void RefreshFilteringFrame(void)
         //BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 2],LEFT_MODE);
         //BSP_LCD_DisplayStringAt(16,FOURTH_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 3],LEFT_MODE);
         
-        BSP_LCD_DisplayStringAt(350,FIRST_CURSOR_POS_Y + 17,"MIN",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(350,SECOND_CURSOR_POS_Y + 17,"MIN",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(350,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(350,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
 
         BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);

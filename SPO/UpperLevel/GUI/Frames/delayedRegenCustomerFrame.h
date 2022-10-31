@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_DELAYED_REGEN "DELAYED REGEN"
+//#define MODE_DELAYED_REGEN "DELAYED REGEN"
+#define MODE_DELAYED_REGEN "нркнфеммюъ пецем."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

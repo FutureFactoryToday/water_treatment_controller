@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_REGEN "REGENERATION"
+//#define MODE_REGEN "REGENERATION"
+#define MODE_REGEN "–≈√≈Õ≈–¿÷»ﬂ"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

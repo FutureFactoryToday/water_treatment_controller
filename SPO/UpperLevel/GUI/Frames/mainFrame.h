@@ -1,16 +1,25 @@
 #include "main.h"
 
 //Public defines
-#define MODE_SOFTENING_CYCLE "SOFTENING CYCLE"
-//#define MODE_MENU "–≈∆»Ã"
-#define MODE_MENU "MODE"
-#define DELAY_REGEN "DELAY REGEN"
-#define SPEED "SPEED"
-#define TIME "TIME"
+//#define MODE_SOFTENING_CYCLE "SOFTENING CYCLE"
+//#define MODE_MENU "MODE"
+//#define DELAY_REGEN "DELAY REGEN"
+//#define SPEED "SPEED"
+//#define TIME "TIME"
 
-#define DELAY_REGEN_UNITS "DAYS"
-#define SPEED_UNITS "L/MIN"
-#define TIME_UNITS "HH:MM"
+#define MODE_SOFTENING_CYCLE "÷» À ”Ãﬂ√◊≈Õ»ﬂ"
+#define MODE_MENU "–≈∆»Ã"
+#define DELAY_REGEN "Œ“À. –≈√≈Õ."
+#define SPEED "— Œ–Œ—“‹"
+#define TIME "¬–≈Ãﬂ"
+
+//#define DELAY_REGEN_UNITS "DAYS"
+//#define SPEED_UNITS "L/MIN"
+//#define TIME_UNITS "HH:MM"
+
+#define DELAY_REGEN_UNITS "ƒÕ≈…"
+#define SPEED_UNITS "À/Ã»Õ"
+#define TIME_UNITS "◊◊:ÃÃ"
 
 #define DELAY_REGEN_VALUE "4"
 #define SPEED_VALUE "6"

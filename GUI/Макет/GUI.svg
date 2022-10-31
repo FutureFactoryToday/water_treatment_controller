@@ -343,9 +343,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.3535534"
-     inkscape:cx="5562.4265"
-     inkscape:cy="5950.354"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="4704.244"
+     inkscape:cy="6639.3139"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -620,7 +620,7 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <rect
-       style="font-variation-settings:normal;vector-effect:none;fill:#e9e9e9;fill-opacity:1;stroke:none;stroke-width:0.305689;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
+       style="font-variation-settings:normal;vector-effect:none;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:0.732399;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;opacity:1;stop-opacity:1"
        id="rect5974"
        width="126.6115"
        height="51.619892"
@@ -5020,7 +5020,7 @@
     <g
        id="g7021"
        transform="translate(2686.6424,1708.2356)"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96">
       <rect
@@ -20108,7 +20108,7 @@
        inkscape:transform-center-x="71.697098"
        inkscape:transform-center-y="387.58785"
        transform="translate(169.30011,961.02287)"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <circle
@@ -20117,7 +20117,7 @@
        cx="1354.9657"
        cy="1830.608"
        r="7.6067705"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <rect
@@ -20127,7 +20127,7 @@
        height="22.158854"
        x="1354.8995"
        y="1819.8263"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
@@ -20143,7 +20143,7 @@
        sodipodi:arc-type="slice"
        d="m -1823.0343,1354.9987 a 7.6067705,7.6067705 0 0 1 -3.8034,6.5876 7.6067705,7.6067705 0 0 1 -7.6068,0 7.6067705,7.6067705 0 0 1 -3.8034,-6.5876 h 7.6068 z"
        transform="rotate(-90)"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <ellipse
@@ -20153,7 +20153,7 @@
        cy="1830.608"
        rx="4.3986974"
        ry="7.6067705"
-       inkscape:export-filename="C:\Users\Alexandr\Desktop\g2978.png"
+       inkscape:export-filename="C:\Projects\water_treatment_controller\GUI\Макет\pic\png\day-night.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <rect

@@ -1,10 +1,13 @@
 #include "regenPeriodServiceFrame.h"
 
 int8_t hwndRegenPeriodServiceFrameControl = 0;
+//int8_t regenPeriod = 0;
+int8_t startRegenPeriodServiceFrame = 0;
 
 void ShowRegenPeriodServiceFrame(void)
 {
     hwndRegenPeriodServiceFrameControl = 0;
+    startRegenPeriodServiceFrame = 1;
     while(1)
     {
         if(redraw)
@@ -16,6 +19,14 @@ void ShowRegenPeriodServiceFrame(void)
         TranslateRegenPeriodServiceFrameMSG();
         
         if(hwndRegenPeriodServiceFrameControl == 20) return;
+        
+        if(hwndRegenPeriodServiceFrameControl == 1)
+        {
+            regenPeriod = ShowKeyboardFrame();
+            startRegenPeriodServiceFrame = 1;
+        }
+        
+        hwndRegenPeriodServiceFrameControl = 0;
     }
 }
 
@@ -36,6 +47,21 @@ void RefreshRegenPeriodServiceFrame(void)
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_REGEN_PERIOD,LEFT_MODE);
+    
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(REGEN_PERIOD_VALUE_BOX_X,REGEN_PERIOD_VALUE_BOX_Y, REGEN_PERIOD_VALUE_BOX_SIZE_X, REGEN_PERIOD_VALUE_BOX_SIZE_Y);
+    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+    BSP_LCD_DrawRect(REGEN_PERIOD_VALUE_BOX_X, REGEN_PERIOD_VALUE_BOX_Y, REGEN_PERIOD_VALUE_BOX_SIZE_X, REGEN_PERIOD_VALUE_BOX_SIZE_Y);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(REGEN_PERIOD_VALUE_X, REGEN_PERIOD_VALUE_Y, intToStr(regenPeriod), LEFT_MODE);
+    
+    BSP_LCD_SetFont(&Oxygen_Mono_20);
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(REGEN_PERIOD_VALUE_X + 80, REGEN_PERIOD_VALUE_Y, "ƒÕ≈… Ã≈∆ƒ” –≈√≈Õ≈–¿÷»ﬂÃ»", LEFT_MODE);
+    BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 
 void AnimateTimeRegenPeriodServiceFrame(void)
@@ -71,6 +97,10 @@ void TranslateRegenPeriodServiceFrameMSG(void)
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
         {
             hwndRegenPeriodServiceFrameControl = 20;
+        }
+        if (isInRectangle(tsState.X,tsState.Y,REGEN_PERIOD_VALUE_BOX_X,REGEN_PERIOD_VALUE_BOX_Y,REGEN_PERIOD_VALUE_BOX_SIZE_X,REGEN_PERIOD_VALUE_BOX_SIZE_Y)) 
+        {
+            hwndRegenPeriodServiceFrameControl = 1;
         }
     }
 }

@@ -49,7 +49,7 @@ void RefreshQuantityCountServiceFrame(void)
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, "лЕРПНБ*3", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, "лерпю(лерпнб) йсахвеяйху", LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 

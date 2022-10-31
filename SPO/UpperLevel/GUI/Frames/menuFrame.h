@@ -1,6 +1,7 @@
 #include "main.h"
 
-#define MODE_CUSTOMER "CUSTOMER"
+//#define MODE_CUSTOMER "CUSTOMER"
+#define MODE_CUSTOMER "онкэгнбюрекэ"
 extern char* ITEM_MENU[];
 
 //Public defines sizers

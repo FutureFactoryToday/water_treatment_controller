@@ -162,6 +162,9 @@ extern char* ITEM_MENU_SERVICE[];
 extern char* ITEM_MENU_REGENERATION[];
 extern char* ITEM_MENU_FILERING[];
 
+extern int8_t regenPeriod;
+extern int8_t washingTime;
+
 
 //struct message
 //{
