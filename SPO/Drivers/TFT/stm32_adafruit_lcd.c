@@ -996,13 +996,19 @@ uint32_t getStringWidth (uint8_t* str){
 //	return 0;
 //}
 uint8_t getCharIndex(uint8_t ch){
+	unsigned int ch1 = 'À'; 
+	
   if (ch< ' '){
     return 0;
   }
   if (ch>= ' ' && ch <= '~'){
     return ch - ' ';
   }
+<<<<<<< HEAD
   uint32_t testCh = "À";
+=======
+ 
+>>>>>>> GUI
   if (ch>='À'&& ch <= 'ÿ') {
     return ch - 'À' + '~' - ' ' + 1;
   }

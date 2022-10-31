@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="370.0" maxWidth="1250.0" minHeight="370.0" minWidth="1250.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <children>
+        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="350.0" minWidth="1250.0" prefHeight="350.0" prefWidth="1250.0">
+            <children>
+                <TabPane minWidth="250.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab fx:id="bmpTab" onSelectionChanged="#changeScreen" text="BMP Converter">
+                            <VBox prefHeight="320.0" prefWidth="250.0">
+                                <children>
+                                    <Label prefHeight="17.0" prefWidth="166.0" text="Выберите файл" />
+                                    <Separator prefWidth="200.0" />
+                                    <Button id="select" mnemonicParsing="false" onMouseClicked="#chooseFileClick" prefHeight="25.0" prefWidth="71.0" text="File" />
+                                    <Label id="selFile" text="Выбранный файл" />
+                                    <TextField fx:id="selectedFile" />
+                                    <Label id="selFile" layoutX="10.0" layoutY="52.0" text="Введите имя переменной" />
+                                    <TextField fx:id="arrayName" />
+                                    <Separator prefWidth="200.0" />
+                                    <Label text="Параметры изображения" />
+                                    <HBox maxHeight="90.0" minHeight="80.0" prefHeight="90.0">
+                                        <children>
+                                            <VBox maxHeight="90.0" minWidth="0.0" prefHeight="90.0">
+                                                <Label text="Высота" />
+                                                <TextField fx:id="height" onKeyTyped="#changeWidth" />
+                                                <Label layoutX="10.0" layoutY="10.0" text="Угол поворота" />
+                                                <ChoiceBox fx:id="rotCh" prefWidth="150.0" />
+                                                <Label />
+                                            </VBox>
+                                            <Separator maxHeight="90.0" maxWidth="90.0" orientation="VERTICAL" prefHeight="90.0" />
+                                            <VBox maxHeight="90.0" maxWidth="90.0" prefHeight="180.0" prefWidth="90.0">
+                                                <Label text="Ширина" />
+                                                <TextField fx:id="width" onKeyTyped="#changeHeight" />
+                                                <Label />
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <CheckBox fx:id="prop" minWidth="150.0" mnemonicParsing="false" onAction="#changeHeight" onMouseClicked="#changeHeight" prefHeight="17.0" prefWidth="144.0" text="Сохранить пропорции" />
+                                    <Button fx:id="previewPicBtn" mnemonicParsing="false" onMouseClicked="#previewPic" text="Предпросмотр" />
+                                    <Label />
+                                    <Button fx:id="savePicBtn" mnemonicParsing="false" onMouseClicked="#savePic" text="Сохранить" />
+
+                                </children>
+                            </VBox>
+                        </Tab>
+                        <Tab fx:id="fontTab" onSelectionChanged="#changeScreen" text="Font Converter">
+                            <Button mnemonicParsing="false" text="Save" />
+                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                <VBox prefHeight="321.0" prefWidth="256.0">
+                                    <Label fx:id="txtLbl" text="Выберете шрифт" />
+                                    <ComboBox fx:id="fonts" onAction="#fontChange" prefWidth="150.0" />
+                                    <Label text="Выберете высоту шрифта" />
+                                    <TextField fx:id="fontHeight" maxWidth="50.0" minWidth="10.0" onAction="#fontChange" onKeyTyped="#fontChange" prefWidth="10.0" />
+                                    <Label text="Введите названия шрифта" />
+                                    <TextField fx:id="fontSaveName" />
+                                    <Separator prefHeight="33.0" prefWidth="250.0" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                        <HBox prefHeight="12.0" prefWidth="250.0">
+                                            <Button fx:id="previewGlyphsBtn" mnemonicParsing="false" onMouseClicked="#previewGlyphs" text="Предпросмотр" />
+                                            <Separator orientation="VERTICAL" prefHeight="28.0" prefWidth="44.0" />
+                                            <Button fx:id="saveGlyphsBtn" mnemonicParsing="false" onMouseClicked="#saveGlyphs" text="Сохранить" />
+                                        </HBox>
+                                        <Separator prefHeight="21.0" prefWidth="250.0" />
+                                        <HBox prefHeight="26.0" prefWidth="250.0">
+                                            <Label prefHeight="17.0" prefWidth="144.0" text="Преобразуемый символ" />
+                                            <Label fx:id="modChar" />
+                                        </HBox>
+                                        <Separator prefWidth="200.0" />
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                </VBox>
+                            </HBox>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+
+
+                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" minHeight="340.0" minWidth="480.0" prefHeight="340.0" prefWidth="480.0">
+                    <children>
+                        <Label text="Исходное изображение" textAlignment="CENTER" />
+                        <Separator prefWidth="200.0" />
+                        <Pane maxHeight="320.0" maxWidth="480.0" minHeight="320.0" minWidth="480.0" prefHeight="320.0" prefWidth="480.0">
+                            <children>
+                                <Canvas fx:id="initPic" height="320.0" width="480.0" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+                <Separator orientation="VERTICAL" prefHeight="200.0" />
+                <VBox alignment="TOP_CENTER" layoutX="260.0" layoutY="10.0" minWidth="480.0" prefHeight="400.0" prefWidth="205.0">
+                    <children>
+                        <Label text="Финальное изображение" />
+                        <Separator prefWidth="200.0" />
+                        <Pane fx:id="modPic" maxHeight="320.0" maxWidth="480.0" minHeight="320.0" minWidth="480.0" prefHeight="320.0" prefWidth="480.0">
+                            <children>
+                                <Canvas fx:id="drawField" height="320.0" width="480.0" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <Separator prefWidth="200.0" />
+        <Label fx:id="log" text="Label" />
+    </children>
+</VBox>
