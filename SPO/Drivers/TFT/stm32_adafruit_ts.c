@@ -28,7 +28,6 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   TsYBoundary = YSize;
 
 	if (fp->isLoaded != 1){
-		
 		SERV_TS_CALIB();
 	} else {
 		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
@@ -76,15 +75,15 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
 //    x2 = (ts_cindex[1] * x1 + ts_cindex[2] * y1 + ts_cindex[3]) / ts_cindex[0];
 //    y2 = (ts_cindex[4] * x1 + ts_cindex[5] * y1 + ts_cindex[6]) / ts_cindex[0];
 		
-		#if ILI9486_ORIENTATION == 3
-		x2 = x1*kX/MOD - bX/MOD;
-		y2 = y1*kY/MOD - bY/MOD;
-		#endif
-		
-		#if ILI9486_ORIENTATION == 1
+//		#if ILI9486_ORIENTATION == 3
+//		x2 = x1*kX/MOD - bX/MOD;
+//		y2 = y1*kY/MOD - bY/MOD;
+//		#endif
+//		
+//		#if ILI9486_ORIENTATION == 1
 		x2 = (x1*kX)/MOD + bX;
 		y2 = (y1*kY)/MOD + bY;
-		#endif
+//		#endif
     if(x2 < 0)
       x2 = 0;
     else if(x2 >= TsXBoundary)

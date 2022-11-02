@@ -144,30 +144,41 @@ uint8_t formatedString[FORMATED_STRING_LENGTH];
 date_name_t* dateName = &engName;
 uint8_t	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 uint8_t *ptr = formatedString;
-time_t sysTime;
+wtc_time_t sysTime;
 bool isInited;
 
 /* Private function prototypes -----------------------------------------------*/
 bool isLeapYear(uint16_t year);
 
 uint8_t intToChar(uint8_t num);
-void processChar(uint8_t curCh, time_t *source);
+void processChar(uint8_t curCh, wtc_time_t *source);
 void changeTimeLanguage(language_t lang);
 
 /* Private user code ---------------------------------------------------------*/
 
 void Time_init(){
-	if (sysTime.year == 0){
-		time_t defTime = DEFAULT_TIME;
+	if (LL_RTC_TIME_Get(RTC) == 0){
+		wtc_time_t defTime = DEFAULT_TIME;
+		
 		setTime(defTime);
+	} else {
+		time_t rawtime = LL_RTC_TIME_Get(RTC);
+		struct tm *breakTime = localtime(&rawtime);
+		
+		sysTime.year = 1900 + breakTime->tm_year;
+		sysTime.month = 1 + breakTime->tm_mon;
+		sysTime.day = breakTime->tm_mday;
+		sysTime.hour = breakTime->tm_hour;
+		sysTime.minute = breakTime->tm_min;
+		sysTime.second = breakTime->tm_sec;
 	}
 	
 }
-time_t* getTime (){
+wtc_time_t* getTime (){
 	return &sysTime;
 }
 
-void setTime (time_t time){
+void setTime (wtc_time_t time){
 	LL_RTC_TimeTypeDef timeStr = {0};
 	
 	assert_param(time.day != 0);
@@ -175,12 +186,24 @@ void setTime (time_t time){
 	assert_param(time.year != 0);
 	assert_param(time.month < 13);
 	assert_param(time.day <= maxDayInMonth(time.month));
-		
-	timeStr.Hours = time.hour;
-	timeStr.Minutes = time.minute;
-	timeStr.Seconds = time.second;
 	
-	LL_RTC_TIME_Init(RTC,LL_RTC_FORMAT_BIN,&timeStr);
+	struct tm newTime;
+	newTime.tm_hour = time.hour;
+	newTime.tm_min = time.minute;
+	newTime.tm_sec = 0;
+	newTime.tm_mday = time.day;
+	newTime.tm_mon = time.month - 1;
+	newTime.tm_year = time.year - 1900;
+
+	
+	/* Enter Initialization mode */
+  if (LL_RTC_EnterInitMode(RTC) != ERROR)
+  {	
+		time_t rawtime = mktime(&newTime);
+      LL_RTC_TIME_Set(RTC, rawtime);
+  }
+  /* Exit Initialization mode */
+  LL_RTC_ExitInitMode(RTC);
 	
 	sysTime = time;
 }
@@ -246,7 +269,7 @@ uint8_t maxDayInMonth(uint8_t month){
 uint8_t* getFormatedTime(uint8_t* fStr){
 	return getFormatedTimeFromSource(fStr, &sysTime);
 }
-uint8_t* getFormatedTimeFromSource(uint8_t* fStr, time_t *source){
+uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source){
 	uint8_t curCh = 0;
 	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 	ptr = formatedString;
@@ -291,7 +314,7 @@ uint8_t* getFormatedTimeFromSource(uint8_t* fStr, time_t *source){
 	*ptr = 0;
 	return formatedString;
 }
-void processChar(uint8_t curCh, time_t *source){
+void processChar(uint8_t curCh, wtc_time_t *source){
 	uint8_t secondBCD;
 	uint8_t yearUpHalf;
 	uint8_t yearLowHalf;
@@ -399,7 +422,7 @@ void changeTimeLanguage(language_t lang){
 	}
 }
 
-uint8_t getDayNameByDate(time_t *date){
+uint8_t getDayNameByDate(wtc_time_t *date){
 	uint8_t day;
 	uint8_t yearCode;
 	uint8_t redYearCode;
@@ -420,7 +443,7 @@ uint8_t getDayNameByDate(time_t *date){
 }
 
  uint8_t timeTest (){
-	 time_t testTime;
+	 wtc_time_t testTime;
 	 if (!isLeapYear(2104)){
 		 Error_Handler();
 	 }

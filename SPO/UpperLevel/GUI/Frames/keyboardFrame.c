@@ -91,14 +91,14 @@ void RefreshKeys(void)
     
     //Vertical lines
     BSP_LCD_DrawLine(0, 120, 0, 260);
-    BSP_LCD_DrawLine(60, 120, 60, 260);
-    BSP_LCD_DrawLine(120, 120, 120, 260);
-    BSP_LCD_DrawLine(180, 120, 180, 260);
-    BSP_LCD_DrawLine(240, 120, 240, 260);
-    BSP_LCD_DrawLine(300, 120, 300, 260);
-    BSP_LCD_DrawLine(360, 120, 360, 260);
-    BSP_LCD_DrawLine(420, 120, 420, 260);
-    BSP_LCD_DrawLine(480, 120, 480, 260);
+    BSP_LCD_DrawLine(60, 121, 60, 260);
+    BSP_LCD_DrawLine(120, 121, 120, 260);
+    BSP_LCD_DrawLine(180, 121, 180, 260);
+    BSP_LCD_DrawLine(240, 121, 240, 260);
+    BSP_LCD_DrawLine(300, 121, 300, 260);
+    BSP_LCD_DrawLine(360, 121, 360, 260);
+    BSP_LCD_DrawLine(420, 121, 420, 260);
+    BSP_LCD_DrawLine(479, 121, 479, 260);
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

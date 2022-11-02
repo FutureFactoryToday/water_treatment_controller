@@ -50,7 +50,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
 #include "stdlib.h"
-
+#include "time.h"
 #include "Settings.h"
 #include "System/System.h"
 #include "Util.h"

@@ -27,18 +27,18 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-char* pinEnText[] = {
+char* pinRuText[] = {
 	"ÏÀÐÎËÜ ÄËß ÑÅÐÂÈÑÀ",
 	"Ââåäèòå ïàðîëü",
 	"ÂÂÎÄ",
 	"Ââåäèòå ÷èñëî"
 };
-//char* pinEnText[] = {
-//	"SERVICE PASSWORD",
-//	"Enter password",
-//	"ENTER",
-//	"Enter number"
-//};
+char* pinEnText[] = {
+	"SERVICE PASSWORD",
+	"Enter password",
+	"ENTER",
+	"Enter number"
+};
 
 uint8_t** pinFrameText;
 uint8_t enteredPin[PIN_LENGTH] = {0};
@@ -58,7 +58,7 @@ int8_t PIN_showFrame(){
 	if (sysParam.lang == ENGLISH){
 		pinFrameText = &pinEnText;
 	} else {
-		//pinFrameText = &pinRuText;
+		pinFrameText = &pinRuText;
 	}
 	uint8_t memSec = getTime()->second;
 	createPinFrame();
@@ -148,7 +148,7 @@ void createPinFrame(){
 	
 	drawPinBoxes(enteredPin);
 	
-	DrawButton(ENTER_BUT_X, ENTER_BUT_Y, 5*15, PIN_TEXT.height+4,0,(*(pinFrameText + BUT_PIN_TEXT)),&PIN_TEXT);
+	DrawButton(ENTER_BUT_X, ENTER_BUT_Y, 5*15, PIN_TEXT.height+8,0,(*(pinFrameText + BUT_PIN_TEXT)),&PIN_TEXT);
 	
 }
 

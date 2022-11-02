@@ -95,7 +95,7 @@ void SERV_TS_CALIB(void){
 			
 		}
 		if (step > 3){
-			switch(SERV_TS_TEST(kX,kY,bX,bY)){
+			switch(SERV_TS_TEST(kX,kY,bX,bY, false)){
 				case (0): {
 					tCnt = 0;
 					step = 0;
@@ -124,7 +124,7 @@ void SERV_TS_CALIB(void){
 	}
 }
 
-uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
+uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canExit){
 	
 	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
 	uint16_t oldBCol = BSP_LCD_GetBackColor();
@@ -134,7 +134,9 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	DrawButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY",&Oxygen_Mono_8); 
 	DrawButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE",&Oxygen_Mono_8); 
-	DrawButton(BSP_LCD_GetXSize()/2 + 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT",&Oxygen_Mono_8);
+	if (canExit){
+	DrawButton(BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT",&Oxygen_Mono_8);
+}
 	SERV_PRINT_TOUCH_INFO();
 	
 	
@@ -151,7 +153,8 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
 			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40)){
 				return 1;
 			}
-			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 + 20, BSP_LCD_GetYSize() - 40, 40, 40)){
+
+			if (canExit && isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40)){
 				return 2;
 			}
 		}

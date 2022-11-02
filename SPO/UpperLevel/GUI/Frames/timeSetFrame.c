@@ -81,11 +81,11 @@ uint8_t** frameText;
 uint8_t* timeStr = TIME_STR_WD;
 
 char monthTable[7][7];
-time_t displayedTime;
-time_t editedTime;
+wtc_time_t displayedTime;
+wtc_time_t editedTime;
 extern date_name_t* dateName;
 
-uint8_t setTimeButtonLength;
+uint16_t setTimeButtonLength;
 bool editBoxesShow = 0;
 uint32_t rightButX;
 /* Private function prototypes -----------------------------------------------*/
@@ -94,7 +94,7 @@ uint8_t touchHandler();
 void createFrame();
 void drawMonth(void);
 void drawClock(void);
-void drawEditBoxes(time_t editTime);
+void drawEditBoxes(wtc_time_t editTime);
 int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text);
 /* Private user code ---------------------------------------------------------*/
 
@@ -106,7 +106,7 @@ void TSF_showFrame(){
 	}
 	uint8_t memSec = getTime()->second;
 	
-	time_t *sysTimePtr = getTime();
+	wtc_time_t *sysTimePtr = getTime();
 	displayedTime = *sysTimePtr;
 	
 	createFrame();
@@ -287,7 +287,7 @@ void createFrame(){
         
 }
 
-void drawEditBoxes(time_t editTime){
+void drawEditBoxes(wtc_time_t editTime){
 	BSP_LCD_SetFont(&Oxygen_Mono_16);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, FIRST_ROW_Y, (*(frameText + SETTINGS_UP_TEXT)), LEFT_MODE);
@@ -315,7 +315,7 @@ void drawEditBoxes(time_t editTime){
 	BSP_LCD_DrawRect(BOX_X,MINUTE_LINE_Y - 1,4*15,SETTINGS_FONT.height+2);
 	BSP_LCD_DisplayStringAt(BOX_X+10,MINUTE_LINE_Y,getFormatedTimeFromSource("mm", &editTime),LEFT_MODE);
 	
-	DrawButton(BSP_LCD_GetXSize() - 8*10 - 10, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + SAVE_TEXT)),&SETTINGS_FONT);
+	DrawButton(BSP_LCD_GetXSize() - 8*12 - 10, SAVE_LINE_Y, 8*12, SETTINGS_FONT.height + 6, 0, (*(frameText + SAVE_TEXT)),&SETTINGS_FONT);
 	DrawButton(CHANGE_TEXT_X, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + BACK_TEXT)),&SETTINGS_FONT);
 	
 

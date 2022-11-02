@@ -51,7 +51,8 @@ uint8_t BSP_LCD_Init(void)
   #if LCD_INIT_CLEAR == 1
   BSP_LCD_Clear(LCD_DEFAULT_BACKCOLOR);
   #endif
-  
+  sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
+	sysParam.LCD_ROTATION = ILI9486_ORIENTATION;
   ret = LCD_OK;
   return ret;
 }
@@ -985,18 +986,7 @@ uint32_t getStringWidth (uint8_t* str){
 	return size;
 }
 
-//uint8_t getCharIndex(uint8_t ch){
-//	if (ch< ' '){
-//		return 0;
-//	}
-//	if (ch>= ' ' && ch <= '~'){
-//		return ch - ' ';
-//	}
-//	
-//	return 0;
-//}
 uint8_t getCharIndex(uint8_t ch){
-	unsigned int ch1 = 'À'; 
 	
   if (ch< ' '){
     return 0;
@@ -1004,13 +994,8 @@ uint8_t getCharIndex(uint8_t ch){
   if (ch>= ' ' && ch <= '~'){
     return ch - ' ';
   }
-<<<<<<< HEAD
-  uint32_t testCh = "À";
-=======
- 
->>>>>>> GUI
-  if (ch>='À'&& ch <= 'ÿ') {
-    return ch - 'À' + '~' - ' ' + 1;
+  if (ch>=192&& ch <= 255) {
+    return ch - 192 + '~' - ' ' + 1;
   }
   return 0;
 }

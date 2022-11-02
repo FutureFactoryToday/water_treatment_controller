@@ -25,6 +25,7 @@
 //Макс длина строки: 4 цифры года, 9 букв месяца, 11 букв дня, 5 знака препинания, 1конец строки
 #define FORMATED_STRING_LENGTH 4 + 9 + 11 + 5 + 1
 
+
 typedef struct {
 	uint16_t year;
 	uint8_t month;
@@ -33,7 +34,7 @@ typedef struct {
 	uint8_t minute;
 	uint8_t second;
 	bool isSecondSecHalf;
-} time_t;
+} wtc_time_t;
 
 typedef struct {
 	char** monthName;
@@ -47,10 +48,10 @@ typedef struct {
 void Time_init(void);
 
 //Установка вереми. Формат BIN (обычный)
-void setTime (time_t time);
+void setTime (wtc_time_t time);
 
 //Возвращает указатель на системное время
-time_t* getTime (void);
+wtc_time_t* getTime (void);
 //Прерывание для работы часов
 void RTC_Interrupt(void);
 
@@ -99,13 +100,13 @@ void RTC_Interrupt(void);
 */
 uint8_t* getFormatedTime(uint8_t* fStr);
 
-uint8_t* getFormatedTimeFromSource(uint8_t* fStr, time_t *source);
+uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source);
 
 uint8_t* getTimeString(void);
 
 uint8_t maxDayInMonth(uint8_t month);
 
-uint8_t getDayNameByDate(time_t *date);
+uint8_t getDayNameByDate(wtc_time_t *date);
 
 uint8_t timeTest (void);
 #endif /* __TIME_H__ */

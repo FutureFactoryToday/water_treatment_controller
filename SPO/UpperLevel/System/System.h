@@ -16,7 +16,7 @@
 #include "main.h"
 
 /*Public defines */
-#define DEF_SYST_CONFIG_LANG ENGLISH
+#define DEF_SYST_CONFIG_LANG RUSSIAN
 #define DEF_SYST_CONFIG_LCD_TYPE 1
 #define DEF_SYST_CONFIG_LCD_ROTATION 1
 #define DEF_SERVIVE_CODE 1234
