@@ -40,6 +40,8 @@ typedef struct {
 
 extern stored_offsets_params* op;
 
+extern uint32_t curPoz;
+
 /*Global params*/
 
 /*Prototypes */

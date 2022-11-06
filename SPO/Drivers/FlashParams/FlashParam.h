@@ -32,11 +32,13 @@ typedef struct {
 	uint32_t seconds;
 	sys_param_t sysPar;
 	stored_ts_conf_t ts_conf;
-	
-	uint32_t endLoadFlag;
     
     uint8_t washTime;
     uint8_t daysBetweenRegen;
+	
+	uint32_t endLoadFlag;
+    
+
     
 	
 } stored_params_t;

@@ -33,6 +33,9 @@ extern char* ITEM_ADJUSTMENT[];
 #define SAVE_X 400
 #define SAVE_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 13
 
+#define POS_VALUE_X 80
+#define POS_VALUE_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 13
+
 
 //Public defines main window sizers
 #define MAIN_WINDOW_POS_X 0
@@ -105,5 +108,7 @@ void RefreshAdjustmentFrame(void);
 void RefreshScrollBarAdjustmentFrame(void);
 
 void AnimateScrollBarKeysAdjustmentFrame(void);
+
+void AnimatePosMenuFrame(void);
 
 void TranslateMenuAdjustmentMSG(void);

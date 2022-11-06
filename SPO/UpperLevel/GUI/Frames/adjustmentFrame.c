@@ -20,6 +20,7 @@ void ShowAdjustmentFrame(void)
             RefreshAdjustmentFrame();
             redraw = 0;
         }
+        AnimatePosMenuFrame();
         TranslateMenuAdjustmentMSG();
         
         if(hwndAdjustmentFrameControl == 20) return;
@@ -130,6 +131,7 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_ADJUSTMENT,LEFT_MODE);
         BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"януп.",LEFT_MODE);
         BSP_LCD_DisplayStringAt(200,SAVE_Y,"яапня",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(12,SAVE_Y,"онг:",LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -221,6 +223,13 @@ void AnimateScrollBarKeysAdjustmentFrame(void)
     BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
 
     adjustment_frame_was_Scroll = 0;
+}
+
+void AnimatePosMenuFrame(void)
+{
+    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(curPoz), LEFT_MODE);
 }
 
 void TranslateMenuAdjustmentMSG(void)
