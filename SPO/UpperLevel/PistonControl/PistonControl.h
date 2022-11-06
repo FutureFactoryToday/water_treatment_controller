@@ -25,6 +25,21 @@ typedef enum {
 	 PC_IN_PROCESS,
 	 PC_COMPLETE,
 } pc_status_t;
+
+typedef struct {
+	uint32_t closedPosition;                                //Закрытое положение
+	
+	uint32_t backwash;                                      //Обратная промывка
+	uint32_t regeneration;                                  //Регенерация
+	uint32_t filling;                                       //Заполнение
+    uint32_t softening;                                     //Умягчение
+    uint32_t flushing;                                      //Промывка
+    uint32_t filtering;                                     //Фильтрация
+	
+} stored_offsets_params;
+
+extern stored_offsets_params* op;
+
 /*Global params*/
 
 /*Prototypes */

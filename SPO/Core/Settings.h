@@ -16,8 +16,8 @@
 
 
 //SPI для дисплея
-#define SPI_LCD
-//#define PARAL_LCD
+//#define SPI_LCD
+#define PARAL_LCD
 
 #define TS_RESCAN_TIME 10
 

@@ -28,36 +28,80 @@ void ShowAdjustmentFrame(void)
         if(hwndAdjustmentFrameControl == 0)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->closedPosition = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 1)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->backwash = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 2)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->regeneration =qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 3)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->filling = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 4)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->softening = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 5)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->flushing = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 6)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            op->filtering = qwertyAdj[hwndAdjustmentFrameControl];
+            startAdjustmentFrame = 1;
+        }
+        
+        //cycle start
+        if(hwndAdjustmentFrameControl == 10)
+        {
+            PC_GoToPoz(op->closedPosition);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 11)
+        {
+            PC_GoToPoz(op->backwash);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 12)
+        {
+            PC_GoToPoz(op->regeneration);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 13)
+        {
+            PC_GoToPoz(op->filling);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 14)
+        {
+            PC_GoToPoz(op->softening);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 15)
+        {
+            PC_GoToPoz(op->flushing);
+            startAdjustmentFrame = 1;
+        }
+        if(hwndAdjustmentFrameControl == 16)
+        {
+            PC_GoToPoz(op->filtering);
             startAdjustmentFrame = 1;
         }
         
@@ -205,17 +249,31 @@ void TranslateMenuAdjustmentMSG(void)
         }
         
         //process list
-        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,300,FIRST_CURSOR_SIZE_Y))
         {
             hwndAdjustmentFrameControl = adjustment_frame_Scroll_cnt;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,300,SECOND_CURSOR_SIZE_Y))
         {
             hwndAdjustmentFrameControl = adjustment_frame_Scroll_cnt + 1;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,300,THRID_CURSOR_SIZE_Y))
         {
             hwndAdjustmentFrameControl = adjustment_frame_Scroll_cnt + 2;
+        }
+        
+        //process cycle start
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X + 300,FIRST_CURSOR_POS_Y,119,FIRST_CURSOR_SIZE_Y))
+        {
+            hwndAdjustmentFrameControl = 10 + adjustment_frame_Scroll_cnt;
+        }   
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X + 300,SECOND_CURSOR_POS_Y,119,SECOND_CURSOR_SIZE_Y))
+        {
+            hwndAdjustmentFrameControl = 10 + adjustment_frame_Scroll_cnt + 1;
+        }   
+        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X + 300,THRID_CURSOR_POS_Y,119,THRID_CURSOR_SIZE_Y))
+        {
+            hwndAdjustmentFrameControl = 10 + adjustment_frame_Scroll_cnt + 2;
         }
     }
 }

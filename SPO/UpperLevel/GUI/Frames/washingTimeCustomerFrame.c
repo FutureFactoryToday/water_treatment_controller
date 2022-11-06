@@ -42,25 +42,24 @@ void RefreshWashTimCustFrame(void)
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_WASH_TIME_X, MODE_WASH_TIME_Y ,MODE_WASHING_TIME,LEFT_MODE);
         
-        //BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        //BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
-        //BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        //BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
-        
-        if(washingTime == 1)
+        //uint8_t picPtr;
+        if(FP_GetParam()->params.washTime == 1)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
             BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
-            BSP_LCD_DrawBitmap(190, 90, &day);
+            //picPtr = &day;
+            //BSP_LCD_DrawBitmap(190, 90, &day);
         }
-        if(washingTime == 2)
+        if(FP_GetParam()->params.washTime == 2)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
             BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+            //picPtr = &night;
             //BSP_LCD_DrawBitmap(190, 90, &night);
         }
+        //BSP_LCD_DrawBitmap(190, 90, &picPtr);
         startWashTimCustFrame = 0;
     }
 }
