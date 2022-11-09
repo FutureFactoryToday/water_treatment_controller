@@ -21,7 +21,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 typedef struct {
-
+	
 } pc_struct_t;
 
 volatile static stored_offsets_params stored_offsets_p ={0};
@@ -31,13 +31,70 @@ stored_offsets_params* op = &stored_offsets_p;
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint32_t curPoz;
-uint32_t destination;
+int32_t curPoz;
+int32_t destination;
+int32_t minPoz;
+int32_t maxPoz;
 pc_status_t status;
 extern uint8_t redraw;
+uint32_t stall_cnt;
+uint32_t seek_cnt;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
+void PC_Control(void){
+	if (status == PC_IN_PROCESS){//если едем
+		//∆дем STALL_TIME мсек на упоре
+		if (stall_cnt++ >= STALL_TIME){
+			MOT_Stop();
+			status = PC_ERROR;
+			stall_cnt--;
+		} else {
+			
+		}
+	}
+	if (status == PC_SEEK_ZERO){//если едем
+		//∆дем STALL_TIME мсек на упоре
+		if (stall_cnt++ >= STALL_TIME){
+			MOT_Stop();
+			status = PC_COMPLETE;
+			stall_cnt--;
+		} else {
+			
+		}	
+	}
+}
+uint8_t PC_AUTO_CALIBRATE(void){
+	uint8_t result = 2;
+	if (status == PC_COMPLETE){
+		status = PC_SEEK_ZERO;
+		seek_cnt == 0;
+		PC_GoToPoz(- (FULL_LENGTH + 100));
+		//∆дем пока сработает контроль или SEEK_TIME секунд
+		while (status == PC_SEEK_ZERO || seek_cnt++ < SEEK_TIME*1000){
+			LL_mDelay(1);
+		}
+		if (seek_cnt >= SEEK_TIME*1000){
+			result--;
+		}
+		MOT_Stop();
+		
+		minPoz = curPoz+5;
+		status = PC_SEEK_ZERO;
+		seek_cnt == 0;
+		PC_GoToPoz(FULL_LENGTH + 100);
+		//∆дем пока сработает контроль или SEEK_TIME секунд
+		while (status == PC_SEEK_ZERO || seek_cnt++ < SEEK_TIME*1000){
+			LL_mDelay(1);
+		}
+		if (seek_cnt >= SEEK_TIME*1000){
+			result--;
+		}
+		MOT_Stop();
+		maxPoz = curPoz-5;
+	}
+	return result;
+}
 void PC_GoToPoz (uint32_t dest){
 	if (curPoz == dest){
 		status = PC_COMPLETE;
@@ -70,8 +127,11 @@ void PC_Init(void){
 //	} else {
 //		curPoz = 0;
 //	}
+	status = PC_COMPLETE;
+	stall_cnt = 0;
 	curPoz = 0;
 	MOT_Init(PWM,MOT_TIM);
+	PC_AUTO_CALIBRATE();
 }
 void PC_OpticSensInterrupt(void){
 	redraw = 1;
@@ -93,9 +153,8 @@ void PC_OpticSensInterrupt(void){
 		status = PC_COMPLETE;
 		return;
 	}
-	if (curPoz == 0 || curPoz == UINT32_MAX){
-		MOT_Stop();
-		status = PC_ERROR;
-	}
-	redraw = 1;
+//	if (curPoz == 0 || curPoz == UINT32_MAX){
+//		MOT_Stop();
+//		status = PC_ERROR;
+//	}
 }

@@ -35,6 +35,9 @@ uint16_t POWC (uint32_t a, uint8_t b){
 	return res;
 }
 
+uint32_t mod(int32_t a){
+	return (a<0)? -a : a;
+}
 uint8_t intToChar(uint8_t num){
 	assert_param(num< 10);
 	uint32_t modNum = num;

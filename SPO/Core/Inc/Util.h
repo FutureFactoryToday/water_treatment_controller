@@ -27,5 +27,7 @@ uint16_t POWC(uint32_t a,uint8_t b);
 uint8_t intToChar(uint8_t num);
 
 uint8_t* intToStr (uint32_t num);
+
+uint32_t mod(int32_t a);
 #endif /* __UTIL_H__ */
 

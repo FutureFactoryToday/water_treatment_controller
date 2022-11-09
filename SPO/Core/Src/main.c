@@ -130,6 +130,7 @@ int main(void)
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
+	PC_Init();
 	__enable_irq();
 	LL_mDelay(500);
 	#ifdef TESTS

@@ -19,11 +19,15 @@
 //Направление движения штока
 #define OUT 1
 #define IN 0
+#define STALL_TIME 500
+#define FULL_LENGTH 10000
+#define SEEK_TIME 10
 
 typedef enum {
 	 PC_ERROR,
 	 PC_IN_PROCESS,
 	 PC_COMPLETE,
+	 PC_SEEK_ZERO,
 } pc_status_t;
 
 typedef struct {
@@ -40,7 +44,7 @@ typedef struct {
 
 extern stored_offsets_params* op;
 
-extern uint32_t curPoz;
+extern int32_t curPoz;
 
 /*Global params*/
 
@@ -51,5 +55,9 @@ uint32_t PC_GetCurPoz (void);
 void initPistonControl(void);
 void PC_OpticSensInterrupt(void);
 pc_status_t PC_GetStatus(void);
+void PC_Control(void);
+//Если калибровка прошла успещно вернется 2, иначе что-то не нашли
+uint8_t PC_AUTO_CALIBRATE(void);
+void PC_Stop(void);
 #endif /* __PISTON_CONTROL_H__ */
 
