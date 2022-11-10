@@ -229,7 +229,7 @@ void AnimatePosMenuFrame(void)
 {
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(curPoz), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
 }
 
 void TranslateMenuAdjustmentMSG(void)
