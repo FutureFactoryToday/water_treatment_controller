@@ -64,6 +64,8 @@ void PC_Control(void){
 pc_calib_result_t PC_AUTO_CALIBRATE(void){
 	pc_calib_result_t result = SKIPPED;
 	if (pcParams.workStatus == PC_READY){
+		pcParams.maxPoz = FULL_LENGTH*2;
+		pcParams.minPoz = -FULL_LENGTH*2;
 		result = OK;
 		seek_cnt == 0;
 		PC_GoToPoz(- (FULL_LENGTH + 100));
