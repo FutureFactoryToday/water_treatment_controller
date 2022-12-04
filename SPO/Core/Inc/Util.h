@@ -14,7 +14,7 @@
 
 /*Includes */
 #include "main.h"
-
+#include "Time/Time.h"
 /*Public defines */
 
 /*Global params*/
@@ -29,5 +29,6 @@ uint8_t intToChar(uint8_t num);
 uint8_t* intToStr (uint32_t num);
 
 uint32_t mod(int32_t a);
+struct tm wtcTimeToStdTime (wtc_time_t time);
 #endif /* __UTIL_H__ */
 

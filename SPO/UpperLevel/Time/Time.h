@@ -33,7 +33,6 @@ typedef struct {
 	uint8_t hour;
 	uint8_t minute;
 	uint8_t second;
-	bool isSecondSecHalf;
 } wtc_time_t;
 
 typedef struct {

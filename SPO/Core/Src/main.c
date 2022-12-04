@@ -102,8 +102,9 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
+	#ifndef SIM
   SystemClock_Config();
-
+	#endif
   /* USER CODE BEGIN SysInit */
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
   /* USER CODE END SysInit */
@@ -138,7 +139,7 @@ int main(void)
 	#endif
 	initGUI();
 	FP_SaveParam();
-
+	
 //	PC_GoToPoz(500);
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
@@ -176,6 +177,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	wtc_time_t alT = *getTime();
+	alT.second += 10;
+	waitTime(alT, NULL);
   redraw = 1;
   ShowMainFrame();
 //  while (1)
