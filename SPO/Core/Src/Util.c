@@ -28,11 +28,16 @@ uint8_t numBuf[11] = {0};
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
-uint16_t POWC (uint8_t a, uint8_t b){
-	while(b !=0){a = a*a; b--;}
-	return a;
+uint16_t POWC (uint32_t a, uint8_t b){
+	uint32_t res = a;
+	if (b == 0) return 1;
+	while(b !=1){b--; res = res*a; }
+	return res;
 }
 
+uint32_t mod(int32_t a){
+	return (a<0)? -a : a;
+}
 uint8_t intToChar(uint8_t num){
 	assert_param(num< 10);
 	uint32_t modNum = num;
@@ -75,4 +80,15 @@ uint8_t* intToStr (uint32_t num){
 //		}
 	}
 	return numBuf;
+}
+
+struct tm wtcTimeToStdTime (wtc_time_t time){
+	struct tm newTime;
+	newTime.tm_hour = time.hour;
+	newTime.tm_min = time.minute;
+	newTime.tm_sec = 0;
+	newTime.tm_mday = time.day;
+	newTime.tm_mon = time.month - 1;
+	newTime.tm_year = time.year - 1900;
+	return newTime;
 }

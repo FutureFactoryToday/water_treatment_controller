@@ -24,7 +24,7 @@ extern LCD_DrvTypeDef  *lcd_drv;
 static uint8_t bitmap[MAX_HEIGHT_FONT * MAX_WIDTH_FONT * 2 + OFFSET_BITMAP] = {0};
 
 /* @defgroup STM32_ADAFRUIT_LCD_Private_FunctionPrototypes */ 
-static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *c);
+static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *c);
 static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
   
 uint32_t getStringWidth (uint8_t* str);
@@ -45,13 +45,14 @@ uint8_t BSP_LCD_Init(void)
   /* Default value for draw propriety */
   DrawProp.BackColor = LCD_DEFAULT_BACKCOLOR;
   DrawProp.TextColor = LCD_DEFAULT_TEXTCOLOR;
-  DrawProp.pFont     = &LCD_DEFAULT_FONT;
+  DrawProp.pFont     = (WTC_FONT_t*)&LCD_DEFAULT_FONT;
   
   /* Clear the LCD screen */
   #if LCD_INIT_CLEAR == 1
   BSP_LCD_Clear(LCD_DEFAULT_BACKCOLOR);
   #endif
-  
+  sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
+	sysParam.LCD_ROTATION = ILI9486_ORIENTATION;
   ret = LCD_OK;
   return ret;
 }
@@ -177,7 +178,7 @@ void BSP_LCD_ClearStringLine(uint16_t Line)
   */
 void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii)
 {
-	DrawChar(Xpos, Ypos, DrawProp.pFont->glyph[getCharIndex(Ascii)]);
+	DrawChar(Xpos, Ypos, (uint8_t*)DrawProp.pFont->glyph[getCharIndex(Ascii)]);
 }
 
 /**
@@ -192,56 +193,58 @@ void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii)
   *            @arg  LEFT_MODE   
   * @retval None
   */
-void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode)
+uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode)
 {
-  uint16_t refcolumn = 1, i = 0;
-  uint32_t chCnt = 0, xsize = 0, size = 0; 
-  uint8_t  *ptr = Text;
+	uint16_t refcolumn = 1, i = 0;
+	uint32_t chCnt = 0, xsize = 0, size = 0; 
+	uint8_t  *ptr = Text;
+	uint16_t chWidth;
 	
-  size = getStringWidth(ptr);
-  /* Get the text size */
-  while (*ptr++) chCnt ++ ;
-	
-  
-  /* Characters number per line */
-  xsize = (BSP_LCD_GetXSize()/size/chCnt);
-  
-  switch (Mode)
-  {
-  case CENTER_MODE:
-    {
-      refcolumn = Xpos - size/ 2;
-      break;
-    }
-  case LEFT_MODE:
-    {
-      refcolumn = Xpos;
-      break;
-    }
-  case RIGHT_MODE:
-    {
-      refcolumn =  - Xpos + size;
-      break;
-    }    
-  default:
-    {
-      refcolumn = Xpos;
-      break;
-    }
-  }
-  uint16_t chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
-  /* Send the string character by character on lCD */
-  while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= chWidth))
-  {
-    /* Display one character on LCD */
-    BSP_LCD_DisplayChar(refcolumn, Ypos, *Text);
-    /* Decrement the column position by 16 */
-    refcolumn += chWidth;
-    /* Point on the next character */
-    Text++;
-    i++;
+	size = getStringWidth(ptr);
+	/* Get the text size */
+	while (*ptr++) chCnt ++ ;
+
+
+	/* Characters number per line */
+	xsize = (BSP_LCD_GetXSize()/size/chCnt);
+
+	switch (Mode)
+	{
+	case CENTER_MODE:
+	{
+	  refcolumn = Xpos - size/ 2;
+	  break;
+	}
+	case LEFT_MODE:
+	{
+	  refcolumn = Xpos;
+	  break;
+	}
+	case RIGHT_MODE:
+	{
+	  refcolumn =  - Xpos + size;
+	  break;
+	}    
+	default:
+	{
+	  refcolumn = Xpos;
+	  break;
+	}
+	}
+	chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
+	/* Send the string character by character on lCD */
+	while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= chWidth))
+	{
+	/* Display one character on LCD */
+	BSP_LCD_DisplayChar(refcolumn, Ypos, *Text);
+	/* Decrement the column position by 16 */
+	refcolumn += chWidth;
+	/* Point on the next character */
+	Text++;
+	i++;
 		chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
-  }
+	}
+	return size;
 }
 
 /**
@@ -528,23 +531,24 @@ void BSP_LCD_DrawEllipse(uint16_t Xpos, uint16_t Ypos, uint16_t XRadius, uint16_
   */
 void BSP_LCD_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pBmp)
 {
-  uint16_t height = 0;
-  uint16_t width  = 0;
-  
-	BITMAPINFOHEADER *ptr = pBmp;
-  /* Read bitmap width */
-  width = ptr->biWidth;
+	uint16_t height = 0;
+	uint16_t width  = 0;
 
-  /* Read bitmap height */
-  height = ptr->biHeight;
-  
-  SetDisplayWindow(Xpos, Ypos, width, height);
-  
-  if(lcd_drv->DrawBitmap != NULL)
-  {
-    lcd_drv->DrawBitmap(Xpos, Ypos, pBmp);
-  } 
-  SetDisplayWindow(0, 0, BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	BITMAPINFOHEADER *ptr;
+	ptr= (BITMAPINFOHEADER*)pBmp;
+	/* Read bitmap width */
+	width = ptr->biWidth;
+
+	/* Read bitmap height */
+	height = ptr->biHeight;
+
+	SetDisplayWindow(Xpos, Ypos, width, height);
+
+	if(lcd_drv->DrawBitmap != NULL)
+	{
+	lcd_drv->DrawBitmap(Xpos, Ypos, pBmp);
+	} 
+	SetDisplayWindow(0, 0, BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 }
 
 /**
@@ -739,56 +743,62 @@ void BSP_LCD_DisplayOff(void)
   * @param  pChar: Pointer to the character data
   * @retval None
   */
-static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *pChar)
+static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *pChar)
 {
-  uint16_t height = 0, width = 0;
-    
-  height = DrawProp.pFont->height;
+	uint16_t height = 0, width = 0;
+	int i;
+	uint8_t bt;
+	int newW;
+	int bit = 128;
+	int col = 0, row = 0;
+	BITMAPINFOHEADER *ptr;
+	glyph_t *gl;
+	
+	height = DrawProp.pFont->height;
 
-	glyph_t *gl = (glyph_t*)pChar;
-  width  = gl->width;
+	gl = (glyph_t*)pChar;
+	width  = gl->width;
   
   /* Fill bitmap header*/
-	BITMAPINFOHEADER *ptr = bitmap;
+	ptr = (BITMAPINFOHEADER*)bitmap;
 	ptr->biHeight = height;
 	ptr->biWidth = width;
 	ptr->dataSize = (uint32_t)(width*height);
 		
-  int bit = 128;
-  int col = 0, row = 0;
-  int newW = width/8;
-  if (width%8 != 0){
-            newW++;
-        }
-        uint8_t bt = gl->bitsArray[row*newW + col++];
-        for (int i = 0; i < height*width*2; i=i+2){
-            if ((bt & bit) != 0){
-              bitmap[OFFSET_BITMAP + i+1] = (DrawProp.TextColor & 0xFF00)>>8;
+  
+	newW = width/8;
+	if (width%8 != 0){
+			newW++;
+		}
+		bt = gl->bitsArray[row*newW + col++];
+		for ( i = 0; i < height*width*2; i=i+2){
+			if ((bt & bit) != 0){
+			  bitmap[OFFSET_BITMAP + i+1] = (DrawProp.TextColor & 0xFF00)>>8;
 							bitmap[OFFSET_BITMAP + i] = DrawProp.TextColor & 0xFF;
-            } else {
+			} else {
 							uint8_t low = (DrawProp.BackColor & 0xFF00)>>8;
 							uint8_t high = DrawProp.BackColor & 0xFF;
 							bitmap[OFFSET_BITMAP + i+1] = low;
 							bitmap[OFFSET_BITMAP + i] = high;
-            }
-            
-            bit = bit>>1;
-            if (bit == 0 || (i/2+1)%width == 0){
-                if (col == newW){
-                    col = 0;
-                    row++;
-                    if (row == height){
-                        break;
-                    }
-                }
-                bit = 128;
-                if (row >= height){
-                    break;
-                }
-                bt = gl->bitsArray[row*newW + col++];
-            }
-        }
-  BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
+			}
+			
+			bit = bit>>1;
+			if (bit == 0 || (i/2+1)%width == 0){
+				if (col == newW){
+					col = 0;
+					row++;
+					if (row == height){
+						break;
+					}
+				}
+				bit = 128;
+				if (row >= height){
+					break;
+				}
+				bt = gl->bitsArray[row*newW + col++];
+			}
+		}
+	BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
 }
 
 /**
@@ -805,7 +815,11 @@ static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *pChar)
 void BSP_LCD_FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
 {
   int16_t a, b, y, last;
-
+  int32_t
+	  sa   = 0,
+	  sb   = 0;
+  int16_t  dx12, dy12, dx13, dy13, dx23, dy23;
+	
   // Sort coordinates by Y order (y3 >= y2 >= y1)
   if (y1 > y2)
   {
@@ -829,16 +843,13 @@ void BSP_LCD_FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, ui
     return;
   }
 
-  int16_t
-  dx12 = x2 - x1,
-  dy12 = y2 - y1,
-  dx13 = x3 - x1,
-  dy13 = y3 - y1,
-  dx23 = x3 - x2,
+  dx12 = x2 - x1;
+  dy12 = y2 - y1;
+  dx13 = x3 - x1;
+  dy13 = y3 - y1;
+  dx23 = x3 - x2;
   dy23 = y3 - y2;
-  int32_t
-  sa   = 0,
-  sb   = 0;
+  
 
   // For upper part of triangle, find scanline crossings for segments
   // 1-2 and 1-3.  If y2=y3 (flat-bottomed triangle), the scanline y2
@@ -976,12 +987,15 @@ uint32_t getStringWidth (uint8_t* str){
 }
 
 uint8_t getCharIndex(uint8_t ch){
-	if (ch< ' '){
-		return 0;
-	}
-	if (ch>= ' ' && ch <= '~'){
-		return ch - ' ';
-	}
 	
-	return 0;
+  if (ch< ' '){
+    return 0;
+  }
+  if (ch>= ' ' && ch <= '~'){
+    return ch - ' ';
+  }
+  if (ch>=192&& ch <= 255) {
+    return ch - 192 + '~' - ' ' + 1;
+  }
+  return 0;
 }

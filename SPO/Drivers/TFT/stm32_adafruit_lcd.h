@@ -71,8 +71,9 @@
 
 /* some colors */
 #define LCD_COLOR_BLACK         0x0000
-#define LCD_COLOR_GRAY          0xF7DE
-#define LCD_COLOR_LIGHTGRAY     0xF7BE
+#define LCD_COLOR_GRAY          0xdf1b
+#define LCD_COLOR_MEDIUMGRAY    0xdf1e
+#define LCD_COLOR_LIGHTGRAY     0xF7DE
 #define LCD_COLOR_BLUE          0x001F
 #define LCD_COLOR_RED           0xF800
 #define LCD_COLOR_GREEN         0x07E0
@@ -150,7 +151,7 @@ WTC_FONT_t    *BSP_LCD_GetFont(void);
 void     BSP_LCD_Clear(uint16_t Color);
 void     BSP_LCD_ClearStringLine(uint16_t Line);
 void     BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr);
-void     BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode);
+uint32_t     BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode);
 void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii);
 
 void     BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGB_Code);

@@ -85,7 +85,7 @@ public class Controller implements Initializable {
         Graphics2D g = temp.createGraphics();
         g.drawImage(rImg, 0, 0, rImg.getWidth(), rImg.getHeight(), null);
         g.dispose();
-
+        ImageIO.write(temp, "bmp", file);
         NewBMP glBMP = new NewBMP(tempFile);
 
         //FontGlyph.test();

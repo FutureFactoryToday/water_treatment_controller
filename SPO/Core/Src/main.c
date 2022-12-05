@@ -72,6 +72,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
+	unsigned char ch = 'À';
 	
 	#ifdef TESTS
 	/*TEST*/
@@ -101,8 +102,9 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
+	#ifndef SIM
   SystemClock_Config();
-
+	#endif
   /* USER CODE BEGIN SysInit */
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
   /* USER CODE END SysInit */
@@ -129,6 +131,7 @@ int main(void)
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
+	PC_Init();
 	__enable_irq();
 	LL_mDelay(500);
 	#ifdef TESTS
@@ -136,7 +139,7 @@ int main(void)
 	#endif
 	initGUI();
 	FP_SaveParam();
-
+	
 //	PC_GoToPoz(500);
 //	while(PC_GetStatus() != PC_COMPLETE){
 //		
@@ -174,16 +177,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-		if (redraw){
-			translateMessage();
-			redraw = 0;
-		}
-    /* USER CODE END WHILE */
+	wtc_time_t alT = *getTime();
+	alT.second += 10;
+	waitTime(alT, NULL);
+  redraw = 1;
+  ShowMainFrame();
+//  while (1)
+//  {
+//		if (redraw){
+//			translateMessage();
+//			redraw = 0;
+//		}
+//    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-  }
+//    /* USER CODE BEGIN 3 */
+//  }
   /* USER CODE END 3 */
 }
 
@@ -204,24 +212,24 @@ void SystemClock_Config(void)
   {
 
   }
-//  LL_PWR_EnableBkUpAccess();
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_ForceBackupDomainReset();
-//    LL_RCC_ReleaseBackupDomainReset();
-//  }
-//  LL_RCC_LSE_Enable();
+  LL_PWR_EnableBkUpAccess();
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_ForceBackupDomainReset();
+    LL_RCC_ReleaseBackupDomainReset();
+  }
+  LL_RCC_LSE_Enable();
 
-//   /* Wait till LSE is ready */
-//  while(LL_RCC_LSE_IsReady() != 1)
-//  {
+   /* Wait till LSE is ready */
+  while(LL_RCC_LSE_IsReady() != 1)
+  {
 
-//  }
-//  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-//  {
-//    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-//  }
-//  LL_RCC_EnableRTC();
+  }
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  {
+    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+  }
+  LL_RCC_EnableRTC();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 

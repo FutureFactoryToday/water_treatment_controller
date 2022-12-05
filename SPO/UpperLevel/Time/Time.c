@@ -21,14 +21,10 @@
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
-typedef struct {
-	uint8_t* monthName;
-	uint8_t* monthShortName;
-	uint8_t* dayName;
-	uint8_t* dayShortName;
-} date_name_t;
+
+
 /* Private define ------------------------------------------------------------*/
- uint8_t* engMonthName[] = {
+char* engMonthName[] = {
 	"January",
 	"February",
 	"March",
@@ -42,7 +38,7 @@ typedef struct {
 	"November",
 	"December"
 };
-uint8_t* engShortMonthName[] = {
+char* engShortMonthName[] = {
 	"JAN",
 	"FEB",
 	"MAR",
@@ -56,7 +52,7 @@ uint8_t* engShortMonthName[] = {
 	"NOV",
 	"DEC"
 };
-uint8_t* engDayName[] = {
+char* engDayName[] = {
 	"Monday",
 	"Tuesday",
 	"Wendsday",
@@ -65,7 +61,7 @@ uint8_t* engDayName[] = {
 	"Saturday",
 	"Sunday"
 };
-uint8_t* engShortDayName[] = {
+char* engShortDayName[] = {
 	"MO",
 	"TU",
 	"WE",
@@ -75,7 +71,7 @@ uint8_t* engShortDayName[] = {
 	"SU"
 };
 
-uint8_t* ruMonthName[] = {
+char* ruMonthName[] = {
 	"Январь",
 	"Февраль",
 	"Март",
@@ -90,7 +86,7 @@ uint8_t* ruMonthName[] = {
 	"Декабрь"
 };
 
-uint8_t* ruShortMonthName[] = {
+char* ruShortMonthName[] = {
 	"ЯНВ",
 	"ФЕВ",
 	"МАР",
@@ -104,7 +100,7 @@ uint8_t* ruShortMonthName[] = {
 	"НОЯ",
 	"ДЕК"
 };
-uint8_t* ruDayName[] = {
+char* ruDayName[] = {
 	"Понедельник",
 	"Вторник",
 	"Среда",
@@ -113,7 +109,7 @@ uint8_t* ruDayName[] = {
 	"Суббота",
 	"Воскресенье"
 };
-uint8_t* ruShortDayName[] = {
+char* ruShortDayName[] = {
 	"ПН",
 	"ВТ",
 	"СР",
@@ -148,44 +144,68 @@ uint8_t formatedString[FORMATED_STRING_LENGTH];
 date_name_t* dateName = &engName;
 uint8_t	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 uint8_t *ptr = formatedString;
-time_t sysTime;
+wtc_time_t sysTime;
 bool isInited;
 
 /* Private function prototypes -----------------------------------------------*/
 bool isLeapYear(uint16_t year);
-uint8_t maxDayInMonth(uint8_t month);
+
 uint8_t intToChar(uint8_t num);
-void processChar(uint8_t curCh);
+void processChar(uint8_t curCh, wtc_time_t *source);
 void changeTimeLanguage(language_t lang);
-uint8_t getDayNameByDate(time_t date);
+
 /* Private user code ---------------------------------------------------------*/
 
 void Time_init(){
-	if (!isInited){
-		time_t defTime = DEFAULT_TIME;
+	if (LL_RTC_TIME_Get(RTC) == 0){
+		wtc_time_t defTime = DEFAULT_TIME;
+		LL_RTC_AlarmTypeDef alarm = {0};
+		
+		LL_RTC_ALARM_StructInit(&alarm);
 		setTime(defTime);
+		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
+	} else {
+		time_t rawtime = LL_RTC_TIME_Get(RTC);
+		struct tm *breakTime = localtime(&rawtime);
+		
+		sysTime.year = 1900 + breakTime->tm_year;
+		sysTime.month = 1 + breakTime->tm_mon;
+		sysTime.day = breakTime->tm_mday;
+		sysTime.hour = breakTime->tm_hour;
+		sysTime.minute = breakTime->tm_min;
+		sysTime.second = breakTime->tm_sec;
 	}
+	LL_RTC_EnableIT_ALR(RTC);
 }
-time_t* getTime (){
+wtc_time_t* getTime (){
 	return &sysTime;
 }
 
-void setTime (time_t time){
+void setTime (wtc_time_t time){
+	LL_RTC_TimeTypeDef timeStr = {0};
+	
 	assert_param(time.day != 0);
 	assert_param(time.month != 0);
 	assert_param(time.year != 0);
 	assert_param(time.month < 13);
 	assert_param(time.day <= maxDayInMonth(time.month));
 	
-	LL_RTC_TimeTypeDef timeStr = {0};
+	struct tm newTime;
+	newTime = wtcTimeToStdTime(time);
+
 	
-	timeStr.Hours = time.hour;
-	timeStr.Minutes = time.minute;
-	timeStr.Seconds = time.second;
-	
-	LL_RTC_TIME_Init(RTC,LL_RTC_FORMAT_BIN,&timeStr);
+	/* Enter Initialization mode */
+  if (LL_RTC_EnterInitMode(RTC) != ERROR)
+  {	
+		time_t rawtime = mktime(&newTime);
+    LL_RTC_TIME_Set(RTC, rawtime);
+  }
+  /* Exit Initialization mode */
+  LL_RTC_ExitInitMode(RTC);
 	
 	sysTime = time;
+	
+	
 }
 
 void RTC_Interrupt(){
@@ -246,11 +266,14 @@ uint8_t maxDayInMonth(uint8_t month){
 		}
 	}
 }
-
 uint8_t* getFormatedTime(uint8_t* fStr){
+	return getFormatedTimeFromSource(fStr, &sysTime);
+}
+uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source){
+	uint8_t curCh = 0;
 	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 	ptr = formatedString;
-	uint8_t curCh = 0;
+	
 	
 	changeTimeLanguage(sysParam.lang);
 	
@@ -285,17 +308,22 @@ uint8_t* getFormatedTime(uint8_t* fStr){
 			default: break;
 		}
 		if (curCh != *fStr){
-			processChar(curCh);
+			processChar(curCh, source);
 		}
 	}
 	*ptr = 0;
 	return formatedString;
 }
-void processChar(uint8_t curCh){
+void processChar(uint8_t curCh, wtc_time_t *source){
+	uint8_t secondBCD;
+	uint8_t yearUpHalf;
+	uint8_t yearLowHalf;
+	
+	
 	switch (curCh){
 			case 'Y':{	
-				uint8_t yearUpHalf = __LL_RTC_CONVERT_BIN2BCD(sysTime.year/100);
-				uint8_t yearLowHalf = __LL_RTC_CONVERT_BIN2BCD(sysTime.year - (sysTime.year/100) * 100);
+				yearUpHalf = __LL_RTC_CONVERT_BIN2BCD(source->year/100);
+				yearLowHalf = __LL_RTC_CONVERT_BIN2BCD(source->year - (source->year/100) * 100);
 				if (yearNum == 4){
 					*ptr++ = intToChar((yearUpHalf & 0xF0)>>4);
 					*ptr++ = intToChar((yearUpHalf & 0x0F));
@@ -312,25 +340,26 @@ void processChar(uint8_t curCh){
 				if (monthNum == 1){
 					uint8_t** monthNamePtr;
 					monthNamePtr = dateName->monthShortName;
-					monthNamePtr= monthNamePtr + sysTime.month;
+					monthNamePtr= monthNamePtr + source->month - 1;
 					do{
 						*ptr++= *(*monthNamePtr)++;
 					}
 					while (**monthNamePtr!= 0);
 				}
 				if (monthNum == 2){
-					uint8_t monthBCD = __LL_RTC_CONVERT_BIN2BCD(sysTime.month);
+					uint8_t monthBCD = __LL_RTC_CONVERT_BIN2BCD(source->month);
 					*ptr++ = intToChar((monthBCD & 0xF0)>>4);
 					*ptr++ = intToChar((monthBCD & 0x0F));
 				}
 				if (monthNum == 3){
-					uint8_t** monthNamePtr;
-					monthNamePtr = dateName->monthName;
-					monthNamePtr= monthNamePtr + sysTime.month;
+					uint8_t* monthNamePtr;
+					monthNamePtr = *(dateName->monthName + source->month - 1);
+//					monthNamePtr = (monthNamePtr + (sysTime.month - 1));
 					do{
-						*ptr++= *(*monthNamePtr)++;
+						*ptr++= *monthNamePtr++;
 					}
-					while (**monthNamePtr!= 0);
+					while (*monthNamePtr!= 0);
+					
 				}
 				break;
 			}
@@ -338,7 +367,7 @@ void processChar(uint8_t curCh){
 				if (dayNum == 1){
 					uint8_t** dayNamePtr;
 					dayNamePtr = dateName->dayShortName;
-					dayNamePtr= dayNamePtr + getDayNameByDate(sysTime);
+					dayNamePtr= dayNamePtr + getDayNameByDate(&sysTime);
 					
 					do{
 						*ptr++= *(*dayNamePtr)++;
@@ -346,14 +375,14 @@ void processChar(uint8_t curCh){
 					while (**dayNamePtr!= 0);
 				}
 				if (dayNum == 2){
-					uint8_t monthBCD = __LL_RTC_CONVERT_BIN2BCD(sysTime.month);
-					*ptr++ = intToChar((monthBCD & 0xF0)>>4);
-					*ptr++ = intToChar((monthBCD & 0x0F));
+					uint8_t dayBCD = __LL_RTC_CONVERT_BIN2BCD(source->day);
+					*ptr++ = intToChar((dayBCD & 0xF0)>>4);
+					*ptr++ = intToChar((dayBCD & 0x0F));
 				}
 				if (dayNum == 3){
 					uint8_t** dayNamePtr;
 					dayNamePtr = dateName->dayName;
-					dayNamePtr= dayNamePtr + getDayNameByDate(sysTime);
+					dayNamePtr= dayNamePtr + getDayNameByDate(source);
 					do{
 						*ptr++= *(*dayNamePtr)++;
 					}
@@ -362,19 +391,19 @@ void processChar(uint8_t curCh){
 				break;
 			}
 			case 'h':{
-				uint8_t hourBCD = __LL_RTC_CONVERT_BIN2BCD(sysTime.hour);
+				uint8_t hourBCD = __LL_RTC_CONVERT_BIN2BCD(source->hour);
 				*ptr++ = intToChar((hourBCD & 0xF0)>>4);
 				*ptr++ = intToChar((hourBCD & 0x0F));
 				break;
 			}
 			case 'm':{
-				uint8_t minuteBCD = __LL_RTC_CONVERT_BIN2BCD(sysTime.minute);
+				uint8_t minuteBCD = __LL_RTC_CONVERT_BIN2BCD(source->minute);
 				*ptr++ = intToChar((minuteBCD & 0xF0)>>4);
 				*ptr++ = intToChar((minuteBCD & 0x0F));
 				break;
 			}
 			case 's':{
-				uint8_t secondBCD = __LL_RTC_CONVERT_BIN2BCD(sysTime.second);
+				uint8_t secondBCD = __LL_RTC_CONVERT_BIN2BCD(source->second);
 				*ptr++ = intToChar((secondBCD & 0xF0)>>4);
 				*ptr++ = intToChar((secondBCD & 0x0F));
 				break;
@@ -393,20 +422,28 @@ void changeTimeLanguage(language_t lang){
 	}
 }
 
-uint8_t getDayNameByDate(time_t date){
-	uint8_t yearCode = date.year - (date.year/100) * 100;
-	uint8_t redYearCode = (yearCode/4);
-	yearCode = (yearCode + redYearCode)%7;
-	uint8_t monthCode = monthCodeTable[date.month - 1];
-	uint8_t centCode = (date.year > 2099)? 4 : 6;
-	int8_t leapCode = (isLeapYear(date.year) && date.month < 2) ? 1 : 0;
+uint8_t getDayNameByDate(wtc_time_t *date){
+	uint8_t day;
+	uint8_t yearCode;
+	uint8_t redYearCode;
+	uint8_t monthCode;
+	uint8_t centCode;
+	int8_t leapCode;
 	
-	uint8_t day = (yearCode + monthCode + centCode + date.day - leapCode)%7;
+	yearCode = date->year - (date->year/100) * 100;
+	redYearCode = (yearCode/4);
+	yearCode = (yearCode + redYearCode)%7;
+	monthCode = monthCodeTable[date->month - 1];
+	centCode = (date->year > 2099)? 4 : 6;
+	leapCode = (isLeapYear(date->year) && date->month < 2) ? 1 : 0;
+	
+	day = (yearCode + monthCode + centCode + date->day - leapCode)%7;
 	day = (day == 0)? 6 : day - 1;
 	return day;
 }
 
  uint8_t timeTest (){
+	 wtc_time_t testTime;
 	 if (!isLeapYear(2104)){
 		 Error_Handler();
 	 }
@@ -424,14 +461,15 @@ uint8_t getDayNameByDate(time_t date){
 	 }
 	 
 	 
-	 time_t testTime;
+	 
 	
 	 testTime.year = 2022;
 	 testTime.month = 9;
 	 testTime.day = 15;
 	 
-	 if (getDayNameByDate(testTime) != 3){
+	 if (getDayNameByDate(&testTime) != 3){
 		 Error_Handler();
 	 }
 	
  }
+ 

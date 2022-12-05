@@ -70,36 +70,39 @@ void loadParams(void){
 }
 
 uint8_t FP_SaveParam(void){
-	if(!FP_DeleteParam()){
-		return ERROR;
-	}
-	__disable_irq();
-	while (FLASH->SR & FLASH_SR_BSY);
-	unlockFlash();
-	if (FLASH->SR & FLASH_SR_EOP){
-		FLASH->SR |= FLASH_SR_EOP;
-	}
-		FLASH->CR |= FLASH_CR_PG;
-	uint16_t *ptr = (uint16_t*)&flashParams.params;
-	uint32_t paramSize = sizeof(stored_params_t)/sizeof(uint32_t);
-	for(uint8_t i = 0; i < paramSize*2; i++){
-		*(volatile uint16_t*)(USER_FLASH_START+2*i) = 	*ptr;
-		ptr++;
-		while(!(FLASH->SR & FLASH_SR_EOP)){
-			if(FLASH->SR & FLASH_SR_PGERR){
-				lockFlash();
-				FLASH->CR &= ~FLASH_CR_PG;
-				FLASH->SR = FLASH_SR_PGERR;
-				return ERROR;
-			}
+	if (flashParams.needToSave == 1){
+		if(!FP_DeleteParam()){
+			return ERROR;
 		}
-		FLASH->SR = FLASH_SR_EOP;
+		__disable_irq();
+		while (FLASH->SR & FLASH_SR_BSY);
+		unlockFlash();
+		if (FLASH->SR & FLASH_SR_EOP){
+			FLASH->SR |= FLASH_SR_EOP;
+		}
+			FLASH->CR |= FLASH_CR_PG;
+		uint16_t *ptr = (uint16_t*)&flashParams.params;
+		uint32_t paramSize = sizeof(stored_params_t)/sizeof(uint32_t);
+		for(uint8_t i = 0; i < paramSize*2; i++){
+			*(volatile uint16_t*)(USER_FLASH_START+2*i) = 	*ptr;
+			ptr++;
+			while(!(FLASH->SR & FLASH_SR_EOP)){
+				if(FLASH->SR & FLASH_SR_PGERR){
+					lockFlash();
+					FLASH->CR &= ~FLASH_CR_PG;
+					FLASH->SR = FLASH_SR_PGERR;
+					return ERROR;
+				}
+			}
+			FLASH->SR = FLASH_SR_EOP;
+		}
+		FLASH->CR &= ~FLASH_CR_PG;
+		lockFlash();
+		flashParams.needToSave = false;
+		__enable_irq();
+		return 1;
 	}
-	FLASH->CR &= ~FLASH_CR_PG;
-	lockFlash();
-	flashParams.needToSave = false;
-	__enable_irq();
-	return 1;
+	return 0;
 }
 uint8_t FP_DeleteParam(void){
 	__disable_irq();

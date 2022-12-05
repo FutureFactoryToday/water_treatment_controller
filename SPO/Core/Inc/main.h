@@ -50,7 +50,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
 #include "stdlib.h"
-
+#include "time.h"
 #include "Settings.h"
 #include "System/System.h"
 #include "Util.h"
@@ -70,6 +70,8 @@ extern "C" {
 #include "PistonControl/PistonControl.h"
 #include "Time/Time.h"
 #include "FlashParams/FlashParam.h"
+#include "FlowMeter\FlowMeter.h"
+#include "Time/Alarm.h"
 //#include "USER/GUI.h"
 /* USER CODE END Includes */
 

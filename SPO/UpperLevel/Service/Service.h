@@ -21,6 +21,6 @@
 
 /*Prototypes */
 void SERV_TS_CALIB(void);
-uint8_t SERV_TS_TEST (int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe);
+uint8_t SERV_TS_TEST (int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canExit);
 #endif /* __SERVICE_H__ */
 
