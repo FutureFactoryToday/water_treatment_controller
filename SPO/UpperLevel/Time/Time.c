@@ -159,8 +159,11 @@ void changeTimeLanguage(language_t lang);
 void Time_init(){
 	if (LL_RTC_TIME_Get(RTC) == 0){
 		wtc_time_t defTime = DEFAULT_TIME;
+		LL_RTC_AlarmTypeDef alarm = {0};
 		
+		LL_RTC_ALARM_StructInit(&alarm);
 		setTime(defTime);
+		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
 	} else {
 		time_t rawtime = LL_RTC_TIME_Get(RTC);
 		struct tm *breakTime = localtime(&rawtime);
@@ -172,7 +175,7 @@ void Time_init(){
 		sysTime.minute = breakTime->tm_min;
 		sysTime.second = breakTime->tm_sec;
 	}
-	
+	LL_RTC_EnableIT_ALR(RTC);
 }
 wtc_time_t* getTime (){
 	return &sysTime;
@@ -188,24 +191,21 @@ void setTime (wtc_time_t time){
 	assert_param(time.day <= maxDayInMonth(time.month));
 	
 	struct tm newTime;
-	newTime.tm_hour = time.hour;
-	newTime.tm_min = time.minute;
-	newTime.tm_sec = 0;
-	newTime.tm_mday = time.day;
-	newTime.tm_mon = time.month - 1;
-	newTime.tm_year = time.year - 1900;
+	newTime = wtcTimeToStdTime(time);
 
 	
 	/* Enter Initialization mode */
   if (LL_RTC_EnterInitMode(RTC) != ERROR)
   {	
 		time_t rawtime = mktime(&newTime);
-      LL_RTC_TIME_Set(RTC, rawtime);
+    LL_RTC_TIME_Set(RTC, rawtime);
   }
   /* Exit Initialization mode */
   LL_RTC_ExitInitMode(RTC);
 	
 	sysTime = time;
+	
+	
 }
 
 void RTC_Interrupt(){

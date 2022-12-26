@@ -81,3 +81,14 @@ uint8_t* intToStr (uint32_t num){
 	}
 	return numBuf;
 }
+
+struct tm wtcTimeToStdTime (wtc_time_t time){
+	struct tm newTime;
+	newTime.tm_hour = time.hour;
+	newTime.tm_min = time.minute;
+	newTime.tm_sec = 0;
+	newTime.tm_mday = time.day;
+	newTime.tm_mon = time.month - 1;
+	newTime.tm_year = time.year - 1900;
+	return newTime;
+}

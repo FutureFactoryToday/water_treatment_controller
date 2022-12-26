@@ -70,6 +70,8 @@ extern "C" {
 #include "PistonControl/PistonControl.h"
 #include "Time/Time.h"
 #include "FlashParams/FlashParam.h"
+#include "FlowMeter\FlowMeter.h"
+#include "Time/Alarm.h"
 //#include "USER/GUI.h"
 /* USER CODE END Includes */
 

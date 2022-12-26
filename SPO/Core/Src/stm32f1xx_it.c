@@ -215,7 +215,10 @@ void RTC_IRQHandler(void)
 	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-
+	if (LL_RTC_IsActiveFlag_ALR(RTC)){
+		ALARM_INTERRUPT();
+		LL_RTC_ClearFlag_ALR(RTC);
+	}
   /* USER CODE END RTC_IRQn 1 */
 }
 
@@ -299,10 +302,20 @@ void EXTI15_10_IRQHandler(void)
     /* USER CODE END LL_EXTI_LINE_15 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
+		{
+			LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
+			/* USER CODE BEGIN LL_EXTI_LINE_15 */
+			FM_Sense_Interrupt();
+			/* USER CODE END LL_EXTI_LINE_15 */
+		}
   /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
-
+void TIM7_IRQHandler(void)
+{
+	FM_OVF_Interrupt();
+	LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
+}
 /* USER CODE END 1 */
