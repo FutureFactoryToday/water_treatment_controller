@@ -35,12 +35,18 @@ typedef struct {
     
     uint8_t washTime;
     uint8_t daysBetweenRegen;
-	
+    
+    //Положения клапана
+    uint32_t closedPosition;                                //Закрытое положение
+	uint32_t backwash;                                      //Обратная промывка
+	uint32_t regeneration;                                  //Регенерация
+	uint32_t filling;                                       //Заполнение
+    uint32_t softening;                                     //Умягчение
+    uint32_t flushing;                                      //Промывка
+    uint32_t filtering;                                     //Фильтрация
+	//
+    
 	uint32_t endLoadFlag;
-    
-
-    
-	
 } stored_params_t;
 
 typedef struct {

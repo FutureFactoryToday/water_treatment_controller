@@ -21,8 +21,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 
-volatile static stored_offsets_params stored_offsets_p ={0};
-stored_offsets_params* op = &stored_offsets_p;
+
 /* Private define ------------------------------------------------------------*/
 
 /* Private macro -------------------------------------------------------------*/

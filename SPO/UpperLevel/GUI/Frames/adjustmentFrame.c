@@ -2,10 +2,9 @@
 
 uint8_t adjustment_frame_Scroll_cnt = 0;
 uint8_t adjustment_frame_was_Scroll = 0;
-int32_t qwertyAdj[] = {0, 0, 0, 0, 0};
+int32_t qwertyAdj[] = {0, 0, 0, 0, 0, 0, 0};
 int8_t hwndAdjustmentFrameControl = 0;
 int8_t startAdjustmentFrame = 0;
-//char* ITEM_SOFTENING[] = { "BWASH", "REAWASH", "SBWASH", "DFLUSH", "FILLING" };
 char* ITEM_ADJUSTMENT[] = { "«¿ –€“Œ≈ œŒÀ.", "Œ¡–¿“.œ–ŒÃ.", "–≈√≈Õ.", "«¿œŒÀÕ≈Õ»≈", "”Ãﬂ√◊≈Õ»≈", "œ–ŒÃ€¬ ¿", "‘»À‹“–¿÷»ﬂ" };
 
 void ShowAdjustmentFrame(void)
@@ -25,84 +24,104 @@ void ShowAdjustmentFrame(void)
         
         if(hwndAdjustmentFrameControl == 20) return;
         
+        if(hwndAdjustmentFrameControl == 40)
+        {
+            fp->needToSave = true;
+            fp->params.closedPosition = qwertyAdj[0];
+            fp->params.backwash = qwertyAdj[1];
+            fp->params.regeneration = qwertyAdj[2];
+            fp->params.filling = qwertyAdj[3];
+            fp->params.softening = qwertyAdj[4];
+            fp->params.flushing = qwertyAdj[5];
+            fp->params.filtering = qwertyAdj[6];            
+            FP_SaveParam();
+            
+            startAdjustmentFrame = 1;
+        }
+        
+        if(hwndAdjustmentFrameControl == 30)
+        {
+            qwertyAdj[0] = 0;
+            qwertyAdj[1] = 0;
+            qwertyAdj[2] = 0;
+            qwertyAdj[3] = 0;
+            qwertyAdj[4] = 0;
+            qwertyAdj[5] = 0;
+            qwertyAdj[6] = 0;
+            
+            startAdjustmentFrame = 1;
+        }
         
         if(hwndAdjustmentFrameControl == 0)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->closedPosition = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 1)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->backwash = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 2)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->regeneration =qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 3)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->filling = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 4)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->softening = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 5)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->flushing = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 6)
         {
             qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
-            op->filtering = qwertyAdj[hwndAdjustmentFrameControl];
             startAdjustmentFrame = 1;
         }
         
         //cycle start
         if(hwndAdjustmentFrameControl == 10)
         {
-            PC_GoToPoz(op->closedPosition);
+            PC_GoToPoz(qwertyAdj[0]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 11)
         {
-            PC_GoToPoz(op->backwash);
+            PC_GoToPoz(qwertyAdj[1]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 12)
         {
-            PC_GoToPoz(op->regeneration);
+            PC_GoToPoz(qwertyAdj[2]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 13)
         {
-            PC_GoToPoz(op->filling);
+            PC_GoToPoz(qwertyAdj[3]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 14)
         {
-            PC_GoToPoz(op->softening);
+            PC_GoToPoz(qwertyAdj[4]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 15)
         {
-            PC_GoToPoz(op->flushing);
+            PC_GoToPoz(qwertyAdj[5]);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 16)
         {
-            PC_GoToPoz(op->filtering);
+            PC_GoToPoz(qwertyAdj[6]);
             startAdjustmentFrame = 1;
         }
         
@@ -130,8 +149,8 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_ADJUSTMENT,LEFT_MODE);
         BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"—Œ’–.",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(200,SAVE_Y,"—¡–Œ—",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(12,SAVE_Y,"œŒ«:",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,"—¡–Œ—",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,"œŒ«:",LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -238,6 +257,14 @@ void TranslateMenuAdjustmentMSG(void)
 	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
+        if (isInRectangle(tsState.X,tsState.Y,SAVE_BUTTON_X,SAVE_BUTTON_Y,SAVE_BUTTON_SIZE_X,SAVE_BUTTON_SIZE_Y)) 
+        {
+           hwndAdjustmentFrameControl = 40;
+        }  
+        if (isInRectangle(tsState.X,tsState.Y,RESET_BUTTON_X,RESET_BUTTON_Y,RESET_BUTTON_SIZE_X,RESET_BUTTON_SIZE_Y)) 
+        {
+           hwndAdjustmentFrameControl = 30;
+        }  
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
         {
            hwndAdjustmentFrameControl = 20;

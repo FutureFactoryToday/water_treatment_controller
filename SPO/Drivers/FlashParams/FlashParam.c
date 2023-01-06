@@ -27,7 +27,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-volatile static flash_params_t flashParams ={0};
+volatile static flash_params_t flashParams = {0};
 flash_params_t* fp = &flashParams;
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);

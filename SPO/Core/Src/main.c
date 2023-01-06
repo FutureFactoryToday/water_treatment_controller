@@ -163,7 +163,7 @@ int main(void)
 	
 	//MOT_TEST();
 
-	//uint32_t tftID  = manIDRead();
+	//uint32_t tftID = manIDRead();
 //	initTFT();
 //	uint8_t ID[4] = {0};
 //	readResult_t res;
