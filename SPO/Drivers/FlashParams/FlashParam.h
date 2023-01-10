@@ -36,14 +36,14 @@ typedef struct {
     uint8_t washTime;
     uint8_t daysBetweenRegen;
     
-    //Положения клапана
-    uint32_t closedPosition;                                //Закрытое положение
-	uint32_t backwash;                                      //Обратная промывка
-	uint32_t regeneration;                                  //Регенерация
-	uint32_t filling;                                       //Заполнение
-    uint32_t softening;                                     //Умягчение
-    uint32_t flushing;                                      //Промывка
-    uint32_t filtering;                                     //Фильтрация
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    uint32_t closedPosition;                                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	uint32_t backwash;                                      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	uint32_t regeneration;                                  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	uint32_t filling;                                       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    uint32_t softening;                                     //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    uint32_t flushing;                                      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    uint32_t filtering;                                     //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//
     
 	uint32_t endLoadFlag;
