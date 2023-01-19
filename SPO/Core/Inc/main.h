@@ -50,16 +50,12 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
 #include "stdlib.h"
+#include "string.h"
 #include "time.h"
 #include "Settings.h"
 #include "System/System.h"
 #include "Util.h"
 #include "Service/Service.h"
-//#include "TFT/TFT.h"
-//#include "SPI/SPI_Handler.h"
-//#include "WTC_Logic.h"
-//#include "../../GUI/Logo/LOGO_MAIN.h"
-//#include "USER/test.h"
 #include "TFT/Fonts/wtc_fonts.h"
 #include "Motor/Motor.h"
 #include "TFT/stm32_adafruit_lcd.h"
@@ -69,9 +65,34 @@ extern "C" {
 #include "TFT/lcd/ili9486/ili9486.h"
 #include "PistonControl/PistonControl.h"
 #include "Time/Time.h"
-#include "FlashParams/FlashParam.h"
-#include "FlowMeter\FlowMeter.h"
+#include "FlowMeter/FlowMeter.h"
 #include "Time/Alarm.h"
+#include "GUI/Frames/mainFrame.h"
+#include "Planner/Planner.h"
+#include "FlashParams/FlashParam.h"
+
+#include "GUI/Frames/keyboardFrame.h"
+#include "GUI/Frames/mainFrame.h"
+#include "GUI/Frames/filterSelectionFrame.h"
+#include "GUI/Frames/softeningFrame.h"
+#include "GUI/Frames/filteringFrame.h"
+#include "GUI/Frames/alarmListFrame.h"
+#include "GUI/Frames/alarmNotiFrame.h"
+#include "GUI/Frames/adjustmentFrame.h"
+#include "GUI/Frames/regenServiceFrame.h"
+#include "GUI/Frames/quantityCountServiceFrame.h"
+#include "GUI/Frames/washingTimeServiceFrame.h"
+#include "GUI/Frames/regenPeriodServiceFrame.h"
+#include "GUI/Frames/serviceMenuFrame.h"
+#include "GUI/Frames/daysBetweenRegenCustomerFrame.h"
+#include "GUI/Frames/delayedRegenCustomerFrame.h"
+#include "GUI/Frames/forcedRegenCustomerFrame.h"
+#include "GUI/Frames/washingTimeCustomerFrame.h"
+#include "GUI/Frames/PinCode.h"
+#include "GUI/Frames/timeSetFrame.h"
+#include "GUI/Frames/serviceMenuFrame.h"
+#include "GUI/Frames/menuFrame.h"
+
 //#include "USER/GUI.h"
 /* USER CODE END Includes */
 
@@ -82,8 +103,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-	extern uint32_t _1ms_cnt;
-  extern uint8_t* errorCause;
+extern uint32_t _1ms_cnt;
+extern uint8_t* errorCause;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

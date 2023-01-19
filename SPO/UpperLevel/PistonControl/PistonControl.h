@@ -25,14 +25,24 @@
 #define SEEK_TIME 10 //сек
 #define PISTON_MOVE_MIN 100 //обороты
 #define SPEED 37.7 //37,9 //ќборотов/сек при полном напр€жении
+
+#define DEF_CLOSED_POS 0;                                //???????? ?????????
+#define	DEF_BACKWASH_POS 10;                                      //???????? ????????
+#define	DEF_REGENERATION_POS 20;                                  //???????????
+#define	DEF_FILLING_POS 30;                                       //??????????
+#define	DEF_SOFTENNING_POS 40;                                     //?????????
+#define	DEF_FLUSHING_POS 50;                                      //????????
+#define	DEF_FILTERING_POS 60; 
+
 typedef enum {
 	 PC_ERROR,
 	 PC_IN_PROCESS,
 	 PC_READY,
 	 PC_SEEK_ZERO,
 } pc_work_status_t;
+
 typedef enum {
-	OK,
+	PASSED,
 	STALL,
 	NO_MIN,
 	NO_MAX,
@@ -48,8 +58,18 @@ typedef struct {
 	int32_t minPoz;
 } pc_params_t;
 
+typedef struct {
+	uint32_t closedPosition;                                //???????? ?????????
+	uint32_t backwash;                                      //???????? ????????
+	uint32_t regeneration;                                  //???????????
+	uint32_t filling;                                       //??????????
+	uint32_t softening;                                     //?????????
+	uint32_t flushing;                                      //????????
+	uint32_t filtering;                                     //??????????
+} piston_poz_t;
 
 /*Global params*/
+extern piston_poz_t pistonPositions;
 
 /*Prototypes */
 void PC_Init(void);

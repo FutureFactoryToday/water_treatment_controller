@@ -35,6 +35,8 @@ pc_params_t pcParams;
 extern uint8_t redraw;
 uint32_t stall_cnt;
 uint32_t seek_cnt;
+
+piston_poz_t pistonPositions;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
@@ -65,7 +67,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 	if (pcParams.workStatus == PC_READY){
 		pcParams.maxPoz = FULL_LENGTH*2;
 		pcParams.minPoz = -FULL_LENGTH*2;
-		result = OK;
+		result = PASSED;
 		seek_cnt == 0;
 		PC_GoToPoz(- (FULL_LENGTH + 100));
 		pcParams.workStatus = PC_SEEK_ZERO;
@@ -143,6 +145,19 @@ void PC_Init(void){
 	pcParams.workStatus = PC_READY;
 	stall_cnt = 0;
 	pcParams.curPoz = 0;
+	if (fp->isLoaded != 1){
+		pistonPositions.closedPosition = DEF_CLOSED_POS;
+		pistonPositions.backwash = DEF_BACKWASH_POS;
+		pistonPositions.regeneration = DEF_REGENERATION_POS;
+		pistonPositions.filling = DEF_FILLING_POS;
+		pistonPositions.softening = DEF_SOFTENNING_POS;
+		pistonPositions.flushing = DEF_FLUSHING_POS;
+		pistonPositions.filtering = DEF_FILTERING_POS;
+		fp->params.pistonPositions = pistonPositions;
+		fp->needToSave = 1;
+	} else {
+		pistonPositions = fp->params.pistonPositions;
+	}
 	MOT_Init(PWM,MOT_TIM);
 	//pcParams.calibResult = PC_AUTO_CALIBRATE();
 	if (pcParams.calibResult == OK){

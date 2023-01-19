@@ -158,6 +158,11 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-//
+void LED_BLINK(){
+	LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+	wtc_time_t alT = *getTime();
+	addSec(&alT,1);
+	setAlarm(&alT, &LED_BLINK);
+}
 
 /* USER CODE END 2 */

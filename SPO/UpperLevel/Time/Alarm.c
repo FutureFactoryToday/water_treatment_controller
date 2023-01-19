@@ -28,7 +28,7 @@ void (*funcPtr)();
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
-void waitTime(wtc_time_t time, void *func()){
+void setAlarm(wtc_time_t* time, void (*func)(void)){
 	struct tm alarmTimeSt = wtcTimeToStdTime(time);
 	
 	/* Enter Initialization mode */

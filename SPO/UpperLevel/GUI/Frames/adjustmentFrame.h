@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 //#define MODE_SOFTENING "SOFTENING"
 #define MODE_ADJUSTMENT "–≈√”À»–Œ¬ ¿"
 extern char* ITEM_ADJUSTMENT[];

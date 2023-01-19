@@ -44,7 +44,7 @@ void initParal_TFT(void);
 void deInitSPI_TFT(void);
 void deInitParal_TFT(void);
 /* USER CODE END Prototypes */
-
+void LED_BLINK();
 #ifdef __cplusplus
 }
 #endif

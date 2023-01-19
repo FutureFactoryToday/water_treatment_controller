@@ -72,12 +72,12 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-	unsigned char ch = 'À';
-	
+	timeTest ();
 	#ifdef TESTS
 	/*TEST*/
-	testFifo();
-	testSPIHandler();
+	//testFifo();
+	//testSPIHandler();
+	timeTest ();
 	#endif
   /* USER CODE END 1 */
 
@@ -132,12 +132,12 @@ int main(void)
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
 	PC_Init();
+	PL_Init();
 	__enable_irq();
 	LL_mDelay(500);
-	#ifdef TESTS
-	MOT_TEST();
-	#endif
+	
 	initGUI();
+	
 	FP_SaveParam();
 	
 //	PC_GoToPoz(500);
@@ -177,11 +177,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	wtc_time_t alT = *getTime();
-	alT.second += 10;
-	waitTime(alT, NULL);
-  redraw = 1;
+//	wtc_time_t alT = *getTime();
+//	addSec(&alT,10);
+//	waitTime(alT, &LED_BLINK);
+	
   ShowMainFrame();
+	
 //  while (1)
 //  {
 //		if (redraw){
@@ -282,6 +283,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
+	Error_Handler();
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */

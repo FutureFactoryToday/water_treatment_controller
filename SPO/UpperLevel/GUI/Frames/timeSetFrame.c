@@ -159,8 +159,8 @@ uint8_t refreshFrame(){
 			int32_t kbResult = callKeyboard(1, 12, (*(frameText + CH_MONTH_TEXT)));
 			if (kbResult >= 0){
 				editedTime.month = kbResult;
-				if (editedTime.day > maxDayInMonth(editedTime.month)) {
-					editedTime.day = maxDayInMonth(editedTime.month);
+				if (editedTime.day > maxDayInMonth(editedTime.month, editedTime.year)) {
+					editedTime.day = maxDayInMonth(editedTime.month, editedTime.year);
 				}
 				createFrame();
 			}
@@ -168,7 +168,7 @@ uint8_t refreshFrame(){
 		}	
 		if (isInRectangle(tsState.X,tsState.Y,BOX_X,DAY_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
 		{
-			int32_t kbResult = callKeyboard(1, maxDayInMonth(editedTime.month), (*(frameText + CH_DAY_TEXT)));
+			int32_t kbResult = callKeyboard(1, maxDayInMonth(editedTime.month, editedTime.year), (*(frameText + CH_DAY_TEXT)));
 			if (kbResult >= 0){
 				editedTime.day = kbResult;
 				createFrame();
@@ -193,7 +193,7 @@ uint8_t refreshFrame(){
 		if (isInRectangle(tsState.X,tsState.Y,BSP_LCD_GetXSize() - 8*10 - 10, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6))
 		{
 			editedTime.second = 0;
-			setTime(editedTime);
+			setTime(&editedTime);
 			displayedTime = *getTime();
 			createFrame();
 		}	
@@ -370,7 +370,7 @@ void drawMonth(void){
 			} else {
 				BSP_LCD_DisplayStringAt (rowMid[col], curY, intToStr(dispDayOfMonthNum++), CENTER_MODE);
 			}
-			if (dispDayOfMonthNum > maxDayInMonth(displayedTime.month)){
+			if (dispDayOfMonthNum > maxDayInMonth(displayedTime.month, displayedTime.year)){
 				row = 7;
 				break;
 			}

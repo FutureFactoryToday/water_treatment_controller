@@ -27,13 +27,13 @@ void ShowAdjustmentFrame(void)
         if(hwndAdjustmentFrameControl == 40)
         {
             fp->needToSave = true;
-            fp->params.closedPosition = qwertyAdj[0];
-            fp->params.backwash = qwertyAdj[1];
-            fp->params.regeneration = qwertyAdj[2];
-            fp->params.filling = qwertyAdj[3];
-            fp->params.softening = qwertyAdj[4];
-            fp->params.flushing = qwertyAdj[5];
-            fp->params.filtering = qwertyAdj[6];            
+            fp->params.pistonPositions.closedPosition = qwertyAdj[0];
+            fp->params.pistonPositions.backwash = qwertyAdj[1];
+            fp->params.pistonPositions.regeneration = qwertyAdj[2];
+            fp->params.pistonPositions.filling = qwertyAdj[3];
+            fp->params.pistonPositions.softening = qwertyAdj[4];
+            fp->params.pistonPositions.flushing = qwertyAdj[5];
+            fp->params.pistonPositions.filtering = qwertyAdj[6];            
             FP_SaveParam();
             
             startAdjustmentFrame = 1;

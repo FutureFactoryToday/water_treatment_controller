@@ -43,7 +43,8 @@ void RefreshWashTimCustFrame(void)
         BSP_LCD_DisplayStringAt(MODE_WASH_TIME_X, MODE_WASH_TIME_Y ,MODE_WASHING_TIME,LEFT_MODE);
         
         //uint8_t picPtr;
-        if(FP_GetParam()->params.washTime == 1)
+				if(equalTime(&pistonTasks[REGENERATION_TASK_NUM].restartDateTime,&pl_dayWashTime))
+        //if(FP_GetParam()->params.washTime == 1)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -51,7 +52,8 @@ void RefreshWashTimCustFrame(void)
             //picPtr = &day;
             //BSP_LCD_DrawBitmap(190, 90, &day);
         }
-        if(FP_GetParam()->params.washTime == 2)
+				if(equalTime(&pistonTasks[REGENERATION_TASK_NUM].restartDateTime,&pl_nightWashTime))
+        //if(FP_GetParam()->params.washTime == 2)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

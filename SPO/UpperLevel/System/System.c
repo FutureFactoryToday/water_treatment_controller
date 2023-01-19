@@ -32,10 +32,11 @@ sys_param_t sysParam;
 void System_init(void){
 	if (fp->isLoaded != 1){
 		sysParam.lang = DEF_SYST_CONFIG_LANG;
-		sysParam.SERVIVE_CODE = DEF_SERVIVE_CODE;
+		sysParam.SERVICE_CODE = DEF_SERVICE_CODE;
 		fp->needToSave = true;
 		fp->params.sysPar = sysParam;
 	} else {
 		sysParam = fp->params.sysPar;
 	}
+	sysParam.WORK_STATUS = WAIT;
 }

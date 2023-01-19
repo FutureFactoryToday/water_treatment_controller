@@ -9,8 +9,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef _TIME_H_
-#define _TIME_H_
+#ifndef __TIME_H__
+#define __TIME_H__
 
 /*Includes */
 #include "main.h"
@@ -22,7 +22,7 @@
 #define DAYS_NUM 7
 #define MONTHS_NUM 12
 
-//Макс длина строки: 4 цифры года, 9 букв месяца, 11 букв дня, 5 знака препинания, 1конец строки
+//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: 4 пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, 9 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, 11 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, 5 пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 1пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 #define FORMATED_STRING_LENGTH 4 + 9 + 11 + 5 + 1
 
 
@@ -46,56 +46,56 @@ typedef struct {
 /*Prototypes */
 void Time_init(void);
 
-//Установка вереми. Формат BIN (обычный)
-void setTime (wtc_time_t time);
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ BIN (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+void setTime (wtc_time_t *time);
 
-//Возвращает указатель на системное время
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 wtc_time_t* getTime (void);
-//Прерывание для работы часов
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void RTC_Interrupt(void);
 
 /*
-	Функция для вывода времени на экран
-Входные данные: строка с форматом ответа на языке, указаном в System.language:
-	Y - год. 
-		Допустимые значения 
-		YY - крайние 2 числа года);
-		YYYY - полное обозначение года.
-	M - месяц.
-		Допустимые значения
-		M - Возврат короткого названия месяца
-		MM - возврат числового значения месяца (с 0)
-		MMM - возврат длинного имени месяца
-	D - месяц.
-		Допустимые значения
-		D - Возврат короткого названия дня
-		DD - возврат числового значения дня (с 0)
-		DDD -возврат длинного имени дня
+	пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ System.language:
+	Y - пїЅпїЅпїЅ. 
+		пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+		YY - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ);
+		YYYY - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
+	M - пїЅпїЅпїЅпїЅпїЅ.
+		пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		M - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		MM - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅ 0)
+		MMM - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	D - пїЅпїЅпїЅпїЅпїЅ.
+		пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		D - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+		DD - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (пїЅ 0)
+		DDD -пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 		
-	h - час
-	Допустимые значения
+	h - пїЅпїЅпїЅ
+	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		hh
 		
-	m - час
-	Допустимые значения
+	m - пїЅпїЅпїЅ
+	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		mm
 		
-	s - час
-	Допустимые значения
+	s - пїЅпїЅпїЅ
+	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		ss
 
-Пример:
+пїЅпїЅпїЅпїЅпїЅпїЅ:
 	uint8_t* str = "YYYY.MM.DD hh:mm:ss";
 	str = getFormatedTime(str);
-	Ответ - "2022.09.14 14:50:00"
+	пїЅпїЅпїЅпїЅпїЅ - "2022.09.14 14:50:00"
 	
 	str = "YY.M.D hh:mm:ss";
 	str = getFormatedTime(str);
-	Ответ - "22.SEP.TH 14:50:00"  
+	пїЅпїЅпїЅпїЅпїЅ - "22.SEP.TH 14:50:00"  
 	
 	str = "YYYY.MMM.DDD hh:mm:ss";
 	str = getFormatedTime(str);
-	Ответ - "2022.September.Thursday 14:50:00"
+	пїЅпїЅпїЅпїЅпїЅ - "2022.September.Thursday 14:50:00"
 */
 uint8_t* getFormatedTime(uint8_t* fStr);
 
@@ -103,10 +103,49 @@ uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source);
 
 uint8_t* getTimeString(void);
 
-uint8_t maxDayInMonth(uint8_t month);
+uint8_t maxDayInMonth(uint8_t month,uint16_t year);
 
 uint8_t getDayNameByDate(wtc_time_t *date);
 
 uint8_t timeTest (void);
-#endif /* __TIME_H__ */
+
+struct tm wtcTimeToStdTime (wtc_time_t* time);
+
+wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth);
+wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth);
+
+wtc_time_t* addDay (wtc_time_t* initTime, uint8_t numDay);
+wtc_time_t* decDay (wtc_time_t* initTime, uint8_t numDay);
+
+wtc_time_t* addHour (wtc_time_t* initTime, uint8_t numHour);
+wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour);
+
+wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute);
+wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute);
+
+wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec);
+wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec);
+
+wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+//firstTime - secondTime
+wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
+bool equalDate(wtc_time_t* firstTime, wtc_time_t* secondTime);
+bool equalTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+/*
+1 if firstTime > secondTime
+-1 if firstTime < secondTime
+0 if equal
+*/
+int8_t compareTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
+int8_t compareDate(wtc_time_t* firstTime, wtc_time_t* secondTime);
+int8_t compareDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+bool isZeroTime(wtc_time_t* time);
+#endif /* _TIME_H_ */
 

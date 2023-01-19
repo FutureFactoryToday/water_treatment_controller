@@ -20,7 +20,7 @@
 /*Global params*/
 
 /*Prototypes */
-void waitTime(wtc_time_t time, void* func());
+void setAlarm(wtc_time_t* time, void (*func)(void));
 void ALARM_INTERRUPT();
 #endif /* __ALARM_H__ */
 

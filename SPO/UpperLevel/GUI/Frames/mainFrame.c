@@ -7,6 +7,7 @@ int8_t startMainFrame = 1;
 
 void ShowMainFrame(void)
 {
+		redraw = 1;
     hwndMainFrameControl = 0;
     startMainFrame = 1;
     while(1)

@@ -44,7 +44,7 @@ void RefreshDelayedRegenCustFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(FP_GetParam()->params.daysBetweenRegen), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(pistonTasks[REGENERATION_TASK_NUM].restartDateTime.day), LEFT_MODE);
     
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);

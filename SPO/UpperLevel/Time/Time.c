@@ -162,7 +162,7 @@ void Time_init(){
 		LL_RTC_AlarmTypeDef alarm = {0};
 		
 		LL_RTC_ALARM_StructInit(&alarm);
-		setTime(defTime);
+		setTime(&defTime);
 		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
 	} else {
 		time_t rawtime = LL_RTC_TIME_Get(RTC);
@@ -181,14 +181,14 @@ wtc_time_t* getTime (){
 	return &sysTime;
 }
 
-void setTime (wtc_time_t time){
+void setTime (wtc_time_t* time){
 	LL_RTC_TimeTypeDef timeStr = {0};
 	
-	assert_param(time.day != 0);
-	assert_param(time.month != 0);
-	assert_param(time.year != 0);
-	assert_param(time.month < 13);
-	assert_param(time.day <= maxDayInMonth(time.month));
+	assert_param(time->day != 0);
+	assert_param(time->month != 0);
+	assert_param(time->year != 0);
+	assert_param(time->month < 13);
+	assert_param(time->day <= maxDayInMonth(time->month, sysTime.year));
 	
 	struct tm newTime;
 	newTime = wtcTimeToStdTime(time);
@@ -203,7 +203,7 @@ void setTime (wtc_time_t time){
   /* Exit Initialization mode */
   LL_RTC_ExitInitMode(RTC);
 	
-	sysTime = time;
+	sysTime = *time;
 	
 	
 }
@@ -219,7 +219,7 @@ void RTC_Interrupt(){
 			if (sysTime.hour > 23){
 				sysTime.hour = 0;
 				sysTime.day++;
-				if (sysTime.day > maxDayInMonth(sysTime.month)){
+				if (sysTime.day > maxDayInMonth(sysTime.month, sysTime.year)){
 					sysTime.day = 1;
 					sysTime.month++;
 					if (sysTime.month > 12){
@@ -231,12 +231,361 @@ void RTC_Interrupt(){
 		}
 	}
 }
+struct tm wtcTimeToStdTime (wtc_time_t* time){
+	struct tm newTime;
+	newTime.tm_hour = time->hour;
+	newTime.tm_min = time->minute;
+	newTime.tm_sec = time->second;
+	newTime.tm_mday = time->day;
+	newTime.tm_mon = time->month - 1;
+	newTime.tm_year = time->year - 1900;
+	return newTime;
+}
+
+wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth){
+	wtc_time_t time = *initTime;
+	if (numMonth == 0)
+		return &time;
+	
+	time.month += numMonth;
+	if (time.month > 12){
+		uint8_t div = time.month / 12;
+		time.year += div;	
+		time.month = time.month - (div)*12;
+	}
+	if (time.day > maxDayInMonth(time.month, time.year)){
+		time.day = maxDayInMonth(time.month, time.year);
+	}
+	return &time;
+}
+wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth){
+	wtc_time_t time = *initTime;
+	int16_t tempDec = 0;
+	bool isLastDay = false;
+	
+	if (numMonth == 0)
+		return &time;
+	if (time.day == maxDayInMonth(time.month,time.year)){
+		isLastDay = true;
+	}
+	tempDec = time.month - numMonth;
+	if (tempDec <= 0){
+		time.year -= (-tempDec) / 12;	
+		tempDec += (tempDec / 12)*12;
+		if (tempDec <= 0){
+			time.year -= 1;
+			tempDec += 12;
+		}
+		time.month = tempDec;
+	} else {
+		time.month -= numMonth;
+	}
+	
+	if (time.day > maxDayInMonth(time.month, time.year) || isLastDay){
+		time.day = maxDayInMonth(time.month, time.year);
+	}
+	return &time;
+}
+
+wtc_time_t* addDay (wtc_time_t* initTime, uint8_t numDay){
+	wtc_time_t time = *initTime;
+	if (numDay == 0)
+		return &time;
+	
+	time.day += numDay;
+	while (time.day > maxDayInMonth(time.month, time.year)){
+		time.day -= maxDayInMonth(time.month, time.year);	
+		time = *addMonth(&time,1);
+	}
+	return &time;
+}
+wtc_time_t* decDay (wtc_time_t* initTime, uint8_t numDay){
+	wtc_time_t time = *initTime;
+	int16_t tempDec = 0;
+	
+	if (numDay == 0)
+		return &time;
+	
+	tempDec = time.day - numDay;
+	
+	while (tempDec < 0){
+		time = *decMonth(&time,1);
+		tempDec += maxDayInMonth(time.month, time.year);
+		
+	}
+	time.day = tempDec;
+	return &time;
+}
+
+wtc_time_t* addHour (wtc_time_t* initTime, uint8_t numHour){
+	wtc_time_t time = *initTime;
+	if (numHour == 0)
+		return &time;
+	
+	time.hour += numHour;
+	if (time.hour >= 24){
+		uint16_t dec = time.hour / 24;
+		time = *addDay(&time,dec);
+		time.hour -= dec*24;
+	}
+	return &time;
+}
+wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour){
+	wtc_time_t time = *initTime;
+	int16_t tempDec = 0;
+	
+	if (numHour == 0)
+		return &time;
+	
+	tempDec = time.hour - numHour;
+	if (tempDec < 0){
+		uint16_t dec = tempDec / 24;
+		time = *decDay(&time, dec);	
+		tempDec += dec*24;
+		if (tempDec < 0){
+			time = *decDay(&time, 1);
+			tempDec += 24;
+		}
+		time.hour = tempDec;
+	} else {
+		time.hour -= numHour;
+	}
+	
+	return &time;
+}
+
+wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute){
+	wtc_time_t time = *initTime;
+	if (numMinute == 0)
+		return &time;
+	
+	time.minute += numMinute;
+	if (time.minute >= 60){
+		uint16_t dec = time.minute / 60;
+		time = *addHour(&time,dec);
+		time.minute -= dec*60;
+	}
+	return &time;
+}
+wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute){
+	wtc_time_t time = *initTime;
+	int16_t tempDec = 0;
+	
+	if (numMinute == 0)
+		return &time;
+	
+	tempDec = time.minute - numMinute;
+	if (tempDec < 0){
+		uint16_t dec = tempDec / 60;
+		time = *decHour(&time, dec);	
+		tempDec += dec*60;
+		if (tempDec < 0){
+			time = *decHour(&time, 1);
+			tempDec += 60;
+		}
+		time.minute = tempDec;
+	} else {
+		time.minute -= numMinute;
+	}
+	return &time;
+}
+
+wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec){
+	wtc_time_t time = *initTime;
+	if (numSec == 0)
+		return &time;
+	
+	time.second += numSec;
+	if (time.second >= 60){
+		uint16_t dec = time.second / 60;
+		time = *addMinute(&time,dec);
+		time.second -= dec*60;
+	}
+	return &time;
+}
+wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec){
+	int16_t tempDec = 0;
+	wtc_time_t time = *initTime;
+	if (numSec == 0)
+		return &time;
+	
+	tempDec = time.second - numSec;
+	if (tempDec < 0){
+		uint16_t dec = tempDec / 60;
+		time = *decMinute(&time, dec);	
+		tempDec += dec*60;
+		if (tempDec < 0){
+			time = *decMinute(&time, 1);
+			tempDec += 60;
+		}
+		time.second = tempDec;
+	} else {
+		time.second -= numSec;
+	}
+	return &time;
+}
+
+//firstTime + secondTime
+wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	addSec(&tempTime, secondTime->second);
+	addMinute(&tempTime, secondTime->minute);
+	addHour(&tempTime, secondTime->hour);
+	addDay(&tempTime, secondTime->day);
+	addMonth(&tempTime, secondTime->month);
+	tempTime.year += secondTime->year;
+	return &tempTime;
+}
+
+//firstTime - secondTime
+wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	decSec(&tempTime, secondTime->second);
+	decMinute(&tempTime, secondTime->minute);
+	decHour(&tempTime, secondTime->hour);
+	decDay(&tempTime, secondTime->day);
+	decMonth(&tempTime, secondTime->month);
+	tempTime.year -= secondTime->year;
+	return &tempTime;
+}
+
+wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	addDay(&tempTime, secondTime->day);
+	addMonth(&tempTime, secondTime->month);
+	tempTime.year += secondTime->year;
+	return &tempTime;
+}
+bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	return firstTime->year == secondTime->year &&
+	firstTime->month == secondTime->month &&
+	firstTime->day == secondTime->day &&
+	firstTime->hour == secondTime->hour &&
+	firstTime->minute == secondTime->minute &&
+	firstTime->second == secondTime->second;
+}
+
+bool equalTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	return firstTime->hour == secondTime->hour &&
+	firstTime->minute == secondTime->minute &&
+	firstTime->second == secondTime->second;
+}
+
+bool equalDate(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	return firstTime->year == secondTime->year &&
+	firstTime->month == secondTime->month &&
+	firstTime->day == secondTime->day;
+}
+/*
+1 if firstTime > secondTime
+-1 if firstTime < secondTime
+0 if equal
+*/
+int8_t compareTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	if (equalTime(firstTime,secondTime)){
+		return 0;
+	}
+	
+	if (firstTime->hour > secondTime->hour){
+		return 1;
+	} else if (firstTime->hour < secondTime->hour){
+		return -1;
+	} else {
+		if (firstTime->minute > secondTime->minute){
+		return 1;
+		} else if (firstTime->minute < secondTime->minute){
+			return -1;
+		} else {
+			if (firstTime->second > secondTime->second){
+			return 1;
+			} else if (firstTime->second < secondTime->second){
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	}
+}
+bool isZeroTime(wtc_time_t* time){
+	wtc_time_t zeroTime = {0};
+	if (compareDateTime(time, &zeroTime) == 0){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+int8_t compareDate(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	if (equalDate(firstTime,secondTime)){
+		return 0;
+	}
+	if (firstTime->year > secondTime->year){
+		return 1;
+	} else if (firstTime->year < secondTime->year){
+		return -1;
+	} else {
+		if (firstTime->month > secondTime->month){
+			return 1;
+		} else if (firstTime->month < secondTime->month){
+			return -1;
+		} else {
+			if (firstTime->day > secondTime->day){
+				return 1;
+			} else if (firstTime->day < secondTime->day){
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	}
+}
+int8_t compareDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
+	if (equalDateTime(firstTime,secondTime)){
+		return 0;
+	}
+	if (firstTime->year > secondTime->year){
+		return 1;
+	} else if (firstTime->year < secondTime->year){
+		return -1;
+	} else {
+		if (firstTime->month > secondTime->month){
+			return 1;
+		} else if (firstTime->month < secondTime->month){
+			return -1;
+		} else {
+			if (firstTime->day > secondTime->day){
+				return 1;
+			} else if (firstTime->day < secondTime->day){
+				return -1;
+			} else {
+				if (firstTime->hour > secondTime->hour){
+				return 1;
+				} else if (firstTime->hour < secondTime->hour){
+					return -1;
+				} else {
+					if (firstTime->minute > secondTime->minute){
+					return 1;
+					} else if (firstTime->minute < secondTime->minute){
+						return -1;
+					} else {
+						if (firstTime->second > secondTime->second){
+						return 1;
+						} else if (firstTime->second < secondTime->second){
+							return -1;
+						} else {
+							return 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 bool isLeapYear(uint16_t year){
 	return ((year%4 == 0 && year % 100 != 0) || year % 400 == 0);
 }
 
-uint8_t maxDayInMonth(uint8_t month){
+uint8_t maxDayInMonth(uint8_t month, uint16_t year){
 	switch (month){
 		case 1:
 		case 3:
@@ -248,7 +597,7 @@ uint8_t maxDayInMonth(uint8_t month){
 			return 31;
 		}
 		case 2:{
-			if (isLeapYear(sysTime.year)){
+			if (isLeapYear(year)){
 				return 29;
 			} else {
 				return 28;
@@ -314,7 +663,7 @@ uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source){
 	*ptr = 0;
 	return formatedString;
 }
-void processChar(uint8_t curCh, wtc_time_t *source){
+void processChar(uint8_t curCh, wtc_time_t *source)	{
 	uint8_t secondBCD;
 	uint8_t yearUpHalf;
 	uint8_t yearLowHalf;
@@ -442,34 +791,268 @@ uint8_t getDayNameByDate(wtc_time_t *date){
 	return day;
 }
 
- uint8_t timeTest (){
-	 wtc_time_t testTime;
-	 if (!isLeapYear(2104)){
-		 Error_Handler();
-	 }
-	 if (isLeapYear(2100)){
-		 Error_Handler();
-	 }
-	 if (!isLeapYear(2000)){
-		 Error_Handler();
-	 }
-	 if (isLeapYear(2103)){
-		 Error_Handler();
-	 }
-	 if (isLeapYear(700)){
-		 Error_Handler();
-	 }
-	 
-	 
-	 
+uint8_t timeTest (){
+	wtc_time_t testTime, secTempTime = {0};
+	if (!isLeapYear(2104)){
+		Error_Handler();
+	}
+	if (isLeapYear(2100)){
+		Error_Handler();
+	}
+	if (!isLeapYear(2000)){
+		Error_Handler();
+	}
+	if (isLeapYear(2103)){
+		Error_Handler();
+	}
+	if (isLeapYear(700)){
+		Error_Handler();
+	}
+
+	testTime.year = 2022;
+	testTime.month = 9;
+	testTime.day = 15;
+
+	if (getDayNameByDate(&testTime) != 3){
+		Error_Handler();
+	}
 	
-	 testTime.year = 2022;
-	 testTime.month = 9;
-	 testTime.day = 15;
-	 
-	 if (getDayNameByDate(&testTime) != 3){
-		 Error_Handler();
-	 }
+	testTime = *addMonth(&testTime, 1);
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 10 && 
+				testTime.day == 15);
 	
- }
+	testTime = *addMonth(&testTime, 3);
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 1 && 
+				testTime.day == 15);
+	
+	testTime.day = 31;
+	testTime = *addMonth(&testTime, 1);
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 2 && 
+				testTime.day == 28);
+	
+	testTime = *addMonth(&testTime, 1);
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 3 && 
+				testTime.day == 28);
+				
+	testTime.day = 31;			
+	testTime = *addMonth(&testTime, 12);
+	assert_param(testTime.year == 2024 &&
+				testTime.month == 3 && 
+				testTime.day == 31);
+				
+	testTime = *decMonth(&testTime, 1);
+	assert_param(testTime.year == 2024 &&
+				testTime.month == 2 && 
+				testTime.day == 29);	
+			
+	testTime = *decMonth(&testTime, 12);
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 2 && 
+				testTime.day == 28);
+				
+	testTime = *decMonth(&testTime, 1);
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 1 && 
+				testTime.day == 31);	
+
+	testTime = *decMonth(&testTime, 3);
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 10 && 
+				testTime.day == 31);	
+	
+	testTime.day = 15;	
+	testTime = *decMonth(&testTime, 2);
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 15);	
+				
+	testTime = *addDay(&testTime, 2);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 17);
+				
+	testTime = *decDay(&testTime, 2);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 15);
+				
+	testTime = *addDay(&testTime, 17);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 9 && 
+				testTime.day == 1);
+				
+	testTime = *decDay(&testTime, 16);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16);
+
+	testTime = *addDay(&testTime, 31);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 9 && 
+				testTime.day == 16);
+				
+	testTime = *decDay(&testTime, 31);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16);
+				
+	testTime.hour = 10;
+	testTime.minute = 30;
+	testTime.second = 30;
+
+	testTime = *addHour(&testTime, 1);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 11 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+				
+	testTime = *decHour(&testTime, 1);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 10 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+				
+	testTime = *addHour(&testTime, 15);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 17 &&
+				testTime.hour == 1 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+				
+	testTime = *decHour(&testTime, 24);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+
+	testTime = *decHour(&testTime, 1);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 0 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+				
+	testTime = *decHour(&testTime, 1);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 15 &&
+				testTime.hour == 23 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);		
+
+	testTime = *addHour(&testTime, 1);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 0 &&
+				testTime.minute == 30 &&
+				testTime.second == 30);
+				
+	testTime = *decMinute(&testTime, 10);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 0 &&
+				testTime.minute == 20 &&
+				testTime.second == 30);
+				
+	testTime = *decMinute(&testTime, 20);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 0 &&
+				testTime.minute == 00 &&
+				testTime.second == 30);
+
+	testTime = *decMinute(&testTime, 10);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 15 &&
+				testTime.hour == 23 &&
+				testTime.minute == 50 &&
+				testTime.second == 30);
+				
+	testTime = *addMinute(&testTime, 10);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 0 &&
+				testTime.minute == 00 &&
+				testTime.second == 30);
+				
+	testTime = *addMinute(&testTime, 60);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 00 &&
+				testTime.second == 30);
+				
+	testTime = *addMinute(&testTime, 10);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 10 &&
+				testTime.second == 30);			
+				
+	secTempTime.year = 0;
+	secTempTime.month = 0;
+	secTempTime.day = 0;
+	secTempTime.hour = 0;
+	secTempTime.minute = 0;
+	secTempTime.second = 0;
+	
+	testTime = *addDateTime(&testTime, &secTempTime);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 10 &&
+				testTime.second == 30);
+				
+	testTime = *decDateTime(&testTime, &secTempTime);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 10 &&
+				testTime.second == 30);
+				
+	secTempTime.year = 1;
+	secTempTime.month = 2;
+	secTempTime.day = 10;
+	secTempTime.hour = 5;
+	secTempTime.minute = 10;
+	secTempTime.second = 20;
+	
+	testTime = *addDateTime(&testTime, &secTempTime);	
+	assert_param(testTime.year == 2023 &&
+				testTime.month == 10 && 
+				testTime.day == 26 &&
+				testTime.hour == 6 &&
+				testTime.minute == 20 &&
+				testTime.second == 50);
+				
+	testTime = *decDateTime(&testTime, &secTempTime);	
+	assert_param(testTime.year == 2022 &&
+				testTime.month == 8 && 
+				testTime.day == 16 &&
+				testTime.hour == 1 &&
+				testTime.minute == 10 &&
+				testTime.second == 30);
+}
+
  

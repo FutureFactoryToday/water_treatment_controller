@@ -1,5 +1,6 @@
 #include "softeningFrame.h"
 
+
 uint8_t softening_frame_Scroll_cnt = 0;
 uint8_t softening_frame_was_Scroll = 0;
 int32_t qwertySoft[] = {0, 0, 0, 0, 0};

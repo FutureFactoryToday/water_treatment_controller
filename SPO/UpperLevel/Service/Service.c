@@ -17,7 +17,7 @@
 #include "main.h"
 #include "Service/Service.h"
 /* Private includes ----------------------------------------------------------*/
-//#include "FlashParams/FlashParam.h"
+#include "FlashParams/FlashParam.h"
 /* Private typedef -----------------------------------------------------------*/
 typedef struct{
 	uint16_t x;
@@ -46,10 +46,10 @@ void SERV_TS_CALIB(void){
 	
 	WTC_FONT_t *oldFont;
 	stored_ts_conf_t newConf = {0};
-	int32_t kX;
-	int32_t kY;
-	int32_t bX;
-	int32_t bY;
+	int32_t kX = 0;
+	int32_t kY= 0;
+	int32_t bX= 0;
+	int32_t bY= 0;
 	
 	coord_t calibCoord[4] = {0};
 	coord_t calibCross[4] = {{10,10},{470,10},{10,310},{470,310}};

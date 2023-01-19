@@ -79,3 +79,7 @@ SPO/UpperLevel/GUI/PicArrays/mocSmallImg.c
 *.hex
 
 *.Zip
+
+temp/*
+
+SPO/CubeIDE/*

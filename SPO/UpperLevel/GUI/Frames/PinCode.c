@@ -28,8 +28,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 char* pinRuText[] = {
-	"ПАРОЛЬ ДЛЯ СЕРВИСА",
-	"Введите пароль",
+	"СЕРВИСНЫЙ КОД ДОСТУПА",
+	"Введите код",
 	"ВВОД",
 	"Введите число"
 };
@@ -78,7 +78,7 @@ int8_t PIN_showFrame(){
 }
 
 int8_t refreshPinFrame(){
-	/*Кнопка Назад*/
+	/*?????? ?????*/
 	if (isInRectangle(tsState.X,tsState.Y,10, 10,gImage_RETURNARROW.infoHeader.biWidth,gImage_RETURNARROW.infoHeader.biHeight))
   {
 		return -1;
@@ -99,7 +99,7 @@ int8_t refreshPinFrame(){
 		for(uint8_t i = 0; i < PIN_LENGTH; i++){
 			pin += enteredPin[PIN_LENGTH - i - 1]*POWC(10,i);
 		}
-		if (pin == sysParam.SERVIVE_CODE){
+		if (pin == sysParam.SERVICE_CODE){
 			return 1;
 		} else {
 			return -1;
@@ -158,7 +158,7 @@ void drawPinBoxes(uint8_t* pin){
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	for(uint8_t i = 0; i < PIN_LENGTH; i++){
 		BSP_LCD_DrawRect(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE),PIN_BOX_Y,PIN_BOX_X_LENGTH,PIN_BOX_Y_LENGTH);
-		BSP_LCD_DisplayStringAt(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE)+6,PIN_BOX_Y+5,intToStr(enteredPin[i]), &Oxygen_Mono_24);
+		BSP_LCD_DisplayStringAt(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE)+6,PIN_BOX_Y+5,intToStr(enteredPin[i]), CENTER_MODE);
 	}
 	
 }

@@ -42,8 +42,8 @@ void RefreshWashingTimeServiceFrame(void)
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
     BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
     
-
-    if(FP_GetParam()->params.washTime == 1)
+		if(equalTime(&pistonTasks[REGENERATION_TASK_NUM].restartDateTime,&pl_dayWashTime))
+    //if(FP_GetParam()->params.washTime == 1)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
         BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
@@ -53,7 +53,8 @@ void RefreshWashingTimeServiceFrame(void)
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "демэ", LEFT_MODE);
     }
-    if(FP_GetParam()->params.washTime == 2)
+		if(equalTime(&pistonTasks[REGENERATION_TASK_NUM].restartDateTime,&pl_nightWashTime))
+    //if(FP_GetParam()->params.washTime == 2)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
         BSP_LCD_FillRect(WASHING_TIME_VALUE_BOX_X,WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
@@ -111,13 +112,21 @@ void TranslateWashingTimeServiceFrameMSG(void)
         }
         if (isInRectangle(tsState.X,tsState.Y,WASHING_TIME_VALUE_X + 100,WASHING_TIME_VALUE_Y, WASHING_TIME_VALUE_X + 250,WASHING_TIME_VALUE_Y + 50)) 
         {
-            FP_GetParam()->params.washTime = 2;
+          pistonTasks[REGENERATION_TASK_NUM].restartDateTime.hour = pl_nightWashTime.hour;  
+					pistonTasks[REGENERATION_TASK_NUM].restartDateTime.minute = pl_nightWashTime.minute; 
+					pistonTasks[REGENERATION_TASK_NUM].restartDateTime.second = pl_nightWashTime.second;
+					copyOneTaskToFlash(REGENERATION_TASK_NUM);
+					//FP_GetParam()->params.washTime = 2;
             FP_GetParam()->needToSave = 1;
         }
         if (isInRectangle(tsState.X,tsState.Y,WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, WASHING_TIME_VALUE_X + 150,WASHING_TIME_VALUE_Y + 50)) 
         {
-            FP_GetParam()->params.washTime = 1;
-            FP_GetParam()->needToSave = 1;
+          pistonTasks[REGENERATION_TASK_NUM].restartDateTime.hour = pl_dayWashTime.hour;  
+					pistonTasks[REGENERATION_TASK_NUM].restartDateTime.minute = pl_dayWashTime.minute; 
+					pistonTasks[REGENERATION_TASK_NUM].restartDateTime.second = pl_dayWashTime.second;
+					copyOneTaskToFlash(REGENERATION_TASK_NUM);
+					//FP_GetParam()->params.washTime = 1;
+          FP_GetParam()->needToSave = 1;
         }
     }
 }
