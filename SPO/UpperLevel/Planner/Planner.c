@@ -83,7 +83,13 @@ void PL_Planner (planner_control_type_t startType){
 							break;
 						}
 						case FORCE_START_NEAREST:{
-										
+							currentStepDateTime = *getTime();
+							currentStepDateTime.hour = chosenTask->restartDateTime.hour;
+							currentStepDateTime.minute = chosenTask->restartDateTime.minute;
+							currentStepDateTime.second = chosenTask->restartDateTime.second;
+							if (compareDateTime(&currentStepDateTime, getTime()) < 0){
+								currentStepDateTime = *addDay(&currentStepDateTime,1);
+							}								
 							break;
 						}
 				}

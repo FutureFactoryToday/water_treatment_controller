@@ -17,7 +17,7 @@
 
 /*Public defines */
 #define NAME_LENGTH 12
-#define STEP_PER_TASK_NUM 9
+#define STEP_PER_TASK_NUM 10
 #define TASK_NUM 2
 
 #define DEF_TASK_RESTART {0,0,30,0,0,0}

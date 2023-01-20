@@ -428,11 +428,11 @@ wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec){
 //firstTime + secondTime
 wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
-	addSec(&tempTime, secondTime->second);
-	addMinute(&tempTime, secondTime->minute);
-	addHour(&tempTime, secondTime->hour);
-	addDay(&tempTime, secondTime->day);
-	addMonth(&tempTime, secondTime->month);
+	tempTime = *addSec(&tempTime, secondTime->second);
+	tempTime = *addMinute(&tempTime, secondTime->minute);
+	tempTime = *addHour(&tempTime, secondTime->hour);
+	tempTime = *addDay(&tempTime, secondTime->day);
+	tempTime = *addMonth(&tempTime, secondTime->month);
 	tempTime.year += secondTime->year;
 	return &tempTime;
 }
@@ -440,20 +440,28 @@ wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 //firstTime - secondTime
 wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
-	decSec(&tempTime, secondTime->second);
-	decMinute(&tempTime, secondTime->minute);
-	decHour(&tempTime, secondTime->hour);
-	decDay(&tempTime, secondTime->day);
-	decMonth(&tempTime, secondTime->month);
+	tempTime = *decSec(&tempTime, secondTime->second);
+	tempTime = *decMinute(&tempTime, secondTime->minute);
+	tempTime = *decHour(&tempTime, secondTime->hour);
+	tempTime = *decDay(&tempTime, secondTime->day);
+	tempTime = *decMonth(&tempTime, secondTime->month);
 	tempTime.year -= secondTime->year;
 	return &tempTime;
 }
 
 wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
-	addDay(&tempTime, secondTime->day);
-	addMonth(&tempTime, secondTime->month);
+	tempTime = *addDay(&tempTime, secondTime->day);
+	tempTime = *addMonth(&tempTime, secondTime->month);
 	tempTime.year += secondTime->year;
+	return &tempTime;
+}
+
+wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	tempTime = *addSec(&tempTime, secondTime->second);
+	tempTime = *addMinute(&tempTime, secondTime->minute);
+	tempTime = *addHour(&tempTime, secondTime->hour);
 	return &tempTime;
 }
 bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
