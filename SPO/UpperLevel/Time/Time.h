@@ -130,6 +130,9 @@ wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
 wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
+wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+
+
 //firstTime - secondTime
 wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
