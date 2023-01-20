@@ -39,10 +39,9 @@ void PL_Init(){
 	if (fp->isLoaded != 1){
 		wtc_time_t zeroTime = {0};
 		pl_dayWashTime = zeroTime; 
-		
 		pl_nightWashTime = zeroTime; 
 		
-		for (uint16_t task = 0; task < TASK_NUM; task++){
+		for (uint16_t task = 0; task < TASK_NUM; task++){	
 			pistonTasks[task].restartDateTime = zeroTime;
 			pistonTasks[task].startDateTime = zeroTime;
 			for (uint16_t step = 0; step < STEP_PER_TASK_NUM; step++){
@@ -58,6 +57,19 @@ void PL_Init(){
 	} else {
 		copyTasksFromFlash();
 		chosenTask = fp->params.chosenTask;
+		#ifdef TESTS
+		pistonTasks[0].restartDateTime = (wtc_time_t)DEF_TASK_RESTART;
+		chosenTask = &pistonTasks[0];
+		
+		pistonTasks[0].step[0].poz = &pistonPositions.backwash;
+		pistonTasks[0].step[0].secPause = 10;
+		
+		pistonTasks[0].step[1].poz = &pistonPositions.filling;
+		pistonTasks[0].step[1].secPause = 10;
+		
+		pistonTasks[0].step[2].poz = &pistonPositions.closedPosition;
+		pistonTasks[0].step[2].secPause = 10;		
+		#endif
 		PL_Planner(START_NORMAL);
 	}
 }
@@ -66,55 +78,67 @@ void PL_Init(){
 void PL_Planner (planner_control_type_t startType){
 
 	if (chosenTask != NULL){
-		if (isZeroTime(&chosenTask->startDateTime) 
-			&& isZeroTime(&chosenTask->restartDateTime)){
+		if (!isZeroTime(&chosenTask->restartDateTime)){
 				if (!PL_isRunnig){
 					switch (startType){
 						case START_NORMAL:{
-							if (compareDateTime(&currentStepDateTime, getTime())){
-								chosenTask->startDateTime = *addDate(&chosenTask->startDateTime,&chosenTask->restartDateTime);
+							if(!isZeroTime(&chosenTask->startDateTime)) {
+								if (compareDateTime(&chosenTask->startDateTime, getTime()) < 0){
+									chosenTask->startDateTime = *addDate(&chosenTask->startDateTime,&chosenTask->restartDateTime);
+								}
+								currentStepDateTime = chosenTask->startDateTime;
+								currentStepDateTime = *addSec(&currentStepDateTime,START_DELAY_PAUSE);
+							} else {
+								return;
 							}
-							currentStepDateTime = chosenTask->startDateTime;
-							addSec(&currentStepDateTime,10);
 							break;
 						}
 						case FORCE_START_NOW:{
-							currentStepDateTime = *getTime();			
+							currentStepDateTime = *addSec(getTime(), START_DELAY_PAUSE);		
 							break;
 						}
 						case FORCE_START_NEAREST:{
 							currentStepDateTime = *getTime();
-							currentStepDateTime.hour = chosenTask->restartDateTime.hour;
-							currentStepDateTime.minute = chosenTask->restartDateTime.minute;
-							currentStepDateTime.second = chosenTask->restartDateTime.second;
+							currentStepDateTime = *setTime(&currentStepDateTime, &chosenTask->restartDateTime);
 							if (compareDateTime(&currentStepDateTime, getTime()) < 0){
 								currentStepDateTime = *addDay(&currentStepDateTime,1);
 							}								
 							break;
 						}
 				}
-				setAlarm(&currentStepDateTime,PL_ProceedStep);
 				
-				currentStep = &chosenTask->step[0];
-				currentStepDateTime = chosenTask->startDateTime;
-				currentStepDateTime = *addSec(&currentStepDateTime,10);
+				currentStep = &chosenTask->step[0];	
 				setAlarm(&currentStepDateTime,PL_ProceedStep);
+
+			
 			} else {
-				
+				switch (startType){
+						case START_NORMAL:{
+							break;
+						}
+						case FORCE_START_NOW:
+						case FORCE_START_NEAREST:{
+							stopAlarm();
+							PL_ProceedStep();				
+							break;
+						}
+				}
 			}
 		}
-		
 	}
 }
-
 void PL_ProceedStep(void){
-	PC_GoToPoz(*currentStep->poz);
-	*addSec(&currentStepDateTime,currentStep->secPause);
-	setAlarm(&currentStepDateTime,PL_ProceedStep);
-	currentStep++;
-	if (currentStep->poz == NULL && currentStep->secPause == 0){
-		currentStep = 0;
-		chosenTask->startDateTime = *addDateTime(&chosenTask->startDateTime, &chosenTask->restartDateTime);
+	if (currentStep->poz != NULL){
+		PL_isRunnig = true;
+		PC_GoToPoz(*currentStep->poz);
+		currentStepDateTime = *addSec(&currentStepDateTime,currentStep->secPause);
+		setAlarm(&currentStepDateTime,PL_ProceedStep);
+		currentStep++;
+	} else {
+		PL_isRunnig = false;
+		redraw = 1;
+		chosenTask->startDateTime = *addDate(getTime(), &chosenTask->restartDateTime);
+		chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
 		PL_Planner(START_NORMAL);
 	}
 }

@@ -193,7 +193,7 @@ uint8_t refreshFrame(){
 		if (isInRectangle(tsState.X,tsState.Y,BSP_LCD_GetXSize() - 8*10 - 10, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6))
 		{
 			editedTime.second = 0;
-			setTime(&editedTime);
+			setSysTime(&editedTime);
 			displayedTime = *getTime();
 			createFrame();
 		}	
@@ -236,8 +236,8 @@ int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
 	return ShowKeyboardFrame();
 }
 uint8_t touchHandler(){
-	BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	//BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && wasTouch())
     {
       touchDelay = 100;
 			tsState.TouchDetected = 0;

@@ -72,13 +72,6 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-	//timeTest ();
-	#ifdef TESTS
-	/*TEST*/
-	//testFifo();
-	//testSPIHandler();
-	timeTest ();
-	#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -133,6 +126,10 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	PC_Init();
 	PL_Init();
+	#ifdef TESTS
+	/*TEST*/
+	timeTest ();
+	#endif
 	__enable_irq();
 	LL_mDelay(500);
 	

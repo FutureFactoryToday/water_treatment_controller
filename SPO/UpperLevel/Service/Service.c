@@ -67,8 +67,8 @@ void SERV_TS_CALIB(void){
 	
 	while (!exit){
 		LL_mDelay(10);
-		BSP_TS_GetState(&tsState);	
-		if (touchDelay == 0 && tsState.TouchDetected == 1 ){
+		//BSP_TS_GetState(&tsState);	
+		if (touchDelay == 0 && wasTouch() ){
 			touchDelay = 300;
 			SERV_PRINT_TOUCH_INFO();
 		
@@ -143,8 +143,8 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 	BSP_TS_SetCalibCoef((int16_t)kXe, (int16_t)kYe, (int16_t)bXe, (int16_t)bYe);
 	while (1){
 		LL_mDelay(10);
-		BSP_TS_GetState(&tsState);
-		if (touchDelay == 0 && tsState.TouchDetected == 1 ){
+		//BSP_TS_GetState(&tsState);
+		if (touchDelay == 0 && wasTouch() ){
 			touchDelay = 300;
 			SERV_PRINT_TOUCH_INFO();
 			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40)){
