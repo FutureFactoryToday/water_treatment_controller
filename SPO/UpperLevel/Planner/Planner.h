@@ -17,7 +17,7 @@
 
 /*Public defines */
 #define NAME_LENGTH 12
-#define STEP_PER_TASK_NUM 9
+#define STEP_PER_TASK_NUM 10
 #define TASK_NUM 2
 
 #define DEF_TASK_RESTART {0,0,30,0,0,0}
@@ -35,8 +35,8 @@ typedef struct {
 
 typedef struct {
 	task_line_t step[STEP_PER_TASK_NUM];
-	wtc_time_t restartDateTime;
-	wtc_time_t startDateTime;
+	wtc_time_t restartDateTime;                //дни между регенерациями
+	wtc_time_t startDateTime;                   //время первого запуска
 } piston_task_t;
 
 typedef enum {

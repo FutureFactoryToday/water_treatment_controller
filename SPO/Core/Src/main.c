@@ -72,7 +72,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-	timeTest ();
+	//timeTest ();
 	#ifdef TESTS
 	/*TEST*/
 	//testFifo();
