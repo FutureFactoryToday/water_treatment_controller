@@ -253,8 +253,8 @@ void AnimatePosMenuFrame(void)
 
 void TranslateMenuAdjustmentMSG(void)
 {
-    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+  //BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,SAVE_BUTTON_X,SAVE_BUTTON_Y,SAVE_BUTTON_SIZE_X,SAVE_BUTTON_SIZE_Y)) 

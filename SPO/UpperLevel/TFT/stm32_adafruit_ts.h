@@ -50,7 +50,7 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize);
 void    BSP_TS_GetState(TS_StateTypeDef *TsState);
 void BSP_TS_SetCalibCoef(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe);
 void BPS_TS_Calibrate(void);
-
+bool wasTouch(void);
 
 #ifdef __cplusplus
 }

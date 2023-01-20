@@ -105,3 +105,12 @@ void BSP_TS_SetCalibCoef(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){
 		bX = bXe;
 		bY = bYe;
 }
+
+bool wasTouch(){
+	if (tsState.TouchDetected == 1){
+		tsState.TouchDetected = 0;
+		return 1;
+	} else {
+		return 0;
+	}
+}

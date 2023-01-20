@@ -42,6 +42,11 @@ void setAlarm(wtc_time_t* time, void (*func)(void)){
   LL_RTC_ExitInitMode(RTC);
 	
 	funcPtr = func;
+	LL_RTC_ClearFlag_ALR(RTC);
+	LL_RTC_EnableIT_ALR(RTC);
+}
+void stopAlarm(){
+	LL_RTC_DisableIT_ALR(RTC);
 }
 
 void ALARM_INTERRUPT(){

@@ -237,7 +237,7 @@ void EXTI3_IRQHandler(void)
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
 			redraw = 1;
 
-			//BSP_TS_GetState(&tsState);
+			BSP_TS_GetState(&tsState);
 		}
 		
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);

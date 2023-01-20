@@ -47,7 +47,7 @@ typedef struct {
 void Time_init(void);
 
 //��������� ������. ������ BIN (�������)
-void setTime (wtc_time_t *time);
+void setSysTime (wtc_time_t *time);
 
 //���������� ��������� �� ��������� �����
 wtc_time_t* getTime (void);
@@ -132,7 +132,9 @@ wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
 wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
-
+wtc_time_t* setTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t* setDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t* setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 //firstTime - secondTime
 wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 

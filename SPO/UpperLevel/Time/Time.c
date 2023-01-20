@@ -162,7 +162,7 @@ void Time_init(){
 		LL_RTC_AlarmTypeDef alarm = {0};
 		
 		LL_RTC_ALARM_StructInit(&alarm);
-		setTime(&defTime);
+		setSysTime(&defTime);
 		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
 	} else {
 		time_t rawtime = LL_RTC_TIME_Get(RTC);
@@ -181,7 +181,7 @@ wtc_time_t* getTime (){
 	return &sysTime;
 }
 
-void setTime (wtc_time_t* time){
+void setSysTime (wtc_time_t* time){
 	LL_RTC_TimeTypeDef timeStr = {0};
 	
 	assert_param(time->day != 0);
@@ -464,6 +464,32 @@ wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	tempTime = *addHour(&tempTime, secondTime->hour);
 	return &tempTime;
 }
+
+wtc_time_t* setTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	tempTime.second = secondTime->second;
+	tempTime.minute = secondTime->minute;
+	tempTime.hour = secondTime->hour;
+	return &tempTime;
+}
+wtc_time_t* setDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	tempTime.year = secondTime->year;
+	tempTime.month = secondTime->month;
+	tempTime.day = secondTime->day;
+	return &tempTime;
+}
+wtc_time_t* setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+	wtc_time_t tempTime = *firstTime;
+	tempTime.year = secondTime->year;
+	tempTime.month = secondTime->month;
+	tempTime.day = secondTime->day;
+	tempTime.second = secondTime->second;
+	tempTime.minute = secondTime->minute;
+	tempTime.hour = secondTime->hour;
+	return &tempTime;
+}
+
 bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
 	return firstTime->year == secondTime->year &&
 	firstTime->month == secondTime->month &&
