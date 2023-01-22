@@ -72,7 +72,7 @@ void initGUI(void){
 uint32_t neededPoz = 0;
 
 void translateMessage(void){
-	//BSP_TS_GetState(&tsState);
+	BSP_TS_GetState(&tsState);
 	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;

@@ -86,10 +86,11 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		PC_GoToPoz(FULL_LENGTH + 100);
 		pcParams.workStatus = PC_SEEK_ZERO;
 		//∆дем пока сработает контроль или SEEK_TIME секунд
-		while (pcParams.workStatus == PC_SEEK_ZERO && seek_cnt++ < SEEK_TIME*1000){
+		while (pcParams.workStatus == PC_SEEK_ZERO 
+			&& seek_cnt++ < 2 * SEEK_TIME*1000){
 			LL_mDelay(1);
 		}
-		if (seek_cnt >= SEEK_TIME*1000){
+		if (seek_cnt > 2 * SEEK_TIME*1000){
 			if (result == NO_MIN){
 				result = NO_MIN_MAX;
 			} else {
@@ -100,7 +101,8 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		MOT_Stop();
 		pcParams.maxPoz = pcParams.curPoz-5;
 
-		if (mod(maxPoz - minPoz) < PISTON_MOVE_MIN || maxPoz < minPoz){
+		if (result != NO_MIN_MAX && 
+			(mod(maxPoz - minPoz) < PISTON_MOVE_MIN || maxPoz < minPoz)){
 				result = STALL;
 		}
 
@@ -108,12 +110,14 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 			PC_GoToPoz(minPoz);
 			pcParams.curPoz = 0;
 		}
+		pcParams.maxPoz += mod(pcParams.minPoz);
+		pcParams.minPoz = 0;
 	}
 	return result;
 }
 void PC_GoToPoz (int32_t dest){
 	stall_cnt = 0;
-	if (pcParams.workStatus = PC_ERROR){
+	if (pcParams.workStatus == PC_ERROR){
 		return;
 	}
 	if (pcParams.curPoz == dest){
@@ -121,8 +125,8 @@ void PC_GoToPoz (int32_t dest){
 		return;
 	}
 	if (dest > pcParams.maxPoz || dest < pcParams.minPoz){
-		//pcParams.workStatus = PC_ERROR;
-		//return;
+		pcParams.workStatus = PC_ERROR;
+		return;
 	}
 	destination = dest;
 	
@@ -160,12 +164,12 @@ void PC_Init(void){
 	}
 	MOT_Init(PWM,MOT_TIM);
 	//pcParams.calibResult = PC_AUTO_CALIBRATE();
-	if (pcParams.calibResult == OK){
+	if (pcParams.calibResult == PASSED){
 		pcParams.workStatus = PC_READY;
 	} else {
-		//pcParams.workStatus = PC_ERROR;
+		pcParams.workStatus = PC_ERROR;
 	}
-    pcParams.workStatus = PC_READY;
+    //pcParams.workStatus = PC_READY;
 }
 
 void PC_OpticSensInterrupt(void){

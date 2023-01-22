@@ -35,14 +35,14 @@
 #define	DEF_FILTERING_POS 60; 
 
 typedef enum {
-	 PC_ERROR,
+	 PC_ERROR = 1,
 	 PC_IN_PROCESS,
 	 PC_READY,
 	 PC_SEEK_ZERO,
 } pc_work_status_t;
 
 typedef enum {
-	PASSED,
+	PASSED = 1,
 	STALL,
 	NO_MIN,
 	NO_MAX,

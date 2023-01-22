@@ -1,9 +1,13 @@
 #include "mainFrame.h"
 uint8_t* FormatTime = "hh:mm";
-uint8_t* TimeStr;
-
+int32_t remainingDays;
+bool showDays;
 uint8_t hwndMainFrameControl = 0;
 int8_t startMainFrame = 1;
+uint8_t* dayText = DELAY_REGEN_UNITS;
+uint8_t* timeText = "��:��:��";
+uint8_t* valText, *unitsText;
+bool update;
 
 void ShowMainFrame(void)
 {
@@ -64,19 +68,62 @@ void RefreshMainFrame(void)
     BSP_LCD_DisplayStringAt(SPEED_STATUS_TEXT_X, SPEED_STATUS_TEXT_Y, SPEED, LEFT_MODE);
     BSP_LCD_DisplayStringAt(TIME_STATUS_TEXT_X, TIME_STATUS_TEXT_Y, TIME, LEFT_MODE);
     
-    BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_UNITS_X, DELAY_REGEN_STATUS_UNITS_Y, DELAY_REGEN_UNITS, LEFT_MODE);
+		
     BSP_LCD_DisplayStringAt(SPEED_STATUS_UNITS_X, SPEED_STATUS_UNITS_Y, SPEED_UNITS, LEFT_MODE);
     BSP_LCD_DisplayStringAt(TIME_STATUS_UNITS_X , TIME_STATUS_UNITS_Y, TIME_UNITS, LEFT_MODE);
-
-    //Dinamic refresh
-
-	TimeStr = getFormatedTime(FormatTime);
-    
+		startMainFrame = 0;
+		}
+    //Dinamic refres
+	
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		BSP_LCD_FillRect(DELAY_REGEN_VALUE_BOX_X+1, DELAY_REGEN_VALUE_BOX_Y+1, DELAY_REGEN_VALUE_BOX_SIZE_X-2, DELAY_REGEN_VALUE_BOX_SIZE_Y-2);
+		
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		if (chosenTask == NULL || isZeroDateTime(&chosenTask->startDateTime) || compareDateTime(&chosenTask->startDateTime, getTime())<=0){
+			BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+			if (unitsText != dayText){
+					unitsText = dayText;
+					update = true;
+				}
+			BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+			BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_VALUE_X, DELAY_REGEN_STATUS_VALUE_Y, PL_NOT_INITED, LEFT_MODE);
+		} else {
+			remainingDays = countDaysBetween(getTime(), &chosenTask->startDateTime);//*decDateTime(&chosenTask->startDateTime,getTime());
+			BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+			if (!equalDate(&chosenTask->startDateTime,getTime())){
+				BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_VALUE_X, DELAY_REGEN_STATUS_VALUE_Y, intToStr(remainingDays), LEFT_MODE);
+			} else {
+				BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_VALUE_X, DELAY_REGEN_STATUS_VALUE_Y, getFormatedTimeFromSource("hh:mm:ss",decDateTime(&chosenTask->startDateTime,getTime())), LEFT_MODE);	
+			}
+			BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+			if (!equalDate(&chosenTask->startDateTime,getTime())){
+				if (unitsText != dayText){
+					unitsText = dayText;
+					update = true;
+				}
+			}else {
+				if (unitsText != timeText){
+					unitsText = timeText;
+					update = true;
+				}
+			}
+		}
+		if (update){
+			BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+			BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+			BSP_LCD_FillRect(DELAY_REGEN_STATUS_UNITS_X, DELAY_REGEN_STATUS_UNITS_Y, BSP_LCD_GetXSize() - DELAY_REGEN_STATUS_UNITS_X, BSP_LCD_GetFont()->height);
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_UNITS_X, DELAY_REGEN_STATUS_UNITS_Y, unitsText, LEFT_MODE);
+			update = false;
+		}
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_VALUE_X, DELAY_REGEN_STATUS_VALUE_Y, DELAY_REGEN_VALUE, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(SPEED_STATUS_VALUE_X, SPEED_STATUS_VALUE_Y, SPEED_VALUE, LEFT_MODE); 
-    startMainFrame = 0;
-    }    
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		BSP_LCD_FillRect(SPEED_VALUE_BOX_X+1, SPEED_VALUE_BOX_Y+1, SPEED_VALUE_BOX_SIZE_X-2, SPEED_VALUE_BOX_SIZE_Y-2);
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_DisplayStringAt(SPEED_STATUS_VALUE_X, SPEED_STATUS_VALUE_Y, intToStr(FM_getFlowHzInt()), LEFT_MODE); 
+    
+        
 }
 
 void AnimateTimeMainFrame(void)
@@ -106,7 +153,7 @@ void AnimateTimeMainFrame(void)
 void TranslateMainFrameMSG (void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )

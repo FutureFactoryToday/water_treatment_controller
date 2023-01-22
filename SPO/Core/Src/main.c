@@ -111,14 +111,7 @@ int main(void)
   MX_RTC_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-	
-//	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-//	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
-//  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-//  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-//  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-//  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-//	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
+
 	FP_GetParam();
 	System_init();
 	Time_init();
@@ -136,47 +129,7 @@ int main(void)
 	initGUI();
 	
 	FP_SaveParam();
-	
-//	PC_GoToPoz(500);
-//	while(PC_GetStatus() != PC_COMPLETE){
-//		
-//	}
-//	LL_mDelay(2000);
-//	PC_GoToPoz(1500);
-//	while(PC_GetStatus() != PC_COMPLETE){
-//		
-//	}
-//	LL_mDelay(2000);
-//	PC_GoToPoz(500);
-//	while(PC_GetStatus() != PC_COMPLETE){
-//		
-//	}
-//	LL_mDelay(2000);
-//	PC_GoToPoz(0);
-//	while(PC_GetStatus() != PC_COMPLETE){
-//		
-//	}
 
-	
-	//MOT_TEST();
-
-	//uint32_t tftID = manIDRead();
-//	initTFT();
-//	uint8_t ID[4] = {0};
-//	readResult_t res;
-//	res.dataBuf = ID;
-//	res.result = 0;
-//	readID(&res);
-//	while (res.result != FINISH);
-	
-	//uint32_t tftID = (ID[3]<<24) + (ID[2]<<16) + (ID[1]<<8);
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-//	wtc_time_t alT = *getTime();
-//	addSec(&alT,10);
-//	waitTime(alT, &LED_BLINK);
 	
   ShowMainFrame();
 	

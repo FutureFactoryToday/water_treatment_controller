@@ -191,6 +191,7 @@ void SysTick_Handler(void)
 	if (_1ms_cnt%500 == 0){
 		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	}
+	redraw = 1;
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */

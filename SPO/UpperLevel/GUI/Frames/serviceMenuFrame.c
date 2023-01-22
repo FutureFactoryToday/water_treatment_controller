@@ -7,7 +7,7 @@ int8_t hwndServiceMenuFrameControl = 0;
 int8_t startServiceMenuFrame = 0;
 
 //char* ITEM_SERVICE_MENU[] = { "FILTER SELECTION", "REGEN PERIOD", "WASHING TIME", "QUANTITY COUNT", "REGEN", "ALARM NOTIFICATION" };
-char* ITEM_SERVICE_MENU[] = { "бшанп тхкэрпю", "оепхнд пецем", "бпелъ опнлшбйх", "явервхй бндш", "пецемепюжхъ", "пецскхпнбйю йкюоюмю", "сбеднлкемхе наяксфхбюмхъ" };
+char* ITEM_SERVICE_MENU[] = { "О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫" };
 
 void ShowServiceFrame(void)
 {
@@ -172,7 +172,7 @@ void AnimateTimeServiceMenuFrame(void)
 void TranslateServiceMenuFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

@@ -28,10 +28,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 char* pinRuText[] = {
-	"СЕРВИСНЫЙ КОД ДОСТУПА",
-	"Введите код",
-	"ВВОД",
-	"Введите число"
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"
 };
 char* pinEnText[] = {
 	"SERVICE PASSWORD",
@@ -112,7 +112,7 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
 }
 uint8_t pinTouchHandler(){
 	BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
       touchDelay = 100;
 			tsState.TouchDetected = 0;

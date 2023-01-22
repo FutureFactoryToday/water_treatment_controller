@@ -8,7 +8,7 @@ int8_t hwndFilteringFrameControl = 0;
 int8_t startFilteringFrame = 0;
 
 int8_t step = 0;
-char* ITEM_FILTERING[10] = { "ÎÁÐ.ÏÐÎÌ.", "ÏÐßÌ.ÏÐÎÌ."};
+char* ITEM_FILTERING[10] = { "ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½.", "ï¿½ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½."};
 
 
 void ShowFilteringFrame(void)
@@ -68,7 +68,7 @@ void RefreshFilteringFrame(void)
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_FILTERING,LEFT_MODE);
         BSP_LCD_DisplayStringAt(SAVE_X - 200,SAVE_Y,intToStr(step),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"ÑÎÕÐ.",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"ï¿½ï¿½ï¿½ï¿½.",LEFT_MODE);
         
         RefreshItem();        
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
@@ -89,8 +89,8 @@ void RefreshFilteringFrame(void)
         BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 1],LEFT_MODE);
         //BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 2],LEFT_MODE);
         
-//        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"ÌÈÍ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"ÌÈÍ",LEFT_MODE);
+//        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½",LEFT_MODE);
         
 //        BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
         BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);
@@ -129,7 +129,7 @@ void RefreshItem(void)
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt],LEFT_MODE);
     
-    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"ÌÈÍ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½",LEFT_MODE);
     
     BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
     
@@ -142,15 +142,15 @@ void RefreshCreateBox(void)
 {
 //    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
 //    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//    BSP_LCD_DisplayStringAt(155,FIRST_CURSOR_POS_Y + 17,"ÑÎÇÄÀÒÜ",LEFT_MODE);
+//    BSP_LCD_DisplayStringAt(155,FIRST_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
 //    
 //    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
 //    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//    BSP_LCD_DisplayStringAt(155,SECOND_CURSOR_POS_Y + 17,"ÑÎÇÄÀÒÜ",LEFT_MODE);
+//    BSP_LCD_DisplayStringAt(155,SECOND_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(155,THRID_CURSOR_POS_Y + 17,"ÑÎÇÄÀÒÜ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(155,THRID_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
     
 }
 
@@ -185,8 +185,8 @@ void AnimateScrollBarKeysFilteringFrame(void)
 
 void TranslateMenuFilteringMSG(void)
 {
-    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+  BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

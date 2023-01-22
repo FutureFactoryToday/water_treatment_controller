@@ -78,11 +78,11 @@ void PL_Init(){
 void PL_Planner (planner_control_type_t startType){
 
 	if (chosenTask != NULL){
-		if (!isZeroTime(&chosenTask->restartDateTime)){
+		if (!isZeroDateTime(&chosenTask->restartDateTime)){
 				if (!PL_isRunnig){
 					switch (startType){
 						case START_NORMAL:{
-							if(!isZeroTime(&chosenTask->startDateTime)) {
+							if(!isZeroDateTime(&chosenTask->startDateTime)) {
 								if (compareDateTime(&chosenTask->startDateTime, getTime()) < 0){
 									chosenTask->startDateTime = *addDate(&chosenTask->startDateTime,&chosenTask->restartDateTime);
 								}

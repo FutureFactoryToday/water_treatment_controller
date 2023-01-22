@@ -49,7 +49,7 @@ void RefreshQuantityCountServiceFrame(void)
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, "лерпю(лерпнб) йсахвеяйху", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, "О©╫О©╫О©╫О©╫О©╫(О©╫О©╫О©╫О©╫О©╫О©╫) О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 
@@ -80,7 +80,7 @@ void AnimateTimeQuantityCountServiceFrame(void)
 void TranslateQuantityCountServiceFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

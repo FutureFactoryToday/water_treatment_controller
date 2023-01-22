@@ -21,6 +21,7 @@
 #define SPEED_UNITS "Ë/ÌÈÍ"
 #define TIME_UNITS "××:ÌÌ"
 
+#define PL_NOT_INITED "---"
 #define DELAY_REGEN_VALUE "4"
 #define SPEED_VALUE "6"
 #define TIME_VALUE "12:00"

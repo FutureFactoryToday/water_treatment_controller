@@ -43,21 +43,21 @@
 
 /* Private variables ---------------------------------------------------------*/
 char* ruText[] = {
-	"ВРЕМЯ/ДАТА",
-	"Настройка времени и даты",
-	"ГОД",
-	"МЕСЯЦ",
-	"ДЕНЬ",
-	"ЧАС",
-	"МИНУТА",
-	"ЗАПИСАТЬ",
-	"ОТМЕНА",
-	"Настройка времени и даты",
-	"Введите год",
-	"Введите месяц",
-	"Введите день",
-	"Введите час",
-	"Введите минуты"
+	"пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ",
+	"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"
 };
 char* enText[] = {
 	"Date and time",
@@ -125,7 +125,7 @@ void TSF_showFrame(){
 }
 
 uint8_t refreshFrame(){
-	/*Кнопка Установки времени*/
+	/*пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 	if (isInRectangle(tsState.X,tsState.Y,CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y,setTimeButtonLength + 5,Oxygen_Mono_20.height+3))
   {
 		if (!editBoxesShow)
@@ -142,9 +142,9 @@ uint8_t refreshFrame(){
 		}
 		
 	}
-	/* Установка времени*/
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 	if (editBoxesShow){
-		//Настраиваем год
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 		if (isInRectangle(tsState.X,tsState.Y,BOX_X,YEAR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
 		{
 			int32_t kbResult = callKeyboard(0, 9999, (*(frameText + CH_YEAR_TEXT)));
@@ -225,7 +225,7 @@ uint8_t refreshFrame(){
 			}
 			drawMonth();
 		}
-		//Кнопка "Назад"
+		//пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅ"
 	if (isInRectangle(tsState.X,tsState.Y,10, 10,gImage_RETURNARROW.infoHeader.biWidth,gImage_RETURNARROW.infoHeader.biHeight))
   {
 		return 1;
@@ -237,7 +237,7 @@ int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
 }
 uint8_t touchHandler(){
 	BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
       touchDelay = 100;
 			tsState.TouchDetected = 0;

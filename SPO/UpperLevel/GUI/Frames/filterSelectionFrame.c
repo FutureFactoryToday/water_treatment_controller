@@ -7,7 +7,7 @@ int8_t hwndFilterSelectionFrameControl = 0;
 int8_t startFilterSelectionFrame = 0;
 
 //char* ITEM_FILTER_SELECTION[] = { "FILTERING", "SOFTENING" };
-char* ITEM_FILTER_SELECTION[] = { "ÔÈËÜÒÐÀÖÈß", "ÓÌßÃ×ÅÍÈÅ" };
+char* ITEM_FILTER_SELECTION[] = { "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" };
 
 void ShowFilterSelectionFrame(void)
 {
@@ -148,8 +148,8 @@ void AnimateTimeFilterSelectionFrame(void)
 
 void TranslateFilterSelectionFrameMSG(void)
 {
-    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+  BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

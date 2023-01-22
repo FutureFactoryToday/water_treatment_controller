@@ -2,16 +2,18 @@
 
 uint8_t adjustment_frame_Scroll_cnt = 0;
 uint8_t adjustment_frame_was_Scroll = 0;
-int32_t qwertyAdj[] = {0, 0, 0, 0, 0, 0, 0};
+//int32_t pistonPositions.[] = {0, 0, 0, 0, 0, 0, 0};
 int8_t hwndAdjustmentFrameControl = 0;
 int8_t startAdjustmentFrame = 0;
-char* ITEM_ADJUSTMENT[] = { "ÇÀÊÐÛÒÎÅ ÏÎË.", "ÎÁÐÀÒ.ÏÐÎÌ.", "ÐÅÃÅÍ.", "ÇÀÏÎËÍÅÍÈÅ", "ÓÌßÃ×ÅÍÈÅ", "ÏÐÎÌÛÂÊÀ", "ÔÈËÜÒÐÀÖÈß" };
+uint32_t *firstEl;
+char* ITEM_ADJUSTMENT[] = { "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½.", "ï¿½ï¿½ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½.", "ï¿½ï¿½ï¿½ï¿½ï¿½.", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" };
 
 void ShowAdjustmentFrame(void)
 {
-    hwndAdjustmentFrameControl = -1;
-    adjustment_frame_Scroll_cnt = 0;
-    startAdjustmentFrame = 1;
+	hwndAdjustmentFrameControl = -1;
+	adjustment_frame_Scroll_cnt = 0;
+	startAdjustmentFrame = 1;
+	firstEl = &pistonPositions.closedPosition;
     while(1)
     {
         if(redraw)
@@ -27,13 +29,13 @@ void ShowAdjustmentFrame(void)
         if(hwndAdjustmentFrameControl == 40)
         {
             fp->needToSave = true;
-            fp->params.pistonPositions.closedPosition = qwertyAdj[0];
-            fp->params.pistonPositions.backwash = qwertyAdj[1];
-            fp->params.pistonPositions.regeneration = qwertyAdj[2];
-            fp->params.pistonPositions.filling = qwertyAdj[3];
-            fp->params.pistonPositions.softening = qwertyAdj[4];
-            fp->params.pistonPositions.flushing = qwertyAdj[5];
-            fp->params.pistonPositions.filtering = qwertyAdj[6];            
+            fp->params.pistonPositions.closedPosition = pistonPositions.closedPosition;
+            fp->params.pistonPositions.backwash = pistonPositions.backwash;
+            fp->params.pistonPositions.regeneration = pistonPositions.regeneration;
+            fp->params.pistonPositions.filling = pistonPositions.filling;
+            fp->params.pistonPositions.softening = pistonPositions.softening;
+            fp->params.pistonPositions.flushing = pistonPositions.flushing;
+            fp->params.pistonPositions.filtering = pistonPositions.filtering;            
             FP_SaveParam();
             
             startAdjustmentFrame = 1;
@@ -41,87 +43,91 @@ void ShowAdjustmentFrame(void)
         
         if(hwndAdjustmentFrameControl == 30)
         {
-            qwertyAdj[0] = 0;
-            qwertyAdj[1] = 0;
-            qwertyAdj[2] = 0;
-            qwertyAdj[3] = 0;
-            qwertyAdj[4] = 0;
-            qwertyAdj[5] = 0;
-            qwertyAdj[6] = 0;
+            pistonPositions.closedPosition = 0;
+            pistonPositions.backwash = 0;
+            pistonPositions.regeneration = 0;
+            pistonPositions.filling = 0;
+            pistonPositions.softening = 0;
+            pistonPositions.flushing = 0;
+            pistonPositions.filtering = 0;
             
             startAdjustmentFrame = 1;
         }
         
         if(hwndAdjustmentFrameControl == 0)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.closedPosition = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 1)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.backwash = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 2)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.regeneration = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 3)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.filling = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 4)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.softening = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 5)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.flushing = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 6)
         {
-            qwertyAdj[hwndAdjustmentFrameControl] = ShowKeyboardFrame();
+            pistonPositions.filtering = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
-        
+        if (hwndAdjustmentFrameControl >=10 ||
+					hwndAdjustmentFrameControl <= 16)
+				{
+					PC_Restart();
+				}
         //cycle start
         if(hwndAdjustmentFrameControl == 10)
         {
-            PC_GoToPoz(qwertyAdj[0]);
+            PC_GoToPoz(pistonPositions.closedPosition);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 11)
         {
-            PC_GoToPoz(qwertyAdj[1]);
+            PC_GoToPoz(pistonPositions.backwash);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 12)
         {
-            PC_GoToPoz(qwertyAdj[2]);
+            PC_GoToPoz(pistonPositions.regeneration);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 13)
         {
-            PC_GoToPoz(qwertyAdj[3]);
+            PC_GoToPoz(pistonPositions.filling);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 14)
         {
-            PC_GoToPoz(qwertyAdj[4]);
+            PC_GoToPoz(pistonPositions.softening);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 15)
         {
-            PC_GoToPoz(qwertyAdj[5]);
+            PC_GoToPoz(pistonPositions.flushing);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 16)
         {
-            PC_GoToPoz(qwertyAdj[6]);
+            PC_GoToPoz(pistonPositions.filtering);
             startAdjustmentFrame = 1;
         }
         
@@ -148,9 +154,9 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_ADJUSTMENT,LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"ÑÎÕÐ.",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,"ÑÁÐÎÑ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,"ÏÎÇ:",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"ï¿½ï¿½ï¿½ï¿½.",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,"ï¿½ï¿½ï¿½:",LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -171,9 +177,9 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
         
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
 
         BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
@@ -185,9 +191,9 @@ void RefreshAdjustmentFrame(void)
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt + 1]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt + 2]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt)),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 1)),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 2)),LEFT_MODE);
         
 
         
@@ -218,15 +224,15 @@ void RefreshScrollBarAdjustmentFrame()
     BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"ÑÒÀÐÒ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"ï¿½ï¿½ï¿½ï¿½ï¿½",LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt]),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt + 1]),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyAdj[adjustment_frame_Scroll_cnt + 2]),LEFT_MODE);
+    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt)),LEFT_MODE);
+    BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 1)),LEFT_MODE);
+    BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 2)),LEFT_MODE);
     
     
 }
@@ -253,8 +259,8 @@ void AnimatePosMenuFrame(void)
 
 void TranslateMenuAdjustmentMSG(void)
 {
-    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+  BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,SAVE_BUTTON_X,SAVE_BUTTON_Y,SAVE_BUTTON_SIZE_X,SAVE_BUTTON_SIZE_Y)) 

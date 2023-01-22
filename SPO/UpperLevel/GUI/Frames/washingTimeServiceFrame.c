@@ -51,7 +51,7 @@ void RefreshWashingTimeServiceFrame(void)
         BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
+        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ï¿½ï¿½ï¿½ï¿½", LEFT_MODE);
     }
 		if(equalTime(&pistonTasks[REGENERATION_TASK_NUM].restartDateTime,&pl_nightWashTime))
     //if(FP_GetParam()->params.washTime == 2)
@@ -62,15 +62,15 @@ void RefreshWashingTimeServiceFrame(void)
         BSP_LCD_DrawRect(WASHING_TIME_VALUE_BOX_X, WASHING_TIME_VALUE_BOX_Y, WASHING_TIME_VALUE_BOX_SIZE_X, WASHING_TIME_VALUE_BOX_SIZE_Y);
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+        BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X, WASHING_TIME_VALUE_Y, "ï¿½ï¿½ï¿½ï¿½", LEFT_MODE);
     }
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 150, WASHING_TIME_VALUE_Y, "ÄÅÍÜ", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 150, WASHING_TIME_VALUE_Y, "ï¿½ï¿½ï¿½ï¿½", LEFT_MODE);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 250, WASHING_TIME_VALUE_Y, "ÍÎ×Ü", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(WASHING_TIME_VALUE_X + 250, WASHING_TIME_VALUE_Y, "ï¿½ï¿½ï¿½ï¿½", LEFT_MODE);
     
 
     //BSP_LCD_SetFont(&Oxygen_Mono_24);
@@ -103,7 +103,7 @@ void AnimateTimeWashingTimeServiceFrame(void)
 void TranslateWashingTimeServiceFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
+	if (touchDelay == 0 && wasTouch())
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

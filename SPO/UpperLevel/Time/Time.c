@@ -242,6 +242,17 @@ struct tm wtcTimeToStdTime (wtc_time_t* time){
 	return newTime;
 }
 
+wtc_time_t stdTimeToWTCTime (struct tm* time){
+	wtc_time_t newTime;
+	newTime.hour = time->tm_hour;
+	newTime.minute = time->tm_min;
+	newTime.second = time->tm_sec;
+	newTime.day = time->tm_mday;
+	newTime.month = time->tm_mon + 1;
+	newTime.year = time->tm_year + 1900;
+	return newTime;
+}
+
 wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth){
 	wtc_time_t time = *initTime;
 	if (numMonth == 0)
@@ -540,7 +551,7 @@ int8_t compareTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
 		}
 	}
 }
-bool isZeroTime(wtc_time_t* time){
+bool isZeroDateTime(wtc_time_t* time){
 	wtc_time_t zeroTime = {0};
 	if (compareDateTime(time, &zeroTime) == 0){
 		return 1;
@@ -548,6 +559,23 @@ bool isZeroTime(wtc_time_t* time){
 		return 0;
 	}
 }
+bool isZeroDate(wtc_time_t* time){
+	wtc_time_t zeroTime = {0};
+	if (compareDate(time, &zeroTime) == 0){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+bool isZeroTime(wtc_time_t* time){
+	wtc_time_t zeroTime = {0};
+	if (compareTime(time, &zeroTime) == 0){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 int8_t compareDate(wtc_time_t* firstTime, wtc_time_t* secondTime){
 	if (equalDate(firstTime,secondTime)){
 		return 0;
@@ -614,7 +642,23 @@ int8_t compareDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
 		}
 	}
 }
-
+int32_t countDaysBetween (wtc_time_t* startTime, wtc_time_t* stopTime){
+	wtc_time_t tempTime = *startTime;
+	uint32_t result;
+	
+	if (compareDateTime(startTime,stopTime) > 0 ||
+		compareDateTime(startTime, &(wtc_time_t)MIN_DATE_TIME) < 0){
+		return -1;
+	} 
+	if (equalDate(startTime,stopTime)){
+		return 0;
+	}
+	struct tm startEdTime = wtcTimeToStdTime(startTime);
+	struct tm stopEdTime = wtcTimeToStdTime(stopTime);
+	uint32_t secNum = mktime(&stopEdTime) - mktime(&startEdTime);
+	
+	return (secNum/(24*60*60));
+}
 bool isLeapYear(uint16_t year){
 	return ((year%4 == 0 && year % 100 != 0) || year % 400 == 0);
 }

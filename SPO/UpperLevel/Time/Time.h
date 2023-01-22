@@ -18,6 +18,7 @@
 #include <stdbool.h>
 
 /*Public defines */
+#define MIN_DATE_TIME {1900, 1, 1, 0,0,0}
 #define DEFAULT_TIME {2022, 10, 22,12,0,0}
 #define DAYS_NUM 7
 #define MONTHS_NUM 12
@@ -110,6 +111,8 @@ uint8_t getDayNameByDate(wtc_time_t *date);
 uint8_t timeTest (void);
 
 struct tm wtcTimeToStdTime (wtc_time_t* time);
+wtc_time_t stdTimeToWTCTime (struct tm* time);
+
 
 wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth);
 wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth);
@@ -151,6 +154,10 @@ int8_t compareTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
 int8_t compareDate(wtc_time_t* firstTime, wtc_time_t* secondTime);
 int8_t compareDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
 
+bool isZeroDateTime(wtc_time_t* time);
+bool isZeroDate(wtc_time_t* time);
 bool isZeroTime(wtc_time_t* time);
+
+int32_t countDaysBetween (wtc_time_t* startTime, wtc_time_t* stopTime);
 #endif /* _TIME_H_ */
 
