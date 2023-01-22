@@ -105,8 +105,8 @@ void AnimateTimeMainFrame(void)
 
 void TranslateMainFrameMSG (void)
 {
-    //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )

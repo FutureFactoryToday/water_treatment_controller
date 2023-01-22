@@ -59,7 +59,7 @@ extern char* ITEM_FILTERING[];
 
 #define FIRST_CURSOR_VALUE_BOX_X 210
 #define FIRST_CURSOR_VALUE_BOX_Y TOP_BOT_LINE_WIDTH
-#define FIRST_CURSOR_VALUE_BOX_SIZE_X 130
+#define FIRST_CURSOR_VALUE_BOX_SIZE_X 80
 #define FIRST_CURSOR_VALUE_BOX_SIZE_Y 66
 
 #define SECOND_CURSOR_VALUE_BOX_X 210
@@ -101,6 +101,10 @@ extern char* ITEM_FILTERING[];
 void ShowFilteringFrame(void);
 
 void RefreshFilteringFrame(void);
+
+void RefreshItem(void);
+
+void RefreshCreateBox(void);
 
 void RefreshScrollBarFilteringFrame(void);
 

@@ -148,8 +148,8 @@ void AnimateTimeFilterSelectionFrame(void)
 
 void TranslateFilterSelectionFrameMSG(void)
 {
-  //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

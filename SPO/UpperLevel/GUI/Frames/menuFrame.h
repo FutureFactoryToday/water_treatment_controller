@@ -1,6 +1,5 @@
 #include "main.h"
 
-//#define MODE_CUSTOMER "CUSTOMER"
 #define MODE_CUSTOMER "онкэгнбюрекэ"
 extern char* ITEM_MENU[];
 
@@ -100,4 +99,3 @@ void AnimateScrollBarKeysMenuFrame(void);
 void AnimateTimeMenuFrame(void);
 
 void TranslateMenuFrameMSG(void);
-

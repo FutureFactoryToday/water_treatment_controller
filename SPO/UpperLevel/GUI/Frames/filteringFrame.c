@@ -6,8 +6,10 @@ int32_t qwertyFilBWASH = 0;
 int32_t qwertyFilDFLUSH = 0;
 int8_t hwndFilteringFrameControl = 0;
 int8_t startFilteringFrame = 0;
-//char* ITEM_FILTERING[] = { "BWASH", "DFLUSH" };
-char* ITEM_FILTERING[] = { "Œ¡–.œ–ŒÃ.", "œ–ﬂÃ.œ–ŒÃ." };
+
+int8_t step = 0;
+char* ITEM_FILTERING[10] = { "Œ¡–.œ–ŒÃ.", "œ–ﬂÃ.œ–ŒÃ."};
+
 
 void ShowFilteringFrame(void)
 {
@@ -19,9 +21,9 @@ void ShowFilteringFrame(void)
         if(redraw)
         {
             RefreshFilteringFrame();
+            RefreshCreateBox();
             redraw = 0;
         }
-        //AnimateTimeMenuFrame();
         TranslateMenuFilteringMSG();
         
         if(hwndFilteringFrameControl == 20) return;
@@ -37,7 +39,11 @@ void ShowFilteringFrame(void)
             qwertyFilDFLUSH = ShowKeyboardFrame();
             startFilteringFrame = 1;
         }
-        
+        if(hwndFilteringFrameControl == 2)
+        {
+            step = ShowStepsFrame();
+            startFilteringFrame = 1;
+        }
         hwndFilteringFrameControl = -1;
     }
 }
@@ -61,29 +67,33 @@ void RefreshFilteringFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_FILTERING,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X - 200,SAVE_Y,intToStr(step),LEFT_MODE);
         BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"—Œ’–.",LEFT_MODE);
-            
+        
+        RefreshItem();        
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        BSP_LCD_DrawRect(FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y);
+//        BSP_LCD_DrawRect(FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y);
         BSP_LCD_DrawRect(SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y);
         BSP_LCD_DrawRect(THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y);
         BSP_LCD_DrawRect(SCROLLBAR_POS_X,SCROLLBAR_POS_Y,SCROLLBAR_SIZE_X,SCROLLBAR_SIZE_Y);
         
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        BSP_LCD_FillRect(FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y);
+//        BSP_LCD_FillRect(FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y);
         BSP_LCD_FillRect(SECOND_CURSOR_VALUE_BOX_X,SECOND_CURSOR_VALUE_BOX_Y, SECOND_CURSOR_VALUE_BOX_SIZE_X, SECOND_CURSOR_VALUE_BOX_SIZE_Y);
         //BSP_LCD_FillRect(THRID_CURSOR_VALUE_BOX_X,THRID_CURSOR_VALUE_BOX_Y, THRID_CURSOR_VALUE_BOX_SIZE_X, THRID_CURSOR_VALUE_BOX_SIZE_Y);
         
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt],LEFT_MODE);
+//        BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt],LEFT_MODE);
         BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 1],LEFT_MODE);
         //BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 2],LEFT_MODE);
-        //BSP_LCD_DisplayStringAt(16,FOURTH_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt + 3],LEFT_MODE);
         
-        BSP_LCD_DisplayStringAt(350,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(350,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+//        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        
+//        BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
+        BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);
 
         BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
@@ -95,8 +105,8 @@ void RefreshFilteringFrame(void)
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilBWASH),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilDFLUSH),LEFT_MODE);
+//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilBWASH),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilDFLUSH),LEFT_MODE);
         
 
         
@@ -104,6 +114,44 @@ void RefreshFilteringFrame(void)
     }
     if(fitlering_frame_was_Scroll == 1 || fitlering_frame_was_Scroll == 2)
         RefreshScrollBarFilteringFrame();
+}
+
+void RefreshItem(void)
+{
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+    BSP_LCD_DrawRect(FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y);
+    
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_FILTERING[fitlering_frame_Scroll_cnt],LEFT_MODE);
+    
+    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    
+    BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilBWASH),LEFT_MODE);
+}
+
+void RefreshCreateBox(void)
+{
+//    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+//    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//    BSP_LCD_DisplayStringAt(155,FIRST_CURSOR_POS_Y + 17,"—Œ«ƒ¿“‹",LEFT_MODE);
+//    
+//    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+//    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//    BSP_LCD_DisplayStringAt(155,SECOND_CURSOR_POS_Y + 17,"—Œ«ƒ¿“‹",LEFT_MODE);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(155,THRID_CURSOR_POS_Y + 17,"—Œ«ƒ¿“‹",LEFT_MODE);
+    
 }
 
 void RefreshScrollBarFilteringFrame()
@@ -137,8 +185,8 @@ void AnimateScrollBarKeysFilteringFrame(void)
 
 void TranslateMenuFilteringMSG(void)
 {
-  //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
@@ -161,17 +209,17 @@ void TranslateMenuFilteringMSG(void)
 //        }
         
         //process list
-        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y))
         {
             hwndFilteringFrameControl = fitlering_frame_Scroll_cnt;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_VALUE_BOX_X,SECOND_CURSOR_VALUE_BOX_Y, SECOND_CURSOR_VALUE_BOX_SIZE_X, SECOND_CURSOR_VALUE_BOX_SIZE_Y))
         {
             hwndFilteringFrameControl = fitlering_frame_Scroll_cnt + 1;
         }   
-//        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y))
-//        {
-//            hwndFilteringFrameControl = fitlering_frame_Scroll_cnt + 2;
-//        }
+        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_VALUE_BOX_X,THRID_CURSOR_VALUE_BOX_Y, THRID_CURSOR_VALUE_BOX_SIZE_X, THRID_CURSOR_VALUE_BOX_SIZE_Y))
+        {
+            hwndFilteringFrameControl = fitlering_frame_Scroll_cnt + 2;
+        }
     }
 }

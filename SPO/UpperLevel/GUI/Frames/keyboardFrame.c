@@ -119,8 +119,8 @@ void RefreshKeys(void)
 uint8_t KeyClick()
 {
     int32_t result = 144;
-    //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if(result_keyboard < 99999999)
@@ -209,8 +209,8 @@ void PrintResultFromKeyboard()
 
 void TranslateKeyboardFrameMSG()
 {
-    //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,420,260,60,60)) //OK

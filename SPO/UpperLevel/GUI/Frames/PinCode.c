@@ -93,7 +93,7 @@ int8_t refreshPinFrame(){
 			}
 		}
 	}
-	if (isInRectangle(tsState.X,tsState.Y,ENTER_BUT_X, ENTER_BUT_Y,5*15, PIN_TEXT.height+4))
+	if (isInRectangle(tsState.X,tsState.Y,ENTER_BUT_X, ENTER_BUT_Y,10*15, PIN_TEXT.height+20))
   {
 		uint32_t pin = 0;
 		for(uint8_t i = 0; i < PIN_LENGTH; i++){
@@ -111,8 +111,8 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
 	return ShowKeyboardFrame();
 }
 uint8_t pinTouchHandler(){
-	//BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
       touchDelay = 100;
 			tsState.TouchDetected = 0;
@@ -144,11 +144,11 @@ void createPinFrame(){
 	BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(pinFrameText + MAIN_TEXT)), LEFT_MODE);
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y, (*(pinFrameText + ENTER_PIN_TEXT)), CENTER_MODE);
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + 5, (*(pinFrameText + ENTER_PIN_TEXT)), CENTER_MODE);
 	
 	drawPinBoxes(enteredPin);
 	
-	DrawButton(ENTER_BUT_X, ENTER_BUT_Y, 5*15, PIN_TEXT.height+8,0,(*(pinFrameText + BUT_PIN_TEXT)),&PIN_TEXT);
+	DrawButton(ENTER_BUT_X, ENTER_BUT_Y, 10*15, PIN_TEXT.height+20,0,(*(pinFrameText + BUT_PIN_TEXT)),&PIN_TEXT);
 	
 }
 
@@ -158,7 +158,7 @@ void drawPinBoxes(uint8_t* pin){
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	for(uint8_t i = 0; i < PIN_LENGTH; i++){
 		BSP_LCD_DrawRect(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE),PIN_BOX_Y,PIN_BOX_X_LENGTH,PIN_BOX_Y_LENGTH);
-		BSP_LCD_DisplayStringAt(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE)+6,PIN_BOX_Y+5,intToStr(enteredPin[i]), CENTER_MODE);
+		BSP_LCD_DisplayStringAt(PIN_BOX_X + i* (PIN_BOX_X_LENGTH + PIN_BOX_SPACE)+30,PIN_BOX_Y+13,intToStr(enteredPin[i]), CENTER_MODE);
 	}
 	
 }

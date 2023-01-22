@@ -96,9 +96,13 @@ void RefreshSofteningFrame(void)
         BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
         BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
         
-        BSP_LCD_DisplayStringAt(350,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(350,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(350,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        
+        BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
+        BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);
+        BSP_LCD_DrawBitmap(372, THRID_CURSOR_POS_Y + 8,&gImage_TRASH);
 
         BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
@@ -110,9 +114,9 @@ void RefreshSofteningFrame(void)
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 1]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 2]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 1]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 14,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 2]),LEFT_MODE);
         
 
         
@@ -142,9 +146,13 @@ void RefreshScrollBarSofteningFrame()
     BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
     BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
     
-    BSP_LCD_DisplayStringAt(350,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(350,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(350,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    
+    BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
+    BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);
+    BSP_LCD_DrawBitmap(372, THRID_CURSOR_POS_Y + 8,&gImage_TRASH);
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -171,7 +179,7 @@ void AnimateScrollBarKeysSofteningFrame(void)
 void TranslateMenuSofteningMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
@@ -194,15 +202,15 @@ void TranslateMenuSofteningMSG(void)
         }
         
         //process list
-        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y))
         {
             hwndSofteningFrameControl = softening_frame_Scroll_cnt;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_VALUE_BOX_X,SECOND_CURSOR_VALUE_BOX_Y, SECOND_CURSOR_VALUE_BOX_SIZE_X, SECOND_CURSOR_VALUE_BOX_SIZE_Y))
         {
             hwndSofteningFrameControl = softening_frame_Scroll_cnt + 1;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_VALUE_BOX_X,THRID_CURSOR_VALUE_BOX_Y, THRID_CURSOR_VALUE_BOX_SIZE_X, THRID_CURSOR_VALUE_BOX_SIZE_Y))
         {
             hwndSofteningFrameControl = softening_frame_Scroll_cnt + 2;
         }

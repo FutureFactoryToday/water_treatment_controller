@@ -5,7 +5,6 @@ uint8_t menu_frame_was_Scroll = 0;
 int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
-//char* ITEM_MENU[] = { "TIME/DATE", "WASHING TIME", "FORCED REGEN", "DELAYED REGEN", "DBR", "SERVICE" };
 char* ITEM_MENU[] = { "ÂÐÅÌß/ÄÀÒÀ", "ÂÐÅÌß ÏÐÎÌÛÂÊÈ", "ÏÐÈÍÓÄÈÒÅËÜÍÀß ÐÅÃ.", "ÎÒËÎÆÅÍÍÀß ÐÅÃ.", "ÄÍÅÉ ÌÅÆÄÓ ÐÅÃ.", "ÑÅÐÂÈÑ" };
 
 void ShowMenuFrame(void)
@@ -172,18 +171,18 @@ void AnimateTimeMenuFrame(void)
 
 void TranslateMenuFrameMSG(void)
 {
-    //BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
         {
            hwndMenuFrameControl = 20;
         }     
-        if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )
-        {
-           hwndMenuFrameControl = 10;
-        }       
+//        if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )
+//        {
+//           hwndMenuFrameControl = 10;
+//        }       
         if (isInRectangle(tsState.X,tsState.Y,UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y))
         {
             if(menu_frame_Scroll_cnt > 0) menu_frame_Scroll_cnt--;

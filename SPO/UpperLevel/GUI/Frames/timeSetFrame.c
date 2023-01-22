@@ -236,8 +236,8 @@ int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
 	return ShowKeyboardFrame();
 }
 uint8_t touchHandler(){
-	//BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	BSP_TS_GetState(&tsState);
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
       touchDelay = 100;
 			tsState.TouchDetected = 0;

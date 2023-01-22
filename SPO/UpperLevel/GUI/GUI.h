@@ -146,6 +146,10 @@ extern const BITMAPSTRUCT gImage_PAGEBUT;
 
 extern const BITMAPSTRUCT leftArowImg;
 extern const BITMAPSTRUCT rightArowImg;
+
+extern const BITMAPSTRUCT gImage_TRASH;
+extern const BITMAPSTRUCT gImage_CHECKMARK;
+
 extern uint32_t touchDelay;
 extern uint8_t redraw;
 extern uint8_t frame;
