@@ -41,14 +41,56 @@ void PL_Init(){
 		pl_dayWashTime = zeroTime; 
 		pl_nightWashTime = zeroTime; 
 		
-		for (uint16_t task = 0; task < TASK_NUM; task++){	
-			pistonTasks[task].restartDateTime = zeroTime;
-			pistonTasks[task].startDateTime = zeroTime;
-			for (uint16_t step = 0; step < STEP_PER_TASK_NUM; step++){
-				pistonTasks[task].step[step].poz = NULL;
-				pistonTasks[task].step[step].secPause = 0;
-			}
-		}
+//		for (uint16_t task = 0; task < TASK_NUM; task++){	
+//			pistonTasks[task].restartDateTime = zeroTime;
+//			pistonTasks[task].startDateTime = zeroTime;
+//			for (uint16_t step = 0; step < STEP_PER_TASK_NUM; step++){
+//				pistonTasks[task].step[step].poz = NULL;
+//				pistonTasks[task].step[step].secPause = 0;
+//			}
+//		}
+		
+		//Filtration
+		chosenTask = &pistonTasks[REGENERATION_TASK_NUM];
+		pistonTasks[REGENERATION_TASK_NUM].restartDateTime = (wtc_time_t)DEF_TASK_RESTART;
+		chosenTask = &pistonTasks[0];
+		uint8_t taskNum = 0;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
+		
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.filtering;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 8*60;
+		
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.closedPosition;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
+		
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
+		
+		
+		//Softening
+		pistonTasks[SOFTENING_TASK_NUM].restartDateTime = (wtc_time_t)DEF_TASK_RESTART;
+		taskNum = 0;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 8*60;
+		
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.softening;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 60*60;
+		
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 10*60; 	
+		
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.filtering;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
+		
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.flushing;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
+		
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.closedPosition;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
+		
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
 		
 		copyTasksToFlash();
 		chosenTask = NULL;
@@ -57,19 +99,6 @@ void PL_Init(){
 	} else {
 		copyTasksFromFlash();
 		chosenTask = fp->params.chosenTask;
-		#ifdef TESTS
-		pistonTasks[0].restartDateTime = (wtc_time_t)DEF_TASK_RESTART;
-		chosenTask = &pistonTasks[0];
-		
-		pistonTasks[0].step[0].poz = &pistonPositions.backwash;
-		pistonTasks[0].step[0].secPause = 10;
-		
-		pistonTasks[0].step[1].poz = &pistonPositions.filling;
-		pistonTasks[0].step[1].secPause = 10;
-		
-		pistonTasks[0].step[2].poz = &pistonPositions.closedPosition;
-		pistonTasks[0].step[2].secPause = 10;		
-		#endif
 		PL_Planner(START_NORMAL);
 	}
 }

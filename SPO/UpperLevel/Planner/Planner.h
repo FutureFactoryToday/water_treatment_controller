@@ -25,6 +25,7 @@
 #define DEF_TASK_TOTAL_LINE 4
 
 #define REGENERATION_TASK_NUM 0
+#define SOFTENING_TASK_NUM 1
 
 #define DEF_TASK_NUM 0
 
