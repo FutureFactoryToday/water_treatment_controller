@@ -1,7 +1,6 @@
 #include "main.h"
 
-//#define MODE_FORCED_REGEN "FORCED REGEN"
-#define MODE_FORCED_REGEN "опхмсдхрекэмюъ пецем."
+//#define MODE_FORCED_REGEN "опхмсдхрекэмюъ пецем."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

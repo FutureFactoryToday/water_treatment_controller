@@ -49,7 +49,7 @@ void RefreshDelayedRegenCustFrame(void)
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X + 80, DELAYED_REGEN_VALUE_Y, "���� �� �����������", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X + 80, DELAYED_REGEN_VALUE_Y, DAY_BEFORE_REGEN, LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 
@@ -80,7 +80,7 @@ void AnimateTimeDelayedRegenCustFrame(void)
 void TranslateDelayedRegenCustFrameMSG(void)
 {
   BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

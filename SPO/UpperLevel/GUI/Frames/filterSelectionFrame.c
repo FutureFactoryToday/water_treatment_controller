@@ -6,14 +6,16 @@ uint8_t filter_selection_frame_was_Scroll = 0;
 int8_t hwndFilterSelectionFrameControl = 0;
 int8_t startFilterSelectionFrame = 0;
 
-//char* ITEM_FILTER_SELECTION[] = { "FILTERING", "SOFTENING" };
-char* ITEM_FILTER_SELECTION[] = { "����������", "���������" };
+int8_t markItem = 0;
+
+//char* ITEM_FILTER_SELECTION[] = { "ФИЛЬТРАЦИЯ", "УМЯГЧЕНИЕ" };
 
 void ShowFilterSelectionFrame(void)
 {
     hwndFilterSelectionFrameControl = -1;
     filter_selection_frame_Scroll_cnt = 0;
     startFilterSelectionFrame = 1;
+    markItem = 0;
     while(1)
     {
         if(redraw)
@@ -89,6 +91,23 @@ void RefreshFilterSelectionFrame(void)
     }
     if(filter_selection_frame_was_Scroll == 1 || filter_selection_frame_was_Scroll == 2)
         RefreshScrollBarFilterSelectionFrame();
+    if(markItem == 1)
+    {
+        BSP_LCD_DrawBitmap(360, FIRST_CURSOR_POS_Y + 9, &gImage_CHECKMARK);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+        BSP_LCD_FillRect(SECOND_CURSOR_POS_X + 340, SECOND_CURSOR_POS_Y + 2, 76, SECOND_CURSOR_SIZE_Y - 8);
+        chosenTask = &pistonTasks[0];
+    }
+    if(markItem == 2)
+    {
+        BSP_LCD_DrawBitmap(360, SECOND_CURSOR_POS_Y + 9, &gImage_CHECKMARK);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+        BSP_LCD_FillRect(FIRST_CURSOR_POS_X + 340, FIRST_CURSOR_POS_Y + 2, 76, FIRST_CURSOR_SIZE_Y - 8);
+        chosenTask = &pistonTasks[1];
+    }
+    
 }
 
 void RefreshScrollBarFilterSelectionFrame(void)
@@ -149,7 +168,7 @@ void AnimateTimeFilterSelectionFrame(void)
 void TranslateFilterSelectionFrameMSG(void)
 {
   BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
@@ -168,14 +187,23 @@ void TranslateFilterSelectionFrameMSG(void)
 //        }
         
         //process list
-        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X - 80,FIRST_CURSOR_SIZE_Y))
         {
             hwndFilterSelectionFrameControl = filter_selection_frame_Scroll_cnt;
         }   
-        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y))
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X - 80,SECOND_CURSOR_SIZE_Y))
         {
             hwndFilterSelectionFrameControl = filter_selection_frame_Scroll_cnt + 1;
         }   
+        
+        if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X + 340,FIRST_CURSOR_POS_Y,80,FIRST_CURSOR_SIZE_Y))
+        {
+            markItem = 1;
+        }   
+        if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X + 340,SECOND_CURSOR_POS_Y,80,SECOND_CURSOR_SIZE_Y))
+        {
+            markItem = 2;
+        }
 //        if (isInRectangle(tsState.X,tsState.Y,THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y))
 //        {
 //            hwndFilterSelectionFrameControl = filter_selection_frame_Scroll_cnt + 2;

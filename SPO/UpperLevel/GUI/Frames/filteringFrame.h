@@ -1,8 +1,7 @@
 #include "main.h"
 
-//#define MODE_FILTERING "FILTERING"
-#define MODE_FILTERING "‘»À‹“–¿÷»ﬂ"
-extern char* ITEM_FILTERING[];
+//#define MODE_FILTERING "‘»À‹“–¿÷»ﬂ"
+//extern char* ITEM_FILTERING[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

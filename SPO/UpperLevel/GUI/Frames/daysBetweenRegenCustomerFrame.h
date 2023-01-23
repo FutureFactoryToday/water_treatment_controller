@@ -1,7 +1,6 @@
 #include "main.h"
 
-//#define MODE_DAYS_BETWEEN_REGEN "DAYS BETWEEN REGEN"
-#define MODE_DAYS_BETWEEN_REGEN "дмх лефдс пецемепюжхълх"
+//#define MODE_DAYS_BETWEEN_REGEN "дмх лефдс пецемепюжхълх"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

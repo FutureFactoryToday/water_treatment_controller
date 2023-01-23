@@ -1,7 +1,6 @@
 #include "main.h"
 
-//#define MODE_WASHING_TIME "WASHING TIME"
-#define MODE_WASHING_TIME "бпелъ опнлшбйх"
+//#define MODE_WASHING_TIME "бпелъ опнлшбйх"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

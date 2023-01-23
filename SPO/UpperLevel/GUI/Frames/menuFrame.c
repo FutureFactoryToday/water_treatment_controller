@@ -5,7 +5,7 @@ uint8_t menu_frame_was_Scroll = 0;
 int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
-char* ITEM_MENU[] = { "О©╫О©╫О©╫О©╫О©╫/О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫.", "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫.", "О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫.", "О©╫О©╫О©╫О©╫О©╫О©╫" };
+//char* ITEM_MENU[] = { "бпелъ/дюрю", "бпелъ опнлшбйх", "опхмсдхрекэмюъ пец.", "нркнфеммюъ пец.", "дмеи лефдс пец.", "яепбхя" };
 
 void ShowMenuFrame(void)
 {
@@ -172,7 +172,7 @@ void AnimateTimeMenuFrame(void)
 void TranslateMenuFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

@@ -1,7 +1,6 @@
 #include "main.h"
 
-//#define MODE_REGEN_PERIOD "REGEN PERIOD"
-#define MODE_REGEN_PERIOD "оепхнд пецемепюжхх"
+//#define MODE_REGEN_PERIOD "оепхнд пецемепюжхх"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

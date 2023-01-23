@@ -6,7 +6,7 @@ uint8_t adjustment_frame_was_Scroll = 0;
 int8_t hwndAdjustmentFrameControl = 0;
 int8_t startAdjustmentFrame = 0;
 uint32_t *firstEl;
-char* ITEM_ADJUSTMENT[] = { "�������� ���.", "�����.����.", "�����.", "����������", "���������", "��������", "����������" };
+//char* ITEM_ADJUSTMENT[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
 
 void ShowAdjustmentFrame(void)
 {
@@ -154,9 +154,9 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_ADJUSTMENT,LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"����.",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,"�����",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,"���:",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,RESET,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,POSITION,LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -177,9 +177,9 @@ void RefreshAdjustmentFrame(void)
         BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
         
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
 
         BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
         BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
@@ -224,9 +224,9 @@ void RefreshScrollBarAdjustmentFrame()
     BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,"�����",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
+    BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -260,7 +260,7 @@ void AnimatePosMenuFrame(void)
 void TranslateMenuAdjustmentMSG(void)
 {
   BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,SAVE_BUTTON_X,SAVE_BUTTON_Y,SAVE_BUTTON_SIZE_X,SAVE_BUTTON_SIZE_Y)) 

@@ -47,7 +47,7 @@ void RefreshAlarmListFrame(void)
         
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y,MODE_ALARM_LIST,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, MODE_ALARM_LIST, LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -137,7 +137,7 @@ void AnimateTimeAlarmListFrame(void)
 void TranslateAlarmListFrameMSG(void)
 {
   BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

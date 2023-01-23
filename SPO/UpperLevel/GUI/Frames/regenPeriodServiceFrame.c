@@ -60,7 +60,7 @@ void RefreshRegenPeriodServiceFrame(void)
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(REGEN_PERIOD_VALUE_X + 80, REGEN_PERIOD_VALUE_Y, "���� ����� �������������", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(REGEN_PERIOD_VALUE_X + 80, REGEN_PERIOD_VALUE_Y, DAY_BETWEEN_REGEN, LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
 }
 
@@ -91,7 +91,7 @@ void AnimateTimeRegenPeriodServiceFrame(void)
 void TranslateRegenPeriodServiceFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

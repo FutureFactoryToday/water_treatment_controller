@@ -1,9 +1,7 @@
 #include "main.h"
 
-
-//#define MODE_SOFTENING "SOFTENING"
-#define MODE_ADJUSTMENT "–≈√”À»–Œ¬ ¿"
-extern char* ITEM_ADJUSTMENT[];
+//#define MODE_ADJUSTMENT "–≈√”À»–Œ¬ ¿"
+//extern char* ITEM_ADJUSTMENT[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

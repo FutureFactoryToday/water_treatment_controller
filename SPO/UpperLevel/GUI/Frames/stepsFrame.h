@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define STEPS_LIST "ÿ¿√»"
-extern char* ITEM_STEPS[];
+//#define STEPS_LIST "ÿ¿√»"
+//extern char* ITEM_STEPS[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

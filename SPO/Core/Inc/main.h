@@ -92,6 +92,7 @@ extern "C" {
 #include "GUI/Frames/timeSetFrame.h"
 #include "GUI/Frames/serviceMenuFrame.h"
 #include "GUI/Frames/menuFrame.h"
+#include "GUI/Frames/items.h"
 
 //#include "USER/GUI.h"
 /* USER CODE END Includes */

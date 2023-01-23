@@ -1,8 +1,7 @@
 #include "main.h"
 
-//#define MODE_SOFTENING "SOFTENING"
-#define MODE_SOFTENING "”Ãﬂ√◊≈Õ»≈"
-extern char* ITEM_SOFTENING[];
+//#define MODE_SOFTENING "”Ãﬂ√◊≈Õ»≈"
+//extern char* ITEM_SOFTENING[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

@@ -5,7 +5,7 @@ bool showDays;
 uint8_t hwndMainFrameControl = 0;
 int8_t startMainFrame = 1;
 uint8_t* dayText = DELAY_REGEN_UNITS;
-uint8_t* timeText = "��:��:��";
+uint8_t* timeText = "ЧЧ:ММ";
 uint8_t* valText, *unitsText;
 bool update;
 
@@ -153,7 +153,7 @@ void AnimateTimeMainFrame(void)
 void TranslateMainFrameMSG (void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )

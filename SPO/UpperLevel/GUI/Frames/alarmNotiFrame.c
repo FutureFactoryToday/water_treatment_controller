@@ -53,14 +53,12 @@ void RefreshAlarmNotiServiceFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(75, 100, "��� ���������� ������������ ����������", LEFT_MODE);
-    BSP_LCD_DisplayStringAt(85, 130, "��������� � ��� ������", LEFT_MODE);
-    BSP_LCD_DisplayStringAt(135, 160, "+7 (495) 189 - 71 - 78", LEFT_MODE);
-    BSP_LCD_DisplayStringAt(140, 190, "info@sarmatwater.ru", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(85, 100, NOTI_STRING_1, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(105, 130, NOTI_STRING_2, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(135, 160, NOTI_STRING_3, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(140, 190, NOTI_STRING_4, LEFT_MODE);
     
     BSP_LCD_SetFont(&Oxygen_Mono_24);
-    
-    
 }
 
 void AnimateTimeAlarmNotiServiceFrame(void)
@@ -89,8 +87,8 @@ void AnimateTimeAlarmNotiServiceFrame(void)
 
 void TranslateAlarmNotiServiceFrameMSG(void)
 {
-  BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+    BSP_TS_GetState(&tsState);
+    if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

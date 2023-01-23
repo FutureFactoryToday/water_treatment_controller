@@ -51,8 +51,8 @@ void RefreshForcedRegenCustFrame(void)
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(KEY_REGEN_FAST_TEXT_X, KEY_REGEN_FAST_TEXT_Y, "�����.", LEFT_MODE);
-	BSP_LCD_DisplayStringAt(KEY_REGEN_DELAY_TEXT_X, KEY_REGEN_DELAY_TEXT_Y, "���. �����.", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(KEY_REGEN_FAST_TEXT_X, KEY_REGEN_FAST_TEXT_Y, FAST_REGEN, LEFT_MODE);
+	BSP_LCD_DisplayStringAt(KEY_REGEN_DELAY_TEXT_X - 10, KEY_REGEN_DELAY_TEXT_Y, STEP_NIGHT, LEFT_MODE);
 		
 	if (PL_isRunnig){
 		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
@@ -89,7 +89,7 @@ void AnimateTimeForcedRegenCustFrame(void)
 void TranslateForcedRegenCustFrameMSG(void)
 {
    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

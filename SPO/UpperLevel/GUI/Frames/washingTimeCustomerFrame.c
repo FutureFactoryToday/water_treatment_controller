@@ -48,7 +48,7 @@ void RefreshWashTimCustFrame(void)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "����", LEFT_MODE);
+            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, DAY, LEFT_MODE);
             //picPtr = &day;
             //BSP_LCD_DrawBitmap(190, 90, &day);
         }
@@ -57,7 +57,7 @@ void RefreshWashTimCustFrame(void)
         {
             BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
             BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, "����", LEFT_MODE);
+            BSP_LCD_DisplayStringAt(WASHING_TIME_CUST_VALUE_X, WASHING_TIME_CUST_VALUE_Y, NIGHT, LEFT_MODE);
             //picPtr = &night;
             //BSP_LCD_DrawBitmap(190, 90, &night);
         }
@@ -93,7 +93,7 @@ void AnimateTimeWashTimCustFrame(void)
 void TranslateWashTimCustFrameMSG(void)
 {
     BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
+	if (touchDelay == 0 && tsState.TouchDetected == 1)
     {
         touchDelay = 100;
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 

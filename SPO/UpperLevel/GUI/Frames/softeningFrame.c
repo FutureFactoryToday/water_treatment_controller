@@ -6,8 +6,7 @@ uint8_t softening_frame_was_Scroll = 0;
 int32_t qwertySoft[] = {0, 0, 0, 0, 0};
 int8_t hwndSofteningFrameControl = 0;
 int8_t startSofteningFrame = 0;
-//char* ITEM_SOFTENING[] = { "BWASH", "REAWASH", "SBWASH", "DFLUSH", "FILLING" };
-char* ITEM_SOFTENING[] = { "Œ¡–.œ–ŒÃ.", "–≈¿√.œ–ŒÃ.", "¬“Œ–¿ﬂ.œ–ŒÃ.", "œ–ﬂÃ¿ﬂ.œ–ŒÃ.", "«¿À»¬ ¿" };
+//char* ITEM_SOFTENING[] = { "Œ¡–.œ–ŒÃ.", "–≈¿√.œ–ŒÃ.", "¬“Œ–¿ﬂ.œ–ŒÃ.", "œ–ﬂÃ¿ﬂ.œ–ŒÃ.", "«¿À»¬ ¿" };
 
 void ShowSofteningFrame(void)
 {
@@ -76,7 +75,7 @@ void RefreshSofteningFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_SOFTENING,LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,"—Œ’–.",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
             
         BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -96,9 +95,9 @@ void RefreshSofteningFrame(void)
         BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
         BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
         
-        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-        BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
+        BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
         
         BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
         BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);
@@ -146,9 +145,9 @@ void RefreshScrollBarSofteningFrame()
     BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
     BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
     
-    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
-    BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,"Ã»Õ",LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,FIRST_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,SECOND_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
+    BSP_LCD_DisplayStringAt(300,THRID_CURSOR_POS_Y + 17,MINUTE,LEFT_MODE);
     
     BSP_LCD_DrawBitmap(372, FIRST_CURSOR_POS_Y + 8,&gImage_TRASH);
     BSP_LCD_DrawBitmap(372, SECOND_CURSOR_POS_Y + 8,&gImage_TRASH);

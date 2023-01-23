@@ -1,7 +1,7 @@
 #include "main.h"
 
-#define MODE_CUSTOMER "онкэгнбюрекэ"
-extern char* ITEM_MENU[];
+//#define MODE_CUSTOMER "онкэгнбюрекэ"
+//extern char* ITEM_MENU[];
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
