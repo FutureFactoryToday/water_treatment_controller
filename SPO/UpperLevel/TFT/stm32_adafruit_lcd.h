@@ -55,7 +55,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "lcd.h"
 #include "TFT/Fonts/wtc_fonts.h" 
-
+#include "stdbool.h"
 //-----------------------------------------------------------------------------
 /* Config section (you can change this defines) */
 
@@ -134,6 +134,7 @@ typedef enum
   */
 #define LCD_COLOR(r, g, b)      (r & 0xF8) << 8 | (g & 0xFC) << 3 | (b & 0xF8) >> 3)
 
+
 /** @defgroup STM32_ADAFRUIT_LCD_Exported_Functions
   * @{
   */   
@@ -152,7 +153,7 @@ void     BSP_LCD_Clear(uint16_t Color);
 void     BSP_LCD_ClearStringLine(uint16_t Line);
 void     BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr);
 uint32_t     BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode);
-void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii);
+void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar);
 
 void     BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGB_Code);
 void     BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length);

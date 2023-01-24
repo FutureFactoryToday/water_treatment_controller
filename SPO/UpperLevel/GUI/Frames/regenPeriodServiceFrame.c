@@ -22,7 +22,9 @@ void ShowRegenPeriodServiceFrame(void)
         
         if(hwndRegenPeriodServiceFrameControl == 1)
         {
-            regenPeriod = ShowKeyboardFrame();
+          if (chosenTask != NULL){  
+						chosenTask->restartDateTime.day = ShowKeyboardFrame();
+					}
             startRegenPeriodServiceFrame = 1;
         }
         
@@ -55,7 +57,12 @@ void RefreshRegenPeriodServiceFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(REGEN_PERIOD_VALUE_X, REGEN_PERIOD_VALUE_Y, intToStr(regenPeriod), LEFT_MODE);
+    
+		if (chosenTask == NULL){
+				BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, PL_NOT_INITED, LEFT_MODE);
+			} else {
+				BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, intToStr(chosenTask->restartDateTime.day), LEFT_MODE);
+			}
     
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);

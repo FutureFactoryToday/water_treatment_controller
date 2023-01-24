@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_QUANTITY_COUNT "яв╗рвхй бндш"
+//#define MODE_QUANTITY_COUNT "п║п╖п│п╒п╖п≤п  п▓п·п■п╚"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

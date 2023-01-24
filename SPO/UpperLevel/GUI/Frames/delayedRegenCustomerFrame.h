@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_DELAYED_REGEN "Œ“ÀŒ∆≈ÕÕ¿ﬂ –≈√≈Õ."
+//#define MODE_DELAYED_REGEN "–û–¢–õ–û–ñ–ï–ù–ù–ê–Ø –†–ï–ì–ï–ù."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

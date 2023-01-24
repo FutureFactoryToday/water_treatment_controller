@@ -32,7 +32,7 @@
 /* Private variables ---------------------------------------------------------*/
 _lcd_dev lcddev;
 
-//ª≠± —’…´,±≥æ∞—’…´
+//¬ª¬≠¬±–ö–°–•–ô¬´,¬±—ñ—ï¬∞–°–•–ô¬´
 uint16_t POINT_COLOR = 0x0000,BACK_COLOR = 0xFFFF; 
 	uint32_t TFT_ID;
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +69,7 @@ void LCD_WR_REG (uint8_t data, uint8_t hold){
 	processMsg(&msg,3,DATA,SEND,hold);
 	while(msg.result != FINISH);
 	}
-/*** √Î‡‚Ì˚Â ÙÛÌÍˆËË ***/
+/*** –ì–ª–∞–≤–Ω—ã–µ —Ñ—É–Ω–∫—Ü–∏–∏ ***/
 uint8_t initTFT(void){
 	uint32_t ID;
 	initTFT_LL(SPI);
@@ -234,7 +234,7 @@ uint8_t initTFT(void){
 	#endif
 	LCD_WR_REG(0x29, FALSE);
 	LL_mDelay(TFT_INIT_DEL);
-  LCD_direction(USE_VERTICAL);//…Ë÷√LCDœ‘ æ∑ΩœÚ
+  LCD_direction(USE_VERTICAL);//–ô–∏–¶–ìLCD–ü–§–ö—ï¬∑–Ö–ü—Ç
 	
 	LCD_Clear(WHITE);
 	LL_mDelay(100);
@@ -271,7 +271,7 @@ uint8_t readID(readResult_t *result){
 //	
 //}
 
-///*** ¬ÌÛÚÂÌÌËÂ ÙÛÌÍˆËË  ***/
+///*** –í–Ω—É—Ç—Ä–µ–Ω–Ω–∏–µ —Ñ—É–Ω–∫—Ü–∏–∏  ***/
 //uint8_t setColumnAdress(uint8_t column){
 //	
 //}
@@ -303,7 +303,7 @@ void LCD_SetWindows(uint16_t xStar, uint16_t yStar,uint16_t xEnd,uint16_t yEnd)
 	LCD_WR_DATA(yEnd>>8,TRUE);
 	LCD_WR_DATA(0x00FF&yEnd,TRUE);
 
-	LCD_WriteRAM_Prepare();	//ø™ º–¥»ÎGRAM		
+	LCD_WriteRAM_Prepare();	//—ó–Ñ–ö—ò–†“ë–ò–ªGRAM		
 //	LCD_WR_REG(ILI_NOP, FALSE);
 }   
 
@@ -398,7 +398,7 @@ void Lcd_WriteData_16Bit(uint16_t Data)
 ******************************************************************************/	
 void LCD_DrawPoint(uint16_t x,uint16_t y)
 {
-	LCD_SetCursor(x,y);//…Ë÷√π‚±ÍŒª÷√ 
+	LCD_SetCursor(x,y);//–ô–∏–¶–ì‚Ññ–≤¬±–∫–û¬ª–¶–ì 
 	Lcd_WriteData_16Bit(POINT_COLOR); 
 }
 

@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define STEPS_LIST "ÿ¿√»"
+//#define STEPS_LIST "–®–ê–ì–ò"
 //extern char* ITEM_STEPS[];
 
 //Public defines sizers

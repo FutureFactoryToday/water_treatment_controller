@@ -1,9 +1,10 @@
 #include "forcedRegenCustomerFrame.h"
 
 int8_t hwndForcedRegenCustFrameControl = 0;
-
+uint16_t statusColor;
 void ShowForcedRegenCustFrame(void)
 {
+	uint8_t oldSec = getTime()->second - 1;
     hwndForcedRegenCustFrameControl = 0;
     while(1)
     {
@@ -12,6 +13,24 @@ void ShowForcedRegenCustFrame(void)
             RefreshForcedRegenCustFrame();
             redraw = 0;
         }
+				if (oldSec != getTime()->second){
+					switch(PL_status){
+						case (PL_WAITING):{
+							statusColor = LCD_COLOR_RED;
+							 break;
+						}
+						case (PL_ALARM_SET):{
+							statusColor = LCD_COLOR_YELLOW;
+							break;
+						}
+						case (PL_WORKING):{
+							statusColor = LCD_COLOR_GREEN;
+							 break;
+						}
+					}
+					BSP_LCD_SetTextColor(statusColor);
+					BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
+				}
         AnimateTimeForcedRegenCustFrame();
         TranslateForcedRegenCustFrameMSG();
         
@@ -51,15 +70,10 @@ void RefreshForcedRegenCustFrame(void)
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(KEY_REGEN_FAST_TEXT_X, KEY_REGEN_FAST_TEXT_Y, FAST_REGEN, LEFT_MODE);
-	BSP_LCD_DisplayStringAt(KEY_REGEN_DELAY_TEXT_X - 10, KEY_REGEN_DELAY_TEXT_Y, STEP_NIGHT, LEFT_MODE);
+	BSP_LCD_DisplayStringAt(KEY_REGEN_FAST_X+KEY_REGEN_FAST_SIZE_X/2, KEY_REGEN_FAST_TEXT_Y, FAST_REGEN, CENTER_MODE);
+	BSP_LCD_DisplayStringAt(KEY_REGEN_DELAY_X+KEY_REGEN_DELAY_SIZE_X/2, KEY_REGEN_DELAY_TEXT_Y, DELAYED_REGEN, CENTER_MODE);
 		
-	if (PL_isRunnig){
-		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-	}else {
-		BSP_LCD_SetTextColor(LCD_COLOR_RED);
-	}
-	BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
+	
 }
 
 void AnimateTimeForcedRegenCustFrame(void)

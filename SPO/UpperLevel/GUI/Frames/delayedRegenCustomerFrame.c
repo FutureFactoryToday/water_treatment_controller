@@ -1,9 +1,10 @@
 #include "delayedRegenCustomerFrame.h"
 
 int8_t hwndDelayedRegenCustFrameControl = 0;
-
+void ShowRemainingDays(void);
 void ShowDelayedRegenCustFrame(void)
 {
+	uint8_t oldSec = getTime()->second - 1;
     hwndDelayedRegenCustFrameControl = 0;
     while(1)
     {
@@ -12,13 +13,35 @@ void ShowDelayedRegenCustFrame(void)
             RefreshDelayedRegenCustFrame();
             redraw = 0;
         }
-        AnimateTimeDelayedRegenCustFrame();
+				if (oldSec != getTime()->second){
+					AnimateTimeDelayedRegenCustFrame();
+					ShowRemainingDays();
+				}
+        
         TranslateDelayedRegenCustFrameMSG();
         
         if(hwndDelayedRegenCustFrameControl == 20) return;
     }
 }
-
+void ShowRemainingDays(void){
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(DELAYED_REGEN_VALUE_BOX_X,DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
+    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+    BSP_LCD_DrawRect(DELAYED_REGEN_VALUE_BOX_X, DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	if (chosenTask == NULL || 
+			isZeroDateTime(&chosenTask->startDateTime) || 
+			compareDateTime(&chosenTask->startDateTime, getTime())<=0){
+				
+				BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, PL_NOT_INITED, LEFT_MODE);
+			} else {
+				uint8_t remainingDays = countDaysBetween(getTime(), &chosenTask->startDateTime);//*decDateTime(&chosenTask->startDateTime,getTime());
+				BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+				BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(remainingDays), LEFT_MODE);
+			
+			}
+}
 void RefreshDelayedRegenCustFrame(void)
 {
     //Static refresh
@@ -37,15 +60,15 @@ void RefreshDelayedRegenCustFrame(void)
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_DELAYED_REGEN,LEFT_MODE);
     
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_FillRect(DELAYED_REGEN_VALUE_BOX_X,DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_DrawRect(DELAYED_REGEN_VALUE_BOX_X, DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(pistonTasks[REGENERATION_TASK_NUM].restartDateTime.day), LEFT_MODE);
-    
+//    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//    BSP_LCD_FillRect(DELAYED_REGEN_VALUE_BOX_X,DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
+//    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+//    BSP_LCD_DrawRect(DELAYED_REGEN_VALUE_BOX_X, DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
+//    
+//    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+//    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//    BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(pistonTasks[REGENERATION_TASK_NUM].restartDateTime.day), LEFT_MODE);
+//    
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

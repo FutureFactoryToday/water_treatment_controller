@@ -17,6 +17,8 @@
 
 /*Public defines */
 #define DEF_FLOW_COEF 1.0 //m^3/(rot/s) 
+#define DEF_VAL_COEF 0.001
+#define FLOW_TIM_TAKT_FREQ 72000000Ul
 #define FLOW_TIM_FREQ 1000000Ul
 
 /*Global params*/
@@ -29,9 +31,12 @@ uint32_t FM_getFlowHzInt(void);
 //Flow freq (float)
 float FM_getFlowHzFloat(void);
 //Flow speed scaled by coef
-float FM_getFlowSpeedKoef(float coef);
+float FM_getFlowSpeed(void);
 
+uint32_t FM_getFlowMeterVal(void);
+void FM_Init(void);
 void FM_Sense_Interrupt(void);
 void FM_OVF_Interrupt(void);
+void FM_incFlowMeter(void);
 #endif /* __FLOW_METER_H__ */
 

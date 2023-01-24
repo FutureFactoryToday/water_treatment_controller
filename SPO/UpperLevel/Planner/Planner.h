@@ -38,20 +38,24 @@ typedef struct {
 
 typedef struct {
 	task_line_t step[STEP_PER_TASK_NUM];
-	wtc_time_t restartDateTime;                //дни между регенерациями
-	wtc_time_t startDateTime;                   //время первого запуска
+	wtc_time_t restartDateTime;                //РґРЅРё РјРµР¶РґСѓ СЂРµРіРµРЅРµСЂР°С†РёСЏРјРё
+	wtc_time_t startDateTime;                   //РІСЂРµРјСЏ РїРµСЂРІРѕРіРѕ Р·Р°РїСѓСЃРєР°
 } piston_task_t;
 
 typedef enum {
-	START_NORMAL,
+	START_NORMAL = 1,
 	FORCE_START_NOW,
 	FORCE_START_NEAREST
 } planner_control_type_t;
-
+typedef enum {
+	PL_WAITING = 1,
+	PL_ALARM_SET,
+	PL_WORKING
+} planer_status_t;
 /*Global params*/
 extern piston_task_t pistonTasks[TASK_NUM], *chosenTask;
 extern wtc_time_t pl_dayWashTime, pl_nightWashTime;
-extern bool PL_isRunnig;
+extern planer_status_t PL_status;
 /*Prototypes */
 
 void PL_Init(void);

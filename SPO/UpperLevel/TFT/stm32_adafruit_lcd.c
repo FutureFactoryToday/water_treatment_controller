@@ -28,8 +28,8 @@ static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *c);
 static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
   
 uint32_t getStringWidth (uint8_t* str);
-uint8_t getCharIndex(uint8_t ch);
-
+uint8_t getCharIndex(uint8_t* ch, bool ruChar);
+bool ruChar = false;
 /**
   * @brief  Initializes the LCD.
   * @param  None
@@ -176,9 +176,9 @@ void BSP_LCD_ClearStringLine(uint16_t Line)
   *           This parameter must be a number between Min_Data = 0x20 and Max_Data = 0x7E 
   * @retval None
   */
-void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint32_t Ascii)
+void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar)
 {
-	DrawChar(Xpos, Ypos, (uint8_t*)DrawProp.pFont->glyph[getCharIndex(Ascii)]);
+	DrawChar(Xpos, Ypos, (uint8_t*)DrawProp.pFont->glyph[getCharIndex(Ascii,ruChar)]);
 }
 
 /**
@@ -199,7 +199,7 @@ uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Li
 	uint32_t chCnt = 0, xsize = 0, size = 0; 
 	uint8_t  *ptr = Text;
 	uint16_t chWidth;
-	
+	bool isRuChar = false;
 	size = getStringWidth(ptr);
 	/* Get the text size */
 	while (*ptr++) chCnt ++ ;
@@ -231,18 +231,36 @@ uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Li
 	  break;
 	}
 	}
-	chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
+	uint8_t res =*Text&0xC0;
+	if (res == 0xC0){
+		Text++;
+		isRuChar = true;
+	} else {
+		 isRuChar = false;
+	}
+	uint8_t index = getCharIndex(Text, isRuChar);
+	chWidth = DrawProp.pFont->glyph[index]->width;
+	
 	/* Send the string character by character on lCD */
 	while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= chWidth))
 	{
+	
 	/* Display one character on LCD */
-	BSP_LCD_DisplayChar(refcolumn, Ypos, *Text);
+	BSP_LCD_DisplayChar(refcolumn, Ypos, Text, isRuChar);
 	/* Decrement the column position by 16 */
 	refcolumn += chWidth;
 	/* Point on the next character */
 	Text++;
 	i++;
-		chWidth = DrawProp.pFont->glyph[getCharIndex(*Text)]->width;
+	res =*Text&0xC0;
+	if (res == 0xC0){
+		Text++;
+		isRuChar = true;
+	} else {
+		 isRuChar = false;
+	}
+	index = getCharIndex(Text, isRuChar);
+	chWidth = DrawProp.pFont->glyph[index]->width;
 	}
 	return size;
 }
@@ -979,23 +997,50 @@ void BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 
 uint32_t getStringWidth (uint8_t* str){
 	uint32_t size = 0;
+	bool isRuChar = false;
 	while(*str != 0){
-		size += DrawProp.pFont->glyph[getCharIndex(*str)]->width;
+		uint8_t res =(*str)&0xC0;
+		if (res == 0xC0){
+			str++;
+			isRuChar = true;
+		} else {
+			 isRuChar = false;
+		}
+		uint8_t index = getCharIndex(str,isRuChar);
+		size += DrawProp.pFont->glyph[index]->width;
 		str++;
 	}
 	return size;
 }
 
-uint8_t getCharIndex(uint8_t ch){
+uint8_t getCharIndex(uint8_t* ch, bool ruChar){
+	#ifdef UTF-8
 	
-  if (ch< ' '){
+	if (ruChar){
+		uint16_t newChar = *ch;
+		uint8_t* ptr = ch;
+		ptr--;
+		newChar |= (uint8_t)(*ptr) << 8;
+		newChar = newChar & ((uint16_t)0x3FFF);
+		uint8_t res = newChar - 0x1090;
+		if (newChar >= (uint16_t)0x1180){
+			 res -=  (uint8_t)0xC0;
+		}
+		res += '~' - ' ' + 1;
+		return res;
+	}
+	#endif
+  if (*ch < ' '){
     return 0;
   }
-  if (ch>= ' ' && ch <= '~'){
-    return ch - ' ';
+  if (*ch>= ' ' && *ch <= '~'){
+    return *ch - ' ';
   }
-  if (ch>=192&& ch <= 255) {
+	#ifdef WIN1251
+  if (*ch>=192&& *ch <= 255) {
     return ch - 192 + '~' - ' ' + 1;
   }
+	#endif
+	
   return 0;
 }

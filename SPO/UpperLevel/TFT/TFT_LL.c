@@ -90,7 +90,7 @@ void finishTransmission(void);
 
 void initPerifTFT(perifType_t type);
 /* Private user code ---------------------------------------------------------*/
-/*** Главные функции ***/
+/*** Р“Р»Р°РІРЅС‹Рµ С„СѓРЅРєС†РёРё ***/
 tftDriverStatus_t initTFT_LL(perifType_t type){
 	msgFifo = initFifo(TFT_LL_FIFO_SIZE, sizeof(msg_t*));
 	curMsg = NULL;
@@ -133,12 +133,12 @@ uint8_t processMsg(readResult_t *result, uint8_t bufSize, dataType_t type, uint8
 	return opRes;
 }
 
-//Определяем ситуацию
-	//1. SPI свободен - загружаем новое сообщение
+//РћРїСЂРµРґРµР»СЏРµРј СЃРёС‚СѓР°С†РёСЋ
+	//1. SPI СЃРІРѕР±РѕРґРµРЅ - Р·Р°РіСЂСѓР¶Р°РµРј РЅРѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
 handlerStatus_t tftSpiHandler(void){
 	tCnt++;
 	step = 3;
-	//Еще не запускались
+	//Р•С‰Рµ РЅРµ Р·Р°РїСѓСЃРєР°Р»РёСЃСЊ
 	if (tftStatus.BUSY == 0){
 		if (!transNewMsg()){
 			if (curMsg != NULL){
@@ -151,7 +151,7 @@ handlerStatus_t tftSpiHandler(void){
 		handlerStatus.cnt = tCnt;
 		return handlerStatus;
 	}
-	//Еще в процессе
+	//Р•С‰Рµ РІ РїСЂРѕС†РµСЃСЃРµ
 	else {
 		transCurMsg();
 	}
@@ -162,39 +162,39 @@ handlerStatus_t tftSpiHandler(void){
 
 uint8_t transNewMsg(void){
 	step = 6;
-	//Получаем новое сообщение
+	//РџРѕР»СѓС‡Р°РµРј РЅРѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
 	curMsg = pop(&msgFifo);
-	//Если сообщений нет, выходим
+	//Р•СЃР»Рё СЃРѕРѕР±С‰РµРЅРёР№ РЅРµС‚, РІС‹С…РѕРґРёРј
 	checkNull(curMsg);
-	//Если есть, занимаем передатчик
+	//Р•СЃР»Рё РµСЃС‚СЊ, Р·Р°РЅРёРјР°РµРј РїРµСЂРµРґР°С‚С‡РёРє
 	handlerStatus.FREE = 0;
 	tftStatus.BUSY = 1;
-	//Отправляем первый байт
+	//РћС‚РїСЂР°РІР»СЏРµРј РїРµСЂРІС‹Р№ Р±Р°Р№С‚
 	firstByte = 1;
 	curEl = 0;
 	curMsg->result->result = IN_PROC;
 	if (curMsg->dir == SEND){
 		//CS = 0
 		enableTFTCommunication();
-		//Выставляем пин D/CX
+		//Р’С‹СЃС‚Р°РІР»СЏРµРј РїРёРЅ D/CX
 		if (curMsg->dataType == DATA){
 			selectData();
 		} 
 		if (curMsg->dataType == COMMAND){
 			selectCommand();
 		}
-		//Если дисплей SPI
+		//Р•СЃР»Рё РґРёСЃРїР»РµР№ SPI
 		if (tftStatus.TYPE == SPI){
-			//И разрешена DMA
+			//Р СЂР°Р·СЂРµС€РµРЅР° DMA
 			#ifdef ALLOW_TFT_DMA
-			//Отправляем байты в соответсвие с граничным условием
+			//РћС‚РїСЂР°РІР»СЏРµРј Р±Р°Р№С‚С‹ РІ СЃРѕРѕС‚РІРµС‚СЃРІРёРµ СЃ РіСЂР°РЅРёС‡РЅС‹Рј СѓСЃР»РѕРІРёРµРј
 			if (curMsg->bufSize > DMA_MIN_SIZE){
 				handlerStatus.DMA = 1;
-				//Настраиваем DMA
+				//РќР°СЃС‚СЂР°РёРІР°РµРј DMA
 				initDMA();
 				LL_SPI_EnableDMAReq_TX(TFT_SPI);
 			} else {
-				//Настраиваем прерывания
+				//РќР°СЃС‚СЂР°РёРІР°РµРј РїСЂРµСЂС‹РІР°РЅРёСЏ
 				handlerStatus.INT = 1;
 				curEl++;
 				step = 7;
@@ -240,13 +240,13 @@ uint8_t transCurMsg(void){
 	step = 8;
 	__disable_irq();
 	
-	//Передача через прерывание
+	//РџРµСЂРµРґР°С‡Р° С‡РµСЂРµР· РїСЂРµСЂС‹РІР°РЅРёРµ
 	if (handlerStatus.INT == 1){
-		//Продолжаем отправлять сообщение
+		//РџСЂРѕРґРѕР»Р¶Р°РµРј РѕС‚РїСЂР°РІР»СЏС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ
 	if (curMsg->dir == SEND){
-		//Если отправили не все сообщение
+		//Р•СЃР»Рё РѕС‚РїСЂР°РІРёР»Рё РЅРµ РІСЃРµ СЃРѕРѕР±С‰РµРЅРёРµ
 		if (curEl < curMsg->bufSize){
-			//Отправляем следующий байт
+			//РћС‚РїСЂР°РІР»СЏРµРј СЃР»РµРґСѓСЋС‰РёР№ Р±Р°Р№С‚
 			//send(
 			uint8_t el = *(curMsg->result->dataBuf + curEl);
 			curEl++;
@@ -254,23 +254,23 @@ uint8_t transCurMsg(void){
 			LL_SPI_TransmitData8(TFT_SPI, el);
 		} else {
 			step = 10;
-			//Если закончили, ищем новое сообщение в очереди
+			//Р•СЃР»Рё Р·Р°РєРѕРЅС‡РёР»Рё, РёС‰РµРј РЅРѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РІ РѕС‡РµСЂРµРґРё
 			finishTransmission();
 			tftStatus.BUSY = 0;
 			transNewMsg();
 		}
 	} 
-	//Продолжаем получать сообщение
+	//РџСЂРѕРґРѕР»Р¶Р°РµРј РїРѕР»СѓС‡Р°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ
 		else {
 			uint8_t el = LL_SPI_ReceiveData8(TFT_SPI);
 			*(curMsg->result->dataBuf + curEl) = el;
 			curEl++;
 			
-			//если получили не все сообщения, продолжаем получать
+			//РµСЃР»Рё РїРѕР»СѓС‡РёР»Рё РЅРµ РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ, РїСЂРѕРґРѕР»Р¶Р°РµРј РїРѕР»СѓС‡Р°С‚СЊ
 			if (curEl < curMsg->bufSize){	
 				LL_SPI_TransmitData8(TFT_SPI, 0xFF);
 			}
-			//если получили все, то ищем новое сообщение
+			//РµСЃР»Рё РїРѕР»СѓС‡РёР»Рё РІСЃРµ, С‚Рѕ РёС‰РµРј РЅРѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
 			else {
 				if (curMsg->hold == TRUE){
 					tftStatus.BUSY = 0;
@@ -282,7 +282,7 @@ uint8_t transCurMsg(void){
 			}
 		}
 	}		
-	//Передача через DMA
+	//РџРµСЂРµРґР°С‡Р° С‡РµСЂРµР· DMA
 	if (handlerStatus.DMA == 1) {
 		if (curMsg->hold == TRUE){
 					tftStatus.BUSY = 0;
@@ -296,14 +296,14 @@ uint8_t transCurMsg(void){
 }
 
 void finishTransmission(void){
-	//Передача была по прерываниям
+	//РџРµСЂРµРґР°С‡Р° Р±С‹Р»Р° РїРѕ РїСЂРµСЂС‹РІР°РЅРёСЏРј
 	if (handlerStatus.INT == 1){
 		LL_SPI_DisableIT_ERR(TFT_SPI);
 		LL_SPI_DisableIT_RXNE(TFT_SPI);
 		LL_SPI_DisableIT_TXE(TFT_SPI);
 	} 
 	#ifdef ALLOW_TFT_DMA
-	//Если DMA
+	//Р•СЃР»Рё DMA
 	if (handlerStatus.DMA == 1) {
 		LL_SPI_DisableDMAReq_RX(TFT_SPI);
 		LL_SPI_DisableDMAReq_TX(TFT_SPI);
@@ -329,7 +329,7 @@ void finishTransmission(void){
 void initDMA(void){
 	uint32_t channel;
 	if (curMsg->dir == SEND) {
-		//Иниацилиируем DMA на отправку
+		//РРЅРёР°С†РёР»РёРёСЂСѓРµРј DMA РЅР° РѕС‚РїСЂР°РІРєСѓ
 		LL_DMA_ConfigTransfer(TFT_DMA,
 												TFT_TX_CHANNEL,
 												LL_DMA_DIRECTION_MEMORY_TO_PERIPH|
@@ -353,7 +353,7 @@ void initDMA(void){
 		LL_DMA_EnableIT_TE(TFT_DMA,TFT_TX_CHANNEL);
 		LL_DMA_EnableChannel(TFT_DMA,TFT_TX_CHANNEL);
 	} else {
-		//Иниацилизируем канал RX
+		//РРЅРёР°С†РёР»РёР·РёСЂСѓРµРј РєР°РЅР°Р» RX
 		LL_DMA_ConfigTransfer(TFT_DMA,
 												TFT_RX_CHANNEL,
 												LL_DMA_DIRECTION_PERIPH_TO_MEMORY|
@@ -377,7 +377,7 @@ void initDMA(void){
 		LL_DMA_EnableIT_TE(TFT_DMA,TFT_RX_CHANNEL);
 		LL_DMA_EnableChannel(TFT_DMA,TFT_RX_CHANNEL);
 		
-		//Иниацилизируем канал TX на отправку dummy Byte
+		//РРЅРёР°С†РёР»РёР·РёСЂСѓРµРј РєР°РЅР°Р» TX РЅР° РѕС‚РїСЂР°РІРєСѓ dummy Byte
 		LL_DMA_ConfigTransfer(TFT_DMA,
 												TFT_TX_CHANNEL,
 												LL_DMA_DIRECTION_MEMORY_TO_PERIPH|
@@ -404,12 +404,12 @@ void initDMA(void){
 		LL_DMA_EnableChannel(TFT_DMA,TFT_TX_CHANNEL);
 	}
 }
-/******* Функции для SPI дисплея *******/
+/******* Р¤СѓРЅРєС†РёРё РґР»СЏ SPI РґРёСЃРїР»РµСЏ *******/
 
 /*
-	Отправка данных с помощью SPI с ожиданием окончания в цикле
-	size - размер данных для отправки
-	*data - буфер с данными для отправки
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI СЃ РѕР¶РёРґР°РЅРёРµРј РѕРєРѕРЅС‡Р°РЅРёСЏ РІ С†РёРєР»Рµ
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РѕС‚РїСЂР°РІРєРё
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РѕС‚РїСЂР°РІРєРё
 */
 uint32_t spiManualSend (uint32_t size, uint8_t *data){
 	if (tftStatus.BUSY == 0 && 
@@ -432,9 +432,9 @@ uint32_t spiManualSend (uint32_t size, uint8_t *data){
 }
 
 /*
-	Отправка данных с помощью SPI через DMA
-	size - размер данных для отправки
-	*data - буфер с данными для отправки
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI С‡РµСЂРµР· DMA
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РѕС‚РїСЂР°РІРєРё
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РѕС‚РїСЂР°РІРєРё
 */
 uint32_t spiDMASend (uint32_t size, uint8_t *data){
 
@@ -442,9 +442,9 @@ uint32_t spiDMASend (uint32_t size, uint8_t *data){
 }
 
 /*
-	Отправка данных с помощью SPI через прерывания
-	size - размер данных для получения
-	*data - буфер с данными для получения
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI С‡РµСЂРµР· РїСЂРµСЂС‹РІР°РЅРёСЏ
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
 */
 uint32_t spiITSend (uint32_t size, uint8_t *data){
 	LL_SPI_TransmitData8(TFT_SPI, *(data+curEl));
@@ -453,9 +453,9 @@ uint32_t spiITSend (uint32_t size, uint8_t *data){
 }
 
 /*
-	Получение данных с помощью SPI с ожиданием окончания в цикле
-	size - размер данных для получения
-	*data - буфер с данными для получения
+	РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI СЃ РѕР¶РёРґР°РЅРёРµРј РѕРєРѕРЅС‡Р°РЅРёСЏ РІ С†РёРєР»Рµ
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
 */
 uint16_t* spiManualReceive (uint32_t size, uint8_t *data){
 	
@@ -464,9 +464,9 @@ uint16_t* spiManualReceive (uint32_t size, uint8_t *data){
 }
 
 /*
-	Получение данных с помощью SPI через DMA
-	size - размер данных для получения
-	*data - буфер с данными для получения
+	РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI С‡РµСЂРµР· DMA
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
 */
 uint16_t* spiDMAReceive (uint32_t size, uint8_t *data){
 	
@@ -474,23 +474,23 @@ uint16_t* spiDMAReceive (uint32_t size, uint8_t *data){
 }
 
 /*
-	Получение данных с помощью SPI через прерывания
-	size - размер данных для получения
-	*data - буфер с данными для получения
+	РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ SPI С‡РµСЂРµР· РїСЂРµСЂС‹РІР°РЅРёСЏ
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
+	*data - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ
 */
 uint16_t* spiITReceive (uint32_t size, uint8_t *data){
 	
 	return NULL;
 }
 
-/******* Функции для параллельного дисплея *******/
+/******* Р¤СѓРЅРєС†РёРё РґР»СЏ РїР°СЂР°Р»Р»РµР»СЊРЅРѕРіРѕ РґРёСЃРїР»РµСЏ *******/
 /*
-	Чтение данных/команд через параллельный порт
-	size - размер данных на передачу
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С…/РєРѕРјР°РЅРґ С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅС‹Р№ РїРѕСЂС‚
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїРµСЂРµРґР°С‡Сѓ
+	*data - Р±СѓС„С„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 uint32_t manualParalRead(uint32_t size, uint8_t *data, uint8_t dataType){
 	if (tftStatus.BUSY == 0 &&
@@ -521,12 +521,12 @@ uint32_t manualParalRead(uint32_t size, uint8_t *data, uint8_t dataType){
 	}
 }
 /*
-	Отправка данных/команд через параллельный порт
-	size - размер данных на прием
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С…/РєРѕРјР°РЅРґ С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅС‹Р№ РїРѕСЂС‚
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїСЂРёРµРј
+	*data - Р±СѓС„С„РµСЂ СЃ РґР°РЅРЅС‹РјРё
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 uint32_t manualParalSend (uint32_t size, uint8_t *data, uint8_t dataType){
 	if (tftStatus.BUSY == 0 &&
@@ -559,12 +559,12 @@ uint32_t manualParalSend (uint32_t size, uint8_t *data, uint8_t dataType){
 	}
 }
 /*
-	Отправка данных через параллельную шину с помощью прерывания (TIM2 или TIM5)
-	size - размер данных на передачу
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅСѓСЋ С€РёРЅСѓ СЃ РїРѕРјРѕС‰СЊСЋ РїСЂРµСЂС‹РІР°РЅРёСЏ (TIM2 РёР»Рё TIM5)
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїРµСЂРµРґР°С‡Сѓ
+	*data - Р±СѓС„С„РµСЂ СЃ РґР°РЅРЅС‹РјРё
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 uint32_t paralItSend (uint32_t size, uint8_t *data, uint32_t dataType){
 	
@@ -572,24 +572,24 @@ uint32_t paralItSend (uint32_t size, uint8_t *data, uint32_t dataType){
 }
 
 /*
-	Отправка данных через параллельную шину с помощью DMA и прерывания (TIM2 или TIM5)
-	size - размер данных на передачу
-	*data - буффер с данными
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅСѓСЋ С€РёРЅСѓ СЃ РїРѕРјРѕС‰СЊСЋ DMA Рё РїСЂРµСЂС‹РІР°РЅРёСЏ (TIM2 РёР»Рё TIM5)
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїРµСЂРµРґР°С‡Сѓ
+	*data - Р±СѓС„С„РµСЂ СЃ РґР°РЅРЅС‹РјРё
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 uint32_t paralDMASend (uint32_t size, uint8_t *data, uint32_t dataType){
 	
 	return 0;
 }
 /*
-	Чтение данных через параллельную шину с помощью прерывания (TIM2 или TIM5)
-	size - размер данных на прием
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅСѓСЋ С€РёРЅСѓ СЃ РїРѕРјРѕС‰СЊСЋ РїСЂРµСЂС‹РІР°РЅРёСЏ (TIM2 РёР»Рё TIM5)
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїСЂРёРµРј
+	*data - Р±СѓС„С„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 
 uint32_t paralItRead (uint32_t size, uint8_t *data, uint32_t dataType){
@@ -598,12 +598,12 @@ uint32_t paralItRead (uint32_t size, uint8_t *data, uint32_t dataType){
 }
 
 /*
-	Чтение данных через параллельную шину с помощью DMA и прерывания (TIM2 или TIM5)
-	size - размер данных на прием
-	*data - буффер для данных
-	dataType - тип данных
-		DATA - данные
-		COMMAND - команда
+	Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… С‡РµСЂРµР· РїР°СЂР°Р»Р»РµР»СЊРЅСѓСЋ С€РёРЅСѓ СЃ РїРѕРјРѕС‰СЊСЋ DMA Рё РїСЂРµСЂС‹РІР°РЅРёСЏ (TIM2 РёР»Рё TIM5)
+	size - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РЅР° РїСЂРёРµРј
+	*data - Р±СѓС„С„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…
+	dataType - С‚РёРї РґР°РЅРЅС‹С…
+		DATA - РґР°РЅРЅС‹Рµ
+		COMMAND - РєРѕРјР°РЅРґР°
 */
 uint32_t paralDMARead (uint32_t size, uint8_t *data, uint32_t dataType){
 	
@@ -632,10 +632,10 @@ void SetParalPortInput(){
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   LL_GPIO_Init(TFT_PARAL_PORT, &GPIO_InitStruct);
 }
-/******* Общие функции *******/
+/******* РћР±С‰РёРµ С„СѓРЅРєС†РёРё *******/
 
 /*
-	Перезапуск дисплея
+	РџРµСЂРµР·Р°РїСѓСЃРє РґРёСЃРїР»РµСЏ
 */
 void rebootTFT (void){
 	LL_GPIO_ResetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin);
@@ -649,35 +649,35 @@ void rebootTFT (void){
 }
 
 /*
-	Включение обмена с дисплеем (пин CSX low)
+	Р’РєР»СЋС‡РµРЅРёРµ РѕР±РјРµРЅР° СЃ РґРёСЃРїР»РµРµРј (РїРёРЅ CSX low)
 */
 void enableTFTCommunication(void){
 	LL_GPIO_ResetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin);
 }
 
 /*
-	Отключения обмена с дисплеем (пин CSX high)
+	РћС‚РєР»СЋС‡РµРЅРёСЏ РѕР±РјРµРЅР° СЃ РґРёСЃРїР»РµРµРј (РїРёРЅ CSX high)
 */
 void disableTFTCommunication(void){
 	LL_GPIO_SetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin);
 }
 
 /*
-Выбор типа данных на шине: Данные (D/CX low)
+Р’С‹Р±РѕСЂ С‚РёРїР° РґР°РЅРЅС‹С… РЅР° С€РёРЅРµ: Р”Р°РЅРЅС‹Рµ (D/CX low)
 */
 void selectData (void){
 	LL_GPIO_SetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
 }
 
 /*
-Выбор типа данных на шине: Команда(D/CX high)
+Р’С‹Р±РѕСЂ С‚РёРїР° РґР°РЅРЅС‹С… РЅР° С€РёРЅРµ: РљРѕРјР°РЅРґР°(D/CX high)
 */
 void selectCommand (void){
 	LL_GPIO_ResetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin);
 }
 
 /*
-Строб для записи данных
+РЎС‚СЂРѕР± РґР»СЏ Р·Р°РїРёСЃРё РґР°РЅРЅС‹С…
 */
 void writeStrobe (void){
 	LL_GPIO_ResetOutputPin(TFT_WR_GPIO_Port,TFT_WR_Pin);
@@ -686,7 +686,7 @@ void writeStrobe (void){
 }
 
 /*
-Строб для записи данных
+РЎС‚СЂРѕР± РґР»СЏ Р·Р°РїРёСЃРё РґР°РЅРЅС‹С…
 */
 void readStrobe (void){
 	LL_GPIO_ResetOutputPin(TFT_RD_GPIO_Port,TFT_RD_Pin);

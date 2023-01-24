@@ -14,8 +14,8 @@
 /*Includes */
 #include "main.h"
 
-
-//SPI для дисплея
+#define UTF-8
+//SPI 
 #define SPI_LCD
 //#define PARAL_LCD
 

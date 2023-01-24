@@ -42,40 +42,23 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-char* ruText[] = {
-	"�����/����",
-	"��������� ������� � ����",
-	"���",
-	"�����",
-	"����",
-	"���",
-	"������",
-	"��������",
-	"������",
-	"��������� ������� � ����",
-	"������� ���",
-	"������� �����",
-	"������� ����",
-	"������� ���",
-	"������� ������"
-};
-char* enText[] = {
-	"Date and time",
-	"Set date and time",
-	"YEAR",
-	"MONTH",
-	"DAY",
-	"HOUR",
-	"MINUTE",
-	"SAVE",
-	"DISCARD",
-	"Set date and time",
-	"Enter year",
-	"Enter month",
-	"Enter day",
-	"Enter hour",
-	"Enter minute"
-};
+//uint8_t* ITEM_TIME_enText[] = {
+//	"Date and time",
+//	"Set date and time",
+//	"YEAR",
+//	"MONTH",
+//	"DAY",
+//	"HOUR",
+//	"MINUTE",
+//	"SAVE",
+//	"DISCARD",
+//	"Set date and time",
+//	"Enter year",
+//	"Enter month",
+//	"Enter day",
+//	"Enter hour",
+//	"Enter minute"
+//};
 
 uint8_t** frameText;
 uint8_t* timeStr = TIME_STR_WD;
@@ -99,11 +82,13 @@ int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text);
 /* Private user code ---------------------------------------------------------*/
 
 void TSF_showFrame(){
-	if (sysParam.lang == ENGLISH){
-		frameText = &enText;
-	} else {
-		frameText = &ruText;
-	}
+	
+//	if (sysParam.lang == ENGLISH){
+//		frameText = &enText;
+//	} else {
+//		frameText = &ITEM_TIME_ruText;
+//	}
+	frameText = &ITEM_TIME_ruText;
 	uint8_t memSec = getTime()->second;
 	
 	wtc_time_t *sysTimePtr = getTime();
@@ -125,7 +110,7 @@ void TSF_showFrame(){
 }
 
 uint8_t refreshFrame(){
-	/*������ ��������� �������*/
+
 	if (isInRectangle(tsState.X,tsState.Y,CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y,setTimeButtonLength + 5,Oxygen_Mono_20.height+3))
   {
 		if (!editBoxesShow)
@@ -142,9 +127,9 @@ uint8_t refreshFrame(){
 		}
 		
 	}
-	/* ��������� �������*/
+	
 	if (editBoxesShow){
-		//����������� ���
+		
 		if (isInRectangle(tsState.X,tsState.Y,BOX_X,YEAR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
 		{
 			int32_t kbResult = callKeyboard(0, 9999, (*(frameText + CH_YEAR_TEXT)));
@@ -225,7 +210,7 @@ uint8_t refreshFrame(){
 			}
 			drawMonth();
 		}
-		//������ "�����"
+
 	if (isInRectangle(tsState.X,tsState.Y,10, 10,gImage_RETURNARROW.infoHeader.biWidth,gImage_RETURNARROW.infoHeader.biHeight))
   {
 		return 1;

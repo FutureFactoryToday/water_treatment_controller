@@ -1,24 +1,38 @@
 #include "quantityCountServiceFrame.h"
 
 int8_t hwndQuantityCountServiceFrameControl = 0;
-
+void updateData (void);
 void ShowQuantityCountServiceFrame(void)
 {
-    hwndQuantityCountServiceFrameControl = 0;
-    while(1)
-    {
-        if(redraw)
-        {
-            RefreshQuantityCountServiceFrame();
-            redraw = 0;
-        }
-        AnimateTimeQuantityCountServiceFrame();
-        TranslateQuantityCountServiceFrameMSG();
-        
-        if(hwndQuantityCountServiceFrameControl == 20) return;
-    }
+	uint8_t oldSec = getTime()->second - 1;
+	hwndQuantityCountServiceFrameControl = 0;
+	while(1)
+	{
+			if(redraw)
+			{
+					RefreshQuantityCountServiceFrame();
+					redraw = 0;
+			}
+			if (oldSec != getTime()->second){ 
+				AnimateTimeQuantityCountServiceFrame();
+				updateData();
+				oldSec = getTime()->second;
+			}
+			TranslateQuantityCountServiceFrameMSG();
+			
+			if(hwndQuantityCountServiceFrameControl == 20) return;
+	}
 }
-
+void updateData (void){
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(QUANTITY_COUNT_BOX_X,QUANTITY_COUNT_BOX_Y, QUANTITY_COUNT_BOX_SIZE_X, QUANTITY_COUNT_BOX_SIZE_Y);
+    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+    BSP_LCD_DrawRect(QUANTITY_COUNT_BOX_X, QUANTITY_COUNT_BOX_Y, QUANTITY_COUNT_BOX_SIZE_X, QUANTITY_COUNT_BOX_SIZE_Y);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X, QUANTITY_COUNT_VALUE_Y, intToStr((uint32_t)FM_getFlowMeterVal()), LEFT_MODE);
+}
 void RefreshQuantityCountServiceFrame(void)
 {
     //Static refresh
@@ -37,14 +51,7 @@ void RefreshQuantityCountServiceFrame(void)
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_QUANTITY_COUNT,LEFT_MODE);
     
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_FillRect(QUANTITY_COUNT_BOX_X,QUANTITY_COUNT_BOX_Y, QUANTITY_COUNT_BOX_SIZE_X, QUANTITY_COUNT_BOX_SIZE_Y);
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_DrawRect(QUANTITY_COUNT_BOX_X, QUANTITY_COUNT_BOX_Y, QUANTITY_COUNT_BOX_SIZE_X, QUANTITY_COUNT_BOX_SIZE_Y);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X, QUANTITY_COUNT_VALUE_Y, intToStr(524), LEFT_MODE);
+    updateData();
     
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);

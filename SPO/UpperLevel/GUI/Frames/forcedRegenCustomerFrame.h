@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_FORCED_REGEN "œ–»Õ”ƒ»“≈À‹Õ¿ﬂ –≈√≈Õ."
+//#define MODE_FORCED_REGEN "–ü–†–ò–ù–£–î–ò–¢–ï–õ–¨–ù–ê–Ø –†–ï–ì–ï–ù."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

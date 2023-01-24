@@ -6,7 +6,7 @@ uint8_t softening_frame_was_Scroll = 0;
 int32_t qwertySoft[] = {0, 0, 0, 0, 0};
 int8_t hwndSofteningFrameControl = 0;
 int8_t startSofteningFrame = 0;
-//char* ITEM_SOFTENING[] = { "Œ¡–.œ–ŒÃ.", "–≈¿√.œ–ŒÃ.", "¬“Œ–¿ﬂ.œ–ŒÃ.", "œ–ﬂÃ¿ﬂ.œ–ŒÃ.", "«¿À»¬ ¿" };
+//char* ITEM_SOFTENING[] = { "–û–ë–†.–ü–†–û–ú.", "–†–ï–ê–ì.–ü–†–û–ú.", "–í–¢–û–†–ê–Ø.–ü–†–û–ú.", "–ü–†–Ø–ú–ê–Ø.–ü–†–û–ú.", "–ó–ê–õ–ò–í–ö–ê" };
 
 void ShowSofteningFrame(void)
 {

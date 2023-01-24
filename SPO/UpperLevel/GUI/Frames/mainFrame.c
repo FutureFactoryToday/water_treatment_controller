@@ -4,33 +4,41 @@ int32_t remainingDays;
 bool showDays;
 uint8_t hwndMainFrameControl = 0;
 int8_t startMainFrame = 1;
-uint8_t* dayText = DELAY_REGEN_UNITS;
-uint8_t* timeText = "ЧЧ:ММ";
+uint8_t* dayText;
+uint8_t* timeText;
 uint8_t* valText, *unitsText;
 bool update;
 
 void ShowMainFrame(void)
 {
-		redraw = 1;
-    hwndMainFrameControl = 0;
-    startMainFrame = 1;
-    while(1)
-    {
-        if(redraw)
-        {
-            RefreshMainFrame();
-            redraw = 0;
-        }
-        AnimateTimeMainFrame();
-        TranslateMainFrameMSG();
-        
-        if(hwndMainFrameControl == 1)
-        {
-            ShowMenuFrame();
-            startMainFrame = 1;
-        }
-        hwndMainFrameControl = 0;
-    }
+	dayText = ITEM_MAIN_FRAME[DELAY_REGEN_UNITS];
+	timeText = ITEM_MAIN_FRAME[TIME_UNITS];
+	redraw = 1;
+	hwndMainFrameControl = 0;
+	startMainFrame = 1;
+	uint8_t oldSec = getTime()->second - 1;
+	while(1)
+	{
+			if(redraw)
+			{
+					RefreshMainFrame();
+					redraw = 0;
+			}
+			if(getTime()->second != oldSec){
+				AnimateTimeMainFrame();
+				RefreshMainFrame();
+				oldSec = getTime()->second;
+			}
+			
+			TranslateMainFrameMSG();
+			
+			if(hwndMainFrameControl == 1)
+			{
+					ShowMenuFrame();
+					startMainFrame = 1;
+			}
+			hwndMainFrameControl = 0;
+	}
 }
 
 void RefreshMainFrame(void)
@@ -60,17 +68,17 @@ void RefreshMainFrame(void)
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     
-    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, MODE_SOFTENING_CYCLE, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(MODE_MENU_X, MODE_MENU_Y, MODE_MENU, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, ITEM_MAIN_FRAME[MODE_SOFTENING_CYCLE], LEFT_MODE);
+    BSP_LCD_DisplayStringAt(MODE_MENU_X, MODE_MENU_Y, ITEM_MAIN_FRAME[MODE_MENU], LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_TEXT_X, DELAY_REGEN_STATUS_TEXT_Y, DELAY_REGEN, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(SPEED_STATUS_TEXT_X, SPEED_STATUS_TEXT_Y, SPEED, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(TIME_STATUS_TEXT_X, TIME_STATUS_TEXT_Y, TIME, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_TEXT_X, DELAY_REGEN_STATUS_TEXT_Y, ITEM_MAIN_FRAME[DELAY_REGEN], LEFT_MODE);
+    BSP_LCD_DisplayStringAt(SPEED_STATUS_TEXT_X, SPEED_STATUS_TEXT_Y, ITEM_MAIN_FRAME[SPEED], LEFT_MODE);
+    BSP_LCD_DisplayStringAt(TIME_STATUS_TEXT_X, TIME_STATUS_TEXT_Y, ITEM_MAIN_FRAME[TIME], LEFT_MODE);
     
 		
-    BSP_LCD_DisplayStringAt(SPEED_STATUS_UNITS_X, SPEED_STATUS_UNITS_Y, SPEED_UNITS, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(TIME_STATUS_UNITS_X , TIME_STATUS_UNITS_Y, TIME_UNITS, LEFT_MODE);
+    BSP_LCD_DisplayStringAt(SPEED_STATUS_UNITS_X, SPEED_STATUS_UNITS_Y, ITEM_MAIN_FRAME[SPEED_UNITS], LEFT_MODE);
+    BSP_LCD_DisplayStringAt(TIME_STATUS_UNITS_X , TIME_STATUS_UNITS_Y, ITEM_MAIN_FRAME[TIME_UNITS], LEFT_MODE);
 		startMainFrame = 0;
 		}
     //Dinamic refres
@@ -121,7 +129,7 @@ void RefreshMainFrame(void)
 		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 		BSP_LCD_FillRect(SPEED_VALUE_BOX_X+1, SPEED_VALUE_BOX_Y+1, SPEED_VALUE_BOX_SIZE_X-2, SPEED_VALUE_BOX_SIZE_Y-2);
 		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		BSP_LCD_DisplayStringAt(SPEED_STATUS_VALUE_X, SPEED_STATUS_VALUE_Y, intToStr(FM_getFlowHzInt()), LEFT_MODE); 
+		BSP_LCD_DisplayStringAt(SPEED_STATUS_VALUE_X, SPEED_STATUS_VALUE_Y, intToStr((uint32_t)FM_getFlowSpeed()), LEFT_MODE); 
     
         
 }

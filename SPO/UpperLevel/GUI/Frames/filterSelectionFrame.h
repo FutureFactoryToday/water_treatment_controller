@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_FILTER_SELECTION "¬€¡Œ– ‘»À‹“–¿"
+//#define MODE_FILTER_SELECTION "–í–´–ë–û–† –§–ò–õ–¨–¢–†–ê"
 //extern char* ITEM_FILTER_SELECTION[];
 
 //Public defines sizers

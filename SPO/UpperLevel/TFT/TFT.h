@@ -23,28 +23,28 @@
 //extern const unsigned char gImage_LOGO_MAIN2;
 typedef struct  
 {										    
-	uint16_t width;			//LCD ¿í¶È
-	uint16_t height;			//LCD ¸ß¶È
+	uint16_t width;			//LCD Ñ—Ğ½Â¶Ğ˜
+	uint16_t height;			//LCD Ñ‘Ğ¯Â¶Ğ˜
 	uint16_t id;				  //LCD ID
-	uint8_t  dir;			  //ºáÆÁ»¹ÊÇÊúÆÁ¿ØÖÆ£º0£¬ÊúÆÁ£»1£¬ºáÆÁ¡£	
-	uint16_t	 wramcmd;		//¿ªÊ¼Ğ´gramÖ¸Áî
-	uint16_t  setxcmd;		//ÉèÖÃx×ø±êÖ¸Áî
-	uint16_t  setycmd;		//ÉèÖÃy×ø±êÖ¸Áî	 
+	uint8_t  dir;			  //Ñ”Ğ±Ğ–Ğ‘Â»â„–ĞšĞ—ĞšÑŠĞ–Ğ‘Ñ—Ğ¨Ğ¦Ğ–ĞˆÑ”0ĞˆÂ¬ĞšÑŠĞ–Ğ‘ĞˆÂ»1ĞˆÂ¬Ñ”Ğ±Ğ–Ğ‘ĞĞˆ	
+	uint16_t	 wramcmd;		//Ñ—Ğ„ĞšÑ˜Ğ Ò‘gramĞ¦Ñ‘Ğ‘Ğ¾
+	uint16_t  setxcmd;		//Ğ™Ğ¸Ğ¦Ğ“xĞ§ÑˆÂ±ĞºĞ¦Ñ‘Ğ‘Ğ¾
+	uint16_t  setycmd;		//Ğ™Ğ¸Ğ¦Ğ“yĞ§ÑˆÂ±ĞºĞ¦Ñ‘Ğ‘Ğ¾	 
 }_lcd_dev; 	
 
-//LCD²ÎÊı
-extern _lcd_dev lcddev;	//¹ÜÀíLCDÖØÒª²ÎÊı
-/////////////////////////////////////ÓÃ»§ÅäÖÃÇø///////////////////////////////////	 
-#define USE_HORIZONTAL  	 0//¶¨ÒåÒº¾§ÆÁË³Ê±ÕëĞı×ª·½Ïò 	0-0¶ÈĞı×ª£¬1-90¶ÈĞı×ª£¬2-180¶ÈĞı×ª£¬3-270¶ÈĞı×ª
+//LCDĞ†ĞĞšÑ
+extern _lcd_dev lcddev;	//â„–Ğ¬ĞĞ½LCDĞ¦Ğ¨Ğ¢Ğ„Ğ†ĞĞšÑ
+/////////////////////////////////////Ğ£Ğ“Â»Â§Ğ•Ğ´Ğ¦Ğ“Ğ—Ñˆ///////////////////////////////////	 
+#define USE_HORIZONTAL  	 0//Â¶ĞĞ¢ĞµĞ¢Ñ”Ñ•Â§Ğ–Ğ‘Ğ›Ñ–ĞšÂ±Ğ¥Ğ»Ğ ÑĞ§Ğ„Â·Ğ…ĞŸÑ‚ 	0-0Â¶Ğ˜Ğ ÑĞ§Ğ„ĞˆÂ¬1-90Â¶Ğ˜Ğ ÑĞ§Ğ„ĞˆÂ¬2-180Â¶Ğ˜Ğ ÑĞ§Ğ„ĞˆÂ¬3-270Â¶Ğ˜Ğ ÑĞ§Ğ„
 #define USE_VERTICAL 1
 #define USE_HORISONTAL_180 2
 #define USE_VERTICAL_180 3
 //////////////////////////////////////////////////////////////////////////////////	  
-//¶¨ÒåLCDµÄ³ß´ç
+//Â¶ĞĞ¢ĞµLCDÂµĞ”Ñ–Ğ¯Ò‘Ğ·
 #define LCD_W 320
 #define LCD_H 480
 
-//»­±ÊÑÕÉ«
+//Â»Â­Â±ĞšĞ¡Ğ¥Ğ™Â«
 #define WHITE       0xFFFF
 #define BLACK      	0x0000	  
 #define BLUE       	0x001F  
@@ -56,27 +56,27 @@ extern _lcd_dev lcddev;	//¹ÜÀíLCDÖØÒª²ÎÊı
 #define GREEN       0x07E0
 #define CYAN        0x7FFF
 #define YELLOW      0xFFE0
-#define BROWN 			0XBC40 //×ØÉ«
-#define BRRED 			0XFC07 //×ØºìÉ«
-#define GRAY  			0X8430 //»ÒÉ«
-//GUIÑÕÉ«
+#define BROWN 			0XBC40 //Ğ§Ğ¨Ğ™Â«
+#define BRRED 			0XFC07 //Ğ§Ğ¨Ñ”Ğ¼Ğ™Â«
+#define GRAY  			0X8430 //Â»Ğ¢Ğ™Â«
+//GUIĞ¡Ğ¥Ğ™Â«
 
-#define DARKBLUE      	 0X01CF	//ÉîÀ¶É«
-#define LIGHTBLUE      	 0X7D7C	//Ç³À¶É«  
-#define GRAYBLUE       	 0X5458 //»ÒÀ¶É«
-//ÒÔÉÏÈıÉ«ÎªPANELµÄÑÕÉ« 
+#define DARKBLUE      	 0X01CF	//Ğ™Ğ¾ĞÂ¶Ğ™Â«
+#define LIGHTBLUE      	 0X7D7C	//Ğ—Ñ–ĞÂ¶Ğ™Â«  
+#define GRAYBLUE       	 0X5458 //Â»Ğ¢ĞÂ¶Ğ™Â«
+//Ğ¢Ğ¤Ğ™ĞŸĞ˜ÑĞ™Â«ĞĞ„PANELÂµĞ”Ğ¡Ğ¥Ğ™Â« 
  
-#define LIGHTGREEN     	0X841F //Ç³ÂÌÉ«
-#define LIGHTGRAY     0XEF5B //Ç³»ÒÉ«(PANNEL)
-#define LGRAY 			 		0XC618 //Ç³»ÒÉ«(PANNEL),´°Ìå±³¾°É«
+#define LIGHTGREEN     	0X841F //Ğ—Ñ–Ğ’ĞœĞ™Â«
+#define LIGHTGRAY     0XEF5B //Ğ—Ñ–Â»Ğ¢Ğ™Â«(PANNEL)
+#define LGRAY 			 		0XC618 //Ğ—Ñ–Â»Ğ¢Ğ™Â«(PANNEL),Ò‘Â°ĞœĞµÂ±Ñ–Ñ•Â°Ğ™Â«
 
-#define LGRAYBLUE      	0XA651 //Ç³»ÒÀ¶É«(ÖĞ¼ä²ãÑÕÉ«)
-#define LBBLUE          0X2B12 //Ç³×ØÀ¶É«(Ñ¡ÔñÌõÄ¿µÄ·´É«)
+#define LGRAYBLUE      	0XA651 //Ğ—Ñ–Â»Ğ¢ĞÂ¶Ğ™Â«(Ğ¦Ğ Ñ˜Ğ´Ğ†Ğ³Ğ¡Ğ¥Ğ™Â«)
+#define LBBLUE          0X2B12 //Ğ—Ñ–Ğ§Ğ¨ĞÂ¶Ğ™Â«(Ğ¡ĞĞ¤ÑĞœÑ…Ğ”Ñ—ÂµĞ”Â·Ò‘Ğ™Â«)
 
-//TFTLCD²¿·ÖÍâÒªµ÷ÓÃµÄº¯Êı		   
-extern uint16_t  POINT_COLOR;//Ä¬ÈÏºìÉ«    
-extern uint16_t  BACK_COLOR; //±³¾°ÑÕÉ«.Ä¬ÈÏÎª°×É«
-/*Ñòğóêòóğà ïèêñåëÿ*/
+//TFTLCDĞ†Ñ—Â·Ğ¦ĞĞ²Ğ¢Ğ„ÂµÑ‡Ğ£Ğ“ÂµĞ”Ñ”Ğ‡ĞšÑ		   
+extern uint16_t  POINT_COLOR;//Ğ”Â¬Ğ˜ĞŸÑ”Ğ¼Ğ™Â«    
+extern uint16_t  BACK_COLOR; //Â±Ñ–Ñ•Â°Ğ¡Ğ¥Ğ™Â«.Ğ”Â¬Ğ˜ĞŸĞĞ„Â°Ğ§Ğ™Â«
+/*Ğ¡Ñ‚Ñ€ÑƒĞºÑ‚ÑƒÑ€Ğ° Ğ¿Ğ¸ĞºÑĞµĞ»Ñ*/
 typedef struct {
 	uint8_t red;
 	uint8_t green;
@@ -97,13 +97,13 @@ void LCD_DisplayOn(void);
 void LCD_DisplayOff(void);
 void LCD_Clear(uint16_t Color);	 
 void LCD_SetCursor(uint16_t Xpos, uint16_t Ypos);
-void LCD_DrawPoint(uint16_t x,uint16_t y);//»­µã
-uint16_t  LCD_ReadPoint(uint16_t x,uint16_t y); //¶Áµã
+void LCD_DrawPoint(uint16_t x,uint16_t y);//Â»Â­ÂµĞ³
+uint16_t  LCD_ReadPoint(uint16_t x,uint16_t y); //Â¶Ğ‘ÂµĞ³
 void LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 void LCD_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);		   
 void LCD_SetWindows(uint16_t xStar, uint16_t yStar,uint16_t xEnd,uint16_t yEnd);
 
-uint16_t LCD_RD_DATA(void);//¶ÁÈ¡LCDÊı¾İ									    
+uint16_t LCD_RD_DATA(void);//Â¶Ğ‘Ğ˜ĞLCDĞšÑÑ•Ğ­									    
 uint16_t LCD_ReadReg(uint8_t LCD_Reg);
 void LCD_WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue);
 void LCD_WriteRAM_Prepare(void);

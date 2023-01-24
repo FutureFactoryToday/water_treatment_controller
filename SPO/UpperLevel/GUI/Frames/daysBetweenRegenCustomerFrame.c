@@ -4,6 +4,7 @@ int8_t hwndDaysBetweenRegenCustFrameControl = 0;
 
 void ShowDaysBetweenRegenCustFrame(void)
 {
+	uint8_t oldSec = getTime()->second - 1;
     hwndDaysBetweenRegenCustFrameControl = 0;
     while(1)
     {
@@ -12,7 +13,10 @@ void ShowDaysBetweenRegenCustFrame(void)
             RefreshDaysBetweenRegenCustFrame();
             redraw = 0;
         }
-        AnimateTimeDaysBetweenRegenCustFrame();
+				if (oldSec != getTime()->second){
+					AnimateTimeDaysBetweenRegenCustFrame();
+					oldSec = getTime()->second;
+				}
         TranslateDaysBetweenRegenCustFrameMSG();
         
         if(hwndDaysBetweenRegenCustFrameControl == 20) return;
@@ -44,8 +48,12 @@ void RefreshDaysBetweenRegenCustFrame(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, intToStr(regenPeriod), LEFT_MODE);
-    
+			
+    if (chosenTask == NULL){
+				BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, PL_NOT_INITED, LEFT_MODE);
+			} else {
+				BSP_LCD_DisplayStringAt(DBR_VALUE_X, DBR_VALUE_Y, intToStr(chosenTask->restartDateTime.day), LEFT_MODE);
+			}
     BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

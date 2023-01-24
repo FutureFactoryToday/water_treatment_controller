@@ -70,7 +70,9 @@ extern "C" {
 #include "GUI/Frames/mainFrame.h"
 #include "Planner/Planner.h"
 #include "FlashParams/FlashParam.h"
+#include "Filter/filter.h"
 
+#include "GUI/Frames/items.h"
 #include "GUI/Frames/keyboardFrame.h"
 #include "GUI/Frames/mainFrame.h"
 #include "GUI/Frames/filterSelectionFrame.h"
@@ -92,7 +94,7 @@ extern "C" {
 #include "GUI/Frames/timeSetFrame.h"
 #include "GUI/Frames/serviceMenuFrame.h"
 #include "GUI/Frames/menuFrame.h"
-#include "GUI/Frames/items.h"
+
 #include "GUI/Frames/stepsFrame.h"
 //#include "USER/GUI.h"
 /* USER CODE END Includes */

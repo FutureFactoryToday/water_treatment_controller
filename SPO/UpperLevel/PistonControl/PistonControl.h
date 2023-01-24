@@ -16,15 +16,15 @@
 #include "main.h"
 
 /*Public defines */
-//Направление движения штока
+//РќР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ С€С‚РѕРєР°
 #define OUT 1
 #define IN 0
 
-#define STALL_TIME 500 //мс
-#define FULL_LENGTH 10000 //обороты
-#define SEEK_TIME 10 //сек
-#define PISTON_MOVE_MIN 100 //обороты
-#define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
+#define STALL_TIME 500 //РјСЃ
+#define FULL_LENGTH 10000 //РѕР±РѕСЂРѕС‚С‹
+#define SEEK_TIME 10 //СЃРµРє
+#define PISTON_MOVE_MIN 100 //РѕР±РѕСЂРѕС‚С‹
+#define SPEED 37.7 //37,9 //РћР±РѕСЂРѕС‚РѕРІ/СЃРµРє РїСЂРё РїРѕР»РЅРѕРј РЅР°РїСЂСЏР¶РµРЅРёРё
 
 #define DEF_CLOSED_POS 0;                                //???????? ?????????
 #define	DEF_BACKWASH_POS 10;                                      //???????? ????????
@@ -77,7 +77,7 @@ void PC_GoToPoz (int32_t dest);
 void PC_OpticSensInterrupt(void);
 pc_params_t* PC_GetParams(void);
 void PC_Control(void);
-//Если калибровка прошла успещно вернется 2, иначе что-то не нашли
+//Р•СЃР»Рё РєР°Р»РёР±СЂРѕРІРєР° РїСЂРѕС€Р»Р° СѓСЃРїРµС‰РЅРѕ РІРµСЂРЅРµС‚СЃСЏ 2, РёРЅР°С‡Рµ С‡С‚Рѕ-С‚Рѕ РЅРµ РЅР°С€Р»Рё
 pc_calib_result_t PC_AUTO_CALIBRATE(void);
 void PC_Stop(void);
 void PC_Restart (void);

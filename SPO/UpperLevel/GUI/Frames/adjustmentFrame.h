@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_ADJUSTMENT "–≈√”À»–Œ¬ ¿"
+//#define MODE_ADJUSTMENT "–†–ï–ì–£–õ–ò–†–û–í–ö–ê"
 //extern char* ITEM_ADJUSTMENT[];
 
 //Public defines sizers

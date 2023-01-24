@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_REGEN_PERIOD "œ≈–»Œƒ –≈√≈Õ≈–¿÷»»"
+//#define MODE_REGEN_PERIOD "–ü–ï–†–ò–û–î –†–ï–ì–ï–ù–ï–†–ê–¶–ò–ò"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

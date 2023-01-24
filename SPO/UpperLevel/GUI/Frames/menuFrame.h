@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_CUSTOMER "œŒÀ‹«Œ¬¿“≈À‹"
+//#define MODE_CUSTOMER "–ü–û–õ–¨–ó–û–í–ê–¢–ï–õ–¨"
 //extern char* ITEM_MENU[];
 
 //Public defines sizers

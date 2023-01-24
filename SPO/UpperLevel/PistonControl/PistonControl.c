@@ -41,8 +41,9 @@ piston_poz_t pistonPositions;
 
 /* Private user code ---------------------------------------------------------*/
 void PC_Control(void){
-	if (pcParams.workStatus == PC_IN_PROCESS){//если едем
-		//Ждем STALL_TIME мсек на упоре
+
+	if (pcParams.workStatus == PC_IN_PROCESS){//РµСЃР»Рё РµРґРµРј
+		//Р–РґРµРј STALL_TIME РјСЃРµРє РЅР° СѓРїРѕСЂРµ
 		if (stall_cnt++ >= STALL_TIME){
 			MOT_Stop();
 			pcParams.workStatus = PC_ERROR;
@@ -51,8 +52,8 @@ void PC_Control(void){
 			
 		}
 	}
-	if (pcParams.workStatus == PC_SEEK_ZERO){//если едем
-		//Ждем STALL_TIME мсек на упоре
+	if (pcParams.workStatus == PC_SEEK_ZERO){//РµСЃР»Рё РµРґРµРј
+		//Р–РґРµРј STALL_TIME РјСЃРµРє РЅР° СѓРїРѕСЂРµ
 		if (stall_cnt++ >= STALL_TIME){
 			MOT_Stop();
 			pcParams.workStatus = PC_READY;
@@ -71,7 +72,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		seek_cnt == 0;
 		PC_GoToPoz(- (FULL_LENGTH + 100));
 		pcParams.workStatus = PC_SEEK_ZERO;
-		//Ждем пока сработает контроль или SEEK_TIME секунд
+		//Р–РґРµРј РїРѕРєР° СЃСЂР°Р±РѕС‚Р°РµС‚ РєРѕРЅС‚СЂРѕР»СЊ РёР»Рё SEEK_TIME СЃРµРєСѓРЅРґ
 		while (pcParams.workStatus == PC_SEEK_ZERO && seek_cnt++ < SEEK_TIME*1000){
 			LL_mDelay(1);
 		}
@@ -85,7 +86,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		seek_cnt = 0;
 		PC_GoToPoz(FULL_LENGTH + 100);
 		pcParams.workStatus = PC_SEEK_ZERO;
-		//Ждем пока сработает контроль или SEEK_TIME секунд
+		//Р–РґРµРј РїРѕРєР° СЃСЂР°Р±РѕС‚Р°РµС‚ РєРѕРЅС‚СЂРѕР»СЊ РёР»Рё SEEK_TIME СЃРµРєСѓРЅРґ
 		while (pcParams.workStatus == PC_SEEK_ZERO 
 			&& seek_cnt++ < 2 * SEEK_TIME*1000){
 			LL_mDelay(1);
@@ -116,6 +117,9 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 	return result;
 }
 void PC_GoToPoz (int32_t dest){
+		//!!!!!!Р—РђР“Р›РЈРЁРљРђ!!!!!!//
+	pcParams.workStatus = PC_READY;
+	//!!!!!!Р—РђР“Р›РЈРЁРљРђ!!!!!!//
 	stall_cnt = 0;
 	if (pcParams.workStatus == PC_ERROR){
 		return;
@@ -124,10 +128,11 @@ void PC_GoToPoz (int32_t dest){
 		pcParams.workStatus = PC_READY;
 		return;
 	}
-	if (dest > pcParams.maxPoz || dest < pcParams.minPoz){
-		pcParams.workStatus = PC_ERROR;
-		return;
-	}
+			//!!!!!!Р—РђР“Р›РЈРЁРљРђ!!!!!!//
+//	if (dest > pcParams.maxPoz || dest < pcParams.minPoz){
+//		pcParams.workStatus = PC_ERROR;
+//		return;
+//	}
 	destination = dest;
 	
 	if (pcParams.curPoz<dest){

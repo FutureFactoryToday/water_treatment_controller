@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_ALARM_NOTI "сбеднлкемхе наяксфхбюмхъ"
+//#define MODE_ALARM_NOTI "пёп▓п∙п■п·п°п⌡п∙п²п≤п∙ п·п▒п║п⌡пёп√п≤п▓п░п²п≤п╞"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

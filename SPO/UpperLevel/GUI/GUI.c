@@ -35,7 +35,7 @@ uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
 
-int8_t regenPeriod = 0;
+
 
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
@@ -214,7 +214,7 @@ void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t 
   while (*ptr++) size ++ ;
 	
 	uint16_t xTextStart = xSize/2+x;
-	uint16_t yTextStart = ySize/2+(y-18);
+	uint16_t yTextStart = ySize/2+y-font->height/2;
 	
 	//SP_LCD_DrawPixel(xTextStart, yTextStart, LCD_COLOR_RED);
 	//BSP_LCD_DrawPixel(xSize/2+x, ySize/2+y, LCD_COLOR_RED);

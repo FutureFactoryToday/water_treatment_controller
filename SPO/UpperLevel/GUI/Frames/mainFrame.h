@@ -7,24 +7,21 @@
 //#define SPEED "SPEED"
 //#define TIME "TIME"
 
-#define MODE_SOFTENING_CYCLE "÷» À ”Ãﬂ√◊≈Õ»ﬂ"
-#define MODE_MENU "–≈∆»Ã"
-#define DELAY_REGEN "Œ“À. –≈√≈Õ."
-#define SPEED "— Œ–Œ—“‹"
-#define TIME "¬–≈Ãﬂ"
+#define MODE_SOFTENING_CYCLE 0
+#define MODE_MENU 1
+#define DELAY_REGEN 2
+#define SPEED 3
+#define TIME 4
 
 //#define DELAY_REGEN_UNITS "DAYS"
 //#define SPEED_UNITS "L/MIN"
 //#define TIME_UNITS "HH:MM"
 
-#define DELAY_REGEN_UNITS "ƒÕ≈…"
-#define SPEED_UNITS "À/Ã»Õ"
-#define TIME_UNITS "◊◊:ÃÃ"
+#define DELAY_REGEN_UNITS 5
+#define SPEED_UNITS 6
+#define TIME_UNITS 7
 
 #define PL_NOT_INITED "---"
-#define DELAY_REGEN_VALUE "4"
-#define SPEED_VALUE "6"
-#define TIME_VALUE "12:00"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

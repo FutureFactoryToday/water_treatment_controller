@@ -1,7 +1,7 @@
 #include "main.h"
 
 //#define MODE_WASHING_TIME_SET "WASHING TIME SET"
-#define MODE_WASHING_TIME_SET "”—“¿ÕŒ¬ ¿ ¬–≈Ã≈Õ» –≈√≈Õ."
+#define MODE_WASHING_TIME_SET "–£–°–¢–ê–ù–û–í–ö–ê –í–†–ï–ú–ï–ù–ò –†–ï–ì–ï–ù."
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

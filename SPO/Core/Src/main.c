@@ -119,6 +119,7 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	PC_Init();
 	PL_Init();
+	FM_Init();
 	#ifdef TESTS
 	/*TEST*/
 	timeTest ();
@@ -130,7 +131,7 @@ int main(void)
 	
 	FP_SaveParam();
 
-	
+	//TSF_showFrame();
   ShowMainFrame();
 	
 //  while (1)

@@ -31,7 +31,7 @@ typedef struct {
 	stored_ts_conf_t ts_conf;
 	piston_poz_t pistonPositions;
 	piston_task_t pistonTasks[TASK_NUM];
-  piston_task_t *chosenTask;
+  uint32_t chosenTaskNum;
 	uint32_t endLoadFlag;
 } stored_params_t;
 

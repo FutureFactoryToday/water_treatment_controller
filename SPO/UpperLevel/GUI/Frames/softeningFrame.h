@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_SOFTENING "”Ãﬂ√◊≈Õ»≈"
+//#define MODE_SOFTENING "–£–ú–Ø–ì–ß–ï–ù–ò–ï"
 //extern char* ITEM_SOFTENING[];
 
 //Public defines sizers

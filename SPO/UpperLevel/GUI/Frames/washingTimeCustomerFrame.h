@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#define MODE_WASHING_TIME "ÂÐÅÌß ÏÐÎÌÛÂÊÈ"
+//#define MODE_WASHING_TIME "Ð’Ð Ð•ÐœÐ¯ ÐŸÐ ÐžÐœÐ«Ð’ÐšÐ˜"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60
