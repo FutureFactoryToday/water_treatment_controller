@@ -26,17 +26,23 @@ void ShowFilteringFrame(void)
         }
         TranslateMenuFilteringMSG();
         
-        if(hwndFilteringFrameControl == 20) return;
+        if(hwndFilteringFrameControl == 20)
+        {
+           copyTasksToFlash();
+              fp->needToSave = 1;
+            FP_SaveParam();
+            return;
+        }
         
         
         if(hwndFilteringFrameControl == 0)
         {
-            qwertyFilBWASH = ShowKeyboardFrame();
+            pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();
             startFilteringFrame = 1;
         }
         if(hwndFilteringFrameControl == 1)
         {
-            qwertyFilDFLUSH = ShowKeyboardFrame();
+            pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
             startFilteringFrame = 1;
         }
         if(hwndFilteringFrameControl == 2)
@@ -106,7 +112,7 @@ void RefreshFilteringFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 //        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilBWASH),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilDFLUSH),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60),LEFT_MODE);
         
 
         
@@ -135,7 +141,7 @@ void RefreshItem(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertyFilBWASH),LEFT_MODE);
+    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60),LEFT_MODE);
 }
 
 void RefreshCreateBox(void)

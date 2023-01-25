@@ -107,12 +107,14 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 				result = STALL;
 		}
 
-		if (result == OK){
-			PC_GoToPoz(minPoz);
-			pcParams.curPoz = 0;
-		}
+		
 		pcParams.maxPoz += mod(pcParams.minPoz);
 		pcParams.minPoz = 0;
+        if (result == OK){
+			PC_GoToPoz(minPoz);
+			pcParams.curPoz = 0;
+
+		}
 	}
 	return result;
 }
@@ -168,7 +170,7 @@ void PC_Init(void){
 		pistonPositions = fp->params.pistonPositions;
 	}
 	MOT_Init(PWM,MOT_TIM);
-	//pcParams.calibResult = PC_AUTO_CALIBRATE();
+	pcParams.calibResult = PC_AUTO_CALIBRATE();
 	if (pcParams.calibResult == PASSED){
 		pcParams.workStatus = PC_READY;
 	} else {

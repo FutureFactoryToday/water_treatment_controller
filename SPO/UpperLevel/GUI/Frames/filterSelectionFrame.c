@@ -94,8 +94,8 @@ void RefreshFilterSelectionFrame(void)
         BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (filter_selection_frame_Scroll_cnt == 0 ? 0 : filter_selection_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
         BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (filter_selection_frame_Scroll_cnt == 0 ? 0 : filter_selection_frame_Scroll_cnt * 36), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-				BSP_LCD_DrawRect(FIRST_CURSOR_POS_X + 339,FIRST_CURSOR_POS_Y + 1,77,FIRST_CURSOR_SIZE_Y - 7);
-				BSP_LCD_DrawRect(SECOND_CURSOR_POS_X + 339,SECOND_CURSOR_POS_Y + 1,77,SECOND_CURSOR_SIZE_Y - 7);
+				BSP_LCD_DrawRect(FIRST_CURSOR_POS_X + 339,FIRST_CURSOR_POS_Y + 3,77,FIRST_CURSOR_SIZE_Y - 7);
+				BSP_LCD_DrawRect(SECOND_CURSOR_POS_X + 339,SECOND_CURSOR_POS_Y + 3,77,SECOND_CURSOR_SIZE_Y - 7);
         startFilterSelectionFrame = 0;
     }
     if(filter_selection_frame_was_Scroll == 1 || filter_selection_frame_was_Scroll == 2)
@@ -106,11 +106,11 @@ void RefreshFilterSelectionFrame(void)
         
         BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_FillRect(SECOND_CURSOR_POS_X + 340, SECOND_CURSOR_POS_Y + 2, 76, SECOND_CURSOR_SIZE_Y - 8);
-				BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-				BSP_LCD_DrawRect(SECOND_CURSOR_POS_X + 339,SECOND_CURSOR_POS_Y + 1,77,SECOND_CURSOR_SIZE_Y - 7);
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_DrawRect(SECOND_CURSOR_POS_X + 339,SECOND_CURSOR_POS_Y + 3,77,SECOND_CURSOR_SIZE_Y - 7);
         chosenTask = &pistonTasks[0];
-			fp->params.chosenTaskNum = 0;
-			fp->needToSave = 1;
+		fp->params.chosenTaskNum = 0;
+		fp->needToSave = 1;
     }
     if(markItem == 2)
     {
@@ -120,10 +120,10 @@ void RefreshFilterSelectionFrame(void)
         BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
         BSP_LCD_FillRect(FIRST_CURSOR_POS_X + 340, FIRST_CURSOR_POS_Y + 2, 76, FIRST_CURSOR_SIZE_Y - 8);
       	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-				BSP_LCD_DrawRect(FIRST_CURSOR_POS_X + 339,FIRST_CURSOR_POS_Y + 1,77,FIRST_CURSOR_SIZE_Y - 7);  
-			chosenTask = &pistonTasks[1];
-			fp->params.chosenTaskNum = 1;
-			fp->needToSave = 1;
+		BSP_LCD_DrawRect(FIRST_CURSOR_POS_X + 339,FIRST_CURSOR_POS_Y + 3,77,FIRST_CURSOR_SIZE_Y - 7);  
+		chosenTask = &pistonTasks[1];
+		fp->params.chosenTaskNum = 1;
+		fp->needToSave = 1;
     }
     
 }

@@ -23,32 +23,39 @@ void ShowSofteningFrame(void)
         //AnimateTimeMenuFrame();
         TranslateMenuSofteningMSG();
         
-        if(hwndSofteningFrameControl == 20) return;
+        if(hwndSofteningFrameControl == 20)
+        {
+        
+copyTasksToFlash();
+              fp->needToSave = 1;
+            FP_SaveParam();
+            return;
+        }
         
         
         if(hwndSofteningFrameControl == 0)
         {
-            qwertySoft[hwndSofteningFrameControl] = ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 1)
         {
-            qwertySoft[hwndSofteningFrameControl] = ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 2)
         {
-            qwertySoft[hwndSofteningFrameControl] = ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * ShowKeyboardFrame();
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 3)
         {
-            qwertySoft[hwndSofteningFrameControl] = ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * ShowKeyboardFrame();
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 4)
         {
-            qwertySoft[hwndSofteningFrameControl] = ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * ShowKeyboardFrame();
             startSofteningFrame = 1;
         }
         
@@ -113,9 +120,9 @@ void RefreshSofteningFrame(void)
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 1]),LEFT_MODE);
-        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 14,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 2]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt].secPause/60),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt + 1].secPause/60),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 14,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt + 2].secPause/60),LEFT_MODE);
         
 
         
@@ -155,9 +162,9 @@ void RefreshScrollBarSofteningFrame()
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt]),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 1]),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(qwertySoft[softening_frame_Scroll_cnt + 2]),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 14,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt].secPause/60),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 14,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt + 1].secPause/60),LEFT_MODE);
+        BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 14,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(pistonTasks[SOFTENING_TASK_NUM].step[softening_frame_Scroll_cnt + 2].secPause/60),LEFT_MODE);
     
     
 }

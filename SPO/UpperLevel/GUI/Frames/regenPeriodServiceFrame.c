@@ -18,12 +18,20 @@ void ShowRegenPeriodServiceFrame(void)
         AnimateTimeRegenPeriodServiceFrame();
         TranslateRegenPeriodServiceFrameMSG();
         
-        if(hwndRegenPeriodServiceFrameControl == 20) return;
+        if(hwndRegenPeriodServiceFrameControl == 20)
+        {
+            
+              fp->needToSave = 1;
+            FP_SaveParam();
+            return;
+            
+        }       
         
         if(hwndRegenPeriodServiceFrameControl == 1)
         {
           if (chosenTask != NULL){  
 						chosenTask->restartDateTime.day = ShowKeyboardFrame();
+              copyTasksToFlash();
 					}
             startRegenPeriodServiceFrame = 1;
         }

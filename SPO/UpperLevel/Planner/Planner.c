@@ -168,6 +168,9 @@ void PL_ProceedStep(void){
 		redraw = 1;
 		chosenTask->startDateTime = *addDate(getTime(), &chosenTask->restartDateTime);
 		chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
+        copyTasksToFlash();
+        fp->needToSave = 1;
+        FP_SaveParam();
 		PL_Planner(START_NORMAL);
 	}
 }
@@ -214,3 +217,9 @@ void copyOneTaskFromFlash(uint16_t task){
 		}
 	}
 }
+
+void PL_saveToFlash(void)
+{
+
+}
+void PL_loadFromFlash(void);
