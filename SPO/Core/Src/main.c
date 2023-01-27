@@ -117,6 +117,7 @@ int main(void)
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
+	initGUI();
 	PC_Init();
 	PL_Init();
 	FM_Init();
@@ -126,12 +127,11 @@ int main(void)
 	#endif
 	__enable_irq();
 	LL_mDelay(500);
-	
-	initGUI();
-	
 	FP_SaveParam();
 
 	//TSF_showFrame();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	//ShowAdjustmentFrame();
   ShowMainFrame();
 	
 //  while (1)

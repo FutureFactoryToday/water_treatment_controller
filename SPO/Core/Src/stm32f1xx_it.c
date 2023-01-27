@@ -212,6 +212,7 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
+	updateFlags.sec = true;
 	RTC_Interrupt();
 	LL_RTC_ClearFlag_SEC(RTC);
 	FM_incFlowMeter();
@@ -238,7 +239,7 @@ void EXTI3_IRQHandler(void)
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
 			redraw = 1;
-
+			updateFlags.touch = true;
 			//BSP_TS_GetState(&tsState);
 		}
 		
@@ -292,7 +293,7 @@ void EXTI15_10_IRQHandler(void)
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
 		if (!LL_GPIO_IsInputPinSet(OPT_SENS_GPIO_Port,OPT_SENS_Pin)){
 			PC_OpticSensInterrupt();
-			redraw = 1;
+			updateFlags.optic = true;
 		}
     /* USER CODE END LL_EXTI_LINE_11 */
   }

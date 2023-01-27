@@ -1137,7 +1137,7 @@ void LCD_IO_Init(void)
   #if GPIOX_PORTNUM(LCD_RST) >= GPIOX_PORTNUM_A // reset
   LCD_Delay(10);
   LCD_RST_ON;
-  LCD_Delay(10);
+  LCD_Delay(100);
   LCD_RST_OFF;
   #endif
   LCD_Delay(10);

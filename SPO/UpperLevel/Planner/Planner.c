@@ -30,11 +30,13 @@ uint8_t tasksCnt;
 wtc_time_t pl_dayWashTime = {0}, pl_nightWashTime = {0}, currentStepDateTime;
 task_line_t *currentStep;
 planer_status_t PL_status;
+bool forced;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
 /*---------------------------------------------*/
 void PL_Init(){
 	currentStep = NULL;
+	forced = false;
 	PL_status = PL_WAITING;
 	if (fp->isLoaded != 1){
 		wtc_time_t zeroTime = {0};
@@ -107,7 +109,7 @@ void PL_Planner (planner_control_type_t startType){
 
 	if (chosenTask != NULL){
 		if (!isZeroDateTime(&chosenTask->restartDateTime)){
-				if (PL_status == PL_WAITING){
+				if (!forced){
 					switch (startType){
 						case START_NORMAL:{
 							if(!isZeroDateTime(&chosenTask->startDateTime)) {
@@ -116,40 +118,47 @@ void PL_Planner (planner_control_type_t startType){
 								}
 								currentStepDateTime = chosenTask->startDateTime;
 								currentStepDateTime = *addSec(&currentStepDateTime,START_DELAY_PAUSE);
+								PL_status=PL_ALARM_SET;
 							} else {
 								return;
 							}
 							break;
 						}
 						case FORCE_START_NOW:{
-							currentStepDateTime = *addSec(getTime(), START_DELAY_PAUSE);		
+							currentStepDateTime = *addSec(getTime(), START_DELAY_PAUSE);
+							PL_status=PL_FORCED_ALARM_SET;
+							forced = true;
 							break;
 						}
 						case FORCE_START_NEAREST:{
 							currentStepDateTime = *getTime();
 							currentStepDateTime = *setTime(&currentStepDateTime, &chosenTask->restartDateTime);
+							forced = true;
 							if (compareDateTime(&currentStepDateTime, getTime()) < 0){
 								currentStepDateTime = *addDay(&currentStepDateTime,1);
-							}								
+							}	
+							PL_status=PL_FORCED_ALARM_SET;							
 							break;
 						}
 				}
 				
 				currentStep = &chosenTask->step[0];	
 				setAlarm(&currentStepDateTime,PL_ProceedStep);
-				PL_status=PL_ALARM_SET;
+				
 			
 			} else {
-				switch (startType){
-						case START_NORMAL:{
-							break;
-						}
-						case FORCE_START_NOW:
-						case FORCE_START_NEAREST:{
-							stopAlarm();
-							PL_ProceedStep();				
-							break;
-						}
+				if (!PC_isBusy()){
+					switch (startType){
+							case START_NORMAL:{
+								break;
+							}
+							case FORCE_START_NOW:
+							case FORCE_START_NEAREST:{
+								stopAlarm();
+								PL_ProceedStep();				
+								break;
+							}
+					}
 				}
 			}
 		}

@@ -34,7 +34,7 @@ uint8_t redraw = 0;
 uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
-
+update_flag_t updateFlags;
 
 
 uint8_t* hour = "hh";
@@ -47,6 +47,7 @@ char* ITEM_MENU_PAGE[] = { "ERROR LIST", "DIAGRAM", "COUNTER" };
 char* ITEM_MENU_SERVICE[] = { "ADJUSTMENT", "FEED RAPID", "CALIBRATE" };
 char* ITEM_MENU_REGENERATION[] = { "BACKWASH", "RINSE", "DOWNFLOW BRINE", "UPFLOW BRINE", "FILL/REGENERANT REFILL", "SOFTENING/FILTERING" };
 char* ITEM_MENU_FILTERING[] = { "aaa", "sss", "ddd" };
+
 /* Private function prototypes -----------------------------------------------*/
 
 void DrawOpticStatus(void);
@@ -66,7 +67,7 @@ void initGUI(void){
    // wasScroll = 0;
     
     itemIndex = 0;
-    BSP_LCD_Clear(LCD_COLOR_WHITE);
+    
     //ShowMainFrame();
 }
 uint32_t neededPoz = 0;

@@ -10,6 +10,7 @@ uint32_t *firstEl;
 
 void ShowAdjustmentFrame(void)
 {
+	redraw = 1;
 	hwndAdjustmentFrameControl = -1;
 	adjustment_frame_Scroll_cnt = 0;
 	startAdjustmentFrame = 1;
@@ -21,7 +22,10 @@ void ShowAdjustmentFrame(void)
             RefreshAdjustmentFrame();
             redraw = 0;
         }
-        AnimatePosMenuFrame();
+        if (updateFlags.optic){
+					 AnimatePosMenuFrame();
+					updateFlags.optic = false;
+				}
         TranslateMenuAdjustmentMSG();
         
         if(hwndAdjustmentFrameControl == 20) return;
@@ -89,7 +93,7 @@ void ShowAdjustmentFrame(void)
             pistonPositions.filtering = ShowKeyboardFrame();
             startAdjustmentFrame = 1;
         }
-        if (hwndAdjustmentFrameControl >=10 ||
+        if (hwndAdjustmentFrameControl >=10 &&
 					hwndAdjustmentFrameControl <= 16)
 				{
 					PC_Restart();
@@ -252,9 +256,12 @@ void AnimateScrollBarKeysAdjustmentFrame(void)
 
 void AnimatePosMenuFrame(void)
 {
+	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+	BSP_LCD_FillRect(POS_VALUE_X, POS_VALUE_Y,RESET_BUTTON_X - POS_VALUE_X,RESET_BUTTON_SIZE_Y);
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
     BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
+	
 }
 
 void TranslateMenuAdjustmentMSG(void)

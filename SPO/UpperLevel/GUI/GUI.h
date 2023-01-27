@@ -129,6 +129,12 @@
 #define MINUTE_X CLOCK_X + 2 * 15 + 10
 #define DIV_X CLOCK_X + 2 * 15
 
+typedef struct {
+	bool optic;
+	bool sec;
+	bool touch;
+} update_flag_t;
+
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;
@@ -166,7 +172,7 @@ extern char* ITEM_MENU_SERVICE[];
 extern char* ITEM_MENU_REGENERATION[];
 extern char* ITEM_MENU_FILERING[];
 
-
+extern update_flag_t updateFlags;
 
 //struct message
 //{

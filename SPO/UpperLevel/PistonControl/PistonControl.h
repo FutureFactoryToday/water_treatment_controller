@@ -20,19 +20,19 @@
 #define OUT 1
 #define IN 0
 
-#define STALL_TIME 500 //мс
-#define FULL_LENGTH 10000 //обороты
-#define SEEK_TIME 10 //сек
+#define STALL_TIME 100 //мс
+#define FULL_LENGTH 560 //обороты
+#define SEEK_TIME 20 //сек
 #define PISTON_MOVE_MIN 100 //обороты
 #define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
 
-#define DEF_CLOSED_POS 0;                                //???????? ?????????
-#define	DEF_BACKWASH_POS 10;                                      //???????? ????????
+#define DEF_CLOSED_POS 26;                                //???????? ?????????
+#define	DEF_BACKWASH_POS 261;                                      //???????? ????????
 #define	DEF_REGENERATION_POS 20;                                  //???????????
-#define	DEF_FILLING_POS 30;                                       //??????????
-#define	DEF_SOFTENNING_POS 40;                                     //?????????
+#define	DEF_FILLING_POS 132;                                       //??????????
+#define	DEF_SOFTENNING_POS 384;                                     //?????????
 #define	DEF_FLUSHING_POS 50;                                      //????????
-#define	DEF_FILTERING_POS 60; 
+#define	DEF_FILTERING_POS 487; 
 
 typedef enum {
 	 PC_ERROR = 1,
@@ -81,5 +81,6 @@ void PC_Control(void);
 pc_calib_result_t PC_AUTO_CALIBRATE(void);
 void PC_Stop(void);
 void PC_Restart (void);
+bool PC_isBusy();
 #endif /* __PISTON_CONTROL_H__ */
 

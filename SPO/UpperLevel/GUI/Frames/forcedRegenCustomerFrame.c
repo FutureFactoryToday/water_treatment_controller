@@ -20,11 +20,15 @@ void ShowForcedRegenCustFrame(void)
 							 break;
 						}
 						case (PL_ALARM_SET):{
-							statusColor = LCD_COLOR_YELLOW;
+							statusColor = LCD_COLOR_BLUE;
 							break;
 						}
 						case (PL_WORKING):{
 							statusColor = LCD_COLOR_GREEN;
+							 break;
+						}
+						case (PL_FORCED_ALARM_SET):{
+							statusColor = LCD_COLOR_YELLOW;
 							 break;
 						}
 					}

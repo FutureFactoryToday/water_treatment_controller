@@ -50,6 +50,7 @@ typedef enum {
 typedef enum {
 	PL_WAITING = 1,
 	PL_ALARM_SET,
+	PL_FORCED_ALARM_SET,
 	PL_WORKING
 } planer_status_t;
 /*Global params*/
