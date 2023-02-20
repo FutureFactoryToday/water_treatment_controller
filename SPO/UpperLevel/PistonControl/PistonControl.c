@@ -121,6 +121,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 //     if (result == PASSED){
 //			PC_GoToPoz(pcParams.minPoz);
 //		}
+      LL_mDelay(100);
 			PC_GoToPoz(pistonPositions.closedPosition);
 			while( pcParams.workStatus == PC_IN_PROCESS);
 	}

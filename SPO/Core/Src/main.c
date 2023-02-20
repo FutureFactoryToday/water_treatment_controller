@@ -111,12 +111,17 @@ int main(void)
   MX_RTC_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-
+  
+    
 	FP_GetParam();
 	System_init();
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
+    
+//    setAlarm(&currentStepDateTime,PL_ProceedStep);
+//    while (1);
+    
 	initGUI();
 	PC_Init();
 	PL_Init();

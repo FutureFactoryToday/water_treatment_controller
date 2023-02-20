@@ -38,9 +38,11 @@ void RefreshRegenServiceFrame(void)
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_REGEN,LEFT_MODE);
     
     //plug
-    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(218, 142, "???", LEFT_MODE);
+//    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+//    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//    BSP_LCD_DisplayStringAt(218, 142, "???", LEFT_MODE);
+    drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, false);
+    drawFillButton(120, 200, 200, 50, 8, "ВЫКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, false);
 }
 
 void AnimateTimeRegenServiceFrame(void)
@@ -76,6 +78,10 @@ void TranslateRegenServiceFrameMSG(void)
         if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
         {
             hwndRegenServiceFrameControl = 20;
+        }
+        if (isInRectangle(tsState.X,tsState.Y,120,80,200,50)) 
+        {
+            drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, true);
         }
     }
 }

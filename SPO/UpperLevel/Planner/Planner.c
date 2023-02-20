@@ -179,6 +179,7 @@ void PL_ProceedStep(void){
 		chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
         copyTasksToFlash();
         fp->needToSave = 1;
+        forced = false;
         FP_SaveParam();
 		PL_Planner(START_NORMAL);
 	}
