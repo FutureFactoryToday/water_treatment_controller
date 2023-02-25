@@ -25,6 +25,9 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+button_t retBut = {0,0,30,30,0}, okBut = {0,0,0,0,0};
+
+
 TS_StateTypeDef tsState;
 uint32_t touchDelay;
 uint8_t dropBut;
@@ -35,7 +38,7 @@ uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
 update_flag_t updateFlags;
-
+bool enableClockDraw;
 
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
@@ -58,7 +61,7 @@ void initGUI(void){
 	BSP_LCD_Init();
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&LOGO);
+	//BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&LOGO);
 	//LL_mDelay(1000);
     
     BSP_LCD_SetFont(&Oxygen_Mono_24);
@@ -176,7 +179,7 @@ void translateMessage(void){
 
 void drawClock(void){
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+	BSP_LCD_SetBackColor(SECOND_COLOR);
 	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
 	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
 	if (getTime()->second % 2){

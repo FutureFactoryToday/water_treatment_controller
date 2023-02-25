@@ -191,6 +191,9 @@ void SysTick_Handler(void)
 	if (_1ms_cnt%500 == 0){
 		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	}
+	if (_1ms_cnt%100 == 0){
+		TC_checkButtons();
+	}
 	//redraw = 1;
   /* USER CODE END SysTick_IRQn 0 */
 
@@ -216,6 +219,7 @@ void RTC_IRQHandler(void)
 	RTC_Interrupt();
 	LL_RTC_ClearFlag_SEC(RTC);
 	FM_incFlowMeter();
+	drawClock();
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
 	if (LL_RTC_IsActiveFlag_ALR(RTC)){
@@ -235,14 +239,16 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    //LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
 			//redraw = 1;
 			updateFlags.touch = true;
 			BSP_TS_GetState(&tsState);
-			TC_Interrupt();
+			TC_checkButtons();
 			tsState.TouchDetected = 0;
+		} else {
+			TC_releaseButtons();
 		}
 		
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);

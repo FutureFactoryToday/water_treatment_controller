@@ -41,8 +41,8 @@ void RefreshRegenServiceFrame(void)
 //    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
 //    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 //    BSP_LCD_DisplayStringAt(218, 142, "???", LEFT_MODE);
-    drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, false);
-    drawFillButton(120, 200, 200, 50, 8, "ВЫКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, false);
+    drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, &Oxygen_Mono_24, false);
+    drawFillButton(120, 200, 200, 50, 8, "ВЫКЛ", LCD_COLOR_BLUE, &Oxygen_Mono_24, false);
 }
 
 void AnimateTimeRegenServiceFrame(void)
@@ -81,7 +81,7 @@ void TranslateRegenServiceFrameMSG(void)
         }
         if (isInRectangle(tsState.X,tsState.Y,120,80,200,50)) 
         {
-            drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, Oxygen_Mono_24, true);
+            drawFillButton(120, 80, 200, 50, 8, "ВКЛ", LCD_COLOR_BLUE, &Oxygen_Mono_24, true);
         }
     }
 }

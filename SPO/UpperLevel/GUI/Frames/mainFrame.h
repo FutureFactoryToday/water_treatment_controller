@@ -101,10 +101,7 @@
 
 void ShowMainFrame(void);
 
-void RefreshMainFrame(void);
 
-void AnimateTimeMainFrame(void);
 
-void TranslateMainFrameMSG (void);
 
 

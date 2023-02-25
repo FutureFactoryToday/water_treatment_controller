@@ -135,6 +135,18 @@ typedef struct {
 	bool touch;
 } update_flag_t;
 
+typedef struct {
+	uint16_t x;
+	uint16_t y;
+	uint16_t xSize;
+	uint16_t ySize;
+	bool isPressed;
+	bool isReleased;
+	uint32_t pressCnt;
+} button_t;
+
+extern button_t retBut, okBut;
+extern bool enableClockDraw;
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;

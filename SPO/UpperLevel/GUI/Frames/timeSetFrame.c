@@ -91,7 +91,7 @@ void TSF_showFrame(){
 	
 	wtc_time_t *sysTimePtr = getTime();
 	displayedTime = *sysTimePtr;
-	TC_clearButtons();
+	
 	createFrame();
 	
 	while(1)
@@ -102,14 +102,22 @@ void TSF_showFrame(){
 				drawMidClock();
 				updateFlags.sec = false;
 			} 
-			if (timeSetButton.isPressed == 1){
-				uint16_t time = callKeyboard(0,2400,"Введите часы и минуты");
+			if (timeSetButton.isReleased == 1){
+				int16_t time = callKeyboard(0,2400,"Введите часы и минуты");
+				if (time > 0){
 				uint8_t hour = time/100;
 				uint8_t minutes = time - hour*100;
 				displayedTime.hour = hour;
 				displayedTime.minute = minutes;
-				drawMidClock();
-				timeSetButton.isPressed = 0;
+				
+				
+				}
+				timeSetButton.isReleased = 0;
+				createFrame();
+			}
+			if (retBut.isPressed == 1){
+				retBut.isPressed = 0;
+				return;
 			}
 //			if (touchHandler()){
 //					if (refreshFrame()){
@@ -248,7 +256,7 @@ uint8_t touchHandler(){
 void createFrame(){
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_GRAY);
-	
+	enableClockDraw = false;
 //	BSP_LCD_SetTextColor(MAIN_COLOR);
 //	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
 //	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
@@ -280,6 +288,7 @@ void createFrame(){
 //	//}
 //	
 //	BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
+	TC_clearButtons();
 	drawMidClock();
 	uint16_t dateTextLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + BSP_LCD_GetFont()->height,getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime),CENTER_MODE);
 	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + dateTextLength/2,MAINBAR_SIZE_Y + BSP_LCD_GetFont()->height + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);

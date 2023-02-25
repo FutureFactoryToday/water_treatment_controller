@@ -88,7 +88,7 @@
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_X TOP_BOT_LINE_WIDTH - 10
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_Y 5
 
-void ShowServiceFrame(void);
+void ShowServiceMenuFrame(void);
 
 void RefreshServiceMenuFrame(void);
 

@@ -346,6 +346,12 @@ void ili9486_Init(void)
   LCD_IO_WriteCmd8(ILI9486_MADCTL); 
 	LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_DOWN);
 		LCD_Delay(5);
+	//Adaptive Brightness Control	
+	LCD_IO_WriteCmd8MultipleData8(0x55, (uint8_t *)"\x01", 1);
+	LCD_Delay(5);	
+		
+		
+		
 	LCD_IO_WriteCmd8(ILI9486_NORON);     // Normal display on (0x13)
   	LCD_Delay(5);
 	LCD_IO_WriteCmd8(ILI9486_INVOFF);    // Display inversion off (0x20)
