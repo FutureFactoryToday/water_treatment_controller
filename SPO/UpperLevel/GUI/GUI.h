@@ -24,7 +24,7 @@
 #include "main.h"
 
 /*Public defines */
-#define SMALL_LOGO_X  480 - 55
+#define SMALL_LOGO_X  480 - 110
 #define SMALL_LOGO_Y  5
 
 #define TOP_BOT_LINE_WIDTH 60
@@ -137,6 +137,7 @@ typedef struct {
 
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
+extern const BITMAPSTRUCT Logo;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;
 extern const BITMAPSTRUCT gImage_ARROWUP;
 //extern const BITMAPSTRUCT gImage_ARROWUP_ghost;

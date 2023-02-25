@@ -1,6 +1,6 @@
 #include "main.h"
-#define OK "OK"
-#define CANCEL "CANCEL"
+#define OK "Ок"
+#define CANCEL "Отмена"
 
 //Public defines sizers
 #define TOP_BOT_LINE_WIDTH 60

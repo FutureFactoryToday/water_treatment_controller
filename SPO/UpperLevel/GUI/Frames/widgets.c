@@ -1,6 +1,6 @@
 #include "widgets.h"
 
-void drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t radius, uint16_t* label, uint16_t color, WTC_FONT_t* font, bool isTouch)
+void drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t radius, uint16_t* label, uint16_t color, bool isTouch)
 {
     if(isTouch)
     {
@@ -27,7 +27,8 @@ void drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySiz
         BSP_LCD_FillRect(xPos, yPos, xSize, ySize);
     }
     
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 18, label, CENTER_MODE);
 }
 
@@ -63,8 +64,45 @@ void drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 18, label, CENTER_MODE);
 }
 
-void drawBar(uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t color)
+void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint16_t* label)
 {
-    BSP_LCD_SetTextColor(color);
-    BSP_LCD_FillRect(xPos, yPos, xSize, ySize);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+    BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
+    
+    
+    BSP_LCD_DrawBitmap(xPosLogo, yPosLogo ,&Logo);
+    
+    if(returnBut)
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,label, LEFT_MODE);
+}
+
+void drawStatusBar(statusBar_t stBar)
+{
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+    switch(stBar)
+    {
+        case OkCancel:
+        {
+            BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, CANCEL, LEFT_MODE);
+            
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(OK_X, OK_Y, OK, LEFT_MODE);
+            break;
+        }
+        case Save:
+        {
+            BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
+            break;
+        }      
+        default: break;
+    }
 }
