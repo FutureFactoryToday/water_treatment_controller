@@ -71,8 +71,10 @@ extern "C" {
 #include "Planner/Planner.h"
 #include "FlashParams/FlashParam.h"
 #include "Filter/filter.h"
+#include "GUI/TouchController.h"
 
 #include "GUI/Frames/items.h"
+#include "GUI/Frames/widgets.h"
 #include "GUI/Frames/keyboardFrame.h"
 #include "GUI/Frames/mainFrame.h"
 #include "GUI/Frames/filterSelectionFrame.h"

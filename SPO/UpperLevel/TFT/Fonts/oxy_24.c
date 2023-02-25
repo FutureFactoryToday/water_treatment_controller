@@ -2,7 +2,7 @@
 #include "TFT/Fonts/wtc_fonts.h"
 const glyph_t _32_glyph_35= 
 	{
-		7,
+		6,
 		{
 			0x00, 	//-------
 			0x00, 	//-------
