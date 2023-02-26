@@ -74,7 +74,7 @@
 #define LCD_COLOR_GRAY          0xdf1b
 #define LCD_COLOR_MEDIUMGRAY    0xdf1e
 #define LCD_COLOR_LIGHTGRAY     0xF7DE
-#define LCD_COLOR_WHITEBLUE     0x001E
+#define LCD_COLOR_WHITEBLUE     0xaf1E  // 0xcf1E
 #define LCD_COLOR_BLUE          0x1147
 #define LCD_COLOR_RED           0xF800
 #define LCD_COLOR_GREEN         0x07E0

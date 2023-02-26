@@ -56,15 +56,13 @@
 #define NUM_KEYS_POS_X 25
 #define NUM_KEYS_POS_Y (TOP_BOT_LINE_WIDTH * 2) + 5
 
-int32_t ShowKeyboardFrame(void);
+int32_t ShowKeyboardFrame(int32_t min, int32_t max);
 
 void RefreshKeyboardFrame(void);
 
 void RefreshCursor(uint8_t dx);
 
 void RefreshKeys(void);
-
-uint8_t KeyClick(void);
 
 void PrintResultFromKeyboard();
 

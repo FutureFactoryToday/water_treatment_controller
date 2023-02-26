@@ -228,7 +228,7 @@ uint8_t refreshFrame(){
 	return 0;
 }
 int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
-	return ShowKeyboardFrame();
+	return ShowKeyboardFrame(0,25);
 }
 uint8_t touchHandler(){
 	BSP_TS_GetState(&tsState);
@@ -293,7 +293,7 @@ void createFrame(){
 }
 void drawMidClock (void){
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(MID_BACK_COLOR);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	uint8_t* formatter = (getTime()->second % 2)? "hh:mm " : "hh mm ";
 	uint16_t timeLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,MAINBAR_SIZE_Y,getFormatedTimeFromSource(formatter, &displayedTime), CENTER_MODE);

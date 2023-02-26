@@ -61,7 +61,7 @@ extern uint8_t* ITEM_FILTER_SELECTION[];
 //filteringFrame
 #define MODE_FILTERING "ФИЛЬТРАЦИЯ"
 extern uint8_t* ITEM_FILTERING[];
-#define SAVE "СОХР."
+#define SAVE "Сохранить"
 #define MINUTE "МИН"
 #define CREATE "СОЗДАТЬ"
 
@@ -72,7 +72,6 @@ extern uint8_t* ITEM_SOFTENING[];
 //adjustmentFrame
 #define MODE_ADJUSTMENT "РЕГУЛИРОВКА"
 extern uint8_t* ITEM_ADJUSTMENT[];
-#define SAVE "СОХР."
 #define RESET "СБРОС"
 #define POSITION "ПОЗ:"
 #define START_ENG "СТАРТ"

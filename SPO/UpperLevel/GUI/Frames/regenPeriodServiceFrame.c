@@ -30,7 +30,7 @@ void ShowRegenPeriodServiceFrame(void)
         if(hwndRegenPeriodServiceFrameControl == 1)
         {
           if (chosenTask != NULL){  
-						chosenTask->restartDateTime.day = ShowKeyboardFrame();
+						chosenTask->restartDateTime.day = ShowKeyboardFrame(1,14);
               copyTasksToFlash();
 					}
             startRegenPeriodServiceFrame = 1;

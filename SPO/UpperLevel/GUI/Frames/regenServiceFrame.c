@@ -26,10 +26,13 @@ void RefreshRegenServiceFrame(void)
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y + 20);
     
-    drawStatusBar(OkCancel);
+    drawStatusBarSave("Обезжелезивание");
 
-    drawFillButton(120, 80, 200, 50, 15, "ВКЛ", LCD_COLOR_WHITEBLUE, false);
-    drawFillButton(120, 200, 200, 50, 15, "ВЫКЛ", LCD_COLOR_WHITEBLUE, false);
+    drawFillButton(60, 70, 300, 50, 15, "ВКЛ", LCD_COLOR_WHITEBLUE, false);
+    drawFillButton(60, 145, 300, 50, 15, "ВЫКЛ", LCD_COLOR_WHITEBLUE, false);
+    drawTextLabel(60, 220, 300, 50, 15, "Ввод", LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE);
+    
+    drawScrollButton(1);
 }
 
 void AnimateTimeRegenServiceFrame(void)

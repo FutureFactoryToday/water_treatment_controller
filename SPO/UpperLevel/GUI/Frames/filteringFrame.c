@@ -37,12 +37,12 @@ void ShowFilteringFrame(void)
         
         if(hwndFilteringFrameControl == 0)
         {
-            pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame(1, 150);
             startFilteringFrame = 1;
         }
         if(hwndFilteringFrameControl == 1)
         {
-            pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame(1, 150);
             startFilteringFrame = 1;
         }
         if(hwndFilteringFrameControl == 2)

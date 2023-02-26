@@ -25,9 +25,8 @@ void ShowSofteningFrame(void)
         
         if(hwndSofteningFrameControl == 20)
         {
-        
-copyTasksToFlash();
-              fp->needToSave = 1;
+            copyTasksToFlash();
+            fp->needToSave = 1;
             FP_SaveParam();
             return;
         }
@@ -35,27 +34,27 @@ copyTasksToFlash();
         
         if(hwndSofteningFrameControl == 0)
         {
-            pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame(1, 150);
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 1)
         {
-            pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame(1, 150);
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 2)
         {
-            pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * ShowKeyboardFrame(1, 150);
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 3)
         {
-            pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * ShowKeyboardFrame(1, 150);
             startSofteningFrame = 1;
         }
         if(hwndSofteningFrameControl == 4)
         {
-            pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * ShowKeyboardFrame();
+            pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * ShowKeyboardFrame(1, 150);
             startSofteningFrame = 1;
         }
         

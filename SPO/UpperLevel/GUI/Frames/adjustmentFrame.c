@@ -60,37 +60,37 @@ void ShowAdjustmentFrame(void)
         
         if(hwndAdjustmentFrameControl == 0)
         {
-            pistonPositions.closedPosition = ShowKeyboardFrame();
+            pistonPositions.closedPosition = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 1)
         {
-            pistonPositions.backwash = ShowKeyboardFrame();
+            pistonPositions.backwash = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 2)
         {
-            pistonPositions.regeneration = ShowKeyboardFrame();
+            pistonPositions.regeneration = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 3)
         {
-            pistonPositions.filling = ShowKeyboardFrame();
+            pistonPositions.filling = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 4)
         {
-            pistonPositions.softening = ShowKeyboardFrame();
+            pistonPositions.softening = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 5)
         {
-            pistonPositions.flushing = ShowKeyboardFrame();
+            pistonPositions.flushing = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if(hwndAdjustmentFrameControl == 6)
         {
-            pistonPositions.filtering = ShowKeyboardFrame();
+            pistonPositions.filtering = ShowKeyboardFrame(1, 300);
             startAdjustmentFrame = 1;
         }
         if (hwndAdjustmentFrameControl >=10 &&

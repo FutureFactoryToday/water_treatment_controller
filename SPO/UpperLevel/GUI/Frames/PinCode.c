@@ -108,7 +108,7 @@ int8_t refreshPinFrame(){
 	return 0;
 }
 int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
-	return ShowKeyboardFrame();
+	return ShowKeyboardFrame(1, 9);
 }
 uint8_t pinTouchHandler(){
 	BSP_TS_GetState(&tsState);

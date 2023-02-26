@@ -24,7 +24,7 @@
 #include "main.h"
 
 /*Public defines */
-#define SMALL_LOGO_X  480 - 110
+#define SMALL_LOGO_X  480 - 140
 #define SMALL_LOGO_Y  5
 
 #define TOP_BOT_LINE_WIDTH 60
@@ -134,6 +134,14 @@ typedef struct {
 	bool sec;
 	bool touch;
 } update_flag_t;
+
+typedef struct {
+  uint16_t x;
+  uint16_t y;
+  uint16_t xSize;
+  uint16_t ySize;
+  bool isPressed;
+} button_t;
 
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
