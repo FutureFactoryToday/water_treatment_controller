@@ -1,7 +1,3 @@
-#include "main.h"
-#define OK "Ок"
-#define CANCEL "Отмена"
-
 #ifndef _KEYBOARD_H_
 #define _KEYBOARD_H_
 	#include "main.h"
@@ -51,23 +47,10 @@
 	#define TEXT_CTRL_SIZE_X BSP_LCD_GetXSize()
 	#define TEXT_CTRL_SIZE_Y TOP_BOT_LINE_WIDTH
 
-
-int32_t ShowKeyboardFrame(int32_t min, int32_t max);
-
-	//Public defines keys sizers
+    //Public defines keys sizers
 	////Public defines number keys sizers
 	#define NUM_KEYS_POS_X 25
 	#define NUM_KEYS_POS_Y (TOP_BOT_LINE_WIDTH * 2) + 5
+    
 
-	int32_t ShowKeyboardFrame(void);
-
-	void RefreshKeyboardFrame(void);
-
-void PrintResultFromKeyboard();
-
-	uint8_t KeyClick(void);
-
-	void PrintResultFromKeyboard();
-
-	void TranslateKeyboardFrameMSG(void);
 #endif //_KEYBOARD_H_

@@ -179,7 +179,7 @@ void translateMessage(void){
 
 void drawClock(void){
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(SECOND_COLOR);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
 	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
 	if (getTime()->second % 2){

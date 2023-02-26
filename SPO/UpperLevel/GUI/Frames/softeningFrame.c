@@ -28,31 +28,31 @@ void ShowSofteningFrame(void)
 		}			
     if(menuLine[0].isReleased == true)
 		{
-			pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();      
+			pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame(1,150);      
 			createFrame();
 			menuLine[0].isReleased = false;
 		}
 		if(menuLine[1].isReleased == true)
 		{
-			pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
+			pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame(1,150);
 			createFrame();
 			menuLine[1].isReleased = false;
 		}   
     if(menuLine[2].isReleased == true)
 		{
-			pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * ShowKeyboardFrame();  
+			pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * ShowKeyboardFrame(1,150);  
 			createFrame();
 			menuLine[2].isReleased = false;
 		}
 		if(menuLine[3].isReleased == true)
 		{
-			pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * ShowKeyboardFrame();
+			pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * ShowKeyboardFrame(1,150);
 			createFrame();
 			menuLine[3].isReleased = false;
 		}   
     if(menuLine[4].isReleased == true)
 		{
-			pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * ShowKeyboardFrame();
+			pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * ShowKeyboardFrame(1,150);
 			createFrame();
 			menuLine[4].isReleased = false;
 		}

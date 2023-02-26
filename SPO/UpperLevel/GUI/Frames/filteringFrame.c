@@ -33,12 +33,12 @@ void ShowFilteringFrame(void)
 				return;
 			 }
        if(menuLine[0].isReleased == true){
-					pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame();
+					pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * ShowKeyboardFrame(1,150);
 					menuLine[0].isReleased = false;
 					createFrame();
 			 }
 			 if(menuLine[1].isReleased == true){
-					pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame();
+					pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * ShowKeyboardFrame(1,150);
 					menuLine[1].isReleased = false;
 				 createFrame();
 			 }

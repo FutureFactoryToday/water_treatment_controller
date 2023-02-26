@@ -69,7 +69,6 @@ void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint16_t*
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
     
-    
     BSP_LCD_DrawBitmap(xPosLogo, yPosLogo ,&Logo);
     
     if(returnBut)

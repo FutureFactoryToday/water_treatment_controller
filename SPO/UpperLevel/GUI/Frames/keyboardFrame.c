@@ -11,21 +11,29 @@ int32_t _max = 0;
 
 int32_t result = 144;
 
-int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 button_t _0,_1,_2,_3,_4,_5,_6,_7,_8,_9, delBut;
 
 void staticCreate(void);
 
-int32_t ShowKeyboardFrame(void)
+int32_t ShowKeyboardFrame(int32_t min, int32_t max);
+
+void RefreshKeyboardFrame(void);
+
+void RefreshCursor(uint8_t dx);
+
+void PrintResultFromKeyboard();
+
+uint8_t KeyClick(void);
+
+void TranslateKeyboardFrameMSG(void);
+
+int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 {
     _min = min;
     _max = max;
     dx = 0;
-    qwertyResult= 0;
+    qwertyResult = 0;
     result_keyboard = 0;
-	dx = 0;
-	qwertyResult= 0;
-	result_keyboard = 0;
 	
 	
 	staticCreate();
@@ -106,6 +114,9 @@ int32_t ShowKeyboardFrame(void)
 //        if(qwertyResult == 0)return qwertyResult;
         
         
+        RefreshCursor(dx);
+        
+        qwertyResult = 2;
     }
     
 }
@@ -120,6 +131,39 @@ int32_t ShowKeyboardFrame(void)
 //    }
 //    PrintResultFromKeyboard();
 //}
+void RefreshKeyboardFrame(void)
+{
+    //Static refresh
+    if(qwertyResult == 0)
+    {
+        BSP_LCD_SetFont(&Oxygen_Mono_24);
+        BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+        BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
+        BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+        BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+        BSP_LCD_FillRect(TEXT_CTRL_POS_X,TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
+        
+        BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
+        
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
+        
+        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+        BSP_LCD_SetTextColor(LCD_COLOR_RED);
+        
+        BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, CANCEL, LEFT_MODE);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+        
+        BSP_LCD_DisplayStringAt(OK_X, OK_Y, OK, LEFT_MODE);
+        
+        //RefreshKeys();
+    }
+    PrintResultFromKeyboard();
+}
 
 void RefreshCursor(uint8_t dx)
 {
@@ -265,6 +309,7 @@ void staticCreate(void)
 	TC_addButton(&retBut);
 	
 	PrintResultFromKeyboard();
+    enableClockDraw = false;
 }
 
 //uint8_t KeyClick()
@@ -325,16 +370,17 @@ void staticCreate(void)
 //    return result;
 //}
 
-void PrintResultFromKeyboard(int32_t pre_result)
+void PrintResultFromKeyboard()
 {
-  
     int32_t pre_result = result;
-    
 
     if((pre_result >= 1 && pre_result <= 9) || (pre_result == 0 && result_keyboard != 0))
     {
-        dx += 13;
         result_keyboard = (result_keyboard * 10) + pre_result;
+        if(result_keyboard > _max)
+            result_keyboard = result_keyboard / 10;
+        else
+            dx += 13;
     }
         
     if(pre_result == 10)
@@ -344,7 +390,6 @@ void PrintResultFromKeyboard(int32_t pre_result)
             dx -= 13;
     }
 
-        
     if(result_keyboard != 0)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
