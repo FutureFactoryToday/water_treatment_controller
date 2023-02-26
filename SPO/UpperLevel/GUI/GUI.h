@@ -142,6 +142,7 @@ typedef struct {
 	uint16_t ySize;
 	bool isPressed;
 	bool isReleased;
+	bool wasPressed;
 	uint32_t pressCnt;
 } button_t;
 

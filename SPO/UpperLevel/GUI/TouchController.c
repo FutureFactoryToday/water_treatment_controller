@@ -51,11 +51,17 @@ void TC_checkButtons(void){
 	 if (buttonList.butNum > 0 && tsState.TouchDetected == 1){
 		 for (uint8_t i = 0; i < buttonList.butNum; i++){
 				if (isInRectangle(tsState.X,tsState.Y,buttonList.buttons[i]->x,buttonList.buttons[i]->y,buttonList.buttons[i]->xSize,buttonList.buttons[i]->ySize)){
-					buttonList.buttons[i]->isPressed = 1;
+					buttonList.buttons[i]->isPressed = true;
+					buttonList.buttons[i]->wasPressed = true;
+					buttonList.buttons[i]->pressCnt++;
 					buttonList.buttons[i]->isReleased = false;
 					TC_isTouched = true;
 				}
-				if (buttonList.buttons[i]->isPressed == 1){
+		 }
+	 }
+	 if (TC_isTouched == true){
+			for (uint8_t i = 0; i < buttonList.butNum; i++){
+				if (buttonList.buttons[i]->pressCnt > 0){
 					buttonList.buttons[i]->pressCnt++;
 					if (buttonList.buttons[i]->pressCnt == BUT_MAX_PRESS){
 						 buttonList.buttons[i]->pressCnt--;
@@ -67,9 +73,10 @@ void TC_checkButtons(void){
 void TC_releaseButtons(void) {
 	for (uint8_t i = 0; i < buttonList.butNum; i++){
 		buttonList.buttons[i]->pressCnt = 0;
-		if (buttonList.buttons[i]->isPressed == true){
+		if (buttonList.buttons[i]->wasPressed == true){
 			 buttonList.buttons[i]->isReleased = true;
 		}
 		buttonList.buttons[i]->isPressed = false;
+		buttonList.buttons[i]->wasPressed = false;
 	}
 }

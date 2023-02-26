@@ -19,7 +19,7 @@ void ShowRegenPeriodServiceFrame(void)
 		if(restartTextArea.isReleased == true)
 		{
 			if (chosenTask != NULL){  
-				chosenTask->restartDateTime.day = ShowKeyboardFrame();
+				chosenTask->restartDateTime.day = ShowKeyboardFrame(0,99999);
 				copyTasksToFlash();
 			}
 		}

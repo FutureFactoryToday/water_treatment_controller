@@ -62,43 +62,43 @@ void ShowAdjustmentFrame(void)
         
         if(menuLine[0].isReleased == true)
         {
-					pistonPositions.closedPosition = ShowKeyboardFrame();
+					pistonPositions.closedPosition = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[0].isReleased = false;
         }
         if(menuLine[1].isReleased == true)
         {
-					pistonPositions.backwash = ShowKeyboardFrame();
+					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[1].isReleased = false;
         }
         if(menuLine[2].isReleased == true)
         {
-					pistonPositions.regeneration = ShowKeyboardFrame();
+					pistonPositions.regeneration = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[2].isReleased = false;
         }
         if(menuLine[3].isReleased == true)
         {
-					pistonPositions.filling = ShowKeyboardFrame();
+					pistonPositions.filling = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[3].isReleased = false;
         }
         if(menuLine[4].isReleased == true)
         {
-					pistonPositions.softening = ShowKeyboardFrame();
+					pistonPositions.softening = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[4].isReleased = false;
         }
         if(menuLine[5].isReleased == true)
         {
-					pistonPositions.flushing = ShowKeyboardFrame();
+					pistonPositions.flushing = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[5].isReleased = false;
         }
         if(menuLine[6].isReleased == true)
         {
-					pistonPositions.filtering = ShowKeyboardFrame();
+					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[6].isReleased = false;
         }
