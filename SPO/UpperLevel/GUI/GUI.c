@@ -25,7 +25,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-button_t retBut = {0,0,30,30,0}, okBut = {0,0,0,0,0};
+button_t retBut = {0,0,30,30,0}, okBut = {0,0,0,0,0}, scrollUpBut, scrollDwnBut;
 
 
 TS_StateTypeDef tsState;

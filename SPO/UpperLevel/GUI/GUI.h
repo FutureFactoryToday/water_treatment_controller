@@ -145,7 +145,7 @@ typedef struct {
 	uint32_t pressCnt;
 } button_t;
 
-extern button_t retBut, okBut;
+extern button_t retBut, okBut, scrollUpBut, scrollDwnBut;
 extern bool enableClockDraw;
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;

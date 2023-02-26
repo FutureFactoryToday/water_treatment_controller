@@ -1,26 +1,21 @@
 #include "quantityCountServiceFrame.h"
 
-int8_t hwndQuantityCountServiceFrameControl = 0;
-void updateData (void);
+static void createFrame(void);
+static void updateData (void);
+
 void ShowQuantityCountServiceFrame(void)
 {
-	uint8_t oldSec = getTime()->second - 1;
-	hwndQuantityCountServiceFrameControl = 0;
+	createFrame();
 	while(1)
 	{
-			if(redraw)
-			{
-					RefreshQuantityCountServiceFrame();
-					redraw = 0;
-			}
-			if (oldSec != getTime()->second){ 
-				AnimateTimeQuantityCountServiceFrame();
-				updateData();
-				oldSec = getTime()->second;
-			}
-			TranslateQuantityCountServiceFrameMSG();
 			
-			if(hwndQuantityCountServiceFrameControl == 20) return;
+		if (updateFlags.sec == true){ 
+			updateData();
+			updateFlags.sec = false;
+		}	
+		if(retBut.isPressed == true){
+			return;
+    }
 	}
 }
 void updateData (void){
@@ -33,31 +28,35 @@ void updateData (void){
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X, QUANTITY_COUNT_VALUE_Y, intToStr((uint32_t)FM_getFlowMeterVal()), LEFT_MODE);
 }
-void RefreshQuantityCountServiceFrame(void)
+void createFrame(void)
 {
-    //Static refresh
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
-    
-    BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
-    
-    BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_QUANTITY_COUNT,LEFT_MODE);
-    
-    updateData();
-    
-    BSP_LCD_SetFont(&Oxygen_Mono_20);
-    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, QUANTITY_COUNT, LEFT_MODE);
-    BSP_LCD_SetFont(&Oxygen_Mono_24);
+	TC_clearButtons();
+	//Static refresh
+	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
+	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
+	
+	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
+	
+	BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
+	
+	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_QUANTITY_COUNT,LEFT_MODE);
+	
+	updateData();
+	
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(QUANTITY_COUNT_VALUE_X + 80, QUANTITY_COUNT_VALUE_Y, QUANTITY_COUNT, LEFT_MODE);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	
+	TC_addButton(&retBut);
+	enableClockDraw = true;
 }
 
 void AnimateTimeQuantityCountServiceFrame(void)
@@ -81,18 +80,5 @@ void AnimateTimeQuantityCountServiceFrame(void)
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
         BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
-    }
-}
-
-void TranslateQuantityCountServiceFrameMSG(void)
-{
-    BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
-    {
-        touchDelay = 100;
-        if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
-        {
-            hwndQuantityCountServiceFrameControl = 20;
-        }
     }
 }

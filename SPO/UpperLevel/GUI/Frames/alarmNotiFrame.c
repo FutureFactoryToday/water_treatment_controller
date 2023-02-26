@@ -14,8 +14,7 @@ void ShowAlarmNotiServiceFrame(void)
 					 retBut.isPressed = false;
 					return;
 				}
-        
-        
+ 
         if(alarmListBut.isPressed == true){
 					alarmListBut.isPressed = false;
 				}

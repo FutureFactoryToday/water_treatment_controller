@@ -7,7 +7,7 @@ int8_t hwndServiceMenuFrameControl = 0;
 int8_t startServiceMenuFrame = 0;
 
 //char* ITEM_SERVICE_MENU[] = { "ВЫБОР ФИЛЬТРА", "ПЕРИОД РЕГЕН", "ВРЕМЯ ПРОМЫВКИ", "СЧЁТЧИК ВОДЫ", "РЕГЕНЕРАЦИЯ", "РЕГУЛИРОВКА КЛАПАНА", "УВЕДОМЛЕНИЯ ОБСЛУЖИВАНИЯ" };
-static button_t menuLines[7], scrollUpBut, scrollDwnBut; 
+static button_t menuLines[7]; 
 static void createFrame();
 
 void ShowServiceMenuFrame(void)

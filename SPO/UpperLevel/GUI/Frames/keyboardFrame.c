@@ -18,7 +18,6 @@ int32_t ShowKeyboardFrame(void)
 	
 	staticCreate();
 	
-	
     while(1)
     {
 			//Секундное обновление

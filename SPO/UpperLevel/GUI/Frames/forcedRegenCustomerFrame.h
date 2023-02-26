@@ -58,8 +58,3 @@
 
 void ShowForcedRegenCustFrame(void);
 
-void RefreshForcedRegenCustFrame(void);
-
-void AnimateTimeForcedRegenCustFrame(void);
-
-void TranslateForcedRegenCustFrameMSG(void);

@@ -93,6 +93,7 @@ void createFrame (void){
 	TC_addButton(&customerBut);
 	
 	enableClockDraw = true;
+   
 }
 
 void RefreshMainFrame(void)

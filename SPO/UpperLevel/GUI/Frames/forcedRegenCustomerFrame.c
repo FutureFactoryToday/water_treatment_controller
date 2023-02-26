@@ -1,4 +1,9 @@
 #include "forcedRegenCustomerFrame.h"
+void RefreshForcedRegenCustFrame(void);
+
+
+
+void TranslateForcedRegenCustFrameMSG(void);
 
 int8_t hwndForcedRegenCustFrameControl = 0;
 uint16_t statusColor;
@@ -35,7 +40,7 @@ void ShowForcedRegenCustFrame(void)
 					BSP_LCD_SetTextColor(statusColor);
 					BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
 				}
-        AnimateTimeForcedRegenCustFrame();
+
         TranslateForcedRegenCustFrameMSG();
         
         if(hwndForcedRegenCustFrameControl == 20) return;
@@ -80,29 +85,6 @@ void RefreshForcedRegenCustFrame(void)
 	
 }
 
-void AnimateTimeForcedRegenCustFrame(void)
-{
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X, TIME_Y, getFormatedTime(hour), LEFT_MODE);
-
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X + 40, TIME_Y, getFormatedTime(minute), LEFT_MODE);
-    
-    if(getTime()->second%2 == 0)
-    {
-        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
-    }
-    else
-    {
-        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
-    }
-}
 
 void TranslateForcedRegenCustFrameMSG(void)
 {

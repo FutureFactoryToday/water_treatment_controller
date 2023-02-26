@@ -1,27 +1,21 @@
 #include "delayedRegenCustomerFrame.h"
 
-int8_t hwndDelayedRegenCustFrameControl = 0;
 void ShowRemainingDays(void);
+
+static void createFrame();
+
 void ShowDelayedRegenCustFrame(void)
 {
-	uint8_t oldSec = getTime()->second - 1;
-    hwndDelayedRegenCustFrameControl = 0;
-    while(1)
-    {
-        if(redraw)
-        {
-            RefreshDelayedRegenCustFrame();
-            redraw = 0;
-        }
-				if (oldSec != getTime()->second){
-					AnimateTimeDelayedRegenCustFrame();
-					ShowRemainingDays();
-				}
-        
-        TranslateDelayedRegenCustFrameMSG();
-        
-        if(hwndDelayedRegenCustFrameControl == 20) return;
+	createFrame();
+	while(1)
+	{
+		if (updateFlags.sec == true){
+			 ShowRemainingDays();
+		}
+		if(retBut.isPressed == true){
+			return;
     }
+	}
 }
 void ShowRemainingDays(void){
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
@@ -42,8 +36,9 @@ void ShowRemainingDays(void){
 			
 			}
 }
-void RefreshDelayedRegenCustFrame(void)
+void createFrame(void)
 {
+	TC_clearButtons();
     //Static refresh
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
@@ -74,41 +69,8 @@ void RefreshDelayedRegenCustFrame(void)
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X + 80, DELAYED_REGEN_VALUE_Y, DAY_BEFORE_REGEN, LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
+		
+		enableClockDraw = true;
+		TC_addButton(&retBut);
 }
 
-void AnimateTimeDelayedRegenCustFrame(void)
-{
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X, TIME_Y, getFormatedTime(hour), LEFT_MODE);
-
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X + 40, TIME_Y, getFormatedTime(minute), LEFT_MODE);
-    
-    if(getTime()->second%2 == 0)
-    {
-        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
-    }
-    else
-    {
-        BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-        BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
-    }
-}
-
-void TranslateDelayedRegenCustFrameMSG(void)
-{
-  BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
-    {
-        touchDelay = 100;
-        if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
-        {
-            hwndDelayedRegenCustFrameControl = 20;
-        }
-    }
-}

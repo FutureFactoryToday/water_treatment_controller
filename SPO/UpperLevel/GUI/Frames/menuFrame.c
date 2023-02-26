@@ -7,7 +7,7 @@ int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
 //char* ITEM_MENU[] = { "ВРЕМЯ/ДАТА", "ВРЕМЯ ПРОМЫВКИ", "ПРИНУДИТЕЛЬНАЯ РЕГ.", "ОТЛОЖЕННАЯ РЕГ.", "ДНЕЙ МЕЖДУ РЕГ.", "СЕРВИС" };
 
-static button_t menuLines[5], scrollUpBut, scrollDwnBut; 
+static button_t menuLines[5]; 
 static void createFrame();
 
 
@@ -23,7 +23,7 @@ void ShowMenuFrame(void)
 			 if (retBut.isPressed == true){
 				 
 				 retBut.isPressed = false;
-				 return;
+				 
 			 }
 			 if(menuLines[0].isPressed == true){
 					//Make it blue
@@ -55,8 +55,8 @@ void ShowMenuFrame(void)
 			 }
 			/*Buttons released*/
        if (retBut.isReleased == true){
-				 
 				 retBut.isReleased = false;
+				 return;
 			 }
        if(menuLines[0].isReleased == true){
 					TSF_showFrame();
@@ -84,11 +84,15 @@ void ShowMenuFrame(void)
 				 createFrame();
 			 }
 			 if(scrollUpBut.isReleased == true){
-					
+					if (menu_frame_Scroll_cnt > 0){
+						 menu_frame_Scroll_cnt--;
+					}
+					RefreshScrollBarMenuFrame();
 					scrollUpBut.isReleased = false;
 			 }
 			 if(scrollDwnBut.isReleased == true){
-					
+					menu_frame_Scroll_cnt++;
+					RefreshScrollBarMenuFrame();
 					scrollDwnBut.isReleased = false;
 			 }   
 	}

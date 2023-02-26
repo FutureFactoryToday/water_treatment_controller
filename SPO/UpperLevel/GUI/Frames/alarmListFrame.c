@@ -7,7 +7,7 @@ int8_t hwndAlarmListFrameControl = 0;
 int8_t startAlarmListFrame = 0;
 
 //char* ITEM_ALARM_LIST[];
-static button_t menuLines[5], scrollUpBut, scrollDwnBut; 
+static button_t menuLines[5]; 
 static void createFrame();
 
 void ShowAlarmListFrame(void)

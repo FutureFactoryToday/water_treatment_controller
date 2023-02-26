@@ -47,9 +47,3 @@
 #define MAIN_WINDOW_SIZE_Y MED_LINE_WIDTH
 
 void ShowWashingTimeServiceFrame(void);
-
-void RefreshWashingTimeServiceFrame(void);
-
-void AnimateTimeWashingTimeServiceFrame(void);
-
-void TranslateWashingTimeServiceFrameMSG(void);
