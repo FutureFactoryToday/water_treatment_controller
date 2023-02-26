@@ -77,7 +77,7 @@ int8_t PIN_showFrame(){
 }
 
 int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
-	return ShowKeyboardFrame();
+	return ShowKeyboardFrame(1, 9);
 }
 
 void createPinFrame(){

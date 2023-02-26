@@ -1,3 +1,6 @@
+#include "main.h"
+#define OK "Ок"
+#define CANCEL "Отмена"
 
 #ifndef _KEYBOARD_H_
 #define _KEYBOARD_H_
@@ -49,11 +52,7 @@
 	#define TEXT_CTRL_SIZE_Y TOP_BOT_LINE_WIDTH
 
 
-	//Public defines cursor sizers
-	#define CURSOR_POS_X 10
-	#define CURSOR_POS_Y TOP_BOT_LINE_WIDTH + 10
-	#define CURSOR_SIZE_X 2
-	#define CURSOR_SIZE_Y 40
+int32_t ShowKeyboardFrame(int32_t min, int32_t max);
 
 	//Public defines keys sizers
 	////Public defines number keys sizers
@@ -64,9 +63,7 @@
 
 	void RefreshKeyboardFrame(void);
 
-	void RefreshCursor(uint8_t dx);
-
-	void RefreshKeys(void);
+void PrintResultFromKeyboard();
 
 	uint8_t KeyClick(void);
 

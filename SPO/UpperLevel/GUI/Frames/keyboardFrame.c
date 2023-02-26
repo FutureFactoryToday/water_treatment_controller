@@ -5,12 +5,24 @@ uint8_t dx = 0;
 int8_t hwndKeyboardFrameControl = 0;
 int32_t result_keyboard = 0;
 
+int32_t _min = 0;
+
+int32_t _max = 0;
+
+int32_t result = 144;
+
+int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 button_t _0,_1,_2,_3,_4,_5,_6,_7,_8,_9, delBut;
 
 void staticCreate(void);
 
 int32_t ShowKeyboardFrame(void)
 {
+    _min = min;
+    _max = max;
+    dx = 0;
+    qwertyResult= 0;
+    result_keyboard = 0;
 	dx = 0;
 	qwertyResult= 0;
 	result_keyboard = 0;
@@ -316,7 +328,9 @@ void staticCreate(void)
 void PrintResultFromKeyboard(int32_t pre_result)
 {
   
+    int32_t pre_result = result;
     
+
     if((pre_result >= 1 && pre_result <= 9) || (pre_result == 0 && result_keyboard != 0))
     {
         dx += 13;
@@ -329,7 +343,8 @@ void PrintResultFromKeyboard(int32_t pre_result)
         if(dx != 0) 
             dx -= 13;
     }
-    
+
+        
     if(result_keyboard != 0)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -344,6 +359,7 @@ void PrintResultFromKeyboard(int32_t pre_result)
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
         BSP_LCD_FillRect(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
     }
+    result = 144;
 }
 
 //void TranslateKeyboardFrameMSG()

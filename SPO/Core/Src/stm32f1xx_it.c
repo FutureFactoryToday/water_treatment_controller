@@ -242,7 +242,7 @@ void EXTI3_IRQHandler(void)
     //LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
-			//redraw = 1;
+			redraw = 1;
 			updateFlags.touch = true;
 			BSP_TS_GetState(&tsState);
 			TC_checkButtons();
