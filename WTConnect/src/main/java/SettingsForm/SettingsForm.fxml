@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0">
+               <children>
+                  <Separator prefHeight="0.0" prefWidth="600.0" />
+                  <Separator layoutY="13.0" prefHeight="0.0" prefWidth="600.0" />
+               </children>
+            </AnchorPane>
+          </content>
+          <expandableContent>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+          </expandableContent>
+         <header>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Настройки WTC">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </header>
+      </DialogPane>
+      <ButtonBar>
+        <buttons>
+            <Button mnemonicParsing="false" text="Отмена" />
+          <Button mnemonicParsing="false" text="Сохранить" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</VBox>

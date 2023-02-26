@@ -15,18 +15,16 @@ button_t _0,_1,_2,_3,_4,_5,_6,_7,_8,_9, delBut;
 
 void staticCreate(void);
 
-int32_t ShowKeyboardFrame(int32_t min, int32_t max);
-
 void RefreshKeyboardFrame(void);
-
-void RefreshCursor(uint8_t dx);
 
 void PrintResultFromKeyboard();
 
 uint8_t KeyClick(void);
 
-void TranslateKeyboardFrameMSG(void);
+void PrintResultFromKeyboard();
 
+void RefreshCursor(uint8_t dx);
+	
 int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 {
     _min = min;
@@ -102,21 +100,8 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 				delBut.isPressed = 0;
 			}
 			
-//        if(redraw)
-//        {
-//            RefreshKeyboardFrame();
-//            redraw = 0;
-//        }
-//        TranslateKeyboardFrameMSG();
-//        
-//        if(qwertyResult == 1)return result_keyboard;
-//        
-//        if(qwertyResult == 0)return qwertyResult;
+ 
         
-        
-        RefreshCursor(dx);
-        
-        qwertyResult = 2;
     }
     
 }
@@ -228,7 +213,8 @@ void staticCreate(void)
     
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    //Setting for key "0"
+    
+		//Setting for key "0"
     _0.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
 		_0.x = NUM_KEYS_POS_X;
 		_0.y = NUM_KEYS_POS_Y;
@@ -309,7 +295,8 @@ void staticCreate(void)
 	TC_addButton(&retBut);
 	
 	PrintResultFromKeyboard();
-    enableClockDraw = false;
+	
+	enableClockDraw = false;
 }
 
 //uint8_t KeyClick()
@@ -373,7 +360,7 @@ void staticCreate(void)
 void PrintResultFromKeyboard()
 {
     int32_t pre_result = result;
-
+    
     if((pre_result >= 1 && pre_result <= 9) || (pre_result == 0 && result_keyboard != 0))
     {
         result_keyboard = (result_keyboard * 10) + pre_result;
