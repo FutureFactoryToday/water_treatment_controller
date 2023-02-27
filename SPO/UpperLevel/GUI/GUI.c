@@ -25,7 +25,12 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+<<<<<<< HEAD
 button_t retBut = {RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y,0,0,0,0}, okBut = {OK_X,OK_Y,100,50,0,0,0,0}, cancelBut = {CANCEL_X,CANCEL_Y,100,50,0,0,0,0}, scrollUpBut = {UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y,0,0,0,0}, scrollDwnBut = {DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y,0,0,0,0};
+=======
+button_t retBut = {RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y,0,0,0,0}, okBut = {OK_X,OK_Y,100,50,0,0,0,0}, CancelBut = {CANCEL_X,CANCEL_Y,100,50,0,0,0,0}, scrollUpBut = {UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y,0,0,0,0}, scrollDwnBut = {DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y,0,0,0,0};
+
+>>>>>>> GUI
 
 TS_StateTypeDef tsState;
 uint32_t touchDelay;
