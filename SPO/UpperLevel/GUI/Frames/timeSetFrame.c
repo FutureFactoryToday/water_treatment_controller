@@ -78,9 +78,9 @@ uint8_t refreshFrame();
 uint8_t touchHandler();
 void createFrame();
 void drawMonth(void);
-void drawMidClock(void);
+uint16_t drawMidClock(bool checked);
 void drawEditBoxes(wtc_time_t editTime);
-int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text);
+bool timeSetPressed = false;
 /* Private user code ---------------------------------------------------------*/
 
 void TSF_showFrame(){
@@ -99,11 +99,16 @@ void TSF_showFrame(){
 			
 			if (updateFlags.sec){
 				displayedTime = *addSec(&displayedTime,1);
-				drawMidClock();
+				drawMidClock(timeSetPressed);
 				updateFlags.sec = false;
 			} 
+			if (timeSetButton.isPressed == true){
+				timeSetPressed = true;
+				drawMidClock(timeSetPressed);
+				timeSetButton.isPressed = false;
+			}
 			if (timeSetButton.isReleased == 1){
-				int16_t time = callKeyboard(0,2400,"Введите часы и минуты");
+				int16_t time = ShowKeyboardFrame(0,2400);
 				if (time > 0){
 				uint8_t hour = time/100;
 				uint8_t minutes = time - hour*100;
@@ -112,6 +117,8 @@ void TSF_showFrame(){
 				
 				
 				}
+				timeSetPressed = false;
+				drawMidClock(timeSetPressed);
 				timeSetButton.isReleased = 0;
 				createFrame();
 			}
@@ -127,224 +134,62 @@ void TSF_showFrame(){
     }
 }
 
-uint8_t refreshFrame(){
-
-	if (isInRectangle(tsState.X,tsState.Y,CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y,setTimeButtonLength + 5,Oxygen_Mono_20.height+3))
-  {
-		if (!editBoxesShow)
-		{
-			editedTime = *getTime();
-			drawEditBoxes(*getTime());
-			editBoxesShow = 1;
-		} else {
-			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			BSP_LCD_FillRect(BSP_LCD_GetXSize()/2 + 1, MAINBAR_SIZE_Y, BSP_LCD_GetXSize()/2, STATUSBAR_POS_Y - MAINBAR_SIZE_Y);
-			
-			editBoxesShow = 0;
-			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		}
-		
-	}
-	
-	if (editBoxesShow){
-		
-		if (isInRectangle(tsState.X,tsState.Y,BOX_X,YEAR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
-		{
-			int32_t kbResult = callKeyboard(0, 9999, (*(frameText + CH_YEAR_TEXT)));
-			if (kbResult >= 0){
-				editedTime.year = kbResult;
-				createFrame();
-			}
-			
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,BOX_X,MONTH_LINE_Y - 1,9*15,SETTINGS_FONT.height+2))
-		{
-			int32_t kbResult = callKeyboard(1, 12, (*(frameText + CH_MONTH_TEXT)));
-			if (kbResult >= 0){
-				editedTime.month = kbResult;
-				if (editedTime.day > maxDayInMonth(editedTime.month, editedTime.year)) {
-					editedTime.day = maxDayInMonth(editedTime.month, editedTime.year);
-				}
-				createFrame();
-			}
-			
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,BOX_X,DAY_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
-		{
-			int32_t kbResult = callKeyboard(1, maxDayInMonth(editedTime.month, editedTime.year), (*(frameText + CH_DAY_TEXT)));
-			if (kbResult >= 0){
-				editedTime.day = kbResult;
-				createFrame();
-			}
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,BOX_X,HOUR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
-		{
-			int32_t kbResult = callKeyboard(0, 23, (*(frameText + CH_HOUR_TEXT)));
-			if (kbResult >= 0){
-				editedTime.hour = kbResult;
-				createFrame();
-			}
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,BOX_X,MINUTE_LINE_Y - 1,4*15,SETTINGS_FONT.height+2))
-		{
-			int32_t kbResult = callKeyboard(0, 59, (*(frameText + CH_MINUTE_TEXT)));
-			if (kbResult >= 0){
-				editedTime.minute = kbResult;
-				createFrame();
-			}
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,BSP_LCD_GetXSize() - 8*10 - 10, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6))
-		{
-			editedTime.second = 0;
-			setSysTime(&editedTime);
-			displayedTime = *getTime();
-			createFrame();
-		}	
-		if (isInRectangle(tsState.X,tsState.Y,CHANGE_TEXT_X, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6))
-		{
-			editedTime = *getTime();
-			drawEditBoxes(*getTime());
-			editBoxesShow = 1;
-		}	
-		
-		
-	}
-
-	if (isInRectangle(tsState.X,tsState.Y,MONTH_GRID_X1, MONTH_GRID_Y1 +  5,leftArowImg.infoHeader.biWidth,leftArowImg.infoHeader.biHeight))
-		{
-			displayedTime.month -= 1;
-			if (displayedTime.month < 1){
-				displayedTime.month = 12;
-				displayedTime.year -= 1;
-			}
-			drawMonth();
-		}
-	if (isInRectangle(tsState.X,tsState.Y,rightButX - rightArowImg.infoHeader.biWidth, MONTH_GRID_Y1 + 5,rightArowImg.infoHeader.biWidth,rightArowImg.infoHeader.biHeight))
-		{
-			displayedTime.month += 1;
-			if (displayedTime.month > 12){
-				displayedTime.month = 1;
-				displayedTime.year += 1;
-			}
-			drawMonth();
-		}
-
-	if (isInRectangle(tsState.X,tsState.Y,10, 10,gImage_RETURNARROW.infoHeader.biWidth,gImage_RETURNARROW.infoHeader.biHeight))
-  {
-		return 1;
-	}
-	return 0;
-}
-int32_t callKeyboard(uint32_t min, uint32_t max, uint8_t* text){
-	return ShowKeyboardFrame(0,25);
-}
-uint8_t touchHandler(){
-	BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && tsState.TouchDetected == 1)
-    {
-      touchDelay = 100;
-			tsState.TouchDetected = 0;
-			return 1;
-		}
-		else {
-			tsState.TouchDetected = 0;
-			return 0;
-		}
-		
-}
 
 void createFrame(){
 	//Static refresh
-	BSP_LCD_Clear(LCD_COLOR_GRAY);
 	enableClockDraw = false;
-//	BSP_LCD_SetTextColor(MAIN_COLOR);
-//	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-//	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-//	
-//	
-//	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
-//		
 
-//	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-//	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-
-//	BSP_LCD_SetFont(&Oxygen_Mono_24);
-//	BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(frameText + MAIN_TEXT)), LEFT_MODE);
-//			
-//	
-//	drawMonth();
-//	
-//	drawClock();
-//	
-//	//BSP_LCD_SetFont(&Oxygen_Mono_20);
-//	//BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-//	//setTimeButtonLength = BSP_LCD_DisplayStringAt(CLOCK_EDIT_BUT_X + 3,CLOCK_EDIT_BUT_Y + 3,(*(frameText + EDIT_TEXT)),LEFT_MODE);
-//	//BSP_LCD_DrawRect(CLOCK_EDIT_BUT_X,CLOCK_EDIT_BUT_Y ,setTimeButtonLength + 5, Oxygen_Mono_20.height+3);
-//	
-//	//BSP_LCD_DrawVLine( BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y, BSP_LCD_GetYSize() - MAINBAR_SIZE_Y - STATUSBAR_SIZE_Y);
-//	
-//	//if (editBoxesShow){
-//	//		drawEditBoxes(editedTime);
-//	//}
-//	
-//	BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
 	TC_clearButtons();
-	drawMidClock();
-	uint16_t dateTextLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + BSP_LCD_GetFont()->height,getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime),CENTER_MODE);
-	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + dateTextLength/2,MAINBAR_SIZE_Y + BSP_LCD_GetFont()->height + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-	timeSetButton.x = BSP_LCD_GetXSize()/2 + dateTextLength/2;
-	timeSetButton.y = MAINBAR_SIZE_Y + BSP_LCD_GetFont()->height;
-	timeSetButton.xSize = rightArowImg.infoHeader.biWidth;
-	timeSetButton.ySize = rightArowImg.infoHeader.biHeight;
+	BSP_LCD_Clear(MID_COLOR);
+	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
+	drawStatusBarOkCancel();
+	uint16_t timeLength = drawMidClock(false);
+	
+	uint16_t dateTextLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MID_CLOCK_Y + BSP_LCD_GetFont()->height,getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime),CENTER_MODE);
+	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + dateTextLength/2,MID_CLOCK_Y + BSP_LCD_GetFont()->height + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
+	dateSetButton.x = BSP_LCD_GetXSize()/2 + dateTextLength/2;
+	dateSetButton.y = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
+	dateSetButton.xSize = rightArowImg.infoHeader.biWidth;
+	dateSetButton.ySize = rightArowImg.infoHeader.biHeight;
+	
+	timeSetButton.x = BSP_LCD_GetXSize()/2 - timeLength/2;
+	timeSetButton.y = MID_CLOCK_Y;
+	timeSetButton.xSize = timeLength + 10;
+	timeSetButton.ySize = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
+	
+	TC_addButton(&okBut);
 	TC_addButton(&timeSetButton);
 	TC_addButton(&dateSetButton);
 }
-void drawMidClock (void){
+uint16_t drawMidClock (bool checked){
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(0,MID_CLOCK_Y,BSP_LCD_GetXSize(),BSP_LCD_GetFont()->height);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	uint8_t* formatter = (getTime()->second % 2)? "hh:mm " : "hh mm ";
-	uint16_t timeLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,MAINBAR_SIZE_Y,getFormatedTimeFromSource(formatter, &displayedTime), CENTER_MODE);
-	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MAINBAR_SIZE_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-	timeSetButton.x = BSP_LCD_GetXSize()/2 + timeLength/2;
-	timeSetButton.y = MAINBAR_SIZE_Y;
-	timeSetButton.xSize = rightArowImg.infoHeader.biWidth;
-	timeSetButton.ySize = rightArowImg.infoHeader.biHeight;
-}
-void drawEditBoxes(wtc_time_t editTime){
-	BSP_LCD_SetFont(&Oxygen_Mono_16);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, FIRST_ROW_Y, (*(frameText + SETTINGS_UP_TEXT)), LEFT_MODE);
+	uint16_t timeLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,MID_CLOCK_Y,getFormatedTimeFromSource(formatter, &displayedTime), CENTER_MODE);
 	
-	BSP_LCD_SetFont(&SETTINGS_FONT);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, YEAR_LINE_Y, (*(frameText + YEAR_TEXT)), LEFT_MODE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, MONTH_LINE_Y, (*(frameText + MONTH_TEXT)), LEFT_MODE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, DAY_LINE_Y, (*(frameText + DAY_TEXT)), LEFT_MODE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, HOUR_LINE_Y, (*(frameText + HOUR_TEXT)), LEFT_MODE);
-	BSP_LCD_DisplayStringAt(CHANGE_TEXT_X, MINUTE_LINE_Y, (*(frameText + MIN_TEXT)), LEFT_MODE);
-	
-	BSP_LCD_DrawRect(BOX_X,YEAR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2);
-	BSP_LCD_DisplayStringAt(BOX_X+10,YEAR_LINE_Y,getFormatedTimeFromSource("YYYY", &editTime),LEFT_MODE);
-	
-	BSP_LCD_DrawRect(BOX_X,MONTH_LINE_Y - 1,9*15,SETTINGS_FONT.height+2);
-	BSP_LCD_DisplayStringAt(BOX_X + 10,MONTH_LINE_Y,getFormatedTimeFromSource("MMM", &editTime),LEFT_MODE);
-	
-	BSP_LCD_DrawRect(BOX_X,DAY_LINE_Y - 1,4*15,SETTINGS_FONT.height+2);
-	BSP_LCD_DisplayStringAt(BOX_X+10,DAY_LINE_Y,getFormatedTimeFromSource("DD", &editTime),LEFT_MODE);
-	
-	BSP_LCD_DrawRect(BOX_X,HOUR_LINE_Y - 1,4*15,SETTINGS_FONT.height+2);
-	BSP_LCD_DisplayStringAt(BOX_X+10,HOUR_LINE_Y,getFormatedTimeFromSource("hh" ,&editTime),LEFT_MODE);
-	
-	BSP_LCD_DrawRect(BOX_X,MINUTE_LINE_Y - 1,4*15,SETTINGS_FONT.height+2);
-	BSP_LCD_DisplayStringAt(BOX_X+10,MINUTE_LINE_Y,getFormatedTimeFromSource("mm", &editTime),LEFT_MODE);
-	
-	DrawButton(BSP_LCD_GetXSize() - 8*12 - 10, SAVE_LINE_Y, 8*12, SETTINGS_FONT.height + 6, 0, (*(frameText + SAVE_TEXT)),&SETTINGS_FONT);
-	DrawButton(CHANGE_TEXT_X, SAVE_LINE_Y, 8*10, SETTINGS_FONT.height + 6, 0, (*(frameText + BACK_TEXT)),&SETTINGS_FONT);
-	
+	if (!checked){
+		BSP_LCD_SetTextColor(DARK_COLOR);
+		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
+		BSP_LCD_FillTriangle(BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + 10, 
+													BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + 20, 
+													BSP_LCD_GetXSize()/2 + timeLength/2 + 5 + 5, MID_CLOCK_Y + 15); 
+				
+	} else {
+		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
+		BSP_LCD_SetTextColor(LIGHT_COLOR);
+		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
+		BSP_LCD_FillTriangle(BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 - 5, 
+													BSP_LCD_GetXSize()/2 + timeLength/2 + 15, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 - 5, 
+													BSP_LCD_GetXSize()/2 + timeLength/2 + 10, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 + 5); 
 
+	}
+	return timeLength;
 }
+
 
 void drawMonth(void){
 	uint32_t tableLength = 0;
@@ -355,7 +200,7 @@ void drawMonth(void){
 	
 	
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(BSP_LCD_GetXSize(), MAINBAR_SIZE_Y, BSP_LCD_GetXSize()/2 - 1, STATUSBAR_POS_Y - MAINBAR_SIZE_Y);
+	BSP_LCD_FillRect(BSP_LCD_GetXSize(), MID_CLOCK_Y, BSP_LCD_GetXSize()/2 - 1, STATUSBAR_POS_Y - MID_CLOCK_Y);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	curY+=BSP_LCD_GetFont()->height;
 	uint32_t rowS, rowE;

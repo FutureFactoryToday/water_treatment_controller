@@ -25,8 +25,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-button_t retBut = {0,0,30,30,0}, okBut = {0,0,0,0,0}, scrollUpBut, scrollDwnBut;
-
+button_t retBut = {RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y,0,0,0,0}, okBut = {OK_X,OK_Y,100,50,0,0,0,0}, cancelBut = {CANCEL_X,CANCEL_Y,100,50,0,0,0,0}, scrollUpBut = {UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y,0,0,0,0}, scrollDwnBut = {DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y,0,0,0,0};
 
 TS_StateTypeDef tsState;
 uint32_t touchDelay;
@@ -38,7 +37,7 @@ uint8_t frame = 0;
 //uint8_t wasScroll = 0;
 uint8_t itemIndex;
 update_flag_t updateFlags;
-bool enableClockDraw;
+bool enableClockDraw = false;
 
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
@@ -73,113 +72,15 @@ void initGUI(void){
     
     //ShowMainFrame();
 }
-uint32_t neededPoz = 0;
-
-void translateMessage(void){
-	BSP_TS_GetState(&tsState);
-	if (touchDelay == 0 && wasTouch())
-    {
-        touchDelay = 100;
-        switch(frame)
-        {
-            case 0:
-            {
-                if (isInRectangle(tsState.X,tsState.Y,DROP_BUT_X,DROP_BUT_Y,DROP_BUT_X_SIZE,DROP_BUT_Y_SIZE) )
-                {
-                    if (dropBut == 0)
-                    {
-                        dropBut = 1;
-                        frame = 1;
-                    } 
-                }
-                if (isInRectangle(tsState.X,tsState.Y,WRENCH_BUT_X,WRENCH_BUT_Y,DROP_BUT_X_SIZE,DROP_BUT_Y_SIZE) )
-                {
-                    if (wrenchBut == 0) 
-                    {
-                        wrenchBut = 1;
-                        frame = 2;
-                    } 
-                }
-                if (isInRectangle(tsState.X,tsState.Y,PAGE_BUT_X,PAGE_BUT_Y,DROP_BUT_X_SIZE,DROP_BUT_X_SIZE) )
-                {
-                    if (pageBut == 0) 
-                    {
-                        pageBut = 1;
-                        frame = 3;
-                    } 
-                }   
-                break;
-            }
-            case 1:
-            {
-                if (isInRectangle(tsState.X,tsState.Y,FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y))
-                {
-                    frame = 11;
-                }   
-                if (isInRectangle(tsState.X,tsState.Y,SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y))
-                {
-                    frame = 12;
-                }   
-                if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y))
-                {
-                    frame = 0;
-                }
-                break;
-            }
-            
-            case 2:
-            {
-                if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y))
-                {
-                    frame = 0;
-                }
-                break;
-            }
-            
-            case 3:
-            {  
-                if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y))
-                {
-                    frame = 0;
-                }
-                break;
-            }
-
-            case 11:
-            {
-                if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y))
-                {
-                    frame = 1;
-                }
-                break;
-            }
-            case 12:
-            {
-                if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y))
-                {
-                    frame = 1;
-                }
-                if (isInRectangle(tsState.X,tsState.Y,UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y))
-                {
-                    //if(wasScroll > 0) wasScroll--;
-                }
-                if (isInRectangle(tsState.X,tsState.Y,DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y))
-                {
-                    //if(wasScroll < 2) wasScroll++;
-                }
-                break;
-            }
-        }
-		
-		  
-	}    
-   
-    //intToStr(opticCnt);
-}
 
 void drawClock(void){
+    
+    uint16_t oldTextColor = BSP_LCD_GetTextColor();
+    uint16_t oldBackColor = BSP_LCD_GetBackColor();
+    
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
 	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
 	if (getTime()->second % 2){
@@ -188,6 +89,9 @@ void drawClock(void){
 	} else {
 		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
 	}
+    
+    BSP_LCD_SetTextColor(oldTextColor);
+    BSP_LCD_SetBackColor(oldBackColor);
 }
 
 

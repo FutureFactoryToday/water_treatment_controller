@@ -10,6 +10,8 @@ void drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize
 
 void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint16_t* label);
 
+void drawMainWindow();
+
 typedef enum
 {
     OkCancel,
@@ -19,6 +21,8 @@ typedef enum
 void drawStatusBarOkCancel();
 
 void drawStatusBarSave(uint16_t* label);
+
+void drawStatusBarEmpty();
 
 void drawScrollButton (uint16_t scPos);
 

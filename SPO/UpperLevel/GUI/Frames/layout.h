@@ -7,6 +7,12 @@
 #define TOP_BOT_LINE_WIDTH 60
 #define MED_LINE_WIDTH 220
 
+#define SMALL_LOGO_X  480 - 140
+#define SMALL_LOGO_Y  5
+
+#define DARK_COLOR LCD_COLOR_BLUE
+#define LIGHT_COLOR LCD_COLOR_WHITEBLUE
+#define MID_COLOR LCD_COLOR_WHITE
 
 //Public defines mainbar sizers
 #define MAINBAR_POS_X 0

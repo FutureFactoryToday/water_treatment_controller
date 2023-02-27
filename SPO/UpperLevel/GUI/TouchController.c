@@ -48,6 +48,7 @@ void TC_clearButtons(void){
 	 buttonList.butNum = 0;
 }
 void TC_checkButtons(void){
+	
 	 if (buttonList.butNum > 0 && tsState.TouchDetected == 1){
 		 for (uint8_t i = 0; i < buttonList.butNum; i++){
 				if (isInRectangle(tsState.X,tsState.Y,buttonList.buttons[i]->x,buttonList.buttons[i]->y,buttonList.buttons[i]->xSize,buttonList.buttons[i]->ySize)){

@@ -16,6 +16,9 @@
 #include "main.h"
 
 /*Public defines */
+#define MID_CLOCK_Y MAINBAR_SIZE_Y + 20
+
+
 #define TOP_BOT_LINE_WIDTH 60
 #define MED_LINE_WIDTH 200
 

@@ -79,6 +79,12 @@ void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint16_t*
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,label, LEFT_MODE);
 }
 
+void drawMainWindow()
+{
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
+}
+
 void drawStatusBarOkCancel()
 {
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
@@ -105,6 +111,12 @@ void drawStatusBarSave(uint16_t* label)
     BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
+}
+
+void drawStatusBarEmpty()
+{
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
 }
 
 

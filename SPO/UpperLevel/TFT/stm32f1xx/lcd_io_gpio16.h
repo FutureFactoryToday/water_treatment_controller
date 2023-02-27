@@ -38,7 +38,7 @@
 /* A few nsec delay at LCD write and read operations
    first, set it to 10 and 20, then reduce it until the display works well.
    (the values also depend on the processor clock speed and the LCD display speed) */
-#define LCD_WRITE_DELAY   10
+#define LCD_WRITE_DELAY   0
 #define LCD_READ_DELAY    20
 
 /*=============================================================================

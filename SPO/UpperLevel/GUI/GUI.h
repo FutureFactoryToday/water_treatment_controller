@@ -24,8 +24,7 @@
 #include "main.h"
 
 /*Public defines */
-#define SMALL_LOGO_X  480 - 140
-#define SMALL_LOGO_Y  5
+
 
 #define TOP_BOT_LINE_WIDTH 60
 
@@ -146,7 +145,7 @@ typedef struct {
 	uint32_t pressCnt;
 } button_t;
 
-extern button_t retBut, okBut, scrollUpBut, scrollDwnBut;
+extern button_t retBut, okBut, scrollUpBut, scrollDwnBut, cancelBut;
 extern bool enableClockDraw;
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
@@ -195,7 +194,7 @@ extern update_flag_t updateFlags;
 //}msg;
 /*Prototypes */
 void initGUI(void);
-void translateMessage(void);
+//void translateMessage(void);
 void refresh(void);
 void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font);
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
