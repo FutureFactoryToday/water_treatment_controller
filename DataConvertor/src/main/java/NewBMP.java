@@ -40,6 +40,8 @@ public class NewBMP {
     private int bitCount;
     private int bitConv;
     private int bImSize;
+    private int offset;
+    private boolean needOffset;
 
     public NewBMP(String pic) throws IOException {
         convert(new File(pic));
@@ -59,9 +61,9 @@ public class NewBMP {
         Pixel p;
         for (int i = 0; i < h*w; i++){
             if ((bt & bit) != 0){
-                 p = new Pixel(0,0,0);
+                 p = new Pixel(0,0,0, 0, false);
             } else {
-                 p = new Pixel(255, 255, 255);
+                 p = new Pixel(255, 255, 255, 0, false);
             }
             mass.add(p);
             bit = bit>>1;
@@ -83,11 +85,12 @@ public class NewBMP {
 
     }
 
-    public NewBMP(String pic, int h, int w, int rot) throws IOException {
+    public NewBMP(String pic, int h, int w, int rot, int offSet, boolean needOffset) throws IOException {
         this.pic = pic;
         this.h = h;
         this.w = w;
-
+        this.offset = offSet;
+        this.needOffset = needOffset;
         File file = new File(pic);
         BufferedImage img = ImageIO.read(file);
 
@@ -162,7 +165,7 @@ public class NewBMP {
                     break;
                 }
             }
-            tempArr.add(new Pixel(context[el + dataOffset], context[el + 1 + dataOffset], context[el + 2 + dataOffset]));
+            tempArr.add(new Pixel(context[el + dataOffset], context[el + 1 + dataOffset], context[el + 2 + dataOffset], offset, needOffset));
         }
         mass = new ArrayList<>();
         int ind;

@@ -32,6 +32,12 @@ public class Controller implements Initializable {
     public TextField fontSaveName;
     public Tab fontTab;
     public Tab bmpTab;
+    public TextField totalOffset;
+    public TextField blueOffset;
+    public CheckBox needOffset;
+    public TextField greenOffset;
+    public TextField redOffset;
+    public CheckBox isHex;
     boolean isInited;
     File lastSaveDir, lastLoadDir;
     public CheckBox prop;
@@ -66,6 +72,10 @@ public class Controller implements Initializable {
     private ArrayList<FontGlyph> glyphs;
     NewBMP bmpPic;
 
+    private int offset = 0xABA8;
+    private int rOffset ;
+    private int gOffset;
+    private int bOffset;
     private void log(String str) {
         log.setText(str);
     }
@@ -260,7 +270,7 @@ public class Controller implements Initializable {
             if (initImg == null) {
                 return;
             }
-            bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue());
+            bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue(), offset, needOffset.isSelected());
             drawBMP(bmpPic);
         }catch (Exception e){
             e.printStackTrace();
@@ -290,7 +300,7 @@ public class Controller implements Initializable {
         if (saveFile != null) {
             lastSaveDir = saveFile.getParentFile();
             if (bmpPic == null) {
-                bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue());
+                bmpPic = new NewBMP(selectedFile.getText(), Integer.parseInt(height.getText()), Integer.parseInt(width.getText()), rotCh.getValue(),offset,needOffset.isSelected());
             }
             BMPSaver.saveToFile(saveFile.getAbsolutePath(), arrayName.getText(), bmpPic);
             bmpPic = null;
@@ -351,6 +361,46 @@ public class Controller implements Initializable {
 
     }
 
+    public void rePrintOffset(){
+        if (isHex.isSelected()){
+            offset =  Integer.parseInt(totalOffset.getText().replace("0x",""),16);
+        } else{
+            offset = Integer.parseInt(totalOffset.getText());
+        }
+        printOffset();
+    }
+    public void printOffset(){
+        rOffset = (offset & 0xF800) >> 11;
+        gOffset = (offset & 0x07E0) >> 5;
+        bOffset = (offset & 0x001F);
+        if (isHex.isSelected()){
+            totalOffset.setText("0x" + String.format("%x",offset).toUpperCase());
+            redOffset.setText("0x" + String.format("%x",rOffset).toUpperCase());
+            greenOffset.setText("0x" + String.format("%x",gOffset).toUpperCase());
+            blueOffset.setText("0x" + String.format("%x",bOffset).toUpperCase());
+        } else {
+            totalOffset.setText(String.format("%d",offset));
+            redOffset.setText(String.format("%d",rOffset).toUpperCase());
+            greenOffset.setText(String.format("%d",gOffset).toUpperCase());
+            blueOffset.setText(String.format("%d",bOffset).toUpperCase());
+        }
+
+    }
+
+    public void countTotalOffset(){
+        if (isHex.isSelected()){
+            rOffset =  0x1F & Integer.parseInt(redOffset.getText().replace("0x",""),16);
+            gOffset =  0x3F & Integer.parseInt(greenOffset.getText().replace("0x",""),16);
+            bOffset =  0x1F & Integer.parseInt(blueOffset.getText().replace("0x",""),16);
+        } else{
+            rOffset =  0x1F & Integer.parseInt(redOffset.getText());
+            gOffset =  0x3F & Integer.parseInt(greenOffset.getText());
+            bOffset =  0x1F & Integer.parseInt(blueOffset.getText());
+        }
+        offset = rOffset << 11 | gOffset << 5 | bOffset ;
+        printOffset();
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<String> avFonts = Font.getFontNames();
@@ -365,6 +415,32 @@ public class Controller implements Initializable {
         rotCh.setValue(rotCh.getItems().get(0));
         fontHeight.setText("8");
         isInited = true;
+        printOffset();
+
+        totalOffset.focusedProperty().addListener((obs, oldVal, newVal) ->
+                {
+                 if(!newVal){
+                     rePrintOffset();
+                 }
+                });
+        redOffset.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            if(!newVal){
+                countTotalOffset();
+            }
+        });
+        blueOffset.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            if(!newVal){
+                countTotalOffset();
+            }
+        });
+        greenOffset.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            if(!newVal){
+                countTotalOffset();
+            }
+        });
         log("Готов к работе");
     }
 }
