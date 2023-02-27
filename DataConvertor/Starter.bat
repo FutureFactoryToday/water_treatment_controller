@@ -1,1 +1,1 @@
-java -jar DataConvertor.jar
+java -jar out\artifacts\DataConvertor_jar\DataConvertor.jar
