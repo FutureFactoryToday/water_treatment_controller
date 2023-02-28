@@ -81,4 +81,6 @@ uint8_t* intToStr (uint32_t num){
 	}
 	return numBuf;
 }
-
+int32_t MAX(int32_t a, int32_t b){
+	return (a>b)?a:b;
+}

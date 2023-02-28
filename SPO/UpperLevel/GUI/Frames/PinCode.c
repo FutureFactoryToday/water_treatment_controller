@@ -27,29 +27,18 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-char* pinRuText[] = {
-	"Пароль для сервиса",
-	"Введите пароль",
-	"ВВОД",
-	"Введите число"
-};
-char* pinEnText[] = {
-	"SERVICE PASSWORD",
-	"Enter password",
-	"ENTER",
-	"Enter number"
-};
 
 uint8_t** pinFrameText;
 uint32_t enteredPin = {0};
-static button_t pinTextArea;
-
+static button_t pinTextArea, enterBut;
+uint8_t pinString[8];
 /* Private function prototypes -----------------------------------------------*/
 int8_t refreshPinFrame();
 uint8_t pinTouchHandler();
 void createPinFrame();
 void drawPinBoxes(uint8_t* pin);
 int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text);
+void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
 
@@ -58,26 +47,30 @@ int8_t PIN_showFrame(){
 	while(1)
     { 
 			if(pinTextArea.isPressed == true){
-				enteredPin = callKeyboardFromPin(0,999999,"Введите ПИН код");
+				enteredPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
 				createPinFrame();
 				pinTextArea.isPressed = false;
 			}
-			if (okBut.isPressed == true){
-				 okBut.isPressed = false;
+			if (enterBut.isPressed == true){
+				 enterBut.isPressed = false;
 			}
-			if (okBut.isReleased == true){
-				okBut.isReleased = false;
+			if (enterBut.isReleased == true){
+				enterBut.isReleased = false;
 				if (enteredPin == sysParam.SERVICE_CODE){
 					return 1;
 				} else {
 					 return -1;
 				}
-			}			
+			}
+			if (retBut.isReleased == true){
+				return -1;
+				retBut.isReleased = false;
+			}	
     }
 }
 
 int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
-	return ShowKeyboardFrame(1, 9);
+	return ShowKeyboardFrame(0, 9999);
 }
 
 void createPinFrame(){
@@ -85,30 +78,27 @@ void createPinFrame(){
 	TC_clearButtons();
 	enteredPin = 1234;
 	
-	pinFrameText = &pinRuText;
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-			
-	BSP_LCD_DrawBitmap(10, 10, &gImage_RETURNARROW);
+	pinFrameText = &ITEM_PINCODE_FRAME;
 	
-	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
+	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, (*(pinFrameText + MAIN_TEXT)));
+	
+	drawStatusBarEmpty();
 		
-
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-
-	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_DisplayStringAt(FRAME_NAME_TEXT_X, FRAME_NAME_TEXT_Y, (*(pinFrameText + MAIN_TEXT)), LEFT_MODE);
-	
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetFont(&PIN_FONT);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + 5, (*(pinFrameText + ENTER_PIN_TEXT)), CENTER_MODE);
+	pinToStr(enteredPin);
+	pinTextArea = drawTextLabel(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y, 200, BSP_LCD_GetFont()->height + 10,&pinString);    
 	
-	//drawPinBoxes(enteredPin);
+	enterBut = drawFillButton(BSP_LCD_GetXSize()/2 - 50, ENTER_BUT_Y,100,BSP_LCD_GetFont()->height + 10,(*(pinFrameText + BUT_PIN_TEXT)), false);
 	
-	DrawButton(ENTER_BUT_X, ENTER_BUT_Y, 10*15, PIN_TEXT.height+20,0,(*(pinFrameText + BUT_PIN_TEXT)),&PIN_TEXT);
-	
+	TC_addButton(&pinTextArea);
+	TC_addButton(&retBut);
+	TC_addButton(&cancelBut);
+	TC_addButton(&okBut);
+	TC_addButton(&enterBut);
 	enableClockDraw = true;
 }
 
@@ -120,4 +110,21 @@ void drawPinBoxes(uint8_t* pin){
 	
 }
 
+void pinToStr (uint16_t pin){
+	if (pin == 0){
+		 pinString[0] = 0;
+	}
+	
+	uint8_t i = 0;
+	uint8_t* edPin = intToStr(pin);
+	while (*edPin != 0){
+		pinString[i++] = *edPin;
+		pinString[i++] = '-'; 
+		edPin++;
+	}
+	if (i == 2){
+		 pinString[1] = 0;
+	}
+	pinString[7] = 0;
+}
 

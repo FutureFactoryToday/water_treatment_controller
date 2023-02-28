@@ -45,11 +45,19 @@ void TC_addButton (button_t* but){
 	}
 }
 void TC_clearButtons(void){
+	if ( buttonList.butNum > 0){
+	 for (uint8_t i = 0; i < buttonList.butNum; i++){
+		 buttonList.buttons[i]->isPressed = 0;
+		 buttonList.buttons[i]->isReleased = 0;
+		 buttonList.buttons[i]->wasPressed = 0;
+		 buttonList.buttons[i]->pressCnt = 0;
+	 }
 	 buttonList.butNum = 0;
+ }
 }
 void TC_checkButtons(void){
 	
-	 if (buttonList.butNum > 0 && tsState.TouchDetected == 1){
+	 if (TC_isTouched == false && buttonList.butNum > 0 && tsState.TouchDetected == 1){
 		 for (uint8_t i = 0; i < buttonList.butNum; i++){
 				if (isInRectangle(tsState.X,tsState.Y,buttonList.buttons[i]->x,buttonList.buttons[i]->y,buttonList.buttons[i]->xSize,buttonList.buttons[i]->ySize)){
 					buttonList.buttons[i]->isPressed = true;
@@ -80,4 +88,5 @@ void TC_releaseButtons(void) {
 		buttonList.buttons[i]->isPressed = false;
 		buttonList.buttons[i]->wasPressed = false;
 	}
+
 }

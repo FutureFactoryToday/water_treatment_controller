@@ -15,14 +15,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "math.h"
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
 
 
 /* Private define ------------------------------------------------------------*/
- 	#define FIRST_LINE_Y MAINBAR_POS_Y
+ 	#define FIRST_LINE_Y MAINBAR_SIZE_Y + 10
 	#define GAP 20
 /* Private macro -------------------------------------------------------------*/
 
@@ -30,7 +30,7 @@
 static wtc_time_t displayedTime = {0}, nullTime = {0};
 static button_t hourBut, minBut;
 /* Private function prototypes -----------------------------------------------*/
-static void 	createFrame();
+static void createFrame();
 /* Private user code ---------------------------------------------------------*/
 wtc_time_t CSF_showFrame(){
 	
@@ -55,7 +55,7 @@ wtc_time_t CSF_showFrame(){
 			}
 			
 			if (hourBut.isReleased == 1){
-				int16_t time = ShowKeyboardFrame(0,24);
+				int16_t time = ShowKeyboardFrame(0,23);
 				if (time > 0){
 					displayedTime.hour = time;
 				}
@@ -64,7 +64,7 @@ wtc_time_t CSF_showFrame(){
 			}
 			
 			if (minBut.isReleased == 1){
-				int16_t time = ShowKeyboardFrame(0,24);
+				int16_t time = ShowKeyboardFrame(0,59);
 				if (time > 0){
 					displayedTime.minute = time;
 				}
@@ -98,19 +98,18 @@ void createFrame(){
 	
 	drawStatusBarOkCancel();
 
-	
-	
-//	uint16_t dateTextLength = BSP_LCD_DisplayStringAt(GAP, FIRST_LINE_Y,ITEM_CLOCKSET_FRAME[0],LEFT);
-//	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + dateTextLength/2,MID_CLOCK_Y + BSP_LCD_GetFont()->height + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-//	dateSetButton.x = BSP_LCD_GetXSize()/2 + dateTextLength/2;
-//	dateSetButton.y = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
-//	dateSetButton.xSize = rightArowImg.infoHeader.biWidth;
-//	dateSetButton.ySize = rightArowImg.infoHeader.biHeight;
-//	
-//	timeSetButton.x = BSP_LCD_GetXSize()/2 - timeLength/2;
-//	timeSetButton.y = MID_CLOCK_Y;
-//	timeSetButton.xSize = timeLength + 10;
-//	timeSetButton.ySize = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
+	BSP_LCD_SetBackColor(MID_COLOR);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2, 0, BSP_LCD_GetYSize());
+	uint8_t hourText = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 - 100, BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height+5,ITEM_CLOCKSET_FRAME[0],LEFT_MODE);
+	uint8_t minText = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 - 100, BSP_LCD_GetYSize()/2 + GAP+5,ITEM_CLOCKSET_FRAME[1],LEFT_MODE);
+//	uint8_t hourLength = BSP_LCD_DisplayStringAt(MAX(hourText,minText) + 2, FIRST_LINE_Y, getFormatedTimeFromSource("hh",&displayedTime),LEFT_MODE); 
+//	uint8_t minLength = BSP_LCD_DisplayStringAt(MAX(hourText,minText) + 2, FIRST_LINE_Y + BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("mm",&displayedTime),LEFT_MODE);
+	#define HOUR_LABEL_SIZE_X 100
+
+	hourBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
+	minBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
+
 	
 	TC_addButton(&okBut);
 	TC_addButton(&cancelBut);

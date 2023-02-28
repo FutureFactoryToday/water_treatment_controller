@@ -219,7 +219,9 @@ void RTC_IRQHandler(void)
 	RTC_Interrupt();
 	LL_RTC_ClearFlag_SEC(RTC);
 	FM_incFlowMeter();
-	drawClock();
+	if (enableClockDraw){
+		drawClock();
+	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
 	if (LL_RTC_IsActiveFlag_ALR(RTC)){
@@ -250,6 +252,7 @@ void EXTI3_IRQHandler(void)
 			tsState.TouchDetected = 0;
 		} else {
 			TC_releaseButtons();
+			TC_isTouched = false;
 		}
 		
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);

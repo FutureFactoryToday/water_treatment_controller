@@ -1,6 +1,6 @@
 #include "widgets.h"
 
-button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t* label, bool isTouch)
+button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch)
 {
     uint16_t radius = ySize/4;
     
@@ -46,7 +46,7 @@ button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
     return but;
 }
 
-button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t* label)
+button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label)
 {
     uint16_t radius = ySize/4;
     
@@ -93,7 +93,7 @@ button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t y
     return but;
 }
 
-void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint16_t* label)
+void drawMainBar(bool returnBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label)
 {
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
@@ -128,7 +128,7 @@ void drawStatusBarOkCancel()
 
 }
 
-void drawStatusBarSave(uint16_t* label)
+void drawStatusBarSave(uint8_t* label)
 {
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);

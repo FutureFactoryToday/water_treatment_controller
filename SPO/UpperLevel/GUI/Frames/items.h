@@ -3,12 +3,15 @@
 //Main Frame
 extern uint8_t* ITEM_MAIN_FRAME[];
 
+//Clock Set Frame
+extern uint8_t* ITEM_CLOCKSET_FRAME[];
 //TimeSet Frame
 extern uint8_t* ITEM_TIME_ruText[];
 //menuFrame
 #define MODE_CUSTOMER "ПОЛЬЗОВАТЕЛЬ"
 extern uint8_t* ITEM_MENU[];
-
+//Pincode Frame
+extern uint8_t* ITEM_PINCODE_FRAME[];
 //serviceMenuFrame
 #define MODE_CUSTOMER "СЕРВИС"
 extern uint8_t* ITEM_SERVICE_MENU[];

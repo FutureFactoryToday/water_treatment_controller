@@ -61,8 +61,8 @@ void createFrame (void){
 //	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&Logo);
     drawMainBar(false, 190, 5, " ");
     
-    drawFillButton(20, 80, 200, 60, 20, "Пользователь", LCD_COLOR_WHITEBLUE, false);
-	drawFillButton(260, 80, 200, 60, 20, "Инженер", LCD_COLOR_WHITEBLUE, false);
+    drawFillButton(20, 80, 200, 60,  "Пользователь", false);
+	drawFillButton(260, 80, 200, 60,  "Инженер", false);
     
     drawStatusBarSave(" ");
 	

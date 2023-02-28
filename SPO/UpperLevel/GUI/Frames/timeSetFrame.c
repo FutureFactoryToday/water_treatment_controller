@@ -108,14 +108,10 @@ void TSF_showFrame(){
 				timeSetButton.isPressed = false;
 			}
 			if (timeSetButton.isReleased == 1){
-				int16_t time = ShowKeyboardFrame(0,2400);
-				if (time > 0){
-				uint8_t hour = time/100;
-				uint8_t minutes = time - hour*100;
-				displayedTime.hour = hour;
-				displayedTime.minute = minutes;
-				
-				
+				wtc_time_t time = CSF_showFrame();
+				if (!isZeroDateTime(&time)){
+					displayedTime.hour = time.hour;
+					displayedTime.minute = time.minute;				
 				}
 				timeSetPressed = false;
 				drawMidClock(timeSetPressed);
