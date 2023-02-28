@@ -8,80 +8,80 @@ extern uint8_t* ITEM_CLOCKSET_FRAME[];
 //TimeSet Frame
 extern uint8_t* ITEM_TIME_ruText[];
 //menuFrame
-#define MODE_CUSTOMER "ПОЛЬЗОВАТЕЛЬ"
+#define MODE_CUSTOMER "Пользователь"
 extern uint8_t* ITEM_MENU[];
 //Pincode Frame
 extern uint8_t* ITEM_PINCODE_FRAME[];
 //serviceMenuFrame
-#define MODE_CUSTOMER "СЕРВИС"
+#define MODE_SERVICE "Сервис"
 extern uint8_t* ITEM_SERVICE_MENU[];
 
 //washingTimeCustomerFrame
-#define MODE_WASHING_TIME "ВРЕМЯ ПРОМЫВКИ"
-#define DAY "ДЕНЬ"
-#define NIGHT "НОЧЬ"
+#define MODE_WASHING_TIME "Время промывки"
+#define DAY "День"
+#define NIGHT "Ночь"
 
 //forcedRegenCustomerFrame
-#define MODE_FORCED_REGEN "ПРИНУДИТЕЛЬНАЯ РЕГЕН."
-#define FAST_REGEN "РЕГЕН."
-#define DELAYED_REGEN "ОТЛ.РЕГЕН."
+#define MODE_FORCED_REGEN "Принудительная рег."
+#define FAST_REGEN "Рег."
+#define DELAYED_REGEN "Отл.рег."
 
 //delayedRegenCustomerFrame
-#define MODE_DELAYED_REGEN "ОТЛОЖЕННАЯ РЕГЕН."
-#define DAY_BEFORE_REGEN "ДНЕЙ ДО РЕГЕНЕРАЦИИ"
+#define MODE_DELAYED_REGEN "Отложенная рег."
+#define DAY_BEFORE_REGEN "Дней до регенерации"
 
 //daysBetweenRegenCustomerFrame
-#define MODE_DAYS_BETWEEN_REGEN "ДНИ МЕЖДУ РЕГЕНЕРАЦИЯМИ"
-#define DAY_BETWEEN_REGEN "ДНЕЙ МЕЖДУ РЕГЕНЕРАЦИЯМИ"
+#define MODE_DAYS_BETWEEN_REGEN "Дни между регенерациями"
+#define DAY_BETWEEN_REGEN "Дней между регенерациями"
 
 //filterSelectionFrame
-#define MODE_FILTER_SELECTION "ВЫБОР ФИЛЬТРА"
+#define MODE_FILTER_SELECTION "Выбор фильтра"
 extern uint8_t* ITEM_FILTER_SELECTION[];
 
 //regenPeriodServiceFrame
-#define MODE_REGEN_PERIOD "ПЕРИОД РЕГЕНЕРАЦИИ"
+#define MODE_REGEN_PERIOD "Период регенерации"
 
 //washingTimeServiceFrame
 ///
 
 //quantityCountServiceFrame
-#define MODE_QUANTITY_COUNT "СЧЕТЧИК ВОДЫ"
-#define QUANTITY_COUNT "ОБЪЕМ(ЛИТРОВ)"
+#define MODE_QUANTITY_COUNT "Счётчик воды"
+#define QUANTITY_COUNT "Объём"
 
 //regenServiceFrame
-#define MODE_REGEN "РЕГЕНЕРАЦИЯ"
+#define MODE_REGEN "Регенерация"
 
 //alarmNotiFrame
-#define MODE_ALARM_NOTI "СЕРВИСНОЕ ОБСЛУЖИВАНИЕ"
+#define MODE_ALARM_NOTI "Сервисное обслуживание"
 #define NOTI_STRING_1 "Для сервисного обслуживания"
 #define NOTI_STRING_2 "связаться с ООО САРМАТ"
 #define NOTI_STRING_3 "+7 (495) 189 - 71 - 78"
 #define NOTI_STRING_4 "info@sarmatwater.ru"
 
 //alarmListFrame
-#define MODE_ALARM_LIST "СПИСОК ОШИБОК"
+#define MODE_ALARM_LIST "Список ошибок"
 
 //filteringFrame
-#define MODE_FILTERING "ФИЛЬТРАЦИЯ"
+#define MODE_FILTERING "Фильтрация"
 extern uint8_t* ITEM_FILTERING[];
 #define SAVE "Сохранить"
-#define MINUTE "МИН"
-#define CREATE "СОЗДАТЬ"
+#define MINUTE "Мин"
+#define CREATE "Создать"
 
 //softeningFrame
-#define MODE_SOFTENING "УМЯГЧЕНИЕ"
+#define MODE_SOFTENING "Умягчение"
 extern uint8_t* ITEM_SOFTENING[];
 
 //adjustmentFrame
-#define MODE_ADJUSTMENT "РЕГУЛИРОВКА"
+#define MODE_ADJUSTMENT "Регулировка"
 extern uint8_t* ITEM_ADJUSTMENT[];
-#define RESET "СБРОС"
-#define POSITION "ПОЗ:"
-#define START_ENG "СТАРТ"
+#define RESET "Сброс"
+#define POSITION "Поз:"
+#define START_ENG "Старт"
 
 
 //stepFrame
-#define STEPS_LIST "ШАГИ"
+#define STEPS_LIST "Шаги"
 extern uint8_t* ITEM_STEPS[];
 
 

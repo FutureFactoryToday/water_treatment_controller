@@ -16,8 +16,8 @@ button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
     
     if(isTouch)
     {
-        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+        BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
     }
     else
     {
@@ -44,6 +44,26 @@ button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 18, label, CENTER_MODE);
     
     return but;
+}
+
+button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize)
+{
+    uint16_t oldTextColor = BSP_LCD_GetTextColor();
+    uint16_t oldBackColor = BSP_LCD_GetBackColor();
+    
+    uint16_t radius = ySize/4;
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    
+    BSP_LCD_FillRect(xPos, yPos + radius, xSize + 1, ySize - radius * 2);
+    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+        
+    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+    
+    BSP_LCD_SetTextColor(oldTextColor);
+    BSP_LCD_SetBackColor(oldBackColor);
 }
 
 button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label)

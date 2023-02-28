@@ -171,23 +171,23 @@ void AnimateTimeFilterSelectionFrame(void)
 {
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X, TIME_Y, getFormatedTime(hour), LEFT_MODE);
+    //BSP_LCD_DisplayStringAt(TIME_X, TIME_Y, getFormatedTime(hour), LEFT_MODE);
 
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(TIME_X + 40, TIME_Y, getFormatedTime(minute), LEFT_MODE);
+    //BSP_LCD_DisplayStringAt(TIME_X + 40, TIME_Y, getFormatedTime(minute), LEFT_MODE);
 
     if(getTime()->second%2 == 0)
     {
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
+        //BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
     }
     else
     {
         BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
         BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-        BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
+        //BSP_LCD_DisplayStringAt(TIME_X + 30, TIME_Y - 2, ":", LEFT_MODE);
     }
 }
 

@@ -17,11 +17,9 @@ void staticCreate(void);
 
 void RefreshKeyboardFrame(void);
 
-void PrintResultFromKeyboard();
-
 uint8_t KeyClick(void);
 
-void PrintResultFromKeyboard();
+void PrintResultFromKeyboard(int32_t result);
 
 void RefreshCursor(uint8_t dx);
 	
@@ -99,9 +97,6 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 				PrintResultFromKeyboard(10);
 				delBut.isPressed = 0;
 			}
-			
- 
-        
     }
     
 }
@@ -147,11 +142,13 @@ void RefreshKeyboardFrame(void)
         
         //RefreshKeys();
     }
-    PrintResultFromKeyboard();
+    //PrintResultFromKeyboard();
 }
 
 void RefreshCursor(uint8_t dx)
 {
+    uint16_t oldTextColor = BSP_LCD_GetTextColor();
+    
     if(getTime()->second%2 == 0)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -162,36 +159,22 @@ void RefreshCursor(uint8_t dx)
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
         BSP_LCD_FillRect(CURSOR_POS_X + dx,CURSOR_POS_Y, CURSOR_SIZE_X, CURSOR_SIZE_Y);
     }
+    
+    BSP_LCD_SetTextColor(oldTextColor);
 }
 
 void staticCreate(void)
 {
 	TC_clearButtons();
 
-	enableClockDraw = false;
-	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-	BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(TEXT_CTRL_POS_X,TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
-	
-	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
-	
-	BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
-	
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-	BSP_LCD_SetTextColor(LCD_COLOR_RED);
-	
-	BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, CANCEL, LEFT_MODE);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-	
-	BSP_LCD_DisplayStringAt(OK_X, OK_Y, OK, LEFT_MODE);
+    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
+    
+    drawMainWindow();
+    
+    drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "          ");
+
+
+    drawStatusBarOkCancel();
 				
     //Horizontal lines
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -214,72 +197,84 @@ void staticCreate(void)
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y, "1", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y, "2", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 180, NUM_KEYS_POS_Y, "3", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 240, NUM_KEYS_POS_Y, "4", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 300, NUM_KEYS_POS_Y, "5", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 360, NUM_KEYS_POS_Y, "6", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 420, NUM_KEYS_POS_Y, "7", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y + 46, "8", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y + 46, "9", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 116, NUM_KEYS_POS_Y + 46, "<", LEFT_MODE);
+    
 		//Setting for key "0"
-    _0.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
-		_0.x = NUM_KEYS_POS_X;
-		_0.y = NUM_KEYS_POS_Y;
-		_0.ySize = BSP_LCD_GetFont()->height;
+    _0.xSize = 60;//
+    _0.x = NUM_KEYS_POS_X;
+    _0.y = NUM_KEYS_POS_Y;
+    _0.ySize = BSP_LCD_GetFont()->height;
 		
 		//Setting for key "1"
-    _1.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y, "1", LEFT_MODE);
-		_1.x = NUM_KEYS_POS_X + 60;
-		_1.y = NUM_KEYS_POS_Y;
-		_1.ySize = BSP_LCD_GetFont()->height;
-		
+    _1.xSize = 60;//
+    _1.x = NUM_KEYS_POS_X + 60;
+    _1.y = NUM_KEYS_POS_Y;
+    _1.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "2"
-    _2.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y, "2", LEFT_MODE);
-		_2.x = NUM_KEYS_POS_X + 120;
-		_2.y = NUM_KEYS_POS_Y;
-		_2.ySize = BSP_LCD_GetFont()->height;
-		
+    _2.xSize = 60;//
+    _2.x = NUM_KEYS_POS_X + 120;
+    _2.y = NUM_KEYS_POS_Y;
+    _2.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "3"
-    _3.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 180, NUM_KEYS_POS_Y, "3", LEFT_MODE);
-		_3.x = NUM_KEYS_POS_X + 180;
-		_3.y = NUM_KEYS_POS_Y;
-		_3.ySize = BSP_LCD_GetFont()->height;
-		
+    _3.xSize = 60;//
+    _3.x = NUM_KEYS_POS_X + 180;
+    _3.y = NUM_KEYS_POS_Y;
+    _3.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "4"
-    _4.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 240, NUM_KEYS_POS_Y, "4", LEFT_MODE);
-		_4.x = NUM_KEYS_POS_X + 240;
-		_4.y = NUM_KEYS_POS_Y;
-		_4.ySize = BSP_LCD_GetFont()->height;
-		
+    _4.xSize = 60;//
+    _4.x = NUM_KEYS_POS_X + 240;
+    _4.y = NUM_KEYS_POS_Y;
+    _4.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "5"
-    _5.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 300, NUM_KEYS_POS_Y, "5", LEFT_MODE);
-		_5.x = NUM_KEYS_POS_X +300;
-		_5.y = NUM_KEYS_POS_Y;
-		_5.ySize = BSP_LCD_GetFont()->height;
-		
+    _5.xSize = 60;//
+    _5.x = NUM_KEYS_POS_X + 300;
+    _5.y = NUM_KEYS_POS_Y;
+    _5.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "6"
-    _6.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 360, NUM_KEYS_POS_Y, "6", LEFT_MODE);
-		_6.x = NUM_KEYS_POS_X + 360;
-		_6.y = NUM_KEYS_POS_Y;
-		_6.ySize = BSP_LCD_GetFont()->height;
-		
+    _6.xSize = 60;//
+    _6.x = NUM_KEYS_POS_X + 360;
+    _6.y = NUM_KEYS_POS_Y;
+    _6.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "7"
-    _7.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 420, NUM_KEYS_POS_Y, "7", LEFT_MODE);
-		_7.x = NUM_KEYS_POS_X + 420;
-		_7.y = NUM_KEYS_POS_Y;
-		_7.ySize = BSP_LCD_GetFont()->height;
-		
+    _7.xSize = 60;//
+    _7.x = NUM_KEYS_POS_X + 420;
+    _7.y = NUM_KEYS_POS_Y;
+    _7.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "8"
-    _8.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y + 46, "8", LEFT_MODE);
-		_8.x = NUM_KEYS_POS_X;
-		_8.y = NUM_KEYS_POS_Y + 46;
-		_8.ySize = BSP_LCD_GetFont()->height;
-		
+    _8.xSize = 60;//
+    _8.x = NUM_KEYS_POS_X;
+    _8.y = NUM_KEYS_POS_Y + 46;
+    _8.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "9"
-    _9.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y + 46, "9", LEFT_MODE);
-		_9.x = NUM_KEYS_POS_X + 60;
-		_9.y = NUM_KEYS_POS_Y + 46;
-		_9.ySize = BSP_LCD_GetFont()->height;
-		
+    _9.xSize = 60;//
+    _9.x = NUM_KEYS_POS_X + 60;
+    _9.y = NUM_KEYS_POS_Y + 46;
+    _9.ySize = BSP_LCD_GetFont()->height;
+    
 		//Setting for key "delete"
-    delBut.xSize = BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 116, NUM_KEYS_POS_Y + 46, "<", LEFT_MODE);
-		delBut.x = NUM_KEYS_POS_X + 116;
-		delBut.y = NUM_KEYS_POS_Y + 46;
-		delBut.ySize = BSP_LCD_GetFont()->height;
-		
+    delBut.xSize = 60;//
+    delBut.x = NUM_KEYS_POS_X + 116;
+    delBut.y = NUM_KEYS_POS_Y + 46;
+    delBut.ySize = BSP_LCD_GetFont()->height;
+    
 	TC_addButton(&_0);
 	TC_addButton(&_1);
 	TC_addButton(&_2);
@@ -294,7 +289,7 @@ void staticCreate(void)
 	TC_addButton(&okBut);
 	TC_addButton(&retBut);
 	
-	PrintResultFromKeyboard();
+	//PrintResultFromKeyboard();
 	
 	enableClockDraw = false;
 }
@@ -357,7 +352,7 @@ void staticCreate(void)
 //    return result;
 //}
 
-void PrintResultFromKeyboard()
+void PrintResultFromKeyboard(int32_t result)
 {
     int32_t pre_result = result;
     
@@ -378,18 +373,19 @@ void PrintResultFromKeyboard()
     }
 
     if(result_keyboard != 0)
-    {
-        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        BSP_LCD_FillRect(TEXT_CTRL_POS_X,TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
-        
-        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);         
+    {       
+////        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+////        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        //drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "");
+        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3);
+        BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);        
     }
     if(result_keyboard == 0)
     {
-        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-        BSP_LCD_FillRect(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
+//        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//        BSP_LCD_FillRect(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
+        //drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "");
+        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3);
     }
     result = 144;
 }
