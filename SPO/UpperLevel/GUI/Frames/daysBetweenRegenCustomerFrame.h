@@ -5,7 +5,7 @@
 //Public defines sizers
 
 #define DBR_VALUE_BOX_X 30
-#define DBR_VALUE_BOX_Y TOP_BOT_LINE_WIDTH + 70
+#define DBR_VALUE_BOX_Y TOP_LINE_WIDTH + 70
 #define DBR_VALUE_BOX_SIZE_X 80
 #define DBR_VALUE_BOX_SIZE_Y 60
 

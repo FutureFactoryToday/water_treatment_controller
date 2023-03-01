@@ -41,6 +41,8 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text);
 void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
+    
+    enteredPin = 1234;
 
 	createPinFrame();
 	
@@ -76,7 +78,7 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
 void createPinFrame(){
 	//Static refresh
 	TC_clearButtons();
-	enteredPin = 1234;
+	
 	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	pinFrameText = &ITEM_PINCODE_FRAME;
@@ -125,6 +127,6 @@ void pinToStr (uint16_t pin){
 	if (i == 2){
 		 pinString[1] = 0;
 	}
-	pinString[7] = 0;
+	pinString[--i] = 0;
 }
 
