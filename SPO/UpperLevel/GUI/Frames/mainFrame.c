@@ -37,11 +37,11 @@ void ShowMainFrame(void)
 		}
 		/*Button pressed*/
 		if (serviceBut.isPressed == true){
-			 
+			drawFillButton(260, 80, 200, 60, "Инженер", true);
 			serviceBut.isPressed = false;
 		}
 		if (customerBut.isPressed == true){
-			 
+			drawFillButton(20, 80, 200, 60, "Пользователь", true);
 			customerBut.isPressed = false;
 		}
 	
@@ -51,12 +51,6 @@ void ShowMainFrame(void)
 void createFrame (void){
 	TC_clearButtons();
 	
-//	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-//	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-//	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-	
-//	
-//	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&Logo);
     drawMainBar(false, 190, 5, " ");
     
     drawMainWindow();
@@ -67,31 +61,6 @@ void createFrame (void){
     drawStatusBarEmpty();
     
     drawClock();
-	
-//	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//	BSP_LCD_FillRect(DELAY_REGEN_VALUE_BOX_X,DELAY_REGEN_VALUE_BOX_Y, DELAY_REGEN_VALUE_BOX_SIZE_X, DELAY_REGEN_VALUE_BOX_SIZE_Y * 3);
-//	
-//	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-//	BSP_LCD_DrawRect(DELAY_REGEN_VALUE_BOX_X, DELAY_REGEN_VALUE_BOX_Y, DELAY_REGEN_VALUE_BOX_SIZE_X, DELAY_REGEN_VALUE_BOX_SIZE_Y);
-//	BSP_LCD_DrawRect(SPEED_VALUE_BOX_X, SPEED_VALUE_BOX_Y, SPEED_VALUE_BOX_SIZE_X, SPEED_VALUE_BOX_SIZE_Y);
-//	BSP_LCD_DrawRect(TIME_VALUE_BOX_X, TIME_VALUE_BOX_Y, TIME_VALUE_BOX_SIZE_X, TIME_VALUE_BOX_SIZE_Y);
-//	BSP_LCD_DrawRect(DELAY_REGEN_VALUE_BOX_X - 1, DELAY_REGEN_VALUE_BOX_Y - 1, DELAY_REGEN_VALUE_BOX_SIZE_X + 2, TIME_VALUE_BOX_SIZE_Y*3+2);
-//	
-//	
-//	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-//	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//	
-//	BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, ITEM_MAIN_FRAME[MODE_SOFTENING_CYCLE], LEFT_MODE);
-//	BSP_LCD_DisplayStringAt(MODE_MENU_X, MODE_MENU_Y, ITEM_MAIN_FRAME[MODE_MENU], LEFT_MODE);
-//	
-//	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-//	BSP_LCD_DisplayStringAt(DELAY_REGEN_STATUS_TEXT_X, DELAY_REGEN_STATUS_TEXT_Y, ITEM_MAIN_FRAME[DELAY_REGEN], LEFT_MODE);
-//	BSP_LCD_DisplayStringAt(SPEED_STATUS_TEXT_X, SPEED_STATUS_TEXT_Y, ITEM_MAIN_FRAME[SPEED], LEFT_MODE);
-//	BSP_LCD_DisplayStringAt(TIME_STATUS_TEXT_X, TIME_STATUS_TEXT_Y, ITEM_MAIN_FRAME[TIME], LEFT_MODE);
-//	
-//	
-//	BSP_LCD_DisplayStringAt(SPEED_STATUS_UNITS_X, SPEED_STATUS_UNITS_Y, ITEM_MAIN_FRAME[SPEED_UNITS], LEFT_MODE);
-//	BSP_LCD_DisplayStringAt(TIME_STATUS_UNITS_X , TIME_STATUS_UNITS_Y, ITEM_MAIN_FRAME[TIME_UNITS], LEFT_MODE);
 	
 	/*Add buttons settings*/
 	

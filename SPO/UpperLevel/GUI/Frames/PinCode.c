@@ -42,7 +42,9 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text);
 void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
-	enteredPin = 1234;
+    
+    enteredPin = 1234;
+
 	createPinFrame();
 	
 	while(1)

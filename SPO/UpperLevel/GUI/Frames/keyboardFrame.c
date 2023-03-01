@@ -101,16 +101,6 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
     
 }
 
-//void RefreshKeyboardFrame(void)
-//{
-//    //Static refresh
-//    if(qwertyResult == 0)
-//    {      
-//        RefreshKeys();
-//        qwertyResult = 2;
-//    }
-//    PrintResultFromKeyboard();
-//}
 void RefreshKeyboardFrame(void)
 {
     //Static refresh
@@ -173,29 +163,30 @@ void staticCreate(void)
     
     drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "          ");
 
-
     drawStatusBarOkCancel();
-				
+    
+	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);	
+    ////uint32_t dy = (BSP_LCD_GetYSize() - LINE_KEYS_POS_Y - 40);   //////// 
+    BSP_LCD_FillRect(0, LINE_KEYS_POS_Y, BSP_LCD_GetXSize(),91);
     //Horizontal lines
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_DrawLine(0, 121, BSP_LCD_GetXSize(), 121);
-    BSP_LCD_DrawLine(0, 166, BSP_LCD_GetXSize(), 166);
-    BSP_LCD_DrawLine(0, 212, BSP_LCD_GetXSize(), 212);
-    BSP_LCD_DrawLine(0, 259, BSP_LCD_GetXSize(), 259);
+    BSP_LCD_DrawLine(0, LINE_KEYS_POS_Y, BSP_LCD_GetXSize(), LINE_KEYS_POS_Y);
+    BSP_LCD_DrawLine(0, LINE_KEYS_POS_Y + 45, BSP_LCD_GetXSize(), LINE_KEYS_POS_Y + 45);
+    BSP_LCD_DrawLine(0, LINE_KEYS_POS_Y + 91, BSP_LCD_GetXSize(), LINE_KEYS_POS_Y + 91);
     
     //Vertical lines
-    BSP_LCD_DrawLine(0, 120, 0, 260);
-    BSP_LCD_DrawLine(60, 121, 60, 260);
-    BSP_LCD_DrawLine(120, 121, 120, 260);
-    BSP_LCD_DrawLine(180, 121, 180, 260);
-    BSP_LCD_DrawLine(240, 121, 240, 260);
-    BSP_LCD_DrawLine(300, 121, 300, 260);
-    BSP_LCD_DrawLine(360, 121, 360, 260);
-    BSP_LCD_DrawLine(420, 121, 420, 260);
-    BSP_LCD_DrawLine(479, 121, 479, 260);
+    BSP_LCD_DrawLine(0, LINE_KEYS_POS_Y, 0, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(60, LINE_KEYS_POS_Y, 60, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(120, LINE_KEYS_POS_Y, 120, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(180, LINE_KEYS_POS_Y, 180, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(240, LINE_KEYS_POS_Y, 240, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(300, LINE_KEYS_POS_Y, 300, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(360, LINE_KEYS_POS_Y, 360, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(420, LINE_KEYS_POS_Y, 420, LINE_KEYS_POS_Y + 91);
+    BSP_LCD_DrawLine(479, LINE_KEYS_POS_Y, 479, LINE_KEYS_POS_Y + 91);
     
-    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     
     BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
     BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y, "1", LEFT_MODE);
@@ -208,6 +199,10 @@ void staticCreate(void)
     BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y + 46, "8", LEFT_MODE);
     BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y + 46, "9", LEFT_MODE);
     BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 116, NUM_KEYS_POS_Y + 46, "<", LEFT_MODE);
+    
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     
 		//Setting for key "0"
     _0.xSize = 60;//
@@ -294,64 +289,6 @@ void staticCreate(void)
 	enableClockDraw = false;
 }
 
-//uint8_t KeyClick()
-//{
-//    int32_t result = 144;
-//  BSP_TS_GetState(&tsState);
-//	if (touchDelay == 0 && tsState.TouchDetected == 1)
-//    {
-//        touchDelay = 100;
-//        if(result_keyboard < 99999999)
-//        {
-//            if (isInRectangle(tsState.X,tsState.Y, 0, 121, 60, 46)) 
-//            {
-//               result = 0;
-//            }  
-//            if (isInRectangle(tsState.X,tsState.Y, 60, 121, 60, 46)) 
-//            {
-//               result = 1;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 120, 121, 60, 46)) 
-//            {
-//               result = 2;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 180, 121, 60, 46)) 
-//            {
-//               result = 3;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 240, 121, 60, 46)) 
-//            {
-//               result = 4;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 300, 121, 60, 46)) 
-//            {
-//               result = 5;
-//            }   
-//            if (isInRectangle(tsState.X,tsState.Y, 360, 121, 60, 46)) 
-//            {
-//               result = 6;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 420, 121, 60, 46)) 
-//            {
-//               result = 7;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 0, 166, 60, 46)) 
-//            {
-//               result = 8;
-//            }
-//            if (isInRectangle(tsState.X,tsState.Y, 60, 166, 60, 46)) 
-//            {
-//               result = 9;
-//            }
-//        }
-//        if (isInRectangle(tsState.X,tsState.Y, 120, 166, 60, 46)) 
-//        {
-//           result = 10;
-//        }
-//    }
-//    return result;
-//}
-
 void PrintResultFromKeyboard(int32_t result)
 {
     int32_t pre_result = result;
@@ -374,39 +311,12 @@ void PrintResultFromKeyboard(int32_t result)
 
     if(result_keyboard != 0)
     {       
-////        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-////        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        //drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "");
-        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3);
-        BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);        
+        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
+        BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 4, intToStr(result_keyboard), LEFT_MODE);        
     }
     if(result_keyboard == 0)
     {
-//        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//        BSP_LCD_FillRect(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y);
-        //drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "");
-        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3);
+        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
     }
     result = 144;
 }
-
-//void TranslateKeyboardFrameMSG()
-//{
-//  BSP_TS_GetState(&tsState);
-//	if (touchDelay == 0 && tsState.TouchDetected == 1)
-//    {
-//        touchDelay = 100;
-//        if (isInRectangle(tsState.X,tsState.Y,420,260,60,60)) //OK
-//        {
-//           qwertyResult = 1;
-//        }  
-//        if (isInRectangle(tsState.X,tsState.Y,0,260,120,60))  //CANCEL
-//        {
-//           qwertyResult = -1;
-//        }  
-//        if (isInRectangle(tsState.X,tsState.Y,RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y)) 
-//        {
-//           qwertyResult = -1;
-//        }     
-//    }
-//}

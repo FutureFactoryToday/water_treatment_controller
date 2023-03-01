@@ -5,7 +5,7 @@
 //Public defines sizers
 
 #define LIST_X 10
-#define LIST_Y TOP_BOT_LINE_WIDTH + MED_LINE_WIDTH + 6
+#define LIST_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 6
 
 
 void ShowAlarmNotiServiceFrame(void);
