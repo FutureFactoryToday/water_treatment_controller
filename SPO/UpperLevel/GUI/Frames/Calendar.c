@@ -57,23 +57,15 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				updateFlags.sec = false;
 			} 
 			if (setMonth.isPressed == 1){
-				
+				drawDarkTextLabel(BSP_LCD_GetXSize()/2 + GAP, BSP_LCD_GetYSize()/2 - 10, 150, 40,getFormatedTimeFromSource("MM",&displayedTime));
 				setMonth.isPressed = 0;
 			}
 			if (setDay.isPressed == 1){
-				
+				drawDarkTextLabel(BSP_LCD_GetXSize()/2 + GAP, BSP_LCD_GetYSize()/2 - 10 - 60, 150, 40,getFormatedTimeFromSource("DD",&displayedTime));
 				setDay.isPressed = 0;
 			}
 			if (setYear.isPressed == 1){
-				int32_t newYear = ShowKeyboardFrame(2020, 2050);
-				if (newYear > 0) {
-					displayedTime.year = newYear;
-					if (displayedTime.day > maxDayInMonth( displayedTime.month,displayedTime.year)){
-						 displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
-						drawDay();
-					}
-					drawYear();
-				}
+				drawDarkTextLabel(BSP_LCD_GetXSize()/2 + GAP, BSP_LCD_GetYSize()/2 - 10 + 60, 150, 40,getFormatedTimeFromSource("YYYY",&displayedTime));
 				setYear.isPressed = 0;
 			}
 			if (setMonth.isReleased == 1){
@@ -82,10 +74,10 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 					displayedTime.month = newMonth;
 					if (displayedTime.day > maxDayInMonth( displayedTime.month,displayedTime.year)){
 						 displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
-						drawDay();
 					}
-					drawMonth();
+					
 				}
+				createFrame();
 				setMonth.isReleased = 0;
 			}
 			if (setDay.isReleased == 1){
@@ -96,12 +88,21 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 					} else {
 						displayedTime.day = newDay;
 					}
-					drawDay();
+					
 				}
+				createFrame();
 				setDay.isReleased = 0;
 			}
 			if (setYear.isReleased == 1){
-				
+				int32_t newYear = ShowKeyboardFrame(2020, 2050);
+				if (newYear > 0) {
+					displayedTime.year = newYear;
+					if (displayedTime.day > maxDayInMonth( displayedTime.month,displayedTime.year)){
+						 displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
+					}
+					
+				}
+				createFrame();
 				setYear.isReleased = 0;
 			}
 			if (retBut.isReleased == 1){

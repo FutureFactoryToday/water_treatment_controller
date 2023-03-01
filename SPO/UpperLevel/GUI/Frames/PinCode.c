@@ -24,7 +24,7 @@
 #define ENTER_PIN_TEXT 1
 #define BUT_PIN_TEXT 2
 #define PIN_KB_TEXT 3
-#define MAX_PIN_CHAR 4 + 3 + 3 + 3
+#define MAX_PIN_CHAR 4 + 3 + 3 + 3 + 1
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -66,12 +66,19 @@ int8_t PIN_showFrame(){
 				if (enteredPin == sysParam.SERVICE_CODE){
 					return 1;
 				} else {
-					 return -1;
+					BSP_LCD_SetTextColor(LCD_COLOR_RED);
+					BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+					for(uint8_t i = 0; i < 6; i++){
+						BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y + 20 + PIN_FONT.height + i, 200);
+					}
+					
+					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+					BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, PIN_FONT.height*5, "Неверный код!", CENTER_MODE);
 				}
 			}
 			if (retBut.isReleased == true){
-				return -1;
 				retBut.isReleased = false;
+				return -1;
 			}	
     }
 }
@@ -126,12 +133,17 @@ void pinToStr (uint16_t pin){
 	uint8_t* edPin = intToStr(pin);
 	while (*edPin != 0){
 		pinString[i++] = *edPin;
-		pinString[i++] = ' ';
-pinString[i++] = '-';
-pinString[i++] = ' ';		
+		if (i < MAX_PIN_CHAR - 1){
+			pinString[i++] = ' ';
+			pinString[i++] = '-';
+			pinString[i++] = ' ';	
+		}			
 		edPin++;
 	}
-
-	pinString[--i] = 0;
+	if (i == MAX_PIN_CHAR - 1){
+		pinString[i] = 0;
+	} else {
+		pinString[i - 3] = 0;
+	}
 }
 

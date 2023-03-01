@@ -29,7 +29,7 @@
 #define PIN_BOX_X (BSP_LCD_GetXSize() - (PIN_LENGTH*PIN_BOX_X_LENGTH + (PIN_LENGTH-1)*PIN_BOX_SPACE))/2 - 10
 
 #define ENTER_BUT_X (BSP_LCD_GetXSize() - 10*15 - 1)/2
-#define ENTER_BUT_Y PIN_FONT.height*5+13
+#define ENTER_BUT_Y PIN_FONT.height*6+13
 
 /*Global params*/
 

@@ -23,7 +23,7 @@
 
 /* Private define ------------------------------------------------------------*/
  	#define FIRST_LINE_Y MAINBAR_SIZE_Y + 10
-	
+	#define HOUR_LABEL_SIZE_X 100	
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -45,12 +45,12 @@ wtc_time_t CSF_showFrame(){
 				updateFlags.sec = false;
 			} 
 			if (hourBut.isPressed == true){
-				
+				drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
 				hourBut.isPressed = false;
 			}
 			
 			if (minBut.isPressed == true){
-				
+				drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
 				minBut.isPressed = false;
 			}
 			
@@ -74,11 +74,11 @@ wtc_time_t CSF_showFrame(){
 			
 			if (retBut.isReleased == 1){
 				retBut.isReleased = 0;
-				return displayedTime;
+				return nullTime;
 			}
 			if (okBut.isReleased == 1){
 				okBut.isReleased = 0;
-				return nullTime;
+				return displayedTime;
 			}
 			if (cancelBut.isReleased == 1){
 				cancelBut.isReleased = 0;
@@ -105,7 +105,7 @@ void createFrame(){
 	uint8_t minText = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 - 100, BSP_LCD_GetYSize()/2 + GAP+5,ITEM_CLOCKSET_FRAME[1],LEFT_MODE);
 //	uint8_t hourLength = BSP_LCD_DisplayStringAt(MAX(hourText,minText) + 2, FIRST_LINE_Y, getFormatedTimeFromSource("hh",&displayedTime),LEFT_MODE); 
 //	uint8_t minLength = BSP_LCD_DisplayStringAt(MAX(hourText,minText) + 2, FIRST_LINE_Y + BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("mm",&displayedTime),LEFT_MODE);
-	#define HOUR_LABEL_SIZE_X 100
+
 
 	hourBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
 	minBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
