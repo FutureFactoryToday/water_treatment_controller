@@ -4,6 +4,8 @@
 
 #include "main.h"
 
+#define GAP 20
+
 #define TOP_BOT_LINE_WIDTH 60
 #define MED_LINE_WIDTH 220
 
@@ -123,7 +125,7 @@
 
 //Clock defines
 #define CLOCK_X 390
-#define CLOCK_Y STATUSBAR_POS_Y + 24
+#define CLOCK_Y STATUSBAR_POS_Y //+ 24
 #define HOUR_X CLOCK_X
 #define MINUTE_X CLOCK_X + 2 * 15 + 10
 #define DIV_X CLOCK_X + 2 * 15

@@ -78,7 +78,7 @@ uint8_t refreshFrame();
 uint8_t touchHandler();
 void createFrame();
 void drawMonth(void);
-uint16_t drawMidClock(bool checked);
+button_t drawMidClock(bool checked);
 void drawEditBoxes(wtc_time_t editTime);
 bool timeSetPressed = false;
 /* Private user code ---------------------------------------------------------*/
@@ -118,9 +118,29 @@ void TSF_showFrame(){
 				timeSetButton.isReleased = 0;
 				createFrame();
 			}
-			if (retBut.isPressed == 1){
-				retBut.isPressed = 0;
+			if (dateSetButton.isPressed == true){
+				drawFillButton(BSP_LCD_GetXSize()/2 - 100, MID_CLOCK_Y + BSP_LCD_GetFont()->height + 2*GAP,200, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime), false); 
+				dateSetButton.isPressed = false;
+				
+			}
+			if (retBut.isReleased == 1){
+				retBut.isReleased = 0;
 				return;
+			}
+			if (dateSetButton.isReleased == true){
+				wtc_time_t date = CAL_showFrame(&displayedTime);
+				if (!isZeroDateTime(&date)){
+					
+				}
+				dateSetButton.isReleased = false;
+			}
+			if (okBut.isReleased == true){
+				setSysTime(&displayedTime);
+				okBut.isReleased = false;
+			}
+			if (cancelBut.isReleased == true){
+				 return;
+				cancelBut.isReleased = false;
 			}
 //			if (touchHandler()){
 //					if (refreshFrame()){
@@ -140,50 +160,19 @@ void createFrame(){
 	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
 	drawStatusBarOkCancel();
-	uint16_t timeLength = drawMidClock(false);
+
+	timeSetButton = drawMidClock(false);
+	dateSetButton = drawFillButton(BSP_LCD_GetXSize()/2 - 100, MID_CLOCK_Y + BSP_LCD_GetFont()->height + 2*GAP,200, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime), false); 
 	
-	uint16_t dateTextLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MID_CLOCK_Y + BSP_LCD_GetFont()->height,getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime),CENTER_MODE);
-	BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + dateTextLength/2,MID_CLOCK_Y + BSP_LCD_GetFont()->height + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-	dateSetButton.x = BSP_LCD_GetXSize()/2 + dateTextLength/2;
-	dateSetButton.y = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
-	dateSetButton.xSize = rightArowImg.infoHeader.biWidth;
-	dateSetButton.ySize = rightArowImg.infoHeader.biHeight;
-	
-	timeSetButton.x = BSP_LCD_GetXSize()/2 - timeLength/2;
-	timeSetButton.y = MID_CLOCK_Y;
-	timeSetButton.xSize = timeLength + 10;
-	timeSetButton.ySize = MID_CLOCK_Y + BSP_LCD_GetFont()->height;
 	
 	TC_addButton(&okBut);
 	TC_addButton(&timeSetButton);
 	TC_addButton(&dateSetButton);
 }
-uint16_t drawMidClock (bool checked){
-	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(0,MID_CLOCK_Y,BSP_LCD_GetXSize(),BSP_LCD_GetFont()->height);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	uint8_t* formatter = (getTime()->second % 2)? "hh:mm " : "hh mm ";
-	uint16_t timeLength = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,MID_CLOCK_Y,getFormatedTimeFromSource(formatter, &displayedTime), CENTER_MODE);
+button_t drawMidClock (bool checked){
 	
-	if (!checked){
-		BSP_LCD_SetTextColor(DARK_COLOR);
-		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-		BSP_LCD_FillTriangle(BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + 10, 
-													BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + 20, 
-													BSP_LCD_GetXSize()/2 + timeLength/2 + 5 + 5, MID_CLOCK_Y + 15); 
-				
-	} else {
-		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-		BSP_LCD_SetTextColor(LIGHT_COLOR);
-		//BSP_LCD_DrawBitmap(BSP_LCD_GetXSize()/2 + timeLength/2,MID_CLOCK_Y + (BSP_LCD_GetFont()->height - rightArowImg.infoHeader.biHeight)/2,&rightArowImg);
-		BSP_LCD_FillTriangle(BSP_LCD_GetXSize()/2 + timeLength/2 + 5, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 - 5, 
-													BSP_LCD_GetXSize()/2 + timeLength/2 + 15, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 - 5, 
-													BSP_LCD_GetXSize()/2 + timeLength/2 + 10, MID_CLOCK_Y + BSP_LCD_GetFont()->height/2 + 5); 
-
-	}
-	return timeLength;
+	uint8_t* formatter = (getTime()->second % 2)? "hh:mm " : "hh mm ";
+	return drawFillButton(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource(formatter, &displayedTime), checked);
 }
 
 

@@ -24,6 +24,7 @@
 #define ENTER_PIN_TEXT 1
 #define BUT_PIN_TEXT 2
 #define PIN_KB_TEXT 3
+#define MAX_PIN_CHAR 4 + 3 + 3 + 3
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -31,7 +32,7 @@
 uint8_t** pinFrameText;
 uint32_t enteredPin = {0};
 static button_t pinTextArea, enterBut;
-uint8_t pinString[8];
+uint8_t pinString[MAX_PIN_CHAR];
 /* Private function prototypes -----------------------------------------------*/
 int8_t refreshPinFrame();
 uint8_t pinTouchHandler();
@@ -41,14 +42,18 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text);
 void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
-
+	enteredPin = 1234;
 	createPinFrame();
 	
 	while(1)
     { 
 			if(pinTextArea.isPressed == true){
-				enteredPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
-				createPinFrame();
+				int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
+				if (newPin > 0 ){
+					enteredPin = newPin;
+					createPinFrame();
+				}
+				
 				pinTextArea.isPressed = false;
 			}
 			if (enterBut.isPressed == true){
@@ -76,7 +81,7 @@ int32_t callKeyboardFromPin(uint32_t min, uint32_t max, uint8_t* text){
 void createPinFrame(){
 	//Static refresh
 	TC_clearButtons();
-	enteredPin = 1234;
+	
 	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	pinFrameText = &ITEM_PINCODE_FRAME;
@@ -119,12 +124,12 @@ void pinToStr (uint16_t pin){
 	uint8_t* edPin = intToStr(pin);
 	while (*edPin != 0){
 		pinString[i++] = *edPin;
-		pinString[i++] = '-'; 
+		pinString[i++] = ' ';
+pinString[i++] = '-';
+pinString[i++] = ' ';		
 		edPin++;
 	}
-	if (i == 2){
-		 pinString[1] = 0;
-	}
-	pinString[7] = 0;
+
+	pinString[--i] = 0;
 }
 

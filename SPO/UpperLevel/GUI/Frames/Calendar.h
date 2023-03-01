@@ -14,7 +14,7 @@
 /*Includes */
 #include "main.h"
 
-void CAL_showFrame(wtc_time_t* time);
+wtc_time_t CAL_showFrame(wtc_time_t* time);
 
 #endif /*  _Calendar_*/
 

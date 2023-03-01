@@ -5,6 +5,7 @@ extern uint8_t* ITEM_MAIN_FRAME[];
 
 //Clock Set Frame
 extern uint8_t* ITEM_CLOCKSET_FRAME[];
+extern uint8_t* ITEM_CALENDAR_FRAME[];
 //TimeSet Frame
 extern uint8_t* ITEM_TIME_ruText[];
 //menuFrame

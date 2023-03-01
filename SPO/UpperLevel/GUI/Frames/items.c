@@ -20,6 +20,8 @@ uint8_t* ITEM_CLOCKSET_FRAME[] = {"ЧАСЫ","МИНУТЫ"};
 
 uint8_t* ITEM_PINCODE_FRAME[] = {"Пароль для сервиса","Введите пароль","ВВОД","Введите число" };
 
+uint8_t* ITEM_CALENDAR_FRAME[] = {"День","Месяц","Год"};
+
 uint8_t* ITEM_TIME_ruText[] = {
 	"Дата/Время",
 	"Установка даты и времени",
