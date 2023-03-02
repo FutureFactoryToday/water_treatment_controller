@@ -43,59 +43,59 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 			}
 			
 			//Обработка кнопок
-			if(_0.isPressed == 1){
+			if(_0.isReleased == 1){
 				 PrintResultFromKeyboard(0);
-				_0.isPressed = 0;
+				_0.isReleased = 0;
 			}
-			if(_1.isPressed == 1){
+			if(_1.isReleased == 1){
 				PrintResultFromKeyboard(1);
-				_1.isPressed = 0;
+				_1.isReleased = 0;
 			}
-			if(_2.isPressed == 1){
+			if(_2.isReleased == 1){
 				PrintResultFromKeyboard(2);
-				_2.isPressed = 0;
+				_2.isReleased = 0;
 			}
-			if(_3.isPressed == 1){
+			if(_3.isReleased == 1){
 				PrintResultFromKeyboard(3);
-				_3.isPressed = 0;
+				_3.isReleased = 0;
 			}
-			if(_4.isPressed == 1){
+			if(_4.isReleased == 1){
 				PrintResultFromKeyboard(4);
-				_4.isPressed = 0;
+				_4.isReleased = 0;
 			}
-			if(_5.isPressed == 1){
+			if(_5.isReleased == 1){
 				PrintResultFromKeyboard(5);
-				_5.isPressed = 0;
+				_5.isReleased = 0;
 			}
-			if(_6.isPressed == 1){
+			if(_6.isReleased == 1){
 				PrintResultFromKeyboard(6);
-				_6.isPressed = 0;
+				_6.isReleased = 0;
 			}
-			if(_7.isPressed == 1){
+			if(_7.isReleased == 1){
 				PrintResultFromKeyboard(7);
-				_7.isPressed = 0;
+				_7.isReleased = 0;
 			}
-			if(_8.isPressed == 1){
+			if(_8.isReleased == 1){
 				PrintResultFromKeyboard(8);
-				_8.isPressed = 0;
+				_8.isReleased = 0;
 			}
-			if(_9.isPressed == 1){
+			if(_9.isReleased == 1){
 				PrintResultFromKeyboard(9);
-				_9.isPressed = 0;
+				_9.isReleased = 0;
 			}
-			if(retBut.isPressed == 1){
+			if(retBut.isReleased == 1){
 				
-				retBut.isPressed = 0;
+				retBut.isReleased = 0;
 				return -1;
 			}
-			if(okBut.isPressed == 1){
+			if(okBut.isReleased == 1){
 				
-				okBut.isPressed = 0;
+				okBut.isReleased = 0;
 				return result_keyboard;
 			}
-			if(delBut.isPressed == 1){
+			if(delBut.isReleased == 1){
 				PrintResultFromKeyboard(10);
-				delBut.isPressed = 0;
+				delBut.isReleased = 0;
 			}
     }
     
