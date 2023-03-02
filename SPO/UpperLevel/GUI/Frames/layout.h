@@ -100,7 +100,7 @@
 
 
 //Public defines scroll sizers
-#define SCROLLBAR_POS_X 385
+#define SCROLLBAR_POS_X 390
 #define SCROLLBAR_POS_Y TOP_LINE_WIDTH + 9
 #define SCROLLBAR_SIZE_X TOP_LINE_WIDTH - 10
 #define SCROLLBAR_SIZE_Y 202  

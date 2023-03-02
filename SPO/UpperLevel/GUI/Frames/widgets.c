@@ -139,19 +139,7 @@ button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t y
     BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
     BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
    
-    
-//    BSP_LCD_FillRect(xPos + 1, yPos + radius + 1, xSize - 1, ySize - radius * 2 - 2);
-//    BSP_LCD_FillRect(xPos + radius + 1, yPos + 1, xSize - radius * 2 - 2, ySize - 1);
-//    
-//    BSP_LCD_FillCircle(xPos + radius + 1, yPos + radius + 1, radius);
-//    BSP_LCD_FillCircle(xPos + radius + 1, (yPos + ySize) - radius - 1, radius);
-//    BSP_LCD_FillCircle((xPos + xSize) - radius - 1, (yPos + ySize) - radius - 1, radius);
-//    BSP_LCD_FillCircle((xPos + xSize) - radius - 1, yPos + radius + 1, radius);
-//    }
-//    else
-//    {
-//        BSP_LCD_FillRect(xPos, yPos, xSize, ySize);
-//    }
+   
     BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 18, label, CENTER_MODE);

@@ -5,7 +5,6 @@ uint8_t menu_frame_was_Scroll = 0;
 int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
-//char* ITEM_MENU[] = { "ВРЕМЯ/ДАТА", "ВРЕМЯ ПРОМЫВКИ", "ПРИНУДИТЕЛЬНАЯ РЕГ.", "ОТЛОЖЕННАЯ РЕГ.", "ДНЕЙ МЕЖДУ РЕГ.", "СЕРВИС" };
 
 static button_t menuLines[5]; 
 static void createFrame();
@@ -125,7 +124,7 @@ void createFrame(void){
     
     drawMainWindow();
     
-    drawScrollButton (0);
+    drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
     
     drawStatusBarEmpty();
     
@@ -143,7 +142,6 @@ void createFrame(void){
 	/*Add buttons parameters*/
     calcButParam();
 	/*Add buttons to Touch Controller*/
-    int32_t q = sizeof(menuLines);
 	for (uint8_t i = 0; i < sizeof(menuLines[0]); i++){
 			TC_addButton(&menuLines[i]);
 	}
@@ -162,6 +160,8 @@ void RefreshMenuFrame(void)
 void RefreshScrollBarMenuFrame()
 {       
     calcButParam();
+    
+    drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
     
     drawFillArcRec(menuLines[menu_frame_Scroll_cnt].x, menuLines[menu_frame_Scroll_cnt].y, menuLines[menu_frame_Scroll_cnt].xSize, menuLines[menu_frame_Scroll_cnt].ySize, LCD_COLOR_WHITE);
     drawFillArcRec(menuLines[menu_frame_Scroll_cnt + 1].x, menuLines[menu_frame_Scroll_cnt + 1].y, menuLines[menu_frame_Scroll_cnt + 1].xSize, menuLines[menu_frame_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);

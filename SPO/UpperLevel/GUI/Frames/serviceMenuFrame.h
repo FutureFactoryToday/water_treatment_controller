@@ -7,12 +7,4 @@
 
 void ShowServiceMenuFrame(void);
 
-void RefreshServiceMenuFrame(void);
-
-void RefreshScrollBarServiceMenuFrame(void);
-
-void AnimateScrollBarKeysServiceMenuFrame(void);
-
 //void AnimateTimeServiceMenuFrame(void);
-
-void TranslateServiceMenuFrameMSG(void);
