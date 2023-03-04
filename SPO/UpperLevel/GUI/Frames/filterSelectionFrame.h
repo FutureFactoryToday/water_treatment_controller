@@ -9,12 +9,3 @@
 
 void ShowFilterSelectionFrame(void);
 
-void RefreshFilterSelectionFrame(void);
-
-void RefreshScrollBarFilterSelectionFrame(void);
-
-void AnimateScrollBarKeysFilterSelectionFrame(void);
-
-void AnimateTimeFilterSelectionFrame(void);
-
-void TranslateFilterSelectionFrameMSG(void);

@@ -39,6 +39,7 @@ typedef struct {
 	bool optic;
 	bool sec;
 	bool touch;
+	bool TFT;
 } update_flag_t;
 
 typedef struct {
@@ -103,7 +104,7 @@ extern update_flag_t updateFlags;
 void initGUI(void);
 //void translateMessage(void);
 void refresh(void);
-void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font);
+
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
 void drawClock(void);
 #endif /* __GUI_H__ */

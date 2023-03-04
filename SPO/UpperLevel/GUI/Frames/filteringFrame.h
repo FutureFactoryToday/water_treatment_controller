@@ -7,15 +7,4 @@
 
 void ShowFilteringFrame(void);
 
-void RefreshFilteringFrame(void);
-
-void RefreshItem(void);
-
-void RefreshCreateBox(void);
-
-void RefreshScrollBarFilteringFrame(void);
-
-void AnimateScrollBarKeysFilteringFrame(void);
-
-void TranslateMenuFilteringMSG(void);
 

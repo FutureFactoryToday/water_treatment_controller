@@ -132,10 +132,10 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 	
 	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_12);
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	DrawButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY",&Oxygen_Mono_8); 
-	DrawButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE",&Oxygen_Mono_8); 
+	drawFillButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY"); 
+	drawFillButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE"); 
 	if (canExit){
-	DrawButton(BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT",&Oxygen_Mono_8);
+	drawFillButton(BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT");
 }
 	SERV_PRINT_TOUCH_INFO();
 	

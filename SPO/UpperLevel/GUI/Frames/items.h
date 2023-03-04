@@ -43,21 +43,21 @@ extern uint8_t* ITEM_FILTER_SELECTION[];
 #define MODE_REGEN_PERIOD "Период регенерации"
 
 //washingTimeServiceFrame
-///
+#define MODE_REGEN_TIME "Время промывки"
 
 //quantityCountServiceFrame
-#define MODE_QUANTITY_COUNT "Счётчик воды"
-#define QUANTITY_COUNT "Объём"
+#define MODE_QUANTITY_COUNT "Счетчик воды"
+#define QUANTITY_COUNT "Объем"
 
 //regenServiceFrame
 #define MODE_REGEN "Регенерация"
 
 //alarmNotiFrame
-#define MODE_ALARM_NOTI "Сервисное обслуживание"
-#define NOTI_STRING_1 "Для сервисного обслуживания"
-#define NOTI_STRING_2 "связаться с ООО САРМАТ"
-#define NOTI_STRING_3 "+7 (495) 189 - 71 - 78"
-#define NOTI_STRING_4 "info@sarmatwater.ru"
+#define MODE_ALARM_NOTI "Уведомление"
+#define NOTI_STRING_1 "Для сервисного обслуживания и"
+#define NOTI_STRING_2 "ремонта необходимо обратиться в"
+#define NOTI_STRING_3 "ООО \"Промэнергосервис\""
+#define NOTI_STRING_4 ""
 
 //alarmListFrame
 #define MODE_ALARM_LIST "Список ошибок"

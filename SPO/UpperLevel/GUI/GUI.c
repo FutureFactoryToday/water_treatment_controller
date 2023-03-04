@@ -101,33 +101,3 @@ uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_
 	
 	return x < xS+xSize && x > xS && y < yS+ySize && y > yS;
 }
-void DrawButton(uint16_t x, uint16_t y, uint16_t xSize, uint16_t ySize, uint8_t isPushed, uint8_t* text, WTC_FONT_t* font){
-	if (isPushed == 1)
-	{
-		BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-		BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-	}
-	else 
-    {
-		BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-		BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-	}
-	BSP_LCD_FillRect(x,y,xSize,ySize);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_SetFont(font);
-	
-	uint32_t size = 0, xsize = 0; 
-    uint8_t  *ptr = text;
-  
-  /* Get the text size */
-  while (*ptr++) size ++ ;
-	
-	uint16_t xTextStart = xSize/2+x;
-	uint16_t yTextStart = ySize/2+y-font->height/2;
-	
-	//SP_LCD_DrawPixel(xTextStart, yTextStart, LCD_COLOR_RED);
-	//BSP_LCD_DrawPixel(xSize/2+x, ySize/2+y, LCD_COLOR_RED);
-	
-	BSP_LCD_DisplayStringAt(xTextStart,yTextStart,text,CENTER_MODE);
-}
