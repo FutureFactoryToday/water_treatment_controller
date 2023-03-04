@@ -8,20 +8,34 @@ uint8_t* dayText;
 uint8_t* timeText;
 uint8_t* valText, *unitsText;
 bool update;
-static button_t serviceBut, customerBut; 
+static button_t serviceBut, customerBut, contactsBut; 
 static void createFrame (void);
 //void RefreshMainFrame(void);
 
 void ShowMainFrame(void)
 {
-	dayText = ITEM_MAIN_FRAME[DELAY_REGEN_UNITS];
-	timeText = ITEM_MAIN_FRAME[TIME_UNITS];
+//	dayText = ITEM_MAIN_FRAME[DELAY_REGEN_UNITS];
+//	timeText = ITEM_MAIN_FRAME[TIME_UNITS];
 	
 	createFrame();
 	
 	while(1)
 	{		
-
+		/*Button pressed*/
+		if (serviceBut.isPressed == true){
+			drawFillButton(260, 80, 200, 60, "Инженер", true);
+			serviceBut.isPressed = false;
+		}
+		if (customerBut.isPressed == true){
+			drawFillButton(20, 80, 200, 60, "Пользователь", true);
+			customerBut.isPressed = false;
+		}
+        if (contactsBut.isPressed == true){
+			drawFillButton(260, 200, 200, 60, "Контакты", true);
+			contactsBut.isPressed = false;
+		}
+       
+        
 		/*Buttons releases*/
 		if (serviceBut.isReleased == true){
 			if (PIN_showFrame() == 1){
@@ -35,15 +49,10 @@ void ShowMainFrame(void)
 			customerBut.isReleased = false;
 			createFrame();
 		}
-		/*Button pressed*/
-		if (serviceBut.isPressed == true){
-			drawFillButton(260, 80, 200, 60, "Инженер", true);
-			serviceBut.isPressed = false;
+        if (contactsBut.isReleased == true){
+			contactsBut.isReleased = false;
 		}
-		if (customerBut.isPressed == true){
-			drawFillButton(20, 80, 200, 60, "Пользователь", true);
-			customerBut.isPressed = false;
-		}
+
 	
 	}
 }
@@ -57,6 +66,7 @@ void createFrame (void){
     
     customerBut = drawFillButton(20, 80, 200, 60, "Пользователь", false);
 	serviceBut = drawFillButton(260, 80, 200, 60, "Инженер", false);
+    contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
     
     drawStatusBarEmpty();
     
@@ -67,6 +77,7 @@ void createFrame (void){
 	/*Add Buttons*/
 	TC_addButton(&serviceBut);
 	TC_addButton(&customerBut);
+    TC_addButton(&contactsBut);
 	
 	enableClockDraw = true;
 }
@@ -126,19 +137,4 @@ void createFrame (void){
 //		BSP_LCD_DisplayStringAt(SPEED_STATUS_VALUE_X, SPEED_STATUS_VALUE_Y, intToStr((uint32_t)FM_getFlowSpeed()), LEFT_MODE); 
 //    
 //        
-//}
-
-
-
-//void TranslateMainFrameMSG (void)
-//{
-//    BSP_TS_GetState(&tsState);
-//	if (touchDelay == 0 && tsState.TouchDetected == 1)
-//    {
-//        touchDelay = 100;
-//        if (isInRectangle(tsState.X,tsState.Y,STATUSBAR_POS_X,STATUSBAR_POS_Y,100,TOP_BOT_LINE_WIDTH) )
-//        {
-//           hwndMainFrameControl = 1;
-//        }        
-//    }
 //}

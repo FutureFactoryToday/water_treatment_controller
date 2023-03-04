@@ -207,6 +207,17 @@ void drawStatusBarSave(uint8_t* label)
     BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
 }
 
+void drawStatusBarLabel(uint8_t* label)
+{
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+    
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
+}
+
+
 void drawStatusBarEmpty()
 {
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);

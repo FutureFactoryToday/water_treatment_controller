@@ -28,6 +28,8 @@ void drawStatusBarOkCancel();
 
 void drawStatusBarSave(uint8_t* label);
 
+void drawStatusBarLabel(uint8_t* label);
+
 void drawStatusBarEmpty();
 
 void drawScrollButton (uint16_t scPos);

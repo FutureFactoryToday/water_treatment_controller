@@ -13,7 +13,7 @@ int32_t result = 144;
 
 button_t _0,_1,_2,_3,_4,_5,_6,_7,_8,_9, delBut;
 
-void staticCreate(void);
+static void createFrame(void);
 
 void RefreshKeyboardFrame(void);
 
@@ -32,7 +32,7 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
     result_keyboard = 0;
 	
 	
-	staticCreate();
+	createFrame();
 	
     while(1)
     {
@@ -41,47 +41,195 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 				RefreshCursor(dx);
 				updateFlags.sec = 0;
 			}
-			
+			//Удержание кнопки с индикацией
+            if(_0.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(0, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
+				_0.isPressed = 0;
+			}
+			if(_1.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(60, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y, "1", LEFT_MODE);
+				_1.isPressed = 0;
+			}
+			if(_2.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(120, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y, "2", LEFT_MODE);
+				_2.isPressed = 0;
+			}
+			if(_3.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(180, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 180, NUM_KEYS_POS_Y, "3", LEFT_MODE);
+				_3.isPressed = 0;
+			}
+			if(_4.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(240, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 240, NUM_KEYS_POS_Y, "4", LEFT_MODE);
+				_4.isPressed = 0;
+			}
+			if(_5.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(300, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 300, NUM_KEYS_POS_Y, "5", LEFT_MODE);
+				_5.isPressed = 0;
+			}
+			if(_6.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(360, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 360, NUM_KEYS_POS_Y, "6", LEFT_MODE);
+				_6.isPressed = 0;
+			}
+			if(_7.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(420, LINE_KEYS_POS_Y, 60, 45);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 420, NUM_KEYS_POS_Y, "7", LEFT_MODE);
+				_7.isPressed = 0;
+			}
+			if(_8.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(0, LINE_KEYS_POS_Y + 45, 60, 46);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y + 45, "8", LEFT_MODE);
+				_8.isPressed = 0;
+			}
+			if(_9.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(60, LINE_KEYS_POS_Y + 45, 60, 46);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y + 45, "9", LEFT_MODE);
+				_9.isPressed = 0;
+			}
+			if(delBut.isPressed == 1){
+                BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+                BSP_LCD_FillRect(120, LINE_KEYS_POS_Y + 45, 60, 46);
+                BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y + 45, "<", LEFT_MODE);
+				delBut.isPressed = 0;
+			}
+            
 			//Обработка кнопок
 			if(_0.isReleased == 1){
-				 PrintResultFromKeyboard(0);
+				PrintResultFromKeyboard(0);
 				_0.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(1, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y, "0", LEFT_MODE);
 			}
 			if(_1.isReleased == 1){
 				PrintResultFromKeyboard(1);
 				_1.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(61, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y, "1", LEFT_MODE);
 			}
 			if(_2.isReleased == 1){
 				PrintResultFromKeyboard(2);
 				_2.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(121, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y, "2", LEFT_MODE);
 			}
 			if(_3.isReleased == 1){
 				PrintResultFromKeyboard(3);
 				_3.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(181, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 180, NUM_KEYS_POS_Y, "3", LEFT_MODE);
 			}
 			if(_4.isReleased == 1){
 				PrintResultFromKeyboard(4);
 				_4.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(241, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 240, NUM_KEYS_POS_Y, "4", LEFT_MODE);
 			}
 			if(_5.isReleased == 1){
 				PrintResultFromKeyboard(5);
 				_5.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(301, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 300, NUM_KEYS_POS_Y, "5", LEFT_MODE);
 			}
 			if(_6.isReleased == 1){
 				PrintResultFromKeyboard(6);
 				_6.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(361, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 360, NUM_KEYS_POS_Y, "6", LEFT_MODE);
 			}
 			if(_7.isReleased == 1){
 				PrintResultFromKeyboard(7);
 				_7.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(421, LINE_KEYS_POS_Y + 1, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 420, NUM_KEYS_POS_Y, "7", LEFT_MODE);
 			}
 			if(_8.isReleased == 1){
 				PrintResultFromKeyboard(8);
 				_8.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(1, LINE_KEYS_POS_Y + 46, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X, NUM_KEYS_POS_Y + 45, "8", LEFT_MODE);
 			}
 			if(_9.isReleased == 1){
 				PrintResultFromKeyboard(9);
 				_9.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(61, LINE_KEYS_POS_Y + 46, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 60, NUM_KEYS_POS_Y + 45, "9", LEFT_MODE);
+			}
+            if(delBut.isReleased == 1){
+				PrintResultFromKeyboard(10);
+				delBut.isReleased = 0;
+                BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+                BSP_LCD_FillRect(121, LINE_KEYS_POS_Y + 46, 59, 44);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(NUM_KEYS_POS_X + 120, NUM_KEYS_POS_Y + 45, "<", LEFT_MODE);
 			}
 			if(retBut.isReleased == 1){
 				
@@ -92,10 +240,6 @@ int32_t ShowKeyboardFrame(int32_t min, int32_t max)
 				
 				okBut.isReleased = 0;
 				return result_keyboard;
-			}
-			if(delBut.isReleased == 1){
-				PrintResultFromKeyboard(10);
-				delBut.isReleased = 0;
 			}
     }
     
@@ -153,7 +297,7 @@ void RefreshCursor(uint8_t dx)
     BSP_LCD_SetTextColor(oldTextColor);
 }
 
-void staticCreate(void)
+void createFrame(void)
 {
 	TC_clearButtons();
 
@@ -311,12 +455,14 @@ void PrintResultFromKeyboard(int32_t result)
 
     if(result_keyboard != 0)
     {       
-        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
+        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        drawFillArcRec(TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
         BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 4, intToStr(result_keyboard), LEFT_MODE);        
     }
     if(result_keyboard == 0)
     {
-        drawFillArcRec (TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
+        drawFillArcRec(TEXT_CTRL_POS_X + 1, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 2,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
     }
     result = 144;
 }

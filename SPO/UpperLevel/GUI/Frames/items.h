@@ -32,7 +32,7 @@ extern uint8_t* ITEM_SERVICE_MENU[];
 #define DAY_BEFORE_REGEN "Дней до регенерации"
 
 //daysBetweenRegenCustomerFrame
-#define MODE_DAYS_BETWEEN_REGEN "Дни между регенерациями"
+#define MODE_DAYS_BETWEEN_REGEN "ДМР"
 #define DAY_BETWEEN_REGEN "Дней между регенерациями"
 
 //filterSelectionFrame
