@@ -6,7 +6,7 @@ int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
 
-static button_t menuLines[4]; 
+static button_t menuLines[5]; 
 static void createFrame();
 static void calcButParam();
 

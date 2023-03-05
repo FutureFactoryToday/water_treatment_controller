@@ -6,7 +6,7 @@ uint8_t service_menu_frame_was_Scroll = 0;
 int8_t hwndServiceMenuFrameControl = 0;
 int8_t startServiceMenuFrame = 0;
 
-static button_t menuLines[4];
+static button_t menuLines[7];
 static void createFrame();
 static void calcButParam();
 
@@ -109,7 +109,7 @@ void ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[1].isReleased == true){
-            ShowRegenPeriodServiceFrame(); 
+            //ShowRegenPeriodServiceFrame(); 
             menuLines[1].isReleased = false;
             createFrame();
          }
@@ -119,17 +119,17 @@ void ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[3].isReleased == true){
-            ShowQuantityCountServiceFrame();
+            ShowRegenPeriodServiceFrame(); 
             menuLines[3].isReleased = false;
             createFrame();
          }
          if(menuLines[4].isReleased == true){
-            ShowRegenServiceFrame();
+            ShowQuantityCountServiceFrame();
             menuLines[4].isReleased = false;
             createFrame();
          }
          if(menuLines[5].isReleased == true){
-            ShowAdjustmentFrame();               
+            //ShowAdjustmentFrame();                         
             menuLines[5].isReleased = false;
             createFrame();
          }
