@@ -6,7 +6,7 @@ int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
 
-static button_t menuLines[5]; 
+static button_t menuLines[4]; 
 static void createFrame();
 static void calcButParam();
 
@@ -142,12 +142,12 @@ void createFrame(void){
 	/*Add buttons parameters*/
     calcButParam();
 	/*Add buttons to Touch Controller*/
-	for (uint8_t i = 0; i < sizeof(menuLines[0]); i++){
-			TC_addButton(&menuLines[i]);
-	}
-	TC_addButton(&retBut);
-	TC_addButton(&scrollUpBut);
-	TC_addButton(&scrollDwnBut);
+//	for (uint8_t i = 0; i < (sizeof(menuLines)/sizeof(menuLines[0])); i++){
+//			TC_addButton(&menuLines[i]);
+//	}
+//	TC_addButton(&retBut);
+//	TC_addButton(&scrollUpBut);
+//	TC_addButton(&scrollDwnBut);
 	
 	enableClockDraw = true;
 }
@@ -182,6 +182,8 @@ void RefreshScrollBarMenuFrame()
 
 void calcButParam()
 {
+    TC_clearButtons();
+   
         //Setting for key "0"
     menuLines[menu_frame_Scroll_cnt].x = FIRST_CURSOR_POS_X;
     menuLines[menu_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
@@ -205,4 +207,11 @@ void calcButParam()
     menuLines[menu_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
     menuLines[menu_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
     menuLines[menu_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
+    
+    for (uint8_t i = menu_frame_Scroll_cnt; i < menu_frame_Scroll_cnt + 4; i++){
+			TC_addButton(&menuLines[i]);
+	}
+	TC_addButton(&retBut);
+	TC_addButton(&scrollUpBut);
+	TC_addButton(&scrollDwnBut);
 }
