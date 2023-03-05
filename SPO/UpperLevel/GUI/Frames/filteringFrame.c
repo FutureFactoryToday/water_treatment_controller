@@ -10,65 +10,60 @@ int8_t startFilteringFrame = 0;
 int8_t step = 0;
 static button_t menuLine[2];
 static void createFrame();
-uint8_t res[2];
+static uint8_t res[2];
 void ShowFilteringFrame(void)
 {
-	res[0] = pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
-	res[1] = pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
-	fitlering_frame_Scroll_cnt = 0;
-	createFrame();
-	
-	while(1)
-	{
-		
-			/*Buttons released*/
-       if (retBut.isReleased == true){
-				 retBut.isReleased = false;
-				 return;
-			 }
-			 if (okBut.isReleased == true){
-				okBut.isReleased = false;
-				 pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
-				 pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
-				 copyTasksToFlash();
-				fp->needToSave = 1;
-				FP_SaveParam();
-				return;
-			 }
-			 if (cancelBut.isReleased == true){
-				 cancelBut.isReleased = false;
-				 return;
-			 }
-       if(menuLine[0].isReleased == true){
-					uint8_t tempRes = ShowKeyboardFrame(1,150);
-				 if (tempRes > 0){
-					 res[0] = tempRes;
-					 createFrame();
-				 }
-					menuLine[0].isReleased = false;
-					
-			 }
-			 if(menuLine[1].isReleased == true){
-					uint8_t tempRes = ShowKeyboardFrame(1,150);
-				 if (tempRes > 0){
-					 res[1] = tempRes;
-					 createFrame();
-				 }
-					menuLine[1].isReleased = false;
-				 createFrame();
-			 }
-			 
-			 if(menuLine[0].isPressed == true){
-					drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
-					menuLine[0].isPressed = false;
-			 }
-			 if(menuLine[1].isPressed == true){
-					drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[1]));
-					menuLine[1].isPressed = false;
-			 }
+    res[0] = pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
+    res[1] = pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
+    fitlering_frame_Scroll_cnt = 0;
+    createFrame();
 
+    while(1)
+    {
 
-	}
+        /*Buttons released*/
+        if (retBut.isReleased == true){
+            retBut.isReleased = false;
+            return;
+        }
+        if (okBut.isReleased == true){
+            okBut.isReleased = false;
+            pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
+            pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
+            copyTasksToFlash();
+            fp->needToSave = 1;
+            FP_SaveParam();
+            return;
+        }
+        if (cancelBut.isReleased == true){
+            cancelBut.isReleased = false;
+            return;
+        }
+        if(menuLine[0].isReleased == true){
+            uint8_t tempRes = ShowKeyboardFrame(1,150);
+            if (tempRes > 0){
+                res[0] = tempRes;
+                createFrame();
+            }
+            menuLine[0].isReleased = false;
+        }
+        if(menuLine[1].isReleased == true){
+            uint8_t tempRes = ShowKeyboardFrame(1,150);
+            if (tempRes > 0){
+                res[1] = tempRes;
+                createFrame();
+            }
+            menuLine[1].isReleased = false;
+        }
+        if(menuLine[0].isPressed == true){
+            drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
+            menuLine[0].isPressed = false;
+        }
+        if(menuLine[1].isPressed == true){
+            drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
+            menuLine[1].isPressed = false;
+        }
+    }
 }
 
 void createFrame(void)

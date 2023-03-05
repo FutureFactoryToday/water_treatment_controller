@@ -11,7 +11,5 @@ void RefreshSofteningFrame(void);
 
 void RefreshScrollBarSofteningFrame(void);
 
-void AnimateScrollBarKeysSofteningFrame(void);
-
 void TranslateMenuSofteningMSG(void);
 
