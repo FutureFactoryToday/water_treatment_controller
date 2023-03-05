@@ -109,7 +109,7 @@ void ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[1].isReleased == true){
-            //ShowRegenPeriodServiceFrame(); 
+            showLoadTypeFrame(); 
             menuLines[1].isReleased = false;
             createFrame();
          }
@@ -124,12 +124,12 @@ void ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[4].isReleased == true){
-            ShowQuantityCountServiceFrame();
+            ShowWaterCountBeforeRegenFrame();
             menuLines[4].isReleased = false;
             createFrame();
          }
          if(menuLines[5].isReleased == true){
-            //ShowAdjustmentFrame();                         
+            showServiceInfoFrame();                         
             menuLines[5].isReleased = false;
             createFrame();
          }

@@ -28,7 +28,7 @@ void ShowWashingTimeServiceFrame(void)
 			}
 			if (timeBut.isReleased == true){
 				if (chosenTask != NULL){
-					wtc_time_t tempTime = CSF_showFrame();
+					wtc_time_t tempTime = CSF_showFrame(&regTime);
 					if( !isZeroTime(&tempTime)){
 						regTime = *setTime(&regTime, &tempTime);
 						createFrame();
@@ -45,6 +45,8 @@ void ShowWashingTimeServiceFrame(void)
 			if (okBut.isReleased == true){
 				if (chosenTask != NULL){
 					chosenTask->restartDateTime = *setTime(&chosenTask->restartDateTime, &regTime);
+					copyTasksToFlash();
+					fp->needToSave = 1;
 					FP_SaveParam();
 				}
 				okBut.isReleased = false;
@@ -66,11 +68,12 @@ void createFrame(void)
 	if (chosenTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
-		text = getFormatedTimeFromSource("hh:mm", &chosenTask->restartDateTime);
+		text = getFormatedTimeFromSource("hh:mm", &regTime);
 	}
 	timeBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
 	
   TC_addButton(&timeBut);
-	TC_addButton(&retBut);	
+	TC_addButton(&retBut);
+TC_addButton(&okBut);	
 	drawClock();
 }

@@ -100,6 +100,10 @@ extern "C" {
 #include "GUI/Frames/Calendar.h"
 #include "GUI/Frames/stepsFrame.h"
 #include "GUI/Frames/Calendar.h"
+#include "GUI/Frames/waterCountBeforeRegen.h"
+#include "GUI/Frames/serviceInfo.h"
+#include "GUI/Frames/serviceDateSelect.h"
+#include "GUI/Frames/loadTypeFrame.h"
 //#include "USER/GUI.h"
 /* USER CODE END Includes */
 

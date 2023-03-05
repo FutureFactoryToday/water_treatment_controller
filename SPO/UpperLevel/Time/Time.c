@@ -177,6 +177,17 @@ void Time_init(){
 	}
 	LL_RTC_EnableIT_ALR(RTC);
 }
+
+uint32_t wtcTimeToInt(wtc_time_t *time){
+	struct tm timeSt = wtcTimeToStdTime(time);
+	return mktime(&timeSt);
+}
+
+wtc_time_t intToWTCTime (uint32_t time){
+	struct tm timeSt = *localtime(&time);
+	return stdTimeToWTCTime(&timeSt);
+}
+
 wtc_time_t* getTime (){
 	return &sysTime;
 }
@@ -1131,6 +1142,10 @@ uint8_t timeTest (){
 				testTime.hour == 1 &&
 				testTime.minute == 10 &&
 				testTime.second == 30);
+				
+	uint32_t intTestTime = wtcTimeToInt(&testTime);
+	wtc_time_t newTestTime = intToWTCTime(intTestTime);
+	assert_param(compareDateTime(&newTestTime,&testTime) == 0);
 }
 
  

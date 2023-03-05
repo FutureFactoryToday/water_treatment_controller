@@ -32,7 +32,11 @@ typedef struct {
 	piston_poz_t pistonPositions;
 	piston_task_t pistonTasks[TASK_NUM];
   uint32_t chosenTaskNum;
+	uint32_t waterBeforeRegen;
+	uint32_t monthBetweenService;
+	uint32_t lastService;
 	uint32_t endLoadFlag;
+	uint32_t loadType;
 } stored_params_t;
 
 typedef struct {

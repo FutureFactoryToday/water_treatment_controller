@@ -31,6 +31,10 @@ wtc_time_t pl_dayWashTime = {0}, pl_nightWashTime = {0}, currentStepDateTime;
 task_line_t *currentStep;
 planer_status_t PL_status;
 bool forced;
+uint32_t monthBetweenService;
+uint32_t waterBeforeRegen;
+wtc_time_t lastService;
+uint32_t loadType;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
 /*---------------------------------------------*/
@@ -94,10 +98,21 @@ void PL_Init(){
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
 		
+		
 		copyTasksToFlash();
 		fp->params.chosenTaskNum = REGENERATION_TASK_NUM;
+		
+		fp->params.waterBeforeRegen = waterBeforeRegen = DEF_WATER_VAL;
+		fp->params.monthBetweenService = monthBetweenService = DEF_MONTH_SERV;
+		fp->params.lastService = wtcTimeToInt(getTime());
+		fp->params.loadType = loadType = 0;
+		lastService = *getTime();
 		fp->needToSave = true;		
 	} else {
+		waterBeforeRegen = fp->params.waterBeforeRegen;
+		monthBetweenService = fp->params.monthBetweenService;
+		lastService = intToWTCTime(fp->params.lastService);
+		loadType = fp->params.loadType;
 		copyTasksFromFlash();
 		chosenTask = &pistonTasks[fp->params.chosenTaskNum];
 		PL_Planner(START_NORMAL);
@@ -106,7 +121,6 @@ void PL_Init(){
 
 
 void PL_Planner (planner_control_type_t startType){
-
 	if (chosenTask != NULL){
 		if (!isZeroDateTime(&chosenTask->restartDateTime)){
 				if (!forced){
@@ -233,3 +247,8 @@ void PL_saveToFlash(void)
 
 }
 void PL_loadFromFlash(void);
+
+wtc_time_t timeRemain (void){
+	wtc_time_t tempTime = *decDateTime(&currentStepDateTime, getTime());
+	return tempTime;
+}

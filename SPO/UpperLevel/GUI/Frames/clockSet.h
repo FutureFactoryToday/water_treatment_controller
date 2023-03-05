@@ -18,6 +18,6 @@
 	#define GAP 20
 
 
- wtc_time_t CSF_showFrame();
+ wtc_time_t CSF_showFrame(wtc_time_t* time);
 #endif /*  __ClockSet__*/
 

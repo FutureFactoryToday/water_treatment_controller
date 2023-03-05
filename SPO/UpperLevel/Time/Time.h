@@ -104,6 +104,10 @@ uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source);
 
 uint8_t* getTimeString(void);
 
+uint32_t wtcTimeToInt(wtc_time_t *time);
+
+wtc_time_t intToWTCTime (uint32_t time);
+
 uint8_t maxDayInMonth(uint8_t month,uint16_t year);
 
 uint8_t getDayNameByDate(wtc_time_t *date);

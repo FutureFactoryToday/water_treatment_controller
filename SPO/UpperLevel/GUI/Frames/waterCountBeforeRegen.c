@@ -1,14 +1,14 @@
 #include "waterCountBeforeRegen.h"
 
 static void createFrame(void);
-static button_t timeBut;
-static wtc_time_t regTime;
+static button_t waterBut;
+static uint32_t waterVal;
 static uint8_t* text;
 void ShowWaterCountBeforeRegenFrame(void)
 {
-	if (chosenTask != NULL){
-		regTime = chosenTask->restartDateTime;
-	}
+	
+		waterVal = waterBeforeRegen;
+
    createFrame();
     while(1)
     {
@@ -22,32 +22,30 @@ void ShowWaterCountBeforeRegenFrame(void)
 				
 				return;
 			}
-			if (timeBut.isReleased == true){
-				if (chosenTask != NULL){
-					wtc_time_t tempTime = CSF_showFrame();
-					if( !isZeroTime(&tempTime)){
-						regTime = *setTime(&regTime, &tempTime);
+			if (waterBut.isReleased == true){
+				uint32_t tempRes = ShowKeyboardFrame(1,999);
+				if (tempRes > 0){
+						waterVal = tempRes;
 						createFrame();
 					}
-				}
-				timeBut.isReleased = false;
+				
+				waterBut.isReleased = false;
 			}
-			if (timeBut.isPressed == true){
+			if (waterBut.isPressed == true){
 				if (chosenTask != NULL){
-					drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
+					drawDarkTextLabel(waterBut.x, waterBut.y, waterBut.xSize, waterBut.ySize, text);
 				}
-					timeBut.isPressed = false;
+					waterBut.isPressed = false;
 			}
 			if (okBut.isReleased == true){
-				if (chosenTask != NULL){
-					chosenTask->restartDateTime = *setTime(&chosenTask->restartDateTime, &regTime);
-					FP_SaveParam();
-				}
+				fp->params.waterBeforeRegen = waterBeforeRegen = waterVal;
+				fp->needToSave = true;
+				FP_SaveParam();
 				okBut.isReleased = false;
 				return;
 			}
-			
-    }
+		}
+    
 }
 
 void createFrame(void)
@@ -55,19 +53,18 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
+	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_WATER_BR[0]);
 	
 	drawStatusBarOkCancel();
 	
-	if (chosenTask == NULL){
-		text = &PL_NOT_INITED;
-	} else {
-		text = getFormatedTimeFromSource("hh:mm", &chosenTask->restartDateTime);
-	}
-	timeBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
-	
+	waterBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 110, BSP_LCD_GetYSize()/2 - 40, 100, 40, intToStr(waterVal));
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 + 10, BSP_LCD_GetYSize()/2 - 40,ITEM_WATER_BR[1], LEFT_MODE);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 + 30, BSP_LCD_GetYSize()/2 - 50,"3", LEFT_MODE);
 	enableClockDraw = true;
-  TC_addButton(&timeBut);
+	
+  TC_addButton(&waterBut);
+	TC_addButton(&okBut);
 	TC_addButton(&retBut);	
 	drawClock();
 }

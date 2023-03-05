@@ -2,76 +2,109 @@
 
 //void ShowRemainingDays(void);
 
+static uint16_t statusColor;
+static button_t forceRegen; 
 static void createFrame();
+static void showRemeiningTime(void);
 
 void ShowDelayedRegenCustFrame(void)
 {
-	createFrame();
-	while(1)
-	{
+    createFrame();
+	//uint8_t oldSec = getTime()->second - 1;
+    while(1)
+    {
         if (updateFlags.sec == true){
-            drawClock();
-            updateFlags.sec = false;
+          drawClock();
+					showRemeiningTime();
+					
+          updateFlags.sec = false;
         }
-		if (updateFlags.sec == true){
-			 //ShowRemainingDays();
-            if (chosenTask == NULL || 
-            isZeroDateTime(&chosenTask->startDateTime) || 
-            compareDateTime(&chosenTask->startDateTime, getTime())<=0) {
-                BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_BOX_X + 60, DELAYED_REGEN_VALUE_BOX_Y + 12, PL_NOT_INITED, CENTER_MODE);
-            }
-            else{
-                uint8_t remainingDays = countDaysBetween(getTime(), &chosenTask->startDateTime);
-                BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_BOX_X + 60, DELAYED_REGEN_VALUE_BOX_Y + 12, intToStr(remainingDays) ,CENTER_MODE);
-            }
-            updateFlags.sec = false;
-		}
-		if(retBut.isPressed == true){
-            retBut.isPressed = false;
-			return;
+//        if(redraw)
+//        {
+//            RefreshForcedRegenCustFrame();
+//            redraw = 0;
+//        }
+//				if (oldSec != getTime()->second){
+//					switch(PL_status){
+//						case (PL_WAITING):{
+//							statusColor = LCD_COLOR_RED;
+//							 break;
+//						}
+//						case (PL_ALARM_SET):{
+//							statusColor = LCD_COLOR_BLUE;
+//							break;
+//						}
+//						case (PL_WORKING):{
+//							statusColor = LCD_COLOR_GREEN;
+//							 break;
+//						}
+//						case (PL_FORCED_ALARM_SET):{
+//							statusColor = LCD_COLOR_YELLOW;
+//							 break;
+//						}
+//					}
+//					BSP_LCD_SetTextColor(statusColor);
+//					BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
+//				}
+
+//        TranslateForcedRegenCustFrameMSG();
+//        
+//        if(hwndForcedRegenCustFrameControl == 20) return;
+//				if(hwndForcedRegenCustFrameControl == 30){
+//					hwndForcedRegenCustFrameControl = 0;
+//					PL_Planner(FORCE_START_NOW);
+//				}
+//				if(hwndForcedRegenCustFrameControl == 40){
+//					hwndForcedRegenCustFrameControl = 0;
+//					PL_Planner(FORCE_START_NEAREST);
+//				}
+      
+
+        /*Buttons pressed*/ 
+        if (forceRegen.isPressed == true){
+            drawFillButton(80, 180, 200, 60, "Начать", true);
+            
+            forceRegen.isPressed = false;
         }
-	}
+
+        /*Buttons releases*/
+        if (retBut.isReleased == true){
+            retBut.isReleased = false;
+            return;
+        }
+        if (forceRegen.isReleased == true){
+            drawFillButton(80, 180, 200, 60, "Начать", false);
+						PL_Planner(FORCE_START_NEAREST);
+            forceRegen.isReleased = false;
+        }
+        
+        
+    }
 }
-//void ShowRemainingDays(void){
-//	    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-//	    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//    BSP_LCD_FillRect(DELAYED_REGEN_VALUE_BOX_X,DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
-//    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-//    BSP_LCD_DrawRect(DELAYED_REGEN_VALUE_BOX_X, DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y);
-//    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//	if (chosenTask == NULL || 
-//			isZeroDateTime(&chosenTask->startDateTime) || 
-//			compareDateTime(&chosenTask->startDateTime, getTime())<=0){
-//				
-//				BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, PL_NOT_INITED, LEFT_MODE);
-//			} else {
-//				uint8_t remainingDays = countDaysBetween(getTime(), &chosenTask->startDateTime);//*decDateTime(&chosenTask->startDateTime,getTime());
-//				BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-//				BSP_LCD_DisplayStringAt(DELAYED_REGEN_VALUE_X, DELAYED_REGEN_VALUE_Y, intToStr(remainingDays), LEFT_MODE);
-//			
-//			}
-//}
-void createFrame(void)
+
+void createFrame()
 {
     TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_DELAYED_REGEN);
+    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FORCED_REGEN);
     
     drawMainWindow();
     
-    drawTextLabel(DELAYED_REGEN_VALUE_BOX_X, DELAYED_REGEN_VALUE_BOX_Y, DELAYED_REGEN_VALUE_BOX_SIZE_X, DELAYED_REGEN_VALUE_BOX_SIZE_Y,"");
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(250, DELAYED_REGEN_VALUE_BOX_Y + 10, "День(Дни)" ,LEFT_MODE);
+
+
+		
+	showRemeiningTime();
+      
     
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
     
-    drawStatusBarEmpty();
+    BSP_LCD_DrawLine(60, 145, 420, 145);
+    
+    forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
+    
+    drawStatusBarLabel(ITEM_LOAD_TYPE[loadType]);
     
     drawClock();
     
@@ -79,7 +112,71 @@ void createFrame(void)
    
 	/*Add buttons to Touch Controller*/
 	
-	TC_addButton(&retBut);
+		TC_addButton(&retBut);
+    TC_addButton(&forceRegen);
     
     //enableClockDraw = true;
+} 
+
+
+
+void showRemeiningTime(void){
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(70, 90, 480,50);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	if (PL_status != PL_WORKING){
+		BSP_LCD_DisplayStringAt(75, 90, "Регенерация через" ,LEFT_MODE);
+	} else {
+		BSP_LCD_DisplayStringAt(75, 90, "До следующего шага " ,LEFT_MODE);
+	}
+	uint8_t* text;
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	if (chosenTask == NULL || PL_status == PL_WAITING){
+		text = &PL_NOT_INITED;
+		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
+		
+	} else {
+		wtc_time_t remain = timeRemain();
+		if (remain.day > 0) {
+			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("DD",&remain) ,LEFT_MODE);
+			BSP_LCD_DisplayStringAt(355, 90, "дн." ,LEFT_MODE);  
+		} else {
+			if (remain.hour > 0) {
+			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("hh",&remain) ,LEFT_MODE);
+			BSP_LCD_DisplayStringAt(355, 90, "ч." ,LEFT_MODE);  
+		} else {
+			if (remain.minute > 0) {
+			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("mm",&remain) ,LEFT_MODE);
+			BSP_LCD_DisplayStringAt(355, 90, "м." ,LEFT_MODE);  
+		} else {
+			if (remain.second > 0) {
+			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("ss",&remain) ,LEFT_MODE);
+				BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
+		} 
+		}
+		}
+		}
+	}
+	switch(PL_status){
+                case (PL_WAITING):{
+                    statusColor = LCD_COLOR_RED;
+                    break;
+                }
+                case (PL_ALARM_SET):{
+                    statusColor = LCD_COLOR_BLUE;
+                    break;
+                }
+                case (PL_WORKING):{
+                    statusColor = LCD_COLOR_GREEN;
+                    break;
+                }
+                case (PL_FORCED_ALARM_SET):{
+                    statusColor = LCD_COLOR_YELLOW;
+                    break;
+                }
+            }
+            BSP_LCD_SetTextColor(statusColor);
+            BSP_LCD_FillCircle(355, 210, 15);
 }

@@ -112,7 +112,7 @@ void TSF_showFrame(){
 				timeSetButton.isPressed = false;
 			}
 			if (timeSetButton.isReleased == 1){
-				wtc_time_t time = CSF_showFrame();
+				wtc_time_t time = CSF_showFrame(&displayedTime);
 				if (!isZeroDateTime(&time)){
 					displayedTime.hour = time.hour;
 					displayedTime.minute = time.minute;				

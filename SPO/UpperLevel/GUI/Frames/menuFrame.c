@@ -87,7 +87,7 @@ void ShowMenuFrame(void)
                 createFrame();
          }
          if(menuLines[1].isReleased == true){
-                ShowWashTimCustFrame();
+                ShowWashingTimeServiceFrame();
                 menuLines[1].isReleased = false;
                 createFrame();
          }
@@ -102,7 +102,7 @@ void ShowMenuFrame(void)
                 createFrame();
          }
          if(menuLines[4].isReleased == true){
-                ShowDaysBetweenRegenCustFrame();
+                ShowRegenPeriodServiceFrame();
                 menuLines[4].isReleased = false;
                 createFrame();
          }

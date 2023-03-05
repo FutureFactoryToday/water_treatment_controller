@@ -23,6 +23,8 @@
 #define DEF_TASK_RESTART {0,0,30,0,0,0}
 #define DEF_TASK_LAST_START
 #define DEF_TASK_TOTAL_LINE 4
+#define DEF_WATER_VAL 150
+#define DEF_MONTH_SERV 3
 
 #define REGENERATION_TASK_NUM 0
 #define SOFTENING_TASK_NUM 1
@@ -59,6 +61,10 @@ typedef enum {
 extern piston_task_t pistonTasks[TASK_NUM], *chosenTask;
 extern wtc_time_t pl_dayWashTime, pl_nightWashTime;
 extern planer_status_t PL_status;
+extern uint32_t monthBetweenService;
+extern uint32_t waterBeforeRegen;
+extern wtc_time_t lastService;
+extern uint32_t loadType;
 /*Prototypes */
 
 void PL_Init(void);
@@ -69,4 +75,5 @@ void copyOneTaskToFlash (uint16_t task);
 void copyOneTaskFromFlash(uint16_t task);
 void copyTasksToFlash (void);
 void copyTasksFromFlash(void);
+wtc_time_t timeRemain (void);
 #endif /* _PLANNER_H_ */

@@ -32,9 +32,9 @@ static button_t hourBut, minBut;
 /* Private function prototypes -----------------------------------------------*/
 static void createFrame();
 /* Private user code ---------------------------------------------------------*/
-wtc_time_t CSF_showFrame(){
+wtc_time_t CSF_showFrame(wtc_time_t* time){
 	
-	displayedTime = *getTime();
+	displayedTime = *time;
 	
 	createFrame();
 	

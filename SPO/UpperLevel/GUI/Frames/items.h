@@ -88,5 +88,10 @@ extern uint8_t* ITEM_STEPS[];
 //ManualFilteringSettingsFrame
 extern uint8_t* ITEM_MANUAL_SETTINGS[];
 
+extern uint8_t* ITEM_WATER_BR[];
+
+extern uint8_t* ITEM_SERVICE_INFO[];
+
+extern uint8_t* ITEM_LOAD_TYPE[];
 
 
