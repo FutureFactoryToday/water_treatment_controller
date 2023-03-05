@@ -10,6 +10,10 @@ void ShowAlarmNotiServiceFrame(void)
 		createFrame();
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
         if (retBut.isReleased == true){
 					 retBut.isReleased = false;
 					return;
@@ -56,5 +60,5 @@ void createFrame (void){
 	TC_addButton(&retBut);
 	//TC_addButton(&alarmListBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }

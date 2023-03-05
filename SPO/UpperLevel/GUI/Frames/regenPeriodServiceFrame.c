@@ -11,7 +11,12 @@ void ShowRegenPeriodServiceFrame(void)
 	}
 	createFrame();
 	while(1)
-	{ 
+	{
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
+     
 		if(okBut.isReleased == true){	
 			if (chosenTask != NULL){
 				chosenTask->restartDateTime.day = daysBetweenRegen;
@@ -80,5 +85,5 @@ void createFrame(void)
 	TC_addButton(&restartTextArea);
 	
 	drawClock();
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }

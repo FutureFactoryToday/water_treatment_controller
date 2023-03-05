@@ -9,6 +9,10 @@ void ShowDelayedRegenCustFrame(void)
 	createFrame();
 	while(1)
 	{
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 		if (updateFlags.sec == true){
 			 //ShowRemainingDays();
             if (chosenTask == NULL || 
@@ -77,5 +81,5 @@ void createFrame(void)
 	
 	TC_addButton(&retBut);
     
-    enableClockDraw = true;
+    //enableClockDraw = true;
 }

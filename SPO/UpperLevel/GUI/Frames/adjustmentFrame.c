@@ -14,6 +14,10 @@ void ShowAdjustmentFrame(void)
 	firstEl = &pistonPositions.closedPosition;
 	while(1)
 	{
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 		if (updateFlags.optic){
 			 AnimatePosMenuFrame();
 			updateFlags.optic = false;
@@ -228,7 +232,7 @@ void createFrame(void)
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 
 void RefreshScrollBarAdjustmentFrame()

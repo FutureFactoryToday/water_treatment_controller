@@ -15,6 +15,10 @@ void ShowSofteningFrame(void)
     createFrame();
     while(1)
     {   
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 		 if(okBut.isReleased == true){
             okBut.isReleased = false;
             pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * res[0];    
@@ -157,7 +161,7 @@ void createFrame(void)
 //	TC_addButton(&scrollUpBut);
 //	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
           
 }
 

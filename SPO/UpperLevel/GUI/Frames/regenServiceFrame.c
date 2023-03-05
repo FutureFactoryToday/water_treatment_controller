@@ -8,6 +8,10 @@ void ShowRegenServiceFrame(void)
   createFrame();
 	while(1)
 	{
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 		if(retBut.isPressed == true){
 			return;
     }
@@ -41,6 +45,6 @@ void createFrame(void)
 //	drawFillButton(120, 200, 200, 50, "ВЫКЛ", LCD_COLOR_BLUE, false);
 	
 	TC_addButton(&retBut);
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 

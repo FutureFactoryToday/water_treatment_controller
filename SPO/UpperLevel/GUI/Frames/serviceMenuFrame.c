@@ -24,6 +24,10 @@ void ShowServiceMenuFrame(void)
 		createFrame();
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 			/*Buttons pressed*/
          if(retBut.isPressed == true){
              
@@ -183,7 +187,7 @@ void createFrame(void){
 //	TC_addButton(&scrollUpBut);
 //	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 //void RefreshServiceMenuFrame(void)
 //{    

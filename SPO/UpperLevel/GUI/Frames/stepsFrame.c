@@ -137,7 +137,7 @@ void createFrame(void)
     
     drawStatusBarOkCancel();
     
-    drawClock();
+    //drawClock();
     
     drawStaticLines();	
 	
@@ -158,7 +158,7 @@ void createFrame(void)
 //	TC_addButton(&scrollUpBut);
 //	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 
 void RefreshScrollBarStepsFrame()

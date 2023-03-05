@@ -20,6 +20,10 @@ void ShowFilteringFrame(void)
 
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 
         /*Buttons released*/
         if (retBut.isReleased == true){
@@ -95,6 +99,6 @@ void createFrame(void)
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true; 
+	//enableClockDraw = true; 
 }
 

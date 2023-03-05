@@ -38,6 +38,10 @@ void ShowFilterSelectionFrame(void)
 		createFrame();
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
         if(okBut.isReleased == true){
 					if (markItem > 0){
 						chosenTask = &pistonTasks[markItem - 1];
@@ -155,7 +159,7 @@ void createFrame(void)
 //	TC_addButton(&scrollUpBut);
 //	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
  
 }
 
