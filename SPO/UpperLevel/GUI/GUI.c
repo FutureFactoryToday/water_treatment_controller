@@ -61,9 +61,9 @@ void initGUI(void){
 	redraw = 0;
 	BSP_LCD_Init();
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	//BSP_LCD_DrawBitmap((ILI9486_LCD_PIXEL_HEIGHT-150)/2,(ILI9486_LCD_PIXEL_WIDTH-150)/2,&LOGO);
-	//LL_mDelay(1000);
+	BSP_LCD_Clear(0x1947);
+	BSP_LCD_DrawBitmap(90,85,&LOGO);
+	LL_mDelay(1000);
     
     BSP_LCD_SetFont(&Oxygen_Mono_24);
     
