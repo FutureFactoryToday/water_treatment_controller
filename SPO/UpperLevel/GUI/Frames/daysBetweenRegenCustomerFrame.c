@@ -8,6 +8,10 @@ void ShowDaysBetweenRegenCustFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
+        if (updateFlags.sec == true){
             if(chosenTask == NULL){
                 BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
                 BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -53,7 +57,7 @@ void createFrame(void)
 	
 	TC_addButton(&retBut);
     
-    enableClockDraw = true;
+    //enableClockDraw = true;
 }
 
 

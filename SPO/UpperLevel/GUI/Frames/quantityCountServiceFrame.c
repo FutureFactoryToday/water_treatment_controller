@@ -8,7 +8,10 @@ void ShowQuantityCountServiceFrame(void)
 	createFrame();
 	while(1)
 	{
-			
+		if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }	
 		if (updateFlags.sec == true){ 
 			updateData();
 			updateFlags.sec = false;
@@ -38,7 +41,7 @@ void createFrame(void)
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 + GAP, QUANTITY_COUNT_VALUE_Y+10, QUANTITY_COUNT, LEFT_MODE);
 	
 	TC_addButton(&retBut);
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 
 //void AnimateTimeQuantityCountServiceFrame(void)

@@ -220,7 +220,7 @@ void RTC_IRQHandler(void)
 	LL_RTC_ClearFlag_SEC(RTC);
 	FM_incFlowMeter();
 	if (enableClockDraw){
-		drawClock();
+		//drawClock();
 	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */

@@ -21,6 +21,10 @@ void ShowMainFrame(void)
 	
 	while(1)
 	{		
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 		/*Button pressed*/
 		if (serviceBut.isPressed == true){
 			drawFillButton(260, 80, 200, 60, "Инженер", true);
@@ -81,7 +85,7 @@ void createFrame (void){
 	TC_addButton(&customerBut);
     TC_addButton(&contactsBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 
 //void RefreshMainFrame(void)

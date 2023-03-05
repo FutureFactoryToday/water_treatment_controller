@@ -12,6 +12,10 @@ void ShowWashingTimeServiceFrame(void)
    createFrame();
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 			if(retBut.isReleased == true) {
 				retBut.isReleased = false;
 				
@@ -66,7 +70,6 @@ void createFrame(void)
 	}
 	timeBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
 	
-	enableClockDraw = true;
   TC_addButton(&timeBut);
 	TC_addButton(&retBut);	
 	drawClock();

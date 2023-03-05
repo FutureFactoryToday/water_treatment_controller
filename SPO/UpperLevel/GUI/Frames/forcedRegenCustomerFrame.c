@@ -12,6 +12,10 @@ void ShowForcedRegenCustFrame(void)
 	//uint8_t oldSec = getTime()->second - 1;
     while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 //        if(redraw)
 //        {
 //            RefreshForcedRegenCustFrame();
@@ -127,7 +131,7 @@ void createFrame()
 	TC_addButton(&retBut);
     TC_addButton(&forceRegen);
     
-    enableClockDraw = true;
+    //enableClockDraw = true;
 } 
 
 //void RefreshForcedRegenCustFrame(void)

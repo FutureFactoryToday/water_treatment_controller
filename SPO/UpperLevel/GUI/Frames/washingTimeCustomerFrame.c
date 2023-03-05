@@ -9,6 +9,10 @@ void ShowWashTimCustFrame(void)
 	while(1)
 	{
         if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
+        if (updateFlags.sec == true){
             if (chosenTask == NULL){
                 text = &PL_NOT_INITED;
               } else {
@@ -53,7 +57,7 @@ void createFrame()
 	
 	TC_addButton(&retBut);
     
-    enableClockDraw = true;
+    //enableClockDraw = true;
     
 //	TC_clearButtons();
 //	//Static refresh

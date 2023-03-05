@@ -96,6 +96,10 @@ void TSF_showFrame(){
 	
 	while(1)
     {
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 			
 			if (updateFlags.sec){
 				displayedTime = *addSec(&displayedTime,1);
@@ -162,7 +166,7 @@ void TSF_showFrame(){
 
 void createFrame(){
 	//Static refresh
-	enableClockDraw = false;
+	//enableClockDraw = false;
 
 	TC_clearButtons();
 	BSP_LCD_Clear(MID_COLOR);

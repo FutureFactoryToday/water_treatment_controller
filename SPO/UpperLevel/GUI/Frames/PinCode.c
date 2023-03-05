@@ -49,6 +49,10 @@ int8_t PIN_showFrame(){
 	
 	while(1)
     { 
+        if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 			if(pinTextArea.isPressed == true){
 				int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
 				if (newPin > 0 ){
@@ -113,7 +117,7 @@ void createPinFrame(){
 	TC_addButton(&cancelBut);
 	TC_addButton(&okBut);
 	TC_addButton(&enterBut);
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 
 void drawPinBoxes(uint8_t* pin){

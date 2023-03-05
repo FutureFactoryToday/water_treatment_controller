@@ -6,7 +6,7 @@ int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
 
-static button_t menuLines[4]; 
+static button_t menuLines[5]; 
 static void createFrame();
 static void calcButParam();
 
@@ -18,7 +18,10 @@ void ShowMenuFrame(void)
 		createFrame();
     while(1)
     {
-			
+		if (updateFlags.sec == true){
+            drawClock();
+            updateFlags.sec = false;
+        }
 			/*Buttons pressed*/
          if (retBut.isPressed == true){
              
@@ -151,7 +154,7 @@ void createFrame(void){
 //	TC_addButton(&scrollUpBut);
 //	TC_addButton(&scrollDwnBut);
 	
-	enableClockDraw = true;
+	//enableClockDraw = true;
 }
 //void RefreshMenuFrame(void)
 //{
