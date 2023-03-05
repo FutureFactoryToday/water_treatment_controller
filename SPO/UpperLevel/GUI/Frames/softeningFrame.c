@@ -201,30 +201,32 @@ void RefreshScrollBarSofteningFrame()
 void calcButParam()
 {
     TC_clearButtons();
-   
+    
         //Setting for key "0"
-    menuLines[softening_frame_Scroll_cnt].x = FIRST_CURSOR_POS_X;
-    menuLines[softening_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
-    menuLines[softening_frame_Scroll_cnt].xSize = FIRST_CURSOR_SIZE_X;
-    menuLines[softening_frame_Scroll_cnt].ySize = FIRST_CURSOR_SIZE_Y;
+    menuLines[softening_frame_Scroll_cnt].x = 4*GAP + 125;
+    menuLines[softening_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y + 3;
+    menuLines[softening_frame_Scroll_cnt].xSize = 80;
+    menuLines[softening_frame_Scroll_cnt].ySize = 39;
 		
 		//Setting for key "1"
-    menuLines[softening_frame_Scroll_cnt + 1].x = SECOND_CURSOR_POS_X;
-    menuLines[softening_frame_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y;
-    menuLines[softening_frame_Scroll_cnt + 1].xSize = SECOND_CURSOR_SIZE_X;
-    menuLines[softening_frame_Scroll_cnt + 1].ySize = SECOND_CURSOR_SIZE_Y;
+    menuLines[softening_frame_Scroll_cnt + 1].x = 4*GAP + 125;
+    menuLines[softening_frame_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y + 3;
+    menuLines[softening_frame_Scroll_cnt + 1].xSize = 80;
+    menuLines[softening_frame_Scroll_cnt + 1].ySize = 39;
     
 		//Setting for key "2"
-    menuLines[softening_frame_Scroll_cnt + 2].x = THRID_CURSOR_POS_X;
-    menuLines[softening_frame_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y;
-    menuLines[softening_frame_Scroll_cnt + 2].xSize = THRID_CURSOR_SIZE_X;
-    menuLines[softening_frame_Scroll_cnt + 2].ySize = THRID_CURSOR_SIZE_Y;
+    menuLines[softening_frame_Scroll_cnt + 2].x = 4*GAP + 125;
+    menuLines[softening_frame_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y + 3;
+    menuLines[softening_frame_Scroll_cnt + 2].xSize = 80;
+    menuLines[softening_frame_Scroll_cnt + 2].ySize = 39;
     
 		//Setting for key "3"
-    menuLines[softening_frame_Scroll_cnt + 3].x = FOURTH_CURSOR_POS_X;
-    menuLines[softening_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
-    menuLines[softening_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
-    menuLines[softening_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
+    menuLines[softening_frame_Scroll_cnt + 3].x = 4*GAP + 125;
+    menuLines[softening_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y + 3;
+    menuLines[softening_frame_Scroll_cnt + 3].xSize = 80;
+    menuLines[softening_frame_Scroll_cnt + 3].ySize = 39;
+    
+    
     
     for (uint8_t i = softening_frame_Scroll_cnt; i < softening_frame_Scroll_cnt + 4; i++){
 			TC_addButton(&menuLines[i]);

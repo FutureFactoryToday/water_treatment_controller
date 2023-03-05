@@ -50,7 +50,9 @@ void ShowMainFrame(void)
 			createFrame();
 		}
         if (contactsBut.isReleased == true){
+            ShowAlarmNotiServiceFrame();   
 			contactsBut.isReleased = false;
+            createFrame();
 		}
 
 	
