@@ -95,7 +95,7 @@ void ShowServiceMenuFrame(void)
             scrollDwnBut.isPressed = false;
          }
         /*Buttons released*/
-         if (retBut.isReleased == true){
+         if(retBut.isReleased == true){
             retBut.isReleased = false;
             return;
          }
@@ -152,9 +152,9 @@ void ShowServiceMenuFrame(void)
 }
 
 void createFrame(void){
-	TC_clearButtons();
+	//TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
+    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_SERVICE);
     
     drawMainWindow();
     

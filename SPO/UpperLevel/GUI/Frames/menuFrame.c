@@ -120,7 +120,7 @@ void ShowMenuFrame(void)
 	}
 }
 void createFrame(void){
-	TC_clearButtons();
+	//TC_clearButtons();
     
     drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
     
