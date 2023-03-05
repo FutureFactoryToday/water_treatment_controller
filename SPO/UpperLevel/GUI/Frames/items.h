@@ -85,7 +85,8 @@ extern uint8_t* ITEM_ADJUSTMENT[];
 #define STEPS_LIST "Шаги"
 extern uint8_t* ITEM_STEPS[];
 
-
+//ManualFilteringSettingsFrame
+extern uint8_t* ITEM_MANUAL_SETTINGS[];
 
 
 

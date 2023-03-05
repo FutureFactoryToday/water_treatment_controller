@@ -67,7 +67,14 @@ int8_t ShowStepsFrame(void)
            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[5].y + 9,ITEM_STEPS[5],LEFT_MODE);
            menuLines[5].isPressed = false;
         }
-
+				if(menuLines[6].isPressed == true){
+                //Make it blue
+           drawFillArcRec(menuLines[6].x, menuLines[6].y, menuLines[6].xSize, menuLines[6].ySize, LCD_COLOR_BLUE);
+           BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+           BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+           BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_STEPS[6],LEFT_MODE);
+           menuLines[6].isPressed = false;
+        }
 
         
 		if(retBut.isReleased == true)
@@ -110,17 +117,22 @@ int8_t ShowStepsFrame(void)
 			stepResult = 6;
 			menuLines[5].isReleased = false;
 		}
+		if(menuLines[6].isReleased == true)
+		{
+			stepResult = 7;
+			menuLines[6].isReleased = false;
+		}
         if(scrollUpBut.isReleased == true){
            if(steps_frame_Scroll_cnt > 0){ steps_frame_Scroll_cnt--;
                steps_frame_was_Scroll = 1;
-               RefreshScrollBarServiceMenuFrame();
+               RefreshScrollBarStepsFrame();
            }
            scrollUpBut.isReleased = false;
         }
         if(scrollDwnBut.isReleased == true){
            if(steps_frame_Scroll_cnt < 2){ steps_frame_Scroll_cnt++;
                steps_frame_was_Scroll = 2;
-               RefreshScrollBarServiceMenuFrame();
+               RefreshScrollBarStepsFrame();
            }
            scrollDwnBut.isReleased = false;
         } 
@@ -219,7 +231,7 @@ void calcButParam()
 			TC_addButton(&menuLines[i]);
 	}
 	TC_addButton(&retBut);
-    TC_addButton(&okBut);
+  TC_addButton(&okBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 }

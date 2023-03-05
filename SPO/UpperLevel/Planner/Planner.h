@@ -18,7 +18,7 @@
 /*Public defines */
 #define NAME_LENGTH 12
 #define STEP_PER_TASK_NUM 10
-#define TASK_NUM 2
+#define TASK_NUM 3
 
 #define DEF_TASK_RESTART {0,0,30,0,0,0}
 #define DEF_TASK_LAST_START
@@ -26,10 +26,12 @@
 
 #define REGENERATION_TASK_NUM 0
 #define SOFTENING_TASK_NUM 1
+#define MAN_TASK_NUM 2
 
 #define DEF_TASK_NUM 0
 
 #define START_DELAY_PAUSE 10
+
 /*Piston position and pause to form tasks*/
 typedef struct {
 	uint32_t* poz;

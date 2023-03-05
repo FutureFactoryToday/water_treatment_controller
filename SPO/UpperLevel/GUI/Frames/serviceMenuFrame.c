@@ -175,21 +175,9 @@ void createFrame(void){
     
 	/*Add buttons parameters*/
 	calcButParam();
-	/*Add buttons to Touch Controller*/
-//	for (uint8_t i = 0; i < sizeof(menuLines[0]); i++){
-//			TC_addButton(&menuLines[i]);
-//	}
-//	TC_addButton(&retBut);
-//	TC_addButton(&scrollUpBut);
-//	TC_addButton(&scrollDwnBut);
-	
+
 	enableClockDraw = true;
 }
-//void RefreshServiceMenuFrame(void)
-//{    
-//    if(service_menu_frame_was_Scroll == 1 || service_menu_frame_was_Scroll == 2)
-//    RefreshScrollBarServiceMenuFrame();
-//}
 
 void RefreshScrollBarServiceMenuFrame(void)
 {

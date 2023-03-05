@@ -14,12 +14,7 @@ void RefreshFilterSelectionFrame(void);
 
 void RefreshScrollBarFilterSelectionFrame(void);
 
-//void AnimateScrollBarKeysFilterSelectionFrame(void);
 
-//void AnimateTimeFilterSelectionFrame(void);
-
-//void TranslateFilterSelectionFrameMSG(void);
-//char* ITEM_FILTER_SELECTION[] = { "ФИЛЬТРАЦИЯ", "УМЯГЧЕНИЕ" };
 
 void ShowFilterSelectionFrame(void)
 {
@@ -68,6 +63,12 @@ void ShowFilterSelectionFrame(void)
 					createFrame();
 					menuLine[1].isReleased = false;
         }
+				if(menuLine[2].isReleased == true)
+        {
+					ShowSofteningFrame();
+					createFrame();
+					menuLine[2].isReleased = false;
+        }
         if (checkBox[0].isReleased == true){
 					markItem = 1;
 					checkBox[0].isReleased = false;
@@ -87,7 +88,7 @@ void ShowFilterSelectionFrame(void)
 					if (menuLine[i].isPressed){
 						drawDarkTextLabel(3*GAP + 40 + GAP, BSP_LCD_GetYSize()/2 - 80 + i*50, 250, 40, ITEM_FILTER_SELECTION[i]);
 						menuLine[i].isPressed = false;
-					}
+					} 
 					if (checkBox[i].isPressed){
 						drawFillButton(3*GAP, BSP_LCD_GetYSize()/2 - 80 + i*50, 40, 40,"", true);
 						checkBox[i].isPressed = false;

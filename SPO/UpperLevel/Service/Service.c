@@ -42,6 +42,7 @@ void SERV_PRINT_TOUCH_INFO(void);
 
 /* Private user code ---------------------------------------------------------*/
 void SERV_TS_CALIB(void){
+	NVIC_DisableIRQ(EXTI3_IRQn);
 	bool exit = 0;
 	
 	WTC_FONT_t *oldFont;
@@ -68,6 +69,7 @@ void SERV_TS_CALIB(void){
 	while (!exit){
 		LL_mDelay(10);
 		BSP_TS_GetState(&tsState);	
+
 		if (touchDelay == 0 && wasTouch() ){
 			touchDelay = 300;
 			SERV_PRINT_TOUCH_INFO();
@@ -122,6 +124,8 @@ void SERV_TS_CALIB(void){
 			}
 		}
 	}
+	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_24);
+	NVIC_EnableIRQ(EXTI3_IRQn);
 }
 
 uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canExit){
@@ -130,13 +134,14 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 	uint16_t oldBCol = BSP_LCD_GetBackColor();
 	uint16_t oldTCol = BSP_LCD_GetTextColor();
 	
-	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_12);
+	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_20);
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawFillButton(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40, 0, "RETRY"); 
-	drawFillButton(BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40, 0, "SAVE"); 
+	drawFillButton(BSP_LCD_GetXSize()/2 - 170, BSP_LCD_GetYSize() - 40, 100, 40, "RETRY", false); 
+	drawFillButton(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize() - 40, 100, 40, "SAVE", false); 
 	if (canExit){
-	drawFillButton(BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40, 0, "EXIT");
-}
+
+		drawFillButton(BSP_LCD_GetXSize()/2 + 70, BSP_LCD_GetYSize() - 40, 100, 40, "EXIT", false);
+	}
 	SERV_PRINT_TOUCH_INFO();
 	
 	
@@ -147,14 +152,14 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 		if (touchDelay == 0 && wasTouch() ){
 			touchDelay = 300;
 			SERV_PRINT_TOUCH_INFO();
-			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize() - 40, 40, 40)){
+			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 170, BSP_LCD_GetYSize() - 40, 100, 40)){
 				return 0;
 			}
-			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 20, BSP_LCD_GetYSize() - 40, 40, 40)){
+			if (isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize() - 40, 100, 40)){
 				return 1;
 			}
 
-			if (canExit && isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 + 40, BSP_LCD_GetYSize() - 40, 40, 40)){
+			if (canExit && isInRectangle(tsState.X, tsState.Y,BSP_LCD_GetXSize()/2 + 70, BSP_LCD_GetYSize() - 40, 100, 40)){
 				return 2;
 			}
 		}
@@ -167,7 +172,8 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 
 void SERV_PRINT_TOUCH_INFO(void){
 	uint16_t oldCol = BSP_LCD_GetTextColor();
-	
+	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_12);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_FillRect(TEXT_X, TEXT_Y, TEXT_WIDTH*4,TEXT_WIDTH*4);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

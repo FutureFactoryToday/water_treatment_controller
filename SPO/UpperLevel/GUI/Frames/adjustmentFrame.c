@@ -4,7 +4,7 @@ static void createFrame(void);
 static button_t playBut[7], menuLine[7];
 //int32_t pistonPositions.[] = {0, 0, 0, 0, 0, 0, 0};
 uint32_t *firstEl;
-//char* ITEM_ADJUSTMENT[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
+//char* ITEM_STEPS[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
 uint8_t adjustment_frame_Scroll_cnt;
 void ShowAdjustmentFrame(void)
 {
@@ -191,9 +191,9 @@ void createFrame(void)
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
 	BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
@@ -247,9 +247,9 @@ void RefreshScrollBarAdjustmentFrame()
         
     BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt],LEFT_MODE);
-    BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
-    BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_ADJUSTMENT[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
+    BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt],LEFT_MODE);
+    BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
+    BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);

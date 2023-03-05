@@ -1,10 +1,10 @@
-#include "washingTimeServiceFrame.h"
+#include "waterCountBeforeRegen.h"
 
 static void createFrame(void);
 static button_t timeBut;
 static wtc_time_t regTime;
 static uint8_t* text;
-void ShowWashingTimeServiceFrame(void)
+void ShowWaterCountBeforeRegenFrame(void)
 {
 	if (chosenTask != NULL){
 		regTime = chosenTask->restartDateTime;
