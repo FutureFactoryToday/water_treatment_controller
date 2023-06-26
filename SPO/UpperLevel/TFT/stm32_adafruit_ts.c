@@ -1,7 +1,7 @@
 #include "main.h"
 #include "ts.h"
 #include "stm32_adafruit_ts.h"
-#include "lcd\ili9486\ili9486.h"
+#include "lcd\ili9488\ili9488.h"
 
 extern TS_DrvTypeDef     *ts_drv;
 extern int32_t            ts_cindex[];

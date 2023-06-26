@@ -412,20 +412,26 @@ wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute){
 	return &time;
 }
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec){
+wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec){
 	wtc_time_t time = *initTime;
 	if (numSec == 0)
 		return &time;
 	
-	time.second += numSec;
-	if (time.second >= 60){
+	
+	if (numSec >= 60){
+		uint16_t dec = numSec / 60;
+		time = *addMinute(&time,dec);
+		numSec -= dec*60;
+	}
+    time.second += numSec;
+    if (time.second >= 60){
 		uint16_t dec = time.second / 60;
 		time = *addMinute(&time,dec);
 		time.second -= dec*60;
-	}
+	} 
 	return &time;
 }
-wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec){
+wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec){
 	int16_t tempDec = 0;
 	wtc_time_t time = *initTime;
 	if (numSec == 0)

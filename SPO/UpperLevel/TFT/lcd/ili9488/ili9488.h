@@ -21,7 +21,7 @@
    - 0: touchscreen disabled (default)
    - 1: touchscreen enabled
 */
-#define  ILI9488_TOUCH             0
+#define  ILI9488_TOUCH             1
 
 /* Touchscreen calibration data for 4 orientations */
 #define  TS_CINDEX_0        {3385020, 333702, -667424, 1243070964, -458484, -13002, 1806391572}

@@ -1,5 +1,7 @@
+#include <string.h>
 #include "main.h"
-#include "lcd.h"
+#include "TFT\lcd.h"
+#include "TFT\bmp.h"
 #include "ili9488.h"
 
 // Lcd
@@ -679,7 +681,7 @@ void ili9488_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 //=============================================================================
 #if ILI9488_TOUCH == 1
 
-#include "ts.h"
+#include "TFT\ts.h"
 
 #define TS_MULTITASK_MUTEX    ILI9488_MULTITASK_MUTEX
 #define TOUCH_FILTER          16

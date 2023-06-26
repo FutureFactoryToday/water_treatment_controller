@@ -130,8 +130,8 @@ wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour);
 wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute);
 wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute);
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec);
-wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec);
+wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec);
+wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec);
 
 wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 

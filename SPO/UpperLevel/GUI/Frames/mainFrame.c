@@ -9,6 +9,7 @@ uint8_t* timeText;
 uint8_t* valText, *unitsText;
 bool update;
 static button_t serviceBut, customerBut, contactsBut; 
+static button_t colorCalibBut;
 static void createFrame (void);
 //void RefreshMainFrame(void);
 
@@ -38,6 +39,10 @@ void ShowMainFrame(void)
 			drawFillButton(260, 200, 200, 60, "Контакты", true);
 			contactsBut.isPressed = false;
 		}
+        if (colorCalibBut.isPressed == true){
+			drawFillButton(20, 200, 200, 60, "Цветокор.", true);
+			colorCalibBut.isPressed = false;
+		}
        
         
 		/*Buttons releases*/
@@ -58,6 +63,11 @@ void ShowMainFrame(void)
 			contactsBut.isReleased = false;
             createFrame();
 		}
+        if (colorCalibBut.isReleased == true){
+            ShowColorCalibFrame();   
+			colorCalibBut.isReleased = false;
+            createFrame();
+		}
 
 	
 	}
@@ -73,6 +83,7 @@ void createFrame (void){
     customerBut = drawFillButton(20, 80, 200, 60, "Пользователь", false);
 	serviceBut = drawFillButton(260, 80, 200, 60, "Инженер", false);
     contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
+    colorCalibBut = drawFillButton(20, 200, 200, 60, "Цветокор.", false);
     
     drawStatusBarEmpty();
     
@@ -84,7 +95,8 @@ void createFrame (void){
 	TC_addButton(&serviceBut);
 	TC_addButton(&customerBut);
     TC_addButton(&contactsBut);
-	
+	TC_addButton(&colorCalibBut);
+    
 	//enableClockDraw = true;
 }
 

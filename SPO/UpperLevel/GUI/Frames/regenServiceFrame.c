@@ -1,11 +1,10 @@
 #include "regenServiceFrame.h"
 
-
 static void createFrame();
 
 void ShowRegenServiceFrame(void)
 {
-  createFrame();
+    createFrame();
 	while(1)
 	{
         if (updateFlags.sec == true){
