@@ -104,6 +104,7 @@ extern "C" {
 #include "GUI/Frames/serviceInfo.h"
 #include "GUI/Frames/serviceDateSelect.h"
 #include "GUI/Frames/loadTypeFrame.h"
+#include "GUI/Frames/ColorCalibFrame.h"
 //#include "USER/GUI.h"
 /* USER CODE END Includes */
 

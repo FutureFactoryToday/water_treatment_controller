@@ -169,6 +169,7 @@ void PL_Planner (planner_control_type_t startType){
 							case FORCE_START_NOW:
 							case FORCE_START_NEAREST:{
 								stopAlarm();
+                                currentStepDateTime = *getTime();
 								PL_ProceedStep();				
 								break;
 							}
