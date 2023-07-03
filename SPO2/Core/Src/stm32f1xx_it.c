@@ -183,7 +183,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	PC_Control();
+//	PC_Control();
 	if (touchDelay)
 		touchDelay--;
 	
@@ -192,7 +192,7 @@ void SysTick_Handler(void)
 		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	}
 	if (_1ms_cnt%100 == 0){
-		TC_checkButtons();
+//		TC_checkButtons();
 	}
   /* USER CODE END SysTick_IRQn 0 */
 

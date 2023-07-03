@@ -16,7 +16,7 @@
 #include "main.h"
 
 /*Public defines */
-#define USER_FLASH_START 0x08040000
+#define USER_FLASH_START 0x080FF800
 #define START_FP_FLAG 0x12345678
 #define END_FP_FLAG 0x87654321
 

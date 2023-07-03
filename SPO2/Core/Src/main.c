@@ -102,20 +102,20 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
+//  MX_ADC1_Init();
+//  MX_ADC2_Init();
   MX_RTC_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
-  MX_SPI3_Init();
+//  MX_SPI1_Init();
+//  MX_SPI2_Init();
+//  MX_SPI3_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM8_Init();
-  MX_USART1_UART_Init();
+//  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	FP_GetParam();
-	System_init();
-	Time_init();
+//	FP_GetParam();
+	//System_init();
+//	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
     
@@ -123,17 +123,17 @@ int main(void)
 //    while (1);
     
 	initGUI();
-	PC_Init();
-	PL_Init();
-	FM_Init();
-	
-	__enable_irq();
-	LL_mDelay(500);
-	FP_SaveParam();
+//	PC_Init();
+//	PL_Init();
+//	FM_Init();
+//	
+//	__enable_irq();
+//	LL_mDelay(500);
+//	FP_SaveParam();
 
-	//TSF_showFrame();
-	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	ShowForcedRegenCustFrame();
+//	//TSF_showFrame();
+//	BSP_LCD_Clear(LCD_COLOR_WHITE);
+//	ShowForcedRegenCustFrame();
   ShowMainFrame();
   /* USER CODE END 2 */
 
@@ -142,7 +142,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		__NOP();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
