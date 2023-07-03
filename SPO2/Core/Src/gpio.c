@@ -119,7 +119,7 @@ void MX_GPIO_Init(void)
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /**/
-  LL_GPIO_SetPinMode(TOCUH_INT_GPIO_Port, TOCUH_INT_Pin, LL_GPIO_MODE_FLOATING);
+  LL_GPIO_SetPinMode(TOUCH_INT_GPIO_Port, TOUCH_INT_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
   LL_GPIO_SetPinMode(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin, LL_GPIO_MODE_FLOATING);
@@ -128,8 +128,10 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(METER_INP_GPIO_Port, METER_INP_Pin, LL_GPIO_MODE_FLOATING);
 
   /* EXTI interrupt init*/
-  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
   NVIC_EnableIRQ(EXTI3_IRQn);
+  NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
+  NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 

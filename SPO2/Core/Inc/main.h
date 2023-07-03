@@ -145,9 +145,9 @@ void Error_Handler(void);
 #define TFT_COM_EN_GPIO_Port GPIOA
 #define VCC_SENS_Pin LL_GPIO_PIN_2
 #define VCC_SENS_GPIO_Port GPIOA
-#define TOCUH_INT_Pin LL_GPIO_PIN_3
-#define TOCUH_INT_GPIO_Port GPIOA
-#define TOCUH_INT_EXTI_IRQn EXTI3_IRQn
+#define TOUCH_INT_Pin LL_GPIO_PIN_3
+#define TOUCH_INT_GPIO_Port GPIOA
+#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
 #define TOUCH_CS_Pin LL_GPIO_PIN_4
 #define TOUCH_CS_GPIO_Port GPIOA
 #define TOUCH_SCK_Pin LL_GPIO_PIN_5
@@ -188,12 +188,14 @@ void Error_Handler(void);
 #define MEM_WP_GPIO_Port GPIOA
 #define OPTIC_SENS_Pin LL_GPIO_PIN_11
 #define OPTIC_SENS_GPIO_Port GPIOA
+#define OPTIC_SENS_EXTI_IRQn EXTI15_10_IRQn
 #define ILED_Pin LL_GPIO_PIN_12
 #define ILED_GPIO_Port GPIOA
 #define MEM_CS_Pin LL_GPIO_PIN_15
 #define MEM_CS_GPIO_Port GPIOA
 #define METER_INP_Pin LL_GPIO_PIN_10
 #define METER_INP_GPIO_Port GPIOC
+#define METER_INP_EXTI_IRQn EXTI15_10_IRQn
 #define FRAM_HOLD_Pin LL_GPIO_PIN_11
 #define FRAM_HOLD_GPIO_Port GPIOC
 #define MEM_RES_Pin LL_GPIO_PIN_12

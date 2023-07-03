@@ -30,7 +30,7 @@
 #define MODE_PP_OUT_50MHZ     0x3
 #define MODE_FF_DIGITAL_INPUT 0x4
 #define MODE_OD_OUT_10MHZ     0x5
-#define MODE_OD_OUT_2MHZ      0x6
+#define MODE_OD_OUT_2MHZ      0x6,
 #define MODE_OD_OUT_50MHZ     0x7
 #define MODE_PU_DIGITAL_INPUT 0x8
 #define MODE_PP_ALTER_10MHZ   0x9

@@ -183,7 +183,17 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+	PC_Control();
+	if (touchDelay)
+		touchDelay--;
+	
+	_1ms_cnt++; 
+	if (_1ms_cnt%500 == 0){
+		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+	}
+	if (_1ms_cnt%100 == 0){
+		TC_checkButtons();
+	}
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -204,10 +214,20 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-
+	updateFlags.sec = true;
+	RTC_Interrupt();
+	LL_RTC_ClearFlag_SEC(RTC);
+	FM_incFlowMeter();
+	if (enableClockDraw){
+		//drawClock();
+	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-
+	if (LL_RTC_IsActiveFlag_ALR(RTC)){
+		ALARM_INTERRUPT();
+		LL_RTC_ClearFlag_ALR(RTC);
+	}
+  
   /* USER CODE END RTC_IRQn 1 */
 }
 
@@ -221,9 +241,21 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    //LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
-
+		LL_mDelay(5);
+		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
+			redraw = 1;
+			updateFlags.touch = true;
+			BSP_TS_GetState(&tsState);
+			TC_checkButtons();
+			tsState.TouchDetected = 0;
+		} else {
+			TC_releaseButtons();
+			TC_isTouched = false;
+		}
+		
+		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE END LL_EXTI_LINE_3 */
   }
   /* USER CODE BEGIN EXTI3_IRQn 1 */
@@ -257,6 +289,46 @@ void SPI2_IRQHandler(void)
   /* USER CODE END SPI2_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles EXTI line[15:10] interrupts.
+  */
+void EXTI15_10_IRQHandler(void)
+{
+   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
+    /* USER CODE BEGIN LL_EXTI_LINE_11 */
+		if (!LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
+			PC_OpticSensInterrupt();
+			updateFlags.optic = true;
+		}
+    /* USER CODE END LL_EXTI_LINE_11 */
+  }
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
+    /* USER CODE BEGIN LL_EXTI_LINE_15 */
+
+    /* USER CODE END LL_EXTI_LINE_15 */
+  }
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
+		{
+			LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
+			/* USER CODE BEGIN LL_EXTI_LINE_15 */
+			FM_Sense_Interrupt();
+			/* USER CODE END LL_EXTI_LINE_15 */
+		}
+  /* USER CODE END EXTI15_10_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+void TIM7_IRQHandler(void)
+{
+	FM_OVF_Interrupt();
+	LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
+}
 /* USER CODE END 1 */
