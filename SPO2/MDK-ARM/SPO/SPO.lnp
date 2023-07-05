@@ -66,7 +66,6 @@
 "spo\stm32_adafruit_ts.o"
 "spo\ts_xpt2046.o"
 "spo\lcd_io_spi.o"
-"spo\lcd_io_gpio16.o"
 "spo\stm32_adafruit_lcd.o"
 "spo\ili9488.o"
 "spo\mainframe.o"

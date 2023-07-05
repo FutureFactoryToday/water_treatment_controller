@@ -278,7 +278,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x100000</Size>
+                <Size>0xff800</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -1314,11 +1314,6 @@
               <FileName>lcd_io_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\TFT\stm32f1xx\lcd_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd_io_gpio16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\UpperLevel\TFT\stm32f1xx\lcd_io_gpio16.c</FilePath>
             </File>
             <File>
               <FileName>stm32_adafruit_lcd.c</FileName>

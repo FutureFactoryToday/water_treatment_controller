@@ -162,16 +162,16 @@ void  LCD_IO_Delay(uint32_t c);
 #endif
 
 /* Command/data pin set */
-#define LCD_RS_CMD            GPIOX_ODR(LCD_RS) = 0
-#define LCD_RS_DATA           GPIOX_ODR(LCD_RS) = 1
+#define LCD_RS_CMD            LL_GPIO_ResetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin)//GPIOX_ODR(LCD_RS) = 0
+#define LCD_RS_DATA           LL_GPIO_SetOutputPin(TFT_DATA_COM_GPIO_Port,TFT_DATA_COM_Pin)//GPIOX_ODR(LCD_RS) = 1
 
 /* Reset pin set */
-#define LCD_RST_ON            GPIOX_ODR(LCD_RST) = 0
-#define LCD_RST_OFF           GPIOX_ODR(LCD_RST) = 1
+#define LCD_RST_ON            LL_GPIO_ResetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin)//GPIOX_ODR(LCD_RST) = 0
+#define LCD_RST_OFF           LL_GPIO_SetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin)//GPIOX_ODR(LCD_RST) = 1
 
 /* Chip select pin set */
-#define LCD_CS_ON             GPIOX_ODR(LCD_CS) = 0
-#define LCD_CS_OFF            GPIOX_ODR(LCD_CS) = 1
+#define LCD_CS_ON             LL_GPIO_ResetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin)//GPIOX_ODR(LCD_CS) = 0
+#define LCD_CS_OFF            LL_GPIO_SetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin)//GPIOX_ODR(LCD_CS) = 1
 
 /* If the read speed is undefinied -> is the same as writing speed */
 #ifndef LCD_SPI_SPD_READ
@@ -396,14 +396,14 @@ uint16_t LcdRead16(void)
 #define LCD_SPI_RCC_EN        BITBAND_ACCESS(RCC->APB2ENR, RCC_APB2ENR_SPI1EN_Pos) = 1
 #elif LCD_SPI == 2
 #define SPIX                  SPI2
-#define LCD_SPI_RCC_EN        BITBAND_ACCESS(RCC->APB1ENR, RCC_APB1ENR_SPI2EN_Pos) = 1
+#define LCD_SPI_RCC_EN        //BITBAND_ACCESS(RCC->APB1ENR, RCC_APB1ENR_SPI2EN_Pos) = 1
 #elif LCD_SPI == 3
 #define SPIX                  SPI3
 #define LCD_SPI_RCC_EN        BITBAND_ACCESS(RCC->APB1ENR, RCC_APB1ENR_SPI3EN_Pos) = 1
 #endif
 
-#define LcdSpiMode8()         BITBAND_ACCESS(SPIX->CR1, SPI_CR1_DFF_Pos) = 0
-#define LcdSpiMode16()        BITBAND_ACCESS(SPIX->CR1, SPI_CR1_DFF_Pos) = 1
+#define LcdSpiMode8()         LL_SPI_SetDataWidth(SPIX,LL_SPI_DATAWIDTH_8BIT)//ITBAND_ACCESS(SPIX->CR1, SPI_CR1_DFF_Pos) = 0
+#define LcdSpiMode16()        LL_SPI_SetDataWidth(SPIX,LL_SPI_DATAWIDTH_16BIT)//BITBAND_ACCESS(SPIX->CR1, SPI_CR1_DFF_Pos) = 1
 
 //-----------------------------------------------------------------------------
 #if     LCD_SPI_MODE == 1
@@ -478,9 +478,10 @@ inline void LcdDirWrite(void)
 extern inline void LcdWrite8(uint8_t d8);
 inline void LcdWrite8(uint8_t d8)
 {
-  SPIX->DR = d8;
+  LL_SPI_TransmitData8(SPIX,d8);//SPIX->DR = d8;
   LCD_IO_Delay(2);
-  while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
+	while(LL_SPI_IsActiveFlag_BSY(SPIX));
+  //while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
 }
 
 //-----------------------------------------------------------------------------
@@ -488,8 +489,8 @@ extern inline uint8_t LcdRead8(void);
 inline uint8_t LcdRead8(void)
 {
   uint8_t d8;
-  while(!BITBAND_ACCESS(SPIX->SR, SPI_SR_RXNE_Pos));
-  d8 = (uint8_t)SPIX->DR;
+  while(!LL_SPI_IsActiveFlag_RXNE(SPIX));//while(!BITBAND_ACCESS(SPIX->SR, SPI_SR_RXNE_Pos));
+  d8 = LL_SPI_ReceiveData8(SPIX);
   return d8;
 }
 
@@ -498,9 +499,9 @@ extern inline void LcdCmdWrite8(uint8_t cmd8);
 inline void LcdCmdWrite8(uint8_t cmd8)
 {
   LCD_RS_CMD;
-  SPIX->DR = cmd8;
+  LL_SPI_TransmitData8(SPIX,cmd8);//SPIX->DR = cmd8;
   LCD_IO_Delay(2);
-  while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
+  while(LL_SPI_IsActiveFlag_BSY(SPIX));//while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
   LCD_RS_DATA;
 }
 
@@ -508,9 +509,9 @@ inline void LcdCmdWrite8(uint8_t cmd8)
 extern inline void LcdWrite16(uint16_t d16);
 inline void LcdWrite16(uint16_t d16)
 {
-  SPIX->DR = d16;
+  LL_SPI_TransmitData16(SPIX,d16);//SPIX->DR = d16;
   LCD_IO_Delay(1);
-  while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
+  while(LL_SPI_IsActiveFlag_BSY(SPIX));//while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
 }
 
 //-----------------------------------------------------------------------------
@@ -518,8 +519,8 @@ extern inline uint16_t LcdRead16(void);
 inline uint16_t LcdRead16(void)
 {
   uint16_t d16;
-  while(!BITBAND_ACCESS(SPIX->SR, SPI_SR_RXNE_Pos));
-  d16 = SPIX->DR;
+  while(!LL_SPI_IsActiveFlag_RXNE(SPIX));//while(!BITBAND_ACCESS(SPIX->SR, SPI_SR_RXNE_Pos));
+  d16 = LL_SPI_ReceiveData16(SPIX);//SPIX->DR;
   return d16;
 }
 
@@ -528,9 +529,9 @@ extern inline void LcdCmdWrite16(uint16_t cmd16);
 inline void LcdCmdWrite16(uint16_t cmd16)
 {
   LCD_RS_CMD;
-  SPIX->DR = cmd16;
+  LL_SPI_TransmitData16(SPIX,cmd16);//SPIX->DR = cmd16;
   LCD_IO_Delay(2);
-  while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
+   while(LL_SPI_IsActiveFlag_BSY(SPIX));//while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
   LCD_RS_DATA;
 }
 
@@ -646,15 +647,15 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 void LCD_IO_WriteMultiData(void * pData, uint32_t Size, uint32_t dmacr)
 {
   DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CGIF(LCD_DMA_TX);
-  SPIX->CR1 &= ~SPI_CR1_SPE;           /* SPI stop */
+  LL_SPI_Disable(SPIX);//SPIX->CR1 &= ~SPI_CR1_SPE;           /* SPI stop */
   DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;   /* DMA stop */
   while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);
   DMAX_CHANNEL(LCD_DMA_TX)->CMAR = (uint32_t)pData;
   DMAX_CHANNEL(LCD_DMA_TX)->CPAR = (uint32_t)&SPIX->DR;
   DMAX_CHANNEL(LCD_DMA_TX)->CNDTR = Size;
   DMAX_CHANNEL(LCD_DMA_TX)->CCR = dmacr;
-  BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 1;
-  SPIX->CR1 |= SPI_CR1_SPE;
+  LL_SPI_EnableDMAReq_TX(SPIX);//BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 1;
+  LL_SPI_Enable(SPIX);//SPIX->CR1 |= SPI_CR1_SPE;
   DMAX_CHANNEL(LCD_DMA_TX)->CCR |= DMA_CCR_EN;
 }
 
@@ -1052,9 +1053,9 @@ void LCD_IO_Init(void)
   #endif
 
   /* GPIO, DMA Clocks */
-  RCC->APB2ENR |= GPIOX_CLOCK(LCD_RS) | GPIOX_CLOCK(LCD_CS) | GPIOX_CLOCK(LCD_SCK) | GPIOX_CLOCK(LCD_MOSI) |
-                  GPIOX_CLOCK_LCD_RST | GPIOX_CLOCK_LCD_BL  | GPIOX_CLOCK_LCD_MISO |
-                  AFIO_CLOCK;
+//  RCC->APB2ENR |= GPIOX_CLOCK(LCD_RS) | GPIOX_CLOCK(LCD_CS) | GPIOX_CLOCK(LCD_SCK) | GPIOX_CLOCK(LCD_MOSI) |
+//                  GPIOX_CLOCK_LCD_RST | GPIOX_CLOCK_LCD_BL  | GPIOX_CLOCK_LCD_MISO |
+//                  AFIO_CLOCK;
 
   /* DMA clock */
   #if LCD_SPI == 0
@@ -1081,31 +1082,31 @@ void LCD_IO_Init(void)
   RCC->AHBENR |= DMA1_CLOCK_TX | DMA1_CLOCK_RX;
   #endif
 
-  LCD_SPI_ALTERSET;
+  //LCD_SPI_ALTERSET;
 
   /* MISO = input in full duplex mode */
   #if LCD_SPI_MODE == 2                 // Full duplex
-  GPIOX_MODE(MODE_FF_DIGITAL_INPUT, LCD_MISO);
+  //GPIOX_MODE(MODE_FF_DIGITAL_INPUT, LCD_MISO);
   #endif
 
   /* Backlight = output, light on */
   #if GPIOX_PORTNUM(LCD_BL) >= GPIOX_PORTNUM_A
-  GPIOX_MODE(MODE_PP_OUT_2MHZ, LCD_BL);
-  LCD_IO_Bl_OnOff(1);
+  //GPIOX_MODE(MODE_PP_OUT_2MHZ, LCD_BL);
+  //LCD_IO_Bl_OnOff(1);
   #endif
 
   /* Reset pin = output, reset off */
   #if GPIOX_PORTNUM(LCD_RST) >= GPIOX_PORTNUM_A
-  GPIOX_MODE(MODE_PP_OUT_2MHZ, LCD_RST);
+  //GPIOX_MODE(MODE_PP_OUT_2MHZ, LCD_RST);
   LCD_RST_OFF;
   #endif
-
+	
   LCD_RS_DATA;
   LCD_CS_OFF;
-  GPIOX_MODE(MODE_PP_OUT_50MHZ, LCD_RS);
-  GPIOX_MODE(MODE_PP_OUT_50MHZ, LCD_CS);
+  //GPIOX_MODE(MODE_PP_OUT_50MHZ, LCD_RS);
+  //GPIOX_MODE(MODE_PP_OUT_50MHZ, LCD_CS);
 
-  GPIOX_ODR(LCD_SCK) = 1;               // SCK = 1
+  //GPIOX_ODR(LCD_SCK) = 1;               // SCK = 1
 
   #if LCD_SPI == 0
   /* Software SPI */
@@ -1117,8 +1118,8 @@ void LCD_IO_Init(void)
   /* Hardware SPI */
   LCD_SPI_RCC_EN;
 
-  GPIOX_MODE(MODE_PP_ALTER_50MHZ, LCD_SCK);
-  GPIOX_MODE(MODE_PP_ALTER_50MHZ, LCD_MOSI);
+  //GPIOX_MODE(MODE_PP_ALTER_50MHZ, LCD_SCK);
+  //GPIOX_MODE(MODE_PP_ALTER_50MHZ, LCD_MOSI);
 
   #if LCD_SPI_MODE == 1
   /* Half duplex */

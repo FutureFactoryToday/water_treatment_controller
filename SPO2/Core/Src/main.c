@@ -50,6 +50,7 @@
 /* USER CODE BEGIN PV */
 	uint32_t _1ms_cnt;
 	uint8_t* errorCause;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,15 +103,22 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+	errorCause = "GPIO";
 //  MX_ADC1_Init();
 //  MX_ADC2_Init();
   MX_RTC_Init();
-//  MX_SPI1_Init();
-//  MX_SPI2_Init();
+	errorCause = "RTC";
+  MX_SPI1_Init();
+	errorCause = "SPI1";
+  MX_SPI2_Init();
+	errorCause = "SPI2";
 //  MX_SPI3_Init();
   MX_TIM3_Init();
+	errorCause = "TIM3";
   MX_TIM4_Init();
+	errorCause = "TIM4";
   MX_TIM8_Init();
+	errorCause = "INIT COMPL";
 //  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 //	FP_GetParam();
@@ -118,7 +126,7 @@ int main(void)
 //	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
-    
+  LL_GPIO_SetOutputPin(BL_GPIO_Port,BL_Pin); 
 //    setAlarm(&currentStepDateTime,PL_ProceedStep);
 //    while (1);
     

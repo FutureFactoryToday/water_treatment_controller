@@ -84,11 +84,16 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-
+	LL_GPIO_ResetOutputPin(ILED_GPIO_Port,ILED_Pin);
+	uint32_t cnt;
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+		if (cnt++ > 1000000){
+			cnt = 0;
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+		}
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
