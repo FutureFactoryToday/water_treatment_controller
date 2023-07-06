@@ -118,12 +118,12 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 //		pcParams.maxPoz += mod(pcParams.minPoz);
 //		pcParams.curPoz += mod(pcParams.minPoz);
 //		pcParams.minPoz = 0;
-//     if (result == PASSED){
-//			PC_GoToPoz(pcParams.minPoz);
-//		}
-      LL_mDelay(100);
+     if (result == PASSED){
 			PC_GoToPoz(pistonPositions.closedPosition);
-			while( pcParams.workStatus == PC_IN_PROCESS);
+			 LL_mDelay(100);
+			 while( pcParams.workStatus == PC_IN_PROCESS);
+		}
+			
 	}
 	return result;
 }

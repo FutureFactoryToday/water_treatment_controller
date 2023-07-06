@@ -75,31 +75,37 @@ uint8_t FP_SaveParam(void){
 			return ERROR;
 		}
 		__disable_irq();
-		while (FLASH->SR & FLASH_SR_BSY);
-		unlockFlash();
-		if (FLASH->SR & FLASH_SR_EOP){
-			FLASH->SR |= FLASH_SR_EOP;
+		while (FLASH->SR2 & FLASH_SR2_BSY);
+		if (FLASH->CR2 & FLASH_CR2_LOCK){
+			unlockFlash();
 		}
-			FLASH->CR |= FLASH_CR_PG;
+		if (FLASH->SR2 & FLASH_SR2_EOP){
+			FLASH->SR2 |= FLASH_SR2_EOP;
+		}
+		FLASH->AR2 = USER_FLASH_START;
+		FLASH->CR2 |= FLASH_CR2_PG;
 		uint16_t *ptr = (uint16_t*)&flashParams.params;
 		uint32_t paramSize = sizeof(stored_params_t)/sizeof(uint32_t);
 		for(uint16_t i = 0; i < paramSize*2; i++){
+			//uint32_t adr = USER_FLASH_START+2*i;
 			*(volatile uint16_t*)(USER_FLASH_START+2*i) = 	*ptr;
 			ptr++;
-			while(!(FLASH->SR & FLASH_SR_EOP)){
-				if(FLASH->SR & FLASH_SR_PGERR){
+			//while(FLASH->SR & FLASH_SR_BSY){
+			while(!(FLASH->SR2 & FLASH_SR2_EOP)){
+				uint32_t fl = FLASH->SR2;
+				if(FLASH->SR2 & FLASH_SR2_PGERR){
 					lockFlash();
-					FLASH->CR &= ~FLASH_CR_PG;
-					FLASH->SR = FLASH_SR_PGERR;
+					FLASH->CR2 &= ~FLASH_CR2_PG;
+					FLASH->SR2 = FLASH_SR2_PGERR;
 					return ERROR;
 				}
 			}
-			FLASH->SR = FLASH_SR_EOP;
+			FLASH->SR2 |= FLASH_SR2_EOP;
 			if (i == paramSize*2 - 2){
 				flashParams.needToSave = 1;
 			}
 		}
-		FLASH->CR &= ~FLASH_CR_PG;
+		FLASH->CR2 &= ~FLASH_CR2_PG;
 		lockFlash();
 		flashParams.needToSave = false;
 		__enable_irq();
@@ -109,18 +115,18 @@ uint8_t FP_SaveParam(void){
 }
 uint8_t FP_DeleteParam(void){
 	__disable_irq();
-	while (FLASH->SR & FLASH_SR_BSY);
+	while (FLASH->SR2 & FLASH_SR2_BSY);
 	unlockFlash();
-	if (FLASH->SR & FLASH_SR_EOP){
-		FLASH->SR |= FLASH_SR_EOP;
+	if (FLASH->SR2 & FLASH_SR2_EOP){
+		FLASH->SR2 |= FLASH_SR2_EOP;
 	}
-	FLASH->CR |= FLASH_CR_PER;
-	FLASH->AR = USER_FLASH_START;
-	FLASH->CR |= FLASH_CR_STRT;
-	while (!(FLASH->SR & FLASH_SR_EOP));
-	FLASH->SR = FLASH_SR_EOP;
+	FLASH->CR2 |= FLASH_CR2_PER;
+	FLASH->AR2 = USER_FLASH_START;
+	FLASH->CR2 |= FLASH_CR2_STRT;
+	while (!(FLASH->SR2 & FLASH_SR2_EOP));
+	FLASH->SR2 = FLASH_SR2_EOP;
 	
-	FLASH->CR &= ~FLASH_CR_PER;
+	FLASH->CR2 &= ~FLASH_CR2_PER;
 	lockFlash();
 	__enable_irq();
 	return 1;
@@ -154,20 +160,20 @@ uint8_t FP_DeleteParam(void){
 //}
 
 void unlockFlash(void){
-	while ((FLASH->SR & FLASH_SR_BSY) != 0)
+	while ((FLASH->SR2 & FLASH_SR2_BSY) != 0)
 	{
 		
 	}
-	if ((FLASH->CR & FLASH_CR_LOCK) != 0)
+	if ((FLASH->CR2 & FLASH_CR2_LOCK) != 0)
 	{
-		FLASH->KEYR = FLASH_KEY1;
-		FLASH->KEYR = FLASH_KEY2;
+		FLASH->KEYR2 = FLASH_KEY1;
+		FLASH->KEYR2 = FLASH_KEY2;
 	}
 	
 }
 
 void lockFlash(void){
-	FLASH->CR = FLASH_CR_LOCK;
+	FLASH->CR2 = FLASH_CR2_LOCK;
 }
 
 

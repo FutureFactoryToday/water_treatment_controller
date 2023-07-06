@@ -559,7 +559,7 @@ void BSP_LCD_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pBmp)
 
 	/* Read bitmap height */
 	height = ptr->biHeight;
-
+	Ypos -= height;
 	SetDisplayWindow(Xpos, Ypos, width, height);
 
 	if(lcd_drv->DrawBitmap != NULL)

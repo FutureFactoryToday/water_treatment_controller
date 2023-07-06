@@ -523,6 +523,7 @@ void ili9488_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
   //Ypos += pbmp[22] + (pbmp[23] << 8) - 1;
 	pbmp += sizeof(BITMAPINFOHEADER);
   size = ptr->dataSize;
+	Xpos += ptr->biHeight;
   /* Get bitmap data address offset */
 //  index = *(volatile uint16_t *) (pbmp + 10);
 //  index |= (*(volatile uint16_t *) (pbmp + 12)) << 16;

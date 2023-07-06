@@ -62,6 +62,7 @@
 "spo\widgets.o"
 "spo\smallogo.o"
 "spo\layout.o"
+"spo\testbmp.o"
 "spo\touchcontroller.o"
 "spo\stm32_adafruit_ts.o"
 "spo\ts_xpt2046.o"

@@ -127,12 +127,13 @@ int main(void)
 //    while (1);
     
 	initGUI();
-	PC_Init();
-	PL_Init();
-	FM_Init();
+//	PC_Init();
+//	PL_Init();
+//	FM_Init();
 	
 	__enable_irq();
 	LL_mDelay(500);
+
 	FP_SaveParam();
 
 //	//TSF_showFrame();
