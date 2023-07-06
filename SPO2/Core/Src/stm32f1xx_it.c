@@ -246,7 +246,7 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
-    //LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 		LL_mDelay(5);
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
@@ -299,9 +299,16 @@ void SPI2_IRQHandler(void)
   */
 void EXTI15_10_IRQHandler(void)
 {
-   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
+    /* USER CODE BEGIN LL_EXTI_LINE_10 */
+
+    /* USER CODE END LL_EXTI_LINE_10 */
+  }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
@@ -311,13 +318,6 @@ void EXTI15_10_IRQHandler(void)
 			updateFlags.optic = true;
 		}
     /* USER CODE END LL_EXTI_LINE_11 */
-  }
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
-    /* USER CODE BEGIN LL_EXTI_LINE_15 */
-
-    /* USER CODE END LL_EXTI_LINE_15 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)

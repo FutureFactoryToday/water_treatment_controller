@@ -517,7 +517,48 @@ void ili9488_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysi
   */
 void ili9488_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
 {
+	uint32_t index = 0, size = 0;
+	BITMAPINFOHEADER *ptr = pbmp;
+  /* Read bitmap size */
+  //Ypos += pbmp[22] + (pbmp[23] << 8) - 1;
+	pbmp += sizeof(BITMAPINFOHEADER);
+  size = ptr->dataSize;
+  /* Get bitmap data address offset */
+//  index = *(volatile uint16_t *) (pbmp + 10);
+//  index |= (*(volatile uint16_t *) (pbmp + 12)) << 16;
+//  size = (size - index)/2;
+//  pbmp += index;
+
+  ILI9488_LCDMUTEX_PUSH();
+
+  #if ILI9488_INTERFACE == 0
+  LCD_IO_WriteCmd8(ILI9488_MADCTL); 
+	//LCD_IO_WriteData8(ILI9488_MAD_DATA_RIGHT_THEN_UP);
+	LCD_IO_WriteData8(ILI9488_MAD_COLORMODE | ILI9488_MAD_X_LEFT  | ILI9488_MAD_Y_DOWN | ILI9488_MAD_VERTICAL);
+  LCD_IO_WriteCmd8(ILI9488_PASET); 
+	LCD_IO_WriteData16_to_2x8(ILI9488_MAX_Y - yEnd); 
+	LCD_IO_WriteData16_to_2x8(ILI9488_MAX_Y - yStart);
+  LCD_IO_WriteCmd8(ILI9488_RAMWR);
+  while(size--)
+  {
+    ili9488_write16to24(*(uint16_t *)pbmp);
+    pbmp+= 2;
+  }
+  LCD_IO_WriteCmd8(ILI9488_MADCTL); 
+	LCD_IO_WriteData8(ILI9488_MAD_DATA_RIGHT_THEN_DOWN);
+	//LCD_IO_WriteData8(ILI9488_MAD_COLORMODE | ILI9488_MAD_X_LEFT  | ILI9488_MAD_Y_UP | ILI9488_MAD_VERTICAL);
+  #elif ILI9488_INTERFACE == 1
+  LCD_IO_WriteCmd8(ILI9488_MADCTL); 
+	LCD_IO_WriteData8(ILI9488_MAD_DATA_RIGHT_THEN_UP);
+	
+  LCD_IO_WriteCmd8MultipleData16(ILI9488_RAMWR, (uint16_t *)pbmp, size);
+  LCD_IO_WriteCmd8(ILI9488_MADCTL); LCD_IO_WriteData8(ILI9488_MAD_DATA_RIGHT_THEN_DOWN);
+  #endif
+
+  ILI9488_LCDMUTEX_POP();
+	
 //  uint32_t index = 0, size = 0;
+//	
 //  /* Read bitmap size */
 //  Ypos += pbmp[22] + (pbmp[23] << 8) - 1;
 //  size = *(volatile uint16_t *) (pbmp + 2);
@@ -547,19 +588,19 @@ void ili9488_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
 //  #endif
 
 //  ILI9488_LCDMUTEX_POP();
-	uint32_t index, size;
-	BITMAPINFOHEADER *ptr = pbmp;
-  /* Read bitmap size */
-  size = ptr->dataSize;
-  /* Get bitmap data address offset */
-  pbmp += sizeof(BITMAPINFOHEADER);
+//	uint32_t index, size;
+//	BITMAPINFOHEADER *ptr = pbmp;
+//  /* Read bitmap size */
+//  size = ptr->dataSize;
+//  /* Get bitmap data address offset */
+//  pbmp += sizeof(BITMAPINFOHEADER);
 
-  ILI9488_LCDMUTEX_PUSH();
-//  LCD_IO_WriteCmd8(ILI9486_MADCTL); LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_UP);
-//  LCD_IO_WriteCmd8(ILI9486_PASET); LCD_IO_WriteData16_to_2x8(ILI9486_SIZE_Y - 1 - yEnd); LCD_IO_WriteData16_to_2x8(ILI9486_SIZE_Y - 1 - yStart);
-  LCD_IO_WriteCmd8MultipleData16(ILI9488_RAMWR, (uint16_t *)pbmp, size);
-//  LCD_IO_WriteCmd8(ILI9486_MADCTL); LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_DOWN);
-  ILI9488_LCDMUTEX_POP();
+//  ILI9488_LCDMUTEX_PUSH();
+////  LCD_IO_WriteCmd8(ILI9486_MADCTL); LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_UP);
+////  LCD_IO_WriteCmd8(ILI9486_PASET); LCD_IO_WriteData16_to_2x8(ILI9486_SIZE_Y - 1 - yEnd); LCD_IO_WriteData16_to_2x8(ILI9486_SIZE_Y - 1 - yStart);
+//  LCD_IO_WriteCmd8MultipleData16(ILI9488_RAMWR, (uint16_t *)pbmp, size);
+////  LCD_IO_WriteCmd8(ILI9486_MADCTL); LCD_IO_WriteData8(ILI9486_MAD_DATA_RIGHT_THEN_DOWN);
+//  ILI9488_LCDMUTEX_POP();
 }
 
 //-----------------------------------------------------------------------------

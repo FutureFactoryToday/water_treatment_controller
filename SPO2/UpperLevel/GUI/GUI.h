@@ -67,6 +67,8 @@ extern const BITMAPSTRUCT day;
 extern const BITMAPSTRUCT night;
 extern const BITMAPSTRUCT list;
 
+extern const BITMAPSTRUCT Test;
+
 extern const BITMAPSTRUCT gImage_DROPBUT;
 extern const BITMAPSTRUCT gImage_WRENCHBUT;
 extern const BITMAPSTRUCT gImage_PAGEBUT;

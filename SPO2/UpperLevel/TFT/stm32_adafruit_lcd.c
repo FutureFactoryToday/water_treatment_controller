@@ -551,7 +551,7 @@ void BSP_LCD_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pBmp)
 {
 	uint16_t height = 0;
 	uint16_t width  = 0;
-
+	Ypos = BSP_LCD_GetYSize() - Ypos;
 	BITMAPINFOHEADER *ptr;
 	ptr= (BITMAPINFOHEADER*)pBmp;
 	/* Read bitmap width */

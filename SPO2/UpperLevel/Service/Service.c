@@ -62,7 +62,7 @@ void SERV_TS_CALIB(void){
 	oldFont = BSP_LCD_GetFont();
 	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_8);
 	SERV_PRINT_TOUCH_INFO();
-	
+	uint32_t xSize = calibCross[step].x-CROSS_WIDTH/2;
 	BSP_LCD_DrawHLine(calibCross[step].x-CROSS_WIDTH/2,calibCross[step].y,CROSS_WIDTH);
 	BSP_LCD_DrawVLine(calibCross[step].x,calibCross[step].y-CROSS_WIDTH/2,CROSS_WIDTH);
 	
@@ -173,6 +173,7 @@ uint8_t SERV_TS_TEST(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe, bool canEx
 void SERV_PRINT_TOUCH_INFO(void){
 	uint16_t oldCol = BSP_LCD_GetTextColor();
 	BSP_LCD_SetFont((WTC_FONT_t*)&Oxygen_Mono_12);
+	
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_FillRect(TEXT_X, TEXT_Y, TEXT_WIDTH*4,TEXT_WIDTH*4);

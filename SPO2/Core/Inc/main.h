@@ -154,8 +154,8 @@ void Error_Handler(void);
 #define TOUCH_SCK_GPIO_Port GPIOA
 #define TOUCH_MISO_Pin LL_GPIO_PIN_6
 #define TOUCH_MISO_GPIO_Port GPIOA
-#define TOCUH_MOSI_Pin LL_GPIO_PIN_7
-#define TOCUH_MOSI_GPIO_Port GPIOA
+#define TOUCH_MOSI_Pin LL_GPIO_PIN_7
+#define TOUCH_MOSI_GPIO_Port GPIOA
 #define TFT_DATA_COM_Pin LL_GPIO_PIN_5
 #define TFT_DATA_COM_GPIO_Port GPIOC
 #define REL_PWR_CNTR_Pin LL_GPIO_PIN_0

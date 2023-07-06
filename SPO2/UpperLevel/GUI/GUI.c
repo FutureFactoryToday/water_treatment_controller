@@ -60,19 +60,24 @@ void initGUI(void){
 	
 	redraw = 0;
 	BSP_LCD_Init();
+	BSP_LCD_DrawHLine(0,10,21);
+	BSP_LCD_DrawVLine(10,0,21);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(0,0,21,21);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(0x1947);
 	BSP_LCD_DrawBitmap(90,85,&LOGO);
 	LL_mDelay(1000);
     
-    BSP_LCD_SetFont(&Oxygen_Mono_24);
-    
-    frame = 0;
-   // wasScroll = 0;
-    
-    itemIndex = 0;
-    
-    //ShowMainFrame();
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	
+	frame = 0;
+ // wasScroll = 0;
+	
+	itemIndex = 0;
+	
+	//ShowMainFrame();
 }
 
 void drawClock(void){

@@ -103,41 +103,37 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-	errorCause = "GPIO";
-//  MX_ADC1_Init();
-//  MX_ADC2_Init();
+  MX_ADC1_Init();
+  MX_ADC2_Init();
   MX_RTC_Init();
-	errorCause = "RTC";
   MX_SPI1_Init();
-	errorCause = "SPI1";
   MX_SPI2_Init();
-	errorCause = "SPI2";
-//  MX_SPI3_Init();
+  MX_SPI3_Init();
   MX_TIM3_Init();
-	errorCause = "TIM3";
   MX_TIM4_Init();
-	errorCause = "TIM4";
   MX_TIM8_Init();
-	errorCause = "INIT COMPL";
-//  MX_USART1_UART_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-//	FP_GetParam();
-	//System_init();
-//	Time_init();
+
+	
+	
+	FP_GetParam();
+	System_init();
+	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
-  LL_GPIO_SetOutputPin(BL_GPIO_Port,BL_Pin); 
+//  LL_GPIO_SetOutputPin(BL_GPIO_Port,BL_Pin); 
 //    setAlarm(&currentStepDateTime,PL_ProceedStep);
 //    while (1);
     
 	initGUI();
-//	PC_Init();
-//	PL_Init();
-//	FM_Init();
-//	
-//	__enable_irq();
-//	LL_mDelay(500);
-//	FP_SaveParam();
+	PC_Init();
+	PL_Init();
+	FM_Init();
+	
+	__enable_irq();
+	LL_mDelay(500);
+	FP_SaveParam();
 
 //	//TSF_showFrame();
 //	BSP_LCD_Clear(LCD_COLOR_WHITE);
@@ -150,7 +146,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		__NOP();
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -191,7 +187,7 @@ void SystemClock_Config(void)
     LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
   }
   LL_RCC_EnableRTC();
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
+  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_2, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 
    /* Wait till PLL is ready */
