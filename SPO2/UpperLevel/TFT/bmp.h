@@ -16,7 +16,12 @@ typedef struct __attribute__((packed)) {
 
 typedef struct __attribute__((packed)) {
   BITMAPINFOHEADER infoHeader;
+	#ifdef _565_FORMAT 
   uint16_t data[];
+	#endif
+	#ifdef _24bit_FORMAT
+	uint8_t data[];
+	#endif
 } BITMAPSTRUCT;
 
 #endif /* __BMP_H_ */

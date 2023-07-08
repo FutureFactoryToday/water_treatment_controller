@@ -19,6 +19,7 @@
 #define SPI_LCD
 //#define PARAL_LCD
 
+
 #define TS_RESCAN_TIME 10
 
 #define MOT_TIM TIM8

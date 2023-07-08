@@ -44,6 +44,8 @@ void  LCD_IO_ReadCmd16MultipleData24to16(uint16_t Cmd, uint16_t *pData, uint32_t
 
 void  LCD_IO_Delay(uint32_t c);
 
+void LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
+bool		LCD_IO_isBusy();
 //=============================================================================
 
 #define BITBAND_ACCESS(a, b)  *(volatile uint32_t*)(((uint32_t)&a & 0xF0000000) + 0x2000000 + (((uint32_t)&a & 0x000FFFFF) << 5) + (b << 2))
@@ -219,7 +221,9 @@ void  LCD_IO_Delay(uint32_t c);
 #if GPIOX_PORTNUM(LCD_MISO) < GPIOX_PORTNUM_A && LCD_SPI_MODE == 2
 #error  not definied the LCD MISO pin
 #endif
-
+//-----------------------------------------------------------------------------
+uint32_t dmaCircCnt;
+bool isDmaCircMode;
 //-----------------------------------------------------------------------------
 #if LCD_SPI == 0
 /* Software SPI */
@@ -621,23 +625,32 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 {
   if(DMAX(LCD_DMA_TX)->ISR & DMAX_ISR_TCIF(LCD_DMA_TX))
   {
-    DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CTCIF(LCD_DMA_TX);
-    DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;
-    while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);
-    BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 0;
-    while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
-    LCD_IO_Delay(2 ^ LCD_SPI_SPD_WRITE);
+		if (!isDmaCircMode){
+			DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CTCIF(LCD_DMA_TX);
+			DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;
+			while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);
+			BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 0;
+			while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
+			LCD_IO_Delay(2 ^ LCD_SPI_SPD_WRITE);
 
-    if(LCD_IO_DmaTransferStatus == 1) /* last transfer end ? */
-      LCD_CS_OFF;
+			if(LCD_IO_DmaTransferStatus == 1) /* last transfer end ? */
+				LCD_CS_OFF;
 
-    #ifndef osFeature_Semaphore
-    /* no FreeRtos */
-    LCD_IO_DmaTransferStatus = 0;
-    #else
-    /* FreeRtos */
-    osSemaphoreRelease(spiDmaBinSemHandle);
-    #endif // #else osFeature_Semaphore
+			#ifndef osFeature_Semaphore
+			/* no FreeRtos */
+			LCD_IO_DmaTransferStatus = 0;
+			#else
+			/* FreeRtos */
+			osSemaphoreRelease(spiDmaBinSemHandle);
+			#endif // #else osFeature_Semaphore
+		} else {
+			dmaCircCnt--;
+			if (dmaCircCnt == 0){
+				isDmaCircMode = false;
+				dmaCircCnt = 1;
+				DMAX_CHANNEL(LCD_DMA_TX)->CCR &= DMA_CCR_CIRC;
+			}
+		}
   }
   else
     DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CGIF(LCD_DMA_TX);
@@ -1262,7 +1275,58 @@ void LCD_IO_WriteCmd16MultipleData16(uint16_t Cmd, uint16_t *pData, uint32_t Siz
   LcdCmdWrite16(Cmd);
   LCD_IO_WriteMultiData16(pData, Size, 1);
 }
+void LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size){
+	WaitForDmaEnd();
+  LcdSpiMode8();
+  LCD_CS_ON;
+  LcdCmdWrite8(Cmd);
+  //LCD_IO_WriteMultiData16(&Data, Size, 0);
+	//dmaCircCnt
+	//isDmaCircMode
+	uint32_t dmacr;
 
+  dmacr = DMA_CCR_TCIE | (0 << DMA_CCR_MSIZE_Pos) |
+            (0 << DMA_CCR_PSIZE_Pos) | DMA_CCR_DIR | (1 << DMA_CCR_MINC_Pos) |
+            (DMAPRIORITY(LCD_DMA_TX) << DMA_CCR_PL_Pos);
+	if (Size > 1) {
+		dmacr |= DMA_CCR_CIRC;
+		isDmaCircMode = true;
+		dmaCircCnt = Size;
+	}
+  LCD_IO_WriteMultiData((void *)Data, 3, dmacr);
+	
+//	while(Size)
+//  {
+//    if(Size <= DMA_MAXSIZE)
+//    {
+//      LCD_IO_DmaTransferStatus = 1;     /* last transfer */
+//      LCD_IO_WriteMultiData((void *)pData, Size, dmacr);
+//      Size = 0;
+//      #if LCD_DMA_TXWAIT == 1
+//      if(dinc)
+//        WaitForDmaEnd();
+//      #endif
+//    }
+//    else
+//    {
+//      LCD_IO_DmaTransferStatus = 2;     /* no last transfer */
+//      LCD_IO_WriteMultiData((void *)pData, DMA_MAXSIZE, dmacr);
+//      if(dinc)
+//        pData+= DMA_MAXSIZE;
+//      Size-= DMA_MAXSIZE;
+//      #if LCD_DMA_TXWAIT != 2
+//      WaitForDmaEnd();
+//      #endif
+//    }
+//    #if LCD_DMA_TXWAIT == 2
+//    WaitForDmaEnd();
+//    #endif
+//  }
+}
+
+bool		LCD_IO_isBusy(){
+	return (!(LCD_IO_DmaTransferStatus == 0));
+}
 #if LCD_SPI_MODE == 0
 __weak void LCD_IO_ReadCmd8MultipleData8(uint8_t Cmd, uint8_t *pData, uint32_t Size, uint32_t DummySize) {}
 __weak void LCD_IO_ReadCmd8MultipleData16(uint8_t Cmd, uint16_t *pData, uint32_t Size, uint32_t DummySize) {}

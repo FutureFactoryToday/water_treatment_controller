@@ -3,6 +3,7 @@
 "spo\main.o"
 "spo\gpio.o"
 "spo\adc.o"
+"spo\dma.o"
 "spo\rtc.o"
 "spo\spi.o"
 "spo\tim.o"

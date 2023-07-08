@@ -268,6 +268,8 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 1 */
 }
 
+
+
 /**
   * @brief This function handles SPI1 global interrupt.
   */

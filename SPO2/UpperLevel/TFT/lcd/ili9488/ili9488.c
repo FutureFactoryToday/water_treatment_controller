@@ -4,7 +4,10 @@
 #include "TFT\bmp.h"
 
 #include "ili9488.h"
-
+volatile uint16_t colors[5];
+volatile uint32_t waitCnt[5];
+volatile uint8_t modColors[5][3];
+uint16_t cnt = 0;
 // Lcd
 void     ili9488_Init(void);
 uint16_t ili9488_ReadID(void);
@@ -216,6 +219,8 @@ void     LCD_IO_ReadCmd8MultipleData8(uint8_t Cmd, uint8_t *pData, uint32_t Size
 void     LCD_IO_ReadCmd8MultipleData16(uint8_t Cmd, uint16_t *pData, uint32_t Size, uint32_t DummySize);
 void     LCD_IO_ReadCmd8MultipleData24to16(uint8_t Cmd, uint16_t *pData, uint32_t Size, uint32_t DummySize);
 
+void 		LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
+bool		LCD_IO_isBusy();
 #define  LCD_IO_WriteData16_to_2x8(dt)    {LCD_IO_WriteData8((dt) >> 8); LCD_IO_WriteData8(dt); }
 
 //-----------------------------------------------------------------------------
@@ -493,13 +498,29 @@ void ili9488_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t 
   */
 void ili9488_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t RGBCode)
 {
-  ILI9488_LCDMUTEX_PUSH();
+
+
+	while (LCD_IO_isBusy()){
+		waitCnt[cnt]++;
+	}
+  uint8_t tempCol[3];
+	if (cnt < 5) colors[cnt] = RGBCode;
+	tempCol[0]=((RGBCode & 0xF800) >> 8);
+  tempCol[1]=((RGBCode & 0x07E0) >> 3);
+  tempCol[2]=((RGBCode & 0x001F) << 3);
+	modColors[cnt][0]=tempCol[0];
+	modColors[cnt][1]=tempCol[1];
+	modColors[cnt][2]=tempCol[2];
+	cnt++;
+	ILI9488_LCDMUTEX_PUSH();
   ili9488_SetDisplayWindow(Xpos, Ypos, Xsize, Ysize);
   #if ILI9488_INTERFACE == 0
-  LCD_IO_WriteCmd8(ILI9488_RAMWR);
-  uint32_t XYsize = Xsize * Ysize;
-  while(XYsize--)
-    ili9488_write16to24(RGBCode);
+//  LCD_IO_WriteCmd8(ILI9488_RAMWR);
+  uint32_t XYsize = Xsize * Ysize * 3;
+//  while(XYsize--)
+//    ili9488_write16to24(RGBCode);
+	LCD_IO_WriteCmd8DataFill8(ILI9488_RAMWR, tempCol, XYsize);
+	//LCD_IO_WriteCmd8DataFill16(ILI9488_RAMWR, RGBCode, Xsize * Ysize);
   #elif ILI9488_INTERFACE == 1
   LCD_IO_WriteCmd8DataFill16(ILI9488_RAMWR, RGBCode, Xsize * Ysize);
   #endif
@@ -539,12 +560,13 @@ void ili9488_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
   LCD_IO_WriteCmd8(ILI9488_PASET); 
 	LCD_IO_WriteData16_to_2x8(ILI9488_MAX_Y - yEnd); 
 	LCD_IO_WriteData16_to_2x8(ILI9488_MAX_Y - yStart);
-  LCD_IO_WriteCmd8(ILI9488_RAMWR);
-  while(size--)
-  {
-    ili9488_write16to24(*(uint16_t *)pbmp);
-    pbmp+= 2;
-  }
+  //LCD_IO_WriteCmd8(ILI9488_RAMWR);
+	LCD_IO_WriteCmd8MultipleData8(ILI9488_RAMWR,(uint8_t *)pbmp, size*3);
+//  while(size--)
+//  {
+//    ili9488_write16to24(*(uint16_t *)pbmp);
+//    pbmp+= 2;
+//  }
   LCD_IO_WriteCmd8(ILI9488_MADCTL); 
 	LCD_IO_WriteData8(ILI9488_MAD_DATA_RIGHT_THEN_DOWN);
 	//LCD_IO_WriteData8(ILI9488_MAD_COLORMODE | ILI9488_MAD_X_LEFT  | ILI9488_MAD_Y_UP | ILI9488_MAD_VERTICAL);

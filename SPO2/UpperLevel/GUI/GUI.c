@@ -60,22 +60,29 @@ void initGUI(void){
 	
 	redraw = 0;
 	BSP_LCD_Init();
-	BSP_LCD_DrawHLine(0,10,21);
-	BSP_LCD_DrawVLine(10,0,21);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(0,0,21,21);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	BSP_LCD_FillRect(10,10,3,10);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_RED);
+	BSP_LCD_FillRect(10,21,3,10);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+	BSP_LCD_FillRect(10,32,3,10);
+	
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DrawBitmap(10,10,&Test);
+	BSP_LCD_FillRect(10,43,3,10);
+	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-//	BSP_LCD_Clear(0x1947);
-//	BSP_LCD_DrawBitmap(90,85,&LOGO);
-	BSP_LCD_DrawHLine(0,10,21);
-	BSP_LCD_DrawVLine(10,0,21);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(0,0,21,21);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DrawBitmap(10,10,&Test);
+	BSP_LCD_Clear(LCD_COLOR_RED);
+	BSP_LCD_Clear(LCD_COLOR_BLUE);
+	BSP_LCD_Clear(LCD_COLOR_GREEN);
+	LL_mDelay(3000);
+	BSP_LCD_DrawBitmap(90,85,&Test);
+	
+	BSP_LCD_Clear(0x1947);
+	BSP_LCD_DrawBitmap(90,85,&LOGO);
+
 	LL_mDelay(1000);
     
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
