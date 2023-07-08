@@ -1,3 +1,6 @@
+
+import DataClasses.NewBMP;
+import Helpers.FontGlyph;
 import javafx.embed.swing.*;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
@@ -12,8 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import DataClasses.*;
+import Helpers.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -38,6 +44,10 @@ public class Controller implements Initializable {
     public TextField greenOffset;
     public TextField redOffset;
     public CheckBox isHex;
+    public Button UpdateFile;
+    public Button Update;
+    public TextField chosenUpdatePath;
+    public ProgressIndicator updateProgress;
     boolean isInited;
     File lastSaveDir, lastLoadDir;
     public CheckBox prop;
@@ -370,9 +380,9 @@ public class Controller implements Initializable {
         printOffset();
     }
     public void printOffset(){
-        rOffset = (offset & 0xF800) >> 11;
-        gOffset = (offset & 0x07E0) >> 5;
-        bOffset = (offset & 0x001F);
+        rOffset = offset>>12 & 0x3f;
+        gOffset = offset>>6 & 0x03F;
+        bOffset = offset & 0x003F;
         if (isHex.isSelected()){
             totalOffset.setText("0x" + String.format("%x",offset).toUpperCase());
             redOffset.setText("0x" + String.format("%x",rOffset).toUpperCase());
@@ -389,15 +399,15 @@ public class Controller implements Initializable {
 
     public void countTotalOffset(){
         if (isHex.isSelected()){
-            rOffset =  0x1F & Integer.parseInt(redOffset.getText().replace("0x",""),16);
+            rOffset =  0x3F & Integer.parseInt(redOffset.getText().replace("0x",""),16);
             gOffset =  0x3F & Integer.parseInt(greenOffset.getText().replace("0x",""),16);
-            bOffset =  0x1F & Integer.parseInt(blueOffset.getText().replace("0x",""),16);
+            bOffset =  0x3F & Integer.parseInt(blueOffset.getText().replace("0x",""),16);
         } else{
-            rOffset =  0x1F & Integer.parseInt(redOffset.getText());
+            rOffset =  0x3F & Integer.parseInt(redOffset.getText());
             gOffset =  0x3F & Integer.parseInt(greenOffset.getText());
-            bOffset =  0x1F & Integer.parseInt(blueOffset.getText());
+            bOffset =  0x3F & Integer.parseInt(blueOffset.getText());
         }
-        offset = rOffset << 11 | gOffset << 5 | bOffset ;
+        offset = rOffset << 12 | gOffset << 6 | bOffset ;
         printOffset();
 
     }
@@ -442,5 +452,29 @@ public class Controller implements Initializable {
             }
         });
         log("Готов к работе");
+    }
+
+    public void chooseFilesToUpdate() {
+        DirectoryChooser fCh = new DirectoryChooser();
+        fCh.setTitle("Выберите папку или файл для обновления");
+        if (lastLoadDir != null) {
+            fCh.setInitialDirectory(
+                    lastLoadDir
+            );
+        } else {
+            fCh.setInitialDirectory(new File("D:/Dissertation/J/Proj/water_treatment_controller/SPO2/UpperLevel/GUI/PicArrays"));
+        }
+        //fCh.getExtensionFilters().add(new FileChooser.ExtensionFilter("C File", "*.c"));
+
+        File updatedF = fCh.showDialog(stage);
+        if (updatedF != null) {
+                lastLoadDir = updatedF.getParentFile();
+                chosenUpdatePath.setText(updatedF.toString());
+        }
+    }
+    public void updateFormatInFiles() throws IOException {
+
+
+
     }
 }
