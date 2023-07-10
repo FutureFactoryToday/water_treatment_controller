@@ -16,7 +16,9 @@
 #include "lcd_io_spi.h"
 
 #define DMA_MAXSIZE           0xFFFE
-
+#define FILL_BUF_SIZE 1
+volatile uint8_t fillBuf[FILL_BUF_SIZE*3];
+volatile uint8_t watch[5];
 //-----------------------------------------------------------------------------
 /* Link function for LCD peripheral */
 void  LCD_Delay (uint32_t delay);
@@ -625,10 +627,26 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 {
   if(DMAX(LCD_DMA_TX)->ISR & DMAX_ISR_TCIF(LCD_DMA_TX))
   {
+		DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CTCIF(LCD_DMA_TX);
+		
+		if (isDmaCircMode && dmaCircCnt-- == 0){
+			LL_DMA_SetMode(DMA1,LL_DMA_CHANNEL_5,LL_DMA_MODE_NORMAL);
+			//DMAX_CHANNEL(LCD_DMA_TX)->CCR &= DMA_CCR_CIRC;
+			isDmaCircMode = false;
+			dmaCircCnt = 1;
+			watch[3] = DMA1_Channel5->CNDTR;
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+			return;
+		}
+
 		if (!isDmaCircMode){
-			DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CTCIF(LCD_DMA_TX);
+			watch[0] = DMA1_Channel5->CCR;
+			watch[1] = DMA1_Channel5->CNDTR;
+			
 			DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;
+			
 			while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin); 
 			BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 0;
 			while(BITBAND_ACCESS(SPIX->SR, SPI_SR_BSY_Pos));
 			LCD_IO_Delay(2 ^ LCD_SPI_SPD_WRITE);
@@ -643,14 +661,7 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 			/* FreeRtos */
 			osSemaphoreRelease(spiDmaBinSemHandle);
 			#endif // #else osFeature_Semaphore
-		} else {
-			dmaCircCnt--;
-			if (dmaCircCnt == 0){
-				isDmaCircMode = false;
-				dmaCircCnt = 1;
-				DMAX_CHANNEL(LCD_DMA_TX)->CCR &= DMA_CCR_CIRC;
-			}
-		}
+		} 
   }
   else
     DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CGIF(LCD_DMA_TX);
@@ -659,14 +670,17 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 //-----------------------------------------------------------------------------
 void LCD_IO_WriteMultiData(void * pData, uint32_t Size, uint32_t dmacr)
 {
+	
   DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CGIF(LCD_DMA_TX);
   LL_SPI_Disable(SPIX);//SPIX->CR1 &= ~SPI_CR1_SPE;           /* SPI stop */
   DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;   /* DMA stop */
   while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);
   DMAX_CHANNEL(LCD_DMA_TX)->CMAR = (uint32_t)pData;
   DMAX_CHANNEL(LCD_DMA_TX)->CPAR = (uint32_t)&SPIX->DR;
+	//DMAX_CHANNEL(LCD_DMA_TX)->CPAR = (uint32_t)tempBuf;
   DMAX_CHANNEL(LCD_DMA_TX)->CNDTR = Size;
   DMAX_CHANNEL(LCD_DMA_TX)->CCR = dmacr;
+	//LL_DMA_SetPeriphIncMode(DMA1,LL_DMA_CHANNEL_5,LL_DMA_PERIPH_INCREMENT);
   LL_SPI_EnableDMAReq_TX(SPIX);//BITBAND_ACCESS(SPIX->CR2, SPI_CR2_TXDMAEN_Pos) = 1;
   LL_SPI_Enable(SPIX);//SPIX->CR1 |= SPI_CR1_SPE;
   DMAX_CHANNEL(LCD_DMA_TX)->CCR |= DMA_CCR_EN;
@@ -1275,6 +1289,8 @@ void LCD_IO_WriteCmd16MultipleData16(uint16_t Cmd, uint16_t *pData, uint32_t Siz
   LcdCmdWrite16(Cmd);
   LCD_IO_WriteMultiData16(pData, Size, 1);
 }
+
+//-----------------------------------------------------------------------------
 void LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size){
 	WaitForDmaEnd();
   LcdSpiMode8();
@@ -1288,12 +1304,19 @@ void LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size){
   dmacr = DMA_CCR_TCIE | (0 << DMA_CCR_MSIZE_Pos) |
             (0 << DMA_CCR_PSIZE_Pos) | DMA_CCR_DIR | (1 << DMA_CCR_MINC_Pos) |
             (DMAPRIORITY(LCD_DMA_TX) << DMA_CCR_PL_Pos);
+	
 	if (Size > 1) {
 		dmacr |= DMA_CCR_CIRC;
 		isDmaCircMode = true;
-		dmaCircCnt = Size;
+		dmaCircCnt = Size/FILL_BUF_SIZE - 1;
 	}
-  LCD_IO_WriteMultiData((void *)Data, 3, dmacr);
+	for(uint32_t i = 0; i < FILL_BUF_SIZE*3; i+=3){
+		fillBuf[i] = *Data;
+		fillBuf[i+1] = *(Data+1);
+		fillBuf[i+2] = *(Data+2);
+	}
+	LCD_IO_DmaTransferStatus = 1;
+  LCD_IO_WriteMultiData((void *)fillBuf, FILL_BUF_SIZE*3, dmacr);
 	
 //	while(Size)
 //  {

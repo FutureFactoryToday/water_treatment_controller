@@ -21,8 +21,12 @@ LCD_DrawPropTypeDef DrawProp;
 extern LCD_DrvTypeDef  *lcd_drv;
 
 /* Max size of bitmap will based on a font24 (17x24) */
+#ifdef _565_FORMAT
 static uint8_t bitmap[MAX_HEIGHT_FONT * MAX_WIDTH_FONT * 2 + OFFSET_BITMAP] = {0};
-
+#endif
+#ifdef _24bit_FORMAT
+static uint8_t bitmap[MAX_HEIGHT_FONT * MAX_WIDTH_FONT * 2 * 3 + OFFSET_BITMAP] = {0};
+#endif
 /* @defgroup STM32_ADAFRUIT_LCD_Private_FunctionPrototypes */ 
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *c);
 static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
@@ -789,11 +793,16 @@ static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *pChar)
 			newW++;
 		}
 		bt = gl->bitsArray[row*newW + col++];
+		#ifdef _565_FORMAT
 		for ( i = 0; i < height*width*2; i=i+2){
 			if ((bt & bit) != 0){
+				
 			  bitmap[OFFSET_BITMAP + i+1] = (DrawProp.TextColor & 0xFF00)>>8;
 							bitmap[OFFSET_BITMAP + i] = DrawProp.TextColor & 0xFF;
+				
+				
 			} else {
+			
 							uint8_t low = (DrawProp.BackColor & 0xFF00)>>8;
 							uint8_t high = DrawProp.BackColor & 0xFF;
 							bitmap[OFFSET_BITMAP + i+1] = low;
@@ -816,6 +825,36 @@ static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *pChar)
 				bt = gl->bitsArray[row*newW + col++];
 			}
 		}
+		#endif
+		#ifdef _24bit_FORMAT
+		for ( i = 0; i < height*width*3; i=i+3){
+		if ((bt & bit) != 0){
+				bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.TextColor >> 11))<<3;
+				bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.TextColor >> 5)) <<2;
+				bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.TextColor) << 3;	
+			} else {
+				bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.BackColor >> 11))<<3;
+				bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.BackColor >> 5))<<2;
+				bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.BackColor) << 3;	
+	
+			}
+			bit = bit>>1;
+			if (bit == 0 || (i/3+1)%width == 0){
+				if (col == newW){
+					col = 0;
+					row++;
+					if (row == height){
+						break;
+					}
+				}
+				bit = 128;
+				if (row >= height){
+					break;
+				}
+				bt = gl->bitsArray[row*newW + col++];
+			}
+		}	
+		#endif
 	BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
 }
 

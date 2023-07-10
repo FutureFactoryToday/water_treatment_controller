@@ -498,8 +498,6 @@ void ili9488_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t 
   */
 void ili9488_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t RGBCode)
 {
-
-
 	while (LCD_IO_isBusy()){
 		waitCnt[cnt]++;
 	}
@@ -516,13 +514,13 @@ void ili9488_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysi
   ili9488_SetDisplayWindow(Xpos, Ypos, Xsize, Ysize);
   #if ILI9488_INTERFACE == 0
 //  LCD_IO_WriteCmd8(ILI9488_RAMWR);
-  uint32_t XYsize = Xsize * Ysize * 3;
+  uint32_t XYsize = Xsize * Ysize;
 //  while(XYsize--)
 //    ili9488_write16to24(RGBCode);
 	LCD_IO_WriteCmd8DataFill8(ILI9488_RAMWR, tempCol, XYsize);
 	//LCD_IO_WriteCmd8DataFill16(ILI9488_RAMWR, RGBCode, Xsize * Ysize);
   #elif ILI9488_INTERFACE == 1
-  LCD_IO_WriteCmd8DataFill16(ILI9488_RAMWR, RGBCode, Xsize * Ysize);
+		LCD_IO_WriteCmd8DataFill16(ILI9488_RAMWR, RGBCode, Xsize * Ysize);
   #endif
   ILI9488_LCDMUTEX_POP();
 }
