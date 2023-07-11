@@ -499,17 +499,11 @@ void ili9488_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t 
 void ili9488_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t RGBCode)
 {
 	while (LCD_IO_isBusy()){
-		waitCnt[cnt]++;
 	}
-  uint8_t tempCol[3];
-	if (cnt < 5) colors[cnt] = RGBCode;
+    uint8_t tempCol[3];
 	tempCol[0]=((RGBCode & 0xF800) >> 8);
-  tempCol[1]=((RGBCode & 0x07E0) >> 3);
-  tempCol[2]=((RGBCode & 0x001F) << 3);
-	modColors[cnt][0]=tempCol[0];
-	modColors[cnt][1]=tempCol[1];
-	modColors[cnt][2]=tempCol[2];
-	cnt++;
+    tempCol[1]=((RGBCode & 0x07E0) >> 3);
+    tempCol[2]=((RGBCode & 0x001F) << 3);
 	ILI9488_LCDMUTEX_PUSH();
   ili9488_SetDisplayWindow(Xpos, Ypos, Xsize, Ysize);
   #if ILI9488_INTERFACE == 0

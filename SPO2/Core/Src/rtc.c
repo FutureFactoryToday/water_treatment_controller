@@ -51,9 +51,9 @@ void MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_InitStruct.AsynchPrescaler = 0xFFFFFFFFU;
+  RTC_InitStruct.AsynchPrescaler = 0x8000;
   LL_RTC_Init(RTC, &RTC_InitStruct);
-  LL_RTC_SetAsynchPrescaler(RTC, 0xFFFFFFFFU);
+  LL_RTC_SetAsynchPrescaler(RTC, 0x8000);
 
   /** Initialize RTC and set the Time and Date
   */
