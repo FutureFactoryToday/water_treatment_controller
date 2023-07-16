@@ -53,37 +53,36 @@ int8_t PIN_showFrame(){
             drawClock();
             updateFlags.sec = false;
         }
-			if(pinTextArea.isPressed == true){
-				int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
-				if (newPin > 0 ){
-					enteredPin = newPin;
-					createPinFrame();
-				}
-				
-				pinTextArea.isPressed = false;
-			}
-			if (enterBut.isPressed == true){
-				 enterBut.isPressed = false;
-			}
-			if (enterBut.isReleased == true){
-				enterBut.isReleased = false;
-				if (enteredPin == sysParam.SERVICE_CODE){
-					return 1;
-				} else {
-					BSP_LCD_SetTextColor(LCD_COLOR_RED);
-					BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-					for(uint8_t i = 0; i < 6; i++){
-						BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y + 20 + PIN_FONT.height + i, 200);
-					}
-					
-					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-					BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, PIN_FONT.height*5, "Неверный код!", CENTER_MODE);
-				}
-			}
-			if (retBut.isReleased == true){
-				retBut.isReleased = false;
-				return -1;
-			}	
+        if (pinTextArea.isReleased == true){
+            int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
+            if (newPin > 0 ){
+                enteredPin = newPin;
+                createPinFrame();
+            }
+            pinTextArea.isReleased = false;
+        }
+        if (enterBut.isPressed == true){
+             enterBut.isPressed = false;
+        }
+        if (enterBut.isReleased == true){
+            enterBut.isReleased = false;
+            if (enteredPin == sysParam.SERVICE_CODE){
+                return 1;
+            } else {
+                BSP_LCD_SetTextColor(LCD_COLOR_RED);
+                BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+                for(uint8_t i = 0; i < 6; i++){
+                    BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y + 20 + PIN_FONT.height + i, 200);
+                }
+                
+                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+                BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, PIN_FONT.height*5, "Неверный код!", CENTER_MODE);
+            }
+        }
+        if (retBut.isReleased == true){
+            retBut.isReleased = false;
+            return -1;
+        }	
     }
 }
 
@@ -110,7 +109,7 @@ void createPinFrame(){
 	pinToStr(enteredPin);
 	pinTextArea = drawTextLabel(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y, 200, BSP_LCD_GetFont()->height + 10,&pinString);    
 	
-	enterBut = drawFillButton(BSP_LCD_GetXSize()/2 - 50, ENTER_BUT_Y,100,BSP_LCD_GetFont()->height + 10,(*(pinFrameText + BUT_PIN_TEXT)), false);
+	enterBut = drawFillButton(BSP_LCD_GetXSize()/2 - 50, ENTER_BUT_Y, 100, BSP_LCD_GetFont()->height + 10,(*(pinFrameText + BUT_PIN_TEXT)), false);
 	
 	TC_addButton(&pinTextArea);
 	TC_addButton(&retBut);

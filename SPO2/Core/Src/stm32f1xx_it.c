@@ -197,7 +197,7 @@ void SysTick_Handler(void)
 		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	}
 	if (_1ms_cnt%100 == 0){
-//		TC_checkButtons();
+		TC_checkButtons();
 	}
   /* USER CODE END SysTick_IRQn 0 */
 

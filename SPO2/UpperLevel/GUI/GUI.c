@@ -60,11 +60,11 @@ void initGUI(void){
 	
 	redraw = 0;
 	BSP_LCD_Init();
-	
+	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(0x1947);
-	BSP_LCD_DrawBitmap(90,85,&LOGO);
+	BSP_LCD_DrawBitmap(148,100,&LOGO);
 
-	LL_mDelay(1000);
+	LL_mDelay(3000);
     
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
 	
