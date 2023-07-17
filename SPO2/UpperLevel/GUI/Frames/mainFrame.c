@@ -66,17 +66,17 @@ void ShowMainFrame(void)
 void createFrame (void){
 	TC_clearButtons();
 	
-    drawMainBar(false, 190, 5, " ");
-    
-    drawMainWindow();
-    
-    customerBut = drawFillButton(20, 80, 200, 60, "Пользователь", false);
+	drawMainBar(false, 190, 5, " ");
+	
+	drawMainWindow();
+	
+	customerBut = drawFillButton(20, 80, 200, 60, "Пользователь", false);
 	serviceBut = drawFillButton(260, 80, 200, 60, "Инженер", false);
-    contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
-    
-    drawStatusBarEmpty();
-    
-    drawClock();
+	contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
+	
+	drawStatusBarEmpty();
+	
+	drawClock();
 	
 	/*Add buttons settings*/
 	

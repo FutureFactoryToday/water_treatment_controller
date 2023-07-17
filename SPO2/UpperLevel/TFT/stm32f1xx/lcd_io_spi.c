@@ -634,15 +634,11 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 			//DMAX_CHANNEL(LCD_DMA_TX)->CCR &= DMA_CCR_CIRC;
 			isDmaCircMode = false;
 			dmaCircCnt = 1;
-			watch[3] = DMA1_Channel5->CNDTR;
-			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 			return;
 		}
 
 		if (!isDmaCircMode){
-			watch[0] = DMA1_Channel5->CCR;
-			watch[1] = DMA1_Channel5->CNDTR;
-			
+		
 			DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;
 			
 			while(DMAX_CHANNEL(LCD_DMA_TX)->CCR & DMA_CCR_EN);

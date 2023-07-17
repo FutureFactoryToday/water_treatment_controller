@@ -58,6 +58,19 @@ uint8_t BSP_LCD_Init(void)
   sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
 	sysParam.LCD_ROTATION = ILI9486_ORIENTATION;
   ret = LCD_OK;
+	
+//		
+//	BSP_LCD_DrawHLine(10,10,10);
+//	LL_mDelay(1000);
+//	BSP_LCD_DrawHLine(20,10,10);
+//	LL_mDelay(1000);
+//	BSP_LCD_DrawHLine(30,10,10);
+//	LL_mDelay(1000);
+//	BSP_LCD_DrawVLine(10,15,10);
+//	LL_mDelay(1000);
+//	BSP_LCD_DrawVLine(10,25,10);
+//	
+//	LL_mDelay(5000);
   return ret;
 }
 
