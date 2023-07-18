@@ -4,6 +4,7 @@ void RefreshForcedRegenCustFrame(void);
 //int8_t hwndForcedRegenCustFrameControl = 0;
 static uint16_t statusColor;
 static button_t forceRegen; 
+wtc_time_t remain;
 static void createFrame();
 static void showRemeiningTime(void);
 void ShowForcedRegenCustFrame(void)
@@ -121,9 +122,10 @@ void createFrame()
 
 void showRemeiningTime(void){
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(70, 90, 480,50);
+	BSP_LCD_FillRect(70, 90, 400,50);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
 	if (PL_status != PL_WORKING){
 		BSP_LCD_DisplayStringAt(75, 90, "Регенерация через" ,LEFT_MODE);
 	} else {
@@ -137,10 +139,10 @@ void showRemeiningTime(void){
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
 	} else {
-		wtc_time_t remain = timeRemain();
+		remain = timeRemain();
 		if (remain.day > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("DD",&remain) ,LEFT_MODE);
-			BSP_LCD_DisplayStringAt(355, 90, "дн." ,LEFT_MODE);  
+			BSP_LCD_DisplayStringAt(355, 90, " дн." ,LEFT_MODE);  
 		} else {
 			if (remain.hour > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("hh",&remain) ,LEFT_MODE);
@@ -152,7 +154,7 @@ void showRemeiningTime(void){
 		} else {
 			if (remain.second > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("ss",&remain) ,LEFT_MODE);
-				BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
+			BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
 		} 
 		}
 		}

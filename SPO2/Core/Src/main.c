@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "dma.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -104,17 +103,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_RTC_Init();
-  MX_SPI1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM8_Init();
   MX_USART1_UART_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
 
 	
@@ -124,23 +122,17 @@ int main(void)
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
-//  LL_GPIO_SetOutputPin(BL_GPIO_Port,BL_Pin); 
-//    setAlarm(&currentStepDateTime,PL_ProceedStep);
-//    while (1);
-    
+
 	initGUI();
-//	PC_Init();
-//	PL_Init();
-//	FM_Init();
+	PC_Init();
+	PL_Init();
+	FM_Init();
 //	
 	__enable_irq();
 	LL_mDelay(500);
 
 	FP_SaveParam();
 
-//	//TSF_showFrame();
-//	BSP_LCD_Clear(LCD_COLOR_WHITE);
-//	ShowForcedRegenCustFrame();
   ShowMainFrame();
   /* USER CODE END 2 */
 

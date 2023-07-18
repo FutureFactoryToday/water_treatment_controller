@@ -748,25 +748,8 @@ uint8_t st7796s_ts_DetectTouch(uint16_t DeviceAddr)
 {
   static uint8_t tp = 0;
 
-//  #if  ST7796S_MULTITASK_MUTEX == 1
-//  io_ts_busy = 1;
-
-//  if (io_lcd_busy) {
-//    io_ts_busy = 0;
-//    return tp;
-//  }
-//  #endif
-
-//  if (TS_IO_DetectTouch()) {
-//   // tp = TS_Update();
-//  } else {
-//    tp = 0;
-//  }
-
-//  #if  ST7796S_MULTITASK_MUTEX == 1
-//  io_ts_busy = 0;
-//  #endif
-
+  TS_IO_DetectTouch();
+	tsState.TouchDetected = tp_dev
   return tp;
 }
 

@@ -188,7 +188,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-//	PC_Control();
+	PC_Control();
 	if (touchDelay)
 		touchDelay--;
 	
@@ -248,7 +248,6 @@ void EXTI3_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
-		LL_mDelay(5);
 		if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
 			redraw = 1;
 			updateFlags.touch = true;
@@ -268,19 +267,24 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 1 */
 }
 
-
-
 /**
-  * @brief This function handles SPI1 global interrupt.
+  * @brief This function handles EXTI line[9:5] interrupts.
   */
-void SPI1_IRQHandler(void)
+void EXTI9_5_IRQHandler(void)
 {
-  /* USER CODE BEGIN SPI1_IRQn 0 */
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
-  /* USER CODE END SPI1_IRQn 0 */
-  /* USER CODE BEGIN SPI1_IRQn 1 */
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_6) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
+    /* USER CODE BEGIN LL_EXTI_LINE_6 */
 
-  /* USER CODE END SPI1_IRQn 1 */
+    /* USER CODE END LL_EXTI_LINE_6 */
+  }
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
+
+  /* USER CODE END EXTI9_5_IRQn 1 */
 }
 
 /**
@@ -308,27 +312,21 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
     /* USER CODE BEGIN LL_EXTI_LINE_10 */
-
+			FM_Sense_Interrupt();
     /* USER CODE END LL_EXTI_LINE_10 */
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
-		if (!LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
+		
 			PC_OpticSensInterrupt();
 			updateFlags.optic = true;
-		}
+		
     /* USER CODE END LL_EXTI_LINE_11 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
-		{
-			LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
-			/* USER CODE BEGIN LL_EXTI_LINE_15 */
-			FM_Sense_Interrupt();
-			/* USER CODE END LL_EXTI_LINE_15 */
-		}
+	
   /* USER CODE END EXTI15_10_IRQn 1 */
 }
 

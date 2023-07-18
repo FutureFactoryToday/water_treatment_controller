@@ -264,7 +264,7 @@ wtc_time_t stdTimeToWTCTime (struct tm* time){
 	return newTime;
 }
 
-wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth){
+wtc_time_t* addMonth (wtc_time_t* initTime, uint32_t numMonth){
 	wtc_time_t time = *initTime;
 	if (numMonth == 0)
 		return &time;
@@ -280,7 +280,7 @@ wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth){
 	}
 	return &time;
 }
-wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth){
+wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth){
 	wtc_time_t time = *initTime;
 	int16_t tempDec = 0;
 	bool isLastDay = false;
@@ -309,7 +309,7 @@ wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth){
 	return &time;
 }
 
-wtc_time_t* addDay (wtc_time_t* initTime, uint8_t numDay){
+wtc_time_t* addDay (wtc_time_t* initTime, uint32_t numDay){
 	wtc_time_t time = *initTime;
 	if (numDay == 0)
 		return &time;
@@ -321,7 +321,7 @@ wtc_time_t* addDay (wtc_time_t* initTime, uint8_t numDay){
 	}
 	return &time;
 }
-wtc_time_t* decDay (wtc_time_t* initTime, uint8_t numDay){
+wtc_time_t* decDay (wtc_time_t* initTime, uint32_t numDay){
 	wtc_time_t time = *initTime;
 	int16_t tempDec = 0;
 	
@@ -339,7 +339,7 @@ wtc_time_t* decDay (wtc_time_t* initTime, uint8_t numDay){
 	return &time;
 }
 
-wtc_time_t* addHour (wtc_time_t* initTime, uint8_t numHour){
+wtc_time_t* addHour (wtc_time_t* initTime, uint32_t numHour){
 	wtc_time_t time = *initTime;
 	if (numHour == 0)
 		return &time;
@@ -352,7 +352,7 @@ wtc_time_t* addHour (wtc_time_t* initTime, uint8_t numHour){
 	}
 	return &time;
 }
-wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour){
+wtc_time_t* decHour (wtc_time_t* initTime, uint32_t numHour){
 	wtc_time_t time = *initTime;
 	int16_t tempDec = 0;
 	
@@ -376,7 +376,7 @@ wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour){
 	return &time;
 }
 
-wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute){
+wtc_time_t* addMinute (wtc_time_t* initTime, uint32_t numMinute){
 	wtc_time_t time = *initTime;
 	if (numMinute == 0)
 		return &time;
@@ -389,7 +389,7 @@ wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute){
 	}
 	return &time;
 }
-wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute){
+wtc_time_t* decMinute (wtc_time_t* initTime, uint32_t numMinute){
 	wtc_time_t time = *initTime;
 	int16_t tempDec = 0;
 	
@@ -412,7 +412,7 @@ wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute){
 	return &time;
 }
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec){
+wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec){
 	wtc_time_t time = *initTime;
 	if (numSec == 0)
 		return &time;
@@ -425,7 +425,7 @@ wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec){
 	}
 	return &time;
 }
-wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec){
+wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec){
 	int16_t tempDec = 0;
 	wtc_time_t time = *initTime;
 	if (numSec == 0)

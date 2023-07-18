@@ -29,11 +29,11 @@
 
 typedef struct {
 	uint16_t year;
-	uint8_t month;
-	uint8_t day;
-	uint8_t hour;
-	uint8_t minute;
-	uint8_t second;
+	uint32_t month;
+	uint32_t day;
+	uint32_t hour;
+	uint32_t minute;
+	uint32_t second;
 } wtc_time_t;
 
 typedef struct {
@@ -118,20 +118,20 @@ struct tm wtcTimeToStdTime (wtc_time_t* time);
 wtc_time_t stdTimeToWTCTime (struct tm* time);
 
 
-wtc_time_t* addMonth (wtc_time_t* initTime, uint8_t numMonth);
-wtc_time_t* decMonth (wtc_time_t* initTime, uint8_t numMonth);
+wtc_time_t* addMonth (wtc_time_t* initTime, uint32_t numMonth);
+wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth);
 
-wtc_time_t* addDay (wtc_time_t* initTime, uint8_t numDay);
-wtc_time_t* decDay (wtc_time_t* initTime, uint8_t numDay);
+wtc_time_t* addDay (wtc_time_t* initTime, uint32_t numDay);
+wtc_time_t* decDay (wtc_time_t* initTime, uint32_t numDay);
 
-wtc_time_t* addHour (wtc_time_t* initTime, uint8_t numHour);
-wtc_time_t* decHour (wtc_time_t* initTime, uint8_t numHour);
+wtc_time_t* addHour (wtc_time_t* initTime, uint32_t numHour);
+wtc_time_t* decHour (wtc_time_t* initTime, uint32_t numHour);
 
-wtc_time_t* addMinute (wtc_time_t* initTime, uint8_t numMinute);
-wtc_time_t* decMinute (wtc_time_t* initTime, uint8_t numMinute);
+wtc_time_t* addMinute (wtc_time_t* initTime, uint32_t numMinute);
+wtc_time_t* decMinute (wtc_time_t* initTime, uint32_t numMinute);
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint8_t numSec);
-wtc_time_t* decSec (wtc_time_t* initTime, uint8_t numSec);
+wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec);
+wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec);
 
 wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 

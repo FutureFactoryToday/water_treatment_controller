@@ -85,7 +85,7 @@ void createFrame (void){
 	TC_addButton(&customerBut);
     TC_addButton(&contactsBut);
 	
-	//enableClockDraw = true;
+	enableClockDraw = true;
 }
 
 //void RefreshMainFrame(void)

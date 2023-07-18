@@ -32,7 +32,7 @@
 
 #define DEF_TASK_NUM 0
 
-#define START_DELAY_PAUSE 10
+#define START_DELAY_PAUSE 5
 
 /*Piston position and pause to form tasks*/
 typedef struct {

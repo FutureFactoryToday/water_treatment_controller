@@ -29,5 +29,7 @@
 #define FLOW_TIM TIM7
 #define FLOW_TIM_IRQ TIM7_IRQn
 #define FLOW_TIM_CLK LL_APB1_GRP1_PERIPH_TIM7
+
+#define uDelayTim TIM14
 #endif /* __SETTINGS_H__ */
 

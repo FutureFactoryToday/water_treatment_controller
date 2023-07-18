@@ -183,6 +183,7 @@ void PL_ProceedStep(void){
 		PL_status = PL_WORKING;
 		uint32_t poz = *(currentStep->poz);
 		PC_GoToPoz(poz);
+		currentStepDateTime = *getTime();
 		currentStepDateTime = *addSec(&currentStepDateTime,currentStep->secPause);
 		setAlarm(&currentStepDateTime,PL_ProceedStep);
 		currentStep++;

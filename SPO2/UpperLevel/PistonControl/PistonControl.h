@@ -21,6 +21,7 @@
 #define IN 0
 
 #define STALL_TIME 100 //мс
+#define LONG_STALL_TIME 1000
 #define FULL_LENGTH 560 //обороты
 #define SEEK_TIME 20 //сек
 #define PISTON_MOVE_MIN 100 //обороты
@@ -73,6 +74,7 @@ extern piston_poz_t pistonPositions;
 
 /*Prototypes */
 void PC_Init(void);
+void PC_GoToPozWithSpeed (int32_t dest, uint8_t speed);
 void PC_GoToPoz (int32_t dest);
 void PC_OpticSensInterrupt(void);
 pc_params_t* PC_GetParams(void);

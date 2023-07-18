@@ -29,7 +29,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f1xx_ll_adc.h"
-#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_system.h"
@@ -37,6 +36,7 @@ extern "C" {
 #include "stm32f1xx_ll_cortex.h"
 #include "stm32f1xx_ll_utils.h"
 #include "stm32f1xx_ll_pwr.h"
+#include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_rtc.h"
 #include "stm32f1xx_ll_spi.h"
 #include "stm32f1xx_ll_tim.h"
@@ -148,14 +148,15 @@ void Error_Handler(void);
 #define TOUCH_INT_Pin LL_GPIO_PIN_3
 #define TOUCH_INT_GPIO_Port GPIOA
 #define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
-#define TOUCH_CS_Pin LL_GPIO_PIN_4
-#define TOUCH_CS_GPIO_Port GPIOA
-#define TOUCH_SCK_Pin LL_GPIO_PIN_5
-#define TOUCH_SCK_GPIO_Port GPIOA
-#define TOUCH_MISO_Pin LL_GPIO_PIN_6
-#define TOUCH_MISO_GPIO_Port GPIOA
-#define TOUCH_MOSI_Pin LL_GPIO_PIN_7
-#define TOUCH_MOSI_GPIO_Port GPIOA
+#define TOUCH_RES_Pin LL_GPIO_PIN_4
+#define TOUCH_RES_GPIO_Port GPIOA
+#define TOUCH_SCL_Pin LL_GPIO_PIN_5
+#define TOUCH_SCL_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_Pin LL_GPIO_PIN_6
+#define CAP_TOUCH_INT_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_EXTI_IRQn EXTI9_5_IRQn
+#define TOUCH_SDA_Pin LL_GPIO_PIN_7
+#define TOUCH_SDA_GPIO_Port GPIOA
 #define TFT_DATA_COM_Pin LL_GPIO_PIN_5
 #define TFT_DATA_COM_GPIO_Port GPIOC
 #define REL_PWR_CNTR_Pin LL_GPIO_PIN_0
