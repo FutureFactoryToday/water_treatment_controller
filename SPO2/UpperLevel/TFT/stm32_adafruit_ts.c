@@ -3,9 +3,24 @@
 #include "stm32_adafruit_ts.h"
 #include "lcd\ili9488\ili9488.h"
 
-extern TS_DrvTypeDef     *ts_drv;
-extern int32_t            ts_cindex[];
-static uint16_t          TsXBoundary, TsYBoundary;
+#ifdef ILI9486
+	extern TS_DrvTypeDef ts_xpt2046_ts_drv;
+	TS_DrvTypeDef *ts_drv = &ts_xpt2046_ts_drv;
+#endif
+#ifdef ILI9488
+	extern TS_DrvTypeDef ts_xpt2046_ts_drv;
+	TS_DrvTypeDef *ts_drv = &ts_xpt2046_ts_drv;
+#endif
+#ifdef ST7796S
+	extern TS_DrvTypeDef ft6336_ts_drv;
+	TS_DrvTypeDef *ts_drv = &ft6336_ts_drv;
+#endif
+
+
+
+TS_DrvTypeDef     *ts_drv;
+int32_t            ts_cindex[];
+static uint16_t    TsXBoundary, TsYBoundary;
 
 int16_t kX;
 int16_t kY;
@@ -27,18 +42,18 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   TsXBoundary = XSize;
   TsYBoundary = YSize;
 
-	if (fp->isLoaded != 1){
-		SERV_TS_CALIB();
-	} else {
-		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
-			SERV_TS_CALIB();
-		} else {
-			kX = (int16_t)fp->params.ts_conf.kX;
-			bX = (int16_t)fp->params.ts_conf.bX;
-			kY = (int16_t)fp->params.ts_conf.kY;
-			bY = (int16_t)fp->params.ts_conf.bY;
-		}
-	}
+//	if (fp->isLoaded != 1){
+//		SERV_TS_CALIB();
+//	} else {
+//		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
+//			SERV_TS_CALIB();
+//		} else {
+//			kX = (int16_t)fp->params.ts_conf.kX;
+//			bX = (int16_t)fp->params.ts_conf.bX;
+//			kY = (int16_t)fp->params.ts_conf.kY;
+//			bY = (int16_t)fp->params.ts_conf.bY;
+//		}
+//	}
 	
 	
   if(ts_drv)
@@ -59,12 +74,15 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   */
 void BSP_TS_GetState(TS_StateTypeDef* TsState)
 {
-  uint16_t x, y;
+  
+	#ifdef ILI9486 || ILI9488
+	uint16_t x, y;
   int32_t  x1, y1, x2, y2;
   for (uint8_t i = 0; i < TS_RESCAN_TIME; i++){
 		TsState->TouchDetected = ts_drv->DetectTouch(0);
 		LL_mDelay(10);
 	}
+	
   TsState->TouchDetected = ts_drv->DetectTouch(0);
   if(TsState->TouchDetected)
   {
@@ -72,8 +90,6 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
     x1 = x; y1 = y;
 		TsState->X_t = x1;
 		TsState->Y_t = y1;
-//    x2 = (ts_cindex[1] * x1 + ts_cindex[2] * y1 + ts_cindex[3]) / ts_cindex[0];
-//    y2 = (ts_cindex[4] * x1 + ts_cindex[5] * y1 + ts_cindex[6]) / ts_cindex[0];
 		
 //		#if ILI9486_ORIENTATION == 3
 //		x2 = x1*kX/MOD - bX/MOD;
@@ -97,6 +113,13 @@ void BSP_TS_GetState(TS_StateTypeDef* TsState)
     TsState->X = x2;
     TsState->Y = y2;
   }
+	#endif
+	#ifdef ST7796S
+	TsState->TouchDetected = ts_drv->DetectTouch(0);
+	ts_drv->GetXY(0, &TsState->X_t, &TsState->Y_t);
+	TsState->Y = TsState->Y_t;
+	TsState->X = BSP_LCD_GetXSize()- TsState->X_t;
+	#endif
 }
 
 void BSP_TS_SetCalibCoef(int16_t kXe,int16_t kYe,int16_t bXe,int16_t bYe){

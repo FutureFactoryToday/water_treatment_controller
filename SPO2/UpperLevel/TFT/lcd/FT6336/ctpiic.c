@@ -1,29 +1,4 @@
 
-/****************************************************************************************************
-//=========================================电源接线================================================//
-//     LCD模块                CH32单片机
-//      VCC          接        DC5V/3.3V      //电源
-//      GND          接          GND          //电源地
-//=======================================液晶屏数据线接线==========================================//
-//本模块默认数据总线类型为SPI总线
-//     LCD模块                CH32单片机    
-//    SDI(MOSI)      接          PA7          //液晶屏SPI总线数据写信号
-//    SDO(MISO)      接          PA6          //液晶屏SPI总线数据读信号，如果不需要读，可以不接线
-//=======================================液晶屏控制线接线==========================================//
-//     LCD模块 					      CH32单片机 
-//       LED         接          PB6          //液晶屏背光控制信号（如果不需要控制，可以不接）
-//       SCK         接          PA5          //液晶屏SPI总线时钟信号
-//      LCD_RS       接          PB7          //液晶屏数据/命令控制信号
-//      LCD_RST      接          PB8          //液晶屏复位控制信号
-//      LCD_CS       接          PB9          //液晶屏片选控制信号
-//=========================================触摸屏触接线=========================================//
-//如果模块不带触摸功能或者带有触摸功能，但是不需要触摸功能，则不需要进行触摸屏接线
-//	   LCD模块                CH32单片机 
-//     CTP_INT       接          PA8          //电容触摸屏触摸中断信号
-//     CTP_SDA       接          PA9          //电容触摸屏IIC总线数据信号
-//     CTP_RST       接          PA10         //电容触摸屏触摸复位信号
-//     CTP_SCL       接          PB5          //电容触摸屏IIC总线时钟信号
-**************************************************************************************************/	
 #include "main.h"
 #include "TFT/lcd/FT6336/ctpiic.h"
 
@@ -35,14 +10,10 @@
  * @parameters :None
  * @retvalue   :None
 ******************************************************************************/
-void CTP_Delay(uint8_t Delay)
+inline void CTP_Delay(uint8_t Delay)
 {
-	LL_TIM_DisableCounter(uDelayTim);
-	LL_TIM_SetCounter(uDelayTim,0);
-	LL_TIM_ClearFlag_UPDATE(uDelayTim);
-	LL_TIM_SetAutoReload(uDelayTim,72*Delay);
-	LL_TIM_EnableCounter(uDelayTim);
-	while(!LL_TIM_IsActiveFlag_UPDATE(uDelayTim));
+	uDelayTim->CNT = 0;
+	while(uDelayTim->CNT < Delay);
 } 
 
 /*****************************************************************************
@@ -53,11 +24,16 @@ void CTP_Delay(uint8_t Delay)
  * @retvalue   :None
 ******************************************************************************/
 void CTP_IIC_Init(void)
-{	
+{		
+	LL_TIM_EnableCounter(uDelayTim);
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM14);
+	LL_TIM_SetPrescaler(uDelayTim,35);
 	SET_CTP_IIC_SCL;
 	SET_CTP_IIC_SDA;
-	
-	
+	LL_GPIO_SetPinMode(TOUCH_SCL_GPIO_Port,TOUCH_SCL_Pin,LL_GPIO_MODE_OUTPUT);
+	LL_GPIO_SetPinOutputType(TOUCH_SCL_GPIO_Port,TOUCH_SCL_Pin,LL_GPIO_OUTPUT_OPENDRAIN);
+	CTP_SDA_OUT();
+
 }
 
 /*****************************************************************************
@@ -169,7 +145,7 @@ void CTP_IIC_NAck(void)
 void CTP_IIC_Send_Byte(uint8_t txd)
 {                        
   uint8_t t;   
-	CTP_SDA_OUT(); 	    
+ 	CTP_SDA_OUT(); 	  
   CLR_CTP_IIC_SCL;//拉低时钟开始数据传输
   for(t=0;t<8;t++)
   { 

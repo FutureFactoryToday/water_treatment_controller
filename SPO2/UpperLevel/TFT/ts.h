@@ -45,6 +45,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h> 
+#include <stdbool.h>
 
 /** @addtogroup BSP
   * @{
@@ -67,7 +68,7 @@
   */
 typedef struct
 {  
-  void       (*Init)(uint16_t);
+  bool       (*Init)(uint16_t);
   uint16_t   (*ReadID)(uint16_t);
   void       (*Reset)(uint16_t);
   void       (*Start)(uint16_t);
@@ -77,6 +78,9 @@ typedef struct
   void       (*ClearIT)(uint16_t);
   uint8_t    (*GetITStatus)(uint16_t);
   void       (*DisableIT)(uint16_t);
+	uint16_t    tx;
+	uint16_t 		ty;
+	bool				isTouched;
 }TS_DrvTypeDef;
 /**
   * @}

@@ -12,6 +12,28 @@
 #include "main.h"
 #include "TFT\lcd.h"
 #include "ts_xpt2046.h"
+#include "TFT\ts.h"
+//=============================================================================
+/* Touchscreen */
+bool     ts_xpt2046_ts_Init(uint16_t DeviceAddr);
+uint8_t  ts_xpt2046_ts_DetectTouch(uint16_t DeviceAddr);
+void     ts_xpt2046_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y);
+
+TS_DrvTypeDef   ts_xpt2046_ts_drv =
+{
+  ts_xpt2046_ts_Init,
+  0,
+  0,
+  0,
+  ts_xpt2046_ts_DetectTouch,
+  ts_xpt2046_ts_GetXY,
+  0,
+  0,
+  0,
+  0,
+	0,
+	0
+};
 
 //=============================================================================
 
@@ -222,7 +244,7 @@ uint16_t TsRead16(void)
 #endif  /* #if TS_SPI == 0 */
 
 //-----------------------------------------------------------------------------
-void TS_IO_Init(void)
+bool ts_xpt2046_ts_Init(uint16_t DeviceAddr)
 {
   #if GPIOX_PORTNUM(TS_IRQ) >= GPIOX_PORTNUM_A
   #define GPIOX_CLOCK_TS_IRQ   GPIOX_CLOCK(TS_IRQ)
@@ -269,6 +291,7 @@ void TS_IO_Init(void)
   SPIX->CR1 = SPI_CR1_CPHA | SPI_CR1_CPOL | SPI_CR1_MSTR | SPI_CR1_SPE | SPI_CR1_SSM | SPI_CR1_SSI | (TS_SPI_SPD << SPI_CR1_BR_Pos);
   SPIX->CR1 |= SPI_CR1_SPE;
   #endif
+	return 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -323,13 +346,13 @@ uint16_t TS_IO_GetZ2(void)
 /* return:
    - 0 : touchscreen is not pressed
    - 1 : touchscreen is pressed */
-uint8_t TS_IO_DetectToch(void)
+uint8_t ts_xpt2046_ts_DetectTouch(uint16_t DeviceAddr)
 {
   uint8_t  ret;
   static uint8_t ts_inited = 0;
   if(!ts_inited)
   {	  
-    TS_IO_Init();
+    ts_xpt2046_ts_Init(0);
     ts_inited = 1;
   }	
   #if GPIOX_PORTNUM(TS_IRQ) >= GPIOX_PORTNUM_A
@@ -344,4 +367,11 @@ uint8_t TS_IO_DetectToch(void)
     ret = 0;
   #endif
   return ret;
+}
+
+void ts_xpt2046_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y){
+	ts_xpt2046_ts_drv.tx = TS_IO_GetX();
+	ts_xpt2046_ts_drv.ty = TS_IO_GetY();
+	*X = ts_xpt2046_ts_drv.tx,
+  *Y = ts_xpt2046_ts_drv.ty;
 }

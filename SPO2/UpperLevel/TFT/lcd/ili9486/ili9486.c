@@ -28,11 +28,6 @@ void     ili9486_DrawRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint
 void     ili9486_ReadRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     ili9486_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
-/* Touchscreen */
-void     ili9486_ts_Init(uint16_t DeviceAddr);
-uint8_t  ili9486_ts_DetectTouch(uint16_t DeviceAddr);
-void     ili9486_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y);
-
 LCD_DrvTypeDef   ili9486_drv =
 {
   ili9486_Init,
@@ -53,8 +48,6 @@ LCD_DrvTypeDef   ili9486_drv =
   ili9486_ReadRGBImage,
   ili9486_Scroll,
 };
-
-LCD_DrvTypeDef  *lcd_drv = &ili9486_drv;
 
 #define ILI9486_NOP            0x00
 #define ILI9486_SWRESET        0x01
@@ -643,117 +636,89 @@ void ili9486_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 }
 
 //=============================================================================
-#if ILI9486_TOUCH == 1
+//#if ILI9486_TOUCH == 1
 
-#include "TFT\ts.h"
+//#include "TFT\ts.h"
 
-#define TS_MULTITASK_MUTEX    ILI9486_MULTITASK_MUTEX
-#define TOUCH_FILTER          8
-#define TOUCH_MAXREPEAT       8
+//#define TS_MULTITASK_MUTEX    ILI9486_MULTITASK_MUTEX
+//#define TOUCH_FILTER          8
+//#define TOUCH_MAXREPEAT       8
 
-#define ABS(N)   (((N)<0) ? (-(N)) : (N))
+//#define ABS(N)   (((N)<0) ? (-(N)) : (N))
 
-TS_DrvTypeDef   ili9486_ts_drv =
-{
-  ili9486_ts_Init,
-  0,
-  0,
-  0,
-  ili9486_ts_DetectTouch,
-  ili9486_ts_GetXY,
-  0,
-  0,
-  0,
-  0,
-};
+///* Link function for Touchscreen */
+//uint8_t   TS_IO_DetectToch(void);
+//uint16_t  TS_IO_GetX(void);
+//uint16_t  TS_IO_GetY(void);
+//uint16_t  TS_IO_GetZ1(void);
+//uint16_t  TS_IO_GetZ2(void);
 
-TS_DrvTypeDef  *ts_drv = &ili9486_ts_drv;
+////-----------------------------------------------------------------------------
+//void ili9486_ts_Init(uint16_t DeviceAddr)
+//{
+//  if((Is_ili9486_Initialized & ILI9486_IO_INITIALIZED) == 0)
+//    LCD_IO_Init();
+//  Is_ili9486_Initialized |= ILI9486_IO_INITIALIZED;
+//}
 
-#if (ILI9486_ORIENTATION == 0)
-int32_t  ts_cindex[] = TS_CINDEX_0;
-#elif (ILI9486_ORIENTATION == 1)
-int32_t  ts_cindex[] = TS_CINDEX_1;
-#elif (ILI9486_ORIENTATION == 2)
-int32_t  ts_cindex[] = TS_CINDEX_2;
-#elif (ILI9486_ORIENTATION == 3)
-int32_t  ts_cindex[] = TS_CINDEX_3;
-#endif
+////-----------------------------------------------------------------------------
+//uint8_t ili9486_ts_DetectTouch(uint16_t DeviceAddr)
+//{
+//  static uint8_t ret = 0;
+//  int32_t x1, x2, y1, y2, i;
 
-uint16_t tx, ty;
+//  #if TS_MULTITASK_MUTEX == 1
+//  io_ts_busy = 1;
 
-/* Link function for Touchscreen */
-uint8_t   TS_IO_DetectToch(void);
-uint16_t  TS_IO_GetX(void);
-uint16_t  TS_IO_GetY(void);
-uint16_t  TS_IO_GetZ1(void);
-uint16_t  TS_IO_GetZ2(void);
+//  if(io_lcd_busy)
+//  {
+//    io_ts_busy = 0;
+//    return ret;
+//  }
+//  #endif
 
-//-----------------------------------------------------------------------------
-void ili9486_ts_Init(uint16_t DeviceAddr)
-{
-  if((Is_ili9486_Initialized & ILI9486_IO_INITIALIZED) == 0)
-    LCD_IO_Init();
-  Is_ili9486_Initialized |= ILI9486_IO_INITIALIZED;
-}
+//  ret = 0;
+//  if(TS_IO_DetectToch())
+//  {
+//    x1 = TS_IO_GetX();
+//    y1 = TS_IO_GetY();
+//    i = TOUCH_MAXREPEAT;
+//    while(i--)
+//    {
+//      x2 = TS_IO_GetX();
+//      y2 = TS_IO_GetY();
+//      if((ABS(x1 - x2) < TOUCH_FILTER) && (ABS(y1 - y2) < TOUCH_FILTER))
+//      {
+//        x1 = (x1 + x2) >> 1;
+//        y1 = (y1 + y2) >> 1;
+//        i = 0;
+//        if(TS_IO_DetectToch())
+//        {
+//          ili9486_ts_drv.tx = x1;
+//          ili9486_ts_drv.ty = y1;
+//          ret = 1;
+//        }
+//      }
+//      else
+//      {
+//        x1 = x2;
+//        y1 = y2;
+//      }
+//    }
+//  }
 
-//-----------------------------------------------------------------------------
-uint8_t ili9486_ts_DetectTouch(uint16_t DeviceAddr)
-{
-  static uint8_t ret = 0;
-  int32_t x1, x2, y1, y2, i;
+//  #if TS_MULTITASK_MUTEX == 1
+//  io_ts_busy = 0;
+//  #endif
 
-  #if TS_MULTITASK_MUTEX == 1
-  io_ts_busy = 1;
+//  return ret;
+//}
 
-  if(io_lcd_busy)
-  {
-    io_ts_busy = 0;
-    return ret;
-  }
-  #endif
+////-----------------------------------------------------------------------------
+//void ili9486_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
+//{
+//  *X = ili9486_ts_drv.tx,
+//  *Y = ili9486_ts_drv.ty;
+//}
 
-  ret = 0;
-  if(TS_IO_DetectToch())
-  {
-    x1 = TS_IO_GetX();
-    y1 = TS_IO_GetY();
-    i = TOUCH_MAXREPEAT;
-    while(i--)
-    {
-      x2 = TS_IO_GetX();
-      y2 = TS_IO_GetY();
-      if((ABS(x1 - x2) < TOUCH_FILTER) && (ABS(y1 - y2) < TOUCH_FILTER))
-      {
-        x1 = (x1 + x2) >> 1;
-        y1 = (y1 + y2) >> 1;
-        i = 0;
-        if(TS_IO_DetectToch())
-        {
-          tx = x1;
-          ty = y1;
-          ret = 1;
-        }
-      }
-      else
-      {
-        x1 = x2;
-        y1 = y2;
-      }
-    }
-  }
-
-  #if TS_MULTITASK_MUTEX == 1
-  io_ts_busy = 0;
-  #endif
-
-  return ret;
-}
-
-//-----------------------------------------------------------------------------
-void ili9486_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
-{
-  *X = tx,
-  *Y = ty;
-}
-
-#endif /* #if ILI9486_TOUCH == 1 */
+//#endif /* #if ILI9486_TOUCH == 1 */

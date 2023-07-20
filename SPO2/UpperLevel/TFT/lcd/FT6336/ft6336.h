@@ -30,18 +30,6 @@
 #define FT_ID_G_THGROUP			  0x80   		//触摸有效值设置寄存器
 #define FT_ID_G_PERIODACTIVE	0x88   		//激活状态周期设置寄存器
 
-typedef struct
-{
-	uint8_t (*init)(void);			
-	uint8_t (*scan)(void);				 
-	uint16_t x[CTP_MAX_TOUCH]; 		
-	uint16_t y[CTP_MAX_TOUCH];		
-								
-	uint8_t  sta;					
-								
-}_m_tp_dev;
-
-extern _m_tp_dev tp_dev;
 
 uint8_t FT6336_WR_Reg(uint16_t reg,uint8_t *buf,uint8_t len);
 void FT6336_RD_Reg(uint16_t reg,uint8_t *buf,uint8_t len);

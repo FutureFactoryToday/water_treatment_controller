@@ -29,6 +29,7 @@
 tc_button_list_t buttonList;
 bool TC_isTouched;
 uint32_t TC_touchCnt;
+int32_t touchCheckDelay;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
@@ -36,6 +37,7 @@ void TC_Init (void){
 	buttonList.butNum = 0;
 	TC_touchCnt = 0;
 	TC_isTouched = false;
+	touchCheckDelay = -1;
 }
 void TC_addButton (button_t* but){
 	if (buttonList.butNum < MAX_BUT_NUM){
@@ -80,6 +82,7 @@ void TC_checkButtons(void){
 	 }
 }
 void TC_releaseButtons(void) {
+	TC_isTouched = false;
 	for (uint8_t i = 0; i < buttonList.butNum; i++){
 		buttonList.buttons[i]->pressCnt = 0;
 		if (buttonList.buttons[i]->wasPressed == true){
@@ -88,5 +91,37 @@ void TC_releaseButtons(void) {
 		buttonList.buttons[i]->isPressed = false;
 		buttonList.buttons[i]->wasPressed = false;
 	}
+}
 
+void TC_Interrupt(uint8_t cause){
+	#ifdef ILI9486 || ILI9488
+	if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
+		redraw = 1;
+		updateFlags.touch = true;
+		BSP_TS_GetState(&tsState);
+		TC_checkButtons();
+		tsState.TouchDetected = 0;
+	} else {
+		TC_releaseButtons();
+		
+	}
+	#endif
+	#ifdef ST7796S
+	BSP_TS_GetState(&tsState);
+	if (cause == 0){//Первое нажатие
+		if (tsState.TouchDetected == 1){
+			LL_EXTI_DisableIT_0_31(TOUCH_INT_LINE);
+			TC_checkButtons();
+			touchCheckDelay = 100;
+		}
+	} else { //последующие
+		if (tsState.TouchDetected == 1){
+			TC_checkButtons();
+			touchCheckDelay = 100;
+		} else {
+			TC_releaseButtons();
+			LL_EXTI_EnableIT_0_31(TOUCH_INT_LINE);
+		}
+	}	
+	#endif
 }

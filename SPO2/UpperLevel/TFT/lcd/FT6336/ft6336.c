@@ -1,4 +1,5 @@
 #include "main.h"
+#include "TFT/ts.h"
 #include "TFT/lcd/FT6336/ft6336.h"
 #include "TFT/lcd/FT6336/ctpiic.h"
 
@@ -7,9 +8,30 @@
 #define TP_PRES_DOWN 0x80
 #define TP_CATH_PRES 0x40
 
-_m_tp_dev tp_dev;
-
 extern uint8_t touch_flag;
+uint16_t ret[2];
+
+/* Touchscreen */
+bool     ft6336_ts_Init(uint16_t DeviceAddr);
+uint8_t  ft6336_ts_DetectTouch(uint16_t DeviceAddr);
+void     ft6336_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y);
+
+TS_DrvTypeDef   ft6336_ts_drv =
+{
+  ft6336_ts_Init,
+  0,
+  0,
+  0,
+  ft6336_ts_DetectTouch,
+  ft6336_ts_GetXY,
+  0,
+  0,
+  0,
+  0,
+	0,
+	0
+};
+
 
 /*****************************************************************************
  * @name       :uint8_t FT5426_WR_Reg(uint16_t reg,uint8_t *buf,uint8_t len)
@@ -75,19 +97,19 @@ void FT6336_RD_Reg(uint16_t reg,uint8_t *buf,uint8_t len)
  * @date       :2020-05-13 
  * @function   :Initialize the ft5426 touch screen
  * @parameters :none
- * @retvalue   :0-Initialization successful
+ * @retvalue   :1-Initialization successful
 								1-initialization failed
 ******************************************************************************/		
-uint8_t TS_IO_Init(void)
+bool ft6336_ts_Init(uint16_t DeviceAddr)
 {
 	uint8_t temp[2]; 	
 	
 	CTP_IIC_Init();      	//іхКј»ЇµзИЭЖБµДI2CЧЬПЯ  
-	LL_GPIO_ResetOutputPin(TOUCH_RES_GPIO_Port, TOUCH_RES_Pin);
+	LL_GPIO_ResetOutputPin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin);
 	//FT_RST=0;				//ёґО»
 	LL_mDelay(10);
  	//FT_RST=1;				//КН·ЕёґО»		  
-	LL_GPIO_SetOutputPin(TOUCH_RES_GPIO_Port, TOUCH_RES_Pin);  
+	LL_GPIO_SetOutputPin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin);  
 	LL_mDelay(500);  	
 //	temp[0]=0;
 //	FT6336_WR_Reg(FT_DEVIDE_MODE,temp,1);	//ЅшИлХэіЈІЩЧчДЈКЅ 
@@ -97,24 +119,24 @@ uint8_t TS_IO_Init(void)
 	FT6336_RD_Reg(FT_ID_G_FOCALTECH_ID,&temp[0],1);
 	if(temp[0]!=0x11)
 	{
-		return 1;
+		return 0;
 	}
 	FT6336_RD_Reg(FT_ID_G_CIPHER_MID,&temp[0],2);
 	if(temp[0]!=0x26)
 	{
-		return 1;
+		return 0;
 	}
 	if((temp[1]!=0x00)&&(temp[1]!=0x01)&&(temp[1]!=0x02))
 	{
-		return 1;
+		return 0;
 	}
 	FT6336_RD_Reg(FT_ID_G_CIPHER_HIGH,&temp[0],1);
 	if(temp[0]!=0x64)
 	{
-		return 1;
+		return 0;
 	}
 
-	return 0;
+	return 1;
 }
 
 const uint16_t FT6336_TPX_TBL[2]={FT_TP1_REG,FT_TP2_REG};
@@ -128,68 +150,33 @@ const uint16_t FT6336_TPX_TBL[2]={FT_TP1_REG,FT_TP2_REG};
 								0-No touch
 								1-With touch
 ******************************************************************************/	
-uint8_t TS_IO_DetectToch(void)
+uint8_t ft6336_ts_DetectTouch(uint16_t DeviceAddr)
 {
-	uint8_t buf[4];
-	uint8_t i=0;
-	uint8_t res=0;
-	uint8_t temp;
 	uint8_t mode;
 	static uint8_t t=0;//Управляйте интервалом запроса, чтобы снизить нагрузку на ЦП 
-	t++;
-	if((t%10)==0||t<10)//В режиме ожидания функция CTP_Scan обнаруживается каждые 10 раз, что позволяет экономить ресурсы ЦП.
+	
+	FT6336_RD_Reg(FT_REG_NUM_FINGER,&mode,1);//Чтение состояния точки касания 
+	if(mode&&(mode<3))
 	{
-		FT6336_RD_Reg(FT_REG_NUM_FINGER,&mode,1);//Чтение состояния точки касания 
-		if(mode&&(mode<3))
-		{
-			temp=0XFF<<mode;//Преобразуйте количество баллов в 1 цифру, соответствующую определению tp_dev.sta
-			tp_dev.sta=(~temp)|TP_PRES_DOWN|TP_CATH_PRES; 
-			for(i=0;i<CTP_MAX_TOUCH;i++)
-			{
-				FT6336_RD_Reg(FT6336_TPX_TBL[i],buf,4);	//Чтение значения координаты XY
-				if(tp_dev.sta&(1<<i))	//Тач работает?
-				{
-					tp_dev.x[i]=((uint16_t)(buf[0]&0X0F)<<8)+buf[1];
-					tp_dev.y[i]=((uint16_t)(buf[2]&0X0F)<<8)+buf[3];
-//					switch(lcddev.dir)
-//					{
-//						case 0:
-//							tp_dev.x[i]=((uint16_t)(buf[0]&0X0F)<<8)+buf[1];
-//							tp_dev.y[i]=((uint16_t)(buf[2]&0X0F)<<8)+buf[3];						
-//							break;
-//						case 1:
-//							tp_dev.y[i]=lcddev.height-(((uint16_t)(buf[0]&0X0F)<<8)+buf[1]);
-//							tp_dev.x[i]=((uint16_t)(buf[2]&0X0F)<<8)+buf[3];						
-//							break;
-//						case 2:
-//							tp_dev.x[i]=lcddev.width-(((uint16_t)(buf[0]&0X0F)<<8)+buf[1]);
-//							tp_dev.y[i]=lcddev.height-(((uint16_t)(buf[2]&0X0F)<<8)+buf[3]);								
-//							break;
-//						case 3:
-//							tp_dev.y[i]=((uint16_t)(buf[0]&0X0F)<<8)+buf[1];
-//							tp_dev.x[i]=lcddev.width-(((uint16_t)(buf[2]&0X0F)<<8)+buf[3]);	
-//							break;
-//					} 
-
-				}			
-			} 
-			res=1;
-			if(tp_dev.x[0]==0 && tp_dev.y[0]==0)mode=0;	//Если все прочитанные данные равны 0, игнорируйте эти данные.
-			t=0;		//Сработав один раз, он будет непрерывно отслеживаться не менее 10 раз, тем самым увеличивая частоту попаданий.
-		}
+		ft6336_ts_drv.isTouched = 1;
+	} else {
+		ft6336_ts_drv.isTouched = 0;
 	}
-	if(mode==0)//нет касания точки нажатия
-	{ 
-		if(tp_dev.sta&TP_PRES_DOWN)	//был нажат до
-		{
-			tp_dev.sta&=~(1<<7);	//Отметить ключ выпущенным
-		}else						//раньше не нажимал
-		{ 
-			tp_dev.x[0]=0xffff;
-			tp_dev.y[0]=0xffff;
-			tp_dev.sta&=0XE0;	//Очистить точку Действительная отметка	
-		}	 
-	} 
-	if(t>240)t=10;//Снова начать считать с 10.
-	return res;
+	
+	return ft6336_ts_drv.isTouched;
+}
+
+
+void ft6336_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
+{
+	uint8_t buf[4];
+
+	FT6336_RD_Reg(FT_TP1_REG,buf,4);	
+	
+	ft6336_ts_drv.ty=((uint16_t)(buf[0]&0X0F)<<8)+buf[1];
+	
+	ft6336_ts_drv.tx=((uint16_t)(buf[2]&0X0F)<<8)+buf[3];
+	*X = ft6336_ts_drv.tx;
+	*Y = ft6336_ts_drv.ty;
+			
 }

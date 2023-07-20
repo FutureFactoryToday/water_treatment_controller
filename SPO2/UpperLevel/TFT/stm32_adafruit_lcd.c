@@ -18,7 +18,19 @@
 
 LCD_DrawPropTypeDef DrawProp;
 
-extern LCD_DrvTypeDef  *lcd_drv;
+#ifdef ILI9486
+	extern LCD_DrvTypeDef ili9486_drv;
+	LCD_DrvTypeDef  *lcd_drv = &ili9486_drv;
+#endif
+#ifdef ILI9488
+	extern LCD_DrvTypeDef ili9488_drv;
+	LCD_DrvTypeDef  *lcd_drv = &ili9488_drv;
+#endif
+#ifdef ST7796S
+	extern LCD_DrvTypeDef st7796s_drv;
+	LCD_DrvTypeDef  *lcd_drv = &st7796s_drv;
+#endif
+
 
 /* Max size of bitmap will based on a font24 (17x24) */
 #ifdef _565_FORMAT

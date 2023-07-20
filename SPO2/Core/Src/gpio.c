@@ -52,8 +52,8 @@ void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TOUCH_RES_Pin|TOUCH_SCL_Pin
-                          |MEM_WP_Pin|ILED_Pin|MEM_CS_Pin);
+	LL_GPIO_ResetOutputPin(GPIOA, TFT_RES_Pin|TFT_COM_EN_Pin|TOUCH_RST_Pin|TOUCH_SCL_Pin
+                          |TOUCH_SDA_Pin|MEM_WP_Pin|ILED_Pin|MEM_CS_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOC, TFT_DATA_COM_Pin|FRAM_WP_Pin|FRAM_HOLD_Pin|MEM_RES_Pin);
@@ -61,8 +61,7 @@ void MX_GPIO_Init(void)
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, FRAM_CS_Pin|REL1_ON_Pin|REL2_ON_Pin);
 
-  /**/
-  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TOUCH_RES_Pin|MEM_WP_Pin
+  GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TOUCH_RST_Pin|MEM_WP_Pin
                           |ILED_Pin|MEM_CS_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -70,18 +69,13 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = TOUCH_SCL_Pin;
+  GPIO_InitStruct.Pin = TOUCH_SCL_Pin|TOUCH_SDA_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
-  LL_GPIO_Init(TOUCH_SCL_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /**/
-  GPIO_InitStruct.Pin = TOUCH_SDA_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
-  LL_GPIO_Init(TOUCH_SDA_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = TFT_DATA_COM_Pin|FRAM_WP_Pin|FRAM_HOLD_Pin|MEM_RES_Pin;
@@ -103,9 +97,6 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /**/
-  LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE3);
-
-  /**/
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTA, LL_GPIO_AF_EXTI_LINE6);
 
   /**/
@@ -114,20 +105,23 @@ void MX_GPIO_Init(void)
   /**/
   LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTC, LL_GPIO_AF_EXTI_LINE10);
 
-  /**/
-  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
-  LL_EXTI_Init(&EXTI_InitStruct);
-
-  /**/
+	#ifdef ST7796S
+	/**/
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_6;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
   EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
   LL_EXTI_Init(&EXTI_InitStruct);
-
+	#endif
+	#ifdef ILI9486 || ILI9488
+	/**/
+  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
+  EXTI_InitStruct.LineCommand = ENABLE;
+  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
+  LL_EXTI_Init(&EXTI_InitStruct);
+	#endif
+	
   /**/
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_11;
   EXTI_InitStruct.LineCommand = ENABLE;
@@ -146,19 +140,15 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(TOUCH_INT_GPIO_Port, TOUCH_INT_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
-  LL_GPIO_SetPinMode(CAP_TOUCH_INT_GPIO_Port, CAP_TOUCH_INT_Pin, LL_GPIO_MODE_FLOATING);
-
-  /**/
   LL_GPIO_SetPinMode(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
   LL_GPIO_SetPinMode(METER_INP_GPIO_Port, METER_INP_Pin, LL_GPIO_MODE_FLOATING);
 
   /* EXTI interrupt init*/
-  NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
-  NVIC_EnableIRQ(EXTI3_IRQn);
   NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(EXTI9_5_IRQn);
+
   NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
   NVIC_EnableIRQ(EXTI15_10_IRQn);
 

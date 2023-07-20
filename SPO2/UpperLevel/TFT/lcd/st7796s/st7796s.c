@@ -9,10 +9,6 @@
 #include "TFT/bmp.h"
 #include "st7796s.h"
 
-#if  ST7796S_TOUCH == 1
-#include "TFT/ts.h"
-#endif
-
 /* Lcd */
 void     st7796s_Init(void);
 uint16_t st7796s_ReadID(void);
@@ -34,10 +30,7 @@ void     st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
 void 		LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
 bool		LCD_IO_isBusy();
-/* Touchscreen */
-void     st7796s_ts_Init(uint16_t DeviceAddr);
-uint8_t  st7796s_ts_DetectTouch(uint16_t DeviceAddr);
-void     st7796s_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y);
+
 
 LCD_DrvTypeDef   st7796s_drv =
 {
@@ -60,7 +53,7 @@ LCD_DrvTypeDef   st7796s_drv =
   st7796s_Scroll,
 };
 
-LCD_DrvTypeDef  *lcd_drv = &st7796s_drv;
+extern LCD_DrvTypeDef  *lcd_drv;
 
 #define ST7796S_NOP            0x00
 #define ST7796S_SWRESET        0x01
@@ -196,40 +189,10 @@ volatile uint8_t io_ts_busy = 0;
 
 #define ABS(N)   (((N)<0) ? (-(N)) : (N))
 
-TS_DrvTypeDef   st7796s_ts_drv =
-{
-  st7796s_ts_Init,
-  0,
-  0,
-  0,
-  st7796s_ts_DetectTouch,
-  st7796s_ts_GetXY,
-  0,
-  0,
-  0,
-  0,
-};
-
-TS_DrvTypeDef *ts_drv = &st7796s_ts_drv;
-
-#if (ST7796S_ORIENTATION == 0)
-int32_t  ts_cindex[] = TS_CINDEX_0;
-#elif (ST7796S_ORIENTATION == 1)
-int32_t  ts_cindex[] = TS_CINDEX_1;
-#elif (ST7796S_ORIENTATION == 2)
-int32_t  ts_cindex[] = TS_CINDEX_2;
-#elif (ST7796S_ORIENTATION == 3)
-int32_t  ts_cindex[] = TS_CINDEX_3;
-#endif
-
-uint16_t tx, ty;
-
 /* Link function for Touchscreen */
 uint8_t   TS_IO_DetectTouch(void);
-//uint16_t  TS_IO_GetX(void);
-//uint16_t  TS_IO_GetY(void);
-//uint16_t  TS_IO_GetZ1(void);
-//uint16_t  TS_IO_GetZ2(void);
+uint16_t*  TS_IO_GetXY(void);
+uint8_t TS_IO_Init(void);
 
 #endif   /* #if ST7796S_TOUCH == 1 */
 
@@ -729,45 +692,65 @@ void st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 }
 
 
-#if ST7796S_TOUCH == 1
-void st7796s_ts_Init(uint16_t DeviceAddr)
-{
+//#if ST7796S_TOUCH == 1
+//void st7796s_ts_Init(uint16_t DeviceAddr)
+//{
 //  if((Is_st7796s_Initialized & ST7796S_LCD_IO_INITIALIZED) == 0) {
 //    LCD_IO_Init();
 //    Is_st7796s_Initialized |= ST7796S_LCD_IO_INITIALIZED;
 //  }
 
-  if((Is_st7796s_Initialized & ST7796S_TS_IO_INITIALIZED) == 0) {
-//    TOUCH_IO_Init();
-    Is_st7796s_Initialized |= ST7796S_TS_IO_INITIALIZED;
-  }
-}
+//  if((Is_st7796s_Initialized & ST7796S_TS_IO_INITIALIZED) == 0) {
+//    TS_IO_Init();
+//    Is_st7796s_Initialized |= ST7796S_TS_IO_INITIALIZED;
+//  }
+//}
 
 
-uint8_t st7796s_ts_DetectTouch(uint16_t DeviceAddr)
-{
-  static uint8_t tp = 0;
+//uint8_t st7796s_ts_DetectTouch(uint16_t DeviceAddr)
+//{
+////	static uint8_t tp = 0;
+//	return TS_IO_DetectTouch();
+//	
+//  #if  ST7796S_MULTITASK_MUTEX == 1
+//  io_ts_busy = 1;
 
-  TS_IO_DetectTouch();
-	tsState.TouchDetected = tp_dev
-  return tp;
-}
+//  if (io_lcd_busy) {
+//    io_ts_busy = 0;
+//    return tp;
+//  }
+//  #endif
+
+//  if (TS_IO_DetectTouch()) {
+//   // tp = TS_Update();
+//  } else {
+//    tp = 0;
+//  }
+
+//  #if  ST7796S_MULTITASK_MUTEX == 1
+//  io_ts_busy = 0;
+//  #endif
+//}
 
 //-----------------------------------------------------------------------------
-void st7796s_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
-{
-  //TS_GetXY(X, Y);
-  switch (ST7796S_ORIENTATION) {
-      case (0):
-      case (2):
-          *X = (*X * ST7796S_SIZE_X) / 4095;
-          *Y = (ST7796S_SIZE_Y - ((*Y * ST7796S_SIZE_Y) / 4095));
-          break;
-      case (1):
-      case (3):
-        *X = ((*X * ST7796S_SIZE_Y) / 4095);
-        *Y = ST7796S_SIZE_X - ((*Y * ST7796S_SIZE_X) / 4095);
-        break;
-    }
-}
-#endif /* #if ST7796S_TOUCH == 1 */
+//void st7796s_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
+//{
+//	uint16_t* coord = TS_IO_GetXY();
+//	X = coord;
+//	Y = coord+1;
+//	
+//	return;
+//  switch (ST7796S_ORIENTATION) {
+//      case (0):
+//      case (2):
+//          *X = (*X * ST7796S_SIZE_X) / 4095;
+//          *Y = (ST7796S_SIZE_Y - ((*Y * ST7796S_SIZE_Y) / 4095));
+//          break;
+//      case (1):
+//      case (3):
+//        *X = ((*X * ST7796S_SIZE_Y) / 4095);
+//        *Y = ST7796S_SIZE_X - ((*Y * ST7796S_SIZE_X) / 4095);
+//        break;
+//    }
+//}
+//#endif /* #if ST7796S_TOUCH == 1 */
