@@ -76,7 +76,7 @@ extern uint8_t* ITEM_SOFTENING[];
 //adjustmentFrame
 #define MODE_ADJUSTMENT "Регулировка"
 extern uint8_t* ITEM_ADJUSTMENT[];
-#define RESET "Сброс"
+#define RESET_TEXT "Сброс"
 #define POSITION "Поз:"
 #define START_ENG "Старт"
 

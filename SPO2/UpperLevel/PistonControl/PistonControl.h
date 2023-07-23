@@ -54,7 +54,7 @@ typedef enum {
 typedef struct {
 	pc_calib_result_t calibResult;
 	pc_work_status_t workStatus;
-	int32_t curPoz;
+	int16_t curPoz;
 	int32_t maxPoz;
 	int32_t minPoz;
 } pc_params_t;

@@ -73,8 +73,8 @@ void MOT_Forward(void) {
         LL_GPIO_SetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
         LL_GPIO_ResetOutputPin(AIN1_GPIO_Port, AIN1_Pin);
     } else {
-        setReverseSpeed(mot.settings.min);
-        setForwardSpeed(mot.settings.pwm);
+        setReverseSpeed(mot.settings.max + 1);
+        setForwardSpeed(mot.settings.max - mot.settings.pwm);
     }
 
 }
@@ -102,8 +102,8 @@ void MOT_Reverse(void) {
         LL_GPIO_SetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
         LL_GPIO_SetOutputPin(AIN1_GPIO_Port, AIN1_Pin);
     } else {
-        setReverseSpeed(mot.settings.pwm);
-        setForwardSpeed(mot.settings.min);
+        setReverseSpeed(mot.settings.max - mot.settings.pwm);
+        setForwardSpeed(mot.settings.max + 1);
     }
 }
 
