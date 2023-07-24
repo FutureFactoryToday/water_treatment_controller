@@ -55,8 +55,13 @@ int8_t PIN_showFrame(){
         }
         if (pinTextArea.isReleased == true){
             int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
-            if (newPin > 0 ){
+            if (newPin >= 0 ){
                 enteredPin = newPin;
+                createPinFrame();
+            }
+            else if(newPin == -1)
+            {
+                enteredPin = 0;
                 createPinFrame();
             }
             pinTextArea.isReleased = false;
