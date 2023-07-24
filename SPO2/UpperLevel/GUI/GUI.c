@@ -64,7 +64,7 @@ void initGUI(void){
 	BSP_LCD_Clear(0x1947);
 	BSP_LCD_DrawBitmap(148,100,&LOGO);
 
-	LL_mDelay(3000);
+	//LL_mDelay(3000);
     
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
 	

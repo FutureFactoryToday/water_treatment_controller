@@ -1716,6 +1716,11 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\clockSet.c</FilePath>
             </File>
+            <File>
+              <FileName>ManualDriveControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\ManualDriveControl.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

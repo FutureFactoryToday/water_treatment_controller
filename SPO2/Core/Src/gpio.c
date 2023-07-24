@@ -126,7 +126,7 @@ void MX_GPIO_Init(void)
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_11;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /**/
@@ -140,7 +140,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(TOUCH_INT_GPIO_Port, TOUCH_INT_Pin, LL_GPIO_MODE_INPUT);
 
   /**/
-  LL_GPIO_SetPinMode(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin, LL_GPIO_MODE_FLOATING);
+  LL_GPIO_SetPinMode(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin, LL_GPIO_MODE_INPUT);
 
   /**/
   LL_GPIO_SetPinMode(METER_INP_GPIO_Port, METER_INP_Pin, LL_GPIO_MODE_FLOATING);

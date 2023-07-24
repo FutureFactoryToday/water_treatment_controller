@@ -72,6 +72,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
+	__disable_irq();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -115,8 +116,7 @@ int main(void)
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
 
-	
-	
+
 	FP_GetParam();
 	System_init();
 	Time_init();
@@ -127,12 +127,12 @@ int main(void)
 	PC_Init();
 	PL_Init();
 	FM_Init();
-//	
+	
 	__enable_irq();
 	LL_mDelay(500);
 
 	FP_SaveParam();
-
+	//ShowManualDriveControl();
   ShowMainFrame();
   /* USER CODE END 2 */
 

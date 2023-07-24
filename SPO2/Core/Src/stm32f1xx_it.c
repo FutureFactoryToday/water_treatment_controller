@@ -183,6 +183,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
+	
 	PC_Control();
 	if (touchDelay)
 		touchDelay--;
@@ -324,20 +325,15 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
+		LL_mDelay(1);
 		if (!LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 			PC_OpticSensInterrupt();
 			updateFlags.optic = true;
 		}
     /* USER CODE END LL_EXTI_LINE_11 */
   }
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
-    /* USER CODE BEGIN LL_EXTI_LINE_15 */
 
-    /* USER CODE END LL_EXTI_LINE_15 */
-  }
-  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
 		{
 			LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
