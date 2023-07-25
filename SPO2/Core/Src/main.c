@@ -69,7 +69,7 @@ void SystemClock_Config(void);
   * @retval int
   */
 int main(void)
-{
+ {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
 	__disable_irq();
@@ -132,8 +132,9 @@ int main(void)
 	LL_mDelay(500);
 
 	FP_SaveParam();
-	//ShowManualDriveControl();
+//	ShowManualDriveControl();
   ShowMainFrame();
+	//MOT_Start();
   /* USER CODE END 2 */
 
   /* Infinite loop */

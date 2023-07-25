@@ -77,7 +77,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		while (pcParams.workStatus == PC_IN_PROCESS);
 		stallTime = 500;
 		pcParams.workStatus = PC_SEEK_ZERO;
-		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 50);
+		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 80);
 		//Ждем пока сработает контроль или SEEK_TIME секунд
 		while (pcParams.workStatus == PC_IN_PROCESS && seek_cnt++ < SEEK_TIME*1000){
 			LL_mDelay(1);
@@ -196,7 +196,7 @@ uint32_t start;
 void PC_OpticSensInterrupt(void){
 	uint32_t delt = 0;
 	if (!fitstInt){
-		stallTime = 1000;
+		stallTime = 100;
 	} else {
 		 fitstInt = false;
 	}
@@ -210,11 +210,11 @@ void PC_OpticSensInterrupt(void){
 		delt = pcParams.curPoz - destination;
 	}
 	
-//	if (delt < 20){
-//		MOT_SetSpeed(80);
-//		MOT_Start();
-//	}
-	if (delt == 0){
+	if (delt < 20){
+		MOT_SetSpeed(80);
+		MOT_Start();
+	}
+	if (delt < 2){
 		MOT_Stop();
 		pcParams.workStatus = PC_READY;
 		return;

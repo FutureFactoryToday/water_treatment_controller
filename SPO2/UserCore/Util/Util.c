@@ -52,7 +52,7 @@ uint8_t* intToStr (int32_t num){
 	for(int i = 0; i <sizeof(numBuf); i++){
 		numBuf[i] = 0;
 	}
-	uint32_t modNum = num;
+	
 	uint8_t ch = 0;
 	uint32_t mod = 1000000000;
 	if (num == 0){
@@ -65,7 +65,7 @@ uint8_t* intToStr (int32_t num){
 		numBuf[i++] = '-';
 		num = num*(-1);
 	}
-	
+	uint32_t modNum = num;
 	while(modNum < mod){
 		mod /= 10;
 	}

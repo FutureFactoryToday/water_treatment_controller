@@ -187,9 +187,9 @@ void PL_ProceedStep(void){
 		currentStepDateTime = *addSec(&currentStepDateTime,currentStep->secPause);
 		setAlarm(&currentStepDateTime,PL_ProceedStep);
 		currentStep++;
-	} else {
+	} 
+	if (currentStep->poz == NULL){
 		PL_status = PL_WAITING;
-		redraw = 1;
 		chosenTask->startDateTime = *addDate(getTime(), &chosenTask->restartDateTime);
 		chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
         copyTasksToFlash();

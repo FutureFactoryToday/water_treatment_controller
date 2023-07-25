@@ -10,6 +10,7 @@ static button_t motStart, motStop, changeDir, curPoz, goPoz, setPoz;
 static void createFrame (void);
 uint16_t poz;
 uint8_t dir;
+int16_t dispPoz = 0;
 void ShowManualDriveControl(void)
 {
 	
@@ -21,8 +22,9 @@ void ShowManualDriveControl(void)
 				drawClock();
 				updateFlags.sec = false;
 		}
-		if (updateFlags.optic == true){
-			drawTextLabel(curPozBut,intToStr(PC_GetParams()->curPoz));
+		if (updateFlags.optic == true || dispPoz != PC_GetParams()->curPoz){
+			dispPoz = PC_GetParams()->curPoz;
+			drawTextLabel(curPozBut,intToStr(dispPoz));
 			updateFlags.optic = false;
 		}
 		/*Button pressed*/

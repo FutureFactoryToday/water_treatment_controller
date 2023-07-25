@@ -180,11 +180,36 @@ void PendSV_Handler(void)
 /**
   * @brief This function handles System tick timer.
   */
+volatile uint16_t intCnt = 0, optCnt = 0, falseOptCnt = 0;
+volatile uint8_t intState, waitState;
+volatile int8_t optDelayCnt;
+volatile bool wasFront;
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 	
 	PC_Control();
+//	if (optDelayCnt > 0 ){
+//		optDelayCnt--;
+//		if (!optDelayCnt){
+//			if (LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin) == intState && intState == waitState){
+//				PC_OpticSensInterrupt();
+//				waitState = !LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin);
+//				updateFlags.optic = true;
+//			}
+//		}
+//	}
+	if (optCnt){
+		if (wasFront && LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
+			if (!(--optCnt)){
+				PC_OpticSensInterrupt();
+				wasFront = false;
+			}
+		} else {
+			wasFront = false;
+			optCnt = 0;
+		}
+	}
 	if (touchDelay)
 		touchDelay--;
 	#ifdef ST7796S;
@@ -316,21 +341,22 @@ void SPI2_IRQHandler(void)
 /**
   * @brief This function handles EXTI line[15:10] interrupts.
   */
+
+
 void EXTI15_10_IRQHandler(void)
 {
    /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-
   /* USER CODE END EXTI15_10_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
   {
+		
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
-		LL_mDelay(1);
-		if (!LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
-			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-			PC_OpticSensInterrupt();
-			updateFlags.optic = true;
-		}
+//		intState = LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin);
+//		optDelayCnt = 3;
+		//PC_OpticSensInterrupt();
+		optCnt = 3;
+		wasFront = true;
     /* USER CODE END LL_EXTI_LINE_11 */
   }
 
