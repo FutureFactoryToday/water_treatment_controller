@@ -76,4 +76,8 @@ void copyOneTaskFromFlash(uint16_t task);
 void copyTasksToFlash (void);
 void copyTasksFromFlash(void);
 wtc_time_t timeRemain (void);
+
+bool PL_deleteTaskLine(piston_task_t* task, uint8_t line);
+bool PL_addTaskLine(piston_task_t* task,task_line_t tl);
+bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl);
 #endif /* _PLANNER_H_ */

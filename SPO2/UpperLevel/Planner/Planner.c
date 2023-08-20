@@ -37,6 +37,7 @@ wtc_time_t lastService;
 uint32_t loadType;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
+uint8_t findLastElement(piston_task_t* task);
 /*---------------------------------------------*/
 void PL_Init(){
 	currentStep = NULL;
@@ -243,11 +244,7 @@ void copyOneTaskFromFlash(uint16_t task){
 	}
 }
 
-void PL_saveToFlash(void)
-{
 
-}
-void PL_loadFromFlash(void);
 
 wtc_time_t timeRemain (void){
 	//wtc_time_t tempTime = *decDateTime(&currentStepDateTime, getTime());
@@ -255,4 +252,39 @@ wtc_time_t timeRemain (void){
 	tempTime -= wtcTimeToInt(getTime());
 	
 	return intToWTCTime(tempTime);
+}
+
+bool PL_addTaskLine(piston_task_t* task,task_line_t tl){
+	uint8_t lastEl = findLastElement(task);
+	if (lastEl < STEP_PER_TASK_NUM - 1){
+		task->step[lastEl] = tl;
+		return true;
+	}
+	return false;
+}
+
+bool PL_deleteTaskLine(piston_task_t* task, uint8_t line){
+	uint8_t lastEl = findLastElement(task);
+	if (line < STEP_PER_TASK_NUM - 1 && line < lastEl){
+		for(uint8_t i = 0; i < lastEl - line; i++){
+			task->step[line + i] = task->step[line + i + 1];
+		}
+	}
+}
+
+bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl){
+	uint8_t lastEl = findLastElement(task);
+	if (line < lastEl){
+		task->step[lastEl] = tl;
+		return true;
+	}
+	return false;
+}
+
+uint8_t findLastElement(piston_task_t* task){
+	uint8_t pozN = 0;
+	while(task->step[pozN].poz != NULL){
+		pozN++;
+	}
+	return pozN;
 }
