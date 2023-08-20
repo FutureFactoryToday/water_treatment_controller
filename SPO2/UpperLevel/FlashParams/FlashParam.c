@@ -125,7 +125,7 @@ uint8_t FP_DeleteParam(void){
 	FLASH->CR2 |= FLASH_CR2_STRT;
 	while (!(FLASH->SR2 & FLASH_SR2_EOP));
 	FLASH->SR2 = FLASH_SR2_EOP;
-	
+	while (FLASH->SR2 & FLASH_SR2_BSY);
 	FLASH->CR2 &= ~FLASH_CR2_PER;
 	lockFlash();
 	__enable_irq();
