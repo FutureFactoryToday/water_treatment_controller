@@ -250,6 +250,9 @@ void PL_saveToFlash(void)
 void PL_loadFromFlash(void);
 
 wtc_time_t timeRemain (void){
-	wtc_time_t tempTime = *decDateTime(&currentStepDateTime, getTime());
-	return tempTime;
+	//wtc_time_t tempTime = *decDateTime(&currentStepDateTime, getTime());
+	uint32_t tempTime = wtcTimeToInt(&currentStepDateTime);
+	tempTime -= wtcTimeToInt(getTime());
+	
+	return intToWTCTime(tempTime);
 }

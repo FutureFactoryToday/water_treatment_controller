@@ -291,7 +291,7 @@ wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth){
 		isLastDay = true;
 	}
 	tempDec = time.month - numMonth;
-	if (tempDec <= 0){
+	if (tempDec < 0){
 		time.year -= (-tempDec) / 12;	
 		tempDec += (tempDec / 12)*12;
 		if (tempDec <= 0){
@@ -301,6 +301,7 @@ wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth){
 		time.month = tempDec;
 	} else {
 		time.month -= numMonth;
+		return &time;
 	}
 	
 	if (time.day > maxDayInMonth(time.month, time.year) || isLastDay){
@@ -1142,6 +1143,8 @@ uint8_t timeTest (){
 				testTime.hour == 1 &&
 				testTime.minute == 10 &&
 				testTime.second == 30);
+				
+	testTime = *decDateTime(&testTime, &testTime);	
 				
 	uint32_t intTestTime = wtcTimeToInt(&testTime);
 	wtc_time_t newTestTime = intToWTCTime(intTestTime);
