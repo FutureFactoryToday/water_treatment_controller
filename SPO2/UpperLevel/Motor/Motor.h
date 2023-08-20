@@ -16,7 +16,7 @@
 #include "main.h"
 
 /*Public defines */
-#define MAX_SPEED 120
+#define MAX_SPEED 120*(MOT_SPEED_PERCENT/100.0)
 #define MIN_SPEED 60
 #define MOT_PWM_FREQ 10000
 #define MAX_PRESC UINT16_MAX

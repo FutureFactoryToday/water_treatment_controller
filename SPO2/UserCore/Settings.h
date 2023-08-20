@@ -28,6 +28,8 @@
 
 #define MOT_TIM TIM8
 
+#define MOT_SPEED_PERCENT 100
+
 #define WTC_ORIENTATION 1
 
 #define FLOW_TIM TIM7
