@@ -247,11 +247,20 @@ void copyOneTaskFromFlash(uint16_t task){
 
 
 wtc_time_t timeRemain (void){
-	//wtc_time_t tempTime = *decDateTime(&currentStepDateTime, getTime());
-	uint32_t tempTime = wtcTimeToInt(&currentStepDateTime);
-	tempTime -= wtcTimeToInt(getTime());
+	wtc_time_t tempTime = {0};
+	if (currentStepDateTime.month != getTime()->month){
+		tempTime.month = currentStepDateTime.month - getTime()->month;
+	} else if (currentStepDateTime.day != getTime()->day) {
+		tempTime.day = currentStepDateTime.day - getTime()->day;
+	} else if (currentStepDateTime.hour != getTime()->hour){
+		tempTime.hour = currentStepDateTime.hour - getTime()->hour;
+	} else if (currentStepDateTime.minute != getTime()->minute){
+		tempTime.minute = currentStepDateTime.minute - getTime()->minute;
+	} else if (currentStepDateTime.second != getTime()->second){
+		tempTime.second = currentStepDateTime.second - getTime()->second;
+	}
 	
-	return intToWTCTime(tempTime);
+	return tempTime;
 }
 
 bool PL_addTaskLine(piston_task_t* task,task_line_t tl){
