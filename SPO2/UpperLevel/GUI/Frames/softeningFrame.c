@@ -10,7 +10,11 @@ static button_t menuLines[5];
 static uint8_t res[5];
 void ShowSofteningFrame(void)
 {
-
+    res[0] = pistonTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
+    res[1] = pistonTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
+    res[2] = pistonTasks[SOFTENING_TASK_NUM].step[2].secPause/60;
+    res[3] = pistonTasks[SOFTENING_TASK_NUM].step[3].secPause/60;
+    res[4] = pistonTasks[SOFTENING_TASK_NUM].step[4].secPause/60;
     softening_frame_Scroll_cnt = 0;
     createFrame();
     while(1)
@@ -177,6 +181,9 @@ void RefreshScrollBarSofteningFrame()
         drawFillArcRec(menuLines[softening_frame_Scroll_cnt + 1].x, menuLines[softening_frame_Scroll_cnt + 1].y, menuLines[softening_frame_Scroll_cnt + 1].xSize, menuLines[softening_frame_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);
         drawFillArcRec(menuLines[softening_frame_Scroll_cnt + 2].x, menuLines[softening_frame_Scroll_cnt + 2].y, menuLines[softening_frame_Scroll_cnt + 2].xSize, menuLines[softening_frame_Scroll_cnt + 2].ySize, LCD_COLOR_WHITE);
         drawFillArcRec(menuLines[softening_frame_Scroll_cnt + 3].x, menuLines[softening_frame_Scroll_cnt + 3].y, menuLines[softening_frame_Scroll_cnt + 3].xSize, menuLines[softening_frame_Scroll_cnt + 3].ySize, LCD_COLOR_WHITE);
+        
+        BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+        BSP_LCD_FillRect(FIRST_CURSOR_POS_X, FIRST_CURSOR_POS_Y, 300, 200);
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
