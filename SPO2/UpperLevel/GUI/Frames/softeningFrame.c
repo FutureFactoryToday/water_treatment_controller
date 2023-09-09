@@ -5,7 +5,7 @@ uint8_t softening_frame_Scroll_cnt = 0;
 uint8_t softening_frame_was_Scroll = 0;
 int32_t qwertySoft[] = {0, 0, 0, 0, 0};
 static void createFrame(void);
-void calcButParam();
+static void calcButParam();
 static button_t menuLines[5];
 static uint8_t res[5];
 void ShowSofteningFrame(void)
@@ -138,10 +138,10 @@ void createFrame(void)
     
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 3],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 3],LEFT_MODE);
     
     drawTextLabel(4*GAP + 125,FIRST_CURSOR_POS_Y + 3, 80, 39,intToStr((res[softening_frame_Scroll_cnt])));
     drawTextLabel(4*GAP + 125,SECOND_CURSOR_POS_Y + 3, 80, 39,intToStr((res[softening_frame_Scroll_cnt + 1])));
@@ -155,18 +155,6 @@ void createFrame(void)
 			
 	/*Add buttons parameters*/
 	calcButParam();
-	/*Add buttons to Touch Controller*/
-//	for (uint8_t i = 0; i < sizeof(menuLines); i++){
-//			TC_addButton(&menuLines[i]);
-//	}
-
-//	TC_addButton(&retBut);
-//	TC_addButton(&okBut);
-//	TC_addButton(&scrollUpBut);
-//	TC_addButton(&scrollDwnBut);
-	
-	//enableClockDraw = true;
-          
 }
 
 
@@ -187,10 +175,10 @@ void RefreshScrollBarSofteningFrame()
         
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt],LEFT_MODE);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
-        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_SOFTENING[softening_frame_Scroll_cnt + 3],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 1],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 2],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 3,ITEM_SOFTENING[softening_frame_Scroll_cnt + 3],LEFT_MODE);
         
         drawTextLabel(4*GAP + 125,FIRST_CURSOR_POS_Y + 3, 80, 39,intToStr((res[softening_frame_Scroll_cnt])));
         drawTextLabel(4*GAP + 125,SECOND_CURSOR_POS_Y + 3, 80, 39,intToStr((res[softening_frame_Scroll_cnt + 1])));

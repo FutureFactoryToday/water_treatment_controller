@@ -4,8 +4,7 @@
 //extern char* ITEM_STEPS[];
 
 
-
-int8_t ShowStepsFrame(void);
+piston_poz_t* ShowStepsFrame(void);
 
 void RefreshStepsFrame(void);
 

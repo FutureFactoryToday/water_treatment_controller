@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=1223,351,1673,908,0)(1007=-1,-1,-1,-1,0)(1008=596,226,972,462,0)(1009=120,153,378,741,0)</Name>
+          <Name>(1010=1086,307,1536,864,0)(1007=-1,-1,-1,-1,0)(1008=596,226,972,462,0)(1009=120,153,378,741,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -245,7 +245,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>

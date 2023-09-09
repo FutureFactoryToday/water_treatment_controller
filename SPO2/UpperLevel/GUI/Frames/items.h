@@ -56,7 +56,7 @@ extern uint8_t* ITEM_FILTER_SELECTION[];
 #define MODE_ALARM_NOTI "Уведомление"
 #define NOTI_STRING_1 "Для сервисного обслуживания и"
 #define NOTI_STRING_2 "ремонта необходимо обратиться в"
-#define NOTI_STRING_3 "ООО \"Промэнергосервис\""
+#define NOTI_STRING_3 "ООО \"Промэнергоинвест\""
 #define NOTI_STRING_4 ""
 
 //alarmListFrame
