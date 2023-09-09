@@ -94,11 +94,11 @@ void TC_releaseButtons(void) {
 }
 
 void TC_Interrupt(uint8_t cause){
-	#ifdef ILI9486 || ILI9488
+	#ifdef ILI9488
 	if (!LL_GPIO_IsInputPinSet(TOUCH_INT_GPIO_Port,TOUCH_INT_Pin)){
 		redraw = 1;
 		updateFlags.touch = true;
-		BSP_TS_GetState(&tsState);
+ 		BSP_TS_GetState(&tsState);
 		TC_checkButtons();
 		tsState.TouchDetected = 0;
 	} else {

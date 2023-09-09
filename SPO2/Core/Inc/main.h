@@ -64,6 +64,8 @@ extern "C" {
 #include "TFT/bmp.h"
 #include "GUI/GUI.h"
 #include "TFT/lcd/ili9486/ili9486.h"
+#include "TFT/lcd/ili9488/ili9488.h"
+#include "TFT/lcd/st7796s/st7796s.h"
 #include "PistonControl/PistonControl.h"
 #include "Time/Time.h"
 #include "FlowMeter/FlowMeter.h"
@@ -107,6 +109,7 @@ extern "C" {
 #include "GUI/Frames/loadTypeFrame.h"
 #include "TFT/lcd/FT6336/ctpiic.h"
 #include "GUI/Frames/ManualDriveControl.h"
+#include "GUI/Frames/ManualFilteringSettings.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -212,8 +215,11 @@ void Error_Handler(void);
 #define TOUCH_INT_LINE LL_EXTI_LINE_6
 #endif
 
-#ifdef ILI9486 || ILI9488
-	
+#ifdef ILI9488
+	#define TOUCH_INT_Pin LL_GPIO_PIN_3
+	#define TOUCH_INT_GPIO_Port GPIOA
+	#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
+	#define TOUCH_INT_LINE LL_EXTI_LINE_3
 #endif
 
 #ifndef NVIC_PRIORITYGROUP_0
