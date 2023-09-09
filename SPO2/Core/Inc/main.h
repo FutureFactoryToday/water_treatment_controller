@@ -107,6 +107,7 @@ extern "C" {
 #include "GUI/Frames/loadTypeFrame.h"
 #include "TFT/lcd/FT6336/ctpiic.h"
 #include "GUI/Frames/ManualDriveControl.h"
+#include "GUI/Frames/ManualFilteringSettings.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

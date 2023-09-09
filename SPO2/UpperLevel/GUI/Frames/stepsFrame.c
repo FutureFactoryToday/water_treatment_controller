@@ -11,12 +11,13 @@ int8_t stepResult = -1;
 static void createFrame(void);
 static void calcButParam();
 static button_t menuLines[6];
-int8_t ShowStepsFrame(void)
+piston_poz_t* ShowStepsFrame(void)
 {
 	steps_frame_Scroll_cnt = 0;
 	startStepsFrame = 1;
 	stepsFrameResult = 0;
 	stepResult = 0;
+    createFrame();
 	while(1)
 	{     
         if(menuLines[0].isPressed == true){
@@ -67,7 +68,7 @@ int8_t ShowStepsFrame(void)
            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[5].y + 9,ITEM_STEPS[5],LEFT_MODE);
            menuLines[5].isPressed = false;
         }
-				if(menuLines[6].isPressed == true){
+		if(menuLines[6].isPressed == true){
                 //Make it blue
            drawFillArcRec(menuLines[6].x, menuLines[6].y, menuLines[6].xSize, menuLines[6].ySize, LCD_COLOR_BLUE);
            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -75,52 +76,35 @@ int8_t ShowStepsFrame(void)
            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_STEPS[6],LEFT_MODE);
            menuLines[6].isPressed = false;
         }
-
         
-		if(retBut.isReleased == true)
-		{
-			retBut.isReleased == false;
-			return 0;
-		}
-		if(okBut.isReleased == true)
-		{
-			okBut.isReleased == false;
-			return stepResult;
-		}
+        
 		if(menuLines[0].isReleased == true)
 		{
-			stepResult = 1;
-			menuLines[0].isReleased = false;
+			return &pistonPositions.closedPosition;
 		}
 		if(menuLines[1].isReleased == true)
 		{
-			stepResult = 2;
-			menuLines[1].isReleased = false;
+			return &pistonPositions.backwash;
 		}
 		if(menuLines[2].isReleased == true)
 		{
-			stepResult = 3;
-			menuLines[2].isReleased = false;
+			return &pistonPositions.regeneration;
 		}
 		if(menuLines[3].isReleased == true)
 		{
-			stepResult = 4;
-			menuLines[3].isReleased = false;
+			return &pistonPositions.filling;
 		}
 		if(menuLines[4].isReleased == true)
 		{
-			stepResult = 5;
-			menuLines[4].isReleased = false;
+			return &pistonPositions.softening;
 		}
 		if(menuLines[5].isReleased == true)
 		{
-			stepResult = 6;
-			menuLines[5].isReleased = false;
+			return &pistonPositions.flushing;
 		}
 		if(menuLines[6].isReleased == true)
 		{
-			stepResult = 7;
-			menuLines[6].isReleased = false;
+			return &pistonPositions.filtering;
 		}
         if(scrollUpBut.isReleased == true){
            if(steps_frame_Scroll_cnt > 0){ steps_frame_Scroll_cnt--;
@@ -141,15 +125,13 @@ int8_t ShowStepsFrame(void)
 
 void createFrame(void)
 {
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
+    drawMainBar(false, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
     
     drawMainWindow();
     
     drawScrollButton(steps_frame_Scroll_cnt == 0 ? 0 : (steps_frame_Scroll_cnt == 2 ? 2 : 1));
     
-    drawStatusBarOkCancel();
-    
-    //drawClock();
+    drawStatusBarEmpty();
     
     drawStaticLines();	
 	
@@ -162,15 +144,6 @@ void createFrame(void)
     
 	/*Add buttons parameters*/
 	calcButParam();
-	/*Add buttons to Touch Controller*/
-//	for (uint8_t i = 0; i < sizeof(menuLines[0]); i++){
-//			TC_addButton(&menuLines[i]);
-//	}
-//	TC_addButton(&retBut);
-//	TC_addButton(&scrollUpBut);
-//	TC_addButton(&scrollDwnBut);
-	
-	//enableClockDraw = true;
 }
 
 void RefreshScrollBarStepsFrame()
@@ -230,8 +203,6 @@ void calcButParam()
     for (uint8_t i = steps_frame_Scroll_cnt; i < steps_frame_Scroll_cnt + 4; i++){
 			TC_addButton(&menuLines[i]);
 	}
-	TC_addButton(&retBut);
-  TC_addButton(&okBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 }

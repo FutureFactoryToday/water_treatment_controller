@@ -15,8 +15,7 @@ void ShowForcedRegenCustFrame(void)
     {
         if (updateFlags.sec == true){
           drawClock();
-					showRemeiningTime();
-					
+            showRemeiningTime();
           updateFlags.sec = false;
         }
 //        if(redraw)
@@ -74,7 +73,7 @@ void ShowForcedRegenCustFrame(void)
         }
         if (forceRegen.isReleased == true){
             drawFillButton(80, 180, 200, 60, "Начать", false);
-						PL_Planner(FORCE_START_NOW);
+			PL_Planner(FORCE_START_NOW);
             forceRegen.isReleased = false;
         }
         
@@ -90,11 +89,9 @@ void createFrame()
     
     drawMainWindow();
     
-   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
-
-		
 	showRemeiningTime();
       
     
@@ -104,7 +101,7 @@ void createFrame()
     
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
     
-    drawStatusBarLabel(ITEM_LOAD_TYPE[loadType]);
+    drawStatusBarLabel(ITEM_FILTER_SELECTION[fp->params.chosenTaskNum]);
     
     drawClock();
     
@@ -112,7 +109,7 @@ void createFrame()
    
 	/*Add buttons to Touch Controller*/
 	
-		TC_addButton(&retBut);
+	TC_addButton(&retBut);
     TC_addButton(&forceRegen);
     
     //enableClockDraw = true;
@@ -161,23 +158,23 @@ void showRemeiningTime(void){
 		}
 	}
 	switch(PL_status){
-                case (PL_WAITING):{
-                    statusColor = LCD_COLOR_RED;
-                    break;
-                }
-                case (PL_ALARM_SET):{
-                    statusColor = LCD_COLOR_BLUE;
-                    break;
-                }
-                case (PL_WORKING):{
-                    statusColor = LCD_COLOR_GREEN;
-                    break;
-                }
-                case (PL_FORCED_ALARM_SET):{
-                    statusColor = LCD_COLOR_YELLOW;
-                    break;
-                }
-            }
-            BSP_LCD_SetTextColor(statusColor);
-            BSP_LCD_FillCircle(355, 210, 15);
+        case (PL_WAITING):{
+            statusColor = LCD_COLOR_RED;
+            break;
+        }
+        case (PL_ALARM_SET):{
+            statusColor = LCD_COLOR_BLUE;
+            break;
+        }
+        case (PL_WORKING):{
+            statusColor = LCD_COLOR_GREEN;
+            break;
+        }
+        case (PL_FORCED_ALARM_SET):{
+            statusColor = LCD_COLOR_YELLOW;
+            break;
+        }
+    }
+    BSP_LCD_SetTextColor(statusColor);
+    BSP_LCD_FillCircle(355, 210, 15);
 }
