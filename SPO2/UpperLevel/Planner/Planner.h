@@ -65,6 +65,7 @@ extern uint32_t monthBetweenService;
 extern uint32_t waterBeforeRegen;
 extern wtc_time_t lastService;
 extern uint32_t loadType;
+extern task_line_t* currentStep;
 /*Prototypes */
 
 void PL_Init(void);

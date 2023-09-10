@@ -1,4 +1,4 @@
-
+#ifdef ST7796S
 #include "main.h"
 #include "TFT/lcd/FT6336/ctpiic.h"
 
@@ -189,8 +189,7 @@ uint8_t CTP_IIC_Read_Byte(unsigned char ack)
  	return receive;
 }
 
-
-
+#endif
 
 
 

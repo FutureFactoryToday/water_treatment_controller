@@ -216,10 +216,18 @@ void Error_Handler(void);
 #endif
 
 #ifdef ILI9488
-	#define TOUCH_INT_Pin LL_GPIO_PIN_3
-	#define TOUCH_INT_GPIO_Port GPIOA
-	#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
-	#define TOUCH_INT_LINE LL_EXTI_LINE_3
+#define TOUCH_INT_Pin LL_GPIO_PIN_3
+#define TOUCH_INT_GPIO_Port GPIOA
+#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
+#define TOUCH_CS_Pin LL_GPIO_PIN_4
+#define TOUCH_CS_GPIO_Port GPIOA
+#define TOUCH_SCK_Pin LL_GPIO_PIN_5
+#define TOUCH_SCK_GPIO_Port GPIOA
+#define TOUCH_MISO_Pin LL_GPIO_PIN_6
+#define TOUCH_MISO_GPIO_Port GPIOA
+#define TOUCH_MOSI_Pin LL_GPIO_PIN_7
+#define TOUCH_MOSI_GPIO_Port GPIOA
+
 #endif
 
 #ifndef NVIC_PRIORITYGROUP_0

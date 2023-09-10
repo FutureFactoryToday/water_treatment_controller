@@ -42,18 +42,18 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   TsXBoundary = XSize;
   TsYBoundary = YSize;
 
-//	if (fp->isLoaded != 1){
-//		SERV_TS_CALIB();
-//	} else {
-//		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
-//			SERV_TS_CALIB();
-//		} else {
-//			kX = (int16_t)fp->params.ts_conf.kX;
-//			bX = (int16_t)fp->params.ts_conf.bX;
-//			kY = (int16_t)fp->params.ts_conf.kY;
-//			bY = (int16_t)fp->params.ts_conf.bY;
-//		}
-//	}
+	if (fp->isLoaded != 1){
+		SERV_TS_CALIB();
+	} else {
+		if (sysParam.LCD_ROTATION != ILI9486_ORIENTATION || sysParam.LCD_TYPE != COMPILED_LCD_TYPE){
+			SERV_TS_CALIB();
+		} else {
+			kX = (int16_t)fp->params.ts_conf.kX;
+			bX = (int16_t)fp->params.ts_conf.bX;
+			kY = (int16_t)fp->params.ts_conf.kY;
+			bY = (int16_t)fp->params.ts_conf.bY;
+		}
+	}
 	
 	
   if(ts_drv)
@@ -75,7 +75,7 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
 void BSP_TS_GetState(TS_StateTypeDef* TsState)
 {
   
-	#ifdef ILI9486 || ILI9488
+	#ifdef ILI9488
 	uint16_t x, y;
   int32_t  x1, y1, x2, y2;
   for (uint8_t i = 0; i < TS_RESCAN_TIME; i++){

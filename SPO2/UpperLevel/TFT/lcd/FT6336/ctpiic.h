@@ -1,4 +1,4 @@
-
+#ifdef ST7796S
 #ifndef __CTPIIC_H
 #include <stdint.h>
   	   		   
@@ -25,7 +25,7 @@ void CTP_Delay(uint8_t Delay);
 #endif
 
 
-
+#endif
 
 
 

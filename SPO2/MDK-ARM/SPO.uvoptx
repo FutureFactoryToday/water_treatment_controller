@@ -157,18 +157,50 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>88</LineNumber>
+          <LineNumber>188</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134260576</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\GUI\Frames\ManualFilteringSettings.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\UpperLevel\GUI\Frames\forcedRegenCustomerFrame.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/GUI/Frames/ManualFilteringSettings.c\88</Expression>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>121</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\UpperLevel\GUI\Frames\forcedRegenCustomerFrame.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>169</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\UpperLevel\GUI\Frames\forcedRegenCustomerFrame.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -190,37 +222,82 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ptr</ItemText>
+          <ItemText>poz</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>poz</ItemText>
+          <ItemText>pistonPositions,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pistonTasks</ItemText>
+          <ItemText>stepNum</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>stepNum</ItemText>
+          <ItemText>step</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>step</ItemText>
+          <ItemText>_tl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>_tl,0x0A</ItemText>
+          <ItemText>fp</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fp</ItemText>
+          <ItemText>buttonList,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tsState,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>x2</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>y2</ItemText>
+        </Ww>
+        <Ww>
+          <count>13</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>fp,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>poz,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>size,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>text</ItemText>
+        </Ww>
+        <Ww>
+          <count>17</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chosenTask,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>18</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>currentStep,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -245,7 +322,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>

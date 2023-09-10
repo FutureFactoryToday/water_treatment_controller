@@ -224,7 +224,7 @@ void SysTick_Handler(void)
 		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	}
 	if (_1ms_cnt%100 == 0){
-		#ifdef ILI9486 || ILI9488
+		#ifdef ILI9488
 		TC_checkButtons();
 		#endif
 		
@@ -278,8 +278,8 @@ void EXTI3_IRQHandler(void)
   {
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);		
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
-		#ifdef ILI9486 || ILI9488
-		TC_Interrupt();
+		#ifdef ILI9488
+		TC_Interrupt(0);
 		#endif
    }
 	/* USER CODE END LL_EXTI_LINE_3 */

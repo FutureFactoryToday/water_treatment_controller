@@ -84,5 +84,6 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void);
 void PC_Stop(void);
 void PC_Restart (void);
 bool PC_isBusy();
+int8_t PC_pozNum (uint32_t* poz);
 #endif /* __PISTON_CONTROL_H__ */
 

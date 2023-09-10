@@ -1,3 +1,4 @@
+#ifdef ST7796S	
 #include "main.h"
 #include "TFT/ts.h"
 #include "TFT/lcd/FT6336/ft6336.h"
@@ -180,3 +181,4 @@ void ft6336_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
 	*Y = ft6336_ts_drv.ty;
 			
 }
+#endif

@@ -124,9 +124,18 @@ void showRemeiningTime(void){
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
 	if (PL_status != PL_WORKING){
-		BSP_LCD_DisplayStringAt(75, 90, "Регенерация через" ,LEFT_MODE);
+	
+		BSP_LCD_DisplayStringAt(75, 90, "Запуск через" ,LEFT_MODE);
+		
+		
 	} else {
-		BSP_LCD_DisplayStringAt(75, 90, "До следующего шага " ,LEFT_MODE);
+		uint8_t* text;
+		uint8_t stepNum = PC_pozNum ((currentStep-1)->poz);
+		if (stepNum >= 0) {
+			text = ITEM_STEPS[stepNum];
+		}
+		//BSP_LCD_DisplayStringAt(75, 90, "До " ,LEFT_MODE);
+		BSP_LCD_DisplayStringAt(75, 90, text ,LEFT_MODE);
 	}
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
@@ -149,7 +158,7 @@ void showRemeiningTime(void){
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("mm",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, "м." ,LEFT_MODE);  
 		} else {
-			if (remain.second > 0) {
+			if (remain.second >= 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("ss",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
 		} 

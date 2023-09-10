@@ -228,3 +228,14 @@ void PC_Restart (void){
 bool PC_isBusy(){
 	return pcParams.workStatus == PC_IN_PROCESS;
 }
+
+int8_t PC_pozNum (uint32_t* poz){
+	uint32_t* ptr = &pistonPositions;
+	uint8_t size = sizeof(pistonPositions)/sizeof(uint32_t);
+	for (uint8_t i = 0; i < size; i++){
+		if (poz == ptr++){
+			return i;
+		}
+	}
+	return -1;
+}
