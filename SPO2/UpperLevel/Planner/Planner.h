@@ -66,6 +66,8 @@ extern uint32_t waterBeforeRegen;
 extern wtc_time_t lastService;
 extern uint32_t loadType;
 extern task_line_t* currentStep;
+extern bool cycled;
+extern uint32_t cycleCnt;
 /*Prototypes */
 
 void PL_Init(void);

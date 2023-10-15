@@ -75,7 +75,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		stallTime = LONG_STALL_TIME;
 		PC_GoToPoz(20);
 		while (pcParams.workStatus == PC_IN_PROCESS);
-		stallTime = 500;
+		stallTime = 1500;
 		pcParams.workStatus = PC_SEEK_ZERO;
 		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 80);
 		//Ждем пока сработает контроль или SEEK_TIME секунд
@@ -119,7 +119,11 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 //		pcParams.curPoz += mod(pcParams.minPoz);
 //		pcParams.minPoz = 0;
      if (result == PASSED){
-			PC_GoToPoz(pistonPositions.closedPosition);
+			 #ifdef newPositions
+			 PC_GoToPoz(pistonPositions.filtering);
+			 #else
+				PC_GoToPoz(pistonPositions.closedPosition);
+			#endif
 			 LL_mDelay(100);
 			 while( pcParams.workStatus == PC_IN_PROCESS);
 		}
@@ -171,6 +175,7 @@ void PC_Init(void){
 	pcParams.curPoz = 0;
 	
 	if (fp->isLoaded != 1){
+		#ifndef newPositions
 		pistonPositions.closedPosition = DEF_CLOSED_POS;
 		pistonPositions.backwash = DEF_BACKWASH_POS;
 		pistonPositions.regeneration = DEF_REGENERATION_POS;
@@ -178,6 +183,14 @@ void PC_Init(void){
 		pistonPositions.softening = DEF_SOFTENNING_POS;
 		pistonPositions.flushing = DEF_FLUSHING_POS;
 		pistonPositions.filtering = DEF_FILTERING_POS;
+		#else
+		pistonPositions.filtering = DEF_CLOSED_POS; //РабРеж
+		pistonPositions.forwardWash = DEF_FILTERING_POS;
+		pistonPositions.backwash = DEF_BACKWASH_POS; //обр пром
+		pistonPositions.saltering = DEF_SOFTENNING_POS;
+		pistonPositions.filling = DEF_FLUSHING_POS;
+		
+		#endif
 		fp->params.pistonPositions = pistonPositions;
 		fp->needToSave = 1;
 	} else {
@@ -196,7 +209,7 @@ uint32_t start;
 void PC_OpticSensInterrupt(void){
 	uint32_t delt = 0;
 	if (!fitstInt){
-		stallTime = 100;
+		stallTime = 500;
 	} else {
 		 fitstInt = false;
 	}

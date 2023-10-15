@@ -2,9 +2,10 @@
  * ST7796S LCD driver (optional built-in touchscreen driver)
  * 2020.11
 */
-
-#include <string.h>
 #include "main.h"
+#ifdef ST7796S
+#include <string.h>
+
 #include "TFT/lcd.h"
 #include "TFT/bmp.h"
 #include "st7796s.h"
@@ -754,3 +755,4 @@ void st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 //    }
 //}
 //#endif /* #if ST7796S_TOUCH == 1 */
+#endif

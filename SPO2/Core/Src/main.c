@@ -132,7 +132,7 @@ int main(void)
 	LL_mDelay(500);
 
 	FP_SaveParam();
-//	ShowManualDriveControl();
+	ShowForcedRegenCustFrame();
   ShowMainFrame();
 	//MOT_Start();
   /* USER CODE END 2 */

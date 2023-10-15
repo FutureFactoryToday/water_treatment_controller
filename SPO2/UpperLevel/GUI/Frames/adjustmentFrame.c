@@ -11,13 +11,17 @@ void ShowAdjustmentFrame(void)
 	adjustment_frame_Scroll_cnt = 0;
 	PC_Restart();
 	createFrame();
+	#ifndef newPositions
 	firstEl = &pistonPositions.closedPosition;
+	#else
+	firstEl = &pistonPositions.filtering;	
+	#endif
 	while(1)
 	{
-        if (updateFlags.sec == true){
-            drawClock();
-            updateFlags.sec = false;
-        }
+		if (updateFlags.sec == true){
+				drawClock();
+				updateFlags.sec = false;
+		}
 		if (updateFlags.optic){
 			 AnimatePosMenuFrame();
 			updateFlags.optic = false;
@@ -29,13 +33,22 @@ void ShowAdjustmentFrame(void)
 		}
     if (okBut.isReleased == true){
 			fp->needToSave = true;
+			#ifndef newPositions
 			fp->params.pistonPositions.closedPosition = pistonPositions.closedPosition;
 			fp->params.pistonPositions.backwash = pistonPositions.backwash;
 			fp->params.pistonPositions.regeneration = pistonPositions.regeneration;
 			fp->params.pistonPositions.filling = pistonPositions.filling;
 			fp->params.pistonPositions.softening = pistonPositions.softening;
 			fp->params.pistonPositions.flushing = pistonPositions.flushing;
-			fp->params.pistonPositions.filtering = pistonPositions.filtering;            
+			fp->params.pistonPositions.filtering = pistonPositions.filtering; 
+#else
+			fp->params.pistonPositions.filtering = pistonPositions.filtering;
+			fp->params.pistonPositions.forwardWash = pistonPositions.forwardWash;
+			fp->params.pistonPositions.backwash = pistonPositions.backwash;
+			fp->params.pistonPositions.saltering = pistonPositions.saltering;
+			fp->params.pistonPositions.filling = pistonPositions.filling;
+
+#endif			
 			FP_SaveParam(); 
 			okBut.isReleased = false;
 		}
@@ -50,20 +63,74 @@ void ShowAdjustmentFrame(void)
 			scrollDwnBut.isReleased = false;
 		}
         
-        
-//        if(hwndAdjustmentFrameControl == 30)
-//        {
-//            pistonPositions.closedPosition = 0;
-//            pistonPositions.backwash = 0;
-//            pistonPositions.regeneration = 0;
-//            pistonPositions.filling = 0;
-//            pistonPositions.softening = 0;
-//            pistonPositions.flushing = 0;
-//            pistonPositions.filtering = 0;
-//            
-//            createFrame();
-//        }
-        
+		#ifdef newPositions
+        if(menuLine[0].isReleased == true)
+        {
+					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
+					createFrame();
+					menuLine[0].isReleased = false;
+        }
+        if(menuLine[1].isReleased == true)
+        {
+					pistonPositions.forwardWash = ShowKeyboardFrame(0,99999);
+					createFrame();
+					menuLine[1].isReleased = false;
+        }
+        if(menuLine[2].isReleased == true)
+        {
+					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
+					createFrame();
+					menuLine[2].isReleased = false;
+        }
+        if(menuLine[3].isReleased == true)
+        {
+					pistonPositions.saltering = ShowKeyboardFrame(0,99999);
+					createFrame();
+					menuLine[3].isReleased = false;
+        }
+        if(menuLine[4].isReleased == true)
+        {
+					pistonPositions.filling = ShowKeyboardFrame(0,99999);
+					createFrame();
+					menuLine[4].isReleased = false;
+        }
+				//cycle start
+        if(playBut[0].isReleased == true)
+        {
+					PC_GoToPoz(pistonPositions.filtering);
+
+					playBut[0].isReleased = false;
+					createFrame();
+        }
+        if(playBut[1].isReleased == true)
+        {
+					PC_GoToPoz(pistonPositions.backwash);
+
+					playBut[1].isReleased = false;
+					createFrame();
+        }
+        if(playBut[2].isReleased == true)
+        {
+					PC_GoToPoz(pistonPositions.forwardWash);
+
+					playBut[2].isReleased = false;
+					createFrame();
+        }
+        if(playBut[3].isReleased == true)
+        {
+					PC_GoToPoz(pistonPositions.saltering);
+					playBut[3].isReleased = false;
+					createFrame();
+        }
+        if(playBut[4].isReleased == true)
+        {
+					PC_GoToPoz(pistonPositions.filling);
+
+					playBut[4].isReleased = false;
+					createFrame();
+        }
+       
+				#else 
         if(menuLine[0].isReleased == true)
         {
 					pistonPositions.closedPosition = ShowKeyboardFrame(0,99999);
@@ -107,7 +174,7 @@ void ShowAdjustmentFrame(void)
 					menuLine[6].isReleased = false;
         }
 				
-        
+       
         //cycle start
         if(playBut[0].isReleased == true)
         {
@@ -157,6 +224,7 @@ void ShowAdjustmentFrame(void)
 					playBut[6].isReleased = false;
 					createFrame();
         }
+				 #endif
     }
 }
 

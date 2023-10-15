@@ -20,9 +20,9 @@
 //#define PARAL_LCD
 
 /*LCD TYPE*/
-#define ILI9488
+//#define ILI9488
 //#define ILI9486
-//#define ST7796S
+#define ST7796S
 
 #define TS_RESCAN_TIME 10
 

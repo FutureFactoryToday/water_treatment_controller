@@ -1,5 +1,6 @@
-#ifdef ST7796S	
+
 #include "main.h"
+#ifdef ST7796S	
 #include "TFT/ts.h"
 #include "TFT/lcd/FT6336/ft6336.h"
 #include "TFT/lcd/FT6336/ctpiic.h"

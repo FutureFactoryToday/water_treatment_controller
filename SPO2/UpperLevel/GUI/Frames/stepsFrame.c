@@ -60,6 +60,7 @@ piston_poz_t* ShowStepsFrame(void)
            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_STEPS[4],LEFT_MODE);
            menuLines[4].isPressed = false;
         }
+				#ifndef newPositions
         if(menuLines[5].isPressed == true){
                 //Make it blue
            drawFillArcRec(menuLines[5].x, menuLines[5].y, menuLines[5].xSize, menuLines[5].ySize, LCD_COLOR_BLUE);
@@ -76,8 +77,8 @@ piston_poz_t* ShowStepsFrame(void)
            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_STEPS[6],LEFT_MODE);
            menuLines[6].isPressed = false;
         }
-        
-        
+        #endif
+     #ifndef newPositions   
 		if(menuLines[0].isReleased == true)
 		{
 			return &pistonPositions.closedPosition;
@@ -106,6 +107,28 @@ piston_poz_t* ShowStepsFrame(void)
 		{
 			return &pistonPositions.filtering;
 		}
+		#else 
+		if(menuLines[0].isReleased == true)
+		{
+			return &pistonPositions.filtering;
+		}
+		if(menuLines[1].isReleased == true)
+		{
+			return &pistonPositions.forwardWash;
+		}
+		if(menuLines[2].isReleased == true)
+		{
+			return &pistonPositions.backwash;
+		}
+		if(menuLines[3].isReleased == true)
+		{
+			return &pistonPositions.saltering;
+		}
+		if(menuLines[4].isReleased == true)
+		{
+			return &pistonPositions.filling;
+		}
+		#endif
         if(scrollUpBut.isReleased == true){
            if(steps_frame_Scroll_cnt > 0){ steps_frame_Scroll_cnt--;
                steps_frame_was_Scroll = 1;

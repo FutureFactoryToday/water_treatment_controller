@@ -3,7 +3,7 @@ void RefreshForcedRegenCustFrame(void);
 
 //int8_t hwndForcedRegenCustFrameControl = 0;
 static uint16_t statusColor;
-static button_t forceRegen; 
+static button_t forceRegen, cycledRegen; 
 wtc_time_t remain;
 static void createFrame();
 static void showRemeiningTime(void);
@@ -15,7 +15,7 @@ void ShowForcedRegenCustFrame(void)
     {
         if (updateFlags.sec == true){
           drawClock();
-            showRemeiningTime();
+          showRemeiningTime();
           updateFlags.sec = false;
         }
 //        if(redraw)
@@ -65,6 +65,11 @@ void ShowForcedRegenCustFrame(void)
             
             forceRegen.isPressed = false;
         }
+				if (cycledRegen.isPressed == true){
+					uint8_t* text = (cycled)?"ON":"OFF";
+					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, cycled);
+					cycledRegen.isPressed = false;
+				}
 
         /*Buttons releases*/
         if (retBut.isReleased == true){
@@ -73,9 +78,17 @@ void ShowForcedRegenCustFrame(void)
         }
         if (forceRegen.isReleased == true){
             drawFillButton(80, 180, 200, 60, "Начать", false);
-			PL_Planner(FORCE_START_NOW);
+						PL_Planner(FORCE_START_NOW);
             forceRegen.isReleased = false;
         }
+				if (cycledRegen.isReleased == true){
+					cycled = !cycled;
+					uint8_t* text = (cycled)?"ON":"OFF";
+					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, cycled);
+					
+					
+					cycledRegen.isReleased = false;
+				}
         
         
     }
@@ -90,9 +103,9 @@ void createFrame()
     drawMainWindow();
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-
-	showRemeiningTime();
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_DisplayStringAt(400, 140, "Цикл",LEFT_MODE);
+		showRemeiningTime();
       
     
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
@@ -100,7 +113,8 @@ void createFrame()
     BSP_LCD_DrawLine(60, 145, 420, 145);
     
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
-    
+		uint8_t* text = (cycled)?"ON":"OFF";
+    cycledRegen = drawFillButton(400, 180, 60, 60, text, cycled);
     drawStatusBarLabel(ITEM_FILTER_SELECTION[fp->params.chosenTaskNum]);
     
     drawClock();
@@ -109,7 +123,8 @@ void createFrame()
    
 	/*Add buttons to Touch Controller*/
 	
-	TC_addButton(&retBut);
+		TC_addButton(&retBut);
+		TC_addButton(&cycledRegen);
     TC_addButton(&forceRegen);
     
     //enableClockDraw = true;
@@ -146,26 +161,25 @@ void showRemeiningTime(void){
 		
 	} else {
 		remain = timeRemain();
-		if (remain.day > 0) {
+		if (remain.month > 0) {
+			BSP_LCD_DisplayStringAt(325, 90, intToStr(remain.month) ,LEFT_MODE);
+			BSP_LCD_DisplayStringAt(355, 90, " мес." ,LEFT_MODE);  
+		}
+			else if(remain.day > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("DD",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, " дн." ,LEFT_MODE);  
-		} else {
-			if (remain.hour > 0) {
+		} else if (remain.hour > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("hh",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, "ч." ,LEFT_MODE);  
-		} else {
-			if (remain.minute > 0) {
+		} else if (remain.minute > 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("mm",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, "м." ,LEFT_MODE);  
-		} else {
-			if (remain.second >= 0) {
+		} else if (remain.second >= 0) {
 			BSP_LCD_DisplayStringAt(325, 90, getFormatedTimeFromSource("ss",&remain) ,LEFT_MODE);
 			BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
-		} 
-		}
-		}
 		}
 	}
+	BSP_LCD_DisplayStringAt(400, 240, intToStr(cycleCnt),LEFT_MODE);
 	switch(PL_status){
         case (PL_WAITING):{
             statusColor = LCD_COLOR_RED;

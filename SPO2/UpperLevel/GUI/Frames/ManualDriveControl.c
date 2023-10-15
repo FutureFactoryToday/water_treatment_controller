@@ -5,15 +5,16 @@
 #define setPozBut 	 	270,150,  100, 50
 #define goPozBut		 	270,220,  100, 50, "GO"
 #define changeDirBut 	20,70,100, 50
-
-static button_t motStart, motStop, changeDir, curPoz, goPoz, setPoz; 
+#define addPozBut 	 	380,150,  100, 50, "+5"
+#define decPozBut		 	380,220,  100, 50, "-5"
+static button_t motStart, motStop, changeDir, curPoz, goPoz, setPoz, addPoz, decPoz; 
 static void createFrame (void);
-uint16_t poz;
+uint16_t poz ;
 uint8_t dir;
 int16_t dispPoz = 0;
 void ShowManualDriveControl(void)
 {
-	
+	poz = PC_GetParams()->curPoz;
 	createFrame();
 	
 	while(1)
@@ -28,6 +29,10 @@ void ShowManualDriveControl(void)
 			updateFlags.optic = false;
 		}
 		/*Button pressed*/
+		if (retBut.isReleased){
+			PC_GoToPoz(pistonPositions.filtering);
+			return;
+		}
 		if (motStart.isPressed == true){
 			drawFillButton(motStartBut, true);
 			motStart.isPressed = false;
@@ -81,7 +86,22 @@ void ShowManualDriveControl(void)
 			MOT_SetDir(dir);   
 			changeDir.isReleased = false;
 		}
-	
+		if (addPoz.isReleased == true){
+			if (poz < 650) {
+				poz += 5;
+			}
+			PC_GoToPoz(poz);
+			LL_mDelay(100);
+			addPoz.isReleased = false;
+		}
+		if (decPoz.isReleased == true){
+			if (poz >= 5) {
+				poz -= 5;
+			}
+			PC_GoToPoz(poz);
+			LL_mDelay(100);
+			decPoz.isReleased = false;
+		}
 	}
 }
 
@@ -92,7 +112,7 @@ void createFrame (void){
 	
 	dir = IN;
 	
-	drawMainBar(false, 190, 5, " ");
+	drawMainBar(true, 190, 5, " ");
 	
 	drawMainWindow();
 	
@@ -113,6 +133,8 @@ void createFrame (void){
 	
 	setPoz= drawFillButton(setPozBut,intToStr(poz), false);
 	
+	addPoz = drawFillButton(addPozBut, false);
+	decPoz = drawFillButton(decPozBut, false);					
 	drawStatusBarEmpty();
 	
 	drawClock();
@@ -120,11 +142,13 @@ void createFrame (void){
 	/*Add buttons settings*/
 	
 	/*Add Buttons*/
+			TC_addButton(&retBut);
 	TC_addButton(&motStart);
 	TC_addButton(&motStop);
 	TC_addButton(&goPoz);
   TC_addButton(&changeDir);
 	TC_addButton(&setPoz);
-	
+	TC_addButton(&addPoz);
+	TC_addButton(&decPoz);
 	enableClockDraw = true;
 }

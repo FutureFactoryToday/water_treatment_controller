@@ -30,18 +30,21 @@ uint8_t tasksCnt;
 wtc_time_t pl_dayWashTime = {0}, pl_nightWashTime = {0}, currentStepDateTime;
 task_line_t *currentStep;
 planer_status_t PL_status;
-bool forced;
+bool forced, cycled;
 uint32_t monthBetweenService;
 uint32_t waterBeforeRegen;
 wtc_time_t lastService;
 uint32_t loadType;
+uint32_t cycleCnt;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
 uint8_t findLastElement(piston_task_t* task);
 /*---------------------------------------------*/
 void PL_Init(){
 	currentStep = NULL;
+	cycleCnt = 0;
 	forced = false;
+	cycled = false;
 	PL_status = PL_WAITING;
 	if (fp->isLoaded != 1){
 		wtc_time_t zeroTime = {0};
@@ -191,13 +194,20 @@ void PL_ProceedStep(void){
 	} 
 	if (currentStep->poz == NULL){
 		PL_status = PL_WAITING;
-		chosenTask->startDateTime = *addDate(getTime(), &chosenTask->restartDateTime);
-		chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
-        copyTasksToFlash();
-        fp->needToSave = 1;
-        forced = false;
-        FP_SaveParam();
-		PL_Planner(START_NORMAL);
+		cycleCnt++;
+		if(cycled){
+			forced = false;
+			PL_Planner(FORCE_START_NOW);
+		} else {
+			chosenTask->startDateTime = *addDate(getTime(), &chosenTask->restartDateTime);
+			chosenTask->startDateTime = *setTime(&chosenTask->startDateTime,&chosenTask->restartDateTime);
+			copyTasksToFlash();
+			fp->needToSave = 1;
+			forced = false;
+			FP_SaveParam();
+			PL_Planner(START_NORMAL);
+		}
+		
 	}
 }
 
