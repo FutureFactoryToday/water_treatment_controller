@@ -24,6 +24,8 @@
 //#define ILI9486
 #define ST7796S
 
+#define newPositions
+
 #define TS_RESCAN_TIME 10
 
 #define MOT_TIM TIM8

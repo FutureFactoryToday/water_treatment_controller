@@ -41,7 +41,7 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
   /* Initialize x and y positions boundaries */
   TsXBoundary = XSize;
   TsYBoundary = YSize;
-
+/*
 	if (fp->isLoaded != 1){
 		SERV_TS_CALIB();
 	} else {
@@ -55,7 +55,7 @@ uint8_t BSP_TS_Init(uint16_t XSize, uint16_t YSize)
 		}
 	}
 	
-	
+	*/
   if(ts_drv)
     ret = TS_OK;
 

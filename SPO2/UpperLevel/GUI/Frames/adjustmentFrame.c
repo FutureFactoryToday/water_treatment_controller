@@ -14,7 +14,7 @@ void ShowAdjustmentFrame(void)
 	#ifndef newPositions
 	firstEl = &pistonPositions.closedPosition;
 	#else
-	firstEl = &pistonPositions.filtering;	
+	firstEl = &pistonPositions.rabPoz;	
 	#endif
 	while(1)
 	{
@@ -40,9 +40,9 @@ void ShowAdjustmentFrame(void)
 			fp->params.pistonPositions.filling = pistonPositions.filling;
 			fp->params.pistonPositions.softening = pistonPositions.softening;
 			fp->params.pistonPositions.flushing = pistonPositions.flushing;
-			fp->params.pistonPositions.filtering = pistonPositions.filtering; 
+			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz; 
 #else
-			fp->params.pistonPositions.filtering = pistonPositions.filtering;
+			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz;
 			fp->params.pistonPositions.forwardWash = pistonPositions.forwardWash;
 			fp->params.pistonPositions.backwash = pistonPositions.backwash;
 			fp->params.pistonPositions.saltering = pistonPositions.saltering;
@@ -66,7 +66,7 @@ void ShowAdjustmentFrame(void)
 		#ifdef newPositions
         if(menuLine[0].isReleased == true)
         {
-					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
+					pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[0].isReleased = false;
         }
@@ -97,7 +97,7 @@ void ShowAdjustmentFrame(void)
 				//cycle start
         if(playBut[0].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.filtering);
+					PC_GoToPoz(pistonPositions.rabPoz);
 
 					playBut[0].isReleased = false;
 					createFrame();
@@ -169,7 +169,7 @@ void ShowAdjustmentFrame(void)
         }
         if(menuLine[6].isReleased == true)
         {
-					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
+					pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[6].isReleased = false;
         }
@@ -219,7 +219,7 @@ void ShowAdjustmentFrame(void)
         }
         if(playBut[6].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.filtering);
+					PC_GoToPoz(pistonPositions.rabPoz);
 					
 					playBut[6].isReleased = false;
 					createFrame();

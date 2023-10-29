@@ -120,7 +120,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 //		pcParams.minPoz = 0;
      if (result == PASSED){
 			 #ifdef newPositions
-			 PC_GoToPoz(pistonPositions.filtering);
+			 PC_GoToPoz(pistonPositions.rabPoz);
 			 #else
 				PC_GoToPoz(pistonPositions.closedPosition);
 			#endif
@@ -182,13 +182,13 @@ void PC_Init(void){
 		pistonPositions.filling = DEF_FILLING_POS;
 		pistonPositions.softening = DEF_SOFTENNING_POS;
 		pistonPositions.flushing = DEF_FLUSHING_POS;
-		pistonPositions.filtering = DEF_FILTERING_POS;
+		pistonPositions.rabPoz = DEF_FILTERING_POS;
 		#else
-		pistonPositions.filtering = DEF_CLOSED_POS; //РабРеж
-		pistonPositions.forwardWash = DEF_FILTERING_POS;
+		pistonPositions.rabPoz = DEF_WORK_POS; //РабРеж
+		pistonPositions.forwardWash = DEF_FORWARD_POS;
 		pistonPositions.backwash = DEF_BACKWASH_POS; //обр пром
-		pistonPositions.saltering = DEF_SOFTENNING_POS;
-		pistonPositions.filling = DEF_FLUSHING_POS;
+		pistonPositions.saltering = DEF_SALTERING_POS;
+		pistonPositions.filling = DEF_FILLING_POS;
 		
 		#endif
 		fp->params.pistonPositions = pistonPositions;

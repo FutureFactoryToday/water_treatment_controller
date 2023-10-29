@@ -30,7 +30,7 @@ void ShowManualDriveControl(void)
 		}
 		/*Button pressed*/
 		if (retBut.isReleased){
-			PC_GoToPoz(pistonPositions.filtering);
+			PC_GoToPoz(pistonPositions.rabPoz);
 			return;
 		}
 		if (motStart.isPressed == true){

@@ -68,10 +68,10 @@ void PL_Init(){
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
 		
-		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.filtering;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.forwardWash;
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 8*60;
 		
-		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.closedPosition;
+		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.rabPoz;
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
 		
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
@@ -84,19 +84,19 @@ void PL_Init(){
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 8*60;
 		
-		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.softening;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.saltering;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 60*60;
 		
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 10*60; 	
 		
-		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.filtering;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.forwardWash;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
 		
-		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.flushing;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.filling;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
 		
-		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.closedPosition;
+		pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.rabPoz;
 		pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
 		
 		pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;

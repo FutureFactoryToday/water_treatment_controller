@@ -105,12 +105,12 @@ piston_poz_t* ShowStepsFrame(void)
 		}
 		if(menuLines[6].isReleased == true)
 		{
-			return &pistonPositions.filtering;
+			return &pistonPositions.rabPoz;
 		}
 		#else 
 		if(menuLines[0].isReleased == true)
 		{
-			return &pistonPositions.filtering;
+			return &pistonPositions.rabPoz;
 		}
 		if(menuLines[1].isReleased == true)
 		{
