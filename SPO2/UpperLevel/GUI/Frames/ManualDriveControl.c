@@ -9,27 +9,36 @@
 #define decPozBut		 	380,220,  100, 50, "-5"
 static button_t motStart, motStop, changeDir, curPoz, goPoz, setPoz, addPoz, decPoz; 
 static void createFrame (void);
-uint16_t poz ;
+uint16_t poz, manualPoz = 0;
 uint8_t dir;
 int16_t dispPoz = 0;
+uint8_t Speed = 20;
 void ShowManualDriveControl(void)
 {
-	poz = PC_GetParams()->curPoz;
+	//poz = PC_GetParams()->curPoz;
 	createFrame();
 	
 	while(1)
 	{		
+		LL_mDelay(10);
+		
 		if (updateFlags.sec == true){
 				drawClock();
+			
+				//drawTextLabel(curPozBut,intToStr(dispPoz));
 				updateFlags.sec = false;
 		}
-		if (updateFlags.optic == true || dispPoz != PC_GetParams()->curPoz){
-			dispPoz = PC_GetParams()->curPoz;
+		
+		if (dispPoz != PC_GetCurPoz()){
+			dispPoz = PC_GetCurPoz();
+//			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//			BSP_LCD_DisplayStringAt(270,100, intToStr(dispPoz), LEFT_MODE);
 			drawTextLabel(curPozBut,intToStr(dispPoz));
 			updateFlags.optic = false;
 		}
 		/*Button pressed*/
 		if (retBut.isReleased){
+			PC_GetParams()->autoControl = true;
 			PC_GoToPoz(pistonPositions.rabPoz);
 			return;
 		}
@@ -55,11 +64,14 @@ void ShowManualDriveControl(void)
 			changeDir.isPressed = false;
 		}   
     if (setPoz.isPressed == true){
-			poz = ShowKeyboardFrame(-1000,1000);
+			manualPoz = ShowKeyboardFrame(-1000,1000);
 			createFrame();
+			//drawFillButton(setPozBut,intToStr(manualPoz), false);
 		} 
 		/*Buttons releases*/
 		if (motStart.isReleased == true){
+			PC_GetParams()->autoControl = false;
+			MOT_SetSpeed(Speed);
 			MOT_Start();
 			motStart.isReleased = false;
 			drawFillButton(motStartBut, false);
@@ -68,9 +80,11 @@ void ShowManualDriveControl(void)
 			MOT_Stop();
 			motStop.isReleased = false;
 			drawFillButton(motStopBut, false);
+			PC_GetParams()->destPoz = PC_GetParams()->curPoz;
+			PC_GetParams()->autoControl = true;
 		}
 		if (goPoz.isReleased == true){
-			PC_GoToPoz(poz); 
+			PC_GoToPoz(manualPoz); 
 			goPoz.isReleased = false;
 			drawFillButton(goPozBut, false);
 		}
@@ -87,6 +101,7 @@ void ShowManualDriveControl(void)
 			changeDir.isReleased = false;
 		}
 		if (addPoz.isReleased == true){
+			poz = PC_GetCurPoz();
 			if (poz < 650) {
 				poz += 5;
 			}
@@ -95,6 +110,7 @@ void ShowManualDriveControl(void)
 			addPoz.isReleased = false;
 		}
 		if (decPoz.isReleased == true){
+			poz = PC_GetCurPoz();
 			if (poz >= 5) {
 				poz -= 5;
 			}
@@ -120,7 +136,7 @@ void createFrame (void){
 	BSP_LCD_DrawVLine(240,60,220);
 	motStart = drawFillButton(motStartBut, false);
 	motStop = drawFillButton(motStopBut, false);
-	drawTextLabel(curPozBut,intToStr(PC_GetParams()->curPoz));
+	drawTextLabel(curPozBut,intToStr(PC_GetCurPoz()));
 	goPoz = drawFillButton(goPozBut, false);
 	if (dir == IN){
 				dir = 0;
@@ -131,7 +147,7 @@ void createFrame (void){
 				changeDir=drawFillButton(changeDirBut,"OUT", false);
 			}
 	
-	setPoz= drawFillButton(setPozBut,intToStr(poz), false);
+	setPoz= drawFillButton(setPozBut,intToStr(manualPoz), false);
 	
 	addPoz = drawFillButton(addPozBut, false);
 	decPoz = drawFillButton(decPozBut, false);					

@@ -107,11 +107,11 @@ bool ft6336_ts_Init(uint16_t DeviceAddr)
 	uint8_t temp[2]; 	
 	
 	CTP_IIC_Init();      	//初始化电容屏的I2C总线  
-	LL_GPIO_ResetOutputPin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin);
+	LL_GPIO_ResetOutputPin(TOUCH_RES_GPIO_Port, TOUCH_RES_Pin);
 	//FT_RST=0;				//复位
 	LL_mDelay(10);
  	//FT_RST=1;				//释放复位		  
-	LL_GPIO_SetOutputPin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin);  
+	LL_GPIO_SetOutputPin(TOUCH_RES_GPIO_Port, TOUCH_RES_Pin);  
 	LL_mDelay(500);  	
 //	temp[0]=0;
 //	FT6336_WR_Reg(FT_DEVIDE_MODE,temp,1);	//进入正常操作模式 

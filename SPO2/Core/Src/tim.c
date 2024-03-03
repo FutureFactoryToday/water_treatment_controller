@@ -42,9 +42,9 @@ void MX_TIM3_Init(void)
   /* USER CODE BEGIN TIM3_Init 1 */
 
   /* USER CODE END TIM3_Init 1 */
-  TIM_InitStruct.Prescaler = 0;
+  TIM_InitStruct.Prescaler = 7200;
   TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
-  TIM_InitStruct.Autoreload = 65535;
+  TIM_InitStruct.Autoreload = 100;
   TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
   LL_TIM_Init(TIM3, &TIM_InitStruct);
   LL_TIM_DisableARRPreload(TIM3);
@@ -60,7 +60,7 @@ void MX_TIM3_Init(void)
   LL_TIM_DisableMasterSlaveMode(TIM3);
   /* USER CODE BEGIN TIM3_Init 2 */
 	LL_TIM_EnableAllOutputs(TIM3);
-	LL_TIM_OC_SetCompareCH1(TIM3,65535);
+	LL_TIM_OC_SetCompareCH1(TIM3,0);
 	LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
 	LL_TIM_EnableCounter(TIM3);
   /* USER CODE END TIM3_Init 2 */
@@ -141,6 +141,10 @@ void MX_TIM8_Init(void)
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
 
+  /* TIM8 interrupt Init */
+  NVIC_SetPriority(TIM8_UP_TIM13_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+
   /* USER CODE BEGIN TIM8_Init 1 */
 
   /* USER CODE END TIM8_Init 1 */
@@ -188,6 +192,68 @@ void MX_TIM8_Init(void)
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+}
+/* TIM11 init function */
+void MX_TIM11_Init(void)
+{
+
+  /* USER CODE BEGIN TIM11_Init 0 */
+
+  /* USER CODE END TIM11_Init 0 */
+
+  LL_TIM_InitTypeDef TIM_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM11);
+
+  /* TIM11 interrupt Init */
+  NVIC_SetPriority(TIM1_TRG_COM_TIM11_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),12, 0));
+  NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
+
+  /* USER CODE BEGIN TIM11_Init 1 */
+
+  /* USER CODE END TIM11_Init 1 */
+  TIM_InitStruct.Prescaler = 78;
+  TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+  TIM_InitStruct.Autoreload = 10000;
+  TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+  LL_TIM_Init(TIM11, &TIM_InitStruct);
+  LL_TIM_DisableARRPreload(TIM11);
+  /* USER CODE BEGIN TIM11_Init 2 */
+
+  /* USER CODE END TIM11_Init 2 */
+
+}
+/* TIM13 init function */
+void MX_TIM13_Init(void)
+{
+
+  /* USER CODE BEGIN TIM13_Init 0 */
+
+  /* USER CODE END TIM13_Init 0 */
+
+  LL_TIM_InitTypeDef TIM_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM13);
+
+  /* TIM13 interrupt Init */
+  NVIC_SetPriority(TIM8_UP_TIM13_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+
+  /* USER CODE BEGIN TIM13_Init 1 */
+
+  /* USER CODE END TIM13_Init 1 */
+  TIM_InitStruct.Prescaler = 72;
+  TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+  TIM_InitStruct.Autoreload = 100;
+  TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+  LL_TIM_Init(TIM13, &TIM_InitStruct);
+  LL_TIM_DisableARRPreload(TIM13);
+  /* USER CODE BEGIN TIM13_Init 2 */
+
+  /* USER CODE END TIM13_Init 2 */
 
 }
 /* TIM14 init function */

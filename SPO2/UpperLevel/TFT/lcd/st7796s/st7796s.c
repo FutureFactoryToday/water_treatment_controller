@@ -28,7 +28,7 @@ void     st7796s_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp);
 void     st7796s_DrawRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     st7796s_ReadRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
-
+void 		st7796s_BackLightControl (uint8_t BL);
 void 		LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
 bool		LCD_IO_isBusy();
 
@@ -52,6 +52,7 @@ LCD_DrvTypeDef   st7796s_drv =
   st7796s_FillRect,
   st7796s_ReadRGBImage,
   st7796s_Scroll,
+	st7796s_BackLightControl,
 };
 
 extern LCD_DrvTypeDef  *lcd_drv;
@@ -222,6 +223,9 @@ void     LCD_IO_ReadCmd8MultipleData24to16(uint8_t Cmd, uint16_t *pData, uint32_
 static  uint16_t  yStart, yEnd;
 
 //-----------------------------------------------------------------------------
+void st7796s_BackLightControl (uint8_t BL){
+	LCD_IO_Bl_OnOff(BL);
+}
 /**
   * @brief  Enables the Display.
   * @param  None

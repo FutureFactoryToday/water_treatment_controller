@@ -136,6 +136,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define PistonControlTim TIM11
+#define OpticDelayTim TIM13
+#define BLTim TIM3
 #define VPWR_SENS_Pin LL_GPIO_PIN_0
 #define VPWR_SENS_GPIO_Port GPIOC
 #define VCC2_CNTR_Pin LL_GPIO_PIN_1
@@ -150,7 +153,18 @@ void Error_Handler(void);
 #define TFT_COM_EN_GPIO_Port GPIOA
 #define VCC_SENS_Pin LL_GPIO_PIN_2
 #define VCC_SENS_GPIO_Port GPIOA
-
+#define TOUCH_INT_Pin LL_GPIO_PIN_3
+#define TOUCH_INT_GPIO_Port GPIOA
+#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
+#define TOUCH_RES_Pin LL_GPIO_PIN_4
+#define TOUCH_RES_GPIO_Port GPIOA
+#define TOUCH_SCL_Pin LL_GPIO_PIN_5
+#define TOUCH_SCL_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_Pin LL_GPIO_PIN_6
+#define CAP_TOUCH_INT_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_EXTI_IRQn EXTI9_5_IRQn
+#define TOUCH_SDA_Pin LL_GPIO_PIN_7
+#define TOUCH_SDA_GPIO_Port GPIOA
 #define TFT_DATA_COM_Pin LL_GPIO_PIN_5
 #define TFT_DATA_COM_GPIO_Port GPIOC
 #define REL_PWR_CNTR_Pin LL_GPIO_PIN_0
@@ -181,9 +195,9 @@ void Error_Handler(void);
 #define FRAM_WP_GPIO_Port GPIOC
 #define MEM_WP_Pin LL_GPIO_PIN_8
 #define MEM_WP_GPIO_Port GPIOA
-#define OPTIC_SENS_Pin LL_GPIO_PIN_11
-#define OPTIC_SENS_GPIO_Port GPIOA
-#define OPTIC_SENS_EXTI_IRQn EXTI15_10_IRQn
+#define OPTIC_GPIO_Pin LL_GPIO_PIN_11
+#define OPTIC_GPIO_GPIO_Port GPIOA
+#define OPTIC_GPIO_EXTI_IRQn EXTI15_10_IRQn
 #define ILED_Pin LL_GPIO_PIN_12
 #define ILED_GPIO_Port GPIOA
 #define MEM_CS_Pin LL_GPIO_PIN_15
@@ -201,35 +215,6 @@ void Error_Handler(void);
 #define REL1_ON_GPIO_Port GPIOB
 #define REL2_ON_Pin LL_GPIO_PIN_9
 #define REL2_ON_GPIO_Port GPIOB
-
-#ifdef ST7796S
-#define TOUCH_RST_Pin LL_GPIO_PIN_4
-#define TOUCH_RST_GPIO_Port GPIOA
-#define TOUCH_SCL_Pin LL_GPIO_PIN_5
-#define TOUCH_SCL_GPIO_Port GPIOA
-#define TOUCH_INT_Pin LL_GPIO_PIN_6
-#define TOUCH_INT_GPIO_Port GPIOA
-#define TOUCH_SDA_Pin LL_GPIO_PIN_7
-#define TOUCH_SDA_GPIO_Port GPIOA
-#define TOUCH_INT_EXTI_IRQn EXTI9_5_IRQn
-#define TOUCH_INT_LINE LL_EXTI_LINE_6
-#endif
-
-#ifdef ILI9488
-#define TOUCH_INT_Pin LL_GPIO_PIN_3
-#define TOUCH_INT_GPIO_Port GPIOA
-#define TOUCH_INT_EXTI_IRQn EXTI3_IRQn
-#define TOUCH_CS_Pin LL_GPIO_PIN_4
-#define TOUCH_CS_GPIO_Port GPIOA
-#define TOUCH_SCK_Pin LL_GPIO_PIN_5
-#define TOUCH_SCK_GPIO_Port GPIOA
-#define TOUCH_MISO_Pin LL_GPIO_PIN_6
-#define TOUCH_MISO_GPIO_Port GPIOA
-#define TOUCH_MOSI_Pin LL_GPIO_PIN_7
-#define TOUCH_MOSI_GPIO_Port GPIOA
-
-#endif
-
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */

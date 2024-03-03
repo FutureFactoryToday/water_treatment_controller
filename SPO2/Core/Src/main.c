@@ -69,7 +69,7 @@ void SystemClock_Config(void);
   * @retval int
   */
 int main(void)
- {
+{
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
 	__disable_irq();
@@ -85,7 +85,7 @@ int main(void)
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
 
   /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   */
@@ -114,6 +114,8 @@ int main(void)
   MX_TIM8_Init();
   MX_USART1_UART_Init();
   MX_TIM14_Init();
+  MX_TIM11_Init();
+  MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
 
 
@@ -122,16 +124,26 @@ int main(void)
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
-
+	
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0}; 
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	
+	LL_GPIO_LockPin(GPIOA,LL_GPIO_PIN_12);
+	LL_GPIO_LockPin(GPIOA,LL_GPIO_PIN_11);
 	initGUI();
 	PC_Init();
 	PL_Init();
 	FM_Init();
 	
-	__enable_irq();
+	
 	LL_mDelay(500);
 
 	FP_SaveParam();
+	__enable_irq();
 	ShowManualDriveControl();
 	//ShowForcedRegenCustFrame();
   ShowMainFrame();
@@ -140,6 +152,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	uint32_t cnt = 1;
   while (1)
   {
     /* USER CODE END WHILE */

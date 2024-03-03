@@ -89,6 +89,9 @@ button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t y
     BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
     BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
     
+		assert_param(radius == 0);
+	
+	//BSP_LCD_DrawCircle(xPos + radius, yPos + radius, radius);
     BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
     BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
     BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);

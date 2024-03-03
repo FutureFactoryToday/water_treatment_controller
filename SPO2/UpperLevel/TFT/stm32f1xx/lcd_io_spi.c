@@ -1034,7 +1034,7 @@ void LCD_Delay(uint32_t Delay)
 }
 
 //-----------------------------------------------------------------------------
-void LCD_IO_Bl_OnOff(uint8_t Bl)
+void LCD_IO_Bl_OnOff(uint8_t B1)
 {
   #if GPIOX_PORTNUM(LCD_BL) >= GPIOX_PORTNUM_A
   if(Bl)
@@ -1042,6 +1042,10 @@ void LCD_IO_Bl_OnOff(uint8_t Bl)
   else
     GPIOX_ODR(LCD_BL) = 1 - LCD_BLON;
   #endif
+	if (B1 > 100){
+		B1 = 100;
+	}
+	LL_TIM_OC_SetCompareCH1(BLTim,B1*10);
 }
 
 //-----------------------------------------------------------------------------
@@ -1181,6 +1185,10 @@ void LCD_IO_Init(void)
   osSemaphoreWait(spiDmaBinSemHandle, 1);
   #endif
   #endif  // #if DMANUM(LCD_DMA_RX) > 0
+	
+	LL_TIM_CC_EnableChannel(BLTim, LL_TIM_CHANNEL_CH1);
+	LL_TIM_EnableAllOutputs(BLTim);
+	LL_TIM_EnableCounter(BLTim);
 } // void LCD_IO_Init(void)
 
 //-----------------------------------------------------------------------------

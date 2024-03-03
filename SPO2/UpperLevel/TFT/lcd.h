@@ -94,6 +94,8 @@ typedef struct
   void     (*FillRect)(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
   void     (*ReadRGBImage)(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t*);
   void     (*Scroll)(int16_t, uint16_t, uint16_t);
+	
+	void 		(*BLControl)(uint8_t BL);
 }LCD_DrvTypeDef;    
 /**
   * @}

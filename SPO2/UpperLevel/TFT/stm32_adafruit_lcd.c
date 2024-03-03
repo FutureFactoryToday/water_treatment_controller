@@ -46,6 +46,10 @@ static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint1
 uint32_t getStringWidth (uint8_t* str);
 uint8_t getCharIndex(uint8_t* ch, bool ruChar);
 bool ruChar = false;
+
+void BSP_BL_Control (uint8_t BL){
+	lcd_drv->BLControl(BL);
+}
 /**
   * @brief  Initializes the LCD.
   * @param  None
@@ -656,7 +660,7 @@ void BSP_LCD_FillCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius)
     CurX++;
   }
 
-  BSP_LCD_DrawCircle(Xpos, Ypos, Radius);
+  //BSP_LCD_DrawCircle(Xpos, Ypos, Radius);
 }
 
 /**

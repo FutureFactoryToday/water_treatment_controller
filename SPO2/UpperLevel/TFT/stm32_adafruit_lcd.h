@@ -179,7 +179,9 @@ uint16_t BSP_LCD_ReadPixel(uint16_t Xpos, uint16_t Ypos);
 void     BSP_LCD_DrawRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     BSP_LCD_ReadRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
- 
+
+
+void BSP_BL_Control (uint8_t BL);
 #ifdef __cplusplus
 }
 #endif

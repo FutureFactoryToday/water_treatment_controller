@@ -354,6 +354,6 @@ void AnimatePosMenuFrame(void)
 	BSP_LCD_FillRect(POS_VALUE_X, POS_VALUE_Y,RESET_BUTTON_X - POS_VALUE_X,RESET_BUTTON_SIZE_Y);
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetCurPoz()), LEFT_MODE);
 	
 }

@@ -180,36 +180,11 @@ void PendSV_Handler(void)
 /**
   * @brief This function handles System tick timer.
   */
-volatile uint16_t intCnt = 0, optCnt = 0, falseOptCnt = 0;
-volatile uint8_t intState, waitState;
-volatile int8_t optDelayCnt;
-volatile bool wasFront;
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 	
-	PC_Control();
-//	if (optDelayCnt > 0 ){
-//		optDelayCnt--;
-//		if (!optDelayCnt){
-//			if (LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin) == intState && intState == waitState){
-//				PC_OpticSensInterrupt();
-//				waitState = !LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin);
-//				updateFlags.optic = true;
-//			}
-//		}
-//	}
-	if (optCnt){
-		if (wasFront && LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port,OPTIC_SENS_Pin)){
-			if (!(--optCnt)){
-				PC_OpticSensInterrupt();
-				wasFront = false;
-			}
-		} else {
-			wasFront = false;
-			optCnt = 0;
-		}
-	}
+	
 	if (touchDelay)
 		touchDelay--;
 	#ifdef ST7796S;
@@ -220,14 +195,13 @@ void SysTick_Handler(void)
 		}
 	#endif
 	_1ms_cnt++; 
-	if (_1ms_cnt%500 == 0){
-		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-	}
+//	if (_1ms_cnt%500 == 0){
+//		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+//	}
 	if (_1ms_cnt%100 == 0){
 		#ifdef ILI9488
 		TC_checkButtons();
 		#endif
-		
 	}
   /* USER CODE END SysTick_IRQn 0 */
 
@@ -276,14 +250,14 @@ void EXTI3_IRQHandler(void)
   /* USER CODE END EXTI3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
-		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);		
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 		#ifdef ILI9488
 		TC_Interrupt(0);
 		#endif
-   }
-	/* USER CODE END LL_EXTI_LINE_3 */
-  
+   
+    /* USER CODE END LL_EXTI_LINE_3 */
+  }
   /* USER CODE BEGIN EXTI3_IRQn 1 */
 
   /* USER CODE END EXTI3_IRQn 1 */
@@ -304,25 +278,29 @@ void EXTI9_5_IRQHandler(void)
 		#ifdef ST7796S
 		TC_Interrupt(0);
 		#endif
-	}
+	
     /* USER CODE END LL_EXTI_LINE_6 */
-  
+  }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
   /* USER CODE END EXTI9_5_IRQn 1 */
 }
 
 /**
-  * @brief This function handles SPI1 global interrupt.
+  * @brief This function handles TIM1 trigger and commutation interrupts and TIM11 global interrupt.
   */
-void SPI1_IRQHandler(void)
+void TIM1_TRG_COM_TIM11_IRQHandler(void)
 {
-  /* USER CODE BEGIN SPI1_IRQn 0 */
+  /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 0 */
+	if(LL_TIM_IsActiveFlag_UPDATE(TIM11)){
+			LL_TIM_ClearFlag_UPDATE(TIM11);
+			PC_Control();
+		}
+  /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
 
-  /* USER CODE END SPI1_IRQn 0 */
-  /* USER CODE BEGIN SPI1_IRQn 1 */
+  /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 1 */
 
-  /* USER CODE END SPI1_IRQn 1 */
+  /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 1 */
 }
 
 /**
@@ -341,33 +319,48 @@ void SPI2_IRQHandler(void)
 /**
   * @brief This function handles EXTI line[15:10] interrupts.
   */
-
-
 void EXTI15_10_IRQHandler(void)
 {
-   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
   /* USER CODE END EXTI15_10_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
+    /* USER CODE BEGIN LL_EXTI_LINE_10 */
+		
+    /* USER CODE END LL_EXTI_LINE_10 */
+  }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
   {
-		
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
-//		intState = LL_GPIO_IsInputPinSet(OPTIC_SENS_GPIO_Port, OPTIC_SENS_Pin);
-//		optDelayCnt = 3;
-		//PC_OpticSensInterrupt();
-		optCnt = 3;
-		wasFront = true;
+		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_9);
+		PC_GetParams()->opticInt = LL_GPIO_IsInputPinSet(OPTIC_GPIO_GPIO_Port, OPTIC_GPIO_Pin);
     /* USER CODE END LL_EXTI_LINE_11 */
   }
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
-	if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
-		{
-			LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
-			/* USER CODE BEGIN LL_EXTI_LINE_15 */
-			//FM_Sense_Interrupt();
-			/* USER CODE END LL_EXTI_LINE_15 */
-		}
   /* USER CODE END EXTI15_10_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 update interrupt and TIM13 global interrupt.
+  */
+void TIM8_UP_TIM13_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
+	if (LL_TIM_IsActiveFlag_UPDATE(OpticDelayTim)){
+		LL_TIM_ClearFlag_UPDATE(OpticDelayTim);
+		if (opticCnt > 0){
+			opticCnt--;
+		}
+		PC_OpticTest();
+	}
+  /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
+
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
+
+  /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

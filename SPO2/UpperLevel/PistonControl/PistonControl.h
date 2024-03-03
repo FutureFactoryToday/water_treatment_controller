@@ -23,7 +23,7 @@
 #define STALL_TIME 500 //мс
 #define LONG_STALL_TIME 1500
 #define FULL_LENGTH 560 //обороты
-#define SEEK_TIME 20 //сек
+#define SEEK_TIME 10 //сек
 #define PISTON_MOVE_MIN 100 //обороты
 #define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
 
@@ -61,9 +61,14 @@ typedef enum {
 typedef struct {
 	pc_calib_result_t calibResult;
 	pc_work_status_t workStatus;
+	int16_t destPoz;
 	int16_t curPoz;
 	int32_t maxPoz;
 	int32_t minPoz;
+	bool opticInt;
+	bool autoControl;
+	bool destComplete;
+	bool calibration;
 } pc_params_t;
 
 typedef struct {
@@ -86,13 +91,15 @@ typedef struct {
 
 /*Global params*/
 extern piston_poz_t pistonPositions;
-
+extern uint32_t intPoz;
+extern int8_t opticCnt;
 /*Prototypes */
 void PC_Init(void);
 void PC_GoToPozWithSpeed (int32_t dest, uint8_t speed);
 void PC_GoToPoz (int32_t dest);
 void PC_OpticSensInterrupt(void);
 pc_params_t* PC_GetParams(void);
+int16_t PC_GetCurPoz(void);
 void PC_Control(void);
 //Если калибровка прошла успещно вернется 2, иначе что-то не нашли
 pc_calib_result_t PC_AUTO_CALIBRATE(void);
@@ -100,5 +107,6 @@ void PC_Stop(void);
 void PC_Restart (void);
 bool PC_isBusy();
 int8_t PC_pozNum (uint32_t* poz);
+void PC_OpticTest();
 #endif /* __PISTON_CONTROL_H__ */
 

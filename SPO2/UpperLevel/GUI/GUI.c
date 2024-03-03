@@ -62,6 +62,7 @@ void initGUI(void){
 	BSP_LCD_Init();
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(0x1947);
+	BSP_BL_Control(100);
 	BSP_LCD_DrawBitmap(148,100,&LOGO);
 
 	//LL_mDelay(3000);

@@ -110,7 +110,7 @@ void TC_Interrupt(uint8_t cause){
 	BSP_TS_GetState(&tsState);
 	if (cause == 0){//Первое нажатие
 		if (tsState.TouchDetected == 1){
-			LL_EXTI_DisableIT_0_31(TOUCH_INT_LINE);
+			LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_6);
 			TC_checkButtons();
 			touchCheckDelay = 100;
 		}
@@ -120,7 +120,7 @@ void TC_Interrupt(uint8_t cause){
 			touchCheckDelay = 100;
 		} else {
 			TC_releaseButtons();
-			LL_EXTI_EnableIT_0_31(TOUCH_INT_LINE);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_6);
 		}
 	}	
 	#endif
