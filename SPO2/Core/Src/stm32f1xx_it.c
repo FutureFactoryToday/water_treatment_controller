@@ -183,8 +183,6 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	
-	
 	if (touchDelay)
 		touchDelay--;
 	#ifdef ST7796S;
@@ -226,16 +224,18 @@ void RTC_IRQHandler(void)
 	updateFlags.sec = true;
 	RTC_Interrupt();
 	LL_RTC_ClearFlag_SEC(RTC);
+	
+ PL_Interrupt();
 	//FM_incFlowMeter();
-	if (enableClockDraw){
-		//drawClock();
-	}
+//	if (enableClockDraw){
+//		//drawClock();
+//	}
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-	if (LL_RTC_IsActiveFlag_ALR(RTC)){
-		ALARM_INTERRUPT();
-		LL_RTC_ClearFlag_ALR(RTC);
-	}
+//	if (LL_RTC_IsActiveFlag_ALR(RTC)){
+//		ALARM_INTERRUPT();
+//		LL_RTC_ClearFlag_ALR(RTC);
+//	}
   
   /* USER CODE END RTC_IRQn 1 */
 }

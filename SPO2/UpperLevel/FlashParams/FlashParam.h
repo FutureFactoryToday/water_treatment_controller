@@ -30,13 +30,10 @@ typedef struct {
 	sys_param_t sysPar;
 	stored_ts_conf_t ts_conf;
 	piston_poz_t pistonPositions;
-	piston_task_t pistonTasks[TASK_NUM];
-  uint32_t chosenTaskNum;
-	uint32_t waterBeforeRegen;
-	uint32_t monthBetweenService;
-	uint32_t lastService;
+	planer_t planner;
+	
+	
 	uint32_t endLoadFlag;
-	uint32_t loadType;
 } stored_params_t;
 
 typedef struct {

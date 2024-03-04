@@ -19,7 +19,7 @@
 
 /*Public defines */
 #define MIN_DATE_TIME {1900, 1, 1, 0,0,0}
-#define DEFAULT_TIME {2022, 10, 22,12,0,0}
+#define DEFAULT_TIME {2024, 03, 01,12,0,0}
 #define DAYS_NUM 7
 #define MONTHS_NUM 12
 
@@ -55,6 +55,7 @@ wtc_time_t* getTime (void);
 //���������� ��� ������ �����
 void RTC_Interrupt(void);
 
+time_t getRTC();
 /*
 	������� ��� ������ ������� �� �����
 ������� ������: ������ � �������� ������ �� �����, �������� � System.language:
