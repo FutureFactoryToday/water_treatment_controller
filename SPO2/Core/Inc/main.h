@@ -111,8 +111,17 @@ extern "C" {
 #include "TFT/lcd/FT6336/ctpiic.h"
 #include "GUI/Frames/ManualDriveControl.h"
 #include "GUI/Frames/ManualFilteringSettings.h"
+#include "GUI/Frames/historyErrorsFrame.h"
+#include "GUI/Frames/historyFilterFrame.h"
+#include "GUI/Frames/historyMaxWaterFrame.h"
+#include "GUI/Frames/historyMenuFrame.h"
+#include "GUI/Frames/historyWaterFrame.h"
+#include "GUI/Frames/inputOneFrame.h"
+#include "GUI/Frames/universalOutputFrame.h"
+#include "GUI/Frames/elMagFrame.h"
 #include "GUI/Frames/periodRegenFrame.h"
 #include "GUI/Frames/filterCycleFrame.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
