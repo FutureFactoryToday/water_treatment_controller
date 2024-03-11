@@ -12,7 +12,7 @@ void ShowDaysBetweenRegenCustFrame(void)
             updateFlags.sec = false;
         }
         if (updateFlags.sec == true){
-            if(chosenTask == NULL){
+            if(planner.currentTask == NULL){
                 BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
                 BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
                 BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, PL_NOT_INITED, CENTER_MODE);
@@ -20,7 +20,7 @@ void ShowDaysBetweenRegenCustFrame(void)
             else{
                 BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
                 BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, intToStr(chosenTask->restartDateTime.day), CENTER_MODE);
+                BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, intToStr(intToWTCTime(planner.currentTask->restartDateTime).day), CENTER_MODE);
             }
             updateFlags.sec = false;
         }
@@ -35,7 +35,7 @@ void createFrame(void)
 {
     TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_DAYS_BETWEEN_REGEN);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_DAYS_BETWEEN_REGEN);
     
     drawMainWindow();
     

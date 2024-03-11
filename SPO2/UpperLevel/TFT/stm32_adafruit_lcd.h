@@ -82,7 +82,7 @@
 #define LCD_COLOR_MAGENTA       0xF81F
 #define LCD_COLOR_YELLOW        0xFFE0
 #define LCD_COLOR_WHITE         0xFFFF
-  
+#define LCD_COLOR_DARKBLUE      0x1947
 //-----------------------------------------------------------------------------
 /* Interface section (no modify) */   
 
@@ -180,8 +180,7 @@ void     BSP_LCD_DrawRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, ui
 void     BSP_LCD_ReadRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
-
-void BSP_BL_Control (uint8_t BL);
+void 			BSP_BL_Control (uint8_t BL);
 #ifdef __cplusplus
 }
 #endif

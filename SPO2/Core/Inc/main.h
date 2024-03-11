@@ -80,6 +80,7 @@ extern "C" {
 #include "GUI/Frames/widgets.h"
 #include "GUI/Frames/keyboardFrame.h"
 #include "GUI/Frames/mainFrame.h"
+#include "GUI/Frames/mainMenuFrame.h"
 #include "GUI/Frames/filterSelectionFrame.h"
 #include "GUI/Frames/softeningFrame.h"
 #include "GUI/Frames/filteringFrame.h"
@@ -110,6 +111,8 @@ extern "C" {
 #include "TFT/lcd/FT6336/ctpiic.h"
 #include "GUI/Frames/ManualDriveControl.h"
 #include "GUI/Frames/ManualFilteringSettings.h"
+#include "GUI/Frames/periodRegenFrame.h"
+#include "GUI/Frames/filterCycleFrame.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -241,6 +244,11 @@ void Error_Handler(void);
 #define TFT_SPI_MISO_Port GPIOB
 #define TFT_SPI_MOSI_Port GPIOB
 #define TFT_SPI_SCK_Port GPIOB
+
+#ifdef OLD_PCB
+#define REL2_CNTR_Pin LL_GPIO_PIN_2
+#define REL2_CNTR_GPIO_Port GPIOD
+#endif
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

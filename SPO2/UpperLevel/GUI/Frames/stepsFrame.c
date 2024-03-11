@@ -105,7 +105,7 @@ piston_poz_t* ShowStepsFrame(void)
 		}
 		if(menuLines[6].isReleased == true)
 		{
-			return &pistonPositions.rabPoz;
+			return &pistonPositions.filtering;
 		}
 		#else 
 		if(menuLines[0].isReleased == true)
@@ -148,7 +148,7 @@ piston_poz_t* ShowStepsFrame(void)
 
 void createFrame(void)
 {
-    drawMainBar(false, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
+    drawMainBar(false, true, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
     
     drawMainWindow();
     

@@ -74,7 +74,7 @@ void ShowDelayedRegenCustFrame(void)
         }
         if (forceRegen.isReleased == true){
             drawFillButton(80, 180, 200, 60, "Начать", false);
-						PL_Planner(FORCE_START_NEAREST);
+			PL_Planner(FORCE_START_NEAREST);
             forceRegen.isReleased = false;
         }
         
@@ -86,7 +86,7 @@ void createFrame()
 {
     TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FORCED_REGEN);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FORCED_REGEN);
     
     drawMainWindow();
     
@@ -104,7 +104,7 @@ void createFrame()
     
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
     
-    drawStatusBarLabel(ITEM_LOAD_TYPE[loadType]);
+    drawStatusBarLabel(ITEM_LOAD_TYPE[planner.loadType]);
     
     drawClock();
     
@@ -125,7 +125,7 @@ void showRemeiningTime(void){
 	BSP_LCD_FillRect(70, 90, 480,50);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (PL_status != PL_WORKING){
+	if (planner.status != PL_WORKING){
 		BSP_LCD_DisplayStringAt(75, 90, "Регенерация через" ,LEFT_MODE);
 	} else {
 		BSP_LCD_DisplayStringAt(75, 90, "До следующего шага " ,LEFT_MODE);
@@ -133,7 +133,7 @@ void showRemeiningTime(void){
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (chosenTask == NULL || PL_status == PL_WAITING){
+	if (planner.currentTask == NULL || planner.status == PL_FINISHED){
 		text = &PL_NOT_INITED;
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
@@ -159,21 +159,17 @@ void showRemeiningTime(void){
 		}
 		}
 	}
-	switch(PL_status){
-                case (PL_WAITING):{
+	switch(planner.status){
+                case (PL_FINISHED):{
                     statusColor = LCD_COLOR_RED;
                     break;
                 }
-                case (PL_ALARM_SET):{
+                case (PL_SET):{
                     statusColor = LCD_COLOR_BLUE;
                     break;
                 }
                 case (PL_WORKING):{
                     statusColor = LCD_COLOR_GREEN;
-                    break;
-                }
-                case (PL_FORCED_ALARM_SET):{
-                    statusColor = LCD_COLOR_YELLOW;
                     break;
                 }
             }

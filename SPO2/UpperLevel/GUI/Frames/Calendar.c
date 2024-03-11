@@ -126,7 +126,7 @@ void createFrame (void){
 
 	TC_clearButtons();
 	BSP_LCD_Clear(MID_COLOR);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
 	drawStatusBarOkCancel();
 	

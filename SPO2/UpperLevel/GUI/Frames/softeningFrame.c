@@ -10,11 +10,11 @@ static button_t menuLines[5];
 static uint8_t res[5];
 void ShowSofteningFrame(void)
 {
-    res[0] = pistonTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
-    res[1] = pistonTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
-    res[2] = pistonTasks[SOFTENING_TASK_NUM].step[2].secPause/60;
-    res[3] = pistonTasks[SOFTENING_TASK_NUM].step[3].secPause/60;
-    res[4] = pistonTasks[SOFTENING_TASK_NUM].step[4].secPause/60;
+    res[0] = planner.pistonTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
+    res[1] = planner.pistonTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
+    res[2] = planner.pistonTasks[SOFTENING_TASK_NUM].step[2].secPause/60;
+    res[3] = planner.pistonTasks[SOFTENING_TASK_NUM].step[3].secPause/60;
+    res[4] = planner.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause/60;
     softening_frame_Scroll_cnt = 0;
     createFrame();
     while(1)
@@ -25,11 +25,11 @@ void ShowSofteningFrame(void)
         }
 		 if(okBut.isReleased == true){
             okBut.isReleased = false;
-            pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * res[0];    
-            pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * res[1];   
-            pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * res[2];   
-            pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * res[3];
-            pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * res[4];
+            planner.pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * res[0];    
+            planner.pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * res[1];   
+            planner.pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * res[2];   
+            planner.pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * res[3];
+            planner.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * res[4];
             copyTasksToFlash();
 			fp->needToSave = 1;
 			FP_SaveParam();
@@ -124,7 +124,7 @@ void createFrame(void)
 	//Static refresh
     TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
     
     drawMainWindow();
     

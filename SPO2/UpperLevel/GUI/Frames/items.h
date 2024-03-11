@@ -17,6 +17,12 @@ extern uint8_t* ITEM_PINCODE_FRAME[];
 #define MODE_SERVICE "Сервис"
 extern uint8_t* ITEM_SERVICE_MENU[];
 
+//widgets
+#define NEXT_CYCLE_TIME "ч"
+#define CURRENT_WATER_CONSUMPTION "л/мин"
+#define AMOUNT_OF_WATER "л"
+
+
 //washingTimeCustomerFrame
 #define MODE_WASHING_TIME "Время промывки"
 #define DAY "День"
@@ -44,6 +50,9 @@ extern uint8_t* ITEM_FILTER_SELECTION[];
 
 //washingTimeServiceFrame
 #define MODE_REGEN_TIME "Время промывки"
+
+//washingTimeServiceFrame
+#define PERIOD_REGEN "Период промывки"
 
 //quantityCountServiceFrame
 #define MODE_QUANTITY_COUNT "Счетчик воды"

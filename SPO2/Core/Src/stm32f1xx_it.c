@@ -334,7 +334,7 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
-		LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_9);
+		
 		PC_GetParams()->opticInt = LL_GPIO_IsInputPinSet(OPTIC_GPIO_GPIO_Port, OPTIC_GPIO_Pin);
     /* USER CODE END LL_EXTI_LINE_11 */
   }

@@ -147,6 +147,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		PC_GoToPoz(20);
 		LL_mDelay(500);
 		while (pcParams.workStatus == PC_IN_PROCESS);
+		pcParams.workStatus = PC_READY;
 		pcParams.calibration = true;
 		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 80);
 		//Ждем пока сработает контроль или SEEK_TIME секунд

@@ -4,54 +4,59 @@ static void createFrame(void);
 static button_t timeBut;
 static wtc_time_t regTime;
 static uint8_t* text;
-void ShowWashingTimeServiceFrame(void)
+int ShowWashingTimeServiceFrame(void)
 {
-	if (chosenTask != NULL){
-		regTime = chosenTask->restartDateTime;
+	if (planner.currentTask != NULL){
+		regTime = intToWTCTime(planner.currentTask->restartDateTime);
 	}
-   createFrame();
+    createFrame();
     while(1)
     {
         if (updateFlags.sec == true){
             drawClock();
             updateFlags.sec = false;
         }
-			if(retBut.isReleased == true) {
-				retBut.isReleased = false;
-				
-				return;
-			}
-			if(cancelBut.isReleased == true) {
-				cancelBut.isReleased = false;
-				
-				return;
-			}
-			if (timeBut.isReleased == true){
-				if (chosenTask != NULL){
-					wtc_time_t tempTime = CSF_showFrame(&regTime);
-					if( !isZeroTime(&tempTime)){
-						regTime = *setTime(&regTime, &tempTime);
-						createFrame();
-					}
-				}
-				timeBut.isReleased = false;
-			}
-			if (timeBut.isPressed == true){
-				if (chosenTask != NULL){
-					drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
-				}
-					timeBut.isPressed = false;
-			}
-			if (okBut.isReleased == true){
-				if (chosenTask != NULL){
-					chosenTask->restartDateTime = *setTime(&chosenTask->restartDateTime, &regTime);
-					copyTasksToFlash();
-					fp->needToSave = 1;
-					FP_SaveParam();
-				}
-				okBut.isReleased = false;
-				return;
-			}
+        //Pressed
+        if (timeBut.isPressed == true){
+            if (planner.currentTask != NULL){
+                drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize()/2 - 20, 140, 40, getFormatedTimeFromSource("hh:mm", &regTime));
+            }
+            timeBut.isPressed = false;
+        }
+        //Released
+        if(retBut.isReleased == true) {
+            retBut.isReleased = false;
+            return 0;
+        }
+        if(cancelBut.isReleased == true) {
+            cancelBut.isReleased = false;
+            return 0;
+        }
+        if(homeBut.isReleased == true) {
+            homeBut.isReleased = false;
+            return 1;
+        }
+        if (timeBut.isReleased == true){
+            if (planner.currentTask != NULL){
+                wtc_time_t tempTime = CSF_showFrame(&regTime);
+                if( !isZeroTime(&tempTime)){
+                    regTime = *setTime(&regTime, &tempTime);
+                    //createFrame();
+                }
+            }
+            timeBut.isReleased = false;
+            createFrame();
+        }
+        if (okBut.isReleased == true){
+            if (planner.currentTask != NULL){
+                planner.currentTask->restartDateTime = wtcTimeToInt(&regTime);
+                fp->params.planner = planner;
+                fp->needToSave = 1;
+                FP_SaveParam();
+            }
+            okBut.isReleased = false;
+            return 0;
+        }
 			
     }
 }
@@ -61,19 +66,20 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
 	
 	drawStatusBarOkCancel();
+    drawClock();
 	
-	if (chosenTask == NULL){
+	if (planner.currentTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
 		text = getFormatedTimeFromSource("hh:mm", &regTime);
 	}
-	timeBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 - 40, 100, 40, text);
+	timeBut = drawTextLabel(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize()/2 - 20, 140, 40, text);
 	
-  TC_addButton(&timeBut);
+    TC_addButton(&timeBut);
 	TC_addButton(&retBut);
-TC_addButton(&okBut);	
-	drawClock();
+    TC_addButton(&homeBut);
+    TC_addButton(&okBut);	
 }

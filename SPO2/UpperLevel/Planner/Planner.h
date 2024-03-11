@@ -66,11 +66,12 @@ typedef struct{
 	piston_task_t pistonTasks[TASK_NUM];
 	piston_task_t *currentTask;
 	task_line_t *currentStep;
+	uint32_t currentTaskNum;
 	planer_status_t status;
 	wtc_time_t preferedTimeForWash;
 	uint32_t monthBetweenService;
 	uint32_t waterBeforeRegen;
-	wtc_time_t lastService;
+	time_t lastService;
 	uint32_t loadType;
 	uint32_t cycleCnt;
 }planer_t;
@@ -94,6 +95,6 @@ wtc_time_t timeRemain (void);
 bool PL_deleteTaskLine(piston_task_t* task, uint8_t line);
 bool PL_addTaskLine(piston_task_t* task,task_line_t tl);
 bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl);
-
+uint8_t PL_getCurrentTaskNum(void);
 
 #endif /* _PLANNER_H_ */

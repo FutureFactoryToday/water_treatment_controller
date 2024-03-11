@@ -18,7 +18,7 @@
 #define MODE_WASH_TIME_X 65
 #define MODE_WASH_TIME_Y 13
 
-void ShowWashTimCustFrame(void);
+int ShowWashTimCustFrame(void);
 
 //void RefreshWashTimCustFrame(void);
 

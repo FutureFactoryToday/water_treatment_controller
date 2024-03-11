@@ -16,23 +16,22 @@ void RefreshScrollBarServiceMenuFrame(void);
 
 void AnimateScrollBarKeysServiceMenuFrame(void);
 
-void ShowServiceMenuFrame(void)
+int ShowServiceMenuFrame(void)
 {
     service_menu_frame_Scroll_cnt = 0;
 
 		/*Static create*/
-		createFrame();
+	createFrame();
     while(1)
     {
-        if (updateFlags.sec == true){
+         if(updateFlags.sec == true){
             drawClock();
             updateFlags.sec = false;
-        }
+         }
 			/*Buttons pressed*/
          if(retBut.isPressed == true){
-             
             retBut.isPressed = false;
-            return;
+            //return 0;
          }
          if(menuLines[0].isPressed == true){
                 //Make it blue
@@ -90,7 +89,7 @@ void ShowServiceMenuFrame(void)
             BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_SERVICE_MENU[6],LEFT_MODE);
             menuLines[6].isPressed = false;
          }
-				 if(menuLines[7].isPressed == true){
+		 if(menuLines[7].isPressed == true){
                 //Make it blue
             drawFillArcRec(menuLines[7].x, menuLines[7].y, menuLines[7].xSize, menuLines[7].ySize, LCD_COLOR_BLUE);
             BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -98,7 +97,7 @@ void ShowServiceMenuFrame(void)
             BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[7].y + 9,ITEM_SERVICE_MENU[7],LEFT_MODE);
             menuLines[7].isPressed = false;
          }
-				 if(menuLines[8].isPressed == true){
+		 if(menuLines[8].isPressed == true){
                 //Make it blue
             drawFillArcRec(menuLines[8].x, menuLines[8].y, menuLines[8].xSize, menuLines[8].ySize, LCD_COLOR_BLUE);
             BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -117,7 +116,11 @@ void ShowServiceMenuFrame(void)
         /*Buttons released*/
          if(retBut.isReleased == true){
             retBut.isReleased = false;
-            return;
+            return 0;
+         }
+         if(homeBut.isReleased == true){
+            homeBut.isReleased = false;
+            return 1;
          }
          if(menuLines[0].isReleased == true){
             ShowFilterSelectionFrame();
@@ -154,13 +157,12 @@ void ShowServiceMenuFrame(void)
             menuLines[6].isReleased = false;
             createFrame();
          }
-				 if(menuLines[7].isReleased == true){
+         if(menuLines[7].isReleased == true){
             ShowAdjustmentFrame();   
             menuLines[7].isReleased = false;
             createFrame();
-         }
-				 
-				 if(menuLines[8].isReleased == true){
+         } 
+		if(menuLines[8].isReleased == true){
             ShowManualDriveControl();   
             menuLines[8].isReleased = false;
             createFrame();
@@ -185,7 +187,7 @@ void ShowServiceMenuFrame(void)
 void createFrame(void){
 	//TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_SERVICE);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_SERVICE);
     
     drawMainWindow();
     
@@ -266,6 +268,7 @@ void calcButParam()
 			TC_addButton(&menuLines[i]);
 	}
 	TC_addButton(&retBut);
+    TC_addButton(&homeBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 }

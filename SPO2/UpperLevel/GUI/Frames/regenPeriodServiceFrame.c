@@ -6,8 +6,8 @@ static uint16_t daysBetweenRegen;
 static uint8_t* text;
 void ShowRegenPeriodServiceFrame(void)
 {
-	if (chosenTask != NULL){
-		daysBetweenRegen = chosenTask->restartDateTime.day;
+	if (planner.currentTask != NULL){
+		daysBetweenRegen = intToWTCTime(planner.currentTask->restartDateTime).day;
 	}
 	createFrame();
 	while(1)
@@ -18,8 +18,8 @@ void ShowRegenPeriodServiceFrame(void)
         }
      
 		if(okBut.isReleased == true){	
-			if (chosenTask != NULL){
-				chosenTask->restartDateTime.day = daysBetweenRegen;
+			if (planner.currentTask != NULL){
+				planner.currentTask->restartDateTime = daysBetweenRegen*24*60*60;
 				copyTasksToFlash();			
 				fp->needToSave = 1;
 				FP_SaveParam();
@@ -29,7 +29,7 @@ void ShowRegenPeriodServiceFrame(void)
 		}       
 		
 		if(restartTextArea.isReleased == true){
-			if (chosenTask != NULL){  
+			if (planner.currentTask != NULL){  
 				uint16_t result = ShowKeyboardFrame(1,999);
 				if (result > 0 ) {
 					daysBetweenRegen = result;
@@ -40,7 +40,7 @@ void ShowRegenPeriodServiceFrame(void)
 			
 		}
 		if(restartTextArea.isReleased == true){
-			if (chosenTask != NULL){
+			if (planner.currentTask != NULL){
 				drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 30, BSP_LCD_GetYSize()/2 - 40, 60, 40, text);
 			}
 			restartTextArea.isReleased = false;
@@ -61,12 +61,12 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_PERIOD);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_PERIOD);
 	
 	drawStatusBarOkCancel();
 	
 	
-	if (chosenTask == NULL){
+	if (planner.currentTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
 		text = intToStr(daysBetweenRegen);

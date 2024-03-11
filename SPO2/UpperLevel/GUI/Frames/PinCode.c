@@ -103,7 +103,7 @@ void createPinFrame(){
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	pinFrameText = &ITEM_PINCODE_FRAME;
 	
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, (*(pinFrameText + MAIN_TEXT)));
+	drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, (*(pinFrameText + MAIN_TEXT)));
 	
 	drawStatusBarEmpty();
 		

@@ -5,6 +5,6 @@
 
 //Public defines sizers
 
-void ShowServiceMenuFrame(void);
+int ShowServiceMenuFrame(void);
 
 //void AnimateTimeServiceMenuFrame(void);

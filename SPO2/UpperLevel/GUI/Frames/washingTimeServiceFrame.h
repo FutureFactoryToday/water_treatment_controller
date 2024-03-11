@@ -17,4 +17,4 @@
 
 //Public defines statusbar sizers
 
-void ShowWashingTimeServiceFrame(void);
+int ShowWashingTimeServiceFrame(void);

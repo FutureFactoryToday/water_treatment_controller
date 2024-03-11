@@ -8,9 +8,6 @@
 #define BOT_LINE_WIDTH 50
 #define MED_LINE_WIDTH 220
 
-#define SMALL_LOGO_X  480 - 140
-#define SMALL_LOGO_Y  5
-
 #define DARK_COLOR LCD_COLOR_BLUE
 #define LIGHT_COLOR LCD_COLOR_WHITEBLUE
 #define MID_COLOR LCD_COLOR_WHITE
@@ -23,15 +20,17 @@
 
 #define RETURN_BUT_POS_X 0
 #define RETURN_BUT_POS_Y 0
-#define RETURN_BUT_SIZE_X TOP_LINE_WIDTH
-#define RETURN_BUT_SIZE_Y 100
+#define RETURN_BUT_SIZE_X 100
+#define RETURN_BUT_SIZE_Y TOP_LINE_WIDTH
 
-#define MODE_STATUS_TEXT_X 65
-#define MODE_STATUS_TEXT_Y 13
+#define HOME_BUT_X 430
+#define HOME_BUT_Y 0
 
-#define SMALL_LOGO_X  480 - 140
-#define SMALL_LOGO_Y  5
+#define MODE_STATUS_TEXT_X 105
+#define MODE_STATUS_TEXT_Y 16
 
+#define SMALL_LOGO_X  430
+#define SMALL_LOGO_Y  10
 
 //Public defines statusbar sizers
 #define STATUSBAR_POS_X 0
@@ -46,10 +45,10 @@
 #define CANCEL_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 3
 
 #define OK_X 320
-#define OK_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 3
+#define OK_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 5
 
 #define TEXT_X 30
-#define TEXT_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 3
+#define TEXT_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 5
 
 //Public defines main window sizers
 #define MAIN_WINDOW_POS_X 0
@@ -129,14 +128,14 @@
 
 //Clock defines
 #define CLOCK_X 390
-#define CLOCK_Y STATUSBAR_POS_Y + 2 //+ 24
+#define CLOCK_Y TEXT_Y //+ 24
 #define HOUR_X CLOCK_X
 #define MINUTE_X CLOCK_X + 2 * 15 + 10
 #define DIV_X CLOCK_X + 2 * 15
 
 //keyboard defines
 #define TEXT_CTRL_POS_X 40
-#define TEXT_CTRL_POS_Y TOP_LINE_WIDTH + 40
+#define TEXT_CTRL_POS_Y TOP_LINE_WIDTH + 30
 #define TEXT_CTRL_SIZE_X 400
 #define TEXT_CTRL_SIZE_Y BOT_LINE_WIDTH
 
@@ -146,12 +145,12 @@
 #define CURSOR_SIZE_Y 40
 
 #define LINE_KEYS_POS_X 0
-#define LINE_KEYS_POS_Y (TOP_LINE_WIDTH * 2) + 69
+#define LINE_KEYS_POS_Y (TOP_LINE_WIDTH * 2) + 49
 
 #define NUM_KEYS_POS_X 25
 #define NUM_KEYS_POS_Y LINE_KEYS_POS_Y + 4
 
-#define OK "Ок"
-#define CANCEL "Отмена"
+#define OK "ОK"
+#define CANCEL "ОТМЕНА"
     
 #endif 

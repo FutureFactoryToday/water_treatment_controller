@@ -1,6 +1,6 @@
 #include "main.h"
 
-void ShowMenuFrame(void);
+int ShowMenuFrame(void);
 
 void RefreshMenuFrame(void);
 

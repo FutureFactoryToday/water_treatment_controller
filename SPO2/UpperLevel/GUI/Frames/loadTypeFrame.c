@@ -25,7 +25,7 @@ void  showLoadTypeFrame()
 					loadBut[i].isPressed = false;
 				}
 				if (loadBut[i].isReleased){
-					fp->params.loadType = loadType = i;
+					fp->params.planner.loadType = planner.loadType = i;
 					fp->needToSave = 1;
 					FP_SaveParam();
 					return;
@@ -39,7 +39,7 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_LOAD_TYPE[4]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_LOAD_TYPE[4]);
 	drawStaticLines();
 	drawStatusBarEmpty();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);

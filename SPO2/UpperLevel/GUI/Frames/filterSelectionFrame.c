@@ -21,13 +21,13 @@ void ShowFilterSelectionFrame(void)
 {
     filter_selection_frame_Scroll_cnt = 0;
 
-		if(chosenTask == &pistonTasks[0]){
+		if(planner.currentTask == &planner.pistonTasks[0]){
 			markItem = 1;
 		} 
-		if(chosenTask == &pistonTasks[1]){
+		if(planner.currentTask == &planner.pistonTasks[1]){
 			markItem = 2;
 		}
-		if(chosenTask == &pistonTasks[2]){
+		if(planner.currentTask == &planner.pistonTasks[2]){
 			markItem = 3;
 		}
 		
@@ -40,8 +40,8 @@ void ShowFilterSelectionFrame(void)
         }
         if(okBut.isReleased == true){
             if (markItem > 0){
-                chosenTask = &pistonTasks[markItem - 1];
-                fp->params.chosenTaskNum = markItem - 1;
+                fp->params.planner.currentTask = planner.currentTask = &planner.pistonTasks[markItem - 1];
+                
                 fp->needToSave = 1;
                 FP_SaveParam();
             }
@@ -108,7 +108,7 @@ void createFrame(void)
   //Static refresh
 	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FILTER_SELECTION);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FILTER_SELECTION);
 	
 	drawStatusBarOkCancel();
 	

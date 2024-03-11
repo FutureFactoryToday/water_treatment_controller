@@ -11,22 +11,20 @@ static void createFrame();
 static void calcButParam();
 
 
-void ShowMenuFrame(void)
+int ShowMenuFrame(void)
 {
     menu_frame_Scroll_cnt = 0;
 		/*Static create*/
 		createFrame();
     while(1)
     {
-		if (updateFlags.sec == true){
+		 if(updateFlags.sec == true){
             drawClock();
             updateFlags.sec = false;
-        }
+         }
 			/*Buttons pressed*/
-         if (retBut.isPressed == true){
-             
-             retBut.isPressed = false;
-             
+         if(retBut.isPressed == true){
+            retBut.isPressed = false;
          }
          if(menuLines[0].isPressed == true){
                 //Make it blue
@@ -60,14 +58,14 @@ void ShowMenuFrame(void)
                 BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[3].y + 9,ITEM_MENU[3],LEFT_MODE);
                 menuLines[3].isPressed = false;
          }
-         if(menuLines[4].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_MENU[4],LEFT_MODE);
-                menuLines[4].isPressed = false;
-         }
+//         if(menuLines[4].isPressed == true){
+//                //Make it blue
+//                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
+//                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+//                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_MENU[4],LEFT_MODE);
+//                menuLines[4].isPressed = false;
+//         }
          if(scrollUpBut.isPressed == true){
                 //Make it blue
                 scrollUpBut.isPressed = false;
@@ -79,57 +77,60 @@ void ShowMenuFrame(void)
         /*Buttons released*/
          if (retBut.isReleased == true){
              retBut.isReleased = false;
-             return;
+             return 0;
+         }
+         if (homeBut.isReleased == true){
+             homeBut.isReleased = false;
+             return 1;
          }
          if(menuLines[0].isReleased == true){
-                TSF_showFrame();
+                if(TSF_showFrame() == 1) return 1;
                 menuLines[0].isReleased = false;
                 createFrame();
          }
          if(menuLines[1].isReleased == true){
-                ShowWashingTimeServiceFrame();
+                if(ShowWashTimCustFrame() == 1) return 1;
                 menuLines[1].isReleased = false;
                 createFrame();
          }
          if(menuLines[2].isReleased == true){
-                ShowForcedRegenCustFrame();
+                if(ShowPeriodRegenCustFrame() == 1) return 1;
                 menuLines[2].isReleased = false;
                 createFrame();
          }
          if(menuLines[3].isReleased == true){
-                ShowDelayedRegenCustFrame();
+                if(ShowFilterCycleCustFrame() == 1) return 1;
                 menuLines[3].isReleased = false;
                 createFrame();
          }
-         if(menuLines[4].isReleased == true){
-                ShowRegenPeriodServiceFrame();
-                menuLines[4].isReleased = false;
-                createFrame();
-         }
-         if(scrollUpBut.isReleased == true){
-                if(menu_frame_Scroll_cnt > 0){ menu_frame_Scroll_cnt--;
-                    menu_frame_was_Scroll = 1;
-                    RefreshScrollBarMenuFrame();
-                }
-                scrollUpBut.isReleased = false;
-         }
-         if(scrollDwnBut.isReleased == true){
-                if(menu_frame_Scroll_cnt < 1){ menu_frame_Scroll_cnt++;
-                    menu_frame_was_Scroll = 2;
-                    RefreshScrollBarMenuFrame();
-                }
-                scrollDwnBut.isReleased = false;
-         }   
+//         if(menuLines[4].isReleased == true){
+//                ShowRegenPeriodServiceFrame();
+//                menuLines[4].isReleased = false;
+//                createFrame();
+//         }
+//         if(scrollUpBut.isReleased == true){
+//                if(menu_frame_Scroll_cnt > 0){ menu_frame_Scroll_cnt--;
+//                    menu_frame_was_Scroll = 1;
+//                    RefreshScrollBarMenuFrame();
+//                }
+//                scrollUpBut.isReleased = false;
+//         }
+//         if(scrollDwnBut.isReleased == true){
+//                if(menu_frame_Scroll_cnt < 1){ menu_frame_Scroll_cnt++;
+//                    menu_frame_was_Scroll = 2;
+//                    RefreshScrollBarMenuFrame();
+//                }
+//                scrollDwnBut.isReleased = false;
+//         }   
 	}
 }
 void createFrame(void){
-	//TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_CUSTOMER);
     
     drawMainWindow();
     
-    drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
+    //drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
     
     drawStatusBarEmpty();
     
@@ -146,21 +147,7 @@ void createFrame(void){
   
 	/*Add buttons parameters*/
     calcButParam();
-	/*Add buttons to Touch Controller*/
-//	for (uint8_t i = 0; i < (sizeof(menuLines)/sizeof(menuLines[0])); i++){
-//			TC_addButton(&menuLines[i]);
-//	}
-//	TC_addButton(&retBut);
-//	TC_addButton(&scrollUpBut);
-//	TC_addButton(&scrollDwnBut);
-	
-	//enableClockDraw = true;
 }
-//void RefreshMenuFrame(void)
-//{
-//    if(menu_frame_was_Scroll == 1 || menu_frame_was_Scroll == 2)
-//        RefreshScrollBarMenuFrame();
-//}
 
 void RefreshScrollBarMenuFrame()
 {       
@@ -221,4 +208,6 @@ void calcButParam()
 	TC_addButton(&retBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
+    TC_addButton(&homeBut);
+    
 }

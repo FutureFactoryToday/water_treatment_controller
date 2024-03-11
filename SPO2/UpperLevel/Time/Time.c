@@ -159,15 +159,15 @@ void changeTimeLanguage(language_t lang);
 void Time_init(){
 	if (LL_RTC_TIME_Get(RTC) == 0){
 		wtc_time_t defTime = DEFAULT_TIME;
-		LL_RTC_AlarmTypeDef alarm = {0};
+//		LL_RTC_AlarmTypeDef alarm = {0};
 		
-		LL_RTC_ALARM_StructInit(&alarm);
+//		LL_RTC_ALARM_StructInit(&alarm);
 		setSysTime(&defTime);
-		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
+//		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
 	} else {
 		sysTime = *getTime();
 	}
-	LL_RTC_EnableIT_ALR(RTC);
+//	LL_RTC_EnableIT_ALR(RTC);
 }
 
 uint32_t wtcTimeToInt(wtc_time_t *time){

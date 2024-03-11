@@ -53,7 +53,7 @@ typedef struct {
 	uint32_t pressCnt;
 } button_t;
 
-extern button_t retBut, okBut, scrollUpBut, scrollDwnBut, cancelBut;
+extern button_t retBut, okBut, scrollUpBut, scrollDwnBut, cancelBut, homeBut;
 extern bool enableClockDraw;
 /*Global params*/
 extern const BITMAPSTRUCT LOGO;
@@ -72,6 +72,7 @@ extern const BITMAPSTRUCT Test;
 extern const BITMAPSTRUCT gImage_DROPBUT;
 extern const BITMAPSTRUCT gImage_WRENCHBUT;
 extern const BITMAPSTRUCT gImage_PAGEBUT;
+extern const BITMAPSTRUCT gImage_HOMEBUT;
 
 extern const BITMAPSTRUCT leftArowImg;
 extern const BITMAPSTRUCT rightArowImg;

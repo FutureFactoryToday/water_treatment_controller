@@ -117,6 +117,7 @@ int main(void)
   MX_TIM11_Init();
   MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
+	
 
 
 	FP_GetParam();
@@ -125,15 +126,6 @@ int main(void)
 	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
 	
-	LL_GPIO_InitTypeDef GPIO_InitStruct = {0}; 
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	
-	LL_GPIO_LockPin(GPIOA,LL_GPIO_PIN_12);
-	LL_GPIO_LockPin(GPIOA,LL_GPIO_PIN_11);
 	initGUI();
 	PC_Init();
 	PL_Init();
@@ -144,7 +136,7 @@ int main(void)
 
 	FP_SaveParam();
 	__enable_irq();
-	ShowManualDriveControl();
+	//ShowManualDriveControl();
 	//ShowForcedRegenCustFrame();
   ShowMainFrame();
 	//MOT_Start();

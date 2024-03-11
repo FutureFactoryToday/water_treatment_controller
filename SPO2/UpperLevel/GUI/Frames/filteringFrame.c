@@ -13,8 +13,8 @@ static void createFrame();
 static uint8_t res[2];
 void ShowFilteringFrame(void)
 {
-    res[0] = pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
-    res[1] = pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
+    res[0] = planner.pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
+    res[1] = planner.pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
     fitlering_frame_Scroll_cnt = 0;
     createFrame();
 
@@ -32,8 +32,8 @@ void ShowFilteringFrame(void)
         }
         if (okBut.isReleased == true){
             okBut.isReleased = false;
-            pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
-            pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
+            planner.pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
+            planner.pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
             copyTasksToFlash();
             fp->needToSave = 1;
             FP_SaveParam();
@@ -75,7 +75,7 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FILTERING);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FILTERING);
 	
 	drawStatusBarOkCancel();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);

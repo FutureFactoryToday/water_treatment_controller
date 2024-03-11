@@ -27,5 +27,5 @@
 
 //Public defines main window sizers
 
-void ShowForcedRegenCustFrame(void);
+int ShowForcedRegenCustFrame(void);
 

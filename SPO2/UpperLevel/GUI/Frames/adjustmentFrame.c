@@ -33,14 +33,14 @@ void ShowAdjustmentFrame(void)
 		}
     if (okBut.isReleased == true){
 			fp->needToSave = true;
-			#ifndef newPositions
+	#ifndef newPositions
 			fp->params.pistonPositions.closedPosition = pistonPositions.closedPosition;
 			fp->params.pistonPositions.backwash = pistonPositions.backwash;
 			fp->params.pistonPositions.regeneration = pistonPositions.regeneration;
 			fp->params.pistonPositions.filling = pistonPositions.filling;
 			fp->params.pistonPositions.softening = pistonPositions.softening;
 			fp->params.pistonPositions.flushing = pistonPositions.flushing;
-			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz; 
+			fp->params.pistonPositions.filtering = pistonPositions.filtering; 
 #else
 			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz;
 			fp->params.pistonPositions.forwardWash = pistonPositions.forwardWash;
@@ -169,7 +169,7 @@ void ShowAdjustmentFrame(void)
         }
         if(menuLine[6].isReleased == true)
         {
-					pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
+					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[6].isReleased = false;
         }
@@ -219,7 +219,7 @@ void ShowAdjustmentFrame(void)
         }
         if(playBut[6].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.rabPoz);
+					PC_GoToPoz(pistonPositions.filtering);
 					
 					playBut[6].isReleased = false;
 					createFrame();
@@ -354,6 +354,6 @@ void AnimatePosMenuFrame(void)
 	BSP_LCD_FillRect(POS_VALUE_X, POS_VALUE_Y,RESET_BUTTON_X - POS_VALUE_X,RESET_BUTTON_SIZE_Y);
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetCurPoz()), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
 	
 }

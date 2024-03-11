@@ -21,9 +21,9 @@ void  showServiceInfoFrame()
 			if (serviceComplBut.isReleased == true){
 				int32_t res = showServiceDateSelectFrame();
 				if (res > 0){
-					fp->params.monthBetweenService = monthBetweenService = res;
-					lastService = *getTime();
-					fp->params.lastService = wtcTimeToInt(&lastService);
+					fp->params.planner.monthBetweenService = planner.monthBetweenService = res;
+					
+					fp->params.planner.lastService = planner.lastService = getRTC();
 					fp->needToSave = 1;
 					FP_SaveParam();
 				}
@@ -46,13 +46,13 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_INFO[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_INFO[0]);
 	
 	drawStatusBarEmpty();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y, ITEM_SERVICE_INFO[1], CENTER_MODE);
-	wtc_time_t tempDate = *addMonth(&lastService,monthBetweenService);
+	wtc_time_t tempDate = intToWTCTime(planner.lastService + planner.monthBetweenService*30*24*60*60);//*addMonth(&planner.lastService,planner.monthBetweenService);
 	uint8_t* text = (compareDate(getTime(),&tempDate) < 0)? getFormatedTimeFromSource("DD MMM YYYY", &tempDate):ITEM_SERVICE_INFO[3];
 	
 	drawTextLabel(BSP_LCD_GetXSize()/2 - 150, SECOND_CURSOR_POS_Y, 300, 40, text);

@@ -44,7 +44,7 @@ static int8_t getPPStep(uint32_t* poz);
 /* Private user code ---------------------------------------------------------*/
 void ShowManualFilterSettings(){
 	
-	tempTask = pistonTasks[MAN_TASK_NUM];
+	tempTask = planner.pistonTasks[MAN_TASK_NUM];
 
     while(tempTask.step[stepNum].poz != NULL)
     {
@@ -84,8 +84,8 @@ void ShowManualFilterSettings(){
          if(okBut.isReleased == true){
             okBut.isReleased = false;
 
-            pistonTasks[MAN_TASK_NUM] = tempTask;
-            copyTasksToFlash();
+            planner.pistonTasks[MAN_TASK_NUM] = tempTask;
+            fp->params.planner.pistonTasks[MAN_TASK_NUM] = planner.pistonTasks[MAN_TASK_NUM];
 			fp->needToSave = 1;
 			FP_SaveParam();
 			return;
@@ -150,7 +150,7 @@ void createFrame(){
 
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MANUAL_SETTINGS[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MANUAL_SETTINGS[0]);
 	
     drawStatusBarOkCancel();
 	

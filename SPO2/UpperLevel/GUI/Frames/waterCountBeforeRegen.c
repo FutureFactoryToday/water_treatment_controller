@@ -7,7 +7,7 @@ static uint8_t* text;
 void ShowWaterCountBeforeRegenFrame(void)
 {
 	
-		waterVal = waterBeforeRegen;
+		waterVal = planner.waterBeforeRegen;
 
    createFrame();
     while(1)
@@ -32,13 +32,13 @@ void ShowWaterCountBeforeRegenFrame(void)
 				waterBut.isReleased = false;
 			}
 			if (waterBut.isPressed == true){
-				if (chosenTask != NULL){
+				if (planner.currentTask != NULL){
 					drawDarkTextLabel(waterBut.x, waterBut.y, waterBut.xSize, waterBut.ySize, text);
 				}
 					waterBut.isPressed = false;
 			}
 			if (okBut.isReleased == true){
-				fp->params.waterBeforeRegen = waterBeforeRegen = waterVal;
+				fp->params.planner.waterBeforeRegen = planner.waterBeforeRegen = waterVal;
 				fp->needToSave = true;
 				FP_SaveParam();
 				okBut.isReleased = false;
@@ -53,7 +53,7 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_WATER_BR[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_WATER_BR[0]);
 	
 	drawStatusBarOkCancel();
 	

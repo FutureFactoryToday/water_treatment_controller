@@ -162,7 +162,7 @@ void createFrame (void){
 	
 	dir = IN;
 	
-	drawMainBar(true, 190, 5, " ");
+	drawMainBar(true, true, 190, 5, " ");
 	
 	drawMainWindow();
 	

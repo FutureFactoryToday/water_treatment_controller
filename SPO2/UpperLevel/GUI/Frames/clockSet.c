@@ -44,50 +44,46 @@ wtc_time_t CSF_showFrame(wtc_time_t* time){
             drawClock();
             updateFlags.sec = false;
         }
-			
-			if (updateFlags.sec){
-				updateFlags.sec = false;
-			} 
-			if (hourBut.isPressed == true){
-				drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
-				hourBut.isPressed = false;
-			}
-			
-			if (minBut.isPressed == true){
-				drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
-				minBut.isPressed = false;
-			}
-			
-			if (hourBut.isReleased == 1){
-				int16_t time = ShowKeyboardFrame(0,23);
-				if (time > 0){
-					displayedTime.hour = time;
-				}
-				hourBut.isReleased = 0;
-				createFrame();
-			}
-			
-			if (minBut.isReleased == 1){
-				int16_t time = ShowKeyboardFrame(0,59);
-				if (time > 0){
-					displayedTime.minute = time;
-				}
-				minBut.isReleased = 0;
-				createFrame();
-			}
-			
-			if (retBut.isReleased == 1){
-				retBut.isReleased = 0;
-				return nullTime;
-			}
-			if (okBut.isReleased == 1){
-				okBut.isReleased = 0;
-				return displayedTime;
-			}
-			if (cancelBut.isReleased == 1){
-				cancelBut.isReleased = 0;
-				return nullTime;
-			}
+        //Pressed
+        if (hourBut.isPressed == true){
+            //drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
+            hourBut.isPressed = false;
+        }
+        if (minBut.isPressed == true){
+            //drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
+            minBut.isPressed = false;
+        }
+        //Released
+        if (hourBut.isReleased == true){
+            int16_t time = ShowKeyboardFrame(0,23);
+            if (time > 0){
+                displayedTime.hour = time;
+            }
+            hourBut.isReleased = false;
+            createFrame();
+        }
+        
+        if (minBut.isReleased == true){
+            int16_t time = ShowKeyboardFrame(0,59);
+            if (time > 0){
+                displayedTime.minute = time;
+            }
+            minBut.isReleased = false;
+            createFrame();
+        }
+        
+        if (retBut.isReleased == true){
+            retBut.isReleased = false;
+            return nullTime;
+        }
+        if (okBut.isReleased == true){
+            okBut.isReleased = false;
+            return displayedTime;
+        }
+        if (cancelBut.isReleased == true){
+            cancelBut.isReleased = false;
+            return nullTime;
+        }
     }
 }
 
@@ -98,7 +94,7 @@ void createFrame(){
 
 	TC_clearButtons();
 	BSP_LCD_Clear(MID_COLOR);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
+	drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
 	drawStatusBarOkCancel();
 
@@ -111,8 +107,8 @@ void createFrame(){
 //	uint8_t minLength = BSP_LCD_DisplayStringAt(MAX(hourText,minText) + 2, FIRST_LINE_Y + BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("mm",&displayedTime),LEFT_MODE);
 
 
-	hourBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
-	minBut = drawTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
+	hourBut = drawLightTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 - GAP - BSP_LCD_GetFont()->height, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("hh",&displayedTime));
+	minBut = drawLightTextLabel(BSP_LCD_GetXSize()/2 + GAP,BSP_LCD_GetYSize()/2 + GAP, HOUR_LABEL_SIZE_X, BSP_LCD_GetFont()->height + 10, getFormatedTimeFromSource("mm",&displayedTime));
 
 	
 	TC_addButton(&okBut);

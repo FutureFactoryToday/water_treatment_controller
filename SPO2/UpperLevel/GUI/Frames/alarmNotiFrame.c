@@ -35,7 +35,7 @@ void createFrame (void){
 	TC_clearButtons();
  //Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_ALARM_NOTI);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_ALARM_NOTI);
 	
 	drawStatusBarEmpty();
 	

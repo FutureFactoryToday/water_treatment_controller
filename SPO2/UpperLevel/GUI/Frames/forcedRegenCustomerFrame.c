@@ -7,10 +7,9 @@ static button_t forceRegen, cycledRegen;
 wtc_time_t remain;
 static void createFrame();
 static void showRemeiningTime(void);
-void ShowForcedRegenCustFrame(void)
+int ShowForcedRegenCustFrame(void)
 {
     createFrame();
-	//uint8_t oldSec = getTime()->second - 1;
     while(1)
     {
         if (updateFlags.sec == true){
@@ -18,47 +17,6 @@ void ShowForcedRegenCustFrame(void)
           showRemeiningTime();
           updateFlags.sec = false;
         }
-//        if(redraw)
-//        {
-//            RefreshForcedRegenCustFrame();
-//            redraw = 0;
-//        }
-//				if (oldSec != getTime()->second){
-//					switch(PL_status){
-//						case (PL_WAITING):{
-//							statusColor = LCD_COLOR_RED;
-//							 break;
-//						}
-//						case (PL_ALARM_SET):{
-//							statusColor = LCD_COLOR_BLUE;
-//							break;
-//						}
-//						case (PL_WORKING):{
-//							statusColor = LCD_COLOR_GREEN;
-//							 break;
-//						}
-//						case (PL_FORCED_ALARM_SET):{
-//							statusColor = LCD_COLOR_YELLOW;
-//							 break;
-//						}
-//					}
-//					BSP_LCD_SetTextColor(statusColor);
-//					BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
-//				}
-
-//        TranslateForcedRegenCustFrameMSG();
-//        
-//        if(hwndForcedRegenCustFrameControl == 20) return;
-//				if(hwndForcedRegenCustFrameControl == 30){
-//					hwndForcedRegenCustFrameControl = 0;
-//					PL_Planner(FORCE_START_NOW);
-//				}
-//				if(hwndForcedRegenCustFrameControl == 40){
-//					hwndForcedRegenCustFrameControl = 0;
-//					PL_Planner(FORCE_START_NEAREST);
-//				}
-      
-
         /*Buttons pressed*/ 
         if (forceRegen.isPressed == true){
             drawFillButton(80, 180, 200, 60, "Начать", true);
@@ -74,7 +32,7 @@ void ShowForcedRegenCustFrame(void)
         /*Buttons releases*/
         if (retBut.isReleased == true){
             retBut.isReleased = false;
-            return;
+            return 0;
         }
         if (forceRegen.isReleased == true){
             drawFillButton(80, 180, 200, 60, "Начать", false);
@@ -98,7 +56,7 @@ void createFrame()
 {
     TC_clearButtons();
     
-    drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FORCED_REGEN);
+    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_FORCED_REGEN);
     
     drawMainWindow();
     
@@ -115,7 +73,7 @@ void createFrame()
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
 		uint8_t* text = (cycled)?"ON":"OFF";
     cycledRegen = drawFillButton(400, 180, 60, 60, text, cycled);
-    drawStatusBarLabel(ITEM_FILTER_SELECTION[fp->params.chosenTaskNum]);
+    drawStatusBarLabel(ITEM_FILTER_SELECTION[PL_getCurrentTaskNum()]);
     
     drawClock();
     
@@ -123,8 +81,8 @@ void createFrame()
    
 	/*Add buttons to Touch Controller*/
 	
-		TC_addButton(&retBut);
-		TC_addButton(&cycledRegen);
+	TC_addButton(&retBut);
+    TC_addButton(&cycledRegen);
     TC_addButton(&forceRegen);
     
     //enableClockDraw = true;
@@ -138,14 +96,14 @@ void showRemeiningTime(void){
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	if (PL_status != PL_WORKING){
+	if (planner.status != PL_WORKING){
 	
 		BSP_LCD_DisplayStringAt(75, 90, "Запуск через" ,LEFT_MODE);
 		
 		
 	} else {
 		uint8_t* text;
-		uint8_t stepNum = PC_pozNum ((currentStep-1)->poz);
+		uint8_t stepNum = PC_pozNum ((planner.currentStep-1)->poz);
 		if (stepNum >= 0) {
 			text = ITEM_STEPS[stepNum];
 		}
@@ -155,7 +113,7 @@ void showRemeiningTime(void){
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (chosenTask == NULL || PL_status == PL_WAITING){
+	if (planner.currentTask == NULL || planner.status == PL_FINISHED){
 		text = &PL_NOT_INITED;
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
@@ -180,21 +138,17 @@ void showRemeiningTime(void){
 		}
 	}
 	BSP_LCD_DisplayStringAt(400, 240, intToStr(cycleCnt),LEFT_MODE);
-	switch(PL_status){
-        case (PL_WAITING):{
+	switch(planner.status){
+        case (PL_FINISHED):{
             statusColor = LCD_COLOR_RED;
             break;
         }
-        case (PL_ALARM_SET):{
+        case (PL_SET):{
             statusColor = LCD_COLOR_BLUE;
             break;
         }
         case (PL_WORKING):{
             statusColor = LCD_COLOR_GREEN;
-            break;
-        }
-        case (PL_FORCED_ALARM_SET):{
-            statusColor = LCD_COLOR_YELLOW;
             break;
         }
     }

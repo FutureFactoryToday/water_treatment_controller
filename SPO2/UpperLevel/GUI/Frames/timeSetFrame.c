@@ -83,7 +83,7 @@ void drawEditBoxes(wtc_time_t editTime);
 bool timeSetPressed = false;
 /* Private user code ---------------------------------------------------------*/
 
-void TSF_showFrame(){
+int TSF_showFrame(){
 	
 
 	frameText = &ITEM_TIME_ruText;
@@ -98,10 +98,7 @@ void TSF_showFrame(){
     {
         if (updateFlags.sec == true){
             drawClock();
-            updateFlags.sec = false;
-        }
-			
-			if (updateFlags.sec){
+      
 				displayedTime = *addSec(&displayedTime,1);
 				drawMidClock(timeSetPressed);
 				updateFlags.sec = false;
@@ -127,10 +124,6 @@ void TSF_showFrame(){
 				dateSetButton.isPressed = false;
 				
 			}
-			if (retBut.isReleased == 1){
-				retBut.isReleased = 0;
-				return;
-			}
 			if (dateSetButton.isReleased == true){
 				wtc_time_t date = CAL_showFrame(&displayedTime);
 				if (!isZeroDateTime(&date)){
@@ -143,17 +136,19 @@ void TSF_showFrame(){
 			if (okBut.isReleased == true){
 				setSysTime(&displayedTime);
 				okBut.isReleased = false;
-				return;
+				return 0;
 			}
 			if (cancelBut.isReleased == true){
-				 
 				cancelBut.isReleased = false;
-				return;
+				return 0;
 			}
 			if (retBut.isReleased == true){
-				 
 				retBut.isReleased = false;
-				return;
+				return 0;
+			}
+            if (homeBut.isReleased == true){
+				homeBut.isReleased = false;
+				return 1;
 			}
 //			if (touchHandler()){
 //					if (refreshFrame()){
@@ -170,17 +165,17 @@ void createFrame(){
 
 	TC_clearButtons();
 	BSP_LCD_Clear(MID_COLOR);
-	drawMainBar(true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
 	drawStatusBarOkCancel();
 
 	timeSetButton = drawMidClock(false);
 	dateSetButton = drawTextLabel(BSP_LCD_GetXSize()/2 - 100, MID_CLOCK_Y + BSP_LCD_GetFont()->height + 2*GAP,200, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime)); 
-	
-	
+		
 	TC_addButton(&okBut);
 	TC_addButton(&cancelBut);
 	TC_addButton(&retBut);
+    TC_addButton(&homeBut);
 	TC_addButton(&timeSetButton);
 	TC_addButton(&dateSetButton);
 }
