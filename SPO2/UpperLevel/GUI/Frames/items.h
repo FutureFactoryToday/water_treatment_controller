@@ -14,8 +14,17 @@ extern uint8_t* ITEM_MENU[];
 //Pincode Frame
 extern uint8_t* ITEM_PINCODE_FRAME[];
 //serviceMenuFrame
-#define MODE_SERVICE "Сервис"
+#define MODE_SERVICE "Инженер"
 extern uint8_t* ITEM_SERVICE_MENU[];
+
+//historyMenuFrame
+#define MODE_HISTORY "История"
+extern uint8_t* ITEM_HISTORY_MENU[];
+//historyMenuItems
+#define MODE_HISTORY_FILTER "Промывки фильтра"
+#define MODE_HISTORY_WATER "Потребления воды"
+#define MODE_HISTORY_MAX_WATER "Максимальный расход"
+#define MODE_HISTORY_ERRORS "Ошибки"
 
 //widgets
 #define NEXT_CYCLE_TIME "ч"
@@ -42,7 +51,7 @@ extern uint8_t* ITEM_SERVICE_MENU[];
 #define DAY_BETWEEN_REGEN "Дней между регенерациями"
 
 //filterSelectionFrame
-#define MODE_FILTER_SELECTION "Выбор фильтра"
+#define MODE_FILTER_SELECTION "Тип фильтра"
 extern uint8_t* ITEM_FILTER_SELECTION[];
 
 //regenPeriodServiceFrame
@@ -102,5 +111,11 @@ extern uint8_t* ITEM_WATER_BR[];
 extern uint8_t* ITEM_SERVICE_INFO[];
 
 extern uint8_t* ITEM_LOAD_TYPE[];
+
+extern uint8_t* ITEM_INPUT_ONE_FRAME[];
+
+extern uint8_t* ITEM_UNIVERSAL_OUTPUT_FRAME[];
+
+extern uint8_t* ITEM_EL_MAG_FRAME[];
 
 

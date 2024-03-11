@@ -5,7 +5,7 @@
 
 //Public defines sizers
 
-void ShowSofteningFrame(void);
+int ShowSofteningFrame(void);
 
 void RefreshSofteningFrame(void);
 

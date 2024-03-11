@@ -29,11 +29,11 @@ int ShowMainMenuFrame(void){
        
         
 		/*Buttons releases*/
-        if (retBut.isReleased == true){
-            retBut.isReleased = false;
-            return 0;
-        }
-        if (customerBut.isReleased == true){
+		if (retBut.isReleased == true){
+				retBut.isReleased = false;
+				return 0;
+		}
+		if (customerBut.isReleased == true){
 			if(ShowMenuFrame() == 1) return 1;
 			customerBut.isReleased = false;
 			createFrame();
@@ -42,20 +42,17 @@ int ShowMainMenuFrame(void){
 			if (PIN_showFrame() == 1){
 				if(ShowServiceMenuFrame() == 1) return 1;
 			}	
-            //ShowMenuFrame(); 
 			serviceBut.isReleased = false;
 			createFrame();
 		}
-        if (historyBut.isReleased == true){
-            //ShowAlarmNotiServiceFrame();   
+    if (historyBut.isReleased == true){
+        if(ShowHistoryMenuFrame() == 1) return 1;
 			historyBut.isReleased = false;
             createFrame();
 		}
-        if (homeBut.isReleased == true){
-            //ShowAlarmNotiServiceFrame();   
+    if (homeBut.isReleased == true){
 			homeBut.isReleased = false;
             return 1;
-            //createFrame();
 		}
 	}
 }

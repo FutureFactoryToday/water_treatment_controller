@@ -36,14 +36,14 @@ int ShowFilterCycleCustFrame(void)
         }
 				if(mcube.isReleased == true){
 						quantity = false;
-						drawDarkTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
+						drawLightTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
 						drawTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
             mcube.isReleased = false;
         }
 				if(liters.isReleased == true){
 						quantity = true;
 						drawTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
-						drawDarkTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
+						drawLightTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
             liters.isReleased = false;
         }
 				
@@ -81,10 +81,10 @@ void createFrame()
 	reserveBut = drawLightTextLabel(BSP_LCD_GetXSize()/2 - 50, BSP_LCD_GetYSize()/2 + 25, 100, 60, intToStr(reserve));
 	if(quantity) {
 		mcube = drawTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
-		liters = drawDarkTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
+		liters = drawLightTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
 	}
 	else {
-		mcube = drawDarkTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
+		mcube = drawLightTextLabel(BSP_LCD_GetXSize()/2 + 100, BSP_LCD_GetYSize()/2 - 65, 60, 60, "М*3");
 		liters = drawTextLabel(BSP_LCD_GetXSize()/2 + 170, BSP_LCD_GetYSize()/2 - 65, 60, 60, "Л");
 	}
 	

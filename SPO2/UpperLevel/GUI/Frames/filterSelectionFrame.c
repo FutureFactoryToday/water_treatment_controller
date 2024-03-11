@@ -17,7 +17,7 @@ void RefreshScrollBarFilterSelectionFrame(void);
 
 
 
-void ShowFilterSelectionFrame(void)
+int ShowFilterSelectionFrame(void)
 {
     filter_selection_frame_Scroll_cnt = 0;
 
@@ -35,7 +35,7 @@ void ShowFilterSelectionFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+            //drawClock();
             updateFlags.sec = false;
         }
         if(okBut.isReleased == true){
@@ -46,31 +46,35 @@ void ShowFilterSelectionFrame(void)
                 FP_SaveParam();
             }
                 okBut.isReleased = false;
-                return;
+                return 0;
 		}
         if(retBut.isReleased == true){
             retBut.isReleased = false;
-            return;
+            return 0;
         }
         if (cancelBut.isReleased == true){
             cancelBut.isReleased = false;
-            return;
+            return 0;
+        }
+        if (homeBut.isReleased == true){
+            homeBut.isReleased = false;
+            return 1;
         }
         if(menuLine[0].isReleased == true)
         {
-            ShowFilteringFrame();
+            if(ShowFilteringFrame() == 1) return 1;
             createFrame();
             menuLine[0].isReleased = false;
         }
 		if(menuLine[1].isReleased == true)
         {
-            ShowSofteningFrame();
+            if(ShowSofteningFrame() == 1) return 1;
             createFrame();
             menuLine[1].isReleased = false;
         }
 		if(menuLine[2].isReleased == true)
         {
-            ShowManualFilterSettings();
+            if(ShowManualFilterSettings() == 1) return 1;
             createFrame();
             menuLine[2].isReleased = false;
         }
@@ -141,5 +145,7 @@ void calcButParam()
 	}
 	TC_addButton(&retBut);
 	TC_addButton(&okBut);
+    TC_addButton(&cancelBut);
+    TC_addButton(&homeBut);
     
 }

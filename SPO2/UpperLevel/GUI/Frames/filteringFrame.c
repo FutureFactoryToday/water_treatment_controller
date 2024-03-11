@@ -11,7 +11,7 @@ int8_t step = 0;
 static button_t menuLine[2];
 static void createFrame();
 static uint8_t res[2];
-void ShowFilteringFrame(void)
+int ShowFilteringFrame(void)
 {
     res[0] = planner.pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
     res[1] = planner.pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
@@ -21,14 +21,14 @@ void ShowFilteringFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+            //drawClock();
             updateFlags.sec = false;
         }
 
         /*Buttons released*/
         if (retBut.isReleased == true){
             retBut.isReleased = false;
-            return;
+            return 0;
         }
         if (okBut.isReleased == true){
             okBut.isReleased = false;
@@ -37,11 +37,15 @@ void ShowFilteringFrame(void)
             copyTasksToFlash();
             fp->needToSave = 1;
             FP_SaveParam();
-            return;
+            return 0;
         }
         if (cancelBut.isReleased == true){
             cancelBut.isReleased = false;
-            return;
+            return 0;
+        }
+        if (homeBut.isReleased == true){
+            homeBut.isReleased = false;
+            return 1;
         }
         if(menuLine[0].isReleased == true){
             uint8_t tempRes = ShowKeyboardFrame(1,150);
@@ -95,7 +99,9 @@ void createFrame(void)
 			TC_addButton(&menuLine[i]);
 	}
 	TC_addButton(&retBut);
+    TC_addButton(&homeBut);
 	TC_addButton(&okBut);
+    TC_addButton(&cancelBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 	

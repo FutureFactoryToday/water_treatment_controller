@@ -7,5 +7,5 @@
 
 //Public defines statusbar sizers
 
-void ShowFilterSelectionFrame(void);
+int ShowFilterSelectionFrame(void);
 

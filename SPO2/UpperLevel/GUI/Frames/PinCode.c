@@ -76,12 +76,13 @@ int8_t PIN_showFrame(){
             } else {
                 BSP_LCD_SetTextColor(LCD_COLOR_RED);
                 BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-                for(uint8_t i = 0; i < 6; i++){
-                    BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y + 20 + PIN_FONT.height + i, 200);
-                }
-                
-                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, PIN_FONT.height*5, "Неверный код!", CENTER_MODE);
+//                for(uint8_t i = 0; i < 6; i++){
+//                    BSP_LCD_DrawHLine(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y + 20 + PIN_FONT.height + i, 200);
+//                }
+//                BSP_LCD_SetFont(&Oxygen_Mono_24);
+//                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+                  BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + 35, "        Неверный пароль!        ", CENTER_MODE);
+//                BSP_LCD_SetFont(&PIN_FONT);
             }
         }
         if (retBut.isReleased == true){
@@ -110,10 +111,11 @@ void createPinFrame(){
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetFont(&PIN_FONT);
-	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + 5, (*(pinFrameText + ENTER_PIN_TEXT)), CENTER_MODE);
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, MAINBAR_SIZE_Y + 35, (*(pinFrameText + ENTER_PIN_TEXT)), CENTER_MODE);
 	pinToStr(enteredPin);
-	pinTextArea = drawTextLabel(BSP_LCD_GetXSize()/2 - 100, PIN_BOX_Y, 200, BSP_LCD_GetFont()->height + 10,&pinString);    
-	
+    BSP_LCD_SetFont(&Oxygen_Mono_24);
+	pinTextArea = drawTextLabel(BSP_LCD_GetXSize()/2 - 150, PIN_BOX_Y, 300, BSP_LCD_GetFont()->height + 30,&pinString);    
+	BSP_LCD_SetFont(&PIN_FONT);
 	enterBut = drawFillButton(BSP_LCD_GetXSize()/2 - 50, ENTER_BUT_Y, 100, BSP_LCD_GetFont()->height + 10,(*(pinFrameText + BUT_PIN_TEXT)), false);
 	
 	TC_addButton(&pinTextArea);

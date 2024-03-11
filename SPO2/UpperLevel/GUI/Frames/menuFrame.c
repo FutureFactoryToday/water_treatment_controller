@@ -2,7 +2,7 @@
 
 uint8_t menu_frame_Scroll_cnt = 0;
 uint8_t menu_frame_was_Scroll = 0;
-int32_t qwerty = 0;
+//int32_t qwerty = 0;
 int8_t hwndMenuFrameControl = 0;
 int8_t startMenuFrame = 0;
 
@@ -132,7 +132,8 @@ void createFrame(void){
     
     //drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
     
-    drawStatusBarEmpty();
+    //drawStatusBarEmpty();
+    drawMainStatusBar(144, 2305, 16);
     
     drawClock();
     

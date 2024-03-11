@@ -101,7 +101,7 @@ void createFrame (void){
 	menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, false);
 	//contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
 	
-	drawMainStatusBar(144, 2305, 15);
+	drawMainStatusBar(144, 2305, 16);
 	
 	drawClock();
 	

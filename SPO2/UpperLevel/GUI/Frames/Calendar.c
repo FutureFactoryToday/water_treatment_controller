@@ -53,7 +53,7 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
     {	
 			if (updateFlags.sec){
 				displayedTime = *addSec(&displayedTime,1);
-				drawClock();
+				//drawClock();
 				updateFlags.sec = false;
 			} 
 			if (setMonth.isPressed == 1){

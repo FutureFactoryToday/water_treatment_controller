@@ -8,7 +8,7 @@ static void createFrame(void);
 static void calcButParam();
 static button_t menuLines[5];
 static uint8_t res[5];
-void ShowSofteningFrame(void)
+int ShowSofteningFrame(void)
 {
     res[0] = planner.pistonTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
     res[1] = planner.pistonTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
@@ -20,7 +20,7 @@ void ShowSofteningFrame(void)
     while(1)
     {   
         if (updateFlags.sec == true){
-            drawClock();
+            //drawClock();
             updateFlags.sec = false;
         }
 		 if(okBut.isReleased == true){
@@ -33,12 +33,20 @@ void ShowSofteningFrame(void)
             copyTasksToFlash();
 			fp->needToSave = 1;
 			FP_SaveParam();
-			return;
+			return 0;
 		}
+        if(cancelBut.isReleased == true){
+            cancelBut.isReleased = false;
+            return 0;
+        }
 		if(retBut.isReleased == true){
 			retBut.isReleased = false;
-			return;
-		}			
+			return 0;
+		}		
+		if(homeBut.isReleased == true){
+			homeBut.isReleased = false;
+			return 1;
+		}        
         if(menuLines[0].isReleased == true)
 		{
             uint8_t tempRes = ShowKeyboardFrame(1,150);
@@ -132,7 +140,7 @@ void createFrame(void)
     
     drawStatusBarOkCancel();
     
-    drawClock();
+    //drawClock();
     
     drawStaticLines();
     
@@ -231,7 +239,9 @@ void calcButParam()
 			TC_addButton(&menuLines[i]);
 	}
 	TC_addButton(&retBut);
-	TC_addButton(&okBut);
+    TC_addButton(&homeBut);
+	TC_addButton(&okBut);   
+    TC_addButton(&cancelBut);    
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
 }

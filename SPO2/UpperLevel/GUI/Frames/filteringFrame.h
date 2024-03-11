@@ -5,6 +5,6 @@
 
 //Public defines sizers
 
-void ShowFilteringFrame(void);
+int ShowFilteringFrame(void);
 
 

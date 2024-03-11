@@ -63,16 +63,16 @@ void initGUI(void){
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
 	BSP_LCD_DrawBitmap(0,0,&LOGO);
-  BSP_BL_Control(100); 
+    BSP_BL_Control(100);
 
 	//LL_mDelay(3000);
     
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
     
-    BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(160, 225, "ГОЛОВА КМ1", LEFT_MODE);
-    BSP_LCD_DisplayStringAt(110, 270, "МОЗГИ версия ПО 1.0", LEFT_MODE);
+	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_DisplayStringAt(160, 225, "ГОЛОВА КМ1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(110, 270, "МОЗГИ версия ПО 1.0", LEFT_MODE);
 	
 	frame = 0;
 	

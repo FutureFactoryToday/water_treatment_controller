@@ -6,7 +6,7 @@ uint8_t service_menu_frame_was_Scroll = 0;
 int8_t hwndServiceMenuFrameControl = 0;
 int8_t startServiceMenuFrame = 0;
 
-static button_t menuLines[9];
+static button_t menuLines[7];
 static void createFrame();
 static void calcButParam();
 
@@ -89,22 +89,22 @@ int ShowServiceMenuFrame(void)
             BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_SERVICE_MENU[6],LEFT_MODE);
             menuLines[6].isPressed = false;
          }
-		 if(menuLines[7].isPressed == true){
-                //Make it blue
-            drawFillArcRec(menuLines[7].x, menuLines[7].y, menuLines[7].xSize, menuLines[7].ySize, LCD_COLOR_BLUE);
-            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[7].y + 9,ITEM_SERVICE_MENU[7],LEFT_MODE);
-            menuLines[7].isPressed = false;
-         }
-		 if(menuLines[8].isPressed == true){
-                //Make it blue
-            drawFillArcRec(menuLines[8].x, menuLines[8].y, menuLines[8].xSize, menuLines[8].ySize, LCD_COLOR_BLUE);
-            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[8].y + 9,ITEM_SERVICE_MENU[8],LEFT_MODE);
-            menuLines[7].isPressed = false;
-         }
+//		 if(menuLines[7].isPressed == true){
+//                //Make it blue
+//            drawFillArcRec(menuLines[7].x, menuLines[7].y, menuLines[7].xSize, menuLines[7].ySize, LCD_COLOR_BLUE);
+//            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+//            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[7].y + 9,ITEM_SERVICE_MENU[7],LEFT_MODE);
+//            menuLines[7].isPressed = false;
+//         }
+//		 if(menuLines[8].isPressed == true){
+//                //Make it blue
+//            drawFillArcRec(menuLines[8].x, menuLines[8].y, menuLines[8].xSize, menuLines[8].ySize, LCD_COLOR_BLUE);
+//            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+//            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[8].y + 9,ITEM_SERVICE_MENU[8],LEFT_MODE);
+//            menuLines[7].isPressed = false;
+//         }
          if(scrollUpBut.isPressed == true){
                 //Make it blue
             scrollUpBut.isPressed = false;
@@ -123,27 +123,27 @@ int ShowServiceMenuFrame(void)
             return 1;
          }
          if(menuLines[0].isReleased == true){
-            ShowFilterSelectionFrame();
+            if(ShowFilterSelectionFrame() == 1) return 1;
             menuLines[0].isReleased = false;
             createFrame();
          }
          if(menuLines[1].isReleased == true){
-            showLoadTypeFrame(); 
+            if(showLoadTypeFrame() == 1) return 1; 
             menuLines[1].isReleased = false;
             createFrame();
          }
          if(menuLines[2].isReleased == true){
-            ShowWashingTimeServiceFrame();
+            if(showInputOneFrame() == 1) return 1;
             menuLines[2].isReleased = false;
             createFrame();
          }
          if(menuLines[3].isReleased == true){
-            ShowRegenPeriodServiceFrame(); 
+            if(ShowUniversalOutputFrame() == 1) return 1; 
             menuLines[3].isReleased = false;
             createFrame();
          }
          if(menuLines[4].isReleased == true){
-            ShowWaterCountBeforeRegenFrame();
+            if(showElMagFrame() == 1) return 1;
             menuLines[4].isReleased = false;
             createFrame();
          }
@@ -157,16 +157,16 @@ int ShowServiceMenuFrame(void)
             menuLines[6].isReleased = false;
             createFrame();
          }
-         if(menuLines[7].isReleased == true){
-            ShowAdjustmentFrame();   
-            menuLines[7].isReleased = false;
-            createFrame();
-         } 
-		if(menuLines[8].isReleased == true){
-            ShowManualDriveControl();   
-            menuLines[8].isReleased = false;
-            createFrame();
-         }
+//         if(menuLines[7].isReleased == true){
+//            ShowAdjustmentFrame();   
+//            menuLines[7].isReleased = false;
+//            createFrame();
+//         } 
+//		if(menuLines[8].isReleased == true){
+//            ShowManualDriveControl();   
+//            menuLines[8].isReleased = false;
+//            createFrame();
+//         }
          if(scrollUpBut.isReleased == true){
             if(service_menu_frame_Scroll_cnt > 0){ service_menu_frame_Scroll_cnt--;
                 service_menu_frame_was_Scroll = 1;
@@ -175,7 +175,7 @@ int ShowServiceMenuFrame(void)
             scrollUpBut.isReleased = false;
          }
          if(scrollDwnBut.isReleased == true){
-            if(service_menu_frame_Scroll_cnt < 5){ service_menu_frame_Scroll_cnt++;
+            if(service_menu_frame_Scroll_cnt < 3){ service_menu_frame_Scroll_cnt++;
                 service_menu_frame_was_Scroll = 2;
                 RefreshScrollBarServiceMenuFrame();
             }
@@ -193,7 +193,8 @@ void createFrame(void){
     
     drawScrollButton(service_menu_frame_Scroll_cnt == 0 ? 0 : (service_menu_frame_Scroll_cnt == 3 ? 2 : 1));
     
-    drawStatusBarEmpty();
+    //drawStatusBarEmpty();
+    drawMainStatusBar(144, 2305, 16);
     
     drawClock();
     
@@ -216,7 +217,7 @@ void RefreshScrollBarServiceMenuFrame(void)
     if(service_menu_frame_was_Scroll == 1 || service_menu_frame_was_Scroll == 2){
         calcButParam();
         
-        drawScrollButton(service_menu_frame_Scroll_cnt == 0 ? 0 : (service_menu_frame_Scroll_cnt == 3 ? 2 : 1));
+        //drawScrollButton(service_menu_frame_Scroll_cnt == 0 ? 0 : (service_menu_frame_Scroll_cnt == 3 ? 2 : 1));
         
         drawFillArcRec(menuLines[service_menu_frame_Scroll_cnt].x, menuLines[service_menu_frame_Scroll_cnt].y, menuLines[service_menu_frame_Scroll_cnt].xSize, menuLines[service_menu_frame_Scroll_cnt].ySize, LCD_COLOR_WHITE);
         drawFillArcRec(menuLines[service_menu_frame_Scroll_cnt + 1].x, menuLines[service_menu_frame_Scroll_cnt + 1].y, menuLines[service_menu_frame_Scroll_cnt + 1].xSize, menuLines[service_menu_frame_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);

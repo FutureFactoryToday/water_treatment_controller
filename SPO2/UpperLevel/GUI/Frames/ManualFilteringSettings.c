@@ -42,7 +42,7 @@ static void RefreshScrollBar(void);
 static void calcButParam();
 static int8_t getPPStep(uint32_t* poz);
 /* Private user code ---------------------------------------------------------*/
-void ShowManualFilterSettings(){
+int ShowManualFilterSettings(){
 	
 	tempTask = planner.pistonTasks[MAN_TASK_NUM];
 
@@ -55,7 +55,7 @@ void ShowManualFilterSettings(){
 	
 	while (1){
          if (updateFlags.sec == true){
-            drawClock();
+            //drawClock();
             updateFlags.sec = false;
          }
          /*Buttons pressed*/         
@@ -88,11 +88,19 @@ void ShowManualFilterSettings(){
             fp->params.planner.pistonTasks[MAN_TASK_NUM] = planner.pistonTasks[MAN_TASK_NUM];
 			fp->needToSave = 1;
 			FP_SaveParam();
-			return;
+			return 0;
 		 }
+         if (cancelBut.isReleased == true){
+            cancelBut.isReleased = false;
+            return 0;
+         }
          if (retBut.isReleased == true){
             retBut.isReleased = false;
-            return;
+            return 0;
+         }
+         if (homeBut.isReleased == true){
+            homeBut.isReleased = false;
+            return 1;
          }
          if (addLine.isReleased == true){
              if (stepNum < 7){
@@ -154,7 +162,7 @@ void createFrame(){
 	
     drawStatusBarOkCancel();
 	
-	drawClock();
+	//drawClock();
     	
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -169,9 +177,9 @@ void RefreshScrollBar(void)
 {
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_FillRect(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + 3, 320, 177);
-	if (stepNum > 4){
-		drawScrollButton(scroll_cnt == 0 ? 0 : (scroll_cnt == (stepNum - 4) ? 2 : 1));
-	}
+//	if (stepNum > 4){
+//		drawScrollButton(scroll_cnt == 0 ? 0 : (scroll_cnt == (stepNum - 4) ? 2 : 1));
+//	}
 	for(uint8_t i = 0; i < stepNum && i < 4; i++){
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -200,7 +208,9 @@ void calcButParam(){
 	}
 	TC_addButton(&addLine);
     TC_addButton(&okBut);
+    TC_addButton(&cancelBut);
 	TC_addButton(&retBut);
+    TC_addButton(&homeBut);
 	if (stepNum > 4){
 		TC_addButton(&scrollUpBut);
 		TC_addButton(&scrollDwnBut);

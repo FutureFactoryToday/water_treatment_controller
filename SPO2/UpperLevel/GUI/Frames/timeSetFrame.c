@@ -97,8 +97,11 @@ int TSF_showFrame(){
 	while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
-      
+            //drawClock();
+            updateFlags.sec = false;
+        }
+			
+			if (updateFlags.sec){
 				displayedTime = *addSec(&displayedTime,1);
 				drawMidClock(timeSetPressed);
 				updateFlags.sec = false;
@@ -108,16 +111,17 @@ int TSF_showFrame(){
 				drawMidClock(timeSetPressed);
 				timeSetButton.isPressed = false;
 			}
-			if (timeSetButton.isReleased == 1){
+			if (timeSetButton.isReleased == true){
 				wtc_time_t time = CSF_showFrame(&displayedTime);
 				if (!isZeroDateTime(&time)){
 					displayedTime.hour = time.hour;
 					displayedTime.minute = time.minute;				
 				}
 				timeSetPressed = false;
-				drawMidClock(timeSetPressed);
+				//drawMidClock(timeSetPressed);
 				timeSetButton.isReleased = 0;
 				createFrame();
+                timeSetButton.isReleased = false;
 			}
 			if (dateSetButton.isPressed == true){
 				drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 100, MID_CLOCK_Y + BSP_LCD_GetFont()->height + 2*GAP,200, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("DD MMM YYYY ", &displayedTime)); 
