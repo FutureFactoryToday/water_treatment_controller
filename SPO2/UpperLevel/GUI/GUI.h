@@ -73,6 +73,7 @@ extern const BITMAPSTRUCT gImage_DROPBUT;
 extern const BITMAPSTRUCT gImage_WRENCHBUT;
 extern const BITMAPSTRUCT gImage_PAGEBUT;
 extern const BITMAPSTRUCT gImage_HOMEBUT;
+extern const BITMAPSTRUCT gImage_WRENCHBUT_PHANTOM;
 
 extern const BITMAPSTRUCT leftArowImg;
 extern const BITMAPSTRUCT rightArowImg;

@@ -17,8 +17,8 @@
         <TargetCommonOption>
           <Device>STM32F103RG</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.1</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20017FFF) IROM(0x8000000-0x80FFFFF) CLOCK(8000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -130,8 +130,8 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>0</UseTargetDll>
-            <UseExternalTool>1</UseExternalTool>
+            <UseTargetDll>1</UseTargetDll>
+            <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
@@ -1277,6 +1277,11 @@
               <FilePath>..\UpperLevel\GUI\PicArrays\wrenchButImg.c</FilePath>
             </File>
             <File>
+              <FileName>wrenchButPhantom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\wrenchButPhantom.c</FilePath>
+            </File>
+            <File>
               <FileName>wrenchButImgRect.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\wrenchButImgRect.c</FilePath>
@@ -1792,6 +1797,31 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\periodRegenFrame.c</FilePath>
             </File>
+            <File>
+              <FileName>historyErrorsFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyErrorsFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>historyFilterFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyFilterFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>historyMaxWaterFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyMaxWaterFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>historyMenuFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyMenuFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>historyWaterFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyWaterFrame.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1876,6 +1906,21 @@
               <FileName>loadTypeFrame.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\loadTypeFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>elMagFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\elMagFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>inputOneFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\inputOneFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>universalOutputFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\universalOutputFrame.c</FilePath>
             </File>
           </Files>
         </Group>

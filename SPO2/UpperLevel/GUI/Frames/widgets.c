@@ -80,7 +80,7 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
     BSP_LCD_DisplayStringAt(xPos + 20, yPos + ySize/2 - 15, label, LEFT_MODE);
     BSP_LCD_SetFont(&Oxygen_Mono_24);
     
-    BSP_LCD_DrawBitmap(xPos + xSize - 50,yPos + 10, pBmp);
+    BSP_LCD_DrawBitmap(xPos + xSize - 45,yPos + 10, pBmp);
     
     return but;
 }
@@ -198,10 +198,11 @@ button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint
 //    }
     BSP_LCD_SetBackColor(backColor);
     BSP_LCD_SetTextColor(textColor);
+    BSP_LCD_SetFont(&Oxygen_Mono_20);
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    
-		BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
+    BSP_LCD_SetFont(&Oxygen_Mono_24);
+    BSP_LCD_SetTextColor(oldTextColor);
+	BSP_LCD_SetBackColor(oldBackColor);
     return but;
 }
 
