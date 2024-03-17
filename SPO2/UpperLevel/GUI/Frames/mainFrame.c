@@ -29,7 +29,7 @@ void ShowMainFrame(void)
 	while(1)
 	{		
 		if (updateFlags.sec == true){
-				drawClock();
+			drawClock();
 			if (planner.status == PL_WORKING){
 				updateRemTime();
 			}
@@ -78,8 +78,7 @@ void ShowMainFrame(void)
 			createFrame();
 		}
 		if (menuBut.isReleased == true){
-
-      ShowMainMenuFrame();
+            ShowMainMenuFrame();
 			menuBut.isReleased = false;
 			createFrame();
 		}
@@ -123,7 +122,8 @@ void updateRemTime(void){
 }
 
 void showStepName(void){
-	drawCustomTextLabel(25, 160, 300, 60, ITEM_STEPS[PC_pozNum(planner.currentStep->poz)],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
+    int8_t poz_t = PC_pozNum(planner.currentStep->poz);
+	drawCustomTextLabel(25, 160, 300, 60, ITEM_STEPS[poz_t],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
 }
 
 void clearShownStep(void){

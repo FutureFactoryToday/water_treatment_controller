@@ -9,7 +9,7 @@ int ShowSofteningFrame(void);
 
 void RefreshSofteningFrame(void);
 
-void RefreshScrollBarSofteningFrame(void);
+//void RefreshScrollBarSofteningFrame(void);
 
 void TranslateMenuSofteningMSG(void);
 

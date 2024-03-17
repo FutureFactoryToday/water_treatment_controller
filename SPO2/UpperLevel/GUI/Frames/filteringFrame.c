@@ -64,11 +64,11 @@ int ShowFilteringFrame(void)
             menuLine[1].isReleased = false;
         }
         if(menuLine[0].isPressed == true){
-            drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
+            drawDarkTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
             menuLine[0].isPressed = false;
         }
         if(menuLine[1].isPressed == true){
-            drawDarkTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
+            drawDarkTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
             menuLine[1].isPressed = false;
         }
     }
@@ -84,13 +84,14 @@ void createFrame(void)
 	drawStatusBarOkCancel();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	uint8_t fLineSize = BSP_LCD_DisplayStringAt(2*GAP,BSP_LCD_GetYSize()/2 - 70,ITEM_FILTERING[0],LEFT_MODE);
-	menuLine[0] = drawTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
-	BSP_LCD_DisplayStringAt(300,BSP_LCD_GetYSize()/2 - 70,MINUTE,LEFT_MODE);
+    
+	BSP_LCD_DisplayStringAt(2*GAP,BSP_LCD_GetYSize()/2 - 65,ITEM_FILTERING[0],LEFT_MODE);
+	menuLine[0] = drawTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 70,80,40,intToStr(res[0]));
+	BSP_LCD_DisplayStringAt(400,BSP_LCD_GetYSize()/2 - 65,MINUTE,LEFT_MODE);
 	
-	BSP_LCD_DisplayStringAt(2*GAP,BSP_LCD_GetYSize()/2 - 10,ITEM_FILTERING[1],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(300,BSP_LCD_GetYSize()/2 - 10,MINUTE,LEFT_MODE);
-	menuLine[1] = drawTextLabel(4*GAP + 125,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr((res[1])));
+	BSP_LCD_DisplayStringAt(2*GAP,BSP_LCD_GetYSize()/2 - 5,ITEM_FILTERING[1],LEFT_MODE);
+    menuLine[1] = drawTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
+	BSP_LCD_DisplayStringAt(400,BSP_LCD_GetYSize()/2 - 5,MINUTE,LEFT_MODE);
 	
 	/*Add buttons parameters*/
 	
