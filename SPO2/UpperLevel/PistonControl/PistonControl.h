@@ -23,7 +23,7 @@
 #define STALL_TIME 500 //мс
 #define LONG_STALL_TIME 1500
 #define FULL_LENGTH 560 //обороты
-#define SEEK_TIME 10 //сек
+#define SEEK_TIME 30 //сек
 #define PISTON_MOVE_MIN 100 //обороты
 #define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
 

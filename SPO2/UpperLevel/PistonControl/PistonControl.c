@@ -149,7 +149,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 		while (pcParams.workStatus == PC_IN_PROCESS);
 		pcParams.workStatus = PC_READY;
 		pcParams.calibration = true;
-		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 80);
+		PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 100);
 		//Ждем пока сработает контроль или SEEK_TIME секунд
 		while (pcParams.workStatus == PC_IN_PROCESS && seek_cnt++ < SEEK_TIME*1000){
 			LL_mDelay(1);
@@ -204,6 +204,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 }
 
 void PC_GoToPoz (int32_t dest){
+	pcParams.workStatus = PC_READY;
 	PC_GoToPozWithSpeed(dest, MAX_SPEED);
 }
 void PC_GoToPozWithSpeed (int32_t dest, uint8_t speed){

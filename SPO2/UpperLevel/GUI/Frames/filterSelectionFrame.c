@@ -41,7 +41,7 @@ int ShowFilterSelectionFrame(void)
         if(okBut.isReleased == true){
             if (markItem > 0){
                 fp->params.planner.currentTask = planner.currentTask = &planner.pistonTasks[markItem - 1];
-                
+                fp->params.planner.currentTaskNum = planner.currentTaskNum = markItem - 1;
                 fp->needToSave = 1;
                 FP_SaveParam();
             }

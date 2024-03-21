@@ -117,65 +117,6 @@ void PL_Init(){
 
 
 void PL_Planner (planner_control_type_t startType){
-	#if VERSION == 1
-	if (ct != NULL){
-		if (!isZeroDateTime(&ct->restartDateTime)){
-				if (!forced){
-					switch (startType){
-						case START_NORMAL:{
-							
-							if(!isZeroDateTime(&ct->startDateTime)) {
-								if (compareDateTime(&ct->startDateTime, getTime()) < 0){
-									ct->startDateTime = *addDate(&ct->startDateTime,&ct->restartDateTime);
-								}
-								currentStepDateTime = ct->startDateTime;
-								currentStepDateTime = *addSec(&currentStepDateTime,START_DELAY_PAUSE);
-								status=PL_ALARM_SET;
-							} else {
-								return;
-							}
-							break;
-						}
-						case FORCE_START_NOW:{
-							currentStepDateTime = *addSec(getTime(), START_DELAY_PAUSE);
-							status=PL_FORCED_ALARM_SET;
-							forced = true;
-							break;
-						}
-						case FORCE_START_NEAREST:{
-							currentStepDateTime = *getTime();
-							currentStepDateTime = *setTime(&currentStepDateTime, &ct->restartDateTime);
-							forced = true;
-							if (compareDateTime(&currentStepDateTime, getTime()) < 0){
-								currentStepDateTime = *addDay(&currentStepDateTime,1);
-							}	
-							status=PL_FORCED_ALARM_SET;							
-							break;
-						}
-				}
-				
-				currentStep = &ct->step[0];	
-				setAlarm(&currentStepDateTime,PL_ProceedStep);
-				
-			
-			} else {
-				if (!PC_isBusy()){
-					switch (startType){
-							case START_NORMAL:{
-								break;
-							}
-							case FORCE_START_NOW:
-							case FORCE_START_NEAREST:{
-								stopAlarm();
-								PL_ProceedStep();				
-								break;
-							}
-					}
-				}
-			}
-		}
-	}
-	#else
 	if (planner.currentTask != NULL){
 		if (planner.status == PL_FINISHED){
 					switch (startType){
@@ -219,8 +160,6 @@ void PL_Planner (planner_control_type_t startType){
 		}
 	}
 	
-							
-	#endif
 }
 
 time_t setPreferedTime(time_t time){
@@ -243,52 +182,24 @@ time_t setPreferedTime(time_t time){
 void PL_Interrupt(){
 	if (planner.status == PL_SET || planner.status == PL_WORKING){
 		if (planner.currentTask->startDateTime < getRTC()){
+			if (planner.status == PL_WORKING){
+				planner.currentStep++;
+			}
 			planner.status = PL_WORKING;
-			PC_GoToPoz(*(planner.currentStep->poz));
+			
 			
 			if(planner.currentStep->poz == NULL){
 				planner.status = PL_FINISHED;
 				PL_Planner(START_NORMAL);
-				return;
-			} else {
-				planner.currentTask->startDateTime += planner.currentStep->secPause;
 				
+			} else {
+				PC_GoToPoz(*(planner.currentStep->poz));
+				planner.currentTask->startDateTime += planner.currentStep->secPause;
 			}
-			planner.currentStep++;
 		}
 	}
 }
 
-#if VERSION == 1
-void PL_ProceedStep(void){
-	if (currentStep->poz != NULL){
-		status = PL_WORKING;
-		uint32_t poz = *(currentStep->poz);
-		PC_GoToPoz(poz);
-		currentStepDateTime = *getTime();
-		currentStepDateTime = *addSec(&currentStepDateTime,currentStep->secPause);
-		setAlarm(&currentStepDateTime,PL_ProceedStep);
-		currentStep++;
-	} 
-	if (currentStep->poz == NULL){
-		status = PL_WAITING;
-		cycleCnt++;
-		if(cycled){
-			forced = false;
-			PL_Planner(FORCE_START_NOW);
-		} else {
-			ct->startDateTime = *addDate(getTime(), &ct->restartDateTime);
-			ct->startDateTime = *setTime(&ct->startDateTime,&ct->restartDateTime);
-			copyTasksToFlash();
-			fp->needToSave = 1;
-			forced = false;
-			FP_SaveParam();
-			PL_Planner(START_NORMAL);
-		}
-		
-	}
-}
-#endif
 void copyTasksToFlash (void){
 	#if VERSION == 1
 	for (uint16_t task = 0; task < TASK_NUM; task++){
@@ -307,39 +218,6 @@ void copyTasksFromFlash(void){
 	planner = fp->params.planner;
 	#endif
 }
-
-#if VERSION == 1
-void copyOneTaskToFlash (uint16_t task){
-//	fp->params.pistonTasks[task].restartDateTime = pistonTasks[task].restartDateTime;
-//	fp->params.pistonTasks[task].startDateTime = pistonTasks[task].startDateTime;
-//	fp->params.pistonTasks[task].totalLineCnt = pistonTasks[task].totalLineCnt;
-	fp->params.pistonTasks[task] = pistonTasks[task];
-	for(uint8_t stepNum = 0; stepNum < STEP_PER_TASK_NUM; stepNum++){
-		if (pistonTasks[task].step[stepNum].poz == NULL){
-			fp->params.pistonTasks[task].step[stepNum].poz = NULL;
-		} else {
-			uint32_t curAdr = (uint32_t)pistonTasks[task].step[stepNum].poz;
-			uint32_t baseAdr = (uint32_t)&pistonPositions;
-			fp->params.pistonTasks[task].step[stepNum].poz = (uint32_t*)((curAdr - baseAdr )/4 + 1);
-			}
-		}
-}
-
-void copyOneTaskFromFlash(uint16_t task){
-//	pistonTasks[task].restartDateTime = fp->params.pistonTasks[task].restartDateTime;
-//	pistonTasks[task].startDateTime = fp->params.pistonTasks[task].startDateTime;
-//	pistonTasks[task].totalLineCnt = fp->params.pistonTasks[task].totalLineCnt;
-	pistonTasks[task] = fp->params.pistonTasks[task];
-	uint32_t *ptr = &pistonPositions;
-	for(uint8_t stepNum = 0; stepNum < STEP_PER_TASK_NUM; stepNum++){
-		if (fp->params.pistonTasks[task].step[stepNum].poz == NULL){
-			pistonTasks[task].step[stepNum].poz = NULL;
-		} else {
-			pistonTasks[task].step[stepNum].poz = (ptr +(uint32_t)(fp->params.pistonTasks[task].step[stepNum].poz) - 1);
-		}
-	}
-}
-#endif
 
 
 wtc_time_t timeRemain (void){

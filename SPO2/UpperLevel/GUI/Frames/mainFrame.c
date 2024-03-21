@@ -40,7 +40,7 @@ void ShowMainFrame(void)
 				TC_clearButtons();
 				TC_addButton(&regenBut);
 				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, false);
-                drawFillCustomButton(25, 80, 200, 60, "СЛЕДУЮЩАЯ", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
+        drawFillCustomButton(25, 80, 200, 60, "СЛЕДУЮЩАЯ", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
 				showStepName();
 				updateRemTime();
 				shownStep = planner.currentStep;
@@ -122,13 +122,13 @@ void updateRemTime(void){
 }
 
 void showStepName(void){
-    int8_t poz_t = PC_pozNum(planner.currentStep->poz);
+   int8_t poz_t = PC_pozNum(planner.currentStep->poz);
 	drawCustomTextLabel(25, 160, 300, 60, ITEM_STEPS[poz_t],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
 }
 
 void clearShownStep(void){
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(25,160,310,61);
+	BSP_LCD_FillRect(25,160,450,61);
 }
 //void RefreshMainFrame(void)
 //{

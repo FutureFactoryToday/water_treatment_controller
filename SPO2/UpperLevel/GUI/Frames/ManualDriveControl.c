@@ -17,7 +17,7 @@ static void createFrame (void);
 uint16_t poz, manualPoz = 0;
 uint8_t dir;
 int16_t dispPoz = 0;
-uint8_t Speed = 20;
+uint8_t Speed = 100;
 void ShowManualDriveControl(void)
 {
 	//poz = PC_GetParams()->curPoz;
