@@ -79,9 +79,6 @@ void PL_Init(){
 		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.saltering;
 		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 60*60;
 		
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 10*60; 	
-		
 		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.forwardWash;
 		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
 		

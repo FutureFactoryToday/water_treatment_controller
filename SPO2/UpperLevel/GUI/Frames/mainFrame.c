@@ -29,17 +29,18 @@ void ShowMainFrame(void)
 	while(1)
 	{		
 		if (updateFlags.sec == true){
-				drawClock();
+			drawClock();
 			if (planner.status == PL_WORKING){
 				updateRemTime();
 			}
-				updateFlags.sec = false;
+			updateFlags.sec = false;
 		}
 		if (planner.status == PL_WORKING){
 			if (planner.currentStep != shownStep){
 				TC_clearButtons();
 				TC_addButton(&regenBut);
-				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITE, false);
+				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, false);
+                drawFillCustomButton(25, 80, 200, 60, "СЛЕДУЮЩАЯ", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
 				showStepName();
 				updateRemTime();
 				shownStep = planner.currentStep;
@@ -48,7 +49,7 @@ void ShowMainFrame(void)
 		} else {
 			if (stepShow == true){
 				clearShownStep();
-				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, false);
+				//drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, false);
 				TC_addButton(&menuBut);
 				stepShow = false;
 			}
@@ -65,7 +66,7 @@ void ShowMainFrame(void)
 			menuBut.isPressed = false;
 		}
      if (contactsBut.isPressed == true){
-			drawFillButton(260, 200, 200, 60, "Контакты", true);
+			//drawFillButton(260, 200, 200, 60, "Контакты", true);
 			contactsBut.isPressed = false;
 		}
        
@@ -77,8 +78,7 @@ void ShowMainFrame(void)
 			createFrame();
 		}
 		if (menuBut.isReleased == true){
-
-      ShowMainMenuFrame();
+            ShowMainMenuFrame();
 			menuBut.isReleased = false;
 			createFrame();
 		}
@@ -118,12 +118,12 @@ void createFrame (void){
 
 void updateRemTime(void){
 	wtc_time_t remTime = intToWTCTime(planner.currentTask->startDateTime - getRTC());
-	
-	drawCustomTextLabel(235,160,100, 60, getFormatedTimeFromSource("hh:mm",&remTime),LCD_COLOR_BLACK,LCD_COLOR_GREEN);
+	drawCustomTextLabel(355, 160, 100, 60, getFormatedTimeFromSource("mm:ss",&remTime),LCD_COLOR_BLACK,LCD_COLOR_GREEN);
 }
 
 void showStepName(void){
-	drawCustomTextLabel(25, 160, 200, 60, ITEM_STEPS[PC_pozNum(planner.currentStep->poz)],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
+    int8_t poz_t = PC_pozNum(planner.currentStep->poz);
+	drawCustomTextLabel(25, 160, 300, 60, ITEM_STEPS[poz_t],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
 }
 
 void clearShownStep(void){
