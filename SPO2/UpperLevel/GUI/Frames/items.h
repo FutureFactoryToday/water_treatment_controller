@@ -100,7 +100,7 @@ extern uint8_t* ITEM_ADJUSTMENT[];
 
 
 //stepFrame
-#define STEPS_LIST "Шаги"
+#define STEPS_LIST "Стадии"
 extern uint8_t* ITEM_STEPS[];
 
 //ManualFilteringSettingsFrame

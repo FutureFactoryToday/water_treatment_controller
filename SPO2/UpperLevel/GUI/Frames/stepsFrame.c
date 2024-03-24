@@ -10,7 +10,7 @@ int8_t stepResult = -1;
 
 static void createFrame(void);
 static void calcButParam();
-static button_t menuLines[6];
+static button_t menuLines[5];
 piston_poz_t* ShowStepsFrame(void)
 {
 	steps_frame_Scroll_cnt = 0;
@@ -137,7 +137,7 @@ piston_poz_t* ShowStepsFrame(void)
            scrollUpBut.isReleased = false;
         }
         if(scrollDwnBut.isReleased == true){
-           if(steps_frame_Scroll_cnt < 2){ steps_frame_Scroll_cnt++;
+           if(steps_frame_Scroll_cnt < 1){ steps_frame_Scroll_cnt++;
                steps_frame_was_Scroll = 2;
                RefreshScrollBarStepsFrame();
            }
@@ -148,7 +148,7 @@ piston_poz_t* ShowStepsFrame(void)
 
 void createFrame(void)
 {
-    drawMainBar(false, true, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
+    drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, STEPS_LIST);
     
     drawMainWindow();
     
