@@ -28,6 +28,7 @@
 
 /* Lcd control pins assign (A..K, 0..15)
    - if hardware SPI: SCK, MOSI, MISO pins assign is lock to hardware */
+#ifdef OLD_PCB
 #define LCD_RST           A, 0  /* If not used leave it that way */
 #define LCD_RS            C, 5
 
@@ -35,7 +36,15 @@
 #define LCD_SCK           B, 13
 #define LCD_MOSI          B, 15
 #define LCD_MISO          B, 14  /* If not used leave it that way */
+#else
+#define LCD_RST           A, 0  /* If not used leave it that way */
+#define LCD_RS            C, 4
 
+#define LCD_CS            A, 1
+#define LCD_SCK           B, 13
+#define LCD_MOSI          B, 15
+#define LCD_MISO          B, 14  /* If not used leave it that way */
+#endif
 /* Backlight control
    - BL: A..K, 0..15 (if not used -> X, 0)
    - BL_ON: the logical level of the active state */

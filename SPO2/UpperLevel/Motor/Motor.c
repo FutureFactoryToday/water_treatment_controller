@@ -42,12 +42,12 @@ typedef struct {
 #error "Check motor channel settings!"
 #endif
 
-#if FORWARD_CHANNEL == LL_TIM_CHANNEL_CH2 //AIN1
-#define setForwardSpeed(sp)        LL_TIM_OC_SetCompareCH2(mot.tim, sp)
-#define setReverseSpeed(sp)        LL_TIM_OC_SetCompareCH3(mot.tim, sp);
-#else
+#if FORWARD_CHANNEL == LL_TIM_CHANNEL_CH2 //BIN1
 #define setForwardSpeed(sp)        LL_TIM_OC_SetCompareCH3(mot.tim, sp)
-#define setReverseSpeed(sp)        LL_TIM_OC_SetCompareCH2(mot.tim, sp);
+#define setReverseSpeed(sp)        LL_TIM_OC_SetCompareCH4(mot.tim, sp);
+#else
+#define setForwardSpeed(sp)        LL_TIM_OC_SetCompareCH4(mot.tim, sp)
+#define setReverseSpeed(sp)        LL_TIM_OC_SetCompareCH3(mot.tim, sp);
 #endif
 /* Private variables ---------------------------------------------------------*/
 motor_struct_t mot;
@@ -70,8 +70,8 @@ void initMotGPIO(void);
 /* Private user code ---------------------------------------------------------*/
 void MOT_Forward(void) {
     if (mot.control.TYPE == SIMPLE) {
-        LL_GPIO_SetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
-        LL_GPIO_ResetOutputPin(AIN1_GPIO_Port, AIN1_Pin);
+        LL_GPIO_SetOutputPin(BIN2_GPIO_Port, BIN2_Pin);
+        LL_GPIO_ResetOutputPin(BIN1_GPIO_Port, BIN1_Pin);
     } else {
         setReverseSpeed(mot.settings.max + 1);
         setForwardSpeed(mot.settings.max - mot.settings.pwm);
@@ -81,7 +81,7 @@ void MOT_Forward(void) {
 
 void MOT_Brake(void) {
     if (mot.control.TYPE == SIMPLE) {
-        LL_GPIO_ResetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
+        LL_GPIO_ResetOutputPin(BIN2_GPIO_Port, BIN2_Pin);
     } else {
         setForwardSpeed(mot.settings.max + 1);
         setReverseSpeed(mot.settings.max + 1);
@@ -99,8 +99,8 @@ void MOT_Coast(void) {
 
 void MOT_Reverse(void) {
     if (mot.control.TYPE == SIMPLE) {
-        LL_GPIO_SetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
-        LL_GPIO_SetOutputPin(AIN1_GPIO_Port, AIN1_Pin);
+        LL_GPIO_SetOutputPin(BIN2_GPIO_Port, BIN2_Pin);
+        LL_GPIO_SetOutputPin(BIN1_GPIO_Port, BIN1_Pin);
     } else {
         setReverseSpeed(mot.settings.max - mot.settings.pwm);
         setForwardSpeed(mot.settings.max + 1);
@@ -196,20 +196,20 @@ void initMotGPIO(void) {
 //    LL_GPIO_Init(DRV_MODE_GPIO_Port, &GPIO_InitStruct);
 
     if (mot.control.TYPE == SIMPLE) {
-        GPIO_InitStruct.Pin = AIN1_Pin | AIN2_Pin;
+        GPIO_InitStruct.Pin = BIN1_Pin | BIN2_Pin;
         GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
         GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
         GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-        LL_GPIO_Init(AIN1_GPIO_Port, &GPIO_InitStruct);
-        LL_GPIO_ResetOutputPin(AIN2_GPIO_Port, AIN2_Pin);
-        LL_GPIO_SetOutputPin(AIN1_GPIO_Port, AIN1_Pin);
+        LL_GPIO_Init(BIN1_GPIO_Port, &GPIO_InitStruct);
+        LL_GPIO_ResetOutputPin(BIN2_GPIO_Port, BIN2_Pin);
+        LL_GPIO_SetOutputPin(BIN1_GPIO_Port, BIN1_Pin);
 //        LL_GPIO_SetOutputPin(DRV_MODE_GPIO_Port, DRV_MODE_Pin);
     } else {
-        GPIO_InitStruct.Pin = AIN1_Pin | AIN2_Pin;
+        GPIO_InitStruct.Pin = BIN1_Pin | BIN2_Pin;
         GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
         GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
         GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-        LL_GPIO_Init(AIN1_GPIO_Port, &GPIO_InitStruct);
+        LL_GPIO_Init(BIN1_GPIO_Port, &GPIO_InitStruct);
 //        LL_GPIO_ResetOutputPin(DRV_MODE_GPIO_Port, DRV_MODE_Pin);
     }
 }

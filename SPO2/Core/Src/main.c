@@ -70,6 +70,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
 	__disable_irq();
@@ -110,12 +111,12 @@ int main(void)
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_TIM3_Init();
-  MX_TIM4_Init();
   MX_TIM8_Init();
   MX_USART1_UART_Init();
   MX_TIM14_Init();
   MX_TIM11_Init();
   MX_TIM13_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	
 

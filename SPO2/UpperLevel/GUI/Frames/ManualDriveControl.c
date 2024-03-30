@@ -130,8 +130,8 @@ void ShowManualDriveControl(void)
 			decPoz.isReleased = false;
 		}
 		if (dcOnOff.isReleased == true){
-			LL_GPIO_TogglePin(REL1_ON_GPIO_Port,REL1_ON_Pin);
-			if (!LL_GPIO_IsInputPinSet(REL1_CNTR_GPIO_Port,REL1_CNTR_Pin)){
+			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
+			if (!LL_GPIO_IsInputPinSet(REL_DC_CTRL_GPIO_Port,REL_DC_CTRL_Pin)){
 				BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			} else {
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);
@@ -141,8 +141,8 @@ void ShowManualDriveControl(void)
 			dcOnOff.isReleased = false;
 		} 
 		if (acOnOff.isReleased == true){
-			LL_GPIO_TogglePin(REL2_ON_GPIO_Port,REL2_ON_Pin);
-			if (!LL_GPIO_IsInputPinSet(REL2_CNTR_GPIO_Port,REL2_CNTR_Pin)){
+			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
+			if (!LL_GPIO_IsInputPinSet(REL_AC_CTRL_GPIO_Port,REL_AC_CTRL_Pin)){
 				BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			} else {
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);

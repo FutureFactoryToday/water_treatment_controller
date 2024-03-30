@@ -28,7 +28,13 @@
 
 #define TS_RESCAN_TIME 10
 
-#define MOT_TIM TIM8
+#define PistonControlTim TIM11
+
+#define OpticDelayTim TIM13
+
+#define BLTim TIM8
+
+#define MOT_TIM TIM3
 
 #define MOT_SPEED_PERCENT 80
 

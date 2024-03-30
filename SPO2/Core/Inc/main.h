@@ -163,6 +163,116 @@ void Error_Handler(void);
 #define TFT_RES_GPIO_Port GPIOA
 #define TFT_COM_EN_Pin LL_GPIO_PIN_1
 #define TFT_COM_EN_GPIO_Port GPIOA
+#define SELF_RESET_Pin LL_GPIO_PIN_2
+#define SELF_RESET_GPIO_Port GPIOA
+#define SD_CS_Pin LL_GPIO_PIN_3
+#define SD_CS_GPIO_Port GPIOA
+#define SD_CS_EXTI_IRQn EXTI3_IRQn
+#define TOUCH_RES_Pin LL_GPIO_PIN_4
+#define TOUCH_RES_GPIO_Port GPIOA
+#define DRV_1_CNTRL_Pin LL_GPIO_PIN_5
+#define DRV_1_CNTRL_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_Pin LL_GPIO_PIN_6
+#define CAP_TOUCH_INT_GPIO_Port GPIOA
+#define CAP_TOUCH_INT_EXTI_IRQn EXTI9_5_IRQn
+#define DRV_2_CNTRL_Pin LL_GPIO_PIN_7
+#define DRV_2_CNTRL_GPIO_Port GPIOA
+#define TFT_DATA_COM_Pin LL_GPIO_PIN_4
+#define TFT_DATA_COM_GPIO_Port GPIOC
+#define TFT_DATA_COMC5_Pin LL_GPIO_PIN_5
+#define TFT_DATA_COMC5_GPIO_Port GPIOC
+#define BIN2_Pin LL_GPIO_PIN_0
+#define BIN2_GPIO_Port GPIOB
+#define BIN1_Pin LL_GPIO_PIN_1
+#define BIN1_GPIO_Port GPIOB
+#define DP_SWITCH_Pin LL_GPIO_PIN_2
+#define DP_SWITCH_GPIO_Port GPIOB
+#define TOUCH_SCL_Pin LL_GPIO_PIN_10
+#define TOUCH_SCL_GPIO_Port GPIOB
+#define TOUCH_SDA_Pin LL_GPIO_PIN_11
+#define TOUCH_SDA_GPIO_Port GPIOB
+#define TFT_SCK_Pin LL_GPIO_PIN_13
+#define TFT_SCK_GPIO_Port GPIOB
+#define TFT_MISO_Pin LL_GPIO_PIN_14
+#define TFT_MISO_GPIO_Port GPIOB
+#define TFT_MOSI_Pin LL_GPIO_PIN_15
+#define TFT_MOSI_GPIO_Port GPIOB
+#define BL_Pin LL_GPIO_PIN_6
+#define BL_GPIO_Port GPIOC
+#define REL_DC_CTRL_Pin LL_GPIO_PIN_7
+#define REL_DC_CTRL_GPIO_Port GPIOC
+#define REL_AC_CTRL_Pin LL_GPIO_PIN_8
+#define REL_AC_CTRL_GPIO_Port GPIOC
+#define REL_DC_EN_Pin LL_GPIO_PIN_9
+#define REL_DC_EN_GPIO_Port GPIOC
+#define REL_AC_EN_Pin LL_GPIO_PIN_8
+#define REL_AC_EN_GPIO_Port GPIOA
+#define OPTIC_GPIO_Pin LL_GPIO_PIN_11
+#define OPTIC_GPIO_GPIO_Port GPIOA
+#define OPTIC_GPIO_EXTI_IRQn EXTI15_10_IRQn
+#define ILED_Pin LL_GPIO_PIN_12
+#define ILED_GPIO_Port GPIOA
+#define METER_INP_Pin LL_GPIO_PIN_15
+#define METER_INP_GPIO_Port GPIOA
+#define FRAM_HOLD_Pin LL_GPIO_PIN_10
+#define FRAM_HOLD_GPIO_Port GPIOC
+#define MEM_CS_Pin LL_GPIO_PIN_11
+#define MEM_CS_GPIO_Port GPIOC
+#define MEM_RES_Pin LL_GPIO_PIN_12
+#define MEM_RES_GPIO_Port GPIOC
+#define MEM_WP_Pin LL_GPIO_PIN_6
+#define MEM_WP_GPIO_Port GPIOB
+#define FRAM_CS_Pin LL_GPIO_PIN_7
+#define FRAM_CS_GPIO_Port GPIOB
+#define BOOT_Pin LL_GPIO_PIN_8
+#define BOOT_GPIO_Port GPIOB
+#define FRAM_WP_Pin LL_GPIO_PIN_9
+#define FRAM_WP_GPIO_Port GPIOB
+#ifndef NVIC_PRIORITYGROUP_0
+#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
+                                                                 4 bits for subpriority */
+#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority,
+                                                                 3 bits for subpriority */
+#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority,
+                                                                 2 bits for subpriority */
+#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority,
+                                                                 1 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
+                                                                 0 bit  for subpriority */
+#endif
+
+/* USER CODE BEGIN Private defines */
+#define TRUE 1
+#define FALSE 0
+
+#define TFT_SPI_CS_Pin TFT_COM_EN_Pin
+#define TFT_SPI_MISO_Pin LL_GPIO_PIN_14
+#define TFT_SPI_MOSI_Pin LL_GPIO_PIN_15
+#define TFT_SPI_SCK_Pin LL_GPIO_PIN_13
+
+#define TFT_SPI_CS_Port TFT_COM_EN_GPIO_Port
+#define TFT_SPI_MISO_Port GPIOB
+#define TFT_SPI_MOSI_Port GPIOB
+#define TFT_SPI_SCK_Port GPIOB
+
+
+
+#ifdef OLD_PCB
+#define PistonControlTim TIM11
+#define OpticDelayTim TIM13
+#define BLTim TIM3
+#define VPWR_SENS_Pin LL_GPIO_PIN_0
+#define VPWR_SENS_GPIO_Port GPIOC
+#define VCC2_CNTR_Pin LL_GPIO_PIN_1
+#define VCC2_CNTR_GPIO_Port GPIOC
+#define VBAT_SENS_Pin LL_GPIO_PIN_2
+#define VBAT_SENS_GPIO_Port GPIOC
+#define VSEC_SENS_Pin LL_GPIO_PIN_3
+#define VSEC_SENS_GPIO_Port GPIOC
+#define TFT_RES_Pin LL_GPIO_PIN_0
+#define TFT_RES_GPIO_Port GPIOA
+#define TFT_COM_EN_Pin LL_GPIO_PIN_1
+#define TFT_COM_EN_GPIO_Port GPIOA
 #define VCC_SENS_Pin LL_GPIO_PIN_2
 #define VCC_SENS_GPIO_Port GPIOA
 #define TOUCH_INT_Pin LL_GPIO_PIN_3
@@ -224,37 +334,9 @@ void Error_Handler(void);
 #define BIP_Pin LL_GPIO_PIN_6
 #define BIP_GPIO_Port GPIOB
 #define REL1_ON_Pin LL_GPIO_PIN_7
-#define REL1_ON_GPIO_Port GPIOB
+#define REL_DC_EN_GPIO_Port GPIOB
 #define REL2_ON_Pin LL_GPIO_PIN_9
 #define REL2_ON_GPIO_Port GPIOB
-#ifndef NVIC_PRIORITYGROUP_0
-#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
-                                                                 4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority,
-                                                                 3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority,
-                                                                 2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority,
-                                                                 1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
-                                                                 0 bit  for subpriority */
-#endif
-
-/* USER CODE BEGIN Private defines */
-#define TRUE 1
-#define FALSE 0
-
-#define TFT_SPI_CS_Pin TFT_COM_EN_Pin
-#define TFT_SPI_MISO_Pin LL_GPIO_PIN_14
-#define TFT_SPI_MOSI_Pin LL_GPIO_PIN_15
-#define TFT_SPI_SCK_Pin LL_GPIO_PIN_13
-
-#define TFT_SPI_CS_Port TFT_COM_EN_GPIO_Port
-#define TFT_SPI_MISO_Port GPIOB
-#define TFT_SPI_MOSI_Port GPIOB
-#define TFT_SPI_SCK_Port GPIOB
-
-#ifdef OLD_PCB
 #define REL2_CNTR_Pin LL_GPIO_PIN_2
 #define REL2_CNTR_GPIO_Port GPIOD
 #endif
