@@ -52,8 +52,7 @@ void MX_GPIO_Init(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|AIN1_Pin
-                          |AIN2_Pin|BIN1_Pin);
+  LL_GPIO_ResetOutputPin(GPIOC, RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|LL_GPIO_PIN_9);
 
   /**/
   LL_GPIO_ResetOutputPin(GPIOB, DB0_Pin|DB1_Pin|DB2_Pin|DB10_Pin
@@ -62,7 +61,7 @@ void MX_GPIO_Init(void)
                           |DB9_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, BIN2_Pin|ILED_Pin);
+  LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_8|ILED_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(SOUND_ON_GPIO_Port, SOUND_ON_Pin);
@@ -75,8 +74,7 @@ void MX_GPIO_Init(void)
 
   /**/
   GPIO_InitStruct.Pin = RELAY_1_Pin|RELAY_2_Pin|FCS_Pin|SD_CS_Pin
-                          |TFT_RD_Pin|TFT_DATA_COM_Pin|AIN1_Pin|AIN2_Pin
-                          |BIN1_Pin|DRV_MODE_Pin;
+                          |TFT_RD_Pin|TFT_DATA_COM_Pin|LL_GPIO_PIN_9|DRV_MODE_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
@@ -84,7 +82,7 @@ void MX_GPIO_Init(void)
 
   /**/
   GPIO_InitStruct.Pin = TFT_RES_Pin|TFT_COM_EN_Pin|TFT_WR_Pin|TOUCH_CS_Pin
-                          |BIN2_Pin|ILED_Pin;
+                          |LL_GPIO_PIN_8|ILED_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
@@ -125,7 +123,7 @@ void MX_GPIO_Init(void)
   EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_3;
   EXTI_InitStruct.LineCommand = ENABLE;
   EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING_FALLING;
   LL_EXTI_Init(&EXTI_InitStruct);
 
   /**/
@@ -160,6 +158,11 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-//
+void LED_BLINK(){
+	LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+	wtc_time_t alT = *getTime();
+	addSec(&alT,1);
+	setAlarm(&alT, &LED_BLINK);
+}
 
 /* USER CODE END 2 */

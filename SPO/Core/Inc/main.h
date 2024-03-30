@@ -48,21 +48,64 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdbool.h>
 #include "stdlib.h"
+#include "string.h"
+#include "time.h"
 #include "Settings.h"
-//#include "TFT/TFT.h"
-//#include "SPI/SPI_Handler.h"
-//#include "WTC_Logic.h"
-//#include "..\..\GUI\Logo\LOGO_MAIN.h"
-//#include "USER\test.h"
-#include "Motor\Motor.h"
-#include "TFT\stm32_adafruit_lcd.h"
-#include "TFT\stm32_adafruit_ts.h"
-#include "TFT\bmp.h"
-#include "GUI\GUI.h"
+#include "System/System.h"
+#include "Util.h"
+#include "Service/Service.h"
+#include "TFT/Fonts/wtc_fonts.h"
+#include "Motor/Motor.h"
+#include "TFT/stm32_adafruit_lcd.h"
+#include "TFT/stm32_adafruit_ts.h"
+#include "TFT/bmp.h"
+#include "GUI/GUI.h"
 #include "TFT/lcd/ili9486/ili9486.h"
-#include "Optic\Optic.h"
-//#include "USER\GUI.h"
+#include "PistonControl/PistonControl.h"
+#include "Time/Time.h"
+#include "FlowMeter/FlowMeter.h"
+#include "Time/Alarm.h"
+#include "GUI/Frames/mainFrame.h"
+#include "Planner/Planner.h"
+#include "FlashParams/FlashParam.h"
+#include "Filter/filter.h"
+#include "GUI/TouchController.h"
+
+#include "GUI/Frames/items.h"
+#include "GUI/Frames/widgets.h"
+#include "GUI/Frames/keyboardFrame.h"
+#include "GUI/Frames/mainFrame.h"
+#include "GUI/Frames/filterSelectionFrame.h"
+#include "GUI/Frames/softeningFrame.h"
+#include "GUI/Frames/filteringFrame.h"
+#include "GUI/Frames/alarmListFrame.h"
+#include "GUI/Frames/alarmNotiFrame.h"
+#include "GUI/Frames/adjustmentFrame.h"
+#include "GUI/Frames/regenServiceFrame.h"
+#include "GUI/Frames/quantityCountServiceFrame.h"
+#include "GUI/Frames/washingTimeServiceFrame.h"
+#include "GUI/Frames/regenPeriodServiceFrame.h"
+#include "GUI/Frames/serviceMenuFrame.h"
+#include "GUI/Frames/daysBetweenRegenCustomerFrame.h"
+#include "GUI/Frames/delayedRegenCustomerFrame.h"
+#include "GUI/Frames/forcedRegenCustomerFrame.h"
+#include "GUI/Frames/washingTimeCustomerFrame.h"
+#include "GUI/Frames/PinCode.h"
+#include "GUI/Frames/timeSetFrame.h"
+#include "GUI/Frames/serviceMenuFrame.h"
+#include "GUI/Frames/menuFrame.h"
+#include "GUI/Frames/clockSet.h"
+#include "GUI/Frames/Calendar.h"
+#include "GUI/Frames/stepsFrame.h"
+#include "GUI/Frames/Calendar.h"
+#include "GUI/Frames/waterCountBeforeRegen.h"
+#include "GUI/Frames/serviceInfo.h"
+#include "GUI/Frames/serviceDateSelect.h"
+#include "GUI/Frames/loadTypeFrame.h"
+#include "GUI/Frames/ColorCalibFrame.h"
+//#include "USER/GUI.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -72,8 +115,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-	extern uint32_t _1ms_cnt;
-
+extern uint32_t _1ms_cnt;
+extern uint8_t* errorCause;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -134,10 +177,6 @@ void Error_Handler(void);
 #define AIN1_GPIO_Port GPIOC
 #define AIN2_Pin LL_GPIO_PIN_8
 #define AIN2_GPIO_Port GPIOC
-#define BIN1_Pin LL_GPIO_PIN_9
-#define BIN1_GPIO_Port GPIOC
-#define BIN2_Pin LL_GPIO_PIN_8
-#define BIN2_GPIO_Port GPIOA
 #define OPT_SENS_Pin LL_GPIO_PIN_11
 #define OPT_SENS_GPIO_Port GPIOA
 #define OPT_SENS_EXTI_IRQn EXTI15_10_IRQn
@@ -190,6 +229,13 @@ void Error_Handler(void);
 #define TFT_SPI_MISO_Port GPIOB
 #define TFT_SPI_MOSI_Port GPIOB
 #define TFT_SPI_SCK_Port GPIOB
+
+//#define AIN2_GPIO_Port GPIOC
+//#define AIN2_Pin 9
+
+//#define AIN1_GPIO_Port GPIOC
+//#define AIN1_Pin 8
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

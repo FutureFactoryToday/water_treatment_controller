@@ -15,6 +15,8 @@
   *
   ******************************************************************************
   */
+	
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -47,6 +49,8 @@
 
 /* USER CODE BEGIN PV */
 	uint32_t _1ms_cnt;
+	uint8_t* errorCause;
+	
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,12 +72,6 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	_1ms_cnt = 0;
-
-	#ifdef TESTS
-	/*TEST*/
-	testFifo();
-	testSPIHandler();
-	#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -97,10 +95,11 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
+	#ifndef SIM
   SystemClock_Config();
-
+	#endif
   /* USER CODE BEGIN SysInit */
-
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM8);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -110,48 +109,46 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_RTC_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-//	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-//	GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
-//  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-//  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-//  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-//  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-//	LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_6);
-	
+  
+    
+	FP_GetParam();
+	System_init();
+	Time_init();
+	LL_RTC_EnableIT_SEC(RTC);
 	LL_SYSTICK_EnableIT();
+    
+//    setAlarm(&currentStepDateTime,PL_ProceedStep);
+//    while (1);
+    
+	initGUI();
+	PC_Init();
+	PL_Init();
+	FM_Init();
+	#ifdef TESTS
+	/*TEST*/
+	timeTest ();
+	#endif
 	__enable_irq();
 	LL_mDelay(500);
-	initOptic();
-	initMot();
-	//MOT_TEST();
-	initGUI();
-	//MOT_TEST();
+	FP_SaveParam();
 
-	//uint32_t tftID  = manIDRead();
-//	initTFT();
-//	uint8_t ID[4] = {0};
-//	readResult_t res;
-//	res.dataBuf = ID;
-//	res.result = 0;
-//	readID(&res);
-//	while (res.result != FINISH);
+	//TSF_showFrame();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	//ShowAdjustmentFrame();
+  ShowMainFrame();
 	
-	//uint32_t tftID = (ID[3]<<24) + (ID[2]<<16) + (ID[1]<<8);
-  /* USER CODE END 2 */
+//  while (1)
+//  {
+//		if (redraw){
+//			translateMessage();
+//			redraw = 0;
+//		}
+//    /* USER CODE END WHILE */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-		if (redraw){
-			redrawGUI();
-			redraw = 0;
-		}
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
+//    /* USER CODE BEGIN 3 */
+//  }
   /* USER CODE END 3 */
 }
 
@@ -242,6 +239,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
+	Error_Handler();
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
