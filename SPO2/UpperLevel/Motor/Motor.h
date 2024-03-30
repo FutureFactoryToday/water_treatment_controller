@@ -43,7 +43,7 @@ void MOT_Start(void);
 void MOT_Stop(void);
 void MOT_SetDir(uint8_t dir);
 void MOT_SetSpeed(uint8_t speed);
-
+void MOT_ChangeDir();
 void MOT_Init(mot_control_type_t type, TIM_TypeDef *TIM);
 void MOT_SetControlType(mot_control_type_t type);
 

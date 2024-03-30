@@ -128,6 +128,7 @@ int main(void)
 	LL_SYSTICK_EnableIT();
 	
 	initGUI();
+//	#ifndef TEST_FOR_PCB
 	PC_Init();
 	PL_Init();
 	FM_Init();
@@ -136,20 +137,33 @@ int main(void)
 	LL_mDelay(500);
 
 	FP_SaveParam();
+
 	__enable_irq();
 	//ShowManualDriveControl();
 	//ShowForcedRegenCustFrame();
-  ShowMainFrame();
+  //ShowMainFrame();
+	//	#else
+		MOT_Init(PWM,MOT_TIM);
+		BSP_LCD_DisplayStringAt(110, 40, "TEST FOR PCB", LEFT_MODE);
+	//	#endif
 	//MOT_Start();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	uint32_t cnt = 1;
+	MOT_Start();
   while (1)
   {
+		if (cnt++ == 7200000){
+			cnt = 0;
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
+			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
+			MOT_ChangeDir();
+		}
     /* USER CODE END WHILE */
-
+		
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

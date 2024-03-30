@@ -277,7 +277,10 @@ void initTim(void) {
 
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
 }
+void MOT_ChangeDir(){
 
+	MOT_SetDir(!mot.control.DIR);
+}
 mot_control_t MOT_GetControl(void) {
     return mot.control;
 }
