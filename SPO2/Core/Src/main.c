@@ -38,6 +38,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,7 +62,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -72,6 +72,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	
 	_1ms_cnt = 0;
 	__disable_irq();
   /* USER CODE END 1 */
@@ -122,9 +123,11 @@ int main(void)
 
 
 	FP_GetParam();
+	
 	System_init();
 	Time_init();
 	LL_RTC_EnableIT_SEC(RTC);
+	LL_RTC_ClearFlag_SEC(RTC);
 	LL_SYSTICK_EnableIT();
 	
 	initGUI();
@@ -137,31 +140,35 @@ int main(void)
 	LL_mDelay(500);
 
 	FP_SaveParam();
+	
 
-	__enable_irq();
+	
 	//ShowManualDriveControl();
 	//ShowForcedRegenCustFrame();
-  //ShowMainFrame();
+  ShowMainFrame();
 	//	#else
-		MOT_Init(PWM,MOT_TIM);
-		BSP_LCD_DisplayStringAt(110, 40, "TEST FOR PCB", LEFT_MODE);
+	//	MOT_Init(PWM,MOT_TIM);
+	//	BSP_LCD_DisplayStringAt(110, 40, "TEST FOR PCB", LEFT_MODE);
 	//	#endif
 	//MOT_Start();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t cnt = 1;
-	MOT_Start();
+//	uint32_t cnt = 1;
+//	PC_GetParams()->autoControl = false;
+//	MOT_SetSpeed(50);
+//	
+//	MOT_Start();
   while (1)
   {
-		if (cnt++ == 7200000){
-			cnt = 0;
-			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
-			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
-			MOT_ChangeDir();
-		}
+//		if (cnt++ == 7200000){
+//			cnt = 0;
+//			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+//			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
+//			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
+//			MOT_ChangeDir();
+//		}
     /* USER CODE END WHILE */
 		
     /* USER CODE BEGIN 3 */

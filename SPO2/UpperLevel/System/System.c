@@ -32,6 +32,7 @@ sys_param_t sysParam;
 void System_init(void){
 	if (fp->isLoaded != 1){
 		sysParam.lang = DEF_SYST_CONFIG_LANG;
+		sysParam.SYS_VERSION = SYSTEM_PO_VERSION;
 		sysParam.SERVICE_CODE = DEF_SERVICE_CODE;
 		fp->needToSave = true;
 		fp->params.sysPar = sysParam;

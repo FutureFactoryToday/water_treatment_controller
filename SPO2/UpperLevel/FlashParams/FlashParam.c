@@ -29,6 +29,8 @@
 /* Private variables ---------------------------------------------------------*/
 volatile static flash_params_t flashParams = {0};
 flash_params_t* fp = &flashParams;
+uint32_t sysVers;
+
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);
 void unlockFlash(void);
@@ -37,6 +39,7 @@ void lockFlash(void);
 /* Private user code ---------------------------------------------------------*/
 
 flash_params_t* FP_GetParam(void){
+	sysVers = SYSTEM_PO_VERSION;
 	if (!flashParams.isLoaded){
 		loadParams();
 	}
@@ -44,6 +47,7 @@ flash_params_t* FP_GetParam(void){
 }
 
 void loadParams(void){
+	uint32_t irqStatus = __get_PRIMASK();
 	__disable_irq();
 	
 	uint32_t *temp = 0;
@@ -57,7 +61,7 @@ void loadParams(void){
 		ptr++;
 		
 	}
-	if (flashParams.params.startLoadFlag == START_FP_FLAG && flashParams.params.endLoadFlag == END_FP_FLAG) {
+	if (flashParams.params.startLoadFlag == START_FP_FLAG && flashParams.params.endLoadFlag == END_FP_FLAG && flashParams.params.sysPar.SYS_VERSION == sysVers) {
 		flashParams.isLoaded = true;
 	} else {
 		flashParams.params.startLoadFlag = START_FP_FLAG;
@@ -65,11 +69,13 @@ void loadParams(void){
 		flashParams.needToSave = 1;
 		flashParams.isLoaded = false;
 	}
-	__enable_irq();
+	if (irqStatus == 0)
+		__enable_irq();
 	
 }
 
 uint8_t FP_SaveParam(void){
+	uint32_t irqStatus = __get_PRIMASK();
 	if (flashParams.needToSave == 1){
 		if(!FP_DeleteParam()){
 			return ERROR;
@@ -108,6 +114,8 @@ uint8_t FP_SaveParam(void){
 		FLASH->CR2 &= ~FLASH_CR2_PG;
 		lockFlash();
 		flashParams.needToSave = false;
+		
+		if (irqStatus == 0)
 		__enable_irq();
 		return 1;
 	}

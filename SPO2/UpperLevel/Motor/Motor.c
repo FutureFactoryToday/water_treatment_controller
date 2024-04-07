@@ -42,7 +42,7 @@ typedef struct {
 #error "Check motor channel settings!"
 #endif
 
-#if FORWARD_CHANNEL == LL_TIM_CHANNEL_CH2 //BIN1
+#if FORWARD_CHANNEL == LL_TIM_CHANNEL_CH3 //BIN1
 #define setForwardSpeed(sp)        LL_TIM_OC_SetCompareCH3(mot.tim, sp)
 #define setReverseSpeed(sp)        LL_TIM_OC_SetCompareCH4(mot.tim, sp);
 #else

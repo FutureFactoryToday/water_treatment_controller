@@ -72,7 +72,7 @@ uint8_t BSP_LCD_Init(void)
   BSP_LCD_Clear(LCD_DEFAULT_BACKCOLOR);
   #endif
   sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
-	sysParam.LCD_ROTATION = ILI9486_ORIENTATION;
+	
   ret = LCD_OK;
 	
 //		
