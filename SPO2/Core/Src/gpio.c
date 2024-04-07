@@ -162,6 +162,7 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(OPTIC_GPIO_GPIO_Port, OPTIC_GPIO_Pin, LL_GPIO_MODE_INPUT);
 
   /* EXTI interrupt init*/
+
   NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
   NVIC_EnableIRQ(EXTI3_IRQn);
   NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));

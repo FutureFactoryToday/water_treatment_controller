@@ -255,7 +255,10 @@ void Error_Handler(void);
 #define TFT_SPI_MOSI_Port GPIOB
 #define TFT_SPI_SCK_Port GPIOB
 
+#define MAIN_VERSION 1
+#define SUB_VERSION 1
 
+#define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + SUB_VERSION
 
 #ifdef OLD_PCB
 #define PistonControlTim TIM11

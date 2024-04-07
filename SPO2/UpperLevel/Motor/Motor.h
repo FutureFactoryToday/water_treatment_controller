@@ -21,8 +21,8 @@
 
 #define MOT_PWM_FREQ 10000
 #define MAX_PRESC UINT16_MAX
-#define FORWARD_CHANNEL LL_TIM_CHANNEL_CH2 //AIN1
-#define REVERSE_CHANNEL LL_TIM_CHANNEL_CH3 //AIN2
+#define FORWARD_CHANNEL LL_TIM_CHANNEL_CH3 //AIN1
+#define REVERSE_CHANNEL LL_TIM_CHANNEL_CH4 //AIN2
 typedef enum {
 	SIMPLE = 0,
 	PWM
@@ -43,7 +43,7 @@ void MOT_Start(void);
 void MOT_Stop(void);
 void MOT_SetDir(uint8_t dir);
 void MOT_SetSpeed(uint8_t speed);
-
+void MOT_ChangeDir();
 void MOT_Init(mot_control_type_t type, TIM_TypeDef *TIM);
 void MOT_SetControlType(mot_control_type_t type);
 

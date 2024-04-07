@@ -35,7 +35,7 @@ typedef enum{
 typedef struct{
 	uint32_t lang;
 	uint32_t LCD_TYPE;
-	uint32_t LCD_ROTATION;
+	uint32_t SYS_VERSION;
 	uint32_t SERVICE_CODE;
 	uint32_t WORK_STATUS;
 } sys_param_t;
