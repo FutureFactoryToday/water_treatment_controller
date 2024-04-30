@@ -283,7 +283,7 @@ void RefreshCursor(uint8_t dx)
 {
     uint16_t oldTextColor = BSP_LCD_GetTextColor();
     
-    if(getTime()->second%2 == 0)
+    if(getTime().second%2 == 0)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         BSP_LCD_FillRect(CURSOR_POS_X + dx,CURSOR_POS_Y, CURSOR_SIZE_X, CURSOR_SIZE_Y);

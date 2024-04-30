@@ -19,6 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "crc.h"
+#include "dma.h"
+#include "i2c.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -68,6 +71,8 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
+	#include "FlashIC/W25.h"
+	//uint8_t recBuf[10], recBuf2[10];
 int main(void)
 {
 
@@ -80,18 +85,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
-
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-  */
-  LL_GPIO_AF_Remap_SWJ_NOJTAG();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 	
@@ -106,71 +100,76 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
+  MX_DMA_Init();
   MX_RTC_Init();
+  MX_ADC1_Init();
+  MX_I2C2_Init();
+  MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_SPI3_Init();
   MX_TIM3_Init();
   MX_TIM8_Init();
   MX_USART1_UART_Init();
-  MX_TIM14_Init();
+  MX_ADC3_Init();
   MX_TIM11_Init();
   MX_TIM13_Init();
-  MX_TIM2_Init();
+  MX_TIM14_Init();
+  MX_CRC_Init();
+  MX_TIM10_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-	
 
-
-	FP_GetParam();
-	
-	System_init();
-	Time_init();
-	LL_RTC_EnableIT_SEC(RTC);
-	LL_RTC_ClearFlag_SEC(RTC);
-	LL_SYSTICK_EnableIT();
-	
-	initGUI();
-//	#ifndef TEST_FOR_PCB
-	PC_Init();
-	PL_Init();
-	FM_Init();
-	
-	
-	LL_mDelay(500);
-
-	FP_SaveParam();
-	
-
-	
+	SYS_init();
+//	__enable_irq();
+//	flash_driver_t *drv = &W25_driver;
+//	gpio_t logCS = {MEM_CS_GPIO_Port,MEM_CS_Pin};
+//	gpio_t logWP = {MEM_WP_GPIO_Port,MEM_WP_Pin};
+//	gpio_t logHOLD = {MEM_RES_GPIO_Port,MEM_RES_Pin};
+//		
+//	
+//	if (drv->init(MEM_SPI,logCS, logWP, logHOLD,0) == HAL_OK){
+//		sysParams.vars.status.flags.RAMInited = 1;
+//	} else {
+//		sysParams.vars.error.flags.RAMFail = 1;
+//	}
+//	
+//	drv->eraseChip();
+//	drv->readData(0,recBuf,10);
+//	
+//	while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+//	drv->readData(0xFFFFFF-10,recBuf2,10);
+//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+//	for(uint8_t i = 0; i<10;i++){
+//		recBuf[i] = i+1;
+//	}
+//	drv->writeData(0,recBuf,10);
+//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+//	drv->writeData(0xFFFFFF-10,recBuf,10);
+//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+//	for(uint8_t i = 0; i<10;i++){
+//		recBuf[i] = 0;
+//	}
+//	drv->readData(0,recBuf,10);
+//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+//	drv->readData(0xFFFFFF-10,recBuf2,10);
+//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
+	//LOG_Test();
+	//ShowHistoryMenuFrame();
 	//ShowManualDriveControl();
-	//ShowForcedRegenCustFrame();
-  ShowMainFrame();
-	//	#else
-	//	MOT_Init(PWM,MOT_TIM);
-	//	BSP_LCD_DisplayStringAt(110, 40, "TEST FOR PCB", LEFT_MODE);
-	//	#endif
-	//MOT_Start();
+	//ShowFilterSelectionFrame();
+//	
+
+//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[MAN_TASK_NUM], true);
+//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], false);
+//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM], false);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-//	uint32_t cnt = 1;
-//	PC_GetParams()->autoControl = false;
-//	MOT_SetSpeed(50);
-//	
-//	MOT_Start();
+	ShowMainFrame();
   while (1)
   {
-//		if (cnt++ == 7200000){
-//			cnt = 0;
-//			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-//			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
-//			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
-//			MOT_ChangeDir();
-//		}
     /* USER CODE END WHILE */
-		
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -182,56 +181,46 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_2);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_2)
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
+    Error_Handler();
   }
-  LL_RCC_HSE_Enable();
 
-   /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1)
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
-
+    Error_Handler();
   }
-  LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
+    Error_Handler();
   }
-  LL_RCC_LSE_Enable();
-
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
-
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
-  LL_RCC_EnableRTC();
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_2, LL_RCC_PLL_MUL_9);
-  LL_RCC_PLL_Enable();
-
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-
-  }
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-
-  }
-  LL_Init1msTick(72000000);
-  LL_SetSystemCoreClock(72000000);
-  LL_RCC_SetADCClockSource(LL_RCC_ADC_CLKSRC_PCLK2_DIV_6);
 }
 
 /* USER CODE BEGIN 4 */

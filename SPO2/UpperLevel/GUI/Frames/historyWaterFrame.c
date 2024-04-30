@@ -18,7 +18,7 @@ int ShowHistoryWaterFrame(void)
     while(1)
     {
 		 if(updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
          }
 			/*Buttons pressed*/
@@ -79,9 +79,12 @@ int ShowHistoryWaterFrame(void)
              return 0;
          }
          if (homeBut.isReleased == true){
-             homeBut.isReleased = false;
-             return 1;
-         }
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
          if(menuLines[0].isReleased == true){
                 //if(TSF_showFrame() == 1) return 1;
                 menuLines[0].isReleased = false;
@@ -124,7 +127,8 @@ int ShowHistoryWaterFrame(void)
 	}
 }
 void createFrame(void){
-    
+    if (goHome) return;
+	
     drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY_WATER);
     
     drawMainWindow();
@@ -134,7 +138,7 @@ void createFrame(void){
     //drawStatusBarEmpty();
     drawMainStatusBar(144, 2305, 16);
     
-    drawClock();
+     drawClock(); drawMainStatusBar(144, 2305, 16);
     
     drawStaticLines();
     

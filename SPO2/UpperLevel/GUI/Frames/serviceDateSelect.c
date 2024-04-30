@@ -10,7 +10,7 @@ int32_t  showServiceDateSelectFrame()
     while(1)
     {
 			if (updateFlags.sec == true){
-				drawClock();
+				 drawClock(); drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 			}
 			if(retBut.isReleased == true) {
@@ -51,5 +51,5 @@ void createFrame(void)
 
 
 	TC_addButton(&retBut);	
-	drawClock();
+	 drawClock(); drawMainStatusBar(144, 2305, 16);
 }

@@ -1,5 +1,6 @@
 #include "softeningFrame.h"
-
+#define MIN_KEYBOARD_RESULT 0
+#define MAX_KEYBOARD_RESULT 999
 
 uint8_t softening_frame_Scroll_cnt = 0;
 uint8_t softening_frame_was_Scroll = 0;
@@ -7,31 +8,30 @@ int32_t qwertySoft[] = {0, 0, 0, 0, 0};
 static void createFrame(void);
 static void calcButParam();
 static button_t menuLines[4];
-static uint8_t res[4];
+static uint16_t res[4];
 int ShowSofteningFrame(void)
 {
-    res[0] = planner.pistonTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
-    res[1] = planner.pistonTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
-    res[2] = planner.pistonTasks[SOFTENING_TASK_NUM].step[2].secPause/60;
-    res[3] = planner.pistonTasks[SOFTENING_TASK_NUM].step[3].secPause/60;
-    //res[4] = planner.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause/60;
+    res[0] = sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[0].secPause/60;
+    res[1] = sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[1].secPause/60;
+    res[2] = sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[2].secPause/60;
+    res[3] = sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[3].secPause/60;
+    //res[4] = sysParams.consts.planerConsts.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause/60;
     softening_frame_Scroll_cnt = 0;
     createFrame();
     while(1)
     {   
-        if (updateFlags.sec == true){
-            //drawClock();
-            updateFlags.sec = false;
-        }
+			if (updateFlags.sec == true){
+					// drawClock(); drawMainStatusBar(144, 2305, 16);
+					updateFlags.sec = false;
+			}
 		 if(okBut.isReleased == true){
-            okBut.isReleased = false;
-            planner.pistonTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * res[0];    
-            planner.pistonTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * res[1];   
-            planner.pistonTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * res[2];   
-            planner.pistonTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * res[3];
-            //planner.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * res[4];
-            copyTasksToFlash();
-			fp->needToSave = 1;
+			okBut.isReleased = false;
+			sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[0].secPause = 60 * res[0];    
+			sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[1].secPause = 60 * res[1];   
+			sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[2].secPause = 60 * res[2];   
+			sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[3].secPause = 60 * res[3];
+			//sysParams.consts.planerConsts.pistonTasks[SOFTENING_TASK_NUM].step[4].secPause = 60 * res[4];
+
 			FP_SaveParam();
 			return 0;
 		}
@@ -43,14 +43,17 @@ int ShowSofteningFrame(void)
 			retBut.isReleased = false;
 			return 0;
 		}		
-		if(homeBut.isReleased == true){
+		if (homeBut.isReleased == true){
 			homeBut.isReleased = false;
-			return 1;
-		}        
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}      
         if(menuLines[0].isReleased == true)
 		{
-            uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+            uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[0] = tempRes;
                 createFrame();
             }
@@ -58,8 +61,8 @@ int ShowSofteningFrame(void)
 		}
 		if(menuLines[1].isReleased == true)
 		{
-			uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+			uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[1] = tempRes;
                 createFrame();
             }
@@ -67,8 +70,8 @@ int ShowSofteningFrame(void)
 		}   
         if(menuLines[2].isReleased == true)
 		{
-			uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+			uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[2] = tempRes;
                 createFrame();
             }
@@ -76,54 +79,30 @@ int ShowSofteningFrame(void)
 		}
 		if(menuLines[3].isReleased == true)
 		{
-			uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+			uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[3] = tempRes;
                 createFrame();
             }
 			menuLines[3].isReleased = false;
 		}   
-//        if(menuLines[4].isReleased == true)
-//		{	
-//            uint8_t tempRes = ShowKeyboardFrame(1,150);
-//            if (tempRes > 0){
-//                res[4] = tempRes;
-//                createFrame();
-//            }
-//			menuLines[4].isReleased = false;
-//		}
-//        if(scrollUpBut.isReleased == true){
-//            if(softening_frame_Scroll_cnt > 0) { softening_frame_Scroll_cnt--;
-//                softening_frame_was_Scroll = 1;
-//                RefreshScrollBarSofteningFrame();
-//            }
-//            scrollUpBut.isReleased = false;
-//        }
-//        if(scrollDwnBut.isReleased == true){
-//            if(softening_frame_Scroll_cnt < 1) { softening_frame_Scroll_cnt++;
-//                softening_frame_was_Scroll = 2;
-//                RefreshScrollBarSofteningFrame();
-//            }
-//            scrollDwnBut.isReleased = false;
-//        }        
         
-        
-        if(menuLines[softening_frame_Scroll_cnt].isPressed == true){
-            drawDarkTextLabel(4*GAP + 225,FIRST_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt]));
-            menuLines[softening_frame_Scroll_cnt].isPressed = false;
-        }
-		if(menuLines[softening_frame_Scroll_cnt + 1].isPressed == true){
-            drawDarkTextLabel(4*GAP + 225,SECOND_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 1]));
-            menuLines[softening_frame_Scroll_cnt + 1].isPressed = false;
-        }
-        if(menuLines[softening_frame_Scroll_cnt + 2].isPressed == true){
-            drawDarkTextLabel(4*GAP + 225,THRID_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 2]));
-            menuLines[softening_frame_Scroll_cnt + 2].isPressed = false;
-        }
-        if(menuLines[softening_frame_Scroll_cnt + 3].isPressed == true){
-            drawDarkTextLabel(4*GAP + 225,FOURTH_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 3]));
-            menuLines[softening_frame_Scroll_cnt + 3].isPressed = false;
-        }
+		if(menuLines[softening_frame_Scroll_cnt].isPressed == true){
+				drawDarkTextLabel(4*GAP + 225,FIRST_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt]));
+				menuLines[softening_frame_Scroll_cnt].isPressed = false;
+		}
+if(menuLines[softening_frame_Scroll_cnt + 1].isPressed == true){
+				drawDarkTextLabel(4*GAP + 225,SECOND_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 1]));
+				menuLines[softening_frame_Scroll_cnt + 1].isPressed = false;
+		}
+		if(menuLines[softening_frame_Scroll_cnt + 2].isPressed == true){
+				drawDarkTextLabel(4*GAP + 225,THRID_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 2]));
+				menuLines[softening_frame_Scroll_cnt + 2].isPressed = false;
+		}
+		if(menuLines[softening_frame_Scroll_cnt + 3].isPressed == true){
+				drawDarkTextLabel(4*GAP + 225,FOURTH_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 3]));
+				menuLines[softening_frame_Scroll_cnt + 3].isPressed = false;
+		}
 	}
 }
 
@@ -140,7 +119,7 @@ void createFrame(void)
     
     drawStatusBarOkCancel();
     
-    //drawClock();
+    // drawClock(); drawMainStatusBar(144, 2305, 16);
     
     drawStaticLines();
     

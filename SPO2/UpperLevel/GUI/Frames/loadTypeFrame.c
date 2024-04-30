@@ -9,17 +9,20 @@ int showLoadTypeFrame()
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
         if(retBut.isReleased == true) {
             retBut.isReleased = false;
             return 0;
         }
-        if(homeBut.isReleased == true) {
-            homeBut.isReleased = false;
-            return 1;
-        }
+        if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
         for(uint8_t i = 0; i < 4; i ++){
             if (loadBut[i].isPressed){
                 drawFillArcRec(FIRST_CURSOR_POS_X, STATIC_LINE_Y + STATIC_LINE_SPASER*i+3, 300, 40, LCD_COLOR_BLUE);
@@ -31,8 +34,7 @@ int showLoadTypeFrame()
                 loadBut[i].isPressed = false;
             }
             if (loadBut[i].isReleased){
-                fp->params.planner.loadType = planner.loadType = i;
-                fp->needToSave = 1;
+                sysParams.consts.loadType = i;         
                 FP_SaveParam();
                 return 0;
             }
@@ -64,5 +66,5 @@ void createFrame(void)
 //	TC_addButton(&cancelBut);
 	TC_addButton(&retBut);	
     TC_addButton(&homeBut);
-	drawClock();
+	 drawClock(); drawMainStatusBar(144, 2305, 16);
 }

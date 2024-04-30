@@ -6,19 +6,19 @@ static wtc_time_t regTime;
 static uint8_t* text;
 int ShowWashingTimeServiceFrame(void)
 {
-	if (planner.currentTask != NULL){
-		regTime = intToWTCTime(planner.currentTask->restartDateTime);
+	if (sysParams.vars.planer.currentTask != NULL){
+		regTime = intToWTCTime(sysParams.vars.planer.currentTask->restartDateTime);
 	}
     createFrame();
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
         //Pressed
         if (timeBut.isPressed == true){
-            if (planner.currentTask != NULL){
+            if (sysParams.vars.planer.currentTask != NULL){
                 drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize()/2 - 20, 140, 40, getFormatedTimeFromSource("hh:mm", &regTime));
             }
             timeBut.isPressed = false;
@@ -32,15 +32,18 @@ int ShowWashingTimeServiceFrame(void)
             cancelBut.isReleased = false;
             return 0;
         }
-        if(homeBut.isReleased == true) {
-            homeBut.isReleased = false;
-            return 1;
-        }
+        if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
         if (timeBut.isReleased == true){
-            if (planner.currentTask != NULL){
+            if (sysParams.vars.planer.currentTask != NULL){
                 wtc_time_t tempTime = CSF_showFrame(&regTime);
                 if( !isZeroTime(&tempTime)){
-                    regTime = *setTime(&regTime, &tempTime);
+                    regTime = setTime(&regTime, &tempTime);
                     //createFrame();
                 }
             }
@@ -48,10 +51,8 @@ int ShowWashingTimeServiceFrame(void)
             createFrame();
         }
         if (okBut.isReleased == true){
-            if (planner.currentTask != NULL){
-                planner.currentTask->restartDateTime = wtcTimeToInt(&regTime);
-                fp->params.planner = planner;
-                fp->needToSave = 1;
+            if (sysParams.vars.planer.currentTask != NULL){
+                sysParams.vars.planer.currentTask->restartDateTime = wtcTimeToInt(&regTime); 
                 FP_SaveParam();
             }
             okBut.isReleased = false;
@@ -69,9 +70,9 @@ void createFrame(void)
 	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
 	
 	drawStatusBarOkCancel();
-    drawClock();
+     
 	
-	if (planner.currentTask == NULL){
+	if (sysParams.vars.planer.currentTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
 		text = getFormatedTimeFromSource("hh:mm", &regTime);
@@ -82,4 +83,5 @@ void createFrame(void)
 	TC_addButton(&retBut);
     TC_addButton(&homeBut);
     TC_addButton(&okBut);	
+	TC_addButton(&cancelBut);
 }

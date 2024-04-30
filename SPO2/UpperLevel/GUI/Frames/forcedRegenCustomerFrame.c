@@ -13,7 +13,7 @@ int ShowForcedRegenCustFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-          drawClock();
+           drawClock(); drawMainStatusBar(144, 2305, 16);
           showRemeiningTime();
           updateFlags.sec = false;
         }
@@ -24,8 +24,8 @@ int ShowForcedRegenCustFrame(void)
             forceRegen.isPressed = false;
         }
 				if (cycledRegen.isPressed == true){
-					uint8_t* text = (cycled)?"ON":"OFF";
-					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, cycled);
+					uint8_t* text = (sysParams.vars.planer.cycled)?"ON":"OFF";
+					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, sysParams.vars.planer.cycled);
 					cycledRegen.isPressed = false;
 				}
 
@@ -36,13 +36,13 @@ int ShowForcedRegenCustFrame(void)
         }
         if (forceRegen.isReleased == true){
             drawFillButton(80, 180, 200, 60, "Начать", false);
-						PL_Planner(FORCE_START_NOW);
+						PL_planer(FORCE_START_NOW);
             forceRegen.isReleased = false;
         }
 				if (cycledRegen.isReleased == true){
-					cycled = !cycled;
-					uint8_t* text = (cycled)?"ON":"OFF";
-					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, cycled);
+					sysParams.vars.planer.cycled = !sysParams.vars.planer.cycled;
+					uint8_t* text = (sysParams.vars.planer.cycled)?"ON":"OFF";
+					drawFillButton(cycledRegen.x, cycledRegen.y, cycledRegen.xSize, cycledRegen.ySize, text, sysParams.vars.planer.cycled);
 					
 					
 					cycledRegen.isReleased = false;
@@ -71,11 +71,11 @@ void createFrame()
     BSP_LCD_DrawLine(60, 145, 420, 145);
     
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
-		uint8_t* text = (cycled)?"ON":"OFF";
-    cycledRegen = drawFillButton(400, 180, 60, 60, text, cycled);
+		uint8_t* text = (sysParams.vars.planer.cycled)?"ON":"OFF";
+    cycledRegen = drawFillButton(400, 180, 60, 60, text, sysParams.vars.planer.cycled);
     drawStatusBarLabel(ITEM_FILTER_SELECTION[PL_getCurrentTaskNum()]);
     
-    drawClock();
+     drawClock(); drawMainStatusBar(144, 2305, 16);
     
     /*Add buttons parameters*/
    
@@ -96,14 +96,14 @@ void showRemeiningTime(void){
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	if (planner.status != PL_WORKING){
+	if (sysParams.consts.planerConsts.status != PL_WORKING){
 	
 		BSP_LCD_DisplayStringAt(75, 90, "Запуск через" ,LEFT_MODE);
 		
 		
 	} else {
 		uint8_t* text;
-		uint8_t stepNum = PC_pozNum ((planner.currentStep-1)->poz);
+		uint8_t stepNum = PC_pozNum ((sysParams.vars.planer.currentStep-1)->poz);
 		if (stepNum >= 0) {
 			text = ITEM_STEPS[stepNum];
 		}
@@ -113,7 +113,7 @@ void showRemeiningTime(void){
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (planner.currentTask == NULL || planner.status == PL_FINISHED){
+	if (sysParams.vars.planer.currentTask == NULL || sysParams.consts.planerConsts.status == PL_FINISHED){
 		text = &PL_NOT_INITED;
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
@@ -137,8 +137,8 @@ void showRemeiningTime(void){
 			BSP_LCD_DisplayStringAt(355, 90, "сек." ,LEFT_MODE);  
 		}
 	}
-	BSP_LCD_DisplayStringAt(400, 240, intToStr(cycleCnt),LEFT_MODE);
-	switch(planner.status){
+	BSP_LCD_DisplayStringAt(400, 240, intToStr(sysParams.vars.planer.cycleCnt),LEFT_MODE);
+	switch(sysParams.consts.planerConsts.status){
         case (PL_FINISHED):{
             statusColor = LCD_COLOR_RED;
             break;

@@ -90,3 +90,7 @@ uint8_t* intToStr (int32_t num){
 int32_t MAX(int32_t a, int32_t b){
 	return (a>b)?a:b;
 }
+
+int32_t MIN(int32_t a, int32_t b){
+	return (a<b)?a:b;
+}

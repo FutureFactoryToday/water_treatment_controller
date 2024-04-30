@@ -38,5 +38,6 @@ void FM_Init(void);
 void FM_Sense_Interrupt(void);
 void FM_OVF_Interrupt(void);
 void FM_incFlowMeter(void);
+
 #endif /* __FLOW_METER_H__ */
 

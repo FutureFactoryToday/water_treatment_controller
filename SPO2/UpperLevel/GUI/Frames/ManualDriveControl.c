@@ -20,7 +20,7 @@ int16_t dispPoz = 0;
 uint8_t Speed = 100;
 void ShowManualDriveControl(void)
 {
-	//poz = PC_GetParams()->curPoz;
+	//poz = sysParams.vars.pistonParams.curPoz;
 	createFrame();
 	
 	while(1)
@@ -28,7 +28,7 @@ void ShowManualDriveControl(void)
 		LL_mDelay(10);
 		
 		if (updateFlags.sec == true){
-				drawClock();
+				 drawClock(); drawMainStatusBar(144, 2305, 16);
 			
 				//drawTextLabel(curPozBut,intToStr(dispPoz));
 				updateFlags.sec = false;
@@ -43,8 +43,8 @@ void ShowManualDriveControl(void)
 		}
 		/*Button pressed*/
 		if (retBut.isReleased){
-			PC_GetParams()->autoControl = true;
-			PC_GoToPoz(pistonPositions.rabPoz);
+			sysParams.vars.pistonParams.autoControl = true;
+			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
 			return;
 		}
 		if (motStart.isPressed == true){
@@ -81,7 +81,10 @@ void ShowManualDriveControl(void)
 		} 
 		/*Buttons releases*/
 		if (motStart.isReleased == true){
-			PC_GetParams()->autoControl = false;
+			sysParams.vars.pistonParams.autoControl = false;
+			sysParams.vars.error.flags.PistonFail = 0;
+			sysParams.vars.error.flags.PistonStallFail = 0;
+			sysParams.vars.pistonParams.workStatus = PC_READY;
 			MOT_SetSpeed(Speed);
 			MOT_Start();
 			motStart.isReleased = false;
@@ -91,10 +94,11 @@ void ShowManualDriveControl(void)
 			MOT_Stop();
 			motStop.isReleased = false;
 			drawFillButton(motStopBut, false);
-			PC_GetParams()->destPoz = PC_GetParams()->curPoz;
-			PC_GetParams()->autoControl = true;
+			sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.curPoz;
+			sysParams.vars.pistonParams.autoControl = true;
 		}
 		if (goPoz.isReleased == true){
+			
 			PC_GoToPoz(manualPoz); 
 			goPoz.isReleased = false;
 			drawFillButton(goPozBut, false);
@@ -130,8 +134,8 @@ void ShowManualDriveControl(void)
 			decPoz.isReleased = false;
 		}
 		if (dcOnOff.isReleased == true){
-			LL_GPIO_TogglePin(REL_DC_EN_GPIO_Port,REL_DC_EN_Pin);
-			if (!LL_GPIO_IsInputPinSet(REL_DC_CTRL_GPIO_Port,REL_DC_CTRL_Pin)){
+			LL_GPIO_TogglePin(REL_DC_ON_GPIO_Port,REL_DC_ON_Pin);
+			if (!LL_GPIO_IsInputPinSet(REL_DC_FB_GPIO_Port,REL_DC_FB_Pin)){
 				BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			} else {
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);
@@ -141,8 +145,8 @@ void ShowManualDriveControl(void)
 			dcOnOff.isReleased = false;
 		} 
 		if (acOnOff.isReleased == true){
-			LL_GPIO_TogglePin(REL_AC_EN_GPIO_Port,REL_AC_EN_Pin);
-			if (!LL_GPIO_IsInputPinSet(REL_AC_CTRL_GPIO_Port,REL_AC_CTRL_Pin)){
+			LL_GPIO_TogglePin(REL_AC_ON_GPIO_Port,REL_AC_ON_Pin);
+			if (!LL_GPIO_IsInputPinSet(REL_AC_FB_GPIO_Port,REL_AC_FB_Pin)){
 				BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			} else {
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);
@@ -194,7 +198,7 @@ void createFrame (void){
 	BSP_LCD_FillCircle(acIsOnCirc);
 	drawStatusBarEmpty();
 	
-	drawClock();
+	 drawClock(); drawMainStatusBar(144, 2305, 16);
 	
 	/*Add buttons settings*/
 	

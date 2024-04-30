@@ -6,22 +6,20 @@ static uint16_t daysBetweenRegen;
 static uint8_t* text;
 void ShowRegenPeriodServiceFrame(void)
 {
-	if (planner.currentTask != NULL){
-		daysBetweenRegen = intToWTCTime(planner.currentTask->restartDateTime).day;
+	if (sysParams.vars.planer.currentTask != NULL){
+		daysBetweenRegen = intToWTCTime(sysParams.vars.planer.currentTask->restartDateTime).day;
 	}
 	createFrame();
 	while(1)
 	{
         if (updateFlags.sec == true){
-            drawClock();
+            //drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
      
 		if(okBut.isReleased == true){	
-			if (planner.currentTask != NULL){
-				planner.currentTask->restartDateTime = daysBetweenRegen*24*60*60;
-				copyTasksToFlash();			
-				fp->needToSave = 1;
+			if (sysParams.vars.planer.currentTask != NULL){
+				sysParams.vars.planer.currentTask->restartDateTime = daysBetweenRegen*24*60*60;
 				FP_SaveParam();
 			}
 			okBut.isReleased = false;
@@ -29,7 +27,7 @@ void ShowRegenPeriodServiceFrame(void)
 		}       
 		
 		if(restartTextArea.isReleased == true){
-			if (planner.currentTask != NULL){  
+			if (sysParams.vars.planer.currentTask != NULL){  
 				uint16_t result = ShowKeyboardFrame(1,999);
 				if (result > 0 ) {
 					daysBetweenRegen = result;
@@ -40,7 +38,7 @@ void ShowRegenPeriodServiceFrame(void)
 			
 		}
 		if(restartTextArea.isReleased == true){
-			if (planner.currentTask != NULL){
+			if (sysParams.vars.planer.currentTask != NULL){
 				drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 30, BSP_LCD_GetYSize()/2 - 40, 60, 40, text);
 			}
 			restartTextArea.isReleased = false;
@@ -66,7 +64,7 @@ void createFrame(void)
 	drawStatusBarOkCancel();
 	
 	
-	if (planner.currentTask == NULL){
+	if (sysParams.vars.planer.currentTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
 		text = intToStr(daysBetweenRegen);
@@ -83,7 +81,8 @@ void createFrame(void)
 	TC_addButton(&retBut);
 	TC_addButton(&okBut);
 	TC_addButton(&restartTextArea);
+	TC_addButton(&cancelBut);
 	
-	drawClock();
+	 drawClock(); drawMainStatusBar(144, 2305, 16);
 	//enableClockDraw = true;
 }

@@ -23,6 +23,7 @@
 /*Includes */
 #include "main.h"
 
+
 /*Public defines */
 
 
@@ -56,6 +57,7 @@ typedef struct {
 extern button_t retBut, okBut, scrollUpBut, scrollDwnBut, cancelBut, homeBut;
 extern bool enableClockDraw;
 /*Global params*/
+extern bool goHome;
 extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT Logo;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;

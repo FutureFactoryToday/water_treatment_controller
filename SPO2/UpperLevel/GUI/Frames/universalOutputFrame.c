@@ -1,211 +1,145 @@
 #include "universalOutputFrame.h"
-uint8_t universal_Output_Scroll_cnt = 0;
-uint8_t universal_Output_frame_was_Scroll = 0;
-int8_t hwndUniversalOutputFrameControl = 0;
-int8_t startUniversalOutputFrame = 0;
-
-static button_t menuLines[5]; 
+#define LINE_NUM 4
+static int8_t markItem = 0;
+static button_t menuLines[LINE_NUM], checkBox[LINE_NUM];
 static void createFrame();
+static void markLines();
 static void calcButParam();
-
-int ShowUniversalOutputFrame(void)
-{
-    universal_Output_Scroll_cnt = 0;
-		/*Static create*/
-		createFrame();
-    while(1)
-    {
-		 if(updateFlags.sec == true){
-            drawClock();
-            updateFlags.sec = false;
-         }
-			/*Buttons pressed*/
-         if(retBut.isPressed == true){
-            retBut.isPressed = false;
-         }
-         if(menuLines[0].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[0].y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[0],LEFT_MODE);
-                menuLines[0].isPressed = false;
-         }
-         if(menuLines[1].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[1].y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[1],LEFT_MODE);
-                menuLines[1].isPressed = false;
-         }
-         if(menuLines[2].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[2].y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[2],LEFT_MODE);
-                menuLines[2].isPressed = false;
-         }
-         if(menuLines[3].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[3].y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[3],LEFT_MODE);
-                menuLines[3].isPressed = false;
-         }
-//         if(menuLines[4].isPressed == true){
-//                //Make it blue
-//                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
-//                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-//                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_MENU[4],LEFT_MODE);
-//                menuLines[4].isPressed = false;
-//         }
-         if(scrollUpBut.isPressed == true){
-                //Make it blue
-                scrollUpBut.isPressed = false;
-         }
-         if(scrollDwnBut.isPressed == true){
-                //Make it blue
-                scrollDwnBut.isPressed = false;
-         }
-        /*Buttons released*/
-         if (retBut.isReleased == true){
-             retBut.isReleased = false;
-             return 0;
-         }
-         if (homeBut.isReleased == true){
-             homeBut.isReleased = false;
-             return 1;
-         }
-         if(menuLines[0].isReleased == true){
-                //if(TSF_showFrame() == 1) return 1;
-                menuLines[0].isReleased = false;
-                createFrame();
-         }
-         if(menuLines[1].isReleased == true){
-                //if(ShowWashTimCustFrame() == 1) return 1;
-                menuLines[1].isReleased = false;
-                createFrame();
-         }
-         if(menuLines[2].isReleased == true){
-                //if(ShowPeriodRegenCustFrame() == 1) return 1;
-                menuLines[2].isReleased = false;
-                createFrame();
-         }
-         if(menuLines[3].isReleased == true){
-                //if(ShowFilterCycleCustFrame() == 1) return 1;
-                menuLines[3].isReleased = false;
-                createFrame();
-         }
-//         if(menuLines[4].isReleased == true){
-//                ShowRegenPeriodServiceFrame();
-//                menuLines[4].isReleased = false;
-//                createFrame();
-//         }
-//         if(scrollUpBut.isReleased == true){
-//                if(menu_frame_Scroll_cnt > 0){ menu_frame_Scroll_cnt--;
-//                    menu_frame_was_Scroll = 1;
-//                    RefreshScrollBarMenuFrame();
-//                }
-//                scrollUpBut.isReleased = false;
-//         }
-//         if(scrollDwnBut.isReleased == true){
-//                if(menu_frame_Scroll_cnt < 1){ menu_frame_Scroll_cnt++;
-//                    menu_frame_was_Scroll = 2;
-//                    RefreshScrollBarMenuFrame();
-//                }
-//                scrollDwnBut.isReleased = false;
-//         }   
+int ShowUniversalOutputFrame(void) {
+	switch(sysParams.consts.dcRelay.workType) {
+		case (HALT): {
+			markItem = 1;
+			break;
+		}
+		case (WASH): {
+			markItem = 2;
+			break;
+		}
+		case (PULSE): {
+			markItem = 3;
+			break;
+		}
+		case (NEIGHBOR): {
+			markItem = 4;
+			break;
+		}
+	}
+	/*Static create*/
+	createFrame();
+	while(1) {
+		if(updateFlags.sec == true) {
+			updateFlags.sec = false;
+		}
+		/*Buttons pressed*/
+		if(retBut.isPressed == true) {
+			retBut.isPressed = false;
+		}
+		for(uint8_t i = 1; i < LINE_NUM - 1; i++) {
+			if(menuLines[i].isPressed == true) {
+				//Make it blue
+				drawFillArcRec(menuLines[i].x - 9, menuLines[i].y - 9, menuLines[i].xSize, menuLines[i].ySize + 4, LCD_COLOR_BLUE);
+				BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+				BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_UNIVERSAL_OUTPUT_FRAME[i], LEFT_MODE);
+				menuLines[i].isPressed = false;
+			}
+		}
+		/*Buttons released*/
+		if(retBut.isReleased == true) {
+			retBut.isReleased = false;
+			return 0;
+		}
+		if(homeBut.isReleased == true) {
+			homeBut.isReleased = false;
+			goHome = true;
+		}
+		if(okBut.isReleased == true) {
+			switch(markItem) {
+				case (1): {
+					sysParams.consts.dcRelay.workType = HALT;
+					break;
+				}
+				case (2): {
+					sysParams.consts.dcRelay.workType = WASH;
+					break;
+				}
+				case (3): {
+					sysParams.consts.dcRelay.workType = PULSE;
+					break;
+				}
+				case (4): {
+					sysParams.consts.dcRelay.workType = NEIGHBOR;
+					break;
+				}
+			}
+			FP_SaveParam();
+			okBut.isReleased = false;
+			return 0;
+		}
+		if(goHome) {
+			return -1;
+		}
+		if(menuLines[1].isReleased == true) {
+			ShowOutputEnableChoice(ITEM_UNIVERSAL_OUTPUT_FRAME[1],&sysParams.consts.dcRelay);
+			menuLines[1].isReleased = false;
+			createFrame();
+		}
+		if(menuLines[2].isReleased == true) {
+			ShowImpulseWeightChoice();
+			menuLines[2].isReleased = false;
+			createFrame();
+		}
+		for(uint8_t i = 0; i < LINE_NUM; i++) {
+			if(checkBox[i].isPressed) {
+				drawFillButton(checkBox[i].x, checkBox[i].y, checkBox[i].xSize, checkBox[i].ySize, "", true);
+				checkBox[i].isPressed = false;
+			}
+			if(checkBox[i].isReleased) {
+				markItem = i + 1;
+				markLines();
+				checkBox[i].isReleased = false;
+			}
+		}
 	}
 }
-void createFrame(void){
-    
-    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_UNIVERSAL_OUTPUT_FRAME[4]);
-    
-    drawMainWindow();
-    
-    //drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
-    
-    //drawStatusBarEmpty();
-    drawMainStatusBar(144, 2305, 16);
-    
-    drawClock();
-    
-    drawStaticLines();
-    
+void createFrame(void) {
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_UNIVERSAL_OUTPUT_FRAME[4]);
+	drawMainWindow();
+	drawStatusBarOkCancel();
+	drawStaticLines();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 1],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 2],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 3],LEFT_MODE);
-  
-	/*Add buttons parameters*/
-    calcButParam();
-}
-
-//void RefreshScrollBarMenuFrame()
-//{       
-//    if(universal_Output_frame_was_Scroll == 1 || universal_Output_frame_was_Scroll == 2){
-//        calcButParam();
-//        
-//        drawScrollButton(universal_Output_Scroll_cnt == 0 ? 0 : (universal_Output_Scroll_cnt == 1 ? 2 : 1));
-//        
-//        drawFillArcRec(menuLines[universal_Output_Scroll_cnt].x, menuLines[universal_Output_Scroll_cnt].y, menuLines[universal_Output_Scroll_cnt].xSize, menuLines[universal_Output_Scroll_cnt].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[universal_Output_Scroll_cnt + 1].x, menuLines[universal_Output_Scroll_cnt + 1].y, menuLines[universal_Output_Scroll_cnt + 1].xSize, menuLines[universal_Output_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[universal_Output_Scroll_cnt + 2].x, menuLines[universal_Output_Scroll_cnt + 2].y, menuLines[universal_Output_Scroll_cnt + 2].xSize, menuLines[universal_Output_Scroll_cnt + 2].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[universal_Output_Scroll_cnt + 3].x, menuLines[universal_Output_Scroll_cnt + 3].y, menuLines[universal_Output_Scroll_cnt + 3].xSize, menuLines[universal_Output_Scroll_cnt + 3].ySize, LCD_COLOR_WHITE);
-//        
-//        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-//        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 1],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 2],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_UNIVERSAL_OUTPUT_FRAME[universal_Output_Scroll_cnt + 3],LEFT_MODE);
-//        
-//        drawStaticLines();
-//        
-//        universal_Output_frame_was_Scroll = 0;
-//    }
-//}
-
-void calcButParam()
-{
-    TC_clearButtons();
-   
-        //Setting for key "0"
-    menuLines[universal_Output_Scroll_cnt].x = FIRST_CURSOR_POS_X;
-    menuLines[universal_Output_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
-    menuLines[universal_Output_Scroll_cnt].xSize = FIRST_CURSOR_SIZE_X;
-    menuLines[universal_Output_Scroll_cnt].ySize = FIRST_CURSOR_SIZE_Y;
-		
-		//Setting for key "1"
-    menuLines[universal_Output_Scroll_cnt + 1].x = SECOND_CURSOR_POS_X;
-    menuLines[universal_Output_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y;
-    menuLines[universal_Output_Scroll_cnt + 1].xSize = SECOND_CURSOR_SIZE_X;
-    menuLines[universal_Output_Scroll_cnt + 1].ySize = SECOND_CURSOR_SIZE_Y;
-    
-		//Setting for key "2"
-    menuLines[universal_Output_Scroll_cnt + 2].x = THRID_CURSOR_POS_X;
-    menuLines[universal_Output_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y;
-    menuLines[universal_Output_Scroll_cnt + 2].xSize = THRID_CURSOR_SIZE_X;
-    menuLines[universal_Output_Scroll_cnt + 2].ySize = THRID_CURSOR_SIZE_Y;
-    
-		//Setting for key "3"
-    menuLines[universal_Output_Scroll_cnt + 3].x = FOURTH_CURSOR_POS_X;
-    menuLines[universal_Output_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
-    menuLines[universal_Output_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
-    menuLines[universal_Output_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
-    
-    for (uint8_t i = universal_Output_Scroll_cnt; i < universal_Output_Scroll_cnt + 4; i++){
-			TC_addButton(&menuLines[i]);
+	calcButParam();
+	for(uint8_t i = 0; i < LINE_NUM; i++) {
+		menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_UNIVERSAL_OUTPUT_FRAME[i], LEFT_MODE);
 	}
-	TC_addButton(&retBut);
-	TC_addButton(&scrollUpBut);
-	TC_addButton(&scrollDwnBut);
-    TC_addButton(&homeBut);
-    
+	markLines();
+	/*Add buttons parameters*/
+}
+void markLines() {
+	bool checked;
+	char * status;
+	for(uint8_t i = 0; i < LINE_NUM; i++) {
+		checked = (markItem - 1 == i) ? true : false;
+		status = (markItem - 1 == i) ? "X" : "";
+		checkBox[i] = drawFillButton(SCROLLKEYUP_POS_X - 5 - 40, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, 40, 40, status, checked);
+	}
+}
+void calcButParam() {
+	TC_clearButtons();
+	TC_clearButtons();
+	for(uint8_t i = 0; i < LINE_NUM; i++) {
+		menuLines[i].x = FIRST_CURSOR_POS_X + 9;
+		menuLines[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
+		//menuLines[i].xSize = 250;
+		menuLines[i].ySize = 40;
+		TC_addButton( & menuLines[i]);
+	}
+	for(uint8_t i = 0; i < sizeof(checkBox) / sizeof(checkBox[0]); i++) {
+		TC_addButton( & checkBox[i]);
+	}
+	TC_addButton( & retBut);
+	TC_addButton( & okBut);
+	TC_addButton( & cancelBut);
+	TC_addButton( & homeBut);
 }

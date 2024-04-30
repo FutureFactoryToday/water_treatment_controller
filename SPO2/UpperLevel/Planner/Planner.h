@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    Planner.h
+  * @file    Planer.h
   * @brief   This file contains all the function prototypes for
   *          the .c file
   ******************************************************************************
@@ -9,8 +9,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef _PLANNER_H_
-#define _PLANNER_H_
+#ifndef _planer_H_
+#define _planer_H_
 
 #define VERSION 2
 /*Includes */
@@ -20,14 +20,6 @@
 #define NAME_LENGTH 12
 #define STEP_PER_TASK_NUM 10
 #define TASK_NUM 3
-
-#define DEF_TASK_RESTART_HOURS 150
-#define DEF_TASK_PREF_TIME_TO_START {0,0,0,0,0,0}
-#define DEF_TASK_LAST_START
-#define DEF_TASK_TOTAL_LINE 4
-#define DEF_WATER_VAL 150
-#define DEF_TASK_MONTH_BETWEN_SERV 3
-#define DEF_LOAD_TYPE 0
 
 #define REGENERATION_TASK_NUM 0
 #define SOFTENING_TASK_NUM 1
@@ -47,6 +39,7 @@ typedef struct {
 	task_line_t step[STEP_PER_TASK_NUM];
 	time_t restartDateTime;                //дни между регенерациями
 	time_t startDateTime;                   //время первого запуска
+	uint32_t remainingTime;
 } piston_task_t;
 
 typedef enum {
@@ -54,36 +47,40 @@ typedef enum {
 	START_NORMAL = 1,
 	FORCE_START_NOW,
 	FORCE_START_NEAREST
-} planner_control_type_t;
+} planer_control_type_t;
 
 typedef enum {
+	
 	PL_FINISHED = 1,
 	PL_SET,
 	PL_WORKING
 } planer_status_t;
 
 typedef struct{
-	piston_task_t pistonTasks[TASK_NUM];
 	piston_task_t *currentTask;
 	task_line_t *currentStep;
-	uint32_t currentTaskNum;
-	planer_status_t status;
+	uint32_t cycleCnt;
+	bool cycled;
+}planer_t;
+
+typedef struct{
+	time_t lastService;
+	uint32_t waterBeforeRegen;
 	wtc_time_t preferedTimeForWash;
 	uint32_t monthBetweenService;
-	uint32_t waterBeforeRegen;
-	time_t lastService;
-	uint32_t loadType;
-	uint32_t cycleCnt;
-}planer_t;
+	piston_task_t planerTasks[TASK_NUM];
+	uint32_t currentTaskNum;
+	planer_status_t status;
+	uint32_t currentStepNum;
+} planer_consts;
+
 /*Global params*/
-extern bool cycled;
-extern uint32_t cycleCnt;
-extern planer_t planner;
+
 /*Prototypes */
 
 void PL_Init(void);
 
-void PL_Planner (planner_control_type_t startType);
+void PL_planer (planer_control_type_t startType);
 
 void PL_Interrupt();
 void copyOneTaskToFlash (uint16_t task);
@@ -97,4 +94,4 @@ bool PL_addTaskLine(piston_task_t* task,task_line_t tl);
 bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl);
 uint8_t PL_getCurrentTaskNum(void);
 
-#endif /* _PLANNER_H_ */
+#endif /* _sysParams.vars.planer_H_ */

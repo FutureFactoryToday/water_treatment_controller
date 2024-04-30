@@ -25,7 +25,7 @@ int ShowServiceMenuFrame(void)
     while(1)
     {
          if(updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
          }
 			/*Buttons pressed*/
@@ -118,32 +118,35 @@ int ShowServiceMenuFrame(void)
             retBut.isReleased = false;
             return 0;
          }
-         if(homeBut.isReleased == true){
-            homeBut.isReleased = false;
-            return 1;
-         }
+         if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
          if(menuLines[0].isReleased == true){
-            if(ShowFilterSelectionFrame() == 1) return 1;
+            ShowFilterSelectionFrame();
             menuLines[0].isReleased = false;
             createFrame();
          }
          if(menuLines[1].isReleased == true){
-            if(showLoadTypeFrame() == 1) return 1; 
+            showLoadTypeFrame(); 
             menuLines[1].isReleased = false;
             createFrame();
          }
          if(menuLines[2].isReleased == true){
-            if(showInputOneFrame() == 1) return 1;
+            showInputOneFrame();
             menuLines[2].isReleased = false;
             createFrame();
          }
          if(menuLines[3].isReleased == true){
-            if(ShowUniversalOutputFrame() == 1) return 1; 
+            ShowOutputEnableChoice(ITEM_EL_MAG_FRAME[0],&sysParams.consts.acRelay); 
             menuLines[3].isReleased = false;
             createFrame();
          }
-         if(menuLines[4].isReleased == true){
-            if(showElMagFrame() == 1) return 1;
+				 if(menuLines[4].isReleased == true){
+            ShowUniversalOutputFrame(); 
             menuLines[4].isReleased = false;
             createFrame();
          }
@@ -185,6 +188,7 @@ int ShowServiceMenuFrame(void)
 }
 
 void createFrame(void){
+	if (goHome) return;
 	//TC_clearButtons();
     
     drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_SERVICE);
@@ -196,7 +200,7 @@ void createFrame(void){
     //drawStatusBarEmpty();
     drawMainStatusBar(144, 2305, 16);
     
-    drawClock();
+     drawClock(); drawMainStatusBar(144, 2305, 16);
     
     drawStaticLines();	
 	

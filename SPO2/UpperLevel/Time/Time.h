@@ -19,7 +19,7 @@
 
 /*Public defines */
 #define MIN_DATE_TIME {1900, 1, 1, 0,0,0}
-#define DEFAULT_TIME {2024, 03, 01,12,0,0}
+
 #define DAYS_NUM 7
 #define MONTHS_NUM 12
 
@@ -43,7 +43,7 @@ typedef struct {
 	char** dayShortName;
 } date_name_t;
 /*Global params*/
-
+extern wtc_time_t zeroTime;
 /*Prototypes */
 void Time_init(void);
 
@@ -51,7 +51,7 @@ void Time_init(void);
 void setSysTime (wtc_time_t *time);
 
 //���������� ��������� �� ��������� �����
-wtc_time_t* getTime (void);
+wtc_time_t getTime (void);
 //���������� ��� ������ �����
 void RTC_Interrupt(void);
 
@@ -119,32 +119,32 @@ struct tm wtcTimeToStdTime (wtc_time_t* time);
 wtc_time_t stdTimeToWTCTime (struct tm* time);
 
 
-wtc_time_t* addMonth (wtc_time_t* initTime, uint32_t numMonth);
-wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth);
+wtc_time_t addMonth (wtc_time_t* initTime, uint32_t numMonth);
+wtc_time_t decMonth (wtc_time_t* initTime, uint32_t numMonth);
 
-wtc_time_t* addDay (wtc_time_t* initTime, uint32_t numDay);
-wtc_time_t* decDay (wtc_time_t* initTime, uint32_t numDay);
+wtc_time_t addDay (wtc_time_t* initTime, uint32_t numDay);
+wtc_time_t decDay (wtc_time_t* initTime, uint32_t numDay);
 
-wtc_time_t* addHour (wtc_time_t* initTime, uint32_t numHour);
-wtc_time_t* decHour (wtc_time_t* initTime, uint32_t numHour);
+wtc_time_t addHour (wtc_time_t* initTime, uint32_t numHour);
+wtc_time_t decHour (wtc_time_t* initTime, uint32_t numHour);
 
-wtc_time_t* addMinute (wtc_time_t* initTime, uint32_t numMinute);
-wtc_time_t* decMinute (wtc_time_t* initTime, uint32_t numMinute);
+wtc_time_t addMinute (wtc_time_t* initTime, uint32_t numMinute);
+wtc_time_t decMinute (wtc_time_t* initTime, uint32_t numMinute);
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec);
-wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec);
+wtc_time_t addSec (wtc_time_t* initTime, uint32_t numSec);
+wtc_time_t decSec (wtc_time_t* initTime, uint32_t numSec);
 
-wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
-wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t addDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
-wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t addTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
-wtc_time_t* setTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
-wtc_time_t* setDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
-wtc_time_t* setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t setTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t setDate (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 //firstTime - secondTime
-wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
+wtc_time_t decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime);
 
 bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime);
 bool equalDate(wtc_time_t* firstTime, wtc_time_t* secondTime);

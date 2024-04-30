@@ -144,7 +144,7 @@ uint8_t formatedString[FORMATED_STRING_LENGTH];
 date_name_t* dateName = &ruName;
 uint8_t	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 uint8_t *ptr = formatedString;
-wtc_time_t sysTime;
+wtc_time_t zeroTime = {0};
 bool isInited;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -152,22 +152,13 @@ bool isLeapYear(uint16_t year);
 
 uint8_t intToChar(uint8_t num);
 void processChar(uint8_t curCh, wtc_time_t *source);
-void changeTimeLanguage(language_t lang);
 
 /* Private user code ---------------------------------------------------------*/
 
 void Time_init(){
-	if (LL_RTC_TIME_Get(RTC) == 0){
-		wtc_time_t defTime = DEFAULT_TIME;
-//		LL_RTC_AlarmTypeDef alarm = {0};
-		
-//		LL_RTC_ALARM_StructInit(&alarm);
-		setSysTime(&defTime);
-//		LL_RTC_ALARM_Init(RTC,LL_RTC_FORMAT_BIN,&alarm);
-	} else {
-		sysTime = *getTime();
-	}
-//	LL_RTC_EnableIT_ALR(RTC);
+	sysParams.vars.sysTime = getTime();
+	LL_RTC_ClearFlag_SEC(RTC);
+	LL_RTC_EnableIT_SEC(RTC);
 }
 
 uint32_t wtcTimeToInt(wtc_time_t *time){
@@ -180,7 +171,7 @@ wtc_time_t intToWTCTime (uint32_t time){
 	return stdTimeToWTCTime(&timeSt);
 }
 
-wtc_time_t* getTime (){
+wtc_time_t getTime (){
 	wtc_time_t resTime;
 	time_t rawtime = LL_RTC_TIME_Get(RTC);
 	struct tm *breakTime = localtime(&rawtime);
@@ -191,7 +182,7 @@ wtc_time_t* getTime (){
 	resTime.minute = breakTime->tm_min;
 	resTime.second = breakTime->tm_sec;
 	
-	return &resTime;
+	return resTime;
 }
 
 time_t getRTC(){
@@ -204,7 +195,7 @@ void setSysTime (wtc_time_t* time){
 	assert_param(time->month != 0);
 	assert_param(time->year != 0);
 	assert_param(time->month < 13);
-	assert_param(time->day <= maxDayInMonth(time->month, sysTime.year));
+	assert_param(time->day <= maxDayInMonth(time->month, time->year));
 	
 	struct tm newTime;
 	newTime = wtcTimeToStdTime(time);
@@ -218,13 +209,13 @@ void setSysTime (wtc_time_t* time){
   /* Exit Initialization mode */
   LL_RTC_ExitInitMode(RTC);
 	
-	sysTime = *time;
+	sysParams.vars.sysTime = *time;
 	
 }
 
 void RTC_Interrupt(){
-	sysTime = *getTime();
-	//updateFlags.sec = true;
+	sysParams.vars.sysTime = getTime();
+	updateFlags.sec = true;
 }
 struct tm wtcTimeToStdTime (wtc_time_t* time){
 	struct tm newTime;
@@ -248,303 +239,145 @@ wtc_time_t stdTimeToWTCTime (struct tm* time){
 	return newTime;
 }
 
-//wtc_time_t* addMonth (wtc_time_t* initTime, uint32_t numMonth){
-//	wtc_time_t time = *initTime;
-//	if (numMonth == 0)
-//		return &time;
-//	
-//	time.month += numMonth;
-//	if (time.month > 12){
-//		uint8_t div = time.month / 12;
-//		time.year += div;	
-//		time.month = time.month - (div)*12;
-//	}
-//	if (time.day > maxDayInMonth(time.month, time.year)){
-//		time.day = maxDayInMonth(time.month, time.year);
-//	}
-//	return &time;
-//}
-//wtc_time_t* decMonth (wtc_time_t* initTime, uint32_t numMonth){
-//	wtc_time_t time = *initTime;
-//	int16_t tempDec = 0;
-//	bool isLastDay = false;
-//	
-//	if (numMonth == 0)
-//		return &time;
-//	if (time.day == maxDayInMonth(time.month,time.year)){
-//		isLastDay = true;
-//	}
-//	tempDec = time.month - numMonth;
-//	if (tempDec < 0){
-//		time.year -= (-tempDec) / 12;	
-//		tempDec += (tempDec / 12)*12;
-//		if (tempDec <= 0){
-//			time.year -= 1;
-//			tempDec += 12;
-//		}
-//		time.month = tempDec;
-//	} else {
-//		time.month -= numMonth;
-//		return &time;
-//	}
-//	
-//	if (time.day > maxDayInMonth(time.month, time.year) || isLastDay){
-//		time.day = maxDayInMonth(time.month, time.year);
-//	}
-//	return &time;
-//}
 
-wtc_time_t* addDay (wtc_time_t* initTime, uint32_t numDay){
+wtc_time_t addDay (wtc_time_t* initTime, uint32_t numDay){
 	wtc_time_t time = *initTime;
-//	if (numDay == 0)
-//		return &time;
-//	
-//	time.day += numDay;
-//	while (time.day > maxDayInMonth(time.month, time.year)){
-//		time.day -= maxDayInMonth(time.month, time.year);	
-//		time = *addMonth(&time,1);
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numDay*24*60*60;
 	rawTime += addTime;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
-wtc_time_t* decDay (wtc_time_t* initTime, uint32_t numDay){
+wtc_time_t decDay (wtc_time_t* initTime, uint32_t numDay){
 	wtc_time_t time = *initTime;
-//	int16_t tempDec = 0;
-//	
-//	if (numDay == 0)
-//		return &time;
-//	
-//	tempDec = time.day - numDay;
-//	
-//	while (tempDec < 0){
-//		time = *decMonth(&time,1);
-//		tempDec += maxDayInMonth(time.month, time.year);
-//		
-//	}
-//	time.day = tempDec;
-	
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numDay*24*60*60;
 	rawTime -= addTime;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
 
-wtc_time_t* addHour (wtc_time_t* initTime, uint32_t numHour){
+wtc_time_t addHour (wtc_time_t* initTime, uint32_t numHour){
 	wtc_time_t time = *initTime;
-//	if (numHour == 0)
-//		return &time;
-//	
-//	time.hour += numHour;
-//	if (time.hour >= 24){
-//		uint16_t dec = time.hour / 24;
-//		time = *addDay(&time,dec);
-//		time.hour -= dec*24;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numHour*60*60;
 	rawTime += addTime;
 	
 	time = intToWTCTime(rawTime);
-	return &time;
+	return time;
 }
-wtc_time_t* decHour (wtc_time_t* initTime, uint32_t numHour){
+wtc_time_t decHour (wtc_time_t* initTime, uint32_t numHour){
 	wtc_time_t time = *initTime;
-//	int16_t tempDec = 0;
-//	
-//	if (numHour == 0)
-//		return &time;
-//	
-//	tempDec = time.hour - numHour;
-//	if (tempDec < 0){
-//		uint16_t dec = tempDec / 24;
-//		time = *decDay(&time, dec);	
-//		tempDec += dec*24;
-//		if (tempDec < 0){
-//			time = *decDay(&time, 1);
-//			tempDec += 24;
-//		}
-//		time.hour = tempDec;
-//	} else {
-//		time.hour -= numHour;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numHour*60*60;
 	rawTime -= addTime;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
 
-wtc_time_t* addMinute (wtc_time_t* initTime, uint32_t numMinute){
+wtc_time_t addMinute (wtc_time_t* initTime, uint32_t numMinute){
 	wtc_time_t time = *initTime;
-//	if (numMinute == 0)
-//		return &time;
-//	
-//	time.minute += numMinute;
-//	if (time.minute >= 60){
-//		uint16_t dec = time.minute / 60;
-//		time = *addHour(&time,dec);
-//		time.minute -= dec*60;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numMinute*60;
 	rawTime += addTime;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
-wtc_time_t* decMinute (wtc_time_t* initTime, uint32_t numMinute){
+wtc_time_t decMinute (wtc_time_t* initTime, uint32_t numMinute){
 	wtc_time_t time = *initTime;
-//	int16_t tempDec = 0;
-//	
-//	if (numMinute == 0)
-//		return &time;
-//	
-//	tempDec = time.minute - numMinute;
-//	if (tempDec < 0){
-//		uint16_t dec = tempDec / 60;
-//		time = *decHour(&time, dec);	
-//		tempDec += dec*60;
-//		if (tempDec < 0){
-//			time = *decHour(&time, 1);
-//			tempDec += 60;
-//		}
-//		time.minute = tempDec;
-//	} else {
-//		time.minute -= numMinute;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = numMinute*60;
 	rawTime -= addTime;
 	
 	time = intToWTCTime(rawTime);
-	return &time;
+	return time;
 }
 
-wtc_time_t* addSec (wtc_time_t* initTime, uint32_t numSec){
+wtc_time_t addSec (wtc_time_t* initTime, uint32_t numSec){
 	wtc_time_t time = *initTime;
-//	if (numSec == 0)
-//		return &time;
-//	
-//	time.second += numSec;
-//	if (time.second >= 60){
-//		uint16_t dec = time.second / 60;
-//		time = *addMinute(&time,dec);
-//		time.second -= dec*60;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	
 	rawTime += numSec;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
-wtc_time_t* decSec (wtc_time_t* initTime, uint32_t numSec){
-//	int16_t tempDec = 0;
+wtc_time_t decSec (wtc_time_t* initTime, uint32_t numSec){
+
 	wtc_time_t time = *initTime;
-//	if (numSec == 0)
-//		return &time;
-//	
-//	tempDec = time.second - numSec;
-//	if (tempDec < 0){
-//		uint16_t dec = tempDec / 60;
-//		time = *decMinute(&time, dec);	
-//		tempDec += dec*60;
-//		if (tempDec < 0){
-//			time = *decMinute(&time, 1);
-//			tempDec += 60;
-//		}
-//		time.second = tempDec;
-//	} else {
-//		time.second -= numSec;
-//	}
+
 	time_t rawTime = wtcTimeToInt(&time);
 	
 	rawTime -= numSec;
 	
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
 
 //firstTime + secondTime
-wtc_time_t* addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+wtc_time_t addDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t time = *firstTime;
-//	tempTime = *addSec(&tempTime, secondTime->second);
-//	tempTime = *addMinute(&tempTime, secondTime->minute);
-//	tempTime = *addHour(&tempTime, secondTime->hour);
-//	tempTime = *addDay(&tempTime, secondTime->day);
-//	tempTime = *addMonth(&tempTime, secondTime->month);
-//	tempTime.year += secondTime->year;
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = wtcTimeToInt(&secondTime);
 	rawTime += addTime;
 	time = intToWTCTime(rawTime);
-	return &time;
+	return time;
 }
 
 //firstTime - secondTime
-wtc_time_t* decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+wtc_time_t decDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t time = *firstTime;
-//	tempTime = *decSec(&tempTime, secondTime->second);
-//	tempTime = *decMinute(&tempTime, secondTime->minute);
-//	tempTime = *decHour(&tempTime, secondTime->hour);
-//	tempTime = *decDay(&tempTime, secondTime->day);
-//	tempTime = *decMonth(&tempTime, secondTime->month);
-//	tempTime.year -= secondTime->year;
-	
+
 	time_t rawTime = wtcTimeToInt(&time);
 	time_t addTime = wtcTimeToInt(&secondTime);
 	rawTime -= addTime;
 	time = intToWTCTime(rawTime);
 	
-	return &time;
+	return time;
 }
 
-wtc_time_t* addDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
-//	wtc_time_t tempTime = *firstTime;
-//	tempTime = *addDay(&tempTime, secondTime->day);
-//	tempTime = *addMonth(&tempTime, secondTime->month);
-//	tempTime.year += secondTime->year;
-//	return &tempTime;
+wtc_time_t addDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	return addDateTime(firstTime,secondTime);
 }
 
-wtc_time_t* addTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
-//	wtc_time_t tempTime = *firstTime;
-//	tempTime = *addSec(&tempTime, secondTime->second);
-//	tempTime = *addMinute(&tempTime, secondTime->minute);
-//	tempTime = *addHour(&tempTime, secondTime->hour);
-//	return &tempTime;
+wtc_time_t addTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+
 	return addDateTime(firstTime,secondTime);
 }
 
-wtc_time_t* setTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+wtc_time_t setTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
 	tempTime.second = secondTime->second;
 	tempTime.minute = secondTime->minute;
 	tempTime.hour = secondTime->hour;
-	return &tempTime;
+	return tempTime;
 }
-wtc_time_t* setDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
+wtc_time_t setDate (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
 	tempTime.year = secondTime->year;
 	tempTime.month = secondTime->month;
 	tempTime.day = secondTime->day;
-	return &tempTime;
+	return tempTime;
 }
-wtc_time_t* setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
+wtc_time_t setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	wtc_time_t tempTime = *firstTime;
 	tempTime.year = secondTime->year;
 	tempTime.month = secondTime->month;
@@ -552,7 +385,7 @@ wtc_time_t* setDateTime (wtc_time_t* firstTime, wtc_time_t* secondTime){
 	tempTime.second = secondTime->second;
 	tempTime.minute = secondTime->minute;
 	tempTime.hour = secondTime->hour;
-	return &tempTime;
+	return tempTime;
 }
 
 bool equalDateTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
@@ -606,7 +439,7 @@ int8_t compareTime(wtc_time_t* firstTime, wtc_time_t* secondTime){
 	}
 }
 bool isZeroDateTime(wtc_time_t* time){
-	wtc_time_t zeroTime = {0};
+	
 	if (compareDateTime(time, &zeroTime) == 0){
 		return 1;
 	} else {
@@ -748,16 +581,12 @@ uint8_t maxDayInMonth(uint8_t month, uint16_t year){
 	}
 }
 uint8_t* getFormatedTime(uint8_t* fStr){
-	return getFormatedTimeFromSource(fStr, &sysTime);
+	return getFormatedTimeFromSource(fStr, &sysParams.vars.sysTime);
 }
 uint8_t* getFormatedTimeFromSource(uint8_t* fStr, wtc_time_t *source){
 	uint8_t curCh = 0;
 	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minuteNum = 0, secondNum = 0;
 	ptr = formatedString;
-	
-	
-	changeTimeLanguage(sysParam.lang);
-	
 	while(*fStr!= 0){
 		strLength++;
 		curCh = *fStr++;
@@ -848,7 +677,7 @@ void processChar(uint8_t curCh, wtc_time_t *source)	{
 				if (dayNum == 1){
 					uint8_t** dayNamePtr;
 					dayNamePtr = dateName->dayShortName;
-					dayNamePtr= dayNamePtr + getDayNameByDate(&sysTime);
+					dayNamePtr= dayNamePtr + getDayNameByDate(&sysParams.vars.sysTime);
 					
 					do{
 						*ptr++= *(*dayNamePtr)++;
@@ -894,14 +723,6 @@ void processChar(uint8_t curCh, wtc_time_t *source)	{
 			};
 		}
 }
-void changeTimeLanguage(language_t lang){
-	if (lang == RUSSIAN){
-		dateName = &ruName;
-	}
-//	if (lang == ENGLISH){
-//		dateName = &engName;
-//	}
-}
 
 uint8_t getDayNameByDate(wtc_time_t *date){
 	uint8_t day;
@@ -922,7 +743,7 @@ uint8_t getDayNameByDate(wtc_time_t *date){
 	day = (day == 0)? 6 : day - 1;
 	return day;
 }
-
+/*
 uint8_t timeTest (){
 	wtc_time_t testTime, secTempTime = {0};
 	if (!isLeapYear(2104)){
@@ -1192,5 +1013,5 @@ uint8_t timeTest (){
 	wtc_time_t newTestTime = intToWTCTime(intTestTime);
 	assert_param(compareDateTime(&newTestTime,&testTime) == 0);
 }
-
+*/
  

@@ -174,8 +174,8 @@ bool		LCD_IO_isBusy();
 #define LCD_RST_OFF           LL_GPIO_SetOutputPin(TFT_RES_GPIO_Port,TFT_RES_Pin)//GPIOX_ODR(LCD_RST) = 1
 
 /* Chip select pin set */
-#define LCD_CS_ON             LL_GPIO_ResetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin)//GPIOX_ODR(LCD_CS) = 0
-#define LCD_CS_OFF            LL_GPIO_SetOutputPin(TFT_COM_EN_GPIO_Port,TFT_COM_EN_Pin)//GPIOX_ODR(LCD_CS) = 1
+#define LCD_CS_ON             LL_GPIO_ResetOutputPin(TFT_CS_GPIO_Port,TFT_CS_Pin)//GPIOX_ODR(LCD_CS) = 0
+#define LCD_CS_OFF            LL_GPIO_SetOutputPin(TFT_CS_GPIO_Port,TFT_CS_Pin)//GPIOX_ODR(LCD_CS) = 1
 
 /* If the read speed is undefinied -> is the same as writing speed */
 #ifndef LCD_SPI_SPD_READ

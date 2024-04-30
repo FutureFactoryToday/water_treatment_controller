@@ -14,9 +14,10 @@
 
 /*Includes */
 #include "main.h"
+#include "System/System.h"
 
 /*Public defines */
-#define MAX_SPEED 120*(MOT_SPEED_PERCENT/100.0)
+#define MAX_SPEED 120*(sysParams.consts.maxMotorSpeedPercent/100.0)
 #define MIN_SPEED 10
 
 #define MOT_PWM_FREQ 10000
@@ -34,6 +35,22 @@ typedef struct {
     unsigned DIR: 1;
     unsigned TYPE: 1;
 } mot_control_t;
+
+typedef struct {
+    uint32_t max;
+    uint32_t min;
+    uint32_t freq;
+    uint32_t timFreq;
+    uint32_t presc;
+    uint32_t pwm;
+} tim_settings_t;
+
+typedef struct {
+    TIM_TypeDef *tim;
+    uint32_t speed;
+    tim_settings_t settings;
+    mot_control_t control;
+} motor_struct_t;
 
 /*Global params*/
 

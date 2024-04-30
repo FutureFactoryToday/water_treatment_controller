@@ -2,6 +2,8 @@
 
 button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch)
 {
+	uint16_t oldBackColor = BSP_LCD_GetBackColor();
+	uint16_t oldTextColor = BSP_LCD_GetTextColor();
     uint16_t radius = ySize/4;
     
     button_t but;
@@ -36,7 +38,8 @@ button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
     
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    
+		BSP_LCD_SetTextColor(oldTextColor);
+		BSP_LCD_SetBackColor(oldBackColor);
     return but;
 }
 
@@ -86,8 +89,9 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 }
 
 
-void drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t color)
+button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t color)
 {
+		button_t but;
     uint16_t oldTextColor = BSP_LCD_GetTextColor();
     uint16_t oldBackColor = BSP_LCD_GetBackColor();
     
@@ -104,6 +108,16 @@ void drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySiz
     
     BSP_LCD_SetTextColor(oldTextColor);
     BSP_LCD_SetBackColor(oldBackColor);
+	
+    but.x = xPos;
+    but.y = yPos;
+    but.xSize = xSize;
+    but.ySize = ySize; 
+    but.isPressed = false;
+    but.wasPressed = false;
+    but.isReleased = false;
+    but.pressCnt = false;
+	
 }
 
 button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label)
@@ -284,7 +298,7 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
     if(returnBut)
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &gImage_RETURNARROW);
     else {
-        BSP_LCD_DrawBitmap(xPosLogo, yPosLogo, &Logo);
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &Logo);
     }
     
     BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -352,30 +366,38 @@ void drawStatusBarLabel(uint8_t* label)
 void drawStatusBarEmpty()
 {
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X, STATUSBAR_SIZE_Y);
 }
 
 void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumption, uint16_t amountOfWater)
 {
-    BSP_LCD_SetFont(&Oxygen_Mono_20);
+	int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
+	uint32_t remHours = 0;
+	uint8_t offset;		
+		BSP_LCD_SetFont(&Oxygen_Mono_20);
     
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
+    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y);
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,intToStr(nextСycleTime), LEFT_MODE);
-    BSP_LCD_DisplayStringAt(TEXT_X + 50, TEXT_Y , NEXT_CYCLE_TIME, LEFT_MODE);
+		if (deltTime >= 0){
+			remHours = deltTime/(60*60);
+			offset = BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,intToStr(remHours), LEFT_MODE);
+			BSP_LCD_DisplayStringAt(TEXT_X + offset + 5, TEXT_Y , NEXT_CYCLE_TIME, LEFT_MODE);
+		} else {
+			BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"", LEFT_MODE); 
+		}
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(сurrentWaterConsumption), LEFT_MODE);
-    BSP_LCD_DisplayStringAt(TEXT_X + 160, TEXT_Y ,CURRENT_WATER_CONSUMPTION, LEFT_MODE);
+    offset = BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(FM_getFlowHzInt()), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(TEXT_X + 120 + offset, TEXT_Y ,CURRENT_WATER_CONSUMPTION, LEFT_MODE);
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(TEXT_X + 270, TEXT_Y ,intToStr(amountOfWater), LEFT_MODE);
-    BSP_LCD_DisplayStringAt(TEXT_X + 300, TEXT_Y ,AMOUNT_OF_WATER, LEFT_MODE);
+    offset = BSP_LCD_DisplayStringAt(TEXT_X + 270, TEXT_Y ,intToStr(FM_getFlowMeterVal()), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(TEXT_X + 280 + offset, TEXT_Y ,AMOUNT_OF_WATER, LEFT_MODE);
 }
 
 void drawScrollButton (uint16_t scPos)
@@ -420,10 +442,15 @@ void drawScrollButton (uint16_t scPos)
 
 void drawStaticLines()
 {
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y, 350, STATIC_LINE_Y);
-    BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER, 350, STATIC_LINE_Y + STATIC_LINE_SPASER);
-    BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*2);
-    BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*3);
-    BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*4);
+	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y, SCROLLKEYUP_POS_X - STATIC_LINE_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER, SCROLLKEYUP_POS_X - STATIC_LINE_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2, SCROLLKEYUP_POS_X - STATIC_LINE_X );
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3, SCROLLKEYUP_POS_X - STATIC_LINE_X );
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4, SCROLLKEYUP_POS_X - STATIC_LINE_X );
+    //BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y, 350, STATIC_LINE_Y);
+    //BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER, 350, STATIC_LINE_Y + STATIC_LINE_SPASER);
+    //BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*2);
+    //BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*3);
+    //BSP_LCD_DrawLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4, 350, STATIC_LINE_Y + STATIC_LINE_SPASER*4);
 }

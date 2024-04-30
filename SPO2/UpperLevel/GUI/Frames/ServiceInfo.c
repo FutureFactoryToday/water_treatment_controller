@@ -9,7 +9,7 @@ void  showServiceInfoFrame()
     while(1)
     {
 			if (updateFlags.sec == true){
-				drawClock();
+				 drawClock(); drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 			}
 			if(retBut.isReleased == true) {
@@ -21,10 +21,10 @@ void  showServiceInfoFrame()
 			if (serviceComplBut.isReleased == true){
 				int32_t res = showServiceDateSelectFrame();
 				if (res > 0){
-					fp->params.planner.monthBetweenService = planner.monthBetweenService = res;
+					sysParams.consts.planerConsts.monthBetweenService = res;
 					
-					fp->params.planner.lastService = planner.lastService = getRTC();
-					fp->needToSave = 1;
+					sysParams.consts.planerConsts.lastService = getRTC();
+					
 					FP_SaveParam();
 				}
 				createFrame();
@@ -52,9 +52,9 @@ void createFrame(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y, ITEM_SERVICE_INFO[1], CENTER_MODE);
-    BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y + 30, ITEM_SERVICE_INFO[2], CENTER_MODE);
-	wtc_time_t tempDate = intToWTCTime(planner.lastService + planner.monthBetweenService*30*24*60*60);//*addMonth(&planner.lastService,planner.monthBetweenService);
-	uint8_t* text = (compareDate(getTime(),&tempDate) < 0)? getFormatedTimeFromSource("DD MMM YYYY", &tempDate):ITEM_SERVICE_INFO[4];
+  BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y + 30, ITEM_SERVICE_INFO[2], CENTER_MODE);
+	wtc_time_t tempDate = intToWTCTime(sysParams.consts.planerConsts.lastService + sysParams.consts.planerConsts.monthBetweenService*30*24*60*60);//*addMonth(&sysParams.consts.planerConsts.lastService,sysParams.consts.planerConsts.monthBetweenService);
+	uint8_t* text = (compareDate(&sysParams.vars.sysTime,&tempDate) < 0)? getFormatedTimeFromSource("DD MMM YYYY", &tempDate):ITEM_SERVICE_INFO[4];
 	
 	drawTextLabel(BSP_LCD_GetXSize()/2 - 150, SECOND_CURSOR_POS_Y + 30, 300, 40, text);
 	
@@ -63,5 +63,5 @@ void createFrame(void)
     TC_addButton(&serviceComplBut);
 	TC_addButton(&okBut);
 	TC_addButton(&retBut);	
-	drawClock();
+	 drawClock(); drawMainStatusBar(144, 2305, 16);
 }

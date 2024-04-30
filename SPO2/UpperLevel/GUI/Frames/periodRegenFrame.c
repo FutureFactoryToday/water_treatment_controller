@@ -13,17 +13,14 @@ int ShowPeriodRegenCustFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+            // drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
-        
-        
-        
         //Released
         if(periodRegenBut.isReleased == true){
 					int32_t tempData = ShowKeyboardFrame(1,250);
             if (tempData >= 0) {
-							planner.currentTask->restartDateTime = tempData*60*60;
+							sysParams.vars.planer.currentTask->restartDateTime = tempData*60*60;
 						}
             createFrame();
             periodRegenBut.isReleased = false;
@@ -31,7 +28,7 @@ int ShowPeriodRegenCustFrame(void)
         if(timeBeforeRegenBut.isReleased == true){
             int32_t tempData = ShowKeyboardFrame(1,250);
             if (tempData >= 0) {
-							planner.currentTask->startDateTime = getRTC() + tempData*60*60;
+							sysParams.vars.planer.currentTask->startDateTime = getRTC() + tempData*60*60;
 						}
 					
             createFrame();
@@ -41,10 +38,13 @@ int ShowPeriodRegenCustFrame(void)
             retBut.isReleased = false;
             return 0;
         }
-        if(homeBut.isReleased == true) {
-            homeBut.isReleased = false;
-            return 1;
-        }
+        if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
         if (okBut.isReleased == true){
             okBut.isReleased = false;
             return 0;
@@ -64,11 +64,11 @@ void createFrame()
 	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, PERIOD_REGEN);
 	
 	drawStatusBarOkCancel();
-	drawClock();
+	
 
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	periodRegenBut = drawLightTextLabel(BSP_LCD_GetXSize()/2 + 50, BSP_LCD_GetYSize()/2 - 65, 100, 60, intToStr(planner.currentTask->restartDateTime/(60*60)));
-	int32_t deltTime = planner.currentTask->startDateTime - getRTC();
+	periodRegenBut = drawLightTextLabel(BSP_LCD_GetXSize()/2 + 50, BSP_LCD_GetYSize()/2 - 65, 100, 60, intToStr(sysParams.vars.planer.currentTask->restartDateTime/(60*60)));
+	int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
 	uint32_t remHours = 0;
 	if (deltTime >= 0){
 		remHours = deltTime/(60*60);
@@ -93,4 +93,5 @@ void createFrame()
 	TC_addButton(&retBut);
 	TC_addButton(&homeBut);
 	TC_addButton(&okBut);	
+	TC_addButton(&cancelBut);
 }

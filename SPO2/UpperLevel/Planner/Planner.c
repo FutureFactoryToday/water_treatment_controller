@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file           : Planner.c
+  * @file           : sysParams.consts.planerConsts.c
   * @brief          : 
   ******************************************************************************
   * @attention
@@ -25,139 +25,88 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-planer_t planner;
+
 uint8_t tasksCnt;
-bool firstStep, cycled;
+
 time_t timeOfNextStep;
-uint32_t cycleCnt;
+uint32_t oldSec;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
 uint8_t findLastElement(piston_task_t* task);
 time_t setPreferedTime(time_t time);
 /*---------------------------------------------*/
 void PL_Init(){
-	planner.currentStep = NULL;
-	cycleCnt = 0;
-	firstStep = true;
-	cycled = false;
-	planner.status = PL_FINISHED;
-	if (fp->isLoaded != 1){
-		wtc_time_t zeroTime = {0};
-//		for (uint16_t task = 0; task < TASK_NUM; task++){	
-//			pistonTasks[task].restartDateTime = zeroTime;
-//			pistonTasks[task].startDateTime = zeroTime;
-//			for (uint16_t step = 0; step < STEP_PER_TASK_NUM; step++){
-//				pistonTasks[task].step[step].poz = NULL;
-//				pistonTasks[task].step[step].secPause = 0;
-//			}
-//		}
-		
-		//Filtration
-		planner.currentTask = &planner.pistonTasks[REGENERATION_TASK_NUM];
-		planner.currentTaskNum = REGENERATION_TASK_NUM;
-		planner.pistonTasks[REGENERATION_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
-		uint8_t taskNum = 0;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
-		
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.forwardWash;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 8*60;
-		
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &pistonPositions.rabPoz;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
-		
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
-		
-		
-		//Softening
-		planner.pistonTasks[SOFTENING_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;
-		taskNum = 0;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.backwash;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 8*60;
-		
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.saltering;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 60*60;
-		
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.forwardWash;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
-		
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.filling;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
-		
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &pistonPositions.rabPoz;
-		planner.pistonTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 5; //На всякий случай	
-		
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
-		planner.pistonTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
-		
-		
-		//copyTasksToFlash();
-		
-		planner.preferedTimeForWash = zeroTime; 
-		planner.currentStep = planner.currentTask->step;
-		planner.status = PL_FINISHED;
-		planner.preferedTimeForWash = (wtc_time_t)DEF_TASK_PREF_TIME_TO_START;
-		planner.monthBetweenService = DEF_TASK_MONTH_BETWEN_SERV;
-		planner.waterBeforeRegen = DEF_WATER_VAL;
-		planner.lastService = 0;
-		planner.loadType = DEF_LOAD_TYPE;
-		planner.cycleCnt = 0;
-		
-		fp->params.planner = planner;
-		
-		fp->needToSave = true;		
-	} else {
-		planner = fp->params.planner;
-		planner.currentTask = &planner.pistonTasks[planner.currentTaskNum];
-		planner.status = PL_FINISHED;
-		//PL_Planner(START_NORMAL);
+	sysParams.vars.planer.cycleCnt = 0;
+	sysParams.vars.planer.cycled = false;
+	if (sysParams.consts.planerConsts.currentTaskNum >= 3){
+		sysParams.consts.planerConsts.currentTaskNum = 0;
+	}
+	if (sysParams.consts.planerConsts.currentStepNum >= STEP_PER_TASK_NUM){
+		sysParams.consts.planerConsts.currentStepNum = 0;
+	}
+	sysParams.vars.planer.currentTask = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum];
+	sysParams.vars.planer.currentStep = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum].step[sysParams.consts.planerConsts.currentStepNum];
+	if (sysParams.vars.status.flags.PistonInited == 1)
+	sysParams.vars.status.flags.PlanerInited = 1;
+	if (sysParams.vars.status.flags.StoredParamsLoaded == 1){
+		if (sysParams.consts.planerConsts.status == PL_WORKING){
+			PC_GoToPoz(*(sysParams.vars.planer.currentStep->poz));
+		}
 	}
 }
 
-
-void PL_Planner (planner_control_type_t startType){
-	if (planner.currentTask != NULL){
-		if (planner.status == PL_FINISHED){
+void PL_planer (planer_control_type_t startType){
+	if (sysParams.vars.planer.currentTask != NULL &&
+		sysParams.vars.error.flags.PistonFail == 0){
+		if (sysParams.consts.planerConsts.status == PL_FINISHED || 
+				sysParams.consts.planerConsts.status == PL_SET){
 					switch (startType){
 						case START_NORMAL:{
-							if (planner.currentTask->startDateTime >= getRTC()){
-								planner.currentStep = planner.currentTask->step;
-								planner.status = PL_SET;
+							if (sysParams.vars.planer.currentTask->startDateTime >= getRTC()){
+								sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
+								sysParams.consts.planerConsts.status = PL_SET;
 							} else {
-								if (planner.currentTask->restartDateTime > 0){
+								if (sysParams.vars.planer.currentTask->restartDateTime > 0){
 								
-									planner.currentTask->startDateTime = getRTC() + planner.currentTask->restartDateTime;
+									sysParams.vars.planer.currentTask->startDateTime = getRTC() + sysParams.vars.planer.currentTask->restartDateTime;
 									
-									planner.currentTask->startDateTime = setPreferedTime(planner.currentTask->startDateTime);
+									sysParams.vars.planer.currentTask->startDateTime = setPreferedTime(sysParams.vars.planer.currentTask->startDateTime);
 									
-									planner.currentStep = planner.currentTask->step;
-									planner.status = PL_SET;
+									sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
+									
+									sysParams.consts.planerConsts.currentStepNum = 0;
+									
+									sysParams.consts.planerConsts.status = PL_SET;
+									
 								}
 							}
 							break;
 						}
 						case FORCE_START_NOW:{
-							planner.currentTask->startDateTime = getRTC();
-							planner.currentStep = planner.currentTask->step;
-							planner.status = PL_SET;
+							sysParams.vars.planer.currentTask->startDateTime = getRTC();
+							sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
+							sysParams.consts.planerConsts.currentStepNum = 0;
+							sysParams.consts.planerConsts.status = PL_SET;
+							PL_Interrupt();
 							break;
 						}
 						case FORCE_START_NEAREST:{
-							planner.currentTask->startDateTime = getRTC();
-							planner.currentTask->startDateTime = setPreferedTime(planner.currentTask->startDateTime);
-							planner.currentStep = planner.currentTask->step;
-							planner.status = PL_SET;
+							sysParams.vars.planer.currentTask->startDateTime = getRTC();
+							sysParams.vars.planer.currentTask->startDateTime = setPreferedTime(sysParams.vars.planer.currentTask->startDateTime);
+							sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
+							sysParams.consts.planerConsts.currentStepNum = 0;
+							sysParams.consts.planerConsts.status = PL_SET;
 							break;
 						}
 					}
-					firstStep = false;
+					FP_SaveParam();
 					return;
 				} else {
 					if (startType == FORCE_START_NEAREST || startType == FORCE_START_NOW){
-						planner.currentTask->startDateTime = getRTC();
-					}
-		}
+						sysParams.vars.planer.currentTask->remainingTime = 0;
+					}		}
+	} else {
+		sysParams.consts.planerConsts.status = PL_FINISHED;
 	}
 	
 }
@@ -165,38 +114,60 @@ void PL_Planner (planner_control_type_t startType){
 time_t setPreferedTime(time_t time){
 	uint32_t addDay = 0;
 	struct tm tempTime = *localtime(&time);
-	if (planner.preferedTimeForWash.hour < tempTime.tm_hour){
+	if (sysParams.consts.planerConsts.preferedTimeForWash.hour < tempTime.tm_hour){
 		addDay = 24*60*60;
 	} else {
-		if (planner.preferedTimeForWash.hour == tempTime.tm_hour) {
-			if (planner.preferedTimeForWash.minute <= tempTime.tm_min){
+		if (sysParams.consts.planerConsts.preferedTimeForWash.hour == tempTime.tm_hour) {
+			if (sysParams.consts.planerConsts.preferedTimeForWash.minute <= tempTime.tm_min){
 				addDay = 24*60*60;
 			}
 		}
 	}
-	tempTime.tm_hour = planner.preferedTimeForWash.hour;
-	tempTime.tm_min = planner.preferedTimeForWash.minute;
+	tempTime.tm_hour = sysParams.consts.planerConsts.preferedTimeForWash.hour;
+	tempTime.tm_min = sysParams.consts.planerConsts.preferedTimeForWash.minute;
 	addDay += mktime(&tempTime);
 	return addDay;
 }
 void PL_Interrupt(){
-	if (planner.status == PL_SET || planner.status == PL_WORKING){
-		if (planner.currentTask->startDateTime < getRTC()){
-			if (planner.status == PL_WORKING){
-				planner.currentStep++;
-			}
-			planner.status = PL_WORKING;
-			
-			
-			if(planner.currentStep->poz == NULL){
-				planner.status = PL_FINISHED;
-				PL_Planner(START_NORMAL);
-				
-			} else {
-				PC_GoToPoz(*(planner.currentStep->poz));
-				planner.currentTask->startDateTime += planner.currentStep->secPause;
+	if (sysParams.vars.error.flags.PistonFail == 1){
+		sysParams.consts.planerConsts.status = PL_FINISHED;
+		sysParams.consts.planerConsts.currentStepNum = 0;
+		sysParams.vars.planer.currentTask = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum];
+		sysParams.vars.planer.currentStep = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum].step[sysParams.consts.planerConsts.currentStepNum];
+		return;
+	}
+	if (sysParams.vars.status.flags.PlanerInited == 1){
+		uint32_t remTime = sysParams.vars.planer.currentTask->remainingTime;
+		if(remTime && oldSec != LL_RTC_TIME_Get(RTC)){
+			sysParams.vars.planer.currentTask->remainingTime--;
+			oldSec = LL_RTC_TIME_Get(RTC);
+		}
+		if (sysParams.consts.planerConsts.status == PL_SET &&
+			sysParams.vars.planer.currentTask->startDateTime < getRTC()){
+			sysParams.consts.planerConsts.status = PL_WORKING;
+			PC_GoToPoz(*(sysParams.vars.planer.currentStep->poz));
+			sysParams.vars.planer.currentTask->remainingTime = sysParams.vars.planer.currentStep->secPause;
+			oldSec = LL_RTC_TIME_Get(RTC);
+			return;
+		}
+		if(sysParams.consts.planerConsts.status == PL_WORKING){
+			if (sysParams.vars.planer.currentTask->remainingTime == 0){
+					sysParams.vars.planer.currentStep++;
+					sysParams.consts.planerConsts.currentStepNum++;
+				if(sysParams.vars.planer.currentStep->poz == NULL){
+					sysParams.consts.planerConsts.status = PL_FINISHED;
+					PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+					PL_planer(START_NORMAL);
+				} else {
+					PC_GoToPoz(*(sysParams.vars.planer.currentStep->poz));
+					sysParams.vars.planer.currentTask->remainingTime = sysParams.vars.planer.currentStep->secPause;
+				}
 			}
 		}
+		if(sysParams.consts.planerConsts.status == PL_FINISHED){
+			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+		}
+		oldSec = LL_RTC_TIME_Get(RTC);
 	}
 }
 
@@ -206,7 +177,7 @@ void copyTasksToFlash (void){
 		copyOneTaskToFlash(task);
 	}
 	#else 
-	fp->params.planner = planner;
+	//fp->params.sysParams.vars.planer = sysParams.vars.planer;
 	#endif
 }
 
@@ -215,30 +186,13 @@ void copyTasksFromFlash(void){
 		for (uint16_t task = 0; task < TASK_NUM; task++){
 		copyOneTaskFromFlash(task);
 	#else 
-	planner = fp->params.planner;
+	//sysParams.vars.planer = fp->params.sysParams.vars.planer;
 	#endif
 }
 
 
 wtc_time_t timeRemain (void){
-	wtc_time_t tempTime = {0};
-	#if VERSION == 1
-	if (currentStepDateTime.month != getTime()->month){
-		tempTime.month = currentStepDateTime.month - getTime()->month;
-	} else if (currentStepDateTime.day != getTime()->day) {
-		tempTime.day = currentStepDateTime.day - getTime()->day;
-	} else if (currentStepDateTime.hour != getTime()->hour){
-		tempTime.hour = currentStepDateTime.hour - getTime()->hour;
-	} else if (currentStepDateTime.minute != getTime()->minute){
-		tempTime.minute = currentStepDateTime.minute - getTime()->minute;
-	} else if (currentStepDateTime.second != getTime()->second){
-		tempTime.second = currentStepDateTime.second - getTime()->second;
-	}
-	#else
-	uint32_t remTime = planner.currentTask->startDateTime - getRTC();
-	tempTime = intToWTCTime(remTime);
-	#endif
-	return tempTime;
+	return intToWTCTime(sysParams.vars.planer.currentTask->remainingTime);
 }
 
 bool PL_addTaskLine(piston_task_t* task,task_line_t tl){
@@ -277,8 +231,8 @@ uint8_t findLastElement(piston_task_t* task){
 }
 
 uint8_t PL_getCurrentTaskNum(void){
-	for(uint8_t i = 0; i < sizeof(planner.pistonTasks)/sizeof(piston_task_t);i++){
-		if (planner.currentTask == &planner.pistonTasks[i]) 
+	for(uint8_t i = 0; i < sizeof(sysParams.consts.planerConsts.planerTasks)/sizeof(piston_task_t);i++){
+		if (sysParams.vars.planer.currentTask == &sysParams.consts.planerConsts.planerTasks[i]) 
 			return i;
 	}
 	

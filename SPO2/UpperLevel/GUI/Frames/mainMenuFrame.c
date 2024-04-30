@@ -9,12 +9,12 @@ int ShowMainMenuFrame(void){
 	
 	while(1)
 	{		
-        if (updateFlags.sec == true){
-            drawClock();
-            updateFlags.sec = false;
-        }
+		if (updateFlags.sec == true){
+				 drawClock(); drawMainStatusBar(144, 2305, 16);
+				updateFlags.sec = false;
+		}
 		/*Button pressed*/
-        if (customerBut.isPressed == true){
+    if (customerBut.isPressed == true){
 			//drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT, true);
 			customerBut.isPressed = false;
 		}
@@ -34,33 +34,37 @@ int ShowMainMenuFrame(void){
 				return 0;
 		}
 		if (customerBut.isReleased == true){
-			if(ShowMenuFrame() == 1) return 1;
+			ShowMenuFrame();
 			customerBut.isReleased = false;
 			createFrame();
 		}
 		if (serviceBut.isReleased == true){
 			if (PIN_showFrame() == 1){
-				if(ShowServiceMenuFrame() == 1) return 1;
+				ShowServiceMenuFrame();
 			}	
 			serviceBut.isReleased = false;
 			createFrame();
 		}
     if (historyBut.isReleased == true){
-        if(ShowHistoryMenuFrame() == 1) return 1;
+      ShowHistoryMenuFrame();
 			historyBut.isReleased = false;
             createFrame();
 		}
     if (homeBut.isReleased == true){
 			homeBut.isReleased = false;
-            return 1;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
 		}
 	}
 }
 
 void createFrame (void){
+	if (goHome) return;
 	TC_clearButtons();
     
-    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, "");
+  drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, "");
 	
 	drawMainWindow();
 	
@@ -70,7 +74,7 @@ void createFrame (void){
 	
 	drawMainStatusBar(144, 2305, 15);
 	
-	drawClock();
+	drawClock(); drawMainStatusBar(144, 2305, 16);
 	
 	/*Add buttons settings*/
 	
