@@ -2,7 +2,7 @@
 
 
 static void createFrame(void);
-static button_t dateBut[4];
+static button_t dateBut[5];
 int32_t  showServiceDateSelectFrame()
 {
 	
@@ -18,13 +18,13 @@ int32_t  showServiceDateSelectFrame()
 				
 				return -1;
 			}
-			for(uint8_t i = 0; i < 4; i ++){
-				if (dateBut[i].isPressed){
-				 drawFillButton(BSP_LCD_GetXSize()/2 - 140 - GAP - GAP/2 + (70 + GAP)*i, THRID_CURSOR_POS_Y, 70, 40, ITEM_SERVICE_INFO[7+i], true);
-					dateBut[i].isPressed = false;
-				}
+			for(uint8_t i = 0; i < 5; i ++){
+//				if (dateBut[i].isPressed){
+//				 drawFillButton(BSP_LCD_GetXSize()/2 - 140 - GAP + (70 + GAP)*i, THRID_CURSOR_POS_Y, 70, 40, ITEM_SERVICE_INFO[7+i], true);
+//					dateBut[i].isPressed = false;
+//				}
 				if (dateBut[i].isReleased){
-					return 3+3*i;
+					return 3*i;
 				}
 			}
 		}  
@@ -43,9 +43,9 @@ void createFrame(void)
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y, ITEM_SERVICE_INFO[5], CENTER_MODE);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y + 30, ITEM_SERVICE_INFO[6], CENTER_MODE);
-	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FOURTH_CURSOR_POS_Y + 15, ITEM_SERVICE_INFO[11], CENTER_MODE);
-	for(uint8_t i = 0; i < 4; i ++){
-		dateBut[i] = drawFillButton(BSP_LCD_GetXSize()/2 - 140 - GAP - GAP/2 + (70 + GAP)*i, THRID_CURSOR_POS_Y, 70, 40, ITEM_SERVICE_INFO[7+i], false);
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FOURTH_CURSOR_POS_Y + 15, ITEM_SERVICE_INFO[12], CENTER_MODE);
+	for(uint8_t i = 0; i < 5; i ++){
+		dateBut[i] = drawFillButton(BSP_LCD_GetXSize()/2 - 165 - GAP - GAP + (70 + GAP)*i, THRID_CURSOR_POS_Y, 70, 40, ITEM_SERVICE_INFO[7+i], false);
 		TC_addButton(&dateBut[i]);
 	}
 

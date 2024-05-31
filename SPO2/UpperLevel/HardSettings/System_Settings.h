@@ -15,8 +15,8 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 2
-#define NEED_TO_UPDATE 1
+#define SUB_VERSION 4
+#define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
 
@@ -29,14 +29,20 @@
 
 #define LSB 3.3/4096
 
+#define SALT_COEF 90.349
+
 #define AVG_SLOPE 4.3
 
 #define V25 1.43
 
+#define NO_TOUCH_DELAY_VALUE 60
+
+
+
 #define DEF_SERVICE_CODE 1234
 #define DEF_MAX_MOT_SPEED_PERCENT 100
 #define DEF_WAIT_STALL_TIME_MS 100
-#define DEF_SEEK_TIME_SECONDS 30
+#define DEF_SEEK_TIME_SECONDS 35
 #define newPositions
 
 #define DEF_WORK_POS 5;//+ //                               //???????? ?????????
@@ -52,10 +58,25 @@
 #define DEF_WATER_VAL 150
 #define DEF_TASK_MONTH_BETWEN_SERV 3
 #define DEF_LOAD_TYPE 0
+#define DEF_FILTER_START_COND BY_DAY
+#define DEF_FILTR_CYCLE 1500
+#define DEF_FILTER_RESERVE 20
+#define DEF_NO_WATER_CNT_LIMIT 60*10*100 //60sec*10min*100Hz
 
-#define DEF_LOAD_TYPE 0
+#define DEF_EXTERNAL_COM_ENABLE_WASH_DELAY 100*3 //100Hz*3sec
+#define DEF_EXTERNAL_COM_EX_START_DELAY 100*0.1 //100Hz*0.1sec
 
 #define DEFAULT_TIME {2024, 03, 01,12,0,0}
 
+#define DEF_PHONE_NUMBER 9876543210
+
+#define DEF_IMPULSE_WEIGHT 1
 #define FLASH_SECTORS 3
+
+#define DAYS_TO_STORE 90
+#define MAX_MEM_ADR 0xFFFFFF
+#define ERROR_SECTOR_ADDR 0x000000
+#define WATER_USAGE_SECTOR_ADDR	MAX_MEM_ADR - DAYS_TO_STORE*sizeof(log_data_t)
+#define WATER_QUANT_SECTOR_ADDR WATER_USAGE_SECTOR_ADDR - DAYS_TO_STORE*sizeof(log_data_t)
+#define WASG_SECTOR_ADDR 
 #endif /* __SETTINGS_H__ */

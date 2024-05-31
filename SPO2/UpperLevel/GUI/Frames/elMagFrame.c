@@ -12,7 +12,7 @@ static button_t elMagBut[3];
 
 int showElMagFrame(){
 
-	if(sysParams.vars.status.flags.ExternalCommandType == EXTERNAL_START){
+	if(sysParams.consts.ExternalCommandType == EXTERNAL_START){
 		markItem = 1;
 	} else {
 		markItem = 2;

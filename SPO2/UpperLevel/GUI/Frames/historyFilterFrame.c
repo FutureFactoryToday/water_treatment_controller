@@ -78,7 +78,7 @@ void createFrame(void) {
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	uint8_t offset = FIRST_CURSOR_POS_X + 9;
 	BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[0],LEFT_MODE);
-	errorsNum = LOG_GetErrors(firstEl);
+	errorsNum = LOG_GetWash(firstEl);
 	drawMainWindow();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -87,10 +87,8 @@ void createFrame(void) {
 		for(uint8_t i = 0; i < 4 && i < errorsNum; i++){
 			offset = FIRST_CURSOR_POS_X + 9;
 			wtc_time_t time = intToWTCTime(displayData[i].timeStamp);
-			
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("YYYY.MM.DD",&time),LEFT_MODE);
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[3] ,LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, intToStr(displayData[i].cause) ,LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("hh:mm DD.MM.YYYY",&time),LEFT_MODE);
 			
 		}
 		drawStaticLines();

@@ -4,7 +4,6 @@ static void createFrame(void);
 static button_t playBut[7], menuLine[7];
 //int32_t pistonPositions.[] = {0, 0, 0, 0, 0, 0, 0};
 uint32_t *firstEl;
-//char* ITEM_STEPS[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
 uint8_t adjustment_frame_Scroll_cnt;
 void ShowAdjustmentFrame(void)
 {

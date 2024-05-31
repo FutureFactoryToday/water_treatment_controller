@@ -96,6 +96,8 @@ void TC_releaseButtons(void) {
 void TC_Interrupt(uint8_t cause){
 	if (sysParams.vars.status.flags.TouchInited == 1){
 	BSP_TS_GetState(&tsState);
+	noTouchDelay = NO_TOUCH_DELAY_VALUE;
+	goHome = false;
 	if (cause == 0){//Первое нажатие
 		if (tsState.TouchDetected == 1){
 			LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_6);

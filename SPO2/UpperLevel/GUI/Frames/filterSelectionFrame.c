@@ -26,7 +26,7 @@ int ShowFilterSelectionFrame(void) {
 		if(okBut.isReleased == true) {
 			if(markItem > 0) {
 				if(markItem - 1 != sysParams.consts.planerConsts.currentTaskNum) {
-					sysParams.consts.planerConsts.status = PL_FINISHED;
+					sysParams.consts.planerConsts.status = PL_NOT_SET;
 				}
 				sysParams.vars.planer.currentTask = & sysParams.consts.planerConsts.planerTasks[markItem - 1];
 				sysParams.consts.planerConsts.currentTaskNum = markItem - 1;
@@ -51,17 +51,17 @@ int ShowFilterSelectionFrame(void) {
 			return -1;
 		}
 		if(menuLine[0].isReleased == true) {
-			ShowFilteringFrame();
+			ShowManualFilterSettings(&sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM], ITEM_FILTER_SELECTION[0], false);
 			createFrame();
 			menuLine[0].isReleased = false;
 		}
 		if(menuLine[1].isReleased == true) {
-			ShowSofteningFrame();
+			ShowManualFilterSettings(&sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], ITEM_FILTER_SELECTION[1], false);
 			createFrame();
 			menuLine[1].isReleased = false;
 		}
 		if(menuLine[2].isReleased == true) {
-			//            if(ShowManualFilterSettings() == 1) return 1;
+			ShowManualFilterSettings(&sysParams.consts.planerConsts.planerTasks[MAN_TASK_NUM], ITEM_FILTER_SELECTION[2], true);
 			createFrame();
 			menuLine[2].isReleased = false;
 		}
@@ -76,7 +76,7 @@ int ShowFilterSelectionFrame(void) {
 			markLines();
 		}
 		if(checkBox[2].isReleased == true) {
-			//markItem = 3;
+			markItem = 3;
 			checkBox[2].isReleased = false;
 			markLines();
 		}

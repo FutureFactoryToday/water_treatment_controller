@@ -95,7 +95,9 @@ typedef struct{
 	unsigned PlanerInited:1; 	//+
 	unsigned StoredParamsLoaded:1; //+
 	unsigned ExternalCommandOn:1;
-	unsigned ExternalCommandType:1;
+	unsigned NeedService:1;
+	unsigned WaterInLiters:1;
+	unsigned FlowMeterInt:1;
 } sys_status_flag_bits_t;
 
 typedef union{
@@ -105,6 +107,7 @@ typedef union{
 
 typedef struct{
 	uint32_t ServicePinCode;
+	uint64_t ServicePhoneNumber;
 	uint32_t maxMotorSpeedPercent;
 	piston_poz_t pistonPositions;
 	uint32_t pistonStallDelay;
@@ -112,18 +115,19 @@ typedef struct{
 	uint32_t sysVersion;
 	uint32_t loadType;
 	planer_consts planerConsts;
-	uint32_t waterQuantaty;
-	uint32_t externalCommandDelay;
+	float waterQuantaty;
+	float waterFromLastFilter;
 	relay_t acRelay;
 	relay_t	dcRelay;
 	uint8_t impulseWeight;
 	uint32_t storedEntryNum;
 	uint32_t storedWashNum;
 	uint32_t storedDayValueNum;
-	uint32_t maxWaterUsage;
-	uint32_t dayWaterUsage;
+	float maxWaterUsage;
+	float dayWaterUsage;
 	float adcLimit[Vin+1];
 	float adcLimitDelt[Vin+1];
+	bool ExternalCommandType;
 } sys_const_t;
 
 typedef struct {
@@ -138,9 +142,10 @@ typedef struct{
 	sys_error_flags_t error;
 	adc_params adc;
 	pc_params_t pistonParams;
-	uint32_t flowCnt;
+	float flowCnt;
 	planer_t planer;
 	uint32_t dcRelayCnt;
+	uint32_t flowImpulseCnt;
 } sys_var_t;
 
 typedef struct{

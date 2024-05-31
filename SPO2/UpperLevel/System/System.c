@@ -21,7 +21,7 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
-#define EXTERNAL_COM_DEF_DELAY 100*30
+
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -75,11 +75,28 @@ void Start_ADC(){
 	LL_DMA_DisableIT_HT(DMA2,LL_DMA_CHANNEL_5);
 }
 void Load_Flash_Param(){
-	sysParams.consts.externalCommandDelay = EXTERNAL_COM_DEF_DELAY;
+
 	FP_GetParam();
 	if (sysParams.vars.status.flags.StoredParamsLoaded == 1){
 		sysParams.consts = fp->params.sysParConsts;
-	} else {
+		sysParams.consts.planerConsts.currentStepNum = 0;
+		
+		uint8_t taskNum = 0;
+		sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.backwash;
+		sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.forwardWash;
+		sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
+		
+		
+		
+		//Softening
+		taskNum = 0;
+		sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.backwash;
+		sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.saltering;
+		sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.forwardWash;
+		sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.filling;
+		sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = NULL;
+		
+		} else {
 		Load_Default_Values();
 	}
 }
@@ -120,9 +137,9 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.currentTaskNum = REGENERATION_TASK_NUM;
 	
 	sysParams.consts.planerConsts.currentStepNum = 0;
-	sysParams.consts.planerConsts.status = PL_FINISHED;
+	sysParams.consts.planerConsts.status = PL_NOT_SET;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].startDateTime = 0;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].remainingTime = 0;
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].remainingTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
 	uint8_t taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
@@ -137,7 +154,7 @@ void Load_Default_Values(void){
 	
 	//Softening
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].remainingTime = 0;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].startDateTime = 0;
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].startDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;
 	taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
@@ -150,38 +167,43 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
 	
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.filling;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 1*SALT_COEF + 1; 
 		
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = NULL;
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 0; 	
 	
 	
 	//copyTasksToFlash();
 	
-	sysParams.consts.planerConsts.preferedTimeForWash = zeroTime; 
 	sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
-	sysParams.consts.planerConsts.status = PL_FINISHED;
+	sysParams.consts.planerConsts.status = PL_NOT_SET;
 	sysParams.consts.planerConsts.preferedTimeForWash = (wtc_time_t)DEF_TASK_PREF_TIME_TO_START;
 	sysParams.consts.planerConsts.monthBetweenService = DEF_TASK_MONTH_BETWEN_SERV;
-	sysParams.consts.planerConsts.waterBeforeRegen = DEF_WATER_VAL;
 	sysParams.consts.planerConsts.lastService = 0;
+	sysParams.consts.planerConsts.startType = DEF_FILTER_START_COND;
+	sysParams.consts.planerConsts.filtroCycle = DEF_FILTR_CYCLE;
+	sysParams.consts.planerConsts.filtroReserve = DEF_FILTER_RESERVE;
+	sysParams.consts.waterFromLastFilter = 0;
+	
 	sysParams.consts.loadType = DEF_LOAD_TYPE;
 	sysParams.vars.planer.cycleCnt = 0;
 	sysParams.consts.sysVersion = SYSTEM_PO_VERSION;
 	sysParams.consts.waterQuantaty = 0;
 	
-	sysParams.consts.externalCommandDelay = EXTERNAL_COM_DEF_DELAY;
+	sysParams.consts.ExternalCommandType = EXTERNAL_START;
 	
 	sysParams.consts.dcRelay.workType = HALT;
 	sysParams.consts.dcRelay.pozEnable = (relay_enable_t){0};
 	sysParams.consts.acRelay.pozEnable = (relay_enable_t){0};
 	
-	sysParams.consts.impulseWeight = 1;
+	sysParams.consts.impulseWeight = DEF_IMPULSE_WEIGHT;
+	sysParams.consts.ServicePhoneNumber = DEF_PHONE_NUMBER;
 }
 
 void Start_Logic(){
 	sysParams.vars.error.all = 0;
 	sysParams.vars.status.all = 0;
+	sysParams.vars.status.flags.WaterInLiters = 1;
 	LL_TIM_ClearFlag_UPDATE(LOGIC_TIM);
 	LL_TIM_EnableIT_UPDATE(LOGIC_TIM);
 	LL_TIM_EnableCounter(LOGIC_TIM);
@@ -251,21 +273,26 @@ void SYS_Logic_IT(void){
 	
 	/*Status*/
 	//ExCom On?
-	bool externalSignal = LL_GPIO_IsInputPinSet(DP_SWITCH_GPIO_Port, DP_SWITCH_Pin);
-	
-	//On->On
-	if (oldExternalSignal == externalSignal){
-		if (externalSignalCnt == 0){
-			sysParams.vars.status.flags.ExternalCommandOn = externalSignal;
+	if (sysParams.vars.error.flags._5VPowerFail == false){
+		bool externalSignal = !LL_GPIO_IsInputPinSet(DP_SWITCH_GPIO_Port, DP_SWITCH_Pin);
+		
+		//On->On
+		if (oldExternalSignal == externalSignal){
+			if (externalSignalCnt == 0){
+				sysParams.vars.status.flags.ExternalCommandOn = externalSignal;
+			} else {
+				externalSignalCnt--;
+			}
+			//Off->On
 		} else {
-			externalSignalCnt--;
+			if (sysParams.consts.ExternalCommandType == EXTERNAL_START){
+				externalSignalCnt = DEF_EXTERNAL_COM_EX_START_DELAY;
+			} else {
+				externalSignalCnt = DEF_EXTERNAL_COM_ENABLE_WASH_DELAY;
+			}
 		}
-		//Off->On
-	} else {
-		externalSignalCnt = sysParams.consts.externalCommandDelay;
+		oldExternalSignal = externalSignal;
 	}
-	oldExternalSignal = externalSignal;
-	
 	//Output DC
 	RELAY_DC_CYCLE();
 	//Putput AC
@@ -285,6 +312,13 @@ void SYS_Logic_IT(void){
 		sysParams.vars.error.flags.RelayDCFail = 0;
 	} else {
 		sysParams.vars.error.flags.RelayDCFail = 1;
+	}
+	
+	time_t now = LL_RTC_TIME_Get(RTC);
+	if (sysParams.consts.planerConsts.monthBetweenService > 0){
+		if (now > sysParams.consts.planerConsts.lastService + sysParams.consts.planerConsts.monthBetweenService*30*24*60*60){
+			sysParams.vars.status.flags.NeedService = 1;
+		}
 	}
 	//#endif
 }

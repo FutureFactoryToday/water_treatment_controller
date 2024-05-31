@@ -42,6 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 bool oddSec;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -191,8 +192,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	if (touchDelay)
-		touchDelay--;
+
 	#ifdef ST7796S;
 		if (touchCheckDelay-- > 0){	
 			if (touchCheckDelay == 0){
@@ -201,9 +201,10 @@ void SysTick_Handler(void)
 		}
 	#endif
 	_1ms_cnt++; 
-//	if (_1ms_cnt%500 == 0){
-//		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-//	}
+		
+
+	FM_Meter_Test();
+		
 	if (_1ms_cnt%100 == 0){
 		#ifdef ILI9488
 		TC_checkButtons();
@@ -234,6 +235,13 @@ void RTC_IRQHandler(void)
 	RTC_Interrupt();
 	LOG_Interrupt();
 	FP_StartStore();
+	FM_incFlowMeter();
+	
+	if (noTouchDelay){
+		noTouchDelay--;
+	} else {
+		goHome = true;
+	}
 	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
@@ -330,6 +338,7 @@ void EXTI9_5_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
 		TC_Interrupt(0);
+		
     /* USER CODE END LL_EXTI_LINE_6 */
   }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
@@ -349,6 +358,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
 	if (LL_TIM_IsActiveFlag_UPDATE(LOGIC_TIM)){
 		SYS_Logic_IT();
+		
 		LL_TIM_ClearFlag_UPDATE(LOGIC_TIM);
 	}
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
@@ -473,7 +483,9 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
     /* USER CODE BEGIN LL_EXTI_LINE_15 */
-		FM_Sense_Interrupt();
+		sysParams.vars.status.flags.FlowMeterInt = LL_GPIO_IsInputPinSet(METER_IRQ_GPIO_Port, METER_IRQ_Pin);
+
+		//FM_Sense_Interrupt();
     /* USER CODE END LL_EXTI_LINE_15 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
@@ -493,6 +505,7 @@ void TIM8_UP_TIM13_IRQHandler(void)
 			opticCnt--;
 		}
 		PC_OpticTest();
+		
 	}
   /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
 

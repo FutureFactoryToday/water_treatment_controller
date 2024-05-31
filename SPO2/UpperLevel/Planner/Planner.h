@@ -50,8 +50,7 @@ typedef enum {
 } planer_control_type_t;
 
 typedef enum {
-	
-	PL_FINISHED = 1,
+	PL_NOT_SET = 1,
 	PL_SET,
 	PL_WORKING
 } planer_status_t;
@@ -61,13 +60,24 @@ typedef struct{
 	task_line_t *currentStep;
 	uint32_t cycleCnt;
 	bool cycled;
+	uint32_t noWaterUsageCnt;
 }planer_t;
 
+typedef enum {
+	BY_DAY,
+	BY_HOUR,
+	DELAYED,
+	IMMEDIATELY,
+} start_type_t;
+
 typedef struct{
-	time_t lastService;
-	uint32_t waterBeforeRegen;
-	wtc_time_t preferedTimeForWash;
-	uint32_t monthBetweenService;
+	start_type_t startType; 							//+
+	uint32_t filtroCycle; 								//+
+	uint8_t filtroReserve;								//+
+	time_t lastService;										//+
+	//uint32_t waterBeforeRegen;						//+
+	wtc_time_t preferedTimeForWash;				//+
+	uint32_t monthBetweenService;					//+
 	piston_task_t planerTasks[TASK_NUM];
 	uint32_t currentTaskNum;
 	planer_status_t status;
@@ -92,6 +102,7 @@ wtc_time_t timeRemain (void);
 bool PL_deleteTaskLine(piston_task_t* task, uint8_t line);
 bool PL_addTaskLine(piston_task_t* task,task_line_t tl);
 bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl);
+
 uint8_t PL_getCurrentTaskNum(void);
 
 #endif /* _sysParams.vars.planer_H_ */

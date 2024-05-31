@@ -3,13 +3,14 @@
 
 /*Macro and defines*/
 #define LOG_FIFO_SIZE 10
-#define LOG_DISPLAY_SIZE 4
+#define LOG_DISPLAY_SIZE 8
 
 #define MAX_ADRESS 0xFFFFFF
 /*Global parameters*/
 sys_status_flags_t oldFlags;
 sys_error_flags_t	oldErrors;
-
+static uint8_t oldDay; 
+static uint32_t oldWater;
 log_data_t displayData[LOG_DISPLAY_SIZE];
 log_data_t logFifo[LOG_FIFO_SIZE];
 log_data_t dayValues[2];
@@ -17,7 +18,8 @@ static planer_status_t oldStatus;
 uint8_t logBufEntryNum;
 bool processing;
 static uint32_t fifoEntryNum = 0;
-bool washSave;
+
+uint8_t washSave;
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
 static void processComplete (void);
@@ -29,8 +31,10 @@ uint8_t LOG_Init(){
 	oldErrors = sysParams.vars.error;
 	oldStatus = sysParams.consts.planerConsts.status;
 	processing = false;
-	washSave = false;
+	washSave = 0;
 	logBufEntryNum = 0;
+	oldDay = 0;
+	oldWater = 0;
 	for(uint8_t i =0; i < LOG_FIFO_SIZE; i++){
 		logFifo[i] = (log_data_t){0,0,0,0};
 	}
@@ -81,10 +85,14 @@ uint8_t LOG_GetWash(uint16_t startEntry){
 				while(processing);
 				startAddress++;
 				if (displayData[i].type == EVENT){
-					if (startEntry)
+					if (startEntry){
 						startEntry--;
+						next= true;
+					}else{
+						next= false;
+					}
 				} else {
-					next= false;
+					next= true;
 				}
 			}while(next);
 		}
@@ -96,15 +104,19 @@ uint8_t LOG_GetWash(uint16_t startEntry){
 uint8_t LOG_GetWater(uint16_t startEntry){
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint32_t address = MAX_ADRESS - (sysParams.consts.storedDayValueNum)*sizeof(log_data_t);
-		if (sysParams.consts.storedDayValueNum < 4){
+		uint32_t address = MAX_ADRESS - ((sysParams.consts.storedDayValueNum - startEntry))*sizeof(log_data_t);
+		if (sysParams.consts.storedDayValueNum < 8){
 			while (FP_GetStoredLog(address,sysParams.consts.storedDayValueNum*sizeof(log_data_t),displayData,processComplete)!= HAL_OK);
+			
 		} else {
-			while (FP_GetStoredLog(address,4*sizeof(log_data_t),displayData,processComplete)!= HAL_OK);
+			while (FP_GetStoredLog(address,8*sizeof(log_data_t),displayData,processComplete)!= HAL_OK);
 		}
+		while(processing);
+		return sysParams.consts.storedDayValueNum;
 	}
-	while(processing == true);
+	return 0;
 }
+
 
 bool addEntry (log_data_t entry){
 	
@@ -139,6 +151,10 @@ HAL_StatusTypeDef saveLog (uint32_t size, uint32_t adress, uint8_t *buf){
 		res = FP_StoreLog(1,adress,size,buf,processComplete);
 		if (res == HAL_OK){
 			sysParams.consts.storedEntryNum += size/sizeMul;
+			if (washSave){
+				sysParams.consts.storedWashNum += washSave;
+				washSave = 0;
+			}
 		} 
 		return res;
 	}
@@ -170,7 +186,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	
 	uint32_t timeStamp = LL_RTC_TIME_Get(RTC);
 	uint8_t type = FAIL;
-	uint8_t cause;
+	uint32_t cause;
 	
 	if(tempError.flags.RAMFull == 1){
 		error.all = 0;
@@ -342,7 +358,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		type = EVENT;
 		cause = 0;
 		if (addEntry((log_data_t){timeStamp,type,cause,0})){
-			washSave = true;
+			washSave ++;
 			oldStatus = sysParams.consts.planerConsts.status;
 		} else {
 			return HAL_OK;
@@ -352,8 +368,11 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	if (fifoEntryNum){
 		saveLog(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
 	}
-//	oldFlags.all = sysParams.vars.status.all;
-//	oldErrors.all = sysParams.vars.error.all;
+	
+	if (sysParams.vars.sysTime.day != oldDay){
+		LOG_StoreDayValues();
+		oldDay = sysParams.vars.sysTime.day; 
+	}
 }
 
 uint8_t LOG_StoreDayValues(void){
@@ -380,8 +399,13 @@ uint8_t LOG_StoreDayValues(void){
 	if (FP_StoreLog(2, MAX_ADRESS - (sysParams.consts.storedDayValueNum + 2)*sizeof(log_data_t),
 							2*sizeof(log_data_t),
 							dayValues,
-							processComplete));
-	sysParams.consts.storedDayValueNum += 2;
+							processComplete))
+	{
+		sysParams.consts.storedDayValueNum += 2;
+		sysParams.consts.maxWaterUsage = 0;
+		sysParams.consts.dayWaterUsage = 0;
+	}
+	
 }
 
 uint32_t checkEmptySpace(){

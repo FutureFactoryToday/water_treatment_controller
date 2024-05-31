@@ -8,21 +8,22 @@ void ShowDaysBetweenRegenCustFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-             drawClock(); drawMainStatusBar(144, 2305, 16);
-            updateFlags.sec = false;
+          drawClock(); 
+					drawMainStatusBar(144, 2305, 16);
+          updateFlags.sec = false;
         }
         if (updateFlags.sec == true){
-            if(sysParams.vars.planer.currentTask == NULL){
-                BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, PL_NOT_INITED, CENTER_MODE);
-            }
-            else{
-                BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-                BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-                BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, intToStr(intToWTCTime(sysParams.vars.planer.currentTask->restartDateTime).day), CENTER_MODE);
-            }
-            updateFlags.sec = false;
+					if(sysParams.vars.planer.currentTask == NULL){
+							BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+							BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+							BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, PL_NOT_INITED, CENTER_MODE);
+					}
+					else{
+							BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+							BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+							BSP_LCD_DisplayStringAt(DBR_VALUE_BOX_X + 60, DBR_VALUE_BOX_Y + 12, intToStr(intToWTCTime(sysParams.vars.planer.currentTask->restartDateTime).day), CENTER_MODE);
+					}
+					updateFlags.sec = false;
         }
         if(retBut.isReleased == true){
             retBut.isReleased = false;

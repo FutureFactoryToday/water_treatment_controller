@@ -38,20 +38,23 @@ static bool modif;
 static void createFrame();
 static void RefreshScrollBar(void);
 static void calcButParam();
-void drawLine(uint8_t num, uint8_t * string, uint16_t time, bool touch);
+void drawLine(uint8_t num, uint8_t pozNum, uint16_t time, bool touch);
 button_t drawEmptyLine(uint8_t num, bool touch);
+static uint8_t* str;
 /* Private user code ---------------------------------------------------------*/
-int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
+int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modable) {
 	firstEl = 0;
 	taskSize = 0;
-	tempTask = baseTask;
+	tempTask = *baseTask;
 	modif = modable;
+	str = name;
 	while(tempTask.step[taskSize].poz != NULL) {
 		taskSize++;
 	}
 	createFrame();
 	while(1) {
 		if(updateFlags.sec == true) {
+			//RefreshScrollBar();
 			updateFlags.sec = false;
 		}
 		if(scrollUpBut.isPressed == true) {
@@ -65,7 +68,7 @@ int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
 		/*Buttons released*/
 		if(okBut.isReleased == true) {
 			okBut.isReleased = false;
-			baseTask = tempTask;
+			*baseTask = tempTask;
 			FP_SaveParam();
 			return 0;
 		}
@@ -89,9 +92,11 @@ int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
 				if(taskSize < STEP_PER_TASK_NUM) {
 					task_line_t _tl;
 					_tl.poz = ShowStepsFrame();
-					_tl.secPause = 0;
-					if(PL_addTaskLine( & tempTask, _tl)) {
-						taskSize++;
+					if (_tl.poz > 0){
+						_tl.secPause = 0;
+						if(PL_addTaskLine( & tempTask, _tl)) {
+							taskSize++;
+						}
 					}
 					addLine.isReleased = false;
 					createFrame();
@@ -101,7 +106,9 @@ int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
 				if(menuLines[i].isReleased == true) {
 					task_line_t _tl = tempTask.step[i + firstEl];
 					_tl.poz = ShowStepsFrame();
-					PL_modTaskLine( & tempTask, i + firstEl, _tl);
+					if (_tl.poz > 0){
+						PL_modTaskLine( & tempTask, i + firstEl, _tl);
+					}
 					menuLines[i].isReleased = false;
 					createFrame();
 				}
@@ -111,7 +118,12 @@ int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
 			if(lineTime[i].isReleased == true) {
 				int32_t tempRes = ShowKeyboardFrame(0, 999);
 				if(tempRes >= 0) {
-					tempTask.step[i + firstEl].secPause = tempRes * 60;
+					if (*tempTask.step[i + firstEl].poz == sysParams.consts.pistonPositions.filling){
+						float buf = tempRes * SALT_COEF;
+						tempTask.step[i + firstEl].secPause = roundf(buf);
+					} else {
+						tempTask.step[i + firstEl].secPause = tempRes * 60;
+					}
 				}
 				lineTime[i].isReleased = false;
 				createFrame();
@@ -142,12 +154,13 @@ int ShowManualFilterSettings(piston_task_t baseTask, bool modable) {
 			}
 			scrollDwnBut.isReleased = false;
 		}
+		
 	}
 }
 void createFrame() {
 	TC_clearButtons();
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MANUAL_SETTINGS[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, str);
 	drawStatusBarOkCancel();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -164,7 +177,15 @@ void RefreshScrollBar(void) {
 	for(uint8_t i = 0; i < 4; i++) {
 		if(i < taskSize - firstEl) {
 			uint8_t step = firstEl + i;
-			drawLine(i, ITEM_STEPS[PC_pozNum(tempTask.step[step].poz)], tempTask.step[step].secPause, false);
+			uint32_t time = tempTask.step[step].secPause;
+			if (*tempTask.step[i + firstEl].poz == sysParams.consts.pistonPositions.filling){
+				float buf = time/SALT_COEF;
+				 time = roundf(buf);
+			} else {
+				time = time/60;
+			}
+			uint8_t pozNum = PC_pozNum(tempTask.step[step].poz);
+			drawLine(i, pozNum, time, false);
 		} else {
 			if(taskSize < STEP_PER_TASK_NUM) {
 				drawEmptyLine(i, modif);
@@ -182,15 +203,27 @@ void RefreshScrollBar(void) {
 }
 #define SEC_COL 290
 #define THIRD_COL SEC_COL + 80
-void drawLine(uint8_t num, uint8_t * string, uint16_t time, bool touch) {
+static int8_t yOff1 = 18, yOff2 = 0;
+void drawLine(uint8_t num, uint8_t pozNum, uint16_t time, bool touch) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, string, LEFT_MODE);
+	if (pozNum == 4) pozNum = 5;
+	if (pozNum == 3){
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff1, ITEM_STEPS_WITH_MES[pozNum+1], LEFT_MODE);
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff2, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
+		
+	} else {
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
+	}
 	menuLines[num] = (button_t) {
 		FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 200, STATIC_LINE_SPASER
 	};
-	lineTime[num] = drawTextLabel(SEC_COL, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 80, 39, intToStr(time / 60));
-	delMenuLines[num] = drawFillButton(THIRD_COL, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 40, 40, "-", false);
+	lineTime[num] = drawTextLabel(SEC_COL, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 70, 39, intToStr(time));
+	if(modif == true) {
+		delMenuLines[num] = drawFillButton(THIRD_COL, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 40, 40, "-", false);
+	} else {
+		
+	}
 }
 button_t drawEmptyLine(uint8_t num, bool touch) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);

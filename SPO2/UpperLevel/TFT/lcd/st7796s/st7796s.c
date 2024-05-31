@@ -28,10 +28,13 @@ void     st7796s_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp);
 void     st7796s_DrawRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     st7796s_ReadRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
-void 		st7796s_BackLightControl (uint8_t BL);
-void 		LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
-bool		LCD_IO_isBusy();
-
+void 		 st7796s_BackLightControl (uint8_t BL);
+void 		 st7796s_DrawBuffer (uint16_t xStart,uint16_t yStart, uint16_t xSize, uint16_t ySize, uint8_t *buf);
+void 		 LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size);
+bool		 LCD_IO_isBusy();
+void 		 checkCoord(uint16_t x, uint16_t y);
+void 		 st7796s_StartDraw(uint16_t xS, uint16_t yS, uint16_t xSize, uint16_t ySize);
+void 		 st7796s_StopDraw();
 
 LCD_DrvTypeDef   st7796s_drv =
 {
@@ -48,11 +51,12 @@ LCD_DrvTypeDef   st7796s_drv =
   st7796s_GetLcdPixelWidth,
   st7796s_GetLcdPixelHeight,
   st7796s_DrawBitmap,
-  st7796s_DrawRGBImage,
+  0,
   st7796s_FillRect,
-  st7796s_ReadRGBImage,
+  0,
   st7796s_Scroll,
 	st7796s_BackLightControl,
+	st7796s_DrawBuffer
 };
 
 extern LCD_DrvTypeDef  *lcd_drv;
@@ -219,10 +223,19 @@ void     LCD_IO_ReadCmd8MultipleData24to16(uint8_t Cmd, uint16_t *pData, uint32_
 #define  LCD_IO_WriteData16_to_2x8(dt)    {LCD_IO_WriteData8((dt) >> 8); LCD_IO_WriteData8(dt); }
 
 //-----------------------------------------------------------------------------
-
-static  uint16_t  yStart, yEnd;
+static bool contWrite;
+static  uint16_t  xStart, xEnd, yStart, yEnd;
 
 //-----------------------------------------------------------------------------
+
+void st7796s_DrawBuffer (uint16_t xStart,uint16_t yStart, uint16_t xSize, uint16_t ySize, uint8_t *buf){
+	
+	st7796s_SetDisplayWindow(xStart, yStart, xSize, ySize);
+	LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, buf, xSize*ySize*3);
+	
+	
+}
+
 void st7796s_BackLightControl (uint8_t BL){
 	LCD_IO_Bl_OnOff(BL);
 }
@@ -233,9 +246,9 @@ void st7796s_BackLightControl (uint8_t BL){
   */
 void st7796s_DisplayOn(void)
 {
-  ST7796S_LCDMUTEX_PUSH();
+  
   LCD_IO_WriteCmd8(ST7796S_SLPOUT);    // Exit Sleep
-  ST7796S_LCDMUTEX_POP();
+  
   LCD_IO_Bl_OnOff(1);
 }
 
@@ -248,9 +261,9 @@ void st7796s_DisplayOn(void)
 void st7796s_DisplayOff(void)
 {
   LCD_IO_Bl_OnOff(0);
-  ST7796S_LCDMUTEX_PUSH();
+  
   LCD_IO_WriteCmd8(ST7796S_SLPIN);    // Sleep
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -284,9 +297,9 @@ uint16_t st7796s_GetLcdPixelHeight(void)
 uint16_t st7796s_ReadID(void)
 {
   uint32_t id = 0;
-  ST7796S_LCDMUTEX_PUSH();
+  
   LCD_IO_ReadCmd8MultipleData8(0xD3, (uint8_t *)&id, 3, 1);
-  ST7796S_LCDMUTEX_POP();
+  
   if(id == 0x869400)
     return 0x9486;
   else
@@ -308,76 +321,6 @@ void st7796s_Init(void)
       LCD_IO_Init();
     Is_st7796s_Initialized |= ST7796S_LCD_IO_INITIALIZED;
   }
-//  LCD_Delay(1);
-//  LCD_IO_WriteCmd8(ST7796S_SWRESET);
-//  LCD_Delay(5);
-
-////  // Command Set Control - enable command 2 part I
-////  LCD_IO_WriteCmd8MultipleData8(0xF0, (uint8_t *)"\xC3", 1);
-////  // Command Set Control - enable command 2 part II
-////  LCD_IO_WriteCmd8MultipleData8(0xF0, (uint8_t *)"\x96", 1);
-
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_MADCTL, (uint8_t *)"\x68", 1);
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_PIXFMT, (uint8_t *) "\x55", 1);
-
-//  // Interface Mode Control
-//  LCD_IO_WriteCmd8MultipleData8(0xB0, (uint8_t *) "\x80", 1);
-//  // Display Function Control
-//  LCD_IO_WriteCmd8MultipleData8(0xB6, (uint8_t *) "\x02\x02", 2);
-//  // Blanking Porch Control
-//  //LCD_IO_WriteCmd8MultipleData8(0xB5, (uint8_t *) "\x02\x03\x00\x04", 4);
-
-//  // Frame Control
-//  //LCD_IO_WriteCmd8MultipleData8(ST7796S_FRMCTR1, (uint8_t *)"\x80\x10", 2);
-//	LCD_IO_WriteCmd8MultipleData8(ST7796S_FRMCTR1, (uint8_t *)"\xA0", 1);
-//  // Display Inversion Control
-////  LCD_IO_WriteCmd8MultipleData8(ST7796S_INVCTR, (uint8_t *)"\x00", 1);
-//	LCD_IO_WriteCmd8MultipleData8(ST7796S_INVCTR, (uint8_t *)"\x02", 1);
-//  // Entry Mode Set
-//  //LCD_IO_WriteCmd8MultipleData8(0xB7, (uint8_t *)"\xC6", 1);
-
-//  // VCOM Control
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_VMCTR1, (uint8_t *)"\x24", 1);
-
-//  // VCOM Control
-//  LCD_IO_WriteCmd8MultipleData8(0xE4, (uint8_t *)"\x31", 1);
-
-//  // Display Output Ctrl Adjust
-//  LCD_IO_WriteCmd8MultipleData8(0xE8, (uint8_t *) "\x40\x8A\x00\x00\x29\x19\xA5\x33", 8);
-
-//  // Power Control 3
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_PWCTR3, (uint8_t *)"\xA7", 1);
-
-//  // Positive gamma control
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_GMCTRP1,
-//		  (uint8_t *)"\xF0\x09\x13\x12\x12\x2B\x3C\x44\x4B\x1B\x18\x17\x1D\x21", 14);
-
-//  // Negative gamma control
-//  LCD_IO_WriteCmd8MultipleData8(ST7796S_GMCTRN1,
-//		  (uint8_t *)"\xF0\x09\x13\x0C\x0D\x27\x3B\x44\x4D\x0B\x17\x17\x1D\x21", 14);
-
-//  // LCD_IO_WriteCmd8MultipleData8(ST7796S_RGB_INTERFACE, (uint8_t *)"\x00", 1); // RGB mode off (0xB0)
-
-//  LCD_IO_WriteCmd8(ST7796S_MADCTL);
-//  LCD_IO_WriteData8(ST7796S_MAD_DATA_RIGHT_THEN_DOWN);
-
-////  // Command Set Control - enable command 2 part I
-////  LCD_IO_WriteCmd8MultipleData8(0xF0, (uint8_t *)"\xC3", 1);
-////  // Command Set Control - disable command 2 part II
-////  LCD_IO_WriteCmd8MultipleData8(0xF0, (uint8_t *)"\x69", 1);
-
-//  // Normal display on
-//  LCD_IO_WriteCmd8(ST7796S_NORON);
-//  // Display inversion off
-//  LCD_IO_WriteCmd8(ST7796S_INVOFF);
-//  // Exit Sleep
-//  LCD_IO_WriteCmd8(ST7796S_SLPOUT);
-//  LCD_Delay(200);
-//  // Display on
-//  LCD_IO_WriteCmd8(ST7796S_DISPON);
-//  LCD_Delay(10);
-//  st7796s_FillRect(0, 0, ST7796S_SIZE_X, ST7796S_SIZE_Y, 0x0000);
-
 	LCD_Delay(105);
   LCD_IO_WriteCmd8(ST7796S_SWRESET);
   LCD_Delay(5);
@@ -412,7 +355,7 @@ void st7796s_Init(void)
   LCD_IO_WriteCmd8(ST7796S_DISPON);      // Display on
   LCD_Delay(5);
   LCD_IO_WriteCmd8(ST7796S_MADCTL); LCD_IO_WriteData8(ST7796S_MAD_COLORMODE | ST7796S_MAD_X_RIGHT | ST7796S_MAD_Y_UP | ST7796S_MAD_VERTICAL);
-	
+	contWrite = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -424,9 +367,9 @@ void st7796s_Init(void)
   */
 void st7796s_SetCursor(uint16_t Xpos, uint16_t Ypos)
 {
-  ST7796S_LCDMUTEX_PUSH();
+  
   ST7796S_SETCURSOR(Xpos, Ypos);
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -439,11 +382,9 @@ void st7796s_SetCursor(uint16_t Xpos, uint16_t Ypos)
   */
 void st7796s_WritePixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode)
 {
-  ST7796S_LCDMUTEX_PUSH();
   ST7796S_SETCURSOR(Xpos, Ypos);
   LCD_IO_WriteCmd8(ST7796S_RAMWR);
   LCD_IO_WriteData16(RGBCode);
-  ST7796S_LCDMUTEX_POP();
 }
 
 
@@ -456,12 +397,12 @@ void st7796s_WritePixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode)
 uint16_t st7796s_ReadPixel(uint16_t Xpos, uint16_t Ypos)
 {
   uint16_t ret;
-  ST7796S_LCDMUTEX_PUSH();
+  
   LCD_IO_WriteCmd8MultipleData8(ST7796S_PIXFMT, (uint8_t *)"\x66", 1); // Read: only 24bit pixel mode
   ST7796S_SETCURSOR(Xpos, Ypos);
   LCD_IO_ReadCmd8MultipleData24to16(ST7796S_RAMRD, (uint16_t *)&ret, 1, 1);
   LCD_IO_WriteCmd8MultipleData8(ST7796S_PIXFMT, (uint8_t *)"\x55", 1); // Return to 16bit pixel mode
-  ST7796S_LCDMUTEX_POP();
+  
   return(ret);
 }
 
@@ -476,11 +417,12 @@ uint16_t st7796s_ReadPixel(uint16_t Xpos, uint16_t Ypos)
   */
 void st7796s_SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height)
 {
-  yStart = Ypos; yEnd = Ypos + Height - 1;
-  ST7796S_LCDMUTEX_PUSH();
+  xStart = Xpos; xEnd = Xpos + Width - 1;
+	yStart = Ypos; yEnd = Ypos + Height - 1;
+  
   LCD_IO_WriteCmd8(ST7796S_CASET); LCD_IO_WriteData16_to_2x8(Xpos); LCD_IO_WriteData16_to_2x8(Xpos + Width - 1);
   LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(Ypos); LCD_IO_WriteData16_to_2x8(Ypos + Height - 1);
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -494,11 +436,6 @@ void st7796s_SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint
   */
 void st7796s_DrawHLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
-//  ST7796S_LCDMUTEX_PUSH();
-//  LCD_IO_WriteCmd8(ST7796S_CASET); LCD_IO_WriteData16_to_2x8(Xpos); LCD_IO_WriteData16_to_2x8(Xpos + Length - 1);
-//  LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(Ypos); LCD_IO_WriteData16_to_2x8(Ypos);
-//  LCD_IO_WriteCmd8DataFill16(ST7796S_RAMWR, RGBCode, Length);
-//  ST7796S_LCDMUTEX_POP();
 	st7796s_FillRect(Xpos, Ypos, Length, 1, RGBCode);
 }
 
@@ -513,11 +450,6 @@ void st7796s_DrawHLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t 
   */
 void st7796s_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
-//  ST7796S_LCDMUTEX_PUSH();
-//  LCD_IO_WriteCmd8(ST7796S_CASET); LCD_IO_WriteData16_to_2x8(Xpos); LCD_IO_WriteData16_to_2x8(Xpos);
-//  LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(Ypos); LCD_IO_WriteData16_to_2x8(Ypos + Length - 1);
-//  LCD_IO_WriteCmd8DataFill16(ST7796S_RAMWR, RGBCode, Length);
-//  ST7796S_LCDMUTEX_POP();
 	st7796s_FillRect(Xpos, Ypos, 1, Length, RGBCode);
 }
 
@@ -535,17 +467,14 @@ void st7796s_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysi
 {
 	while (LCD_IO_isBusy()){
 	}
-    uint8_t tempCol[3];
+  uint8_t tempCol[3];
 	tempCol[0]=((RGBCode & 0xF800) >> 8);
-    tempCol[1]=((RGBCode & 0x07E0) >> 3);
-    tempCol[2]=((RGBCode & 0x001F) << 3);
+  tempCol[1]=((RGBCode & 0x07E0) >> 3);
+  tempCol[2]=((RGBCode & 0x001F) << 3);
 	uint32_t XYsize = Xsize * Ysize;
-  ST7796S_LCDMUTEX_PUSH();
-  LCD_IO_WriteCmd8(ST7796S_CASET); LCD_IO_WriteData16_to_2x8(Xpos); LCD_IO_WriteData16_to_2x8(Xpos + Xsize - 1);
-  LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(Ypos); LCD_IO_WriteData16_to_2x8(Ypos + Ysize - 1);
+  st7796s_SetDisplayWindow(Xpos,Ypos,Xsize,Ysize);
   LCD_IO_WriteCmd8DataFill8(ST7796S_RAMWR, tempCol, XYsize);
-	//LCD_IO_WriteCmd8DataFill16(ST7796S_RAMWR, RGBCode, Xsize * Ysize);
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -561,66 +490,16 @@ void st7796s_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
 {
 	uint32_t index = 0, size = 0;
 	BITMAPINFOHEADER *ptr = pbmp;
-  /* Read bitmap size */
-  //Ypos += pbmp[22] + (pbmp[23] << 8) - 1;
 	pbmp += sizeof(BITMAPINFOHEADER);
   size = ptr->dataSize;
 	Xpos += ptr->biHeight;
 	
-//  uint32_t index, size;
-//  /* Read bitmap size */
-//  size = ((BITMAPSTRUCT *)pbmp)->fileHeader.bfSize;
-//  /* Get bitmap data address offset */
-//  index = ((BITMAPSTRUCT *)pbmp)->fileHeader.bfOffBits;
-//  size = (size - index) / 2;
-//  pbmp += index;
 
-  ST7796S_LCDMUTEX_PUSH();
+  
   LCD_IO_WriteCmd8(ST7796S_MADCTL); LCD_IO_WriteData8(ST7796S_MAD_COLORMODE | ST7796S_MAD_X_RIGHT | ST7796S_MAD_Y_UP | ST7796S_MAD_VERTICAL);
   LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(ST7796S_SIZE_Y - 1 - yEnd); LCD_IO_WriteData16_to_2x8(ST7796S_SIZE_Y - 1 - yStart);
   LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, (uint8_t *)pbmp, size*3);
-  //LCD_IO_WriteCmd8(ST7796S_MADCTL); LCD_IO_WriteData8(ST7796S_MAD_COLORMODE | ST7796S_MAD_X_RIGHT | ST7796S_MAD_Y_UP | ST7796S_MAD_VERTICAL);
-  ST7796S_LCDMUTEX_POP();
-}
-
-//-----------------------------------------------------------------------------
-/**
-  * @brief  Displays 16bit/pixel picture..
-  * @param  pdata: picture address.
-  * @param  Xpos:  Image X position in the LCD
-  * @param  Ypos:  Image Y position in the LCD
-  * @param  Xsize: Image X size in the LCD
-  * @param  Ysize: Image Y size in the LCD
-  * @retval None
-  * @brief  Draw direction: right then down
-  */
-void st7796s_DrawRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData)
-{
-  st7796s_SetDisplayWindow(Xpos, Ypos, Xsize, Ysize);
-  ST7796S_LCDMUTEX_PUSH();
-  LCD_IO_WriteCmd8MultipleData16(ST7796S_RAMWR, pData, Xsize * Ysize);
-  ST7796S_LCDMUTEX_POP();
-}
-
-//-----------------------------------------------------------------------------
-/**
-  * @brief  Read 16bit/pixel picture from Lcd and store to RAM
-  * @param  pdata: picture address.
-  * @param  Xpos:  Image X position in the LCD
-  * @param  Ypos:  Image Y position in the LCD
-  * @param  Xsize: Image X size in the LCD
-  * @param  Ysize: Image Y size in the LCD
-  * @retval None
-  * @brief  Draw direction: right then down
-  */
-void st7796s_ReadRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData)
-{
-  st7796s_SetDisplayWindow(Xpos, Ypos, Xsize, Ysize);
-  ST7796S_LCDMUTEX_PUSH();
-  LCD_IO_WriteCmd8MultipleData8(ST7796S_PIXFMT, (uint8_t *)"\x66", 1); // Read: only 24bit pixel mode
-  LCD_IO_ReadCmd8MultipleData24to16(ST7796S_RAMRD, pData, Xsize * Ysize, 1);
-  LCD_IO_WriteCmd8MultipleData8(ST7796S_PIXFMT, (uint8_t *)"\x55", 1); // Return to 16bit pixel mode
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
 //-----------------------------------------------------------------------------
@@ -634,7 +513,7 @@ void st7796s_ReadRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t
 void st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
 {
   static uint16_t scrparam[4] = {0, 0, 0, 0};
-  ST7796S_LCDMUTEX_PUSH();
+  
   #if (ST7796S_ORIENTATION == 0)
   if((TopFix != scrparam[1]) || (BottonFix != scrparam[3]))
   {
@@ -693,70 +572,7 @@ void st7796s_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix)
     scrparam[0] = Scroll;
     LCD_IO_WriteCmd8DataFill16(ST7796S_VSCRSADD, scrparam[0], 1);
   }
-  ST7796S_LCDMUTEX_POP();
+  
 }
 
-
-//#if ST7796S_TOUCH == 1
-//void st7796s_ts_Init(uint16_t DeviceAddr)
-//{
-//  if((Is_st7796s_Initialized & ST7796S_LCD_IO_INITIALIZED) == 0) {
-//    LCD_IO_Init();
-//    Is_st7796s_Initialized |= ST7796S_LCD_IO_INITIALIZED;
-//  }
-
-//  if((Is_st7796s_Initialized & ST7796S_TS_IO_INITIALIZED) == 0) {
-//    TS_IO_Init();
-//    Is_st7796s_Initialized |= ST7796S_TS_IO_INITIALIZED;
-//  }
-//}
-
-
-//uint8_t st7796s_ts_DetectTouch(uint16_t DeviceAddr)
-//{
-////	static uint8_t tp = 0;
-//	return TS_IO_DetectTouch();
-//	
-//  #if  ST7796S_MULTITASK_MUTEX == 1
-//  io_ts_busy = 1;
-
-//  if (io_lcd_busy) {
-//    io_ts_busy = 0;
-//    return tp;
-//  }
-//  #endif
-
-//  if (TS_IO_DetectTouch()) {
-//   // tp = TS_Update();
-//  } else {
-//    tp = 0;
-//  }
-
-//  #if  ST7796S_MULTITASK_MUTEX == 1
-//  io_ts_busy = 0;
-//  #endif
-//}
-
-//-----------------------------------------------------------------------------
-//void st7796s_ts_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
-//{
-//	uint16_t* coord = TS_IO_GetXY();
-//	X = coord;
-//	Y = coord+1;
-//	
-//	return;
-//  switch (ST7796S_ORIENTATION) {
-//      case (0):
-//      case (2):
-//          *X = (*X * ST7796S_SIZE_X) / 4095;
-//          *Y = (ST7796S_SIZE_Y - ((*Y * ST7796S_SIZE_Y) / 4095));
-//          break;
-//      case (1):
-//      case (3):
-//        *X = ((*X * ST7796S_SIZE_Y) / 4095);
-//        *Y = ST7796S_SIZE_X - ((*Y * ST7796S_SIZE_X) / 4095);
-//        break;
-//    }
-//}
-//#endif /* #if ST7796S_TOUCH == 1 */
 #endif

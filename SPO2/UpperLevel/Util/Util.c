@@ -48,7 +48,7 @@ uint8_t intToChar(uint8_t num){
 	}
 }
 
-uint8_t* intToStr (int32_t num){
+uint8_t* intToStr (int64_t num){
 	for(int i = 0; i <sizeof(numBuf); i++){
 		numBuf[i] = 0;
 	}
@@ -65,7 +65,7 @@ uint8_t* intToStr (int32_t num){
 		numBuf[i++] = '-';
 		num = num*(-1);
 	}
-	uint32_t modNum = num;
+	uint64_t modNum = num;
 	while(modNum < mod){
 		mod /= 10;
 	}

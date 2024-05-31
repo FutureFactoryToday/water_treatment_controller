@@ -91,12 +91,12 @@ int ShowHistoryMenuFrame(void)
                 createFrame();
          }
          if(menuLines[1].isReleased == true){
-                //ShowHistoryWaterFrame();
+                ShowHistoryWaterFrame();
                 menuLines[1].isReleased = false;
                 createFrame();
          }
          if(menuLines[2].isReleased == true){
-                //ShowHistoryMaxWaterFrame();
+                ShowHistoryMaxWaterFrame();
                 menuLines[2].isReleased = false;
                 createFrame();
          }

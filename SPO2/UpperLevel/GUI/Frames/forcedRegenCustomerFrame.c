@@ -113,7 +113,7 @@ void showRemeiningTime(void){
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (sysParams.vars.planer.currentTask == NULL || sysParams.consts.planerConsts.status == PL_FINISHED){
+	if (sysParams.vars.planer.currentTask == NULL || sysParams.consts.planerConsts.status == PL_NOT_SET){
 		text = &PL_NOT_INITED;
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
@@ -139,7 +139,7 @@ void showRemeiningTime(void){
 	}
 	BSP_LCD_DisplayStringAt(400, 240, intToStr(sysParams.vars.planer.cycleCnt),LEFT_MODE);
 	switch(sysParams.consts.planerConsts.status){
-        case (PL_FINISHED):{
+        case (PL_NOT_SET):{
             statusColor = LCD_COLOR_RED;
             break;
         }

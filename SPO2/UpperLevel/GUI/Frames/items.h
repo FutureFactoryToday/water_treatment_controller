@@ -29,14 +29,16 @@ extern const uint8_t* ITEM_HISTORY_MENU[];
 
 //widgets
 #define NEXT_CYCLE_TIME "ч"
-#define CURRENT_WATER_CONSUMPTION "л/мин"
-#define AMOUNT_OF_WATER "л"
+#define CURRENT_WATER_CONSUMPTION_LITERS "л/мин"
+#define CURRENT_WATER_CONSUMPTION_M_CUBE "м3/мин"
+#define LITERS "л"
+#define M_CUBE "м3"
 
 
 //washingTimeCustomerFrame
-#define MODE_WASHING_TIME "Время промывки"
-#define DAY "День"
-#define NIGHT "Ночь"
+//#define MODE_WASHING_TIME "Время промывки"
+//#define DAY "День"
+//#define NIGHT "Ночь"
 
 //forcedRegenCustomerFrame
 #define MODE_FORCED_REGEN "Принудительная рег."
@@ -103,7 +105,7 @@ extern const uint8_t* ITEM_ADJUSTMENT[];
 //stepFrame
 #define STEPS_LIST "Стадии"
 extern const uint8_t* ITEM_STEPS[];
-
+extern const uint8_t* ITEM_STEPS_WITH_MES[];
 //ManualFilteringSettingsFrame
 extern const uint8_t* ITEM_MANUAL_SETTINGS[];
 

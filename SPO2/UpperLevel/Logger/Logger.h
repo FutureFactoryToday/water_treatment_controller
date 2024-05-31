@@ -27,7 +27,7 @@ uint8_t LOG_Init();
 uint8_t LOG_Interrupt(void);
 uint8_t LOG_GetErrors(uint16_t startEntry);
 uint8_t LOG_StoreDayValues(void);
-uint8_t LOG_GetWater(uint16_t startEntry);
+uint8_t LOG_GetWash(uint16_t startEntry);
 uint8_t LOG_GetWater(uint16_t startEntry);
 void LOG_Test();
 #endif //_LOGGER_H_

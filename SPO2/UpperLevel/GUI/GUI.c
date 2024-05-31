@@ -34,7 +34,7 @@ homeBut = {HOME_BUT_X,HOME_BUT_Y,40,60,0,0,0,0};
 
 
 TS_StateTypeDef tsState;
-uint32_t touchDelay;
+uint32_t noTouchDelay;
 uint8_t dropBut;
 uint8_t wrenchBut;
 uint8_t pageBut;
@@ -93,29 +93,7 @@ void initGUI(void){
 	itemIndex = 0;
 }
 
-void drawClock(void){
-    
-	uint16_t oldTextColor = BSP_LCD_GetTextColor();
-	uint16_t oldBackColor = BSP_LCD_GetBackColor();
-	time_t rtcTime = LL_RTC_TIME_Get(RTC);
-	wtc_time_t time = intToWTCTime(rtcTime);
-	BSP_LCD_SetFont(&Oxygen_Mono_20);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-	BSP_LCD_FillRect(HOUR_X,STATUSBAR_POS_Y,100,STATUSBAR_SIZE_Y);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTimeFromSource("hh", &time),LEFT_MODE);
-	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTimeFromSource("mm", &time),LEFT_MODE);
-	if (getTime().second % 2){
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
-		
-	} else {
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
-	}
-    
-    BSP_LCD_SetTextColor(oldTextColor);
-    BSP_LCD_SetBackColor(oldBackColor);
-}
+
 
 
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xSize, uint16_t ySize){

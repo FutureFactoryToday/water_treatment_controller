@@ -26,7 +26,7 @@
 
 /* Private define ------------------------------------------------------------*/
 #define FLASH_SECTORS 3
-#define SYSTEM_PO_VERSION 0x00010003
+
 #define UNLOCKED 0
 #define AUTO_LOCK 1
 #define MANUAL_LOCK 2
@@ -247,14 +247,14 @@ void FP_StartStore(void){
 }
 
 void saveFRAMParam(void){
+	if (sysParams.vars.status.flags.FRAMInited != 1 || sysParams.vars.error.flags.FRAMFail == 1)
+		return;
 	oldIRQStatus = __get_PRIMASK(); __disable_irq();
 	if (lock != UNLOCKED){
 		__set_PRIMASK(oldIRQStatus);
 		queue[0].set = true;
 		return;
 	}
-	if (sysParams.vars.status.flags.FRAMInited != 1 || sysParams.vars.error.flags.FRAMFail == 1)
-		return;
 	lockSPI();
 	__set_PRIMASK(oldIRQStatus);
 
@@ -273,13 +273,15 @@ void saveFRAMParam(void){
 }
 
 void saveRAMParam(uint8_t handler){
+	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return;
+	}
 	oldIRQStatus = __get_PRIMASK(); __disable_irq();
 	if (lock != UNLOCKED){
 		__set_PRIMASK(oldIRQStatus);
 		return;
 	}
-	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1)
-		return;
+	
 	lockSPI();
 	__set_PRIMASK(oldIRQStatus);
 	cbFunc = queue[handler].cb;

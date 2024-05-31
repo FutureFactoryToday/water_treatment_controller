@@ -71,6 +71,9 @@ void PC_Control(void){
 	if (sysParams.vars.status.flags.PistonInited == 0){
 		return;
 	}
+	if (sysParams.vars.error.flags.mainPowerFail){
+		sysParams.vars.error.flags.PistonFail = 1;
+	}
 	if (sysParams.vars.error.flags.PistonFail == 1 || 
 			sysParams.vars.error.flags.mainPowerFail == 1 ||
 			sysParams.vars.error.flags.MotorFail == 1){
@@ -123,7 +126,8 @@ void PC_Control(void){
 			} 
 			
 			if (abs(sysParams.vars.pistonParams.destPoz - sysParams.vars.pistonParams.curPoz) < 5){
-				MOT_SetSpeed(MAX_SPEED/2);
+				uint32_t speed = (MAX_SPEED*6)/10;
+				MOT_SetSpeed(speed);
 			}
 		
 			

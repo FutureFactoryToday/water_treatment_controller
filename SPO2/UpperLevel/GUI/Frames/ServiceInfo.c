@@ -20,17 +20,18 @@ void  showServiceInfoFrame()
 			
 			if (serviceComplBut.isReleased == true){
 				int32_t res = showServiceDateSelectFrame();
-				if (res > 0){
+				if (res >= 0){
 					sysParams.consts.planerConsts.monthBetweenService = res;
-					
 					sysParams.consts.planerConsts.lastService = getRTC();
-					
+					sysParams.vars.status.flags.NeedService = 0;
 					FP_SaveParam();
 				}
 				createFrame();
 				serviceComplBut.isReleased = false;
 			}
-			
+			if (goHome){
+				return;
+			}
 			if (serviceComplBut.isPressed == true){
 				
 					drawFillButton(serviceComplBut.x, serviceComplBut.y, serviceComplBut.xSize, serviceComplBut.ySize, ITEM_SERVICE_INFO[3], true);
@@ -46,7 +47,7 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_INFO[0]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_INFO[0]);
 	
 	drawStatusBarEmpty();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
@@ -63,5 +64,6 @@ void createFrame(void)
     TC_addButton(&serviceComplBut);
 	TC_addButton(&okBut);
 	TC_addButton(&retBut);	
+	TC_addButton(&homeBut);
 	 drawClock(); drawMainStatusBar(144, 2305, 16);
 }

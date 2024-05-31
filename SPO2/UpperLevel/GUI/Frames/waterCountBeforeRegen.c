@@ -7,7 +7,7 @@ static uint8_t* text;
 void ShowWaterCountBeforeRegenFrame(void)
 {
 	
-		waterVal = sysParams.consts.planerConsts.waterBeforeRegen;
+	waterVal = sysParams.consts.planerConsts.waterBeforeRegen;
 
    createFrame();
     while(1)

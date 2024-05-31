@@ -143,7 +143,7 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 	} 
 	halSt = HAL_SPI_Receive(spi,&ID,3,10);
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-	
+	return halSt;
 }
 
 

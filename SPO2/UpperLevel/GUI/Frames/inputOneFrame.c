@@ -13,7 +13,7 @@ static void calcButParam();
 int showInputOneFrame(void)
 {
 
-	if(sysParams.vars.status.flags.ExternalCommandType == EXTERNAL_START){
+	if(sysParams.consts.ExternalCommandType == EXTERNAL_START){
 		markItem = 1;
 	} else {
 		markItem = 2;
@@ -29,10 +29,10 @@ int showInputOneFrame(void)
 		}
 		if(okBut.isReleased == true){
 			if (markItem == 1){
-				sysParams.vars.status.flags.ExternalCommandType = EXTERNAL_START;	        
+				sysParams.consts.ExternalCommandType = EXTERNAL_START;	        
 			}
 			if (markItem == 2){
-				sysParams.vars.status.flags.ExternalCommandType = EXTERNAL_ENABLE;	        
+				sysParams.consts.ExternalCommandType = EXTERNAL_ENABLE;	        
 			}
 			FP_SaveParam();
 			okBut.isReleased = false;

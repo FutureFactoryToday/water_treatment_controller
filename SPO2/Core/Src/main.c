@@ -54,7 +54,8 @@
 /* USER CODE BEGIN PV */
 	uint32_t _1ms_cnt;
 	uint8_t* errorCause;
-
+	filter_t fil;
+	uint32_t input = 0, output = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,54 +118,14 @@ int main(void)
   MX_TIM10_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-
 	SYS_init();
-//	__enable_irq();
-//	flash_driver_t *drv = &W25_driver;
-//	gpio_t logCS = {MEM_CS_GPIO_Port,MEM_CS_Pin};
-//	gpio_t logWP = {MEM_WP_GPIO_Port,MEM_WP_Pin};
-//	gpio_t logHOLD = {MEM_RES_GPIO_Port,MEM_RES_Pin};
-//		
-//	
-//	if (drv->init(MEM_SPI,logCS, logWP, logHOLD,0) == HAL_OK){
-//		sysParams.vars.status.flags.RAMInited = 1;
-//	} else {
-//		sysParams.vars.error.flags.RAMFail = 1;
-//	}
-//	
-//	drv->eraseChip();
-//	drv->readData(0,recBuf,10);
-//	
-//	while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->readData(0xFFFFFF-10,recBuf2,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	for(uint8_t i = 0; i<10;i++){
-//		recBuf[i] = i+1;
-//	}
-//	drv->writeData(0,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->writeData(0xFFFFFF-10,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	for(uint8_t i = 0; i<10;i++){
-//		recBuf[i] = 0;
-//	}
-//	drv->readData(0,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->readData(0xFFFFFF-10,recBuf2,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-	//LOG_Test();
-	//ShowHistoryMenuFrame();
-	//ShowManualDriveControl();
-	//ShowFilterSelectionFrame();
-//	
-
-//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[MAN_TASK_NUM], true);
-//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], false);
-//	ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM], false);
-  /* USER CODE END 2 */
+/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	//ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], false);
+	//ShowAlarmNotiServiceFrame();
+	//ShowKeyboardFrame(0,1000);
 	ShowMainFrame();
   while (1)
   {

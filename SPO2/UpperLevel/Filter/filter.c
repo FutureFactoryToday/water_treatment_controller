@@ -10,7 +10,7 @@ filter_t* initFilterStruct (filter_t* fil, uint16_t start_value, uint8_t devider
 	return fil;
 }
 
-uint16_t filter (filter_t* fil, uint16_t input){
+uint32_t filter (filter_t* fil, uint32_t input){
 	
 	fil->del = input - fil->fvalue;
 	fil->big_val = fil->big_val + fil->del;
@@ -21,7 +21,7 @@ uint16_t filter (filter_t* fil, uint16_t input){
 	return fil->fvalue;
 }
 
-uint8_t isFiltered (filter_t* fil, uint16_t inp)
+uint8_t isFiltered (filter_t* fil, uint32_t inp)
 {
 	uint16_t mod_del = (fil->del > 0)? fil->del: (- fil->del);
 	if (mod_del < inp/100 )
