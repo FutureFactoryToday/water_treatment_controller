@@ -42,10 +42,43 @@ static uint8_t bitmap[MAX_HEIGHT_FONT * MAX_WIDTH_FONT * 2 * 3 + OFFSET_BITMAP] 
 /* @defgroup STM32_ADAFRUIT_LCD_Private_FunctionPrototypes */ 
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *c);
 static void SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
-  
+bool checkCoord(uint16_t x, uint16_t y);
+
 uint32_t getStringWidth (uint8_t* str);
 uint8_t getCharIndex(uint8_t* ch, bool ruChar);
 bool ruChar = false;
+static bool bufferLock = false;
+static uint16_t bufXSize, bufYSize, drawStartX, drawStartY;
+
+#define xS 480 
+#define yS 50
+uint8_t frameBuffer[yS * xS * 3];
+
+bool checkCoord(uint16_t x, uint16_t y){
+	if (x > (bufXSize + drawStartX)|| x < drawStartX || y > (bufYSize + drawStartY)|| y < drawStartY)
+		Error_Handler();
+}
+
+void BSP_LCD_DrawBuffer_Start(uint16_t xStart, uint16_t yStart, uint16_t xSize, uint16_t ySize, uint32_t color){
+	bufferLock = true;
+	bufXSize = xSize;
+	bufYSize = ySize;
+	drawStartX = xStart;
+	drawStartY = yStart;
+	if (xSize*ySize >= 480*50)
+		Error_Handler();
+	for (uint32_t i = 0; i < bufXSize*bufYSize*3; i++){
+		frameBuffer[i++]=((color & 0xF800) >> 8);
+		frameBuffer[i++]=((color & 0x07E0) >> 3);
+		frameBuffer[i]=((color & 0x001F) << 3);
+	}
+}
+
+
+void BSP_LCD_DrawBuffer_Stop(){
+	lcd_drv->DrawBuffer(drawStartX, drawStartY, bufXSize, bufYSize, frameBuffer);
+	bufferLock = false;
+}
 
 void BSP_BL_Control (uint8_t BL){
 	lcd_drv->BLControl(BL);
@@ -71,22 +104,9 @@ uint8_t BSP_LCD_Init(void)
   #if LCD_INIT_CLEAR == 1
   BSP_LCD_Clear(LCD_DEFAULT_BACKCOLOR);
   #endif
-  sysParam.LCD_TYPE = COMPILED_LCD_TYPE;
 	
   ret = LCD_OK;
-	
-//		
-//	BSP_LCD_DrawHLine(10,10,10);
-//	LL_mDelay(1000);
-//	BSP_LCD_DrawHLine(20,10,10);
-//	LL_mDelay(1000);
-//	BSP_LCD_DrawHLine(30,10,10);
-//	LL_mDelay(1000);
-//	BSP_LCD_DrawVLine(10,15,10);
-//	LL_mDelay(1000);
-//	BSP_LCD_DrawVLine(10,25,10);
-//	
-//	LL_mDelay(5000);
+
   return ret;
 }
 
@@ -255,7 +275,7 @@ uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Li
 	}
 	case RIGHT_MODE:
 	{
-	  refcolumn =  - Xpos + size;
+	  refcolumn =  Xpos - size;
 	  break;
 	}    
 	default:
@@ -324,10 +344,20 @@ void BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr)
   */
 void BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGB_Code)
 {
-  if(lcd_drv->WritePixel != NULL)
-  {
-    lcd_drv->WritePixel(Xpos, Ypos, RGB_Code);
-  }
+	if (bufferLock){
+		//checkCoord(Xpos,Ypos);
+		uint32_t base = (Ypos - drawStartY)*bufXSize*3 + (Xpos - drawStartX)*3;
+		if (base >= 480*50*3)
+			Error_Handler();
+		frameBuffer[base++]=((RGB_Code & 0xF800) >> 8);
+		frameBuffer[base++]=((RGB_Code & 0x07E0) >> 3);
+		frameBuffer[base]=((RGB_Code & 0x001F) << 3);
+	} else {
+		if(lcd_drv->WritePixel != NULL)
+		{
+			lcd_drv->WritePixel(Xpos, Ypos, RGB_Code);
+		}
+	}	
 }
   
 /**
@@ -341,7 +371,7 @@ void BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
   uint32_t index = 0;
   
-  if(lcd_drv->DrawHLine != NULL)
+  if(!bufferLock)
   {
     lcd_drv->DrawHLine(DrawProp.TextColor, Xpos, Ypos, Length);
   }
@@ -365,7 +395,7 @@ void BSP_LCD_DrawVLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
   uint32_t index = 0;
   
-  if(lcd_drv->DrawVLine != NULL)
+  if(!bufferLock)
   {
     lcd_drv->DrawVLine(DrawProp.TextColor, Xpos, Ypos, Length);
   }
@@ -612,7 +642,26 @@ void BSP_LCD_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pBmp)
   */
 void BSP_LCD_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height)
 {
-  lcd_drv->FillRect(Xpos, Ypos, Width, Height, DrawProp.TextColor);
+	if (!bufferLock){
+		lcd_drv->FillRect(Xpos, Ypos, Width, Height, DrawProp.TextColor);
+	} else {
+			uint16_t xStart = Xpos - drawStartX ;
+			uint16_t yStart = Ypos - drawStartY; //- height;
+			//yStart = yStart*bufXSize*3;
+			
+						
+		for (uint16_t y = 0; y < Height; y ++){
+			for (uint16_t x = 0; x < Width*3; x += 3){
+				uint32_t base = (yStart + y)*bufXSize*3 + x + xStart*3;
+				if (base >= 72000)
+					Error_Handler();
+				frameBuffer[base++]=((BSP_LCD_GetTextColor() & 0xF800) >> 8);
+				frameBuffer[base++]=((BSP_LCD_GetTextColor() & 0x07E0) >> 3);
+				frameBuffer[base]=((BSP_LCD_GetTextColor() & 0x001F) << 3);
+			}
+			
+		}
+	}
 }
 
 /**
@@ -856,35 +905,63 @@ static void DrawChar(uint16_t Xpos, uint16_t Ypos, uint8_t *pChar)
 		}
 		#endif
 		#ifdef _24bit_FORMAT
-		for ( i = 0; i < height*width*3; i=i+3){
-		if ((bt & bit) != 0){
-				bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.TextColor >> 11))<<3;
-				bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.TextColor >> 5)) <<2;
-				bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.TextColor) << 3;	
-			} else {
-				bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.BackColor >> 11))<<3;
-				bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.BackColor >> 5))<<2;
-				bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.BackColor) << 3;	
-	
-			}
-			bit = bit>>1;
-			if (bit == 0 || (i/3+1)%width == 0){
-				if (col == newW){
-					col = 0;
-					row++;
-					if (row == height){
+		if (!bufferLock){
+			for ( i = 0; i < height*width*3; i=i+3){
+				if ((bt & bit) != 0){
+					bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.TextColor >> 11))<<3;
+					bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.TextColor >> 5)) <<2;
+					bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.TextColor) << 3;	
+				} else {
+					bitmap[OFFSET_BITMAP + i] = (0x1F & (DrawProp.BackColor >> 11))<<3;
+					bitmap[OFFSET_BITMAP + i+1] = (0x3F & (DrawProp.BackColor >> 5))<<2;
+					bitmap[OFFSET_BITMAP + i+2] = (0x1F & DrawProp.BackColor) << 3;	
+				}
+				bit = bit>>1;
+				if (bit == 0 || (i/3+1)%width == 0){
+					if (col == newW){
+						col = 0;
+						row++;
+						if (row == height){
+							break;
+						}
+					}
+					bit = 128;
+					if (row >= height){
 						break;
 					}
+					bt = gl->bitsArray[row*newW + col++];
 				}
-				bit = 128;
-				if (row >= height){
-					break;
-				}
-				bt = gl->bitsArray[row*newW + col++];
-			}
-		}	
+			}	
 		#endif
-	BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
+		BSP_LCD_DrawBitmap(Xpos, Ypos, bitmap);
+		} else {
+			uint16_t xStart = Xpos - drawStartX ;
+			uint16_t yStart = Ypos - drawStartY; //- height;
+			//yStart = yStart*bufXSize*3;
+			for(uint16_t y = 0; y < height ; y++){
+				col = 0;
+				bt = gl->bitsArray[y*newW];	
+					for (uint16_t x = 0; x < width*3; x=x+3){
+						uint32_t base = (yStart + y)*bufXSize*3 + x + xStart*3;
+						if ((bt & bit) != 0){
+							frameBuffer[base++] = (0x1F & (DrawProp.TextColor >> 11))<<3;
+							frameBuffer[base++] = (0x3F & (DrawProp.TextColor >> 5)) <<2;
+							frameBuffer[base++] = (0x1F & DrawProp.TextColor) << 3;	
+						} else {
+							frameBuffer[base++] = (0x1F & (DrawProp.BackColor >> 11))<<3;
+							frameBuffer[base++] = (0x3F & (DrawProp.BackColor >> 5))<<2;
+							frameBuffer[base++] = (0x1F & DrawProp.BackColor) << 3;	
+						}
+						bit = bit>>1;
+						if (bit == 0 || (x/3+1)%width == 0){
+							col++;
+							bt = gl->bitsArray[y*newW + col];	
+							bit = 128;	
+						}
+					}
+					bit = 128;	
+				}
+		}
 }
 
 /**

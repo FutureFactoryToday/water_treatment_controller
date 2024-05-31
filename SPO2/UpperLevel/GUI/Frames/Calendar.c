@@ -52,8 +52,8 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 	while(1)
     {	
 			if (updateFlags.sec){
-				displayedTime = *addSec(&displayedTime,1);
-				//drawClock();
+				displayedTime = addSec(&displayedTime,1);
+				// drawClock(); drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 			} 
 			if (setMonth.isPressed == 1){
@@ -84,7 +84,7 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				int32_t newDay = ShowKeyboardFrame(1, 31);
 				if (newDay > 0) {
 					if (newDay > maxDayInMonth( displayedTime.month,displayedTime.year)){
-						 displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
+						displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
 					} else {
 						displayedTime.day = newDay;
 					}
@@ -139,6 +139,7 @@ void createFrame (void){
 	TC_addButton(&retBut);
 	TC_addButton(&cancelBut);
 	TC_addButton(&okBut);
+	TC_addButton(&cancelBut);
 }
 
 void drawMonth(){

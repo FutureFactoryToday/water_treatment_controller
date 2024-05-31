@@ -8,17 +8,17 @@ static wtc_time_t regTime;
 int ShowWashTimCustFrame(void)
 {
 
-		regTime = planner.preferedTimeForWash;
+		regTime = sysParams.consts.planerConsts.preferedTimeForWash;
     createFrame();
     while(1)
     {
         if (updateFlags.sec == true){
-            drawClock();
+             
             updateFlags.sec = false;
         }
         //Pressed
         if (timeBut.isPressed == true){
-//            if (planner.currentTask != NULL){
+//            if (sysParams.consts.planerConsts.currentTask != NULL){
 //                drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 80, BSP_LCD_GetYSize()/2 - 20, 140, 40, getFormatedTimeFromSource("hh:mm", &regTime));
 //            }
             timeBut.isPressed = false;
@@ -32,15 +32,18 @@ int ShowWashTimCustFrame(void)
             cancelBut.isReleased = false;
             return 0;
         }
-        if(homeBut.isReleased == true) {
-            homeBut.isReleased = false;
-            return 1;
-        }
+        if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
         if (timeBut.isReleased == true){
             
 					wtc_time_t tempTime = CSF_showFrame(&regTime);
 					if( !isZeroTime(&tempTime)){
-							regTime = *setTime(&regTime, &tempTime);
+							regTime = setTime(&regTime, &tempTime);
 							//createFrame();
 					}
 					timeBut.isReleased = false;
@@ -48,9 +51,7 @@ int ShowWashTimCustFrame(void)
         }
         if (okBut.isReleased == true){
             
-                planner.preferedTimeForWash = regTime;
-                copyTasksToFlash();
-                fp->needToSave = 1;
+                sysParams.consts.planerConsts.preferedTimeForWash = regTime;
                 FP_SaveParam();
             
             okBut.isReleased = false;
@@ -68,9 +69,8 @@ void createFrame()
 	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
 	
 	drawStatusBarOkCancel();
-    drawClock();
 	
-	if (planner.currentTask == NULL){
+	if (sysParams.vars.planer.currentTask == NULL){
 		text = &PL_NOT_INITED;
 	} else {
 		text = getFormatedTimeFromSource("hh:mm", &regTime);
@@ -81,4 +81,5 @@ void createFrame()
 	TC_addButton(&retBut);
     TC_addButton(&homeBut);
     TC_addButton(&okBut);	
+	TC_addButton(&cancelBut);
 }

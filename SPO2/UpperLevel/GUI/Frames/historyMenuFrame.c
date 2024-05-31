@@ -18,7 +18,7 @@ int ShowHistoryMenuFrame(void)
     while(1)
     {
 		 if(updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
          }
 			/*Buttons pressed*/
@@ -79,52 +79,36 @@ int ShowHistoryMenuFrame(void)
              return 0;
          }
          if (homeBut.isReleased == true){
-             homeBut.isReleased = false;
-             return 1;
-         }
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
          if(menuLines[0].isReleased == true){
-                if(ShowHistoryFilterFrame() == 1) return 1;
+               ShowHistoryFilterFrame();
                 menuLines[0].isReleased = false;
                 createFrame();
          }
          if(menuLines[1].isReleased == true){
-                if(ShowHistoryWaterFrame() == 1) return 1;
+                ShowHistoryWaterFrame();
                 menuLines[1].isReleased = false;
                 createFrame();
          }
          if(menuLines[2].isReleased == true){
-                if(ShowHistoryMaxWaterFrame() == 1) return 1;
+                ShowHistoryMaxWaterFrame();
                 menuLines[2].isReleased = false;
                 createFrame();
          }
          if(menuLines[3].isReleased == true){
-                if(ShowHistoryErrorsFrame() == 1) return 1;
+                ShowHistoryErrorsFrame();
                 menuLines[3].isReleased = false;
                 createFrame();
          }
-//         if(menuLines[4].isReleased == true){
-//                ShowRegenPeriodServiceFrame();
-//                menuLines[4].isReleased = false;
-//                createFrame();
-//         }
-//         if(scrollUpBut.isReleased == true){
-//                if(menu_frame_Scroll_cnt > 0){ menu_frame_Scroll_cnt--;
-//                    menu_frame_was_Scroll = 1;
-//                    RefreshScrollBarMenuFrame();
-//                }
-//                scrollUpBut.isReleased = false;
-//         }
-//         if(scrollDwnBut.isReleased == true){
-//                if(menu_frame_Scroll_cnt < 1){ menu_frame_Scroll_cnt++;
-//                    menu_frame_was_Scroll = 2;
-//                    RefreshScrollBarMenuFrame();
-//                }
-//                scrollDwnBut.isReleased = false;
-//         }   
 	}
 }
 void createFrame(void){
-    
+    if (goHome) return;
     drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY);
     
     drawMainWindow();
@@ -134,7 +118,7 @@ void createFrame(void){
     drawMainStatusBar(144, 2305, 16);
     //drawStatusBarEmpty();
     
-    drawClock();
+     drawClock(); drawMainStatusBar(144, 2305, 16);
     
     drawStaticLines();
     

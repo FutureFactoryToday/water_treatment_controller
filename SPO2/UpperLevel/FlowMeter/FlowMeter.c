@@ -25,70 +25,59 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint32_t flowPeriod, flowMeter;
 bool isOverFlow;
 filter_t flowFilter;
+bool oldMeterInt;
+int16_t flowMeterCnt;
+uint32_t timVal;
+
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
 //Flow period (time of one rotation)
 uint32_t FM_getFlowPeriod(void){
-	return  flowPeriod;
+	return  sysParams.vars.flowCnt;
 }
 //Flow freq (int)
 uint32_t FM_getFlowHzInt(void){
-	if (flowPeriod == 0){
+	if (sysParams.vars.flowCnt == 0){
 		 return 0;
 	}
-	return (uint32_t)FLOW_TIM_FREQ/flowPeriod;
+	return (uint32_t)FLOW_TIM_FREQ/sysParams.vars.flowCnt;
 }
 //Flow freq (float)
 float FM_getFlowHzFloat(void){
-	if (flowPeriod == 0){
+	if (sysParams.vars.flowCnt == 0){
 		 return 0;
 	}
-	return FLOW_TIM_FREQ/flowPeriod;
+	return (float)FLOW_TIM_FREQ/sysParams.vars.flowCnt;
 }
 //Flow speed scaled by coef
 float FM_getFlowSpeed(void){
-	if (flowPeriod == 0){
+	if (sysParams.vars.flowCnt == 0){
 		 return 0;
 	}
-	return (FLOW_TIM_FREQ/flowPeriod)*DEF_FLOW_COEF;
+	float res = FM_getFlowHzFloat();
+	res /= DEF_FLOW_COEF;
+	return res;
 }
 uint32_t FM_getFlowMeterVal(void){
-	return flowMeter;
+	return sysParams.consts.waterQuantaty;
 }
 void FM_incFlowMeter(void){
-	flowMeter += (uint32_t)FM_getFlowSpeed()*DEF_VAL_COEF;
+	if (sysParams.consts.planerConsts.status != PL_WORKING){
+		float water = FM_getFlowSpeed();
+		sysParams.consts.waterQuantaty += water;
+		sysParams.consts.dayWaterUsage += water;
+		sysParams.consts.waterFromLastFilter += water;
+	}
 }
 void FM_Init(void){
 	LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
 	LL_TIM_InitTypeDef TIM_InitStruct = {0};
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	
-	flowMeter = 0;
-	flowFilter = *initFilterStruct(&flowFilter,0,128);
-	/* Peripheral clock enable */
-  LL_APB1_GRP1_EnableClock(FLOW_TIM_CLK);
-
-  /* TIM7 interrupt Init */
-  NVIC_SetPriority(FLOW_TIM_IRQ, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
-  NVIC_EnableIRQ(FLOW_TIM_IRQ);
-	
-	GPIO_InitStruct.Pin = METER_INP_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = LL_GPIO_PULL_DOWN;
-	//GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
-  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-	
-	LL_GPIO_AF_SetEXTISource(LL_GPIO_AF_EXTI_PORTC, LL_GPIO_AF_EXTI_LINE10);
-	
-	EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_10;
-  EXTI_InitStruct.LineCommand = ENABLE;
-  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
-  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_FALLING;
-  LL_EXTI_Init(&EXTI_InitStruct);
+	flowFilter = *initFilterStruct(&flowFilter,0,8);
 	
 	//Частота счета 1МГц
 	TIM_InitStruct.Prescaler = FLOW_TIM_TAKT_FREQ/FLOW_TIM_FREQ;
@@ -100,7 +89,7 @@ void FM_Init(void){
 	LL_TIM_DisableARRPreload(FLOW_TIM);
   LL_TIM_SetTriggerOutput(FLOW_TIM, LL_TIM_TRGO_RESET);
   LL_TIM_DisableMasterSlaveMode(FLOW_TIM);
-	
+	LL_TIM_SetCounter(FLOW_TIM,0);
 	LL_TIM_EnableIT_UPDATE(FLOW_TIM);
 	
 	LL_TIM_EnableCounter(FLOW_TIM);
@@ -109,14 +98,43 @@ void FM_Init(void){
 void FM_Sense_Interrupt(void){
 if (isOverFlow){
 		isOverFlow = false;
+		sysParams.vars.flowImpulseCnt = 0;
 	} else {
-		flowPeriod = filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
-		//flowPeriod = LL_TIM_GetCounter(FLOW_TIM);//filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
+		if (sysParams.vars.error.flags._5VPowerFail != true){
+			sysParams.vars.flowImpulseCnt++;
+			if (LL_TIM_GetCounter(FLOW_TIM) < 72){
+				LL_TIM_SetCounter(FLOW_TIM,0);
+				LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
+				return;
+			}
+			sysParams.vars.flowCnt = filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
+			sysParams.consts.maxWaterUsage = MAX(sysParams.consts.maxWaterUsage,sysParams.vars.flowCnt);
+			LL_TIM_SetCounter(FLOW_TIM,0);
+			LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
+			//flowPeriod = LL_TIM_GetCounter(FLOW_TIM);//filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
+		} else {
+			sysParams.vars.flowCnt = 0;
+		}
+		
 	}
 	LL_TIM_SetCounter(FLOW_TIM,0);
 }
 void FM_OVF_Interrupt(void){
 	isOverFlow = true;
-	flowPeriod = 0;
+	sysParams.vars.flowCnt = 0;//filter(&flowFilter,0);
 }
-
+#define FLOW_METER_DELAY 20
+void FM_Meter_Test(void){
+	if (flowMeterCnt > 0){
+		flowMeterCnt--;
+	}
+	if (oldMeterInt != sysParams.vars.status.flags.FlowMeterInt){
+		flowMeterCnt = FLOW_METER_DELAY;
+		oldMeterInt = sysParams.vars.status.flags.FlowMeterInt;
+	} else {
+		if (flowMeterCnt == 0 && sysParams.vars.status.flags.FlowMeterInt == true){
+			flowMeterCnt = -1;
+			FM_Sense_Interrupt();
+		}
+	}
+}

@@ -87,22 +87,17 @@ int TSF_showFrame(){
 	
 
 	frameText = &ITEM_TIME_ruText;
-	uint8_t memSec = getTime()->second;
+	uint8_t memSec = getTime().second;
 	
-	wtc_time_t *sysTimePtr = getTime();
-	displayedTime = *sysTimePtr;
+	wtc_time_t sysTimePtr = getTime();
+	displayedTime = sysTimePtr;
 	
 	createFrame();
 	
 	while(1)
     {
-        if (updateFlags.sec == true){
-            //drawClock();
-            updateFlags.sec = false;
-        }
-			
 			if (updateFlags.sec){
-				displayedTime = *addSec(&displayedTime,1);
+				displayedTime = addSec(&displayedTime,1);
 				drawMidClock(timeSetPressed);
 				updateFlags.sec = false;
 			} 
@@ -131,7 +126,7 @@ int TSF_showFrame(){
 			if (dateSetButton.isReleased == true){
 				wtc_time_t date = CAL_showFrame(&displayedTime);
 				if (!isZeroDateTime(&date)){
-					displayedTime = *setDate(&displayedTime,&date); 
+					displayedTime = setDate(&displayedTime,&date); 
 					
 				}
 				dateSetButton.isReleased = false;
@@ -150,10 +145,13 @@ int TSF_showFrame(){
 				retBut.isReleased = false;
 				return 0;
 			}
-            if (homeBut.isReleased == true){
-				homeBut.isReleased = false;
-				return 1;
-			}
+      if (homeBut.isReleased == true){
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
 //			if (touchHandler()){
 //					if (refreshFrame()){
 //						return;
@@ -179,13 +177,13 @@ void createFrame(){
 	TC_addButton(&okBut);
 	TC_addButton(&cancelBut);
 	TC_addButton(&retBut);
-    TC_addButton(&homeBut);
+  TC_addButton(&homeBut);
 	TC_addButton(&timeSetButton);
 	TC_addButton(&dateSetButton);
 }
 button_t drawMidClock (bool checked){
 	
-	uint8_t* formatter = (getTime()->second % 2)? "hh:mm " : "hh mm ";
+	uint8_t* formatter = (getTime().second % 2)? "hh:mm " : "hh mm ";
 	return (!checked)? drawTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource(formatter, &displayedTime)):
 									drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource(formatter, &displayedTime)) ;
 }

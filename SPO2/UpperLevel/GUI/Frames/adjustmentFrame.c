@@ -4,22 +4,19 @@ static void createFrame(void);
 static button_t playBut[7], menuLine[7];
 //int32_t pistonPositions.[] = {0, 0, 0, 0, 0, 0, 0};
 uint32_t *firstEl;
-//char* ITEM_STEPS[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
 uint8_t adjustment_frame_Scroll_cnt;
 void ShowAdjustmentFrame(void)
 {
 	adjustment_frame_Scroll_cnt = 0;
 	PC_Restart();
 	createFrame();
-	#ifndef newPositions
-	firstEl = &pistonPositions.closedPosition;
-	#else
-	firstEl = &pistonPositions.rabPoz;	
-	#endif
+	
+	firstEl = &sysParams.consts.pistonPositions.rabPoz;	
+	
 	while(1)
 	{
 		if (updateFlags.sec == true){
-				drawClock();
+				 //drawClock(); drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 		}
 		if (updateFlags.optic){
@@ -32,23 +29,6 @@ void ShowAdjustmentFrame(void)
 			return;
 		}
     if (okBut.isReleased == true){
-			fp->needToSave = true;
-	#ifndef newPositions
-			fp->params.pistonPositions.closedPosition = pistonPositions.closedPosition;
-			fp->params.pistonPositions.backwash = pistonPositions.backwash;
-			fp->params.pistonPositions.regeneration = pistonPositions.regeneration;
-			fp->params.pistonPositions.filling = pistonPositions.filling;
-			fp->params.pistonPositions.softening = pistonPositions.softening;
-			fp->params.pistonPositions.flushing = pistonPositions.flushing;
-			fp->params.pistonPositions.filtering = pistonPositions.filtering; 
-#else
-			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz;
-			fp->params.pistonPositions.forwardWash = pistonPositions.forwardWash;
-			fp->params.pistonPositions.backwash = pistonPositions.backwash;
-			fp->params.pistonPositions.saltering = pistonPositions.saltering;
-			fp->params.pistonPositions.filling = pistonPositions.filling;
-
-#endif			
 			FP_SaveParam(); 
 			okBut.isReleased = false;
 		}
@@ -63,168 +43,73 @@ void ShowAdjustmentFrame(void)
 			scrollDwnBut.isReleased = false;
 		}
         
-		#ifdef newPositions
         if(menuLine[0].isReleased == true)
         {
-					pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
+					sysParams.consts.pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[0].isReleased = false;
         }
         if(menuLine[1].isReleased == true)
         {
-					pistonPositions.forwardWash = ShowKeyboardFrame(0,99999);
+					sysParams.consts.pistonPositions.forwardWash = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[1].isReleased = false;
         }
         if(menuLine[2].isReleased == true)
         {
-					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
+					sysParams.consts.pistonPositions.backwash = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[2].isReleased = false;
         }
         if(menuLine[3].isReleased == true)
         {
-					pistonPositions.saltering = ShowKeyboardFrame(0,99999);
+					sysParams.consts.pistonPositions.saltering = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[3].isReleased = false;
         }
         if(menuLine[4].isReleased == true)
         {
-					pistonPositions.filling = ShowKeyboardFrame(0,99999);
+					sysParams.consts.pistonPositions.filling = ShowKeyboardFrame(0,99999);
 					createFrame();
 					menuLine[4].isReleased = false;
         }
 				//cycle start
         if(playBut[0].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.rabPoz);
+					PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
 
 					playBut[0].isReleased = false;
 					createFrame();
         }
         if(playBut[1].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.backwash);
+					PC_GoToPoz(sysParams.consts.pistonPositions.backwash);
 
 					playBut[1].isReleased = false;
 					createFrame();
         }
         if(playBut[2].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.forwardWash);
+					PC_GoToPoz(sysParams.consts.pistonPositions.forwardWash);
 
 					playBut[2].isReleased = false;
 					createFrame();
         }
         if(playBut[3].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.saltering);
+					PC_GoToPoz(sysParams.consts.pistonPositions.saltering);
 					playBut[3].isReleased = false;
 					createFrame();
         }
         if(playBut[4].isReleased == true)
         {
-					PC_GoToPoz(pistonPositions.filling);
+					PC_GoToPoz(sysParams.consts.pistonPositions.filling);
 
 					playBut[4].isReleased = false;
 					createFrame();
         }
        
-				#else 
-        if(menuLine[0].isReleased == true)
-        {
-					pistonPositions.closedPosition = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[0].isReleased = false;
-        }
-        if(menuLine[1].isReleased == true)
-        {
-					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[1].isReleased = false;
-        }
-        if(menuLine[2].isReleased == true)
-        {
-					pistonPositions.regeneration = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[2].isReleased = false;
-        }
-        if(menuLine[3].isReleased == true)
-        {
-					pistonPositions.filling = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[3].isReleased = false;
-        }
-        if(menuLine[4].isReleased == true)
-        {
-					pistonPositions.softening = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[4].isReleased = false;
-        }
-        if(menuLine[5].isReleased == true)
-        {
-					pistonPositions.flushing = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[5].isReleased = false;
-        }
-        if(menuLine[6].isReleased == true)
-        {
-					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[6].isReleased = false;
-        }
 				
-       
-        //cycle start
-        if(playBut[0].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.closedPosition);
-
-					playBut[0].isReleased = false;
-					createFrame();
-        }
-        if(playBut[1].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.backwash);
-
-					playBut[1].isReleased = false;
-					createFrame();
-        }
-        if(playBut[2].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.regeneration);
-
-					playBut[2].isReleased = false;
-					createFrame();
-        }
-        if(playBut[3].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.filling);
-					playBut[3].isReleased = false;
-					createFrame();
-        }
-        if(playBut[4].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.softening);
-
-					playBut[4].isReleased = false;
-					createFrame();
-        }
-        if(playBut[5].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.flushing);
-					
-					playBut[5].isReleased = false;
-					createFrame();
-        }
-        if(playBut[6].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.filtering);
-					
-					playBut[6].isReleased = false;
-					createFrame();
-        }
-				 #endif
     }
 }
 
@@ -354,6 +239,6 @@ void AnimatePosMenuFrame(void)
 	BSP_LCD_FillRect(POS_VALUE_X, POS_VALUE_Y,RESET_BUTTON_X - POS_VALUE_X,RESET_BUTTON_SIZE_Y);
     BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
     BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
+    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(sysParams.vars.pistonParams.curPoz), LEFT_MODE);
 	
 }

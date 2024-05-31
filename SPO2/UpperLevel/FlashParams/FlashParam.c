@@ -17,171 +17,285 @@
 #include "main.h"
 #include "FlashParam.h"
 #include "stdlib.h"
-
+#include "FlashIC/FlashDriver.h"
+#include "FlashIC/FM25.h"
+#include "FlashIC/W25.h"
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
+#define FLASH_SECTORS 3
 
+#define UNLOCKED 0
+#define AUTO_LOCK 1
+#define MANUAL_LOCK 2
+#define MANUAL_UNLOCK 1
+#define AUTO_UNLOCK 2
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+static uint8_t lock;
+static uint8_t currentHandler;
 volatile static flash_params_t flashParams = {0};
 flash_params_t* fp = &flashParams;
 uint32_t sysVers;
+uint32_t irqStatus;
+uint16_t baseAddress[FLASH_SECTORS];
+flash_driver_t *fram = &FM25_driver;
+flash_driver_t *logger = &W25_driver;
+flash_params_t bufFlash[FLASH_SECTORS];
+flash_params_t recBufFlash[FLASH_SECTORS];
+flash_message_t queue[4]; 
+bool oldIRQStatus;
+int8_t lastBuffer;
+void (*cbFunc)(void);
 
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);
-void unlockFlash(void);
-void lockFlash(void);
-
+void unlockSPI(void);
+void lockSPI(void);
+void manualUnlockSPI(void);
+void manualLockSPI(void);
+void queueHandler(void);
+void saveFRAMParam(void);
+void saveRAMParam(uint8_t handler);
+void getRAMParam(uint8_t handler);
 /* Private user code ---------------------------------------------------------*/
 
-flash_params_t* FP_GetParam(void){
+bool FP_Init(void){
+	lock = UNLOCKED;
 	sysVers = SYSTEM_PO_VERSION;
-	if (!flashParams.isLoaded){
-		loadParams();
+	gpio_t framCS = {FRAM_CS_GPIO_Port,FRAM_CS_Pin};
+	gpio_t framWP	=	{FRAM_WP_GPIO_Port, FRAM_WP_Pin};
+	gpio_t framHOLD	=	{FRAM_HOLD_GPIO_Port, FRAM_HOLD_Pin};
+	gpio_t logCS = {MEM_CS_GPIO_Port,MEM_CS_Pin};
+	gpio_t logWP = {MEM_WP_GPIO_Port,MEM_WP_Pin};
+	gpio_t logHOLD = {MEM_RES_GPIO_Port,MEM_RES_Pin};
+		
+	if (fram->init(MEM_SPI,framCS, framWP, framHOLD,unlockSPI) == HAL_OK){
+		sysParams.vars.status.flags.FRAMInited = 1;
+	} else {
+		sysParams.vars.error.flags.FRAMFail = 1;
 	}
-	return &flashParams;
+	if (logger->init(MEM_SPI,logCS, logWP, logHOLD,unlockSPI) == HAL_OK){
+		sysParams.vars.status.flags.RAMInited = 1;
+	} else {
+		sysParams.vars.error.flags.RAMFail = 1;
+	}
+	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
+		baseAddress[i] = i*sizeof(stored_params_t) + i;
+	}
+	for (uint8_t i =0; i < 3; i++){
+		queue[i] = (flash_message_t){0,0,0};
+	}
+
+}
+HAL_StatusTypeDef FP_StoreLog(uint8_t handler, uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
+	if(queue[handler].set == 1)
+		return HAL_BUSY;
+	queue[handler].set = 1;
+	queue[handler].adress = startAddress;
+	queue[handler].buf = buf;
+	queue[handler].cb = cb;
+	queue[handler].size = size;
+	return HAL_OK;
 }
 
-void loadParams(void){
-	uint32_t irqStatus = __get_PRIMASK();
-	__disable_irq();
-	
-	uint32_t *temp = 0;
-	uint32_t *ptr = &flashParams.params.FIRST_ELEMENT;
-	uint32_t paramSize = sizeof(flash_params_t)/sizeof(uint32_t);
-	flashParams.params.startLoadFlag = 0;
-	flashParams.params.endLoadFlag = 0;
-	for(uint32_t parNum = 0; parNum < paramSize; parNum++){
-		temp = (uint32_t*)(USER_FLASH_START + 4*parNum);
-		*ptr = *temp;
-		ptr++;
-		
+HAL_StatusTypeDef FP_GetStoredLog( uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
+	if(queue[3].set == 1)
+		return HAL_BUSY;
+		queue[3].set = 1;
+		queue[3].adress = startAddress;
+		queue[3].buf = buf;
+		queue[3].cb = cb;
+		queue[3].size = size;
+	return HAL_OK;
+}
+uint8_t FP_GetParam(void){
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		return HAL_BUSY;
 	}
-	if (flashParams.params.startLoadFlag == START_FP_FLAG && flashParams.params.endLoadFlag == END_FP_FLAG && flashParams.params.sysPar.SYS_VERSION == sysVers) {
-		flashParams.isLoaded = true;
+	manualLockSPI();
+	__set_PRIMASK(oldIRQStatus);
+	uint8_t timeout;
+	lastBuffer = -1;
+	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
+		manualUnlockSPI();
+		return HAL_ERROR;
+	}
+	
+	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
+		fram->readData(baseAddress[i], &bufFlash[i].params,sizeof(stored_params_t));
+		LL_mDelay(1);
+		if (HAL_SPI_GetState(MEM_SPI) == HAL_BUSY){
+			fram->abortCom();
+			sysParams.vars.error.flags.FRAMFail = 1;
+			sysParams.vars.status.flags.StoredParamsLoaded = 0;
+			manualUnlockSPI();
+			return HAL_ERROR;
+		}
+		if (bufFlash[i].params.startLoadFlag == START_FP_FLAG &&
+			bufFlash[i].params.endLoadFlag == END_FP_FLAG &&
+			(bufFlash[i].params.sysParConsts.sysVersion & 0x1) == (sysVers & 0x1) ){
+				bufFlash[i].isCorrect = true;
+				if (lastBuffer < 0){
+					lastBuffer = i;
+				} else {
+					lastBuffer = (bufFlash[i].params.timeStamp > bufFlash[lastBuffer].params.timeStamp)?i:lastBuffer;
+				}
+			}
+	}
+	manualUnlockSPI();
+	if (lastBuffer < 0){
+		sysParams.vars.status.flags.StoredParamsLoaded = 0;
 	} else {
-		flashParams.params.startLoadFlag = START_FP_FLAG;
-		flashParams.params.endLoadFlag = END_FP_FLAG;
-		flashParams.needToSave = 1;
-		flashParams.isLoaded = false;
+		flashParams = bufFlash[lastBuffer];
+		sysParams.vars.status.flags.StoredParamsLoaded = 1;
 	}
-	if (irqStatus == 0)
-		__enable_irq();
-	
+	return HAL_OK;
 }
 
 uint8_t FP_SaveParam(void){
-	uint32_t irqStatus = __get_PRIMASK();
-	if (flashParams.needToSave == 1){
-		if(!FP_DeleteParam()){
-			return ERROR;
-		}
-		__disable_irq();
-		while (FLASH->SR2 & FLASH_SR2_BSY);
-		if (FLASH->CR2 & FLASH_CR2_LOCK){
-			unlockFlash();
-		}
-		if (FLASH->SR2 & FLASH_SR2_EOP){
-			FLASH->SR2 |= FLASH_SR2_EOP;
-		}
-		FLASH->AR2 = USER_FLASH_START;
-		FLASH->CR2 |= FLASH_CR2_PG;
-		uint16_t *ptr = (uint16_t*)&flashParams.params;
-		uint32_t paramSize = sizeof(stored_params_t)/sizeof(uint32_t);
-		for(uint16_t i = 0; i < paramSize*2; i++){
-			//uint32_t adr = USER_FLASH_START+2*i;
-			*(volatile uint16_t*)(USER_FLASH_START+2*i) = 	*ptr;
-			ptr++;
-			//while(FLASH->SR & FLASH_SR_BSY){
-			while(!(FLASH->SR2 & FLASH_SR2_EOP)){
-				uint32_t fl = FLASH->SR2;
-				if(FLASH->SR2 & FLASH_SR2_PGERR){
-					lockFlash();
-					FLASH->CR2 &= ~FLASH_CR2_PG;
-					FLASH->SR2 = FLASH_SR2_PGERR;
-					return ERROR;
-				}
-			}
-			FLASH->SR2 |= FLASH_SR2_EOP;
-			if (i == paramSize*2 - 2){
-				flashParams.needToSave = 1;
-			}
-		}
-		FLASH->CR2 &= ~FLASH_CR2_PG;
-		lockFlash();
-		flashParams.needToSave = false;
-		
-		if (irqStatus == 0)
-		__enable_irq();
-		return 1;
-	}
-	return 0;
+	if (queue[0].set == 1)
+		return HAL_BUSY;
+	queue[0].set = 1;
 }
-uint8_t FP_DeleteParam(void){
-	__disable_irq();
-	while (FLASH->SR2 & FLASH_SR2_BSY);
-	unlockFlash();
-	if (FLASH->SR2 & FLASH_SR2_EOP){
-		FLASH->SR2 |= FLASH_SR2_EOP;
-	}
-	FLASH->CR2 |= FLASH_CR2_PER;
-	FLASH->AR2 = USER_FLASH_START;
-	FLASH->CR2 |= FLASH_CR2_STRT;
-	while (!(FLASH->SR2 & FLASH_SR2_EOP));
-	FLASH->SR2 = FLASH_SR2_EOP;
-	while (FLASH->SR2 & FLASH_SR2_BSY);
-	FLASH->CR2 &= ~FLASH_CR2_PER;
-	lockFlash();
-	__enable_irq();
-	return 1;
-}
-//uint8_t flashParams_SaveOneParam(uint32_t data, uint32_t adr){
-//	__disable_irq();
-//	while (FLASH->SR & FLASH_SR_BSY);
-//	unlockFlash();
-//	if (FLASH->SR & FLASH_SR_EOP){
-//		FLASH->SR |= FLASH_SR_EOP;
-//	}
-//		FLASH->CR |= FLASH_CR_PG;
-//	uint16_t *ptr = (uint16_t*)&data;
-//	for(uint8_t i = 0; i < 2; i++){
-//		*(volatile uint16_t*)(adr+2*i) = 	*ptr;
-//		ptr++;
-//		while(!(FLASH->SR & FLASH_SR_EOP)){
-//			if(FLASH->SR & FLASH_SR_PGERR){
-//				lockFlash();
-//				FLASH->CR &= ~FLASH_CR_PG;
-//				FLASH->SR = FLASH_SR_PGERR;
-//				return ERROR;
-//			}
-//		}
-//		FLASH->SR = FLASH_SR_EOP;
-//	}
-//	FLASH->CR &= ~FLASH_CR_PG;
-//	lockFlash();
-//	__enable_irq();
-//	return 1;
-//}
 
-void unlockFlash(void){
-	while ((FLASH->SR2 & FLASH_SR2_BSY) != 0)
-	{
-		
+uint8_t FP_DeleteParam(void){
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		return HAL_BUSY;
 	}
-	if ((FLASH->CR2 & FLASH_CR2_LOCK) != 0)
-	{
-		FLASH->KEYR2 = FLASH_KEY1;
-		FLASH->KEYR2 = FLASH_KEY2;
+	__set_PRIMASK(oldIRQStatus);
+	fram->eraseChip();
+	while (lock	!=	UNLOCKED);
+	return HAL_OK;
+}
+uint8_t FP_ClearLog(void){
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		return HAL_BUSY;
 	}
+	__set_PRIMASK(oldIRQStatus);
+	logger->eraseChip();
+	while (lock	!=	UNLOCKED);
+	return HAL_OK;
+}
+
+void unlockSPI(void){
+	if (lock == MANUAL_LOCK){
+		return;
+	} else {
+		lock = 0;
+	}
+	if (queue[currentHandler].cb != NULL){
+		queue[currentHandler].cb();
+		queue[currentHandler].cb = NULL;
+	}
+	queue[currentHandler].set = false;
+	currentHandler++;
+	queueHandler();
+	
 	
 }
-
-void lockFlash(void){
-	FLASH->CR2 = FLASH_CR2_LOCK;
+void lockSPI(void){
+	if (lock == UNLOCKED)
+		lock = AUTO_LOCK;
+}
+void manualUnlockSPI(void){
+	lock = UNLOCKED;
+}
+void manualLockSPI(void){
+	lock = MANUAL_LOCK;
 }
 
+void queueHandler(void){
+	if (queue[currentHandler].set == 1){
+		switch (currentHandler){
+			case (0):{
+				saveFRAMParam();
+				break;
+			}
+			case (1):
+			case (2):{
+				saveRAMParam(currentHandler);
+				break;
+			}
+			case (3):{
+				getRAMParam(currentHandler);
+				break;
+			}
+		}
+	} else {
+		currentHandler++;	
+		if (currentHandler > 4)
+			return;
+		queueHandler();
+	}
+}
 
+void FP_StartStore(void){
+	if (lock == UNLOCKED){
+		currentHandler = 0;
+		queueHandler();
+	}
+}
+
+void saveFRAMParam(void){
+	if (sysParams.vars.status.flags.FRAMInited != 1 || sysParams.vars.error.flags.FRAMFail == 1)
+		return;
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		queue[0].set = true;
+		return;
+	}
+	lockSPI();
+	__set_PRIMASK(oldIRQStatus);
+
+	stored_params_t buf = {0};
+	lastBuffer++;
+	if (lastBuffer >= FLASH_SECTORS || lastBuffer < 0){
+		lastBuffer = 0;
+	}
+	bufFlash[lastBuffer].params.startLoadFlag = START_FP_FLAG;
+	bufFlash[lastBuffer].params.endLoadFlag = END_FP_FLAG;
+	bufFlash[lastBuffer].params.sysParConsts = sysParams.consts;
+	bufFlash[lastBuffer].params.timeStamp = wtcTimeToInt(&sysParams.vars.sysTime);
+	
+	fram->writeData(baseAddress[lastBuffer],&bufFlash[lastBuffer].params,sizeof(stored_params_t));
+	return;
+}
+
+void saveRAMParam(uint8_t handler){
+	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return;
+	}
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		return;
+	}
+	
+	lockSPI();
+	__set_PRIMASK(oldIRQStatus);
+	cbFunc = queue[handler].cb;
+	logger->writeData(queue[handler].adress, queue[handler].buf, queue[handler].size);
+}
+
+void getRAMParam(uint8_t handler){
+	oldIRQStatus = __get_PRIMASK(); 
+	__disable_irq();
+	if (lock != UNLOCKED){
+		__set_PRIMASK(oldIRQStatus);
+		return;
+	}
+	lockSPI();
+	__set_PRIMASK(oldIRQStatus);
+	logger->readData(queue[3].adress, queue[3].buf, queue[3].size);
+}

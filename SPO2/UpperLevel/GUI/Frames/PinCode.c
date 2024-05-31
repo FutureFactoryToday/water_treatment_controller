@@ -50,7 +50,7 @@ int8_t PIN_showFrame(){
 	while(1)
     { 
         if (updateFlags.sec == true){
-            drawClock();
+             drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
         if (pinTextArea.isReleased == true){
@@ -71,7 +71,7 @@ int8_t PIN_showFrame(){
         }
         if (enterBut.isReleased == true){
             enterBut.isReleased = false;
-            if (enteredPin == sysParam.SERVICE_CODE){
+            if (enteredPin == sysParams.consts.ServicePinCode){
                 return 1;
             } else {
                 BSP_LCD_SetTextColor(LCD_COLOR_RED);

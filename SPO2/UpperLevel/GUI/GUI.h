@@ -23,6 +23,7 @@
 /*Includes */
 #include "main.h"
 
+
 /*Public defines */
 
 
@@ -51,11 +52,13 @@ typedef struct {
 	bool isReleased;
 	bool wasPressed;
 	uint32_t pressCnt;
+	bool drawPressed;
 } button_t;
 
 extern button_t retBut, okBut, scrollUpBut, scrollDwnBut, cancelBut, homeBut;
 extern bool enableClockDraw;
 /*Global params*/
+extern bool goHome;
 extern const BITMAPSTRUCT LOGO;
 extern const BITMAPSTRUCT Logo;
 extern const BITMAPSTRUCT gImage_SMALL_LOGO;
@@ -81,7 +84,7 @@ extern const BITMAPSTRUCT rightArowImg;
 extern const BITMAPSTRUCT gImage_TRASH;
 extern const BITMAPSTRUCT gImage_CHECKMARK;
 
-extern uint32_t touchDelay;
+extern uint32_t noTouchDelay;
 extern uint8_t redraw;
 extern uint8_t frame;
 extern TS_StateTypeDef tsState;
@@ -110,6 +113,6 @@ void initGUI(void);
 void refresh(void);
 
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
-void drawClock(void);
+
 #endif /* __GUI_H__ */
 

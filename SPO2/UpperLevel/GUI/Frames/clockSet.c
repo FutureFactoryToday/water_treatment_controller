@@ -41,7 +41,7 @@ wtc_time_t CSF_showFrame(wtc_time_t* time){
 	while(1)
     {
         if (updateFlags.sec == true){
-            //drawClock();
+            // drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
         }
         //Pressed

@@ -14,51 +14,11 @@ void ShowDelayedRegenCustFrame(void)
     while(1)
     {
         if (updateFlags.sec == true){
-          drawClock();
+           drawClock(); drawMainStatusBar(144, 2305, 16);
 					showRemeiningTime();
 					
           updateFlags.sec = false;
-        }
-//        if(redraw)
-//        {
-//            RefreshForcedRegenCustFrame();
-//            redraw = 0;
-//        }
-//				if (oldSec != getTime()->second){
-//					switch(PL_status){
-//						case (PL_WAITING):{
-//							statusColor = LCD_COLOR_RED;
-//							 break;
-//						}
-//						case (PL_ALARM_SET):{
-//							statusColor = LCD_COLOR_BLUE;
-//							break;
-//						}
-//						case (PL_WORKING):{
-//							statusColor = LCD_COLOR_GREEN;
-//							 break;
-//						}
-//						case (PL_FORCED_ALARM_SET):{
-//							statusColor = LCD_COLOR_YELLOW;
-//							 break;
-//						}
-//					}
-//					BSP_LCD_SetTextColor(statusColor);
-//					BSP_LCD_FillRect(PL_STATUS_X,PL_STATUS_Y,PL_STATUS_SIZE_X, PL_STATUS_SIZE_Y);
-//				}
-
-//        TranslateForcedRegenCustFrameMSG();
-//        
-//        if(hwndForcedRegenCustFrameControl == 20) return;
-//				if(hwndForcedRegenCustFrameControl == 30){
-//					hwndForcedRegenCustFrameControl = 0;
-//					PL_Planner(FORCE_START_NOW);
-//				}
-//				if(hwndForcedRegenCustFrameControl == 40){
-//					hwndForcedRegenCustFrameControl = 0;
-//					PL_Planner(FORCE_START_NEAREST);
-//				}
-      
+        }    
 
         /*Buttons pressed*/ 
         if (forceRegen.isPressed == true){
@@ -73,9 +33,9 @@ void ShowDelayedRegenCustFrame(void)
             return;
         }
         if (forceRegen.isReleased == true){
-            drawFillButton(80, 180, 200, 60, "Начать", false);
-			PL_Planner(FORCE_START_NEAREST);
-            forceRegen.isReleased = false;
+          drawFillButton(80, 180, 200, 60, "Начать", false);
+					PL_planer(FORCE_START_NEAREST);
+          forceRegen.isReleased = false;
         }
         
         
@@ -104,9 +64,9 @@ void createFrame()
     
     forceRegen = drawFillButton(80, 180, 200, 60, "Начать", false);
     
-    drawStatusBarLabel(ITEM_LOAD_TYPE[planner.loadType]);
+    drawStatusBarLabel(ITEM_LOAD_TYPE[sysParams.consts.loadType]);
     
-    drawClock();
+     drawClock(); drawMainStatusBar(144, 2305, 16);
     
     /*Add buttons parameters*/
    
@@ -125,7 +85,7 @@ void showRemeiningTime(void){
 	BSP_LCD_FillRect(70, 90, 480,50);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (planner.status != PL_WORKING){
+	if (sysParams.consts.planerConsts.status != PL_WORKING){
 		BSP_LCD_DisplayStringAt(75, 90, "Регенерация через" ,LEFT_MODE);
 	} else {
 		BSP_LCD_DisplayStringAt(75, 90, "До следующего шага " ,LEFT_MODE);
@@ -133,7 +93,7 @@ void showRemeiningTime(void){
 	uint8_t* text;
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (planner.currentTask == NULL || planner.status == PL_FINISHED){
+	if (sysParams.vars.planer.currentTask == NULL || sysParams.consts.planerConsts.status == PL_NOT_SET){
 		text = &PL_NOT_INITED;
 		BSP_LCD_DisplayStringAt(315, 90, text ,LEFT_MODE);
 		
@@ -159,20 +119,20 @@ void showRemeiningTime(void){
 		}
 		}
 	}
-	switch(planner.status){
-                case (PL_FINISHED):{
-                    statusColor = LCD_COLOR_RED;
-                    break;
-                }
-                case (PL_SET):{
-                    statusColor = LCD_COLOR_BLUE;
-                    break;
-                }
-                case (PL_WORKING):{
-                    statusColor = LCD_COLOR_GREEN;
-                    break;
-                }
-            }
-            BSP_LCD_SetTextColor(statusColor);
-            BSP_LCD_FillCircle(355, 210, 15);
+	switch(sysParams.consts.planerConsts.status){
+			case (PL_NOT_SET):{
+					statusColor = LCD_COLOR_RED;
+					break;
+			}
+			case (PL_SET):{
+					statusColor = LCD_COLOR_BLUE;
+					break;
+			}
+			case (PL_WORKING):{
+					statusColor = LCD_COLOR_GREEN;
+					break;
+			}
+	}
+	BSP_LCD_SetTextColor(statusColor);
+	BSP_LCD_FillCircle(355, 210, 15);
 }

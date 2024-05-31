@@ -13,8 +13,8 @@
 ******************************************************************************/
 inline void CTP_Delay(uint8_t Delay)
 {
-	uDelayTim->CNT = 0;
-	while(uDelayTim->CNT < Delay);
+	DELAY_TIM->CNT = 0;
+	while(DELAY_TIM->CNT < Delay);
 } 
 
 /*****************************************************************************
@@ -26,15 +26,15 @@ inline void CTP_Delay(uint8_t Delay)
 ******************************************************************************/
 void CTP_IIC_Init(void)
 {		
-	LL_TIM_EnableCounter(uDelayTim);
+	LL_TIM_EnableCounter(DELAY_TIM);
 	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM14);
-	LL_TIM_SetPrescaler(uDelayTim,35);
+	LL_TIM_SetPrescaler(DELAY_TIM,35);
 	SET_CTP_IIC_SCL;
 	SET_CTP_IIC_SDA;
 	LL_GPIO_SetPinMode(TOUCH_SCL_GPIO_Port,TOUCH_SCL_Pin,LL_GPIO_MODE_OUTPUT);
 	LL_GPIO_SetPinOutputType(TOUCH_SCL_GPIO_Port,TOUCH_SCL_Pin,LL_GPIO_OUTPUT_OPENDRAIN);
-	LL_GPIO_SetPinMode(CAP_TOUCH_INT_GPIO_Port, CAP_TOUCH_INT_Pin, LL_GPIO_MODE_INPUT);
-	LL_GPIO_SetPinPull(CAP_TOUCH_INT_GPIO_Port,CAP_TOUCH_INT_Pin,LL_GPIO_PULL_UP);
+	LL_GPIO_SetPinMode(TOUCH_IRQ_GPIO_Port, TOUCH_IRQ_Pin, LL_GPIO_MODE_INPUT);
+	LL_GPIO_SetPinPull(TOUCH_IRQ_GPIO_Port,TOUCH_IRQ_Pin,LL_GPIO_PULL_UP);
 	CTP_SDA_OUT();
 
 }
