@@ -166,7 +166,7 @@ ShowComponentParameters2=1
 GlobalBookmarks2=0
 PDFACompliance2=Disabled
 PDFVersion2=Default
-OutputFilePath3=E:\MyData\Projects\water_treatment_controller\PCB_v3\Project Outputs for WTC_SPI_v2\2024-05-08\
+OutputFilePath3=E:\MyData\Projects\water_treatment_controller\PCB_v3\Project Outputs for WTC_SPI_v2\2024-06-03\
 ReleaseManaged3=1
 OutputBasePath3=Project Outputs for WTC_SPI_v2
 OutputPathMedia3==CurrentDate
@@ -220,7 +220,7 @@ WmvQuality4=80
 [GeneratedFilesSettings]
 RelativeOutputPath2=E:\MyData\Projects\water_treatment_controller\PCB_v3\Project Outputs for WTC_SPI_v2\2024-05-08\
 OpenOutputs2=0
-RelativeOutputPath3=E:\MyData\Projects\water_treatment_controller\PCB_v3\Project Outputs for WTC_SPI_v2\2024-05-08\
+RelativeOutputPath3=E:\MyData\Projects\water_treatment_controller\PCB_v3\Project Outputs for WTC_SPI_v2\2024-06-03\
 OpenOutputs3=0
 AddToProject3=1
 TimestampFolder3=0
