@@ -2,21 +2,28 @@
 
 static void createFrame(void);
 static button_t serviceComplBut;
-void  showServiceInfoFrame()
+int showServiceInfoFrame()
 {
 	
    createFrame();
     while(1)
     {
 			if (updateFlags.sec == true){
-				 drawClock(); drawMainStatusBar(144, 2305, 16);
+				drawClock();
+                drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 			}
-			if(retBut.isReleased == true) {
+			if (retBut.isReleased == true) {
 				retBut.isReleased = false;
-				
-				return;
+				return 0;
 			}
+            if (homeBut.isReleased == true){
+                homeBut.isReleased = false;
+                goHome = true;
+            }
+            if (goHome){
+                return -1;
+            }
 			
 			if (serviceComplBut.isReleased == true){
 				int32_t res = showServiceDateSelectFrame();
@@ -28,9 +35,6 @@ void  showServiceInfoFrame()
 				}
 				createFrame();
 				serviceComplBut.isReleased = false;
-			}
-			if (goHome){
-				return;
 			}
 			if (serviceComplBut.isPressed == true){
 				

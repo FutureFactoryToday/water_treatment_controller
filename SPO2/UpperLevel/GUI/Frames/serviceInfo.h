@@ -2,5 +2,5 @@
 #define _SERVICE_INFO_H_
 #include "main.h"
 
-void showServiceInfoFrame();
+int showServiceInfoFrame();
 #endif //_SERVICE_INFO_H_

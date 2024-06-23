@@ -28,14 +28,14 @@ static bool enableMenu, enableWash;
 uint32_t color, c; 
 
 void ShowMainFrame(void) {
-  goHome = false;
-  stepShow = false;
-  errorShown = false;
-	shownServiceMessage = false;
-	shownErrorMessage = false;
-	enableMenu = true;
-	enableWash = true;
-  createFrame();
+    goHome = false;
+    stepShow = false;
+    errorShown = false;
+    shownServiceMessage = false;
+    shownErrorMessage = false;
+    enableMenu = true;
+    enableWash = true;
+    createFrame();
 
   while (1) {
 
@@ -129,10 +129,10 @@ void createFrame(void) {
   goHome = false;
   stepShow = false;
   errorShown = false;
-	shownServiceMessage = false;
-	shownErrorMessage = false;
+  shownServiceMessage = false;
+  shownErrorMessage = false;
   TC_clearButtons();
-	menuBut.drawPressed = false;
+  menuBut.drawPressed = false;
   drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
 
   drawMainWindow();
