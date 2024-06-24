@@ -84,9 +84,10 @@ void createFrame(void) {
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	if (errorsNum){
 		drawScrollButton(0);
-		for(uint8_t i = 0; i < 4 && i < errorsNum; i++){
+		uint8_t max = MIN(errorsNum,4);
+		for(uint8_t i = 0; i < max; i++){
 			offset = FIRST_CURSOR_POS_X + 9;
-			wtc_time_t time = intToWTCTime(displayData[i].timeStamp);
+			wtc_time_t time = intToWTCTime(displayData[max - i - 1].timeStamp);
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[3] ,LEFT_MODE);
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("hh:mm DD.MM.YYYY",&time),LEFT_MODE);
 			

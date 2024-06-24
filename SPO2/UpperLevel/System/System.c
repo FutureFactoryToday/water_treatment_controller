@@ -50,7 +50,7 @@ void SYS_init(void){
 	sysParams.consts.storedDayValueNum = 0;
 	sysParams.consts.storedWashNum = 0;
 	#endif
-	
+	LOG_Init();
 	PC_Init();
 	PL_Init();
 	FM_Init();
@@ -98,6 +98,10 @@ void Load_Flash_Param(){
 		
 		} else {
 		Load_Default_Values();
+		FP_ClearLog();
+		sysParams.consts.storedDayValueNum = 0;
+		sysParams.consts.storedEntryNum = 0;
+		sysParams.consts.storedWashNum = 0;
 	}
 }
 

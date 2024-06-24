@@ -3,7 +3,7 @@
 
 /*Macro and defines*/
 #define LOG_FIFO_SIZE 10
-#define LOG_DISPLAY_SIZE 8
+#define LOG_DISPLAY_SIZE 4
 
 #define MAX_ADRESS 0xFFFFFF
 #define DAYS_TO_STORE 90
@@ -51,6 +51,7 @@ uint8_t LOG_Init(){
 	for(uint8_t i =0; i < LOG_DISPLAY_SIZE; i++){
 		displayData[i] = (log_data_t){0,0,0,0};
 	}
+
 }
 
 uint8_t LOG_GetErrors(uint16_t startEntry){
@@ -91,13 +92,19 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
 		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
-		
+		if (startEntry == 0){
+			size--;
+		}
 		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
-
+		displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
+		displayData[size].param = sysParams.consts.dayWaterUsage;
 		return size;
+	} else {
+		displayData[0].timeStamp = LL_RTC_TIME_Get(RTC);
+		displayData[0].param = sysParams.consts.dayWaterUsage;
 	}
-	return 0;
+	return 1;
 }
 uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 	if (sysParams.vars.status.flags.RAMInited != 1){
@@ -106,13 +113,19 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
 		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
-		
+		if (startEntry == 0){
+			size--;
+		}
 		while (FP_GetStoredLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
-
+		displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
+		displayData[size].param = sysParams.consts.maxWaterUsage;
 		return size;
+	} else {
+		displayData[0].timeStamp = LL_RTC_TIME_Get(RTC);
+		displayData[0].param = sysParams.consts.maxWaterUsage;
 	}
-	return 0;
+	return 1;
 }
 //uint8_t LOG_GetWater(uint16_t startEntry){
 //	if (sysParams.consts.storedDayValueNum > 0){
@@ -175,14 +188,13 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	tempError.all = tempError.all & sysParams.vars.error.all;
 	
 	uint32_t timeStamp = LL_RTC_TIME_Get(RTC);
-	uint8_t type = FAIL;
 	uint32_t cause;
 	
 	if(tempError.flags.RAMFull == 1){
 		error.all = 0;
 		error.flags.RAMFull = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.RAMFull = 1;
 			return HAL_ERROR;
 		} 
@@ -192,7 +204,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.mainPowerFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.adc.rawADC[Vin]})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vin]})){
 			oldErrors.flags.mainPowerFail = 1;
 		} else {
 			return HAL_OK;
@@ -203,7 +215,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.BatteryFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.adc.rawADC[Vbat]})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vbat]})){
 			oldErrors.flags.BatteryFail = 1;
 		} else {
 			return HAL_OK;
@@ -213,7 +225,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags._5VPowerFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.adc.rawADC[_5V]})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[_5V]})){
 			oldErrors.flags._5VPowerFail = 1;
 		} else {
 			return HAL_OK;
@@ -223,7 +235,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.RelPowerFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.adc.rawADC[VrelDC]})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[VrelDC]})){
 			oldErrors.flags.RelPowerFail = 1;
 		} else {
 			return HAL_OK;
@@ -233,7 +245,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.TempFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.adc.rawADC[Temp]})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Temp]})){
 			oldErrors.flags.TempFail = 1;
 		} else {
 			return HAL_OK;
@@ -244,7 +256,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.Drive1Fail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.Drive1Fail = 1;
 		} else {
 			return HAL_OK;
@@ -254,7 +266,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.Drive2Fail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.Drive2Fail = 1;
 		} else {
 			return HAL_OK;
@@ -264,7 +276,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.MotorFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.MotorFail = 1;
 		} else {
 			return HAL_OK;
@@ -275,7 +287,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.PistonStallFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.pistonParams.curPoz})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
 			oldErrors.flags.PistonStallFail = 1;
 		} else {
 			return HAL_OK;
@@ -285,7 +297,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.PistonFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.pistonParams.curPoz})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
 			oldErrors.flags.PistonFail = 1;
 		} else {
 			return HAL_OK;
@@ -297,7 +309,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.RelayDCFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.status.flags.RelDCOn})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelDCOn})){
 			oldErrors.flags.RelayDCFail = 1;
 		} else {
 			return HAL_OK;
@@ -307,7 +319,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.RelayACFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,sysParams.vars.status.flags.RelACOn})){
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelACOn})){
 			oldErrors.flags.RelayACFail = 1;
 		} else {
 			return HAL_OK;
@@ -318,7 +330,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.TFTFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.TFTFail = 1;
 		} else {
 			return HAL_OK;
@@ -328,7 +340,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.TouchFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.TouchFail = 1;
 		} else {
 			return HAL_OK;
@@ -338,7 +350,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		error.all = 0;
 		error.flags.FRAMFail = 1;
 		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,type,cause,0})){
+		if (addEntry((log_data_t){timeStamp,cause,0})){
 			oldErrors.flags.FRAMFail = 1;
 		} else {
 			return HAL_OK;
@@ -409,8 +421,8 @@ uint8_t StoreDayValues(void){
 	if (sysParams.vars.error.flags.RAMFull == 1 ||
 		sysParams.vars.error.flags.RAMFail == 1)
 		return HAL_ERROR;
-	if (sysParams.consts.storedDayValueNum < DAYS_TO_STORE){
-		sysParams.vars.error.flags.RAMFull = 1;
+	if (sysParams.consts.storedDayValueNum == DAYS_TO_STORE){
+		//sysParams.vars.error.flags.RAMFull = 1;
 		return HAL_ERROR;
 	}
 	if (processing)
