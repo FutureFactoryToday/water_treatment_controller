@@ -120,7 +120,7 @@ int ShowServiceMenuFrame(void)
          }
          if (homeBut.isReleased == true){
 			homeBut.isReleased = false;
-      goHome = true;
+            goHome = true;
 		}
 		if (goHome){
 			return -1;
@@ -145,7 +145,7 @@ int ShowServiceMenuFrame(void)
             menuLines[3].isReleased = false;
             createFrame();
          }
-				 if(menuLines[4].isReleased == true){
+         if(menuLines[4].isReleased == true){
             ShowOutputEnableChoice(ITEM_EL_MAG_FRAME[0],&sysParams.consts.acRelay); 
             menuLines[4].isReleased = false;
             createFrame();

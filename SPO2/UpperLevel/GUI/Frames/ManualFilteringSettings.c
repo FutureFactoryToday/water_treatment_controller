@@ -207,8 +207,8 @@ static int8_t yOff1 = 18, yOff2 = 0;
 void drawLine(uint8_t num, uint8_t pozNum, uint16_t time, bool touch) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	if (pozNum == 4) pozNum = 5;
-	if (pozNum == 3){
+    if (pozNum == 4) pozNum = 5;
+	if (pozNum == 3 || pozNum == 5){
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff1, ITEM_STEPS_WITH_MES[pozNum+1], LEFT_MODE);
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff2, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
 		

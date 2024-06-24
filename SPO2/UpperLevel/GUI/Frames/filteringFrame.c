@@ -93,7 +93,7 @@ void createFrame(void)
 	BSP_LCD_DisplayStringAt(400,BSP_LCD_GetYSize()/2 - 65,MINUTE,LEFT_MODE);
 	
 	BSP_LCD_DisplayStringAt(2*GAP,BSP_LCD_GetYSize()/2 - 5,ITEM_FILTERING[1],LEFT_MODE);
-  menuLine[1] = drawTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
+    menuLine[1] = drawTextLabel(4*GAP + 225,BSP_LCD_GetYSize()/2 - 10,80,40,intToStr(res[1]));
 	BSP_LCD_DisplayStringAt(400,BSP_LCD_GetYSize()/2 - 5,MINUTE,LEFT_MODE);
 	
 	/*Add buttons parameters*/

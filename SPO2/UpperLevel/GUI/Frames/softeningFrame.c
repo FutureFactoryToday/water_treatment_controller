@@ -45,7 +45,7 @@ int ShowSofteningFrame(void)
 		}		
 		if (homeBut.isReleased == true){
 			homeBut.isReleased = false;
-      goHome = true;
+            goHome = true;
 		}
 		if (goHome){
 			return -1;
@@ -91,7 +91,7 @@ int ShowSofteningFrame(void)
 				drawDarkTextLabel(4*GAP + 225,FIRST_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt]));
 				menuLines[softening_frame_Scroll_cnt].isPressed = false;
 		}
-if(menuLines[softening_frame_Scroll_cnt + 1].isPressed == true){
+        if(menuLines[softening_frame_Scroll_cnt + 1].isPressed == true){
 				drawDarkTextLabel(4*GAP + 225,SECOND_CURSOR_POS_Y + 3,80,39,intToStr(res[softening_frame_Scroll_cnt + 1]));
 				menuLines[softening_frame_Scroll_cnt + 1].isPressed = false;
 		}
