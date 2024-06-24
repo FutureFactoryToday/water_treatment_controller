@@ -26,7 +26,7 @@
 
 /* Private define ------------------------------------------------------------*/
 #define FLASH_SECTORS 3
-
+#define SYSTEM_PO_VERSION 0x00010003
 #define UNLOCKED 0
 #define AUTO_LOCK 1
 #define MANUAL_LOCK 2
