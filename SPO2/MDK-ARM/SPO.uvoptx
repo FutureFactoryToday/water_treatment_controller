@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=596,140,1046,697,0)(1007=105,137,292,412,0)(1008=596,226,972,462,0)(1009=356,148,614,736,0)</Name>
+          <Name>(1010=785,236,1235,793,0)(1007=105,137,292,412,0)(1008=596,226,972,462,0)(1009=356,148,614,736,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -157,50 +157,50 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>88</LineNumber>
+          <LineNumber>67</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134281468</Address>
+          <Address>134228712</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\GUI\Frames\historyErrorsFrame.c</Filename>
+          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/GUI/Frames/historyErrorsFrame.c\88</Expression>
+          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\67</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>85</LineNumber>
+          <LineNumber>181</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134282012</Address>
+          <Address>134350564</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\GUI\Frames\historyFilterFrame.c</Filename>
+          <Filename>..\UpperLevel\FlashIC\W25.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/GUI/Frames/historyFilterFrame.c\85</Expression>
+          <Expression>\\SPO\../UpperLevel/FlashIC/W25.c\181</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>81</LineNumber>
+          <LineNumber>183</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134281968</Address>
+          <Address>134350580</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\GUI\Frames\historyFilterFrame.c</Filename>
+          <Filename>..\UpperLevel\FlashIC\W25.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/GUI/Frames/historyFilterFrame.c\81</Expression>
+          <Expression>\\SPO\../UpperLevel/FlashIC/W25.c\183</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -224,6 +224,36 @@
           <WinNumber>1</WinNumber>
           <ItemText>regenBut,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>dayValues</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>queue</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>processing</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>lock2</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>logger</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>handler</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -244,7 +274,7 @@
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>sysParams,0x0A</ItemText>
+          <ItemText>sysParams,0x10</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
@@ -280,6 +310,16 @@
           <count>10</count>
           <WinNumber>2</WinNumber>
           <ItemText>displayData</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>bufFlash</ItemText>
+        </Ww>
+        <Ww>
+          <count>12</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>SYSTEM_PO_VERSION</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>
@@ -884,7 +924,7 @@
 
   <Group>
     <GroupName>Settings</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1240,7 +1280,7 @@
 
   <Group>
     <GroupName>GUI</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

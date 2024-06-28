@@ -91,6 +91,7 @@ void initGUI(void){
 	frame = 0;
 	
 	itemIndex = 0;
+	LL_mDelay(2000);
 }
 
 

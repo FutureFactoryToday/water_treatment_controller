@@ -25,8 +25,8 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
+#define QUEUE_SIZE 5
 #define FLASH_SECTORS 3
-#define SYSTEM_PO_VERSION 0x00010003
 #define UNLOCKED 0
 #define AUTO_LOCK 1
 #define MANUAL_LOCK 2
@@ -35,7 +35,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-static uint8_t lock;
+static uint8_t lock, lock2;
 static uint8_t currentHandler;
 volatile static flash_params_t flashParams = {0};
 flash_params_t* fp = &flashParams;
@@ -46,7 +46,7 @@ flash_driver_t *fram = &FM25_driver;
 flash_driver_t *logger = &W25_driver;
 flash_params_t bufFlash[FLASH_SECTORS];
 flash_params_t recBufFlash[FLASH_SECTORS];
-flash_message_t queue[4]; 
+flash_message_t queue[QUEUE_SIZE]; 
 bool oldIRQStatus;
 int8_t lastBuffer;
 void (*cbFunc)(void);
@@ -54,7 +54,7 @@ void (*cbFunc)(void);
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);
 void unlockSPI(void);
-void lockSPI(void);
+void lockSPI(uint8_t);
 void manualUnlockSPI(void);
 void manualLockSPI(void);
 void queueHandler(void);
@@ -65,6 +65,7 @@ void getRAMParam(uint8_t handler);
 
 bool FP_Init(void){
 	lock = UNLOCKED;
+	lock2 = lock;
 	sysVers = SYSTEM_PO_VERSION;
 	gpio_t framCS = {FRAM_CS_GPIO_Port,FRAM_CS_Pin};
 	gpio_t framWP	=	{FRAM_WP_GPIO_Port, FRAM_WP_Pin};
@@ -139,7 +140,7 @@ uint8_t FP_GetParam(void){
 		}
 		if (bufFlash[i].params.startLoadFlag == START_FP_FLAG &&
 			bufFlash[i].params.endLoadFlag == END_FP_FLAG &&
-			(bufFlash[i].params.sysParConsts.sysVersion & 0x1) == (sysVers & 0x1) ){
+			(bufFlash[i].params.sysParConsts.sysVersion) == (sysVers) ){
 				bufFlash[i].isCorrect = true;
 				if (lastBuffer < 0){
 					lastBuffer = i;
@@ -203,9 +204,11 @@ void unlockSPI(void){
 	
 	
 }
-void lockSPI(void){
-	if (lock == UNLOCKED)
+void lockSPI(uint8_t lockNum){
+	if (lock == UNLOCKED){
 		lock = AUTO_LOCK;
+	lock2 = lockNum;
+	}
 }
 void manualUnlockSPI(void){
 	lock = UNLOCKED;
@@ -222,7 +225,8 @@ void queueHandler(void){
 				break;
 			}
 			case (1):
-			case (2):{
+			case (2):
+			case (4):{
 				saveRAMParam(currentHandler);
 				break;
 			}
@@ -233,7 +237,7 @@ void queueHandler(void){
 		}
 	} else {
 		currentHandler++;	
-		if (currentHandler > 4)
+		if (currentHandler > QUEUE_SIZE)
 			return;
 		queueHandler();
 	}
@@ -255,7 +259,7 @@ void saveFRAMParam(void){
 		queue[0].set = true;
 		return;
 	}
-	lockSPI();
+	lockSPI(1);
 	__set_PRIMASK(oldIRQStatus);
 
 	stored_params_t buf = {0};
@@ -282,10 +286,10 @@ void saveRAMParam(uint8_t handler){
 		return;
 	}
 	
-	lockSPI();
+	lockSPI(handler);
 	__set_PRIMASK(oldIRQStatus);
 	cbFunc = queue[handler].cb;
-	logger->writeData(queue[handler].adress, queue[handler].buf, queue[handler].size);
+	while(logger->writeData(queue[handler].adress, queue[handler].buf, queue[handler].size) == HAL_BUSY);
 }
 
 void getRAMParam(uint8_t handler){
@@ -295,7 +299,7 @@ void getRAMParam(uint8_t handler){
 		__set_PRIMASK(oldIRQStatus);
 		return;
 	}
-	lockSPI();
+	lockSPI(3);
 	__set_PRIMASK(oldIRQStatus);
 	logger->readData(queue[3].adress, queue[3].buf, queue[3].size);
 }

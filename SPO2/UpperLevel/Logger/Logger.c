@@ -42,9 +42,8 @@ uint8_t LOG_Init(){
 	oldStatus = sysParams.consts.planerConsts.status;
 	processing = false;
 	washSave = 0;
-	logBufEntryNum = 0;
-	oldDay = 0;
-	oldWater = 0;
+	oldDay = sysParams.vars.sysTime.day; 
+	oldWater = sysParams.consts.waterFromLastFilter;
 	for(uint8_t i =0; i < LOG_FIFO_SIZE; i++){
 		logFifo[i] = (log_data_t){0,0,0,0};
 	}
@@ -376,8 +375,8 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 
 uint8_t StoreWashEvent(void){
 	HAL_StatusTypeDef res;
-	if (processing)
-		return HAL_BUSY;
+//if (processing)
+//	return HAL_BUSY;
 	
 	if (oldErrors.flags.RAMFull == 1 ||
 		oldErrors.flags.RAMFail == 1)
@@ -396,8 +395,8 @@ uint8_t StoreWashEvent(void){
 }
 HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	HAL_StatusTypeDef res;
-	if (processing)
-		return HAL_BUSY;
+//	if (processing)
+//		return HAL_BUSY;
 	
 	if (oldErrors.flags.RAMFull == 1 ||
 		oldErrors.flags.RAMFail == 1)
@@ -425,9 +424,9 @@ uint8_t StoreDayValues(void){
 		//sysParams.vars.error.flags.RAMFull = 1;
 		return HAL_ERROR;
 	}
-	if (processing)
-		return HAL_BUSY;
-	
+//	if (processing)
+//		return HAL_BUSY;
+	//while(processing);
 	processing = true;
 	
 	dayValues[1].timeStamp = dayValues[0].timeStamp = LL_RTC_TIME_Get(RTC);
@@ -441,7 +440,7 @@ uint8_t StoreDayValues(void){
 							&dayValues[0],
 							processComplete) == HAL_BUSY);
 
-	while(FP_StoreLog(2, WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
+	while(FP_StoreLog(4, WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
 							sizeof(log_data_t),
 							&dayValues[1],
 							processComplete) == HAL_BUSY);
