@@ -28,6 +28,7 @@
 sys_param_t sysParams;
 uint32_t externalSignalCnt;
 bool oldExternalSignal;
+extern uint32_t resetCounter;
 /* Private function prototypes -----------------------------------------------*/
 static void Start_ADC();
 static void Start_RTC();
@@ -56,6 +57,7 @@ void SYS_init(void){
 	FM_Init();
 	RELAY_Init();
 	Time_init();
+	resetCounter = 0;
 	FP_SaveParam();
 	LL_SYSTICK_EnableIT();
 }
@@ -77,7 +79,7 @@ void Start_ADC(){
 void Load_Flash_Param(){
 
 	FP_GetParam();
-	if (sysParams.vars.status.flags.StoredParamsLoaded == 1){
+	if (sysParams.vars.status.flags.StoredParamsLoaded == 1 /*&& resetCounter < RESET_COUNTER_LIM*/){
 		sysParams.consts = fp->params.sysParConsts;
 		sysParams.consts.planerConsts.currentStepNum = 0;
 		

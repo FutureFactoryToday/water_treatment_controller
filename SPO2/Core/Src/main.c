@@ -56,6 +56,7 @@
 	uint8_t* errorCause;
 	filter_t fil;
 	uint32_t input = 0, output = 0;
+	uint32_t resetCounter __attribute__ ((section (".noinit")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,6 +79,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+//	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
+//	LL_RCC_ClearResetFlags();
 	
 	_1ms_cnt = 0;
 	__disable_irq();
@@ -126,6 +129,7 @@ int main(void)
 	//ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], false);
 	//ShowAlarmNotiServiceFrame();
 	//ShowKeyboardFrame(0,1000);
+	ShowHistoryMenuFrame();
 	ShowMainFrame();
   while (1)
   {

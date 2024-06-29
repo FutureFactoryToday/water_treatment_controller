@@ -25,7 +25,7 @@ static planer_status_t oldStatus;
 uint8_t logBufEntryNum;
 bool processing;
 static uint32_t fifoEntryNum = 0;
-
+extern bool newDay;
 uint8_t washSave;
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
@@ -37,12 +37,12 @@ static uint32_t checkErrorEmptySpace();
 static uint32_t checkWashEmptySpace();
 /*Code*/
 uint8_t LOG_Init(){
-	oldFlags = sysParams.vars.status;
-	oldErrors = sysParams.vars.error;
+	oldFlags.all = 0;
+	oldErrors.all = 0;
 	oldStatus = sysParams.consts.planerConsts.status;
 	processing = false;
 	washSave = 0;
-	oldDay = sysParams.vars.sysTime.day; 
+	oldDay = 0; 
 	oldWater = sysParams.consts.waterFromLastFilter;
 	for(uint8_t i =0; i < LOG_FIFO_SIZE; i++){
 		logFifo[i] = (log_data_t){0,0,0,0};
@@ -64,7 +64,7 @@ uint8_t LOG_GetErrors(uint16_t startEntry){
 		while (FP_GetStoredLog(ERROR_SECTOR_ADDR + (sysParams.consts.storedEntryNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
 
-		return size;
+		return sysParams.consts.storedEntryNum;
 	}
 	return 0;
 }
@@ -80,25 +80,32 @@ uint8_t LOG_GetWash(uint16_t startEntry){
 		while (FP_GetStoredLog(WASH_SECTOR_ADDR + (sysParams.consts.storedWashNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
 
-		return size;
+		return sysParams.consts.storedWashNum;
 	}
 	return 0;
 }
 uint8_t LOG_GetWaterUsage(uint16_t startEntry){
+	uint32_t offset = 0;
 	if (sysParams.vars.status.flags.RAMInited != 1){
 		return 0;
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
 		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
-		if (startEntry == 0){
+		if (startEntry == 0 && size == 4){
 			size--;
 		}
-		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
+		offset = size;
+		if (startEntry > 0)
+			offset += startEntry - 1;
+		
+		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeof(log_data_t),offset*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
-		displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
-		displayData[size].param = sysParams.consts.dayWaterUsage;
-		return size;
+		if (startEntry == 0){
+			displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
+			displayData[size].param = sysParams.consts.dayWaterUsage;
+		}
+		return sysParams.consts.storedDayValueNum+1;
 	} else {
 		displayData[0].timeStamp = LL_RTC_TIME_Get(RTC);
 		displayData[0].param = sysParams.consts.dayWaterUsage;
@@ -106,20 +113,26 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 	return 1;
 }
 uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
+	uint32_t offset = 0;
 	if (sysParams.vars.status.flags.RAMInited != 1){
 		return 0;
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
 		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
-		if (startEntry == 0){
+		if (startEntry == 0 && size == 4){
 			size--;
 		}
-		while (FP_GetStoredLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
+		offset = size;
+		if (startEntry > 0)
+			offset += startEntry - 1;
+		while (FP_GetStoredLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeof(log_data_t),offset*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
-		displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
-		displayData[size].param = sysParams.consts.maxWaterUsage;
-		return size;
+		if (startEntry == 0){
+			displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
+			displayData[size].param = sysParams.consts.maxWaterUsage;
+		}
+		return sysParams.consts.storedDayValueNum+1;
 	} else {
 		displayData[0].timeStamp = LL_RTC_TIME_Get(RTC);
 		displayData[0].param = sysParams.consts.maxWaterUsage;
@@ -180,7 +193,9 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		}
 		fifoEntryNum = 0;
 	}
-	
+	if (oldDay == 0){
+		oldDay = sysParams.vars.sysTime.day; 
+	}
 	tempFlags.all = oldFlags.all 	^ sysParams.vars.status.all; 
 	tempError.all = oldErrors.all ^ sysParams.vars.error.all;
 	tempFlags.all = tempFlags.all & sysParams.vars.status.all;
@@ -360,8 +375,9 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		SaveErrors(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
 	}
 	
-	if (sysParams.vars.sysTime.day != oldDay){
+	if (newDay){
 		StoreDayValues();
+		newDay = false;
 		oldDay = sysParams.vars.sysTime.day; 
 	}
 	
@@ -429,7 +445,7 @@ uint8_t StoreDayValues(void){
 	//while(processing);
 	processing = true;
 	
-	dayValues[1].timeStamp = dayValues[0].timeStamp = LL_RTC_TIME_Get(RTC);
+	dayValues[1].timeStamp = dayValues[0].timeStamp = LL_RTC_TIME_Get(RTC)-1;
 	dayValues[0].param = sysParams.consts.maxWaterUsage;
 	
 	dayValues[1].param = sysParams.consts.dayWaterUsage;

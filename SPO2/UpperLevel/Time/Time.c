@@ -146,7 +146,7 @@ uint8_t	yearNum = 0, strLength = 0, monthNum = 0, dayNum = 0, hourNum =0, minute
 uint8_t *ptr = formatedString;
 wtc_time_t zeroTime = {0};
 bool isInited;
-
+bool newDay = false;
 /* Private function prototypes -----------------------------------------------*/
 bool isLeapYear(uint16_t year);
 
@@ -215,6 +215,9 @@ void setSysTime (wtc_time_t* time){
 
 void RTC_Interrupt(){
 	sysParams.vars.sysTime = getTime();
+	if (sysParams.vars.sysTime.hour == 0 && sysParams.vars.sysTime.minute == 0 && sysParams.vars.sysTime.second == 0){
+		newDay = true;
+	}
 	updateFlags.sec = true;
 }
 struct tm wtcTimeToStdTime (wtc_time_t* time){

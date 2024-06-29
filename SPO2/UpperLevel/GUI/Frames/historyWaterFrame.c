@@ -44,16 +44,18 @@ int ShowHistoryWaterFrame(void) {
     }
 		if (scrollUpBut.isReleased == true) {
       // Make it blue
-			if (firstEl)
+			if (firstEl){
 				firstEl--;
-			RefreshScreen();
+				RefreshScreen();
+			}
       scrollUpBut.isReleased = false;
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (firstEl < errorsNum - 4)
+			if (firstEl < errorsNum - 4){
 				firstEl++;
-			RefreshScreen();
+				RefreshScreen();
+			}
       scrollDwnBut.isReleased = false;
     }
   }
@@ -78,7 +80,7 @@ void createFrame(void) {
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	uint8_t offset = FIRST_CURSOR_POS_X + 9;
 	BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[0],LEFT_MODE);
-	errorsNum = LOG_GetWaterSpeed(firstEl);
+	errorsNum = LOG_GetWaterUsage(firstEl);
 	drawMainWindow();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -90,7 +92,7 @@ void createFrame(void) {
 			wtc_time_t time = intToWTCTime(displayData[max - i - 1].timeStamp);
 			
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("YYYY.MM.DD - ",&time),LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, intToStr(displayData[i].cause) ,LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, intToStr(displayData[max - i - 1].param) ,LEFT_MODE);
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[4] ,LEFT_MODE);
 		}
 		drawStaticLines();

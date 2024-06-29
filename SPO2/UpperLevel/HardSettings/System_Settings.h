@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 5
+#define SUB_VERSION 6
 #define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
@@ -37,7 +37,7 @@
 
 #define NO_TOUCH_DELAY_VALUE 60
 
-
+#define RESET_COUNTER_LIM 5
 
 #define DEF_SERVICE_CODE 1234
 #define DEF_MAX_MOT_SPEED_PERCENT 100
