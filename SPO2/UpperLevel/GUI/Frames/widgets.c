@@ -465,7 +465,7 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 		
 		BSP_LCD_DisplayStringAt(TEXT_X + 120 + offset + 5, TEXT_Y ,CURRENT_WATER_CONSUMPTION_LITERS, LEFT_MODE);
     
-		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == DELAYED){
+		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL){
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			int32_t remWater = sysParams.consts.planerConsts.filtroCycle - sysParams.consts.waterFromLastFilter;

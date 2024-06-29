@@ -35,7 +35,7 @@ int ShowMenuFrame(void) {
     if (menuLines[1].isPressed == true) {
       //Make it blue
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
-        sysParams.consts.planerConsts.startType == DELAYED) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL) {
         drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -47,7 +47,7 @@ int ShowMenuFrame(void) {
       //Make it blue
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
         sysParams.consts.planerConsts.startType == BY_HOUR ||
-        sysParams.consts.planerConsts.startType == DELAYED) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL) {
         drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -58,7 +58,7 @@ int ShowMenuFrame(void) {
     }
     if (menuLines[3].isPressed == true) {
       //Make it blue
-      if (sysParams.consts.planerConsts.startType == DELAYED ||
+      if (sysParams.consts.planerConsts.startType == UNIVERSAL ||
         sysParams.consts.planerConsts.startType == IMMEDIATELY) {
         drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -97,7 +97,7 @@ int ShowMenuFrame(void) {
     if (menuLines[1].isReleased == true) {
       menuLines[1].isReleased = false;
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
-        sysParams.consts.planerConsts.startType == DELAYED) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL) {
         ShowWashTimCustFrame();
         createFrame();
       }
@@ -106,14 +106,14 @@ int ShowMenuFrame(void) {
       menuLines[2].isReleased = false;
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
         sysParams.consts.planerConsts.startType == BY_HOUR ||
-        sysParams.consts.planerConsts.startType == DELAYED) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL) {
         ShowPeriodRegenCustFrame();
         createFrame();
       }
     }
     if (menuLines[3].isReleased == true) {
       menuLines[3].isReleased = false;
-      if (sysParams.consts.planerConsts.startType == DELAYED ||
+      if (sysParams.consts.planerConsts.startType == UNIVERSAL ||
         sysParams.consts.planerConsts.startType == IMMEDIATELY) {
         ShowFilterCycleCustFrame();
         createFrame();

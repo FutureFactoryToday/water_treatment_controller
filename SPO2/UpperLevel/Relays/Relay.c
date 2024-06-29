@@ -4,7 +4,7 @@
 /*Macro and defines*/
 #define CYCLE_HZ 100
 #define TARGET_HZ 10
-#define PULSE_DURATION_SECONDS 1
+#define PULSE_DURATION_SECONDS 60
 /*Global parameters*/
 
 /*Local prototypes*/
@@ -15,7 +15,7 @@ bool pulse ;
 /*Code*/
 void RELAY_Init(void){
 	LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-	oldWater = sysParams.consts.waterQuantaty;
+	oldWater = (uint32_t)sysParams.consts.waterQuantaty;
 	pulse = false;
 	oldStatus =	sysParams.consts.planerConsts.status;
 	oldPoz = sysParams.vars.pistonParams.curPoz;
@@ -31,42 +31,63 @@ void RELAY_DC_CYCLE(void){
 			break;
 		}
 		case (WASH):{
-			if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
-				sysParams.consts.dcRelay.pozEnable.rabPoz == 1){
+			if (sysParams.consts.planerConsts.status == PL_WORKING){
+				bool dcOn = false;
+				dcOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
+					sysParams.consts.dcRelay.pozEnable.rabPoz == 1);
+				
+				dcOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
+					sysParams.consts.dcRelay.pozEnable.forwardWash == 1);
+				dcOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
+					sysParams.consts.dcRelay.pozEnable.backwash == 1);
+				dcOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
+					sysParams.consts.dcRelay.pozEnable.saltering == 1);
+				dcOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
+					sysParams.consts.dcRelay.pozEnable.filling == 1);
+				
+				if (dcOn){
 					LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-					return;
 				} else {
 					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 				}
-			if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
-				sysParams.consts.dcRelay.pozEnable.forwardWash == 1){
-					LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-					return;
-				} else {
-					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-				}
-			if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
-				sysParams.consts.dcRelay.pozEnable.backwash == 1){
-					LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-					return;
-				} else {
-					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-				}
-			if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
-				sysParams.consts.dcRelay.pozEnable.saltering == 1){
-					LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-					return;
-				} else {
-					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-				}
-			if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
-				sysParams.consts.dcRelay.pozEnable.filling == 1){
-					LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-					return;
-				} else {
-					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-				}
-		
+			}
+			
+//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
+//					sysParams.consts.dcRelay.pozEnable.rabPoz == 1){
+//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//						return;
+//					} else {
+//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//					}
+//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
+//					sysParams.consts.dcRelay.pozEnable.forwardWash == 1){
+//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//						return;
+//					} else {
+//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//					}
+//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
+//					sysParams.consts.dcRelay.pozEnable.backwash == 1){
+//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//						return;
+//					} else {
+//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//					}
+//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
+//					sysParams.consts.dcRelay.pozEnable.saltering == 1){
+//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//						return;
+//					} else {
+//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//					}
+//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
+//					sysParams.consts.dcRelay.pozEnable.filling == 1){
+//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//						return;
+//					} else {
+//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+//					}
+//				}
 			break;
 		}
 	
@@ -129,40 +150,59 @@ void RELAY_DC_CYCLE(void){
 	}
 }
 void RELAY_AC_CYCLE(void){
-		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
-			sysParams.consts.acRelay.pozEnable.rabPoz == 1){
-				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-				return;
-			} else {
-				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
+//			sysParams.consts.acRelay.pozEnable.rabPoz == 1){
+//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//				return;
+//			} else {
+//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//			}
+//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
+//			sysParams.consts.acRelay.pozEnable.forwardWash == 1){
+//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//				return;
+//			} else {
+//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//			}
+//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
+//			sysParams.consts.acRelay.pozEnable.backwash == 1){
+//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//				return;
+//			} else {
+//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//			}
+//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
+//			sysParams.consts.acRelay.pozEnable.saltering == 1){
+//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//				return;
+//			} else {
+//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//			}
+//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
+//			sysParams.consts.acRelay.pozEnable.filling == 1){
+//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//				return;
+//			} else {
+//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+//			}
+			if (sysParams.consts.planerConsts.status == PL_WORKING){
+				bool acOn = false;
+				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
+					sysParams.consts.acRelay.pozEnable.rabPoz == 1);
+				
+				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
+					sysParams.consts.acRelay.pozEnable.forwardWash == 1);
+				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
+					sysParams.consts.acRelay.pozEnable.backwash == 1);
+				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
+					sysParams.consts.acRelay.pozEnable.saltering == 1);
+				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
+					sysParams.consts.acRelay.pozEnable.filling == 1);
+				
+				if (acOn){
+					LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+				} else {
+					LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+				}
 			}
-		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
-			sysParams.consts.acRelay.pozEnable.forwardWash == 1){
-				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-				return;
-			} else {
-				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-			}
-		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
-			sysParams.consts.acRelay.pozEnable.backwash == 1){
-				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-				return;
-			} else {
-				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-			}
-		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
-			sysParams.consts.acRelay.pozEnable.saltering == 1){
-				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-				return;
-			} else {
-				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-			}
-		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
-			sysParams.consts.acRelay.pozEnable.filling == 1){
-				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-				return;
-			} else {
-				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-			}
-
 }

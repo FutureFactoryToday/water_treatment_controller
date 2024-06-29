@@ -21,7 +21,7 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
-
+#define FIL_DEPTH 8
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -30,7 +30,9 @@ filter_t flowFilter;
 bool oldMeterInt;
 int16_t flowMeterCnt;
 uint32_t timVal;
-
+uint32_t filBuf[FIL_DEPTH];
+uint8_t filPtr;
+uint64_t filResult;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
@@ -78,7 +80,11 @@ void FM_Init(void){
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 	
 	flowFilter = *initFilterStruct(&flowFilter,0,8);
-	
+	for (uint8_t i = 0; i < FIL_DEPTH; i++){
+		filBuf[i] = LL_TIM_GetAutoReload(FLOW_TIM);
+	}
+	filPtr = 0;
+	filResult = 0;
 	//Частота счета 1МГц
 	TIM_InitStruct.Prescaler = FLOW_TIM_TAKT_FREQ/FLOW_TIM_FREQ;
   
@@ -107,7 +113,23 @@ if (isOverFlow){
 				LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
 				return;
 			}
-			sysParams.vars.flowCnt = filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
+			
+			 
+//			filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));
+//			if (flowFilter.filtered){
+//				sysParams.vars.flowCnt = flowFilter.fvalue;
+//			}
+			filBuf[filPtr++] = LL_TIM_GetCounter(FLOW_TIM);
+			if (filPtr >= FIL_DEPTH){
+				filPtr = 0;
+			}
+			filResult = 0;
+			for (uint8_t i = 0; i < FIL_DEPTH; i++){
+				filResult += filBuf[i];
+				
+			}
+			filResult /= FIL_DEPTH;
+			sysParams.vars.flowCnt = filResult;
 			sysParams.consts.maxWaterUsage = MAX(sysParams.consts.maxWaterUsage,sysParams.vars.flowCnt);
 			LL_TIM_SetCounter(FLOW_TIM,0);
 			LL_TIM_ClearFlag_UPDATE(FLOW_TIM);

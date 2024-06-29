@@ -36,6 +36,7 @@ void PL_ProceedStep(void);
 uint8_t findLastElement(piston_task_t * task);
 time_t setPreferedTime(time_t time);
 bool checkStartConditions(void);
+bool forceStart;
 /*---------------------------------------------*/
 void PL_Init() {
   sysParams.vars.planer.cycleCnt = 0;
@@ -90,18 +91,30 @@ void PL_planer(planer_control_type_t startType) {
         break;
       }
       case FORCE_START_NOW: {
+				if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+          if (sysParams.vars.status.flags.ExternalCommandOn == true) {
+            return;
+          }
+				}
         sysParams.vars.planer.currentTask -> startDateTime = getRTC();
         sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
         sysParams.consts.planerConsts.currentStepNum = 0;
         sysParams.consts.planerConsts.status = PL_SET;
+				forceStart = true;
         PL_Interrupt();
         break;
       }
       case FORCE_START_NEAREST: {
+				if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+          if (sysParams.vars.status.flags.ExternalCommandOn == true) {
+            return;
+          }
+				}
         sysParams.vars.planer.currentTask -> startDateTime = getRTC();
         sysParams.vars.planer.currentTask -> startDateTime = setPreferedTime(sysParams.vars.planer.currentTask -> startDateTime);
         sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
         sysParams.consts.planerConsts.currentStepNum = 0;
+				forceStart = true;
         sysParams.consts.planerConsts.status = PL_SET;
         break;
       }
@@ -110,16 +123,16 @@ void PL_planer(planer_control_type_t startType) {
       return;
     } else {
       if (startType == FORCE_START_NEAREST || startType == FORCE_START_NOW) {
-        if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
-          if (sysParams.vars.status.flags.ExternalCommandOn == true) {
-            return;
-          }
-        }
+//        if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+//          if (sysParams.vars.status.flags.ExternalCommandOn == true) {
+//            return;
+//          }
+//        }
 				sysParams.vars.planer.currentTask -> remainingTime = 0;
       } else {
         sysParams.consts.planerConsts.status = PL_NOT_SET;
       }
-
+		
     }
   }
 }
@@ -164,6 +177,7 @@ void PL_Interrupt() {
     if (sysParams.consts.planerConsts.status == PL_SET && start) {
       //sysParams.vars.planer.currentTask->startDateTime < getRTC()){
       sysParams.consts.planerConsts.status = PL_WORKING;
+			forceStart = false;
       PC_GoToPoz( * (sysParams.vars.planer.currentStep -> poz));
       sysParams.vars.planer.currentTask -> remainingTime = sysParams.vars.planer.currentStep -> secPause;
       oldSec = LL_RTC_TIME_Get(RTC);
@@ -202,6 +216,7 @@ bool checkStartConditions(void) {
   //External Enable Command On (Contact closed for 0.1 sec)
   if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
+			forceStart = false;
       return false;
     }
   }
@@ -211,6 +226,9 @@ bool checkStartConditions(void) {
       return true;
     }
   }
+	if (forceStart){
+		return true;
+	}
   switch (sysParams.consts.planerConsts.startType) {
     //Timer condition
   case BY_DAY:
@@ -218,16 +236,16 @@ bool checkStartConditions(void) {
     return sysParams.vars.planer.currentTask -> startDateTime < getRTC();
     break;
   }
-  case DELAYED: {
+  case UNIVERSAL: {
     if (sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle) {
-      if (oldWater == sysParams.consts.waterFromLastFilter) {
+      if (oldWater == (uint32_t)sysParams.consts.waterFromLastFilter) {
         sysParams.vars.planer.noWaterUsageCnt++;
         if (sysParams.vars.planer.noWaterUsageCnt >= DEF_NO_WATER_CNT_LIMIT) {
           sysParams.vars.planer.noWaterUsageCnt--;
           return true;
         }
       } else {
-        oldWater = sysParams.consts.waterFromLastFilter;
+        oldWater = (uint32_t)sysParams.consts.waterFromLastFilter;
         sysParams.vars.planer.noWaterUsageCnt = 0;
       }
 

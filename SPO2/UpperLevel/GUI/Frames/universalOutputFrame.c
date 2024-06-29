@@ -54,6 +54,7 @@ int ShowUniversalOutputFrame(void) {
 			goHome = true;
 		}
 		if(okBut.isReleased == true) {
+			
 			switch(markItem) {
 				case (1): {
 					sysParams.consts.dcRelay.workType = HALT;
@@ -72,6 +73,7 @@ int ShowUniversalOutputFrame(void) {
 					break;
 				}
 			}
+			LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 			FP_SaveParam();
 			okBut.isReleased = false;
 			return 0;

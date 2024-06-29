@@ -19,7 +19,7 @@ int ShowPeriodRegenCustFrame(void) {
       int32_t tempData = ShowKeyboardFrame(1, 99);
       if (tempData >= 0) {
         if (sysParams.consts.planerConsts.startType == BY_DAY ||
-         sysParams.consts.planerConsts.startType == DELAYED) {
+         sysParams.consts.planerConsts.startType == UNIVERSAL) {
 					tempTask. restartDateTime = tempData * 60 * 60 * 24;
         }
         if (sysParams.consts.planerConsts.startType == BY_HOUR) {
@@ -33,7 +33,7 @@ int ShowPeriodRegenCustFrame(void) {
       int32_t tempData = ShowKeyboardFrame(1, 999);
       if (tempData >= 0) {
 				if (sysParams.consts.planerConsts.startType == BY_DAY ||
-         sysParams.consts.planerConsts.startType == DELAYED) {
+         sysParams.consts.planerConsts.startType == UNIVERSAL) {
 					 bool addDay = false;
 					 time_t tempRaw = getRTC() + tempData * 60 * 60 * 24;
 					 struct tm timeSt = *localtime(&tempRaw); 
@@ -94,7 +94,7 @@ void createFrame() {
 
   BSP_LCD_SetFont( & Oxygen_Mono_24);
   if (sysParams.consts.planerConsts.startType == BY_DAY ||
-    sysParams.consts.planerConsts.startType == DELAYED) {
+    sysParams.consts.planerConsts.startType == UNIVERSAL) {
     periodRegenBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 50, BSP_LCD_GetYSize() / 2 - 65, 100, 60, intToStr(tempTask. restartDateTime / (60 * 60 * 24)));
   }
   if (sysParams.consts.planerConsts.startType == BY_HOUR) {
@@ -107,7 +107,7 @@ void createFrame() {
       remTime = deltTime / (60 * 60);
     }
     if (sysParams.consts.planerConsts.startType == BY_DAY ||
-      sysParams.consts.planerConsts.startType == DELAYED) {
+      sysParams.consts.planerConsts.startType == UNIVERSAL) {
       remTime = deltTime / (60 * 60 * 24);
     }
     timeBeforeRegenBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 50, BSP_LCD_GetYSize() / 2 + 25, 100, 60, intToStr(remTime));
@@ -119,7 +119,7 @@ void createFrame() {
   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
   BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
   if (sysParams.consts.planerConsts.startType == BY_DAY ||
-    sysParams.consts.planerConsts.startType == DELAYED) {
+    sysParams.consts.planerConsts.startType == UNIVERSAL) {
     BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 + 180, BSP_LCD_GetYSize() / 2 - 50, "Д", LEFT_MODE);
     BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 + 180, BSP_LCD_GetYSize() / 2 + 40, "Д", LEFT_MODE);
   }

@@ -66,7 +66,7 @@ typedef struct{
 typedef enum {
 	BY_DAY,
 	BY_HOUR,
-	DELAYED,
+	UNIVERSAL,
 	IMMEDIATELY,
 } start_type_t;
 
