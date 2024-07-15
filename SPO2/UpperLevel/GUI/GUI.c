@@ -78,18 +78,19 @@ void initGUI(void){
     
 	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(160, 225, "ГОЛОВА КМ1", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(160, 220, "ГОЛОВА КМ1", LEFT_MODE);
 	offset = 110;
-	offset += BSP_LCD_DisplayStringAt(offset, 270, "МОЗГИ версия ПО ", LEFT_MODE);
+	offset += BSP_LCD_DisplayStringAt(offset, 255, "МОЗГИ версия ПО ", LEFT_MODE);
 	VersHigh = (0xFFFF0000&sysParams.consts.sysVersion)>>16;
 	VersLow = (0xFFFE&sysParams.consts.sysVersion)>>1;
-	offset += BSP_LCD_DisplayStringAt(offset, 270, intToStr(VersHigh), LEFT_MODE);
-	offset += BSP_LCD_DisplayStringAt(offset, 270, ".", LEFT_MODE);
-	offset += BSP_LCD_DisplayStringAt(offset, 270, intToStr(VersLow), LEFT_MODE);
+	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
+	offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
 	BSP_BL_Control(100);  
 	sysParams.vars.status.flags.TFTInited = 1;
 	frame = 0;
-	
+	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
+	offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и иниацилизация", CENTER_MODE);
 	itemIndex = 0;
 	LL_mDelay(2000);
 }

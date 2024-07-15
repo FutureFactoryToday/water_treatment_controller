@@ -139,7 +139,7 @@ void PL_planer(planer_control_type_t startType) {
 
 time_t setPreferedTime(time_t time) {
   uint32_t addDay = 0;
-  struct tm tempTime = * localtime( & time);
+  struct tm tempTime = * localtime(&time);
   if (sysParams.consts.planerConsts.preferedTimeForWash.hour < tempTime.tm_hour) {
     addDay = 24 * 60 * 60;
   } else {

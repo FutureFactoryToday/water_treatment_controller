@@ -130,6 +130,7 @@ int main(void)
 	//ShowAlarmNotiServiceFrame();
 	//ShowKeyboardFrame(0,1000);
 	//ShowHistoryMenuFrame();
+	
 	ShowMainFrame();
   while (1)
   {

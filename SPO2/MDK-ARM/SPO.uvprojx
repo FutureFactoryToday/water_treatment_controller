@@ -129,8 +129,8 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>1</UseTargetDll>
-            <UseExternalTool>0</UseExternalTool>
+            <UseTargetDll>0</UseTargetDll>
+            <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
@@ -2902,6 +2902,16 @@
               <FileName>ExitEnableCycle.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\ExitEnableCycle.c</FilePath>
+            </File>
+            <File>
+              <FileName>MotorSettingsFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\MotorSettingsFrame.c</FilePath>
+            </File>
+            <File>
+              <FileName>adjustmentFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\adjustmentFrame.c</FilePath>
             </File>
           </Files>
         </Group>

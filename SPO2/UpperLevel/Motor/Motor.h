@@ -18,7 +18,7 @@
 
 /*Public defines */
 #define MAX_SPEED 120*(sysParams.consts.maxMotorSpeedPercent/100.0)
-#define MIN_SPEED 10
+#define MIN_SPEED 120*(sysParams.consts.minMotorSpeedPercent/100.0)
 
 #define MOT_PWM_FREQ 10000
 #define MAX_PRESC UINT16_MAX
@@ -48,6 +48,7 @@ typedef struct {
 typedef struct {
     TIM_TypeDef *tim;
     uint32_t speed;
+		
     tim_settings_t settings;
     mot_control_t control;
 } motor_struct_t;

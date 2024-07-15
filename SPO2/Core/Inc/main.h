@@ -134,6 +134,8 @@ extern "C" {
 #include "GUI/Frames/filterCycleFrame.h"
 #include "GUI/Frames/ImpulseExitWeight.h"
 #include "GUI/Frames/ExitEnableCycle.h"
+#include "GUI/Frames/MotorSettingsFrame.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

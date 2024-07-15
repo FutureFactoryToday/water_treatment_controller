@@ -98,6 +98,7 @@ typedef struct{
 	unsigned NeedService:1;
 	unsigned WaterInLiters:1;
 	unsigned FlowMeterInt:1;
+	unsigned DebugMode:1;
 } sys_status_flag_bits_t;
 
 typedef union{
@@ -109,6 +110,7 @@ typedef struct{
 	uint32_t ServicePinCode;
 	uint64_t ServicePhoneNumber;
 	uint32_t maxMotorSpeedPercent;
+	uint32_t minMotorSpeedPercent;
 	piston_poz_t pistonPositions;
 	uint32_t pistonStallDelay;
 	uint32_t pistonSeekTime;

@@ -43,8 +43,8 @@ void SYS_init(void){
 	Start_Logic();
 	FP_Init();
 	Start_ADC();
-	Load_Flash_Param();	
 	initGUI();
+	Load_Flash_Param();	
 	#ifdef CLEAR_LOG
 	FP_ClearLog();
 	sysParams.consts.storedEntryNum = 0;
@@ -59,6 +59,7 @@ void SYS_init(void){
 	Time_init();
 	resetCounter = 0;
 	FP_SaveParam();
+	sysParams.vars.status.flags.DebugMode = 1;
 	LL_SYSTICK_EnableIT();
 }
 void Start_ADC(){
@@ -125,6 +126,7 @@ void Load_Default_Values(void){
 	sysParams.consts.adcLimitDelt[Vin] = 1.1;
 	
 	sysParams.consts.maxMotorSpeedPercent = DEF_MAX_MOT_SPEED_PERCENT;
+	sysParams.consts.minMotorSpeedPercent = DEF_MIN_MOT_SPEED_PERCENT;
 	
 	sysParams.consts.ServicePinCode = DEF_SERVICE_CODE;
 	

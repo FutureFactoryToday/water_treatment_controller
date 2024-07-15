@@ -1,5 +1,34 @@
 #include "widgets.h"
 
+uint8_t x1 = 25, y1 = 0, y2 = 10, y3 = 20, y4 = 30;
+void drawDebugInfo(){
+	if (sysParams.vars.status.flags.DebugMode == true){
+		WTC_FONT_t* oldFont = BSP_LCD_GetFont();
+		uint16_t oldBackColor = BSP_LCD_GetBackColor();
+		uint16_t oldTextColor = BSP_LCD_GetTextColor();
+		
+		BSP_LCD_SetFont(&Oxygen_Mono_8);
+		BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		
+		uint32_t offset = 0;
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"CurPoz = ",LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.vars.pistonParams.curPoz),LEFT_MODE);
+		offset += 10;
+		
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"DestPoz = ",LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.vars.pistonParams.destPoz),LEFT_MODE);
+		offset += 10;
+		
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"MotSpeed% = ",LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.consts.maxMotorSpeedPercent),LEFT_MODE);
+		offset += 10;
+		
+		BSP_LCD_SetFont(oldFont);
+		BSP_LCD_SetBackColor(oldBackColor);
+		BSP_LCD_SetTextColor(oldTextColor);
+	}
+}
 button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch)
 {
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
@@ -549,4 +578,6 @@ void drawClock(void){
   BSP_LCD_SetTextColor(oldTextColor);
   BSP_LCD_SetBackColor(oldBackColor);
 	BSP_LCD_DrawBuffer_Stop();
+	
+	drawDebugInfo();
 }

@@ -126,8 +126,8 @@ void PC_Control(void){
 			} 
 			
 			if (abs(sysParams.vars.pistonParams.destPoz - sysParams.vars.pistonParams.curPoz) < 5){
-				uint32_t speed = (MAX_SPEED*6)/10;
-				MOT_SetSpeed(speed);
+				//uint32_t speed = (MAX_SPEED*6)/10;
+				MOT_SetSpeed(MIN_SPEED);
 			}
 		
 			

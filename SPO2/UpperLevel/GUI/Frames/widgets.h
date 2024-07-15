@@ -46,4 +46,5 @@ void drawClock(void);
 button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label,uint16_t textColor, uint16_t backColor);
 
 button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2 ,uint16_t textColor, uint16_t backColor);
+void drawDebugInfo();
 #endif 
