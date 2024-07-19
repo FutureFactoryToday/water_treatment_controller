@@ -1,6 +1,6 @@
 #include "widgets.h"
 
-uint8_t x1 = 25, y1 = 0, y2 = 10, y3 = 20, y4 = 30;
+uint8_t x1 = 75, y1 = 0, y2 = 10, y3 = 20, y4 = 30;
 void drawDebugInfo(){
 	if (sysParams.vars.status.flags.DebugMode == true){
 		WTC_FONT_t* oldFont = BSP_LCD_GetFont();
@@ -10,7 +10,7 @@ void drawDebugInfo(){
 		BSP_LCD_SetFont(&Oxygen_Mono_8);
 		BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
 		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-		
+		BSP_LCD_DrawBuffer_Start(x1,y1,400,y2, LCD_COLOR_DARKBLUE);
 		uint32_t offset = 0;
 		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"CurPoz = ",LEFT_MODE);
 		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.vars.pistonParams.curPoz),LEFT_MODE);
@@ -24,6 +24,27 @@ void drawDebugInfo(){
 		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.consts.maxMotorSpeedPercent),LEFT_MODE);
 		offset += 10;
 		
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Planner = ",LEFT_MODE);
+		switch(sysParams.consts.planerConsts.status){
+			case(PL_NOT_SET):{
+				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Not Set",LEFT_MODE);
+				break;
+			}
+			case(PL_SET):{
+				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Set",LEFT_MODE);
+				break;
+			}
+			case(PL_WORKING):{
+				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Working",LEFT_MODE);
+				break;
+			}
+			default: {
+				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Error",LEFT_MODE);
+			}
+		}
+		
+		
+		BSP_LCD_DrawBuffer_Stop();
 		BSP_LCD_SetFont(oldFont);
 		BSP_LCD_SetBackColor(oldBackColor);
 		BSP_LCD_SetTextColor(oldTextColor);

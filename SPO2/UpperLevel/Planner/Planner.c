@@ -196,7 +196,13 @@ void PL_Interrupt() {
         sysParams.consts.planerConsts.currentStepNum++;
         if (sysParams.vars.planer.currentStep -> poz == NULL) {
           sysParams.consts.planerConsts.status = PL_NOT_SET;
-          PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+					
+					sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE();
+		
+					if (sysParams.vars.pistonParams.calibResult != PASSED){
+						sysParams.vars.pistonParams.workStatus = PC_ERROR;
+					}
+          //PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
           PL_planer(START_NORMAL);
           sysParams.consts.waterFromLastFilter = 0;
         } else {

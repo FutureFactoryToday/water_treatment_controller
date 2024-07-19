@@ -130,7 +130,8 @@ int main(void)
 	//ShowAlarmNotiServiceFrame();
 	//ShowKeyboardFrame(0,1000);
 	//ShowHistoryMenuFrame();
-	
+	noTouchDelay = 1000;
+	//ShowAdjustmentFrame();
 	ShowMainFrame();
   while (1)
   {

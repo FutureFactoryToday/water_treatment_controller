@@ -81,8 +81,8 @@ void initGUI(void){
 	BSP_LCD_DisplayStringAt(160, 220, "ГОЛОВА КМ1", LEFT_MODE);
 	offset = 110;
 	offset += BSP_LCD_DisplayStringAt(offset, 255, "МОЗГИ версия ПО ", LEFT_MODE);
-	VersHigh = (0xFFFF0000&sysParams.consts.sysVersion)>>16;
-	VersLow = (0xFFFE&sysParams.consts.sysVersion)>>1;
+	VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
+	VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);

@@ -230,6 +230,7 @@ void PC_Init(void){
 		if (sysParams.vars.pistonParams.calibResult != PASSED){
 			sysParams.vars.pistonParams.workStatus = PC_ERROR;
 		}
+		
 	} else {
 		sysParams.vars.pistonParams.workStatus = PC_ERROR;
 		sysParams.vars.pistonParams.curPoz = 0;

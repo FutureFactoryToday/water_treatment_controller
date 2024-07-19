@@ -10,7 +10,7 @@ int showServiceInfoFrame()
     {
 			if (updateFlags.sec == true){
 				drawClock();
-                drawMainStatusBar(144, 2305, 16);
+        drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false;
 			}
 			if (retBut.isReleased == true) {

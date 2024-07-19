@@ -95,7 +95,7 @@ extern const uint8_t* ITEM_FILTERING[];
 extern const uint8_t* ITEM_SOFTENING[];
 
 //adjustmentFrame
-#define MODE_ADJUSTMENT "Регулировка"
+#define MODE_ADJUSTMENT "Регулировка штока"
 extern const uint8_t* ITEM_ADJUSTMENT[];
 #define RESET_TEXT "Сброс"
 #define POSITION "Поз:"

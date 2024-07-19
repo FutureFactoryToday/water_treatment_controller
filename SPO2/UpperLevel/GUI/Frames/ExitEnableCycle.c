@@ -113,7 +113,16 @@ void RefreshScrollBar(void) {
 	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
 	BSP_LCD_SetFont( &Oxygen_Mono_20);
 	for(uint8_t i = 0; i < LINE_NUM; i++) {
-		menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_STEPS[i + firstEl], LEFT_MODE);
+		int8_t pozNum = i + firstEl;
+		if (pozNum == 4) pozNum = 5;
+		if (pozNum == 3){
+			menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 18, ITEM_STEPS[pozNum+1], LEFT_MODE);
+			menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i , ITEM_STEPS[pozNum], LEFT_MODE);
+			
+		} else {
+			menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, ITEM_STEPS[pozNum], LEFT_MODE);
+		}
+		//menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_STEPS[i + firstEl], LEFT_MODE);
 		markLine(i);
 	}
 	drawScrollButton(0);

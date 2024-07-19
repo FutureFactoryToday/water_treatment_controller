@@ -161,9 +161,9 @@ int ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[7].isReleased == true){
-            //ShowAdjustmentFrame();   
+            ShowAdjustmentFrame();   
             menuLines[7].isReleased = false;
-            //createFrame();
+            createFrame();
          } 
 				if(menuLines[8].isReleased == true){
             ShowMotorSettings();   

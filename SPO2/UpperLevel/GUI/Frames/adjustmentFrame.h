@@ -31,14 +31,4 @@
 
 //Public defines main window sizers
 
-void ShowAdjustmentFrame(void);
-
-void RefreshAdjustmentFrame(void);
-
-void RefreshScrollBarAdjustmentFrame(void);
-
-void AnimateScrollBarKeysAdjustmentFrame(void);
-
-void AnimatePosMenuFrame(void);
-
-void TranslateMenuAdjustmentMSG(void);
+uint8_t ShowAdjustmentFrame(void);
