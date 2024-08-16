@@ -91,23 +91,25 @@ void PC_Control(void){
 	//Need to go?
 		if (sysParams.vars.pistonParams.curPoz != sysParams.vars.pistonParams.destPoz){
 			//Stop->Start
-			if (sysParams.vars.pistonParams.workStatus == PC_READY){
+			if (sysParams.vars.pistonParams.workStatus == PC_READY || 
+				sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS){
 				//Set DIR
 				if (sysParams.vars.pistonParams.curPoz>sysParams.vars.pistonParams.destPoz){
 					MOT_SetDir(OUT);
 				} else {
 					MOT_SetDir(IN);
 				}
-				//Set stall time
-				sysParams.vars.pistonParams.stallTime = sysParams.consts.pistonStallDelay;
 				if (sysParams.vars.pistonParams.workStatus == PC_READY){
-					sysParams.vars.pistonParams.workStatus = PC_IN_PROCESS;
+					//Set stall time
+					sysParams.vars.pistonParams.stallTime = sysParams.consts.pistonStallDelay;
+					if (sysParams.vars.pistonParams.workStatus == PC_READY){
+						sysParams.vars.pistonParams.workStatus = PC_IN_PROCESS;
+					}
+					sysParams.vars.pistonParams.destComplete = false;
+					MOT_Start();
+					lastPoz = -1;
 				}
-				sysParams.vars.pistonParams.destComplete = false;
-				MOT_Start();
-				lastPoz = -1;
 			}
-			
 			if (deltaPoz == 0){
 				sysParams.vars.pistonParams.stallTime--;
 				if (sysParams.vars.pistonParams.stallTime == 0){
@@ -125,9 +127,11 @@ void PC_Control(void){
 				sysParams.vars.pistonParams.stallTime = sysParams.consts.pistonStallDelay;
 			} 
 			
-			if (abs(sysParams.vars.pistonParams.destPoz - sysParams.vars.pistonParams.curPoz) < 5){
+			if (abs(sysParams.vars.pistonParams.destPoz - sysParams.vars.pistonParams.curPoz) < 2){
 				//uint32_t speed = (MAX_SPEED*6)/10;
 				MOT_SetSpeed(MIN_SPEED);
+			} else {
+				MOT_SetSpeed(MAX_SPEED);
 			}
 		
 			
@@ -142,15 +146,20 @@ void PC_Control(void){
 
 	lastPoz = sysParams.vars.pistonParams.curPoz;
 }
-pc_calib_result_t PC_AUTO_CALIBRATE(void){
+pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 	pc_calib_result_t result = SKIPPED;
-	if (sysParams.vars.pistonParams.workStatus == PC_READY){
+	if (sysParams.vars.pistonParams.workStatus == PC_READY || 
+		sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS){
+		sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.curPoz;
+		while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);		
 		sysParams.vars.pistonParams.maxPoz = FULL_LENGTH*2;
 		sysParams.vars.pistonParams.minPoz = -FULL_LENGTH*2;
 		result = PASSED;
 		sysParams.vars.status.flags.PistonInited = 1;
-		PC_GoToPoz(20);
-		while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
+		if (first){
+			PC_GoToPoz(20);
+			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
+		}
 		if (sysParams.vars.error.flags.PistonFail == 1){
 			MOT_Stop();
 			result = STALL;
@@ -163,6 +172,7 @@ pc_calib_result_t PC_AUTO_CALIBRATE(void){
 				LL_mDelay(1);
 			}
 			if (seek_cnt >= sysParams.consts.pistonSeekTime*1000){
+				sysParams.vars.error.flags.PistonLongRun = true;
 				result = NO_MIN;
 			}
 			
@@ -217,6 +227,7 @@ void PC_Init(void){
 		sysParams.vars.pistonParams.autoControl = true;
 		MOT_Init(PWM,MOT_TIM);
 		
+		
 		LL_TIM_EnableCounter(PISTON_CONTROL_TIM);
 		LL_TIM_ClearFlag_UPDATE(PISTON_CONTROL_TIM);
 		LL_TIM_EnableIT_UPDATE(PISTON_CONTROL_TIM);
@@ -225,7 +236,7 @@ void PC_Init(void){
 		LL_TIM_EnableIT_UPDATE(OPTIC_DELAY_TIM);
 		
 
-		sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE();
+		sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE(true);
 		
 		if (sysParams.vars.pistonParams.calibResult != PASSED){
 			sysParams.vars.pistonParams.workStatus = PC_ERROR;

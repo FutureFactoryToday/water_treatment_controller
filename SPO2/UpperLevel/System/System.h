@@ -63,6 +63,7 @@ typedef struct{
 	
 	unsigned PistonStallFail:1; //+
 	unsigned PistonFail:1; 			//+
+	unsigned PistonLongRun:1;	//+
 	
 	unsigned RelayDCFail:1;
 	unsigned RelayACFail:1;

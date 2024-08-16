@@ -42,7 +42,7 @@ void MX_RTC_Init(void)
   LL_RCC_EnableRTC();
 
   /* RTC interrupt Init */
-  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1, 0));
+  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5, 0));
   NVIC_EnableIRQ(RTC_IRQn);
 
   /* USER CODE BEGIN RTC_Init 1 */

@@ -2,7 +2,7 @@
 
 //Main Frame
 extern const uint8_t* ITEM_MAIN_FRAME[];
-
+extern const uint8_t* ITEM_ERRORS[];
 //Clock Set Frame
 extern const uint8_t* ITEM_CLOCKSET_FRAME[];
 extern const uint8_t* ITEM_CALENDAR_FRAME[];

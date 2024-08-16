@@ -495,16 +495,21 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 		float speed = FM_getFlowSpeed()*60;
 		offset = 0;
 		if (speed > 0){
-	
-			uint32_t a = (int) speed;
-			speed = speed - a;
-			speed = speed * 100;
-			uint32_t b = (int) speed;
+	/*Float output*/
+//			uint32_t a = (int) speed;
+//			speed = speed - a;
+//			speed = speed * 100;
+//			uint32_t b = (int) speed;
+//			BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(a), RIGHT_MODE);
+//			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
+//			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
 			
-			
+		/*Int output*/
+			uint32_t a = (uint32_t) round(speed);
+
 			BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(a), RIGHT_MODE);
-			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
+			//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
+			//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
 		} else {
 			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(0), LEFT_MODE);
 		}

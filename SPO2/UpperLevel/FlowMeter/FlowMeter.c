@@ -69,6 +69,7 @@ uint32_t FM_getFlowMeterVal(void){
 void FM_incFlowMeter(void){
 	if (sysParams.consts.planerConsts.status != PL_WORKING){
 		float water = FM_getFlowSpeed();
+		water/= 100; //100Hz
 		sysParams.consts.waterQuantaty += water;
 		sysParams.consts.dayWaterUsage += water;
 		sysParams.consts.waterFromLastFilter += water;
@@ -145,7 +146,7 @@ void FM_OVF_Interrupt(void){
 	isOverFlow = true;
 	sysParams.vars.flowCnt = 0;//filter(&flowFilter,0);
 }
-#define FLOW_METER_DELAY 20
+#define FLOW_METER_DELAY 18
 void FM_Meter_Test(void){
 	if (flowMeterCnt > 0){
 		flowMeterCnt--;

@@ -80,6 +80,7 @@ void NMI_Handler(void)
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
+  HAL_RCC_NMI_IRQHandler();
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   while (1)
   {
@@ -212,7 +213,6 @@ void SysTick_Handler(void)
 	}
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
-	//drawDebugInfo();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -236,7 +236,7 @@ void RTC_IRQHandler(void)
 	RTC_Interrupt();
 	LOG_Interrupt();
 	FP_StartStore();
-	FM_incFlowMeter();
+	
 	
 	if (noTouchDelay){
 		noTouchDelay--;
@@ -358,6 +358,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
 
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
 	if (LL_TIM_IsActiveFlag_UPDATE(LOGIC_TIM)){
+		FM_incFlowMeter();
 		SYS_Logic_IT();
 		
 		LL_TIM_ClearFlag_UPDATE(LOGIC_TIM);
@@ -374,7 +375,7 @@ void TIM1_TRG_COM_TIM11_IRQHandler(void)
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM11)){
 			LL_TIM_ClearFlag_UPDATE(TIM11);
 			PL_Interrupt();
-			PC_Control();
+			
 		}
   /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
 
@@ -394,6 +395,23 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 1 */
 
   /* USER CODE END TIM3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM4 global interrupt.
+  */
+void TIM4_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM4_IRQn 0 */
+	if(LL_TIM_IsActiveFlag_UPDATE(TIM4)){
+			LL_TIM_ClearFlag_UPDATE(TIM4);
+			PC_Control();
+		}
+
+  /* USER CODE END TIM4_IRQn 0 */
+  /* USER CODE BEGIN TIM4_IRQn 1 */
+
+  /* USER CODE END TIM4_IRQn 1 */
 }
 
 /**

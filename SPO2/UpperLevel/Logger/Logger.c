@@ -307,6 +307,17 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 			return HAL_OK;
 		}
 	}
+	if(tempError.flags.PistonLongRun == 1){
+		error.all = 0;
+		error.flags.PistonLongRun = 1;
+		cause = error.all;
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+			oldErrors.flags.PistonLongRun = 1;
+		} else {
+			return HAL_OK;
+		}
+	}
+	
 	if(tempError.flags.PistonFail == 1){
 		error.all = 0;
 		error.flags.PistonFail = 1;

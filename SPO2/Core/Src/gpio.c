@@ -160,10 +160,13 @@ void MX_GPIO_Init(void)
   LL_GPIO_SetPinMode(OPTIC_IRQ_GPIO_Port, OPTIC_IRQ_Pin, LL_GPIO_MODE_FLOATING);
 
   /**/
-  LL_GPIO_SetPinMode(METER_IRQ_GPIO_Port, METER_IRQ_Pin, LL_GPIO_MODE_FLOATING);
+  LL_GPIO_SetPinMode(METER_IRQ_GPIO_Port, METER_IRQ_Pin, LL_GPIO_MODE_INPUT);
+
+  /**/
+  LL_GPIO_SetPinPull(METER_IRQ_GPIO_Port, METER_IRQ_Pin, LL_GPIO_PULL_UP);
 
   /* EXTI interrupt init*/
-  NVIC_SetPriority(EXTI2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_SetPriority(EXTI2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1, 0));
   NVIC_EnableIRQ(EXTI2_IRQn);
   NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(EXTI9_5_IRQn);

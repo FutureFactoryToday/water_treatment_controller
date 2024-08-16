@@ -79,7 +79,7 @@ pc_params_t* PC_GetParams(void);
 int16_t PC_GetCurPoz(void);
 void PC_Control(void);
 //Если калибровка прошла успещно вернется 2, иначе что-то не нашли
-pc_calib_result_t PC_AUTO_CALIBRATE(void);
+pc_calib_result_t PC_AUTO_CALIBRATE(bool first);
 void PC_Stop(void);
 void PC_Restart (void);
 bool PC_isBusy();

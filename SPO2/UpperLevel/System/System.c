@@ -279,7 +279,9 @@ void SYS_Logic_IT(void){
 	}
 	
 	
-	
+//	if (sysParams.vars.pistonParams.calibResult != PASSED){
+//		sysParams.vars.pistonParams.workStatus = PC_ERROR;
+//	}
 	/*Status*/
 	//ExCom On?
 	if (sysParams.vars.error.flags._5VPowerFail == false){

@@ -73,8 +73,6 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-	#include "FlashIC/W25.h"
-	//uint8_t recBuf[10], recBuf2[10];
 int main(void)
 {
 
@@ -120,9 +118,10 @@ int main(void)
   MX_CRC_Init();
   MX_TIM10_Init();
   MX_TIM7_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 	SYS_init();
-/* USER CODE END 2 */
+  /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -188,6 +187,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Enables the Clock Security System
+  */
+  HAL_RCC_EnableCSS();
 }
 
 /* USER CODE BEGIN 4 */

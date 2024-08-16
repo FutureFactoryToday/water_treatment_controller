@@ -42,6 +42,9 @@ void PL_Init() {
   sysParams.vars.planer.cycleCnt = 0;
   sysParams.vars.planer.cycled = false;
   oldWater = 0;
+	LL_TIM_EnableCounter(PLANNER_TIM);
+	LL_TIM_ClearFlag_UPDATE(PLANNER_TIM);
+	LL_TIM_EnableIT_UPDATE(PLANNER_TIM);
   if (sysParams.consts.planerConsts.currentTaskNum >= 3) {
     sysParams.consts.planerConsts.currentTaskNum = 0;
   }
@@ -169,7 +172,15 @@ void PL_Interrupt() {
   if (sysParams.vars.status.flags.PlanerInited == 1) {
     //Not SET after restart or flash error
     if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
-      PL_planer(START_NORMAL);
+      //PL_planer(START_NORMAL);
+			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			if (sysParams.vars.pistonParams.destComplete == true){
+					sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE(false);
+					if (sysParams.vars.pistonParams.calibResult != PASSED){
+						sysParams.vars.pistonParams.workStatus = PC_ERROR;
+					}
+					PL_planer(START_NORMAL);
+			}
       return;
     }
     //
@@ -197,13 +208,14 @@ void PL_Interrupt() {
         if (sysParams.vars.planer.currentStep -> poz == NULL) {
           sysParams.consts.planerConsts.status = PL_NOT_SET;
 					
-					sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE();
-		
-					if (sysParams.vars.pistonParams.calibResult != PASSED){
-						sysParams.vars.pistonParams.workStatus = PC_ERROR;
-					}
+//					sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE();
+//		
+//					if (sysParams.vars.pistonParams.calibResult != PASSED){
+//						sysParams.vars.pistonParams.workStatus = PC_ERROR;
+//					}
+					//PL_planer(START_NORMAL);
           //PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
-          PL_planer(START_NORMAL);
+					
           sysParams.consts.waterFromLastFilter = 0;
         } else {
           PC_GoToPoz( * (sysParams.vars.planer.currentStep -> poz));
@@ -211,9 +223,9 @@ void PL_Interrupt() {
         }
       }
     }
-    if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
-      PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
-    }
+//    if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
+//    
+//    }
     oldSec = LL_RTC_TIME_Get(RTC);
   }
 }

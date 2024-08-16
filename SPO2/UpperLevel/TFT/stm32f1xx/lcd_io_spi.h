@@ -63,7 +63,7 @@
 #define LCD_DMA_RX        1, 4, 3
 
 /* DMA interrupt priority (see NVIC_SetPriority function, default value: 15) */
-#define LCD_DMA_IRQ_PR    13
+#define LCD_DMA_IRQ_PR    0
 
 /* In dma mode the bitmap drawing function is completed before the actual drawing.
  * If the content of the image changes (because it is in a stack), the drawing will be corrupted.

@@ -26,6 +26,7 @@ void showMessage(void);
 extern uint8_t frameBuffer[];
 static bool enableMenu, enableWash; 
 uint32_t color, c; 
+uint32_t error = 0, oldError;
 
 void ShowMainFrame(void) {
     goHome = false;
@@ -50,6 +51,19 @@ void ShowMainFrame(void) {
 			}
       updateFlags.sec = false;
     }
+		if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
+//			if (enableWash == true){
+//				drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
+//                             LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE, false);
+//			}
+			enableWash = false;
+		} else {
+//			if (enableWash == false){
+//				drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
+//                             LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, false);
+//			}
+			enableWash = true;
+		}
     if (sysParams.consts.planerConsts.status == PL_WORKING) {
       if (*sysParams.vars.planer.currentStep->poz != shownStep) {
         shownStep = *sysParams.vars.planer.currentStep->poz;
@@ -158,6 +172,7 @@ void createFrame(void) {
 #define X_SIZE 420
 #define Y_SIZE 55
 void showMessage(void){
+	bool yesError = false;
 	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
 	 BSP_LCD_SetFont(&Oxygen_Mono_20);
 	if (sysParams.vars.status.flags.NeedService == 1){
@@ -179,17 +194,44 @@ void showMessage(void){
 			shownServiceMessage = false;
 		}
 	}		
-	if ((sysParams.vars.error.flags.PistonFail == 1 || sysParams.vars.error.flags.MotorFail == 1)){
-		if (!shownErrorMessage){
+	//One Message
+//	if ((sysParams.vars.error.flags.PistonFail == 1 || sysParams.vars.error.flags.MotorFail == 1)){
+//		if (!shownErrorMessage){
+//			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_PALERED);
+//			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
+//			BSP_LCD_SetFont(&Oxygen_Mono_20);
+//			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,"ОТСУТСТВИЕ ВРАЩЕНИЯ ШЕСТЕРНИ", LEFT_MODE);
+//			
+//			shownErrorMessage = true;
+//		}
+//		BSP_LCD_SetFont(oldFont);
+//	}	else {
+//		if (shownErrorMessage){
+//			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+//			shownErrorMessage = false;
+//		}
+//	}
+	if (sysParams.vars.error.flags.PistonFail == 1){
+		if (sysParams.vars.error.flags.PistonLongRun){
+			error = 2;
+		}
+		if (sysParams.vars.error.flags.PistonStallFail){
+			error = 1;
+		}
+		if (!shownErrorMessage || error != oldError){
+					
 			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_PALERED);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
 			BSP_LCD_SetFont(&Oxygen_Mono_20);
-			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,"ОТСУТСТВИЕ ВРАЩЕНИЯ ШЕСТЕРНИ", LEFT_MODE);
+			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,ITEM_ERRORS[error], LEFT_MODE);
 			
 			shownErrorMessage = true;
 		}
+		oldError = error;
 		BSP_LCD_SetFont(oldFont);
 	}	else {
 		if (shownErrorMessage){
