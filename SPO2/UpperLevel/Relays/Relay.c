@@ -50,7 +50,9 @@ void RELAY_DC_CYCLE(void){
 				} else {
 					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 				}
-			}
+			} else {
+					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+				}
 			
 //				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
 //					sysParams.consts.dcRelay.pozEnable.rabPoz == 1){
@@ -107,14 +109,16 @@ void RELAY_DC_CYCLE(void){
 						sysParams.vars.dcRelayCnt = CYCLE_HZ/TARGET_HZ;
 						oldWater = sysParams.consts.waterQuantaty;
 					} 
+				} else {
+					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 				}
 				break;
 		}
 		case (NEIGHBOR):{
 			//Conditions
 			if (sysParams.consts.planerConsts.currentTaskNum == SOFTENING_TASK_NUM){
-				if (sysParams.vars.pistonParams.curPoz == sysParams.consts.pistonPositions.saltering){
-					if (oldPoz != sysParams.consts.pistonPositions.saltering){
+				if (sysParams.vars.pistonParams.curPoz == sysParams.consts.pistonPositions.filling){
+					if (oldPoz != sysParams.consts.pistonPositions.filling){
 						pulse = true;
 					} 
 				} //else {
@@ -129,7 +133,7 @@ void RELAY_DC_CYCLE(void){
 				} //else {
 //					pulse = false;
 //				}
-				oldStatus = sysParams.consts.planerConsts.status;
+				
 			}
 			
 			//Pulse formation
@@ -148,6 +152,7 @@ void RELAY_DC_CYCLE(void){
 		}
 		default: break;
 	}
+	oldStatus = sysParams.consts.planerConsts.status;
 }
 void RELAY_AC_CYCLE(void){
 //		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 

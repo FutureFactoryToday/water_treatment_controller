@@ -125,12 +125,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	//ShowManualFilterSettings(sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM], false);
-	//ShowAlarmNotiServiceFrame();
-	//ShowKeyboardFrame(0,1000);
-	//ShowHistoryMenuFrame();
+
 	noTouchDelay = 1000;
-	//ShowAdjustmentFrame();
 	ShowMainFrame();
   while (1)
   {

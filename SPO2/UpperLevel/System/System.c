@@ -82,7 +82,7 @@ void Load_Flash_Param(){
 	FP_GetParam();
 	if (sysParams.vars.status.flags.StoredParamsLoaded == 1 /*&& resetCounter < RESET_COUNTER_LIM*/){
 		sysParams.consts = fp->params.sysParConsts;
-		sysParams.consts.planerConsts.currentStepNum = 0;
+		//sysParams.consts.planerConsts.currentStepNum = 0;
 		
 		uint8_t taskNum = 0;
 		sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].poz = &sysParams.consts.pistonPositions.backwash;
