@@ -268,15 +268,15 @@ bool checkStartConditions(void) {
       }
 
     }
-    uint32_t waterLimit = (sysParams.consts.planerConsts.filtroCycle * (100 - sysParams.consts.planerConsts.filtroReserve) / 100);
+    //uint32_t waterLimit = (sysParams.consts.planerConsts.filtroCycle * (100 - sysParams.consts.planerConsts.filtroReserve) / 100);
     bool result = false;
-    if (sysParams.consts.waterFromLastFilter >= waterLimit) {
-      if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
-        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
-        result = true;
-      }
-    }
-    result |= sysParams.vars.planer.currentTask -> startDateTime < getRTC();
+//    if (sysParams.consts.waterFromLastFilter >= waterLimit) {
+//      if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
+//        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
+//        result = true;
+//      }
+//    }
+//    result |= sysParams.vars.planer.currentTask -> startDateTime < getRTC();
     return result;
     break;
   }

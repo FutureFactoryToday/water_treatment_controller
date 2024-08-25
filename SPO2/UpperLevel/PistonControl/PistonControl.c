@@ -174,17 +174,15 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 			if (seek_cnt >= sysParams.consts.pistonSeekTime*1000){
 				sysParams.vars.error.flags.PistonLongRun = true;
 				result = NO_MIN;
+				MOT_Stop();
 			}
-			
-			sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.minPoz = sysParams.vars.pistonParams.curPoz = 0;
-			sysParams.vars.pistonParams.calibration = false;
-			
-			sysParams.vars.pistonParams.maxPoz = FULL_LENGTH;
-			
 		}
 		if (result == PASSED){
 			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
 			sysParams.vars.status.flags.PistonInited = 1;
+			sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.minPoz = sysParams.vars.pistonParams.curPoz = 0;
+			sysParams.vars.pistonParams.calibration = false;
+			sysParams.vars.pistonParams.maxPoz = FULL_LENGTH;
 		} else {
 			sysParams.vars.status.flags.PistonInited = 0;
 			sysParams.vars.error.flags.PistonFail = 1;

@@ -170,6 +170,22 @@
           <ExecCommand></ExecCommand>
           <Expression>\\SPO\../UpperLevel/System/System.c\145</Expression>
         </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>117</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134228240</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\117</Expression>
+        </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
@@ -323,6 +339,11 @@
           <count>5</count>
           <WinNumber>2</WinNumber>
           <ItemText>externalSignal</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>flashParams</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>

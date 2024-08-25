@@ -147,8 +147,8 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.currentStepNum = 0;
 	sysParams.consts.planerConsts.status = PL_NOT_SET;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].startDateTime = 0;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].remainingTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].remainingTime = DEF_TASK_RESTART_HOURS*60*60;
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
 	uint8_t taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
