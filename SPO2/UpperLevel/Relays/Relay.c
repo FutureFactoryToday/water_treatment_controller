@@ -26,6 +26,10 @@ void RELAY_DC_ChangeType(dc_relay_work_t type){
 }
 void RELAY_DC_CYCLE(void){
 	switch(sysParams.consts.dcRelay.workType){
+		case (MANUAL_ON):{
+			LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+			break;
+		}
 		case (HALT):{
 			LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 			break;
@@ -117,7 +121,7 @@ void RELAY_DC_CYCLE(void){
 		case (NEIGHBOR):{
 			//Conditions
 			if (sysParams.consts.planerConsts.currentTaskNum == SOFTENING_TASK_NUM){
-				if (sysParams.vars.pistonParams.curPoz == sysParams.consts.pistonPositions.filling){
+				if (sysParams.vars.pistonParams.destComplete == true && sysParams.vars.pistonParams.curPoz == sysParams.consts.pistonPositions.filling){
 					if (oldPoz != sysParams.consts.pistonPositions.filling){
 						pulse = true;
 					} 
@@ -190,6 +194,12 @@ void RELAY_AC_CYCLE(void){
 //			} else {
 //				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 //			}
+	switch(sysParams.consts.acRelay.workType){
+		case (MANUAL_ON):{
+			LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+			break;
+		}
+		default:{
 			if (sysParams.consts.planerConsts.status == PL_WORKING){
 				bool acOn = false;
 				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
@@ -210,4 +220,6 @@ void RELAY_AC_CYCLE(void){
 					LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 				}
 			}
+		}
+	}
 }

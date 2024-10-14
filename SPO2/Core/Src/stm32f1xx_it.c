@@ -237,7 +237,7 @@ void RTC_IRQHandler(void)
 	LOG_Interrupt();
 	FP_StartStore();
 	
-	
+	noTouchDelay++;
 	if (noTouchDelay){
 		noTouchDelay--;
 	} else {

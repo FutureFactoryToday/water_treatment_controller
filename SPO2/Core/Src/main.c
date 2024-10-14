@@ -127,6 +127,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 	noTouchDelay = 1000;
+	
+//	FontTest(&Oxygen_Mono_8);
+//	FontTest(&Oxygen_Mono_12);
+//	FontTest(&Oxygen_Mono_16);
+//	FontTest(&Oxygen_Mono_20);
+//	FontTest(&Oxygen_Mono_24);
+	
 	ShowMainFrame();
   while (1)
   {

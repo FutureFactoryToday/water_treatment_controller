@@ -157,34 +157,34 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>145</LineNumber>
+          <LineNumber>168</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134269712</Address>
+          <Address>134276474</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\System\System.c</Filename>
+          <Filename>..\UpperLevel\PistonControl\PistonControl.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/System/System.c\145</Expression>
+          <Expression>\\SPO\../UpperLevel/PistonControl/PistonControl.c\168</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>117</LineNumber>
+          <LineNumber>177</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134228240</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\UpperLevel\PistonControl\PistonControl.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\117</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -308,6 +308,21 @@
           <WinNumber>1</WinNumber>
           <ItemText>result</ItemText>
         </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>deltTime,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>25</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sysParams.vars.planer.currentTask-&gt;startDateTime,0x10</ItemText>
+        </Ww>
+        <Ww>
+          <count>26</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>getRTC()</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -344,6 +359,26 @@
           <count>6</count>
           <WinNumber>2</WinNumber>
           <ItemText>flashParams</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>pulse</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>seek_cnt,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>sysParams.consts.pistonSeekTime,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>sysParams.vars.pistonParams.workStatus</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>
@@ -416,6 +451,10 @@
         <Entry>
           <Name>System Viewer\GPIOC</Name>
           <WinId>35904</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\RTC</Name>
+          <WinId>35903</WinId>
         </Entry>
         <Entry>
           <Name>System Viewer\TIM7</Name>
@@ -1706,7 +1745,7 @@
 
   <Group>
     <GroupName>LCD</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

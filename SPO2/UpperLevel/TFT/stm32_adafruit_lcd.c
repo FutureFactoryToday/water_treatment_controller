@@ -229,9 +229,12 @@ void BSP_LCD_ClearStringLine(uint16_t Line)
   *           This parameter must be a number between Min_Data = 0x20 and Max_Data = 0x7E 
   * @retval None
   */
-void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar)
+uint32_t BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar)
 {
+	uint32_t size = 0;
+	size = getStringWidth(Ascii);
 	DrawChar(Xpos, Ypos, (uint8_t*)DrawProp.pFont->glyph[getCharIndex(Ascii,ruChar)]);
+	return size;
 }
 
 /**

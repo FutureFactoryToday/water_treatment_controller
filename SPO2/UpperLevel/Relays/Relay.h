@@ -16,7 +16,8 @@ typedef enum {
 	HALT,
 	WASH,
 	PULSE,
-	NEIGHBOR
+	NEIGHBOR,
+	MANUAL_ON
 } dc_relay_work_t;
 
 typedef struct{

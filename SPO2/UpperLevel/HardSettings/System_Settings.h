@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 9
+#define SUB_VERSION 10
 #define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
@@ -46,9 +46,9 @@
 #define DEF_SEEK_TIME_SECONDS 35
 #define newPositions
 
-#define DEF_WORK_POS 5;//+ //                               //???????? ?????????
+#define DEF_WORK_POS 10;//+ //                               //???????? ?????????
 #define	DEF_BACKWASH_POS 261;  //                                   //???????? ????????
-#define	DEF_FORWARD_POS 500; //+                                      //??????????
+#define	DEF_FORWARD_POS 508; //+                                      //??????????
 #define	DEF_SALTERING_POS 415 //
 #define	DEF_FILLING_POS 105; //
 
@@ -69,7 +69,7 @@
 
 #define DEFAULT_TIME {2024, 03, 01,12,0,0}
 
-#define DEF_PHONE_NUMBER 9876543210
+#define DEF_PHONE_NUMBER 79876543210
 
 #define DEF_IMPULSE_WEIGHT 1
 #define FLASH_SECTORS 3

@@ -183,7 +183,7 @@ void showMessage(void){
 			BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
 
 			BSP_LCD_DisplayStringAt(X_START + 50, 215,"Необходимо провести сервисное", LEFT_MODE);
-			uint32_t offset = BSP_LCD_DisplayStringAt(X_START + 70, 215 + 25,"обслуживание! +7", LEFT_MODE);
+			uint32_t offset = BSP_LCD_DisplayStringAt(X_START + 70, 215 + 25,"обслуживание! +", LEFT_MODE);
 			BSP_LCD_DisplayStringAt(X_START + 70 + offset, 215 + 25,intToStr(sysParams.consts.ServicePhoneNumber), LEFT_MODE);
 			shownServiceMessage = true;
 		}

@@ -102,3 +102,54 @@ uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_
 	
 	return x < xS+xSize && x > xS && y < yS+ySize && y > yS;
 }
+
+void FontTest(WTC_FONT_t *pFonts){
+	  char engStart = ' ';
+    char engEnd = '~';
+	char *rusText[] = {"а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я",
+		"А","Б","В","Г","Д","Е","Ё","Ж","З","И","Й","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я"};
+	uint32_t	size = 0;
+	char str[2] = {0,0};
+	uint32_t yStart = 0;
+	button_t button;
+	
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
+	uint32_t oldMainColor = BSP_LCD_GetTextColor();
+	uint32_t oldBackColor = BSP_LCD_GetBackColor();
+	
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetFont(pFonts);
+	button.x = 0;
+	button.y = 0;
+	button.xSize = BSP_LCD_GetXSize();
+	button.ySize = BSP_LCD_GetYSize();
+	
+	TC_addButton(&button);
+	
+	for(char ch = engStart; ch < engEnd; ch++){
+		if (size > BSP_LCD_GetXSize() - 30){
+			yStart += BSP_LCD_GetFont()->height;
+			size = 0;
+		}
+		str[0] = ch;
+		size += BSP_LCD_DisplayStringAt(size,yStart,str,LEFT_MODE);
+	}		
+	uint32_t rusSize = sizeof(rusText);
+	for(char ch = 0; ch < rusSize/4; ch++){
+		if (size > BSP_LCD_GetXSize() - 30){
+			yStart += BSP_LCD_GetFont()->height;
+			size = 0;
+		}
+		size += BSP_LCD_DisplayStringAt(size,yStart,rusText[ch],LEFT_MODE);
+	}		
+	
+	while (button.pressCnt < 100);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	TC_clearButtons();
+	BSP_LCD_SetFont(oldFont);
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+}	

@@ -26,7 +26,7 @@
 #define FULL_LENGTH 560 //обороты
 //#define SEEK_TIME 30 //сек
 #define PISTON_MOVE_MIN 100 //обороты
-#define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
+#define PISTON_SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
 
 typedef enum {
 	 PC_ERROR = 1,

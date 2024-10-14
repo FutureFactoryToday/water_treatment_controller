@@ -114,5 +114,6 @@ void refresh(void);
 
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xE, uint16_t yE);
 
+void FontTest(WTC_FONT_t *pFonts);
 #endif /* __GUI_H__ */
 

@@ -166,7 +166,11 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 		} else{
 			sysParams.vars.pistonParams.workStatus = PC_READY;
 			sysParams.vars.pistonParams.calibration = true;
-			PC_GoToPozWithSpeed(- (FULL_LENGTH + 100), 100);
+			uint16_t longRun = PISTON_SPEED + 1;
+			longRun *= sysParams.consts.pistonSeekTime*1000;
+			longRun += 100;
+			//PC_GoToPoz(- (FULL_LENGTH + 100));
+			PC_GoToPoz(-longRun);
 			//Ждем пока сработает контроль или SEEK_TIME секунд
 			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS && seek_cnt++ < sysParams.consts.pistonSeekTime*1000){
 				LL_mDelay(1);
@@ -178,9 +182,9 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 			}
 		}
 		if (result == PASSED){
-			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
 			sysParams.vars.status.flags.PistonInited = 1;
 			sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.minPoz = sysParams.vars.pistonParams.curPoz = 0;
+			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
 			sysParams.vars.pistonParams.calibration = false;
 			sysParams.vars.pistonParams.maxPoz = FULL_LENGTH;
 		} else {

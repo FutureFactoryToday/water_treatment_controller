@@ -478,6 +478,7 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 	
 		if(sysParams.consts.planerConsts.startType != IMMEDIATELY){
 			int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
+			
 			uint32_t remHours = 0;
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
