@@ -92,15 +92,21 @@ void createFrame(void) {
 			wtc_time_t time = intToWTCTime(displayData[(max - i - 1)].timeStamp);
 			
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("YYYY.MM.DD hh:mm",&time),LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[1] ,LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, intToStr(displayData[(max - i - 1)].cause) ,LEFT_MODE);
+			//offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[1] ,LEFT_MODE);
+			uint32_t cause = displayData[(max - i - 1)].cause;
+			uint8_t N = 0;
+			while(cause > 0 && N < 20){
+				cause >>= 1;
+				N++;	
+			}
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[4+N] ,LEFT_MODE);
 			
 		}
 		drawStaticLines();
 	} else {
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[2],LEFT_MODE);
+		BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[1],LEFT_MODE);
 	}
 }
 

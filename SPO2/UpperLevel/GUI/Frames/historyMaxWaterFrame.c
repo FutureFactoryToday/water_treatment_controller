@@ -93,14 +93,14 @@ void createFrame(void) {
 			
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("YYYY.MM.DD - ",&time),LEFT_MODE);
 			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, intToStr(displayData[max - i - 1].param) ,LEFT_MODE);
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[5] ,LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[4] ,LEFT_MODE);
 			
 		}
 		drawStaticLines();
 	} else {
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[2],LEFT_MODE);
+		BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[1],LEFT_MODE);
 	}
 }
 
