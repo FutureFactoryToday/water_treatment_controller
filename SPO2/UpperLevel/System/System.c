@@ -39,12 +39,16 @@ void Load_Default_Values(void);
 
 void SYS_init(void){
 	__enable_irq();
+	
 	sysParams.vars = (sys_var_t){0};
 	Start_Logic();
 	FP_Init();
 	Start_ADC();
+	
 	initGUI();
+	
 	Load_Flash_Param();	
+	
 	#ifdef CLEAR_LOG
 	FP_ClearLog();
 	sysParams.consts.storedEntryNum = 0;
@@ -52,14 +56,25 @@ void SYS_init(void){
 	sysParams.consts.storedWashNum = 0;
 	#endif
 	LOG_Init();
+	MX_IWDG_Init();
 	PC_Init();
+	HAL_IWDG_Refresh(&hiwdg);
 	PL_Init();
+	HAL_IWDG_Refresh(&hiwdg);
 	FM_Init();
+	HAL_IWDG_Refresh(&hiwdg);
 	RELAY_Init();
+	HAL_IWDG_Refresh(&hiwdg);
 	Time_init();
+	HAL_IWDG_Refresh(&hiwdg);
 	resetCounter = 0;
 	FP_SaveParam();
 	sysParams.vars.status.flags.DebugMode = 1;
+	
+	HAL_IWDG_Refresh(&hiwdg);
+	HAL_TIM_Base_Start_IT(&htim6);
+
+	//while (1);
 	LL_SYSTICK_EnableIT();
 }
 void Start_ADC(){

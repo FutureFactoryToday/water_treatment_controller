@@ -64,6 +64,7 @@ extern I2C_HandleTypeDef hi2c2;
 extern DMA_HandleTypeDef hdma_spi1_rx;
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern SPI_HandleTypeDef hspi1;
+extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
@@ -559,6 +560,22 @@ void ADC3_IRQHandler(void)
   /* USER CODE BEGIN ADC3_IRQn 1 */
 
   /* USER CODE END ADC3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt.
+  */
+void TIM6_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_IRQn 0 */
+  /* USER CODE END TIM6_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_IRQn 1 */
+		if (LL_RCC_IsActiveFlag_IWDGRST()){
+			__NVIC_SystemReset();
+		}
+
+  /* USER CODE END TIM6_IRQn 1 */
 }
 
 /**

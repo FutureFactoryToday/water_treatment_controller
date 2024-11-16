@@ -267,7 +267,10 @@ void commEnd (SPI_HandleTypeDef *hspi){
 }
 
 bool isBusy (void){
-	readStatus();
+	if (readStatus() != HAL_OK){
+		return true;
+	}
+	
 	return status.bits.BUSY;
 }
 

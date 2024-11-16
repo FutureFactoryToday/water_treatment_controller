@@ -22,6 +22,7 @@
 #include "crc.h"
 #include "dma.h"
 #include "i2c.h"
+#include "iwdg.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -78,7 +79,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 //	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
-//	LL_RCC_ClearResetFlags();
+	LL_RCC_ClearResetFlags();
 	
 	_1ms_cnt = 0;
 	__disable_irq();
@@ -119,7 +120,10 @@ int main(void)
   MX_TIM10_Init();
   MX_TIM7_Init();
   MX_TIM4_Init();
+  
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+	//HAL_IWDG_Refresh(&hiwdg);
 	SYS_init();
   /* USER CODE END 2 */
 
@@ -157,11 +161,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE
+                              |RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;

@@ -67,7 +67,11 @@ void PC_Control(void){
 //	if (sysParams.vars.pistonParams.workStatus == PC_ERROR){
 //		sysParams.vars.pistonParams.workStatus = PC_READY;
 //	}
+//	if (LL_RCC_IsActiveFlag_IWDGRST()){
+//		__NVIC_SystemReset();
+//	}
 	//!!!!!!ЗАГЛУШКА!!!!!!//
+	HAL_IWDG_Refresh(&hiwdg);
 	if (sysParams.vars.status.flags.PistonInited == 0){
 		return;
 	}
@@ -143,7 +147,7 @@ void PC_Control(void){
 				sysParams.vars.pistonParams.workStatus = PC_READY;
 		 }
 	}
-
+	
 	lastPoz = sysParams.vars.pistonParams.curPoz;
 }
 pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
@@ -204,6 +208,9 @@ void PC_GoToPoz (int32_t dest){
 	}
 }
 void PC_GoToPozWithSpeed (int32_t dest, uint8_t speed){
+	if (dest > 600){
+		while (1);
+	}
 	if (dest != sysParams.vars.pistonParams.curPoz){
 		sysParams.vars.pistonParams.destPoz = dest;
 	}

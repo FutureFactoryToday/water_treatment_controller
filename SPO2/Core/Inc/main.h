@@ -58,6 +58,7 @@ extern "C" {
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
+#include "iwdg.h"
 #include "usart.h"
 #include "gpio.h"
 #include "Relays/Relay.h"
