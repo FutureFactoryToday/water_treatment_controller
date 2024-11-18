@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 10
+#define SUB_VERSION 11
 #define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
@@ -48,7 +48,7 @@
 
 #define DEF_WORK_POS 10;//+ //                               //???????? ?????????
 #define	DEF_BACKWASH_POS 261;  //                                   //???????? ????????
-#define	DEF_FORWARD_POS 508; //+                                      //??????????
+#define	DEF_FORWARD_POS 535; //+                                      //??????????
 #define	DEF_SALTERING_POS 415 //
 #define	DEF_FILLING_POS 105; //
 
