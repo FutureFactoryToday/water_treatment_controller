@@ -27,7 +27,7 @@ void RELAY_DC_ChangeType(dc_relay_work_t type){
 void RELAY_DC_CYCLE(void){
 	switch(sysParams.consts.dcRelay.workType){
 		case (MANUAL_ON):{
-			LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+			//LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 			break;
 		}
 		case (HALT):{

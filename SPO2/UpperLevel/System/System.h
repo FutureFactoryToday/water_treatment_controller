@@ -139,7 +139,7 @@ typedef struct {
 	float floatParam[Vin+1];
 }adc_params;
 
-typedef struct{
+typedef struct {
 	wtc_time_t sysTime;
 	sys_status_flags_t status;
 	sys_error_flags_t error;
@@ -156,7 +156,7 @@ typedef struct{
 	sys_const_t consts;
 } sys_param_t;
 
-extern sys_param_t sysParams;
+extern volatile sys_param_t sysParams;
 /*Global params*/
 
 /*Prototypes */

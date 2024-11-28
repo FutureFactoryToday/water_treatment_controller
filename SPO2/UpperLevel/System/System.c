@@ -25,10 +25,10 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-sys_param_t sysParams;
+volatile sys_param_t sysParams;
 uint32_t externalSignalCnt;
 bool oldExternalSignal;
-extern uint32_t resetCounter;
+//extern uint32_t resetCounter;
 /* Private function prototypes -----------------------------------------------*/
 static void Start_ADC();
 static void Start_RTC();
@@ -67,7 +67,7 @@ void SYS_init(void){
 	HAL_IWDG_Refresh(&hiwdg);
 	Time_init();
 	HAL_IWDG_Refresh(&hiwdg);
-	resetCounter = 0;
+	//resetCounter = 0;
 	FP_SaveParam();
 	sysParams.vars.status.flags.DebugMode = 1;
 	
@@ -76,6 +76,11 @@ void SYS_init(void){
 
 	//while (1);
 	LL_SYSTICK_EnableIT();
+	#ifdef OPTIC_TEST
+	sysParams.consts.dcRelay.workType = MANUAL_ON;
+	#endif
+	
+	
 }
 void Start_ADC(){
 	sysParams.vars.adc.adcCoef[Vbat] = 1/0.877;

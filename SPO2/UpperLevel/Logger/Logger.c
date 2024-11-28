@@ -17,7 +17,7 @@ sys_status_flags_t oldFlags;
 sys_error_flags_t	oldErrors;
 static uint8_t oldDay; 
 static uint32_t oldWater;
-log_data_t displayData[LOG_DISPLAY_SIZE];
+volatile log_data_t displayData[LOG_DISPLAY_SIZE];
 log_data_t logFifo[LOG_FIFO_SIZE];
 log_data_t dayValues[2];
 log_data_t washEvent;
@@ -27,6 +27,11 @@ bool processing;
 static uint32_t fifoEntryNum = 0;
 extern bool newDay;
 uint8_t washSave;
+volatile ulog_queue_t uLogQ;
+ulog_entry_t logEntry[UART_LOG_Q_SIZE];
+sys_param_t sysParCopy;
+uint8_t transmitStep;
+uint8_t lastByte;
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
 static void processComplete (void);
@@ -35,6 +40,8 @@ static uint8_t StoreDayValues(void);
 static uint8_t StoreWashEvent(void);
 static uint32_t checkErrorEmptySpace();
 static uint32_t checkWashEmptySpace();
+static void UL_Continue(UART_HandleTypeDef *huart);
+static void UL_Start(void);
 /*Code*/
 uint8_t LOG_Init(){
 	oldFlags.all = 0;
@@ -50,7 +57,22 @@ uint8_t LOG_Init(){
 	for(uint8_t i =0; i < LOG_DISPLAY_SIZE; i++){
 		displayData[i] = (log_data_t){0,0,0,0};
 	}
-
+	
+	/*UART LOG INIT*/
+	uLogQ.full = false;
+	uLogQ.empty = true;
+	for(uint8_t i = 0; i < UART_LOG_Q_SIZE; i++){
+		uLogQ.msgs[i].data = NULL;
+		uLogQ.msgs[i].size = 0;
+		uLogQ.msgs[i].type = 0;
+		
+		logEntry[i].text = NULL;
+		logEntry[i].data = NULL;
+	}
+	uLogQ.head = 0;
+	uLogQ.tail = 0;
+	transmitStep = 0;
+	HAL_UART_RegisterCallback(&huart1,HAL_UART_TX_COMPLETE_CB_ID, UL_Continue);
 }
 
 uint8_t LOG_GetErrors(uint16_t startEntry){
@@ -489,6 +511,208 @@ uint32_t checkWashEmptySpace(){
 void processComplete (void){
 	processing = false;
 }
+
+bool UL_LogText (uint8_t* text, uint32_t data){
+	if (uLogQ.full){
+		return false;
+	}
+	
+	uLogQ.empty = false;
+	
+	uint8_t curMsgNum = uLogQ.head++;
+	
+	if (uLogQ.head > UART_LOG_Q_SIZE-1){
+		uLogQ.head = 0;
+	}
+	if (uLogQ.head == uLogQ.tail){
+		uLogQ.full = true;
+	}
+	uLogQ.msgs[curMsgNum].type = MSG;
+	
+	uLogQ.msgs[curMsgNum].data = &logEntry[curMsgNum];
+	logEntry[curMsgNum].text = text;
+	logEntry[curMsgNum].data = data;
+	uint8_t* ptr = text;
+	uint8_t size = 0;
+	
+	while (*ptr++) size++ ;
+	
+	uLogQ.msgs[curMsgNum].size = size + sizeof(data);
+	
+	UL_Start();
+}
+
+bool UL_LogCond (void){
+	if (uLogQ.full){
+		return false;
+	}
+	uint8_t curMsgNum = uLogQ.head++;
+	
+	if (uLogQ.head > UART_LOG_Q_SIZE-1){
+		uLogQ.head = 0;
+	}
+	if (uLogQ.head == uLogQ.tail){
+		uLogQ.full = true;
+	}
+	uLogQ.msgs[curMsgNum].type = MSG;
+	
+	uLogQ.msgs[curMsgNum].data = &sysParams;
+
+	uLogQ.msgs[curMsgNum].size = sizeof(sysParams);
+	
+	UL_Start();
+}
+
+
+void UL_Start (void){
+	if (uLogQ.empty == true){
+		return;
+	}
+	if (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY){
+		return;
+	}
+//	if (uLogQ.msgs[uLogQ.tail].type == MSG){
+//		uint8_t res = HAL_UART_Transmit_IT(&huart1,
+//				uLogQ.msgs[uLogQ.tail].data,
+//				uLogQ.msgs[uLogQ.tail].size - sizeof(uLogQ.msgs[uLogQ.tail].data));
+//		if (res == HAL_OK){
+//			uLogQ.msgs[uLogQ.tail].size = sizeof(uLogQ.msgs[uLogQ.tail].data);
+//		} else {
+//			errorCause = "UART transmit error"; 
+//			Error_Handler();
+//		}
+//	}
+//	
+//	if (uLogQ.msgs[uLogQ.tail].type == STR){
+//		uint8_t res = HAL_UART_Transmit_IT(&huart1,
+//				uLogQ.msgs[uLogQ.tail].data,
+//				uLogQ.msgs[uLogQ.tail].size);
+//		if (res != HAL_OK){
+//			errorCause = "UART transmit error"; 
+//			Error_Handler();
+//		}
+//	}
+		transmitStep = 0;
+		uint8_t res = HAL_UART_Transmit_IT(&huart1,
+						&uLogQ.msgs[uLogQ.tail].type,
+						1);
+		if (res != HAL_OK){
+			errorCause = "UART transmit error"; 
+			Error_Handler();
+		}
+
+}
+
+void UL_Continue (UART_HandleTypeDef *huart){
+	if (uLogQ.msgs[uLogQ.tail].type == MSG){
+		switch (transmitStep){
+			case 0:{
+				ulog_entry_t* data = (ulog_entry_t*)(uLogQ.msgs[uLogQ.tail].data);
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+				data->text,
+				uLogQ.msgs[uLogQ.tail].size - sizeof(uLogQ.msgs[uLogQ.tail].data));
+			if (res == HAL_OK){
+				transmitStep++;
+			} else {
+				errorCause = "UART transmit error"; 
+				Error_Handler();
+			}
+				break;
+			}
+			case 1:{
+				ulog_entry_t* data = (ulog_entry_t*)(uLogQ.msgs[uLogQ.tail].data);
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+				&data->data,
+				sizeof(uLogQ.msgs[uLogQ.tail].data));
+			if (res == HAL_OK){
+				transmitStep++;
+			} else {
+				errorCause = "UART transmit error"; 
+				Error_Handler();
+			}
+				break;
+			}
+			case 2:{
+				lastByte = ~uLogQ.msgs[uLogQ.tail].type;
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+						&lastByte,
+						1);
+				if (res == HAL_OK){
+						transmitStep++;
+				} else {
+					errorCause = "UART transmit error"; 
+					Error_Handler();
+				}
+				break;
+			}
+			case 3:{
+				uLogQ.tail++;
+				if (uLogQ.tail > UART_LOG_Q_SIZE-1){
+					uLogQ.tail = 0;
+				}
+				if (uLogQ.head == uLogQ.tail){
+					uLogQ.empty = true;
+				}
+				
+				uLogQ.full = false;
+				
+				UL_Start();
+				break;
+			}
+			default:{
+				errorCause = "Wrong transmitStep"; 
+				Error_Handler();
+			}
+		}
+	} 
+	if (uLogQ.msgs[uLogQ.tail].type == STR){
+		switch (transmitStep){
+			case 0:{
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+				uLogQ.msgs[uLogQ.tail].data,
+				uLogQ.msgs[uLogQ.tail].size);
+			if (res == HAL_OK){
+				transmitStep++;
+			} else {
+				errorCause = "UART transmit error"; 
+				Error_Handler();
+			}
+				break;
+			}
+			case 1:{
+				lastByte = ~uLogQ.msgs[uLogQ.tail].type;
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+						&lastByte,
+						1);
+				if (res == HAL_OK){
+						transmitStep++;
+				} else {
+					errorCause = "UART transmit error"; 
+					Error_Handler();
+				}
+				break;
+			}
+			case 2:{
+				uLogQ.tail++;
+				if (uLogQ.tail > UART_LOG_Q_SIZE-1){
+					uLogQ.tail = 0;
+				}
+				if (uLogQ.head == uLogQ.tail){
+					uLogQ.empty = true;
+				}
+				
+				uLogQ.full = false;
+				
+				UL_Start();
+				break;
+			}
+			default:{
+				errorCause = "Wrong transmitStep"; 
+				Error_Handler();
+			}
+		}
+	}
+}
 	#include "FlashIC/W25.h"
 uint8_t recBuf[24];
 void LOG_Test(){
@@ -515,6 +739,7 @@ void LOG_Test(){
 		while(processing);
 	}
 }
+
 //	while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
 //	drv->readData(0xFFFFFF-10,recBuf2,10);
 //while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);

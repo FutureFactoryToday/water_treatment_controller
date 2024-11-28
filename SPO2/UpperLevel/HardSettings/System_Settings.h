@@ -20,7 +20,7 @@
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
 
-#define UTF-8
+#define UTF_8
 //SPI 
 #define SPI_LCD
 
@@ -74,5 +74,5 @@
 #define DEF_IMPULSE_WEIGHT 1
 #define FLASH_SECTORS 3
 
-
+#define UART_LOG_Q_SIZE 20
 #endif /* __SETTINGS_H__ */

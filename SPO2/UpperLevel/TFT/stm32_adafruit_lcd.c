@@ -1162,7 +1162,7 @@ uint32_t getStringWidth (uint8_t* str){
 }
 
 uint8_t getCharIndex(uint8_t* ch, bool ruChar){
-	#ifdef UTF-8
+	#ifdef UTF_8
 	
 	if (ruChar){
 		uint16_t newChar = *ch;

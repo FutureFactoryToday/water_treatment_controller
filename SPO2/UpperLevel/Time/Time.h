@@ -55,7 +55,7 @@ wtc_time_t getTime (void);
 //���������� ��� ������ �����
 void RTC_Interrupt(void);
 
-time_t getRTC();
+time_t getRTC(void);
 /*
 	������� ��� ������ ������� �� �����
 ������� ������: ������ � �������� ������ �� �����, �������� � System.language:

@@ -54,7 +54,7 @@
 /*Global params*/
 
 /*Prototypes */
-int TSF_showFrame();
+int TSF_showFrame(void);
 
 #endif /* __TIME_SET_FRAME_H__ */
 

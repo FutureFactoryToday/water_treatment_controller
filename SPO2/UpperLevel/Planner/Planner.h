@@ -92,7 +92,7 @@ void PL_Init(void);
 
 void PL_planer (planer_control_type_t startType);
 
-void PL_Interrupt();
+void PL_Interrupt(void);
 void copyOneTaskToFlash (uint16_t task);
 void copyOneTaskFromFlash(uint16_t task);
 void copyTasksToFlash (void);

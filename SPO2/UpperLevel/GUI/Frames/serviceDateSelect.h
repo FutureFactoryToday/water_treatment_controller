@@ -2,6 +2,6 @@
 #define _SERVICE_DATE_SELECT_H_
 #include "main.h"
 
-int32_t showServiceDateSelectFrame();
+int32_t showServiceDateSelectFrame(void);
 
 #endif //_SERVICE_DATE_SELECT_H_

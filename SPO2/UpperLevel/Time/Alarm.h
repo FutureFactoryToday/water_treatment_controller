@@ -21,7 +21,7 @@
 
 /*Prototypes */
 void setAlarm(wtc_time_t* time, void (*func)(void));
-void stopAlarm();
-void ALARM_INTERRUPT();
+void stopAlarm(void);
+void ALARM_INTERRUPT(void);
 #endif /* __ALARM_H__ */
 

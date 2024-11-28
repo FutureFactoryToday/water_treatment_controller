@@ -7,11 +7,12 @@
  * - 3 modes (only TX, half duplex, full duplex)
 */
 
-#include "Settings.h"
+//#include "Settings.h"
+#include "main.h"
 #ifdef SPI_LCD
 
 //-----------------------------------------------------------------------------
-#include "main.h"
+
 #include "TFT\lcd.h"
 #include "lcd_io_spi.h"
 
@@ -725,7 +726,7 @@ void LCD_IO_Bl_OnOff(uint8_t B1)
 	if (B1 > 100){
 		B1 = 100;
 	}
-	LL_TIM_OC_SetCompareCH1(BLTim,B1*10);
+	LL_TIM_OC_SetCompareCH1(BL_TIM,B1*10);
 }
 
 //-----------------------------------------------------------------------------
@@ -811,9 +812,9 @@ void LCD_IO_Init(void)
   
   #endif  // #if DMANUM(LCD_DMA_RX) > 0
 	
-	LL_TIM_CC_EnableChannel(BLTim, LL_TIM_CHANNEL_CH1);
-	LL_TIM_EnableAllOutputs(BLTim);
-	LL_TIM_EnableCounter(BLTim);
+	LL_TIM_CC_EnableChannel(BL_TIM, LL_TIM_CHANNEL_CH1);
+	LL_TIM_EnableAllOutputs(BL_TIM);
+	LL_TIM_EnableCounter(BL_TIM);
 } // void LCD_IO_Init(void)
 
 //-----------------------------------------------------------------------------

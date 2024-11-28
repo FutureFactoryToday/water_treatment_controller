@@ -82,8 +82,8 @@ void PC_Control(void);
 pc_calib_result_t PC_AUTO_CALIBRATE(bool first);
 void PC_Stop(void);
 void PC_Restart (void);
-bool PC_isBusy();
+bool PC_isBusy(void);
 int8_t PC_pozNum (uint32_t* poz);
-void PC_OpticTest();
+void PC_OpticTest(void);
 #endif /* __PISTON_CONTROL_H__ */
 

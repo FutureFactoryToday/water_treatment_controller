@@ -21,9 +21,9 @@
 extern uint8_t numBuf[11];
 /*Prototypes */
 
-/*Возведение в степень*/
+/*Power*/
 uint16_t POWC(uint32_t a,uint8_t b);
-/*Возврат строкового аналога числа (от 0 до 9)*/
+/*Convert number to character (from 0 to 9)*/
 uint8_t intToChar(uint8_t num);
 
 uint8_t* intToStr (int64_t num);

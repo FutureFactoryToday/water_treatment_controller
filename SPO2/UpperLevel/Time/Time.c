@@ -578,7 +578,7 @@ uint8_t maxDayInMonth(uint8_t month, uint16_t year){
 			return 30;
 		}
 		default: {
-			errorCause = "Неправильный месяц";
+			//errorCause = "Неправильный месяц";
 			Error_Handler();
 		}
 	}

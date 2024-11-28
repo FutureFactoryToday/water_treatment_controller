@@ -271,11 +271,23 @@ void PC_OpticSensInterrupt(void){
 	}
 	
 	if (MOT_GetControl().DIR == OUT){
+		#ifdef OPTIC_TEST
+		LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+		#endif
 		sysParams.vars.pistonParams.curPoz++;
 		delt = destination - sysParams.vars.pistonParams.curPoz;
+		#ifdef OPTIC_TEST
+		LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+		#endif
 	}else {
+		#ifdef OPTIC_TEST
+		LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+		#endif
 		sysParams.vars.pistonParams.curPoz--;
 		delt = sysParams.vars.pistonParams.curPoz - destination;
+		#ifdef OPTIC_TEST
+		LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
+		#endif
 	}
 	
 	if (delt < 20){

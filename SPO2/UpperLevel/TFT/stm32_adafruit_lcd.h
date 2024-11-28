@@ -128,7 +128,7 @@ typedef enum
 #define LCD_ERROR      0x01
 #define LCD_TIMEOUT    0x02
 
-#if LCD_REVERSE == 1
+#if LCD_REVERSE16 == 1
 #define  RC(a)   ((((a) & 0xFF) << 8) | (((a) & 0xFF00) >> 8))
 #else
 #define  RC(a)   a
@@ -185,7 +185,7 @@ void     BSP_LCD_ReadRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, ui
 void     BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
 void BSP_LCD_DrawBuffer_Start(uint16_t xStart, uint16_t yStart, uint16_t xSize, uint16_t ySize, uint32_t color);
-void BSP_LCD_DrawBuffer_Stop();
+void BSP_LCD_DrawBuffer_Stop(void);
 
 void BSP_BL_Control (uint8_t BL);
 #ifdef __cplusplus

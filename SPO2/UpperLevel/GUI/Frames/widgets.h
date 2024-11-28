@@ -16,7 +16,7 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
 
 void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label);
 
-void drawMainWindow();
+void drawMainWindow(void);
 
 void drawList(uint8_t scrollCnt);
 
@@ -27,24 +27,24 @@ typedef enum
     Save
 }statusBar_t;
 
-void drawStatusBarOkCancel();
+void drawStatusBarOkCancel(void);
 
 void drawStatusBarSave(uint8_t* label);
 
 void drawStatusBarLabel(uint8_t* label);
 
-void drawStatusBarEmpty();
+void drawStatusBarEmpty(void);
 
 void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumption, uint16_t amountOfWater);
 
 void drawScrollButton (uint16_t scPos);
 
-void drawStaticLines();
+void drawStaticLines(void);
 
 void drawClock(void);
 
 button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label,uint16_t textColor, uint16_t backColor);
 
 button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2 ,uint16_t textColor, uint16_t backColor);
-void drawDebugInfo();
+void drawDebugInfo(void);
 #endif 

@@ -6,8 +6,8 @@
 //Public defines sizers
 
 
-#define SAVE_X 400
-#define SAVE_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 13
+#define SAVE_X_ADJ 400
+#define SAVE_Y_ADJ TOP_LINE_WIDTH + MED_LINE_WIDTH + 13
 
 #define RESET_X 200
 #define RESET_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 13
