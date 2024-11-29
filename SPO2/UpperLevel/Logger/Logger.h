@@ -25,8 +25,8 @@ typedef struct{
 
 
 typedef enum {
-	MSG = 1,
-	STR,
+	MSG = 0xA3,
+	STR = 0x5A,
 } ulog_msg_type_t;
 
 typedef struct {

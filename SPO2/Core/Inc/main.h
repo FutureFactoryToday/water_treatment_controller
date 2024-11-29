@@ -146,7 +146,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-extern uint32_t _1ms_cnt;
+extern volatile uint32_t _1ms_cnt;
 extern uint8_t* errorCause;
 /* USER CODE END EC */
 

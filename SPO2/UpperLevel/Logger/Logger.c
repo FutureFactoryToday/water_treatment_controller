@@ -31,7 +31,7 @@ volatile ulog_queue_t uLogQ;
 ulog_entry_t logEntry[UART_LOG_Q_SIZE];
 sys_param_t sysParCopy;
 uint8_t transmitStep;
-uint8_t lastByte;
+uint8_t header[2];
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
 static void processComplete (void);
@@ -554,7 +554,7 @@ bool UL_LogCond (void){
 	if (uLogQ.head == uLogQ.tail){
 		uLogQ.full = true;
 	}
-	uLogQ.msgs[curMsgNum].type = MSG;
+	uLogQ.msgs[curMsgNum].type = STR;
 	
 	uLogQ.msgs[curMsgNum].data = &sysParams;
 
@@ -571,35 +571,16 @@ void UL_Start (void){
 	if (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY){
 		return;
 	}
-//	if (uLogQ.msgs[uLogQ.tail].type == MSG){
-//		uint8_t res = HAL_UART_Transmit_IT(&huart1,
-//				uLogQ.msgs[uLogQ.tail].data,
-//				uLogQ.msgs[uLogQ.tail].size - sizeof(uLogQ.msgs[uLogQ.tail].data));
-//		if (res == HAL_OK){
-//			uLogQ.msgs[uLogQ.tail].size = sizeof(uLogQ.msgs[uLogQ.tail].data);
-//		} else {
-//			errorCause = "UART transmit error"; 
-//			Error_Handler();
-//		}
-//	}
-//	
-//	if (uLogQ.msgs[uLogQ.tail].type == STR){
-//		uint8_t res = HAL_UART_Transmit_IT(&huart1,
-//				uLogQ.msgs[uLogQ.tail].data,
-//				uLogQ.msgs[uLogQ.tail].size);
-//		if (res != HAL_OK){
-//			errorCause = "UART transmit error"; 
-//			Error_Handler();
-//		}
-//	}
-		transmitStep = 0;
-		uint8_t res = HAL_UART_Transmit_IT(&huart1,
-						&uLogQ.msgs[uLogQ.tail].type,
-						1);
-		if (res != HAL_OK){
-			errorCause = "UART transmit error"; 
-			Error_Handler();
-		}
+	transmitStep = 0;
+	header[0] = uLogQ.msgs[uLogQ.tail].type;
+	header[1] = uLogQ.msgs[uLogQ.tail].size;
+	uint8_t res = HAL_UART_Transmit_IT(&huart1,
+					&header,
+					2);
+	if (res != HAL_OK){
+		errorCause = "UART transmit error"; 
+		Error_Handler();
+	}
 
 }
 
@@ -622,30 +603,18 @@ void UL_Continue (UART_HandleTypeDef *huart){
 			case 1:{
 				ulog_entry_t* data = (ulog_entry_t*)(uLogQ.msgs[uLogQ.tail].data);
 				uint8_t res = HAL_UART_Transmit_IT(&huart1,
-				&data->data,
-				sizeof(uLogQ.msgs[uLogQ.tail].data));
-			if (res == HAL_OK){
-				transmitStep++;
-			} else {
-				errorCause = "UART transmit error"; 
-				Error_Handler();
-			}
-				break;
-			}
-			case 2:{
-				lastByte = ~uLogQ.msgs[uLogQ.tail].type;
-				uint8_t res = HAL_UART_Transmit_IT(&huart1,
-						&lastByte,
-						1);
+											&data->data,
+											sizeof(uLogQ.msgs[uLogQ.tail].data));
 				if (res == HAL_OK){
-						transmitStep++;
+					transmitStep++;
 				} else {
 					errorCause = "UART transmit error"; 
 					Error_Handler();
 				}
-				break;
-			}
-			case 3:{
+					break;
+				}
+
+			case 2:{
 				uLogQ.tail++;
 				if (uLogQ.tail > UART_LOG_Q_SIZE-1){
 					uLogQ.tail = 0;
@@ -663,7 +632,9 @@ void UL_Continue (UART_HandleTypeDef *huart){
 				errorCause = "Wrong transmitStep"; 
 				Error_Handler();
 			}
+		
 		}
+		return;
 	} 
 	if (uLogQ.msgs[uLogQ.tail].type == STR){
 		switch (transmitStep){
@@ -680,19 +651,6 @@ void UL_Continue (UART_HandleTypeDef *huart){
 				break;
 			}
 			case 1:{
-				lastByte = ~uLogQ.msgs[uLogQ.tail].type;
-				uint8_t res = HAL_UART_Transmit_IT(&huart1,
-						&lastByte,
-						1);
-				if (res == HAL_OK){
-						transmitStep++;
-				} else {
-					errorCause = "UART transmit error"; 
-					Error_Handler();
-				}
-				break;
-			}
-			case 2:{
 				uLogQ.tail++;
 				if (uLogQ.tail > UART_LOG_Q_SIZE-1){
 					uLogQ.tail = 0;
@@ -710,7 +668,9 @@ void UL_Continue (UART_HandleTypeDef *huart){
 				errorCause = "Wrong transmitStep"; 
 				Error_Handler();
 			}
+			
 		}
+		return;
 	}
 }
 	#include "FlashIC/W25.h"

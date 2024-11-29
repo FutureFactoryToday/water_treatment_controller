@@ -232,6 +232,8 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
+	uint32_t startTime = HAL_GetTick();
+	UL_LogText(ITEM_LOG_TEXT[0], LL_RTC_TIME_Get(RTC));
 	LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 	FP_SaveParam();
 	RTC_Interrupt();
@@ -244,6 +246,9 @@ void RTC_IRQHandler(void)
 	} else {
 		goHome = true;
 	}
+	UL_LogCond();
+	startTime = HAL_GetTick() - startTime;
+	UL_LogText(ITEM_LOG_TEXT[1], startTime);
 	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */

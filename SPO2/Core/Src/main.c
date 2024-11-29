@@ -53,11 +53,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-	uint32_t _1ms_cnt;
+	volatile uint32_t _1ms_cnt;
 	uint8_t* errorCause;
-	filter_t fil;
-	uint32_t input = 0, output = 0;
-	uint32_t resetCounter __attribute__ ((section (".noinit")));
+	//filter_t fil;
+	//uint32_t input = 0, output = 0;
+	//uint32_t resetCounter __attribute__ ((section (".noinit")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -120,10 +120,20 @@ int main(void)
   MX_TIM10_Init();
   MX_TIM7_Init();
   MX_TIM4_Init();
-  
+  //MX_IWDG_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	//HAL_IWDG_Refresh(&hiwdg);
+//	uint8_t* str = "Test 10";
+//	uint8_t size = 1;
+//	__enable_irq();
+//	while (1)
+//  {
+//		HAL_UART_Transmit_IT(&huart1,
+//				str,
+//				size);
+//		LL_mDelay(500);
+//	}
 	SYS_init();
   /* USER CODE END 2 */
 
@@ -139,10 +149,12 @@ int main(void)
 //	FontTest(&Oxygen_Mono_24);
 	
 	ShowMainFrame();
+	
   while (1)
   {
+	
     /* USER CODE END WHILE */
-
+	
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -218,6 +230,7 @@ void Error_Handler(void)
   while (1)
   {
   }
+
   /* USER CODE END Error_Handler_Debug */
 }
 
