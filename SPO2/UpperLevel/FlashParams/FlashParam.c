@@ -201,9 +201,8 @@ void unlockSPI(void){
 	queue[currentHandler].set = false;
 	currentHandler++;
 	queueHandler();
-	
-	
 }
+
 void lockSPI(uint8_t lockNum){
 	if (lock == UNLOCKED){
 		lock = AUTO_LOCK;

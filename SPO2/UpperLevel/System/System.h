@@ -100,6 +100,7 @@ typedef struct{
 	unsigned WaterInLiters:1;
 	unsigned FlowMeterInt:1;
 	unsigned DebugMode:1;
+	unsigned AllInited:1;
 } sys_status_flag_bits_t;
 
 typedef union{
