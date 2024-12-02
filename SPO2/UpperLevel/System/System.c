@@ -79,7 +79,7 @@ void SYS_init(void){
 	#ifdef OPTIC_TEST
 	sysParams.consts.dcRelay.workType = MANUAL_ON;
 	#endif
-	
+	sysParams.vars.status.flags.AllInited =1;
 	
 }
 void Start_ADC(){
@@ -238,6 +238,10 @@ void Start_Logic(){
 }
 
 void SYS_Logic_IT(void){
+	if (sysParams.vars.status.flags.AllInited == 0){
+		return;
+	}
+	
 	/*ADC count*/
 	//#ifndef NO_FLOAT
 	sysParams.vars.adc.floatParam[Temp] = ((V25 - sysParams.vars.adc.rawADC[Temp]*LSB)/AVG_SLOPE) + 25;

@@ -122,6 +122,7 @@ int main(void)
   MX_TIM4_Init();
   //MX_IWDG_Init();
   MX_TIM6_Init();
+  MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
 	//HAL_IWDG_Refresh(&hiwdg);
 //	uint8_t* str = "Test 10";
@@ -154,7 +155,7 @@ int main(void)
   {
 	
     /* USER CODE END WHILE */
-	
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -80,7 +80,9 @@ void PC_Control(void){
 	}
 	if (sysParams.vars.error.flags.PistonFail == 1 || 
 			sysParams.vars.error.flags.mainPowerFail == 1 ||
-			sysParams.vars.error.flags.MotorFail == 1){
+			sysParams.vars.error.flags.MotorFail == 1||
+			sysParams.vars.error.flags.Drive1Fail == 1||
+			sysParams.vars.error.flags.Drive2Fail == 1){
 				
 		sysParams.vars.pistonParams.workStatus = PC_ERROR;		
 		MOT_Stop();
@@ -141,7 +143,6 @@ void PC_Control(void){
 			
 		} else {
 			//Destination complete
-		
 				sysParams.vars.pistonParams.destComplete = true;
 				MOT_Stop();
 				sysParams.vars.pistonParams.workStatus = PC_READY;

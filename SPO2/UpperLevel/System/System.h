@@ -100,6 +100,7 @@ typedef struct{
 	unsigned WaterInLiters:1;
 	unsigned FlowMeterInt:1;
 	unsigned DebugMode:1;
+	unsigned AllInited:1;
 } sys_status_flag_bits_t;
 
 typedef union{
@@ -145,6 +146,7 @@ typedef struct {
 	sys_error_flags_t error;
 	adc_params adc;
 	pc_params_t pistonParams;
+	//uint32_t flowCntDelay;
 	float flowCnt;
 	planer_t planer;
 	uint32_t dcRelayCnt;

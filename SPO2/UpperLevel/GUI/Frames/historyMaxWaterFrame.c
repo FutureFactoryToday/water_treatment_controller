@@ -52,7 +52,7 @@ int ShowHistoryMaxWaterFrame(void) {
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (firstEl < errorsNum - 4){
+			if (sysParams.consts.storedDayValueNum > 4 && firstEl < sysParams.consts.storedDayValueNum - 4){
 				firstEl++;
 				RefreshScreen();
 			}

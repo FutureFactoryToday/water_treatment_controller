@@ -23,7 +23,7 @@ log_data_t dayValues[2];
 log_data_t washEvent;
 static planer_status_t oldStatus;
 uint8_t logBufEntryNum;
-bool processing;
+volatile bool processing;
 static uint32_t fifoEntryNum = 0;
 extern bool newDay;
 uint8_t washSave;
@@ -81,7 +81,7 @@ uint8_t LOG_GetErrors(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedEntryNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedEntryNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedEntryNum - startEntry,LOG_DISPLAY_SIZE);
 		
 		while (FP_GetStoredLog(ERROR_SECTOR_ADDR + (sysParams.consts.storedEntryNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
@@ -97,7 +97,7 @@ uint8_t LOG_GetWash(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedWashNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedWashNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedWashNum - startEntry,LOG_DISPLAY_SIZE);
 		
 		while (FP_GetStoredLog(WASH_SECTOR_ADDR + (sysParams.consts.storedWashNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
@@ -113,7 +113,7 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
@@ -141,7 +141,7 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
@@ -179,6 +179,12 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 
 
 bool addEntry (log_data_t entry){
+	if (entry.cause == 0 && 
+			entry.param == 0 && 
+	entry.timeStamp == 0){
+		errorCause = "Empty entry";
+		Error_Handler();
+	}
 	logFifo[fifoEntryNum] = entry;
 	fifoEntryNum++;
 	uint8_t sizeMul = sizeof(log_data_t);
@@ -199,6 +205,9 @@ bool addEntry (log_data_t entry){
 
 
 HAL_StatusTypeDef LOG_Interrupt(void){
+	if (sysParams.vars.status.flags.AllInited == 0){
+		return HAL_BUSY;
+	}
 	sys_status_flags_t tempFlags;
 	sys_error_flags_t tempError;
 	sys_error_flags_t error;
@@ -452,6 +461,7 @@ HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 		return HAL_ERROR;
 	uint8_t sizeMul = sizeof(log_data_t);
 	if (fifoEntryNum > 0){
+		
 		processing = true;
 		res = FP_StoreLog(1,adress,size,buf,processComplete);
 		if (res == HAL_OK){
@@ -560,6 +570,10 @@ bool UL_LogCond (void){
 
 	uLogQ.msgs[curMsgNum].size = sizeof(sysParams);
 	
+//	uLogQ.msgs[curMsgNum].data = &sysParams.consts.pistonPositions;
+
+//	uLogQ.msgs[curMsgNum].size = sizeof(sysParams.consts.pistonPositions);
+	
 	UL_Start();
 }
 
@@ -632,7 +646,6 @@ void UL_Continue (UART_HandleTypeDef *huart){
 				errorCause = "Wrong transmitStep"; 
 				Error_Handler();
 			}
-		
 		}
 		return;
 	} 
@@ -668,10 +681,9 @@ void UL_Continue (UART_HandleTypeDef *huart){
 				errorCause = "Wrong transmitStep"; 
 				Error_Handler();
 			}
-			
 		}
-		return;
 	}
+	return;
 }
 	#include "FlashIC/W25.h"
 uint8_t recBuf[24];

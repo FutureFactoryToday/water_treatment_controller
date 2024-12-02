@@ -43,6 +43,9 @@ void drawDebugInfo(){
 			}
 		}
 		
+		offset += 10;
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Faults: ",LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,intToStr(sysParams.vars.error.all),LEFT_MODE);
 		
 		BSP_LCD_DrawBuffer_Stop();
 		BSP_LCD_SetFont(oldFont);

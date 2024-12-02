@@ -35,7 +35,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-static uint8_t lock, lock2;
+static volatile uint8_t lock, lock2;
 static uint8_t currentHandler;
 volatile static flash_params_t flashParams = {0};
 flash_params_t* fp = &flashParams;
@@ -201,9 +201,8 @@ void unlockSPI(void){
 	queue[currentHandler].set = false;
 	currentHandler++;
 	queueHandler();
-	
-	
 }
+
 void lockSPI(uint8_t lockNum){
 	if (lock == UNLOCKED){
 		lock = AUTO_LOCK;

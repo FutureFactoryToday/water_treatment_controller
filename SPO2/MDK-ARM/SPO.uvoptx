@@ -157,9 +157,41 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>588</LineNumber>
+          <LineNumber>79</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134317246</Address>
+          <Address>134287324</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\GUI\Frames\historyMaxWaterFrame.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/GUI/Frames/historyMaxWaterFrame.c\79</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>83</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134286384</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\GUI\Frames\historyErrorsFrame.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/GUI/Frames/historyErrorsFrame.c\83</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>522</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134355476</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -168,7 +200,55 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\UpperLevel\Logger\Logger.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SPO\../UpperLevel/Logger/Logger.c\588</Expression>
+          <Expression>\\SPO\../UpperLevel/Logger/Logger.c\522</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>233</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134355580</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\233</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>223</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134355558</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\223</Expression>
+        </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>246</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134229574</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\UpperLevel\FlashParams\FlashParam.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\SPO\../UpperLevel/FlashParams/FlashParam.c\246</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -180,132 +260,92 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>seek_cnt,0x0A</ItemText>
+          <ItemText>displayData</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>enableWash</ItemText>
+          <ItemText>sysParams.vars.planer.currentStep</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>enableWash</ItemText>
+          <ItemText>sysParams.consts.pistonPositions.rabPoz</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dayValues</ItemText>
+          <ItemText>pozNum</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>queue</ItemText>
+          <ItemText>pozPtr + i + firstEl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>logger</ItemText>
+          <ItemText>poz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>handler</ItemText>
+          <ItemText>ptr,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>resetCounter</ItemText>
+          <ItemText>sysParams.consts.pistonPositions,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>&amp;resetCounter</ItemText>
+          <ItemText>tempPoz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>oldDay</ItemText>
+          <ItemText>sysParams.vars.pistonParams.curPoz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>displayData</ItemText>
+          <ItemText>playBut,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.vars.planer.currentStep</ItemText>
+          <ItemText>i,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.consts.pistonPositions.rabPoz</ItemText>
+          <ItemText>result</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pozNum</ItemText>
+          <ItemText>deltTime,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pozPtr + i + firstEl,0x0A</ItemText>
+          <ItemText>getRTC()</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>poz,0x0A</ItemText>
+          <ItemText>queue</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ptr,0x0A</ItemText>
+          <ItemText>lock</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.consts.pistonPositions,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>19</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>tempPoz,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>20</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>sysParams.vars.pistonParams.curPoz,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>21</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>playBut,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>22</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>i,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>23</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>result</ItemText>
-        </Ww>
-        <Ww>
-          <count>24</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>deltTime,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>25</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>sysParams.vars.planer.currentTask-&gt;startDateTime,0x10</ItemText>
-        </Ww>
-        <Ww>
-          <count>26</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>getRTC()</ItemText>
+          <ItemText>lock2</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -373,6 +413,26 @@
           <count>12</count>
           <WinNumber>2</WinNumber>
           <ItemText>dest,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>13</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>filBuf,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\SPO\../UpperLevel/FlowMeter/FlowMeter.c\filBuf</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>hspi1</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>hspi2</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>
