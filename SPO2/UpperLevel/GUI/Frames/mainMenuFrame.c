@@ -5,8 +5,8 @@ static button_t customerBut, serviceBut, historyBut;
 static void createFrame (void);
 
 int ShowMainMenuFrame(void){
-    createFrame();
-	
+  createFrame();
+
 	while(1)
 	{		
 		if (updateFlags.sec == true){

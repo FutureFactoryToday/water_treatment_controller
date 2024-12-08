@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=16000000,STM32F103xG, _24bit_FORMAT,USE_HAL_DRIVER, NOT_CLEAR_LOG, OPTIC_TEST</Define>
+              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=16000000,STM32F103xG, _24bit_FORMAT,USE_HAL_DRIVER, NOT_CLEAR_LOG, OPTIC_TEST, WDT_TEST_1, WDT_TEST_2</Define>
               <Undefine></Undefine>
               <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../UserCore;../MidLevel;../Drivers;../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI;../../GUI/Logo;../UpperLevel;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy</IncludePath>
             </VariousControls>

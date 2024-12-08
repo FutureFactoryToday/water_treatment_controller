@@ -100,6 +100,7 @@ HAL_StatusTypeDef FP_StoreLog(uint8_t handler, uint32_t startAddress, uint32_t s
 	queue[handler].buf = buf;
 	queue[handler].cb = cb;
 	queue[handler].size = size;
+	queueHandler();
 	return HAL_OK;
 }
 
@@ -111,6 +112,7 @@ HAL_StatusTypeDef FP_GetStoredLog( uint32_t startAddress, uint32_t size, log_dat
 		queue[3].buf = buf;
 		queue[3].cb = cb;
 		queue[3].size = size;
+	queueHandler();
 	return HAL_OK;
 }
 uint8_t FP_GetParam(void){
@@ -163,6 +165,7 @@ uint8_t FP_SaveParam(void){
 	if (queue[0].set == 1)
 		return HAL_BUSY;
 	queue[0].set = 1;
+	queueHandler();
 }
 
 uint8_t FP_DeleteParam(void){
@@ -194,9 +197,8 @@ void unlockSPI(void){
 	} else {
 		lock = 0;
 	}
-	if (queue[currentHandler].cb != NULL){
-		queue[currentHandler].cb();
-		queue[currentHandler].cb = NULL;
+	if (cbFunc != NULL){
+		cbFunc();
 	}
 	queue[currentHandler].set = false;
 	currentHandler++;
@@ -217,7 +219,11 @@ void manualLockSPI(void){
 }
 
 void queueHandler(void){
+	if (lock != UNLOCKED){
+		return;
+	}
 	if (queue[currentHandler].set == 1){
+		cbFunc = queue[currentHandler].cb;
 		switch (currentHandler){
 			case (0):{
 				saveFRAMParam();
@@ -236,8 +242,10 @@ void queueHandler(void){
 		}
 	} else {
 		currentHandler++;	
-		if (currentHandler > QUEUE_SIZE)
+		if (currentHandler > QUEUE_SIZE){
+			currentHandler = 0;
 			return;
+		}
 		queueHandler();
 	}
 }
@@ -279,15 +287,15 @@ void saveRAMParam(uint8_t handler){
 	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
 		return;
 	}
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+	
 	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
+		//__set_PRIMASK(oldIRQStatus);
 		return;
 	}
-	
+	oldIRQStatus = __get_PRIMASK(); __disable_irq();
 	lockSPI(handler);
 	__set_PRIMASK(oldIRQStatus);
-	cbFunc = queue[handler].cb;
+//	cbFunc = queue[handler].cb;
 	while(logger->writeData(queue[handler].adress, queue[handler].buf, queue[handler].size) == HAL_BUSY);
 }
 
@@ -301,4 +309,4 @@ void getRAMParam(uint8_t handler){
 	lockSPI(3);
 	__set_PRIMASK(oldIRQStatus);
 	logger->readData(queue[3].adress, queue[3].buf, queue[3].size);
-}
+} 

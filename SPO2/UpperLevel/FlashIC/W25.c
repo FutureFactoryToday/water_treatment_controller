@@ -6,7 +6,7 @@ static HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPi
 static HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size);
 static HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size);
 static HAL_StatusTypeDef abortCom (void);
-static void commEnd (SPI_HandleTypeDef *hspi);
+static void commEndW25 (SPI_HandleTypeDef *hspi);
 static HAL_StatusTypeDef eraseChip (void);
 static HAL_StatusTypeDef readStatus(void);
 static bool isBusy (void);
@@ -117,7 +117,7 @@ typedef union{
 	HAL_StatusTypeDef abortCom (void){
 	HAL_SPI_Abort(MEM_SPI);
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-	commEnd(MEM_SPI);
+	commEndW25(MEM_SPI);
 }
 	
 HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio_t holdPin, void (*callBack) (void)){
@@ -138,7 +138,7 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
 	if (halSt != HAL_OK){
-		commEnd(spi);
+		commEndW25(spi);
 		return halSt;
 	} 
 	halSt = HAL_SPI_Receive(spi,&ID,3,10);
@@ -149,7 +149,7 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 
 HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	HAL_StatusTypeDef halSt;
-	if (spi->State == HAL_BUSY)
+	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
 	if (isBusy())
 		return HAL_BUSY;
@@ -162,13 +162,13 @@ HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	halSt = HAL_SPI_Transmit(spi,commandBuffer,5,10);
 	if (halSt != HAL_OK){
-		commEnd(spi);
+		commEndW25(spi);
 		return halSt;
 	} 
-	HAL_SPI_RegisterCallback(spi,HAL_SPI_RX_COMPLETE_CB_ID, commEnd);
+	HAL_SPI_RegisterCallback(spi,HAL_SPI_RX_COMPLETE_CB_ID, commEndW25);
 	halSt = HAL_SPI_Receive_DMA(spi,buf,size);
 	if (halSt != HAL_OK){
-		commEnd(spi);
+		commEndW25(spi);
 		return halSt;
 	} 
 	
@@ -177,7 +177,7 @@ HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 
 HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 	HAL_StatusTypeDef halSt;
-	if (spi->State == HAL_BUSY)
+	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
 	if (isBusy())
 		return HAL_BUSY;
@@ -240,7 +240,7 @@ void partWriteData (SPI_HandleTypeDef *hspi){
 	if (continueWrite){
 		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, partWriteData);
 	} else {
-		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEnd);
+		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
 	}
 	halSt = HAL_SPI_Transmit_DMA(spi,buf,size);
 	
@@ -258,7 +258,7 @@ HAL_StatusTypeDef readStatus(void){
 	return halSt;
 }
 
-void commEnd (SPI_HandleTypeDef *hspi){
+void commEndW25 (SPI_HandleTypeDef *hspi){
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
 	HAL_SPI_UnRegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID);
 	HAL_SPI_UnRegisterCallback(spi,HAL_SPI_RX_COMPLETE_CB_ID);
