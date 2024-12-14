@@ -146,6 +146,7 @@ typedef struct {
 	sys_error_flags_t error;
 	adc_params adc;
 	pc_params_t pistonParams;
+	//uint32_t flowCntDelay;
 	float flowCnt;
 	planer_t planer;
 	uint32_t dcRelayCnt;

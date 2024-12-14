@@ -175,6 +175,7 @@ void Error_Handler(void);
 #define DELAY_TIM TIM14
 #define _10kHz_Presc 7199
 #define PLANNER_TIM TIM11
+#define RAM_TIM &htim12
 #define Vbat_ADC_Pin LL_GPIO_PIN_0
 #define Vbat_ADC_GPIO_Port GPIOC
 #define V3v3_ADC_Pin LL_GPIO_PIN_1
