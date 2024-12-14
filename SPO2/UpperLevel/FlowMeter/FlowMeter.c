@@ -131,7 +131,8 @@ if (isOverFlow){
 			}
 			filResult /= FIL_DEPTH;
 			sysParams.vars.flowCnt = filResult;
-			sysParams.consts.maxWaterUsage = MAX(sysParams.consts.maxWaterUsage,sysParams.vars.flowCnt);
+			
+			sysParams.consts.maxWaterUsage = MAX(sysParams.consts.maxWaterUsage,round(FM_getFlowSpeed()*60));
 			LL_TIM_SetCounter(FLOW_TIM,0);
 			LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
 			//flowPeriod = LL_TIM_GetCounter(FLOW_TIM);//filter(&flowFilter,LL_TIM_GetCounter(FLOW_TIM));

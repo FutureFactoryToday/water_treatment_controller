@@ -23,7 +23,15 @@
 
 #define PL_NOT_INITED "---"
 
+	#ifdef WDT_TEST_1
 
+	extern bool wdt1While;
+	#endif
+	
+	#ifdef WDT_TEST_2
+
+	extern bool wdt2While;
+	#endif
 void ShowMainFrame(void);
 
 

@@ -94,7 +94,7 @@ bool detect (void){
 HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	detect();
 	HAL_StatusTypeDef halSt;
-	if (spi->State == HAL_BUSY)
+	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
 	commandBuffer[0] = READ;
 	commandBuffer[1] = (uint8_t)((addr & 0xFF00) >> 8);
@@ -155,7 +155,7 @@ void commEnd (SPI_HandleTypeDef *hspi){
 HAL_StatusTypeDef erase (void){
 	uint8_t data = 0xFF;
 	HAL_StatusTypeDef halSt;
-	if (spi->State == HAL_BUSY)
+	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
 	commandBuffer[0] = WREN;
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);

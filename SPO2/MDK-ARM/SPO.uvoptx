@@ -163,97 +163,97 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>seek_cnt,0x0A</ItemText>
+          <ItemText>displayData</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>enableWash</ItemText>
+          <ItemText>sysParams.vars.planer.currentStep</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>enableWash</ItemText>
+          <ItemText>sysParams.consts.pistonPositions.rabPoz</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dayValues</ItemText>
+          <ItemText>pozNum</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>queue</ItemText>
+          <ItemText>pozPtr + i + firstEl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>logger</ItemText>
+          <ItemText>poz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>handler</ItemText>
+          <ItemText>ptr,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>resetCounter</ItemText>
+          <ItemText>sysParams.consts.pistonPositions,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>&amp;resetCounter</ItemText>
+          <ItemText>tempPoz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>oldDay</ItemText>
+          <ItemText>sysParams.vars.pistonParams.curPoz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>displayData</ItemText>
+          <ItemText>playBut,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.vars.planer.currentStep</ItemText>
+          <ItemText>i,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.consts.pistonPositions.rabPoz</ItemText>
+          <ItemText>result</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pozNum</ItemText>
+          <ItemText>deltTime,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pozPtr + i + firstEl,0x0A</ItemText>
+          <ItemText>getRTC()</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>poz,0x0A</ItemText>
+          <ItemText>queue</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ptr,0x0A</ItemText>
+          <ItemText>lock</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>sysParams.consts.pistonPositions,0x0A</ItemText>
+          <ItemText>lock2</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tempPoz,0x0A</ItemText>
+          <ItemText>cb</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
@@ -295,62 +295,37 @@
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>sysParams.consts.ExternalCommandType</ItemText>
+          <ItemText>oldTimeMenuBtnTouch</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>sysParams.vars.status.flags.ExternalCommandOn</ItemText>
+          <ItemText>menuButCnt</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>externalSignalCnt</ItemText>
+          <ItemText>wdt1While</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>2</WinNumber>
-          <ItemText>oldExternalSignal</ItemText>
+          <ItemText>regButCnt</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>2</WinNumber>
-          <ItemText>externalSignal</ItemText>
+          <ItemText>oldTimeRegenBtnTouch</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>2</WinNumber>
-          <ItemText>flashParams</ItemText>
+          <ItemText>time1</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>2</WinNumber>
-          <ItemText>pulse</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>seek_cnt,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>sysParams.consts.pistonSeekTime,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>10</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>sysParams.vars.pistonParams.workStatus</ItemText>
-        </Ww>
-        <Ww>
-          <count>11</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>longRun,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>12</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>dest,0x0A</ItemText>
+          <ItemText>time1-oldTimeMenuBtnTouch,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>

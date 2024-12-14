@@ -42,7 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 bool oddSec;
-
+uint8_t _100HzCnt;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,6 +65,7 @@ extern DMA_HandleTypeDef hdma_spi1_rx;
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim12;
 extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
@@ -238,10 +239,10 @@ void RTC_IRQHandler(void)
 	}
 	uint32_t startTime = HAL_GetTick();
 	UL_LogText(ITEM_LOG_TEXT[0], LL_RTC_TIME_Get(RTC));
-	LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+	
 	FP_SaveParam();
 	LOG_Interrupt();
-	FP_StartStore();
+	//FP_StartStore();
 	
 	noTouchDelay++;
 	if (noTouchDelay){
@@ -416,6 +417,11 @@ void TIM4_IRQHandler(void)
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM4)){
 			LL_TIM_ClearFlag_UPDATE(TIM4);
 			PC_Control();
+		_100HzCnt++;
+		if (_100HzCnt >50){
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+			_100HzCnt = 0;
+		}
 		}
 
   /* USER CODE END TIM4_IRQn 0 */
@@ -520,6 +526,20 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 break interrupt and TIM12 global interrupt.
+  */
+void TIM8_BRK_TIM12_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 0 */
+
+  /* USER CODE END TIM8_BRK_TIM12_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim12);
+  /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 1 */
+
+  /* USER CODE END TIM8_BRK_TIM12_IRQn 1 */
 }
 
 /**

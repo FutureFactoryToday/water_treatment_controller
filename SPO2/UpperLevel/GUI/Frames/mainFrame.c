@@ -1,5 +1,7 @@
 #include "mainFrame.h"
 #define NEXT_STEP_DELAY 2*10
+
+
 uint8_t* FormatTime = "hh:mm";
 int32_t remainingDays;
 bool showDays;
@@ -28,6 +30,17 @@ static bool enableMenu, enableWash;
 uint32_t color, c; 
 uint32_t error = 0, oldError;
 
+	#ifdef WDT_TEST_1
+	static uint8_t menuButCnt = 0;
+	static uint32_t oldTimeMenuBtnTouch;
+	bool wdt1While;
+	#endif
+	
+	#ifdef WDT_TEST_2
+	static uint8_t regButCnt = 0;
+	static uint32_t oldTimeRegenBtnTouch;
+	bool wdt2While;
+	#endif
 void ShowMainFrame(void) {
     goHome = false;
     stepShow = false;
@@ -36,6 +49,20 @@ void ShowMainFrame(void) {
     shownErrorMessage = false;
     enableMenu = true;
     enableWash = true;
+	#ifdef WDT_TEST_1
+		menuButCnt = 0;
+		oldTimeMenuBtnTouch = HAL_GetTick();
+		wdt1While = false;
+	#endif
+	
+	#ifdef WDT_TEST_2
+		uint8_t regButCnt = 0;
+		oldTimeRegenBtnTouch = HAL_GetTick();
+		wdt2While = false;
+	#endif
+		
+	
+		
     createFrame();
 
   while (1) {
@@ -121,11 +148,39 @@ void ShowMainFrame(void) {
 
     /*Buttons releases*/
     if (regenBut.isReleased == true ) {
-      
+      #ifdef WDT_TEST_2
+			uint32_t time2 = HAL_GetTick();
+			if (time2 - oldTimeRegenBtnTouch < 400){
+				regButCnt++;
+				
+				if (regButCnt > 5){
+					wdt2While = true;
+				}
+			} else {
+				regButCnt = 0;
+			}
+			oldTimeRegenBtnTouch = HAL_GetTick();
+			#endif
       regenBut.isReleased = false;
       // createFrame();
     }
     if (menuBut.isReleased == true) {
+			#ifdef WDT_TEST_1
+			uint32_t time1 = HAL_GetTick();
+			if (time1 - oldTimeMenuBtnTouch < 400){
+				menuButCnt++;
+				
+				if (menuButCnt > 5){
+					wdt1While = true;
+				}
+			} else {
+				menuButCnt = 0;
+			}
+			oldTimeMenuBtnTouch = HAL_GetTick();
+			if (wdt1While){
+				while(1);
+			}
+			#endif
       //ShowMainMenuFrame();
 			if (enableMenu){
 				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,

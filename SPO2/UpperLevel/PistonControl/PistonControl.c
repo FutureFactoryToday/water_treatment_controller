@@ -72,6 +72,11 @@ void PC_Control(void){
 //	}
 	//!!!!!!ЗАГЛУШКА!!!!!!//
 	HAL_IWDG_Refresh(&hiwdg);
+	#ifdef WDT_TEST_2
+	if (wdt2While){
+				while(1);
+			}
+	#endif
 	if (sysParams.vars.status.flags.PistonInited == 0){
 		return;
 	}

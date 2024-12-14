@@ -81,7 +81,7 @@ uint8_t LOG_GetErrors(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedEntryNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedEntryNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedEntryNum - startEntry,LOG_DISPLAY_SIZE);
 		
 		while (FP_GetStoredLog(ERROR_SECTOR_ADDR + (sysParams.consts.storedEntryNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
@@ -97,7 +97,7 @@ uint8_t LOG_GetWash(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedWashNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedWashNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedWashNum - startEntry,LOG_DISPLAY_SIZE);
 		
 		while (FP_GetStoredLog(WASH_SECTOR_ADDR + (sysParams.consts.storedWashNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
@@ -113,7 +113,7 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
@@ -141,7 +141,7 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum,LOG_DISPLAY_SIZE);
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
