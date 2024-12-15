@@ -557,7 +557,7 @@ bool UL_LogCond (void){
 		return false;
 	}
 	uint8_t curMsgNum = uLogQ.head++;
-	
+	uLogQ.empty = false;
 	if (uLogQ.head > UART_LOG_Q_SIZE-1){
 		uLogQ.head = 0;
 	}
@@ -570,9 +570,9 @@ bool UL_LogCond (void){
 
 	uLogQ.msgs[curMsgNum].size = sizeof(sysParams);
 	
-//	uLogQ.msgs[curMsgNum].data = &sysParams.consts.pistonPositions;
+//	uLogQ.msgs[curMsgNum].data = &sysParams.vars.sysTime;
 
-//	uLogQ.msgs[curMsgNum].size = sizeof(sysParams.consts.pistonPositions);
+//	uLogQ.msgs[curMsgNum].size = sizeof(sysParams.vars.sysTime);
 	
 	UL_Start();
 }

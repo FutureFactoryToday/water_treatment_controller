@@ -54,7 +54,7 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 			if (updateFlags.sec){
 				displayedTime = addSec(&displayedTime,1);
 				// drawClock(); drawMainStatusBar(144, 2305, 16);
-				updateFlags.sec = false;
+				updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 			} 
 			if (setMonth.isPressed == 1){
 				drawDarkTextLabel(BSP_LCD_GetXSize()/2 + GAP, BSP_LCD_GetYSize()/2 - 10, 150, 40,getFormatedTimeFromSource("MM",&displayedTime));

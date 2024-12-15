@@ -24,7 +24,7 @@ uint8_t ShowOutputEnableChoice(uint8_t* text, relay_t* relay){
 			return -1;
 		}
 		if(updateFlags.sec == true) {
-			updateFlags.sec = false;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		if(okBut.isReleased == true) {
 			okBut.isReleased = false;

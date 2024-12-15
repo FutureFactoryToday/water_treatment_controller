@@ -31,7 +31,7 @@ void ShowManualDriveControl(void)
 				 drawClock(); drawMainStatusBar(144, 2305, 16);
 			
 				//drawTextLabel(curPozBut,intToStr(dispPoz));
-				updateFlags.sec = false;
+				updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		
 		if (dispPoz != PC_GetCurPoz()){

@@ -76,7 +76,7 @@ void ShowMainFrame(void) {
 			if (sysParams.vars.status.flags.NeedService == 0){
 				showInOut();
 			}
-      updateFlags.sec = false;
+      updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
     }
 		if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
 //			if (enableWash == true){

@@ -28,7 +28,7 @@ int ShowUniversalOutputFrame(void) {
 	createFrame();
 	while(1) {
 		if(updateFlags.sec == true) {
-			updateFlags.sec = false;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		/*Buttons pressed*/
 		if(retBut.isPressed == true) {

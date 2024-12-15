@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 12
+#define SUB_VERSION 13
 #define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
@@ -75,4 +75,6 @@
 #define FLASH_SECTORS 3
 
 #define UART_LOG_Q_SIZE 20
+
+#define SOFT_WDT_TIM_VAL_DEF 300
 #endif /* __SETTINGS_H__ */
