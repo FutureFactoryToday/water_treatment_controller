@@ -79,6 +79,8 @@ void SYS_init(void){
 	#ifdef OPTIC_TEST
 	sysParams.consts.dcRelay.workType = MANUAL_ON;
 	#endif
+	sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
+	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.status.flags.AllInited =1;
 	
 }

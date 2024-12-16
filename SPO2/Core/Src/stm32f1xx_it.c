@@ -255,6 +255,7 @@ void RTC_IRQHandler(void)
 	UL_LogCond();
 
 	LL_RTC_ClearFlag_SEC(RTC);
+	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
 
@@ -415,8 +416,20 @@ void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM4)){
-			LL_TIM_ClearFlag_UPDATE(TIM4);
-			PC_Control();
+		LL_TIM_ClearFlag_UPDATE(TIM4);
+		if (sysParams.vars.status.flags.AllInited){
+			if (sysParams.vars.frameWDTTim){
+				sysParams.vars.frameWDTTim--;
+			} else {
+				while(1);
+			}
+			if (sysParams.vars.secWDTTim){
+				sysParams.vars.secWDTTim--;
+			} else {
+				while(1);
+			}
+		}
+		PC_Control();
 		_100HzCnt++;
 		if (_100HzCnt >50){
 			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);

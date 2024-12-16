@@ -14,7 +14,7 @@ int ShowWashTimCustFrame(void)
     {
         if (updateFlags.sec == true){
              
-            updateFlags.sec = false;
+            updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }
         //Pressed
         if (timeBut.isPressed == true){

@@ -99,7 +99,7 @@ int TSF_showFrame(){
 			if (updateFlags.sec){
 				displayedTime = addSec(&displayedTime,1);
 				drawMidClock(timeSetPressed);
-				updateFlags.sec = false;
+				updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 			} 
 			if (timeSetButton.isPressed == true){
 				timeSetPressed = true;

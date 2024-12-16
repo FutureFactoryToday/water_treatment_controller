@@ -31,7 +31,8 @@ uint8_t ShowAdjustmentFrame(){
 			return -1;
 		}
 		if(updateFlags.sec == true) {
-			updateFlags.sec = false;
+			sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		if(okBut.isReleased == true) {
 			okBut.isReleased = false;

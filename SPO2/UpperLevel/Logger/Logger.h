@@ -31,7 +31,7 @@ typedef enum {
 
 typedef struct {
 	ulog_msg_type_t type;
-	uint32_t* data;
+	uint8_t* data;
 	uint8_t size;
 }ulog_msg_t;
 

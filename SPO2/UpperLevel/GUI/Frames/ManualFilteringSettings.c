@@ -55,7 +55,7 @@ int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modabl
 	while(1) {
 		if(updateFlags.sec == true) {
 			//RefreshScrollBar();
-			updateFlags.sec = false;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		if(scrollUpBut.isPressed == true) {
 			//Make it blue

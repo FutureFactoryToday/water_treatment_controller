@@ -71,6 +71,8 @@ void PC_Control(void){
 //		__NVIC_SystemReset();
 //	}
 	//!!!!!!ЗАГЛУШКА!!!!!!//
+	
+	
 	HAL_IWDG_Refresh(&hiwdg);
 	#ifdef WDT_TEST_2
 	if (wdt2While){

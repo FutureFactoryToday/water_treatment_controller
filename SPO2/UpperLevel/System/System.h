@@ -135,7 +135,7 @@ typedef struct{
 } sys_const_t;
 
 typedef struct {
-	uint16_t rawADC[Vin+1];
+	uint32_t rawADC[Vin+1];
 	float adcCoef[Vin+1];
 	float floatParam[Vin+1];
 }adc_params;
@@ -151,6 +151,8 @@ typedef struct {
 	planer_t planer;
 	uint32_t dcRelayCnt;
 	uint32_t flowImpulseCnt;
+	uint32_t secWDTTim;
+	uint32_t frameWDTTim;
 } sys_var_t;
 
 typedef struct{

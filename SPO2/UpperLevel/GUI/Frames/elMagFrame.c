@@ -24,7 +24,7 @@ int showElMagFrame(){
 		if (updateFlags.sec == true){
 //			drawClock(); 
 //			drawMainStatusBar(144, 2305, 16);
-			updateFlags.sec = false;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 		}
 		if(okBut.isReleased == true){
 			switch(markItem) {

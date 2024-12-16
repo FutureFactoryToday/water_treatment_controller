@@ -39,7 +39,7 @@ int64_t ShowKeyboardFrame(int64_t min, int64_t max)
 			//Секундное обновление
         if (updateFlags.sec){
             RefreshCursor(dx);
-            updateFlags.sec = false;
+            updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }
         //Удержание кнопки с индикацией
         if(_0.isPressed){

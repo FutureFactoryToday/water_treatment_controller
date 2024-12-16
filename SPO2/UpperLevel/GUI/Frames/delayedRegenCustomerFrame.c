@@ -17,7 +17,7 @@ void ShowDelayedRegenCustFrame(void)
            drawClock(); drawMainStatusBar(144, 2305, 16);
 					showRemeiningTime();
 					
-          updateFlags.sec = false;
+          updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }    
 
         /*Buttons pressed*/ 
