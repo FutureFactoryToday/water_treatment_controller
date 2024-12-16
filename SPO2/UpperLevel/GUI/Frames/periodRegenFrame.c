@@ -100,7 +100,7 @@ void createFrame() {
   if (sysParams.consts.planerConsts.startType == BY_HOUR) {
     periodRegenBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 50, BSP_LCD_GetYSize() / 2 - 65, 100, 60, intToStr(tempTask. restartDateTime / (60 * 60)));
   }
-  int32_t deltTime = tempTask. startDateTime - getRTC();
+  int32_t deltTime = tempTask.startDateTime - getRTC();
   uint32_t remTime = 0;
   if (deltTime >= 0) {
     if (sysParams.consts.planerConsts.startType == BY_HOUR) {

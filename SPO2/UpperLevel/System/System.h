@@ -123,7 +123,7 @@ typedef struct{
 	float waterFromLastFilter;
 	relay_t acRelay;
 	relay_t	dcRelay;
-	uint8_t impulseWeight;
+	uint32_t impulseWeight;
 	uint32_t storedEntryNum;
 	uint32_t storedWashNum;
 	uint32_t storedDayValueNum;

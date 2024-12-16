@@ -54,7 +54,7 @@ uint8_t* intToStr (int64_t num){
 	}
 	
 	uint8_t ch = 0;
-	uint32_t mod = 1000000000;
+	uint64_t mod = 10000000000;
 	if (num == 0){
 		numBuf[0] = 48;
 		return numBuf;

@@ -23,11 +23,11 @@ void ShowAlarmNotiServiceFrame(void) {
     if (goHome) {
       return;
     }
-//    if (updateFlags.sec == true) {
+    if (updateFlags.sec == true) {
 //      drawClock();
 //      drawMainStatusBar(144, 2305, 16);
-//      updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
-//    }
+      updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+    }
     if (retBut.isReleased == true) {
       retBut.isReleased = false;
       return;
@@ -37,7 +37,7 @@ void ShowAlarmNotiServiceFrame(void) {
       phoneNumber.isPressed = false;
     }
     if (phoneNumber.isReleased == true) {
-      uint64_t temp = ShowKeyboardFrame(1, 9999999999);
+      int64_t temp = ShowKeyboardFrame(1, 9999999999);
       if (temp > 0) {
 				phone = temp;
       }
