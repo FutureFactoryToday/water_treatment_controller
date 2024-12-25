@@ -142,6 +142,7 @@ typedef struct {
 
 typedef struct {
 	wtc_time_t sysTime;
+	uint32_t rtcTime;
 	sys_status_flags_t status;
 	sys_error_flags_t error;
 	adc_params adc;

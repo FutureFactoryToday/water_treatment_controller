@@ -52,7 +52,8 @@ typedef enum {
 typedef enum {
 	PL_NOT_SET = 1,
 	PL_SET,
-	PL_WORKING
+	PL_WORKING,
+	PL_WAIT_MANUAL
 } planer_status_t;
 
 typedef struct{

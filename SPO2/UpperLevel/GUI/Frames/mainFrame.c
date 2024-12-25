@@ -12,6 +12,7 @@ uint8_t* timeText;
 uint8_t *valText, *unitsText;
 bool shownServiceMessage;
 bool shownErrorMessage;
+bool shownManualMessage;
 uint32_t shownStep;
 static time_t displayedTime;
 bool update;
@@ -47,6 +48,7 @@ void ShowMainFrame(void) {
     errorShown = false;
     shownServiceMessage = false;
     shownErrorMessage = false;
+		shownManualMessage = false;
     enableMenu = true;
     enableWash = true;
 	#ifdef WDT_TEST_1
@@ -94,6 +96,10 @@ void ShowMainFrame(void) {
     if (sysParams.consts.planerConsts.status == PL_WORKING) {
       if (*sysParams.vars.planer.currentStep->poz != shownStep) {
         shownStep = *sysParams.vars.planer.currentStep->poz;
+				if (shownManualMessage){ 
+					clearShownStep();
+					shownManualMessage = false;
+				}
         showStepName();
 
 				enableMenu = false;
@@ -292,6 +298,25 @@ void showMessage(void){
 		if (shownErrorMessage){
 			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
 			shownErrorMessage = false;
+		} else {
+			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
+				if (shownManualMessage == false){
+					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
+					BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+					BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
+					BSP_LCD_SetFont(&Oxygen_Mono_20);
+					BSP_LCD_DisplayStringAt(X_START + 5, Y_START + Y_SIZE/4,"Необходимо запустить промывку вручную", LEFT_MODE);
+					shownManualMessage = true;
+					BSP_LCD_SetFont(oldFont);
+				}
+			} else {
+				if (shownManualMessage){
+					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+				}
+				shownManualMessage = false;
+			}
+			
 		}
 	}
 //	if (shownMessage != 0){
