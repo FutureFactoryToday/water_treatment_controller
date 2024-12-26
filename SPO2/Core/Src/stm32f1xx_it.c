@@ -234,6 +234,7 @@ void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
 	RTC_Interrupt();
+	sysParams.vars.rtcTime = LL_RTC_TIME_Get(RTC);
 	if (sysParams.vars.status.flags.AllInited == 0){
 		return;
 	}

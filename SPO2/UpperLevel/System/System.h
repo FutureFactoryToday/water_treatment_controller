@@ -123,7 +123,7 @@ typedef struct{
 	float waterFromLastFilter;
 	relay_t acRelay;
 	relay_t	dcRelay;
-	uint8_t impulseWeight;
+	uint32_t impulseWeight;
 	uint32_t storedEntryNum;
 	uint32_t storedWashNum;
 	uint32_t storedDayValueNum;
@@ -142,6 +142,7 @@ typedef struct {
 
 typedef struct {
 	wtc_time_t sysTime;
+	uint32_t rtcTime;
 	sys_status_flags_t status;
 	sys_error_flags_t error;
 	adc_params adc;

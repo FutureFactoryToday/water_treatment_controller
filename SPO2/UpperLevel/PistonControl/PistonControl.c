@@ -168,10 +168,10 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 		sysParams.vars.pistonParams.minPoz = -FULL_LENGTH*2;
 		result = PASSED;
 		sysParams.vars.status.flags.PistonInited = 1;
-		if (first){
-			PC_GoToPoz(20);
-			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
-		}
+//		if (first){
+//			PC_GoToPoz(20);
+//			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
+//		}
 		if (sysParams.vars.error.flags.PistonFail == 1){
 			MOT_Stop();
 			result = STALL;
@@ -211,7 +211,9 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 void PC_GoToPoz (int32_t dest){
 	if(sysParams.vars.status.flags.PistonInited == 1 &&
 		sysParams.vars.error.flags.PistonFail == 0){
-		sysParams.vars.pistonParams.workStatus = PC_READY;
+//		if (sysParams.vars.pistonParams.workStatus != PC_IN_PROCESS){
+//			sysParams.vars.pistonParams.workStatus = PC_READY;
+//		}
 		PC_GoToPozWithSpeed(dest, MAX_SPEED);
 	}
 }

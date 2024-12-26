@@ -68,29 +68,32 @@ void PL_planer(planer_control_type_t startType) {
   if (sysParams.vars.planer.currentTask != NULL &&
     sysParams.vars.error.flags.PistonFail == 0) {
     if (sysParams.consts.planerConsts.status == PL_NOT_SET ||
-      sysParams.consts.planerConsts.status == PL_SET) {
+      sysParams.consts.planerConsts.status == PL_SET || 
+		sysParams.consts.planerConsts.status == PL_WAIT_MANUAL) {
       switch (startType) {
       case START_NORMAL: {
-        if (sysParams.vars.planer.currentTask -> startDateTime >= getRTC()) {
-          sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
-          sysParams.consts.planerConsts.status = PL_SET;
-        } else {
-          if (sysParams.vars.planer.currentTask -> restartDateTime >= 0) {
+				if (sysParams.consts.planerConsts.status != PL_WAIT_MANUAL){
+					if (sysParams.vars.planer.currentTask -> startDateTime >= getRTC()) {
+						sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
+						sysParams.consts.planerConsts.status = PL_SET;
+					} else {
+						if (sysParams.vars.planer.currentTask -> restartDateTime >= 0) {
 
-            sysParams.vars.planer.currentTask -> startDateTime = getRTC() + sysParams.vars.planer.currentTask -> restartDateTime;
-						
-						if (sysParams.consts.planerConsts.startType != BY_HOUR){			
-							sysParams.vars.planer.currentTask -> startDateTime = setPreferedTime(sysParams.vars.planer.currentTask -> startDateTime);
+							sysParams.vars.planer.currentTask -> startDateTime = getRTC() + sysParams.vars.planer.currentTask -> restartDateTime;
+							
+							if (sysParams.consts.planerConsts.startType != BY_HOUR){			
+								sysParams.vars.planer.currentTask -> startDateTime = setPreferedTime(sysParams.vars.planer.currentTask -> startDateTime);
+							}
+							
+							sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
+
+							sysParams.consts.planerConsts.currentStepNum = 0;
+
+							sysParams.consts.planerConsts.status = PL_SET;
+
 						}
-						
-            sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
-
-            sysParams.consts.planerConsts.currentStepNum = 0;
-
-            sysParams.consts.planerConsts.status = PL_SET;
-
-          }
-        }
+					}
+				}
         break;
       }
       case FORCE_START_NOW: {
@@ -171,6 +174,9 @@ void PL_Interrupt() {
 
   if (sysParams.vars.status.flags.PlanerInited == 1) {
     //Not SET after restart or flash error
+		if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL) {
+			return;
+		}
     if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
       //PL_planer(START_NORMAL);
 			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
@@ -270,13 +276,14 @@ bool checkStartConditions(void) {
     }
     //uint32_t waterLimit = (sysParams.consts.planerConsts.filtroCycle * (100 - sysParams.consts.planerConsts.filtroReserve) / 100);
     bool result = false;
-//    if (sysParams.consts.waterFromLastFilter >= waterLimit) {
-//      if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
-//        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
-//        result = true;
-//      }
-//    }
-//    result |= sysParams.vars.planer.currentTask -> startDateTime < getRTC();
+    //if (sysParams.consts.waterFromLastFilter >= waterLimit) {
+		if (sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle){
+      if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
+        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
+        result = true;
+      }
+    }
+    result |= sysParams.vars.planer.currentTask -> startDateTime < getRTC();
     return result;
     break;
   }

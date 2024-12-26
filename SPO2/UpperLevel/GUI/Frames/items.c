@@ -87,5 +87,5 @@ const uint8_t* ITEM_TIME_ruText[] = {
 
 const uint8_t* ITEM_LOG_TEXT[] = {
 	"Start of 1 sec packet. Current time - ",
-	"End of 1 sec packet. Microsec taken - "
+	"End of 1 sec packet. Milisec taken - "
 };

@@ -169,8 +169,8 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.currentStepNum = 0;
 	sysParams.consts.planerConsts.status = PL_NOT_SET;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].remainingTime = 0;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].startDateTime = DEF_TASK_RESTART_HOURS*60*60;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].startDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
 	uint8_t taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
@@ -184,8 +184,8 @@ void Load_Default_Values(void){
 	
 	//Softening
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].remainingTime = 0;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].startDateTime = DEF_TASK_RESTART_HOURS*60*60;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].restartDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].startDateTime = getRTC() + DEF_TASK_RESTART_HOURS*60*60;
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;
 	taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 8*60;
@@ -206,7 +206,7 @@ void Load_Default_Values(void){
 	//copyTasksToFlash();
 	
 	sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
-	sysParams.consts.planerConsts.status = PL_NOT_SET;
+	sysParams.consts.planerConsts.status = PL_WAIT_MANUAL;
 	sysParams.consts.planerConsts.preferedTimeForWash = (wtc_time_t)DEF_TASK_PREF_TIME_TO_START;
 	sysParams.consts.planerConsts.monthBetweenService = DEF_TASK_MONTH_BETWEN_SERV;
 	sysParams.consts.planerConsts.lastService = 0;
@@ -274,15 +274,15 @@ void SYS_Logic_IT(void){
 		sysParams.vars.error.flags.BatteryFail = 0;
 	}
 	
-	limit = sysParams.consts.adcLimit[_5V];
-	if (sysParams.vars.error.flags._5VPowerFail == 1){
-		limit *= sysParams.consts.adcLimit[_5V]*sysParams.consts.adcLimitDelt[_5V];
-	}
-	if(sysParams.vars.adc.floatParam[_5V] < sysParams.consts.adcLimit[_5V]){
-		sysParams.vars.error.flags._5VPowerFail = 1;
-	} else {
-		sysParams.vars.error.flags._5VPowerFail = 0;
-	}
+//	limit = sysParams.consts.adcLimit[_5V];
+//	if (sysParams.vars.error.flags._5VPowerFail == 1){
+//		limit *= sysParams.consts.adcLimit[_5V]*sysParams.consts.adcLimitDelt[_5V];
+//	}
+//	if(sysParams.vars.adc.floatParam[_5V] < sysParams.consts.adcLimit[_5V]){
+//		sysParams.vars.error.flags._5VPowerFail = 1;
+//	} else {
+//		sysParams.vars.error.flags._5VPowerFail = 0;
+//	}
 	
 	limit = sysParams.consts.adcLimit[VrelDC];
 	if (sysParams.vars.error.flags.RelPowerFail == 1){

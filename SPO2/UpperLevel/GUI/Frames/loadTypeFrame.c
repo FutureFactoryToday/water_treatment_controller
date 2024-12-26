@@ -19,6 +19,7 @@ int showLoadTypeFrame()
 		if(okBut.isReleased == true) {
 			if(markItem >= 0) {
 				sysParams.consts.planerConsts.startType = markItem;
+				sysParams.consts.planerConsts.status = PL_WAIT_MANUAL;
 				FP_SaveParam();
 			}
 			okBut.isReleased = false;
