@@ -238,8 +238,6 @@ void RTC_IRQHandler(void)
 	if (sysParams.vars.status.flags.AllInited == 0){
 		return;
 	}
-	uint32_t startTime = HAL_GetTick();
-	UL_LogText(ITEM_LOG_TEXT[0], LL_RTC_TIME_Get(RTC));
 	
 	FP_SaveParam();
 	LOG_Interrupt();
@@ -251,8 +249,6 @@ void RTC_IRQHandler(void)
 	} else {
 		goHome = true;
 	}
-	startTime = HAL_GetTick() - startTime;
-	UL_LogText(ITEM_LOG_TEXT[1], startTime);
 	UL_LogCond();
 
 	LL_RTC_ClearFlag_SEC(RTC);

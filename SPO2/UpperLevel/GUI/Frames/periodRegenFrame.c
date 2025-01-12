@@ -75,6 +75,7 @@ int ShowPeriodRegenCustFrame(void) {
       okBut.isReleased = false;
 			sysParams.vars.planer.currentTask->startDateTime = tempTask.startDateTime;
 			sysParams.vars.planer.currentTask->restartDateTime = tempTask.restartDateTime;
+			sysParams.consts.planerConsts.status = PL_NOT_SET;
       return 0;
     }
     if (cancelBut.isReleased == true) {

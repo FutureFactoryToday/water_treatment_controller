@@ -97,7 +97,8 @@ int ShowMenuFrame(void) {
     if (menuLines[1].isReleased == true) {
       menuLines[1].isReleased = false;
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
-        sysParams.consts.planerConsts.startType == UNIVERSAL) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL ||
+			sysParams.consts.planerConsts.startType == DELAYED) {
         ShowWashTimCustFrame();
         createFrame();
       }
@@ -114,7 +115,8 @@ int ShowMenuFrame(void) {
     if (menuLines[3].isReleased == true) {
       menuLines[3].isReleased = false;
       if (sysParams.consts.planerConsts.startType == UNIVERSAL ||
-        sysParams.consts.planerConsts.startType == IMMEDIATELY) {
+        sysParams.consts.planerConsts.startType == IMMEDIATELY ||
+			sysParams.consts.planerConsts.startType == DELAYED) {
         ShowFilterCycleCustFrame();
         createFrame();
       }

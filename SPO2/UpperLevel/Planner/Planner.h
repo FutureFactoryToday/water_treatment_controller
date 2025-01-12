@@ -38,7 +38,7 @@ typedef struct {
 typedef struct {
 	task_line_t step[STEP_PER_TASK_NUM];
 	time_t restartDateTime;                //дни между регенерациями
-	time_t startDateTime;                   //время первого запуска
+	time_t startDateTime;                   //время прошлого запуска
 	uint32_t remainingTime;
 } piston_task_t;
 
@@ -53,7 +53,7 @@ typedef enum {
 	PL_NOT_SET = 1,
 	PL_SET,
 	PL_WORKING,
-	PL_WAIT_MANUAL
+	//PL_WAIT_MANUAL
 } planer_status_t;
 
 typedef struct{
@@ -69,6 +69,7 @@ typedef enum {
 	BY_HOUR,
 	UNIVERSAL,
 	IMMEDIATELY,
+	DELAYED
 } start_type_t;
 
 typedef struct{
@@ -105,5 +106,5 @@ bool PL_addTaskLine(piston_task_t* task,task_line_t tl);
 bool PL_modTaskLine(piston_task_t* task, uint8_t line, task_line_t tl);
 
 uint8_t PL_getCurrentTaskNum(void);
-
+time_t PL_GetStartTime();
 #endif /* _sysParams.vars.planer_H_ */

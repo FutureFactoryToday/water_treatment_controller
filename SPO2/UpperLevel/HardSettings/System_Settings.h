@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 15
+#define SUB_VERSION 16
 #define NEED_TO_UPDATE 0
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION << 16) + (SUB_VERSION << 1) + NEED_TO_UPDATE
@@ -46,10 +46,10 @@
 #define DEF_SEEK_TIME_SECONDS 35
 #define newPositions
 
-#define DEF_WORK_POS 10;//+ //                               //???????? ?????????
-#define	DEF_BACKWASH_POS 261;  //                                   //???????? ????????
-#define	DEF_FORWARD_POS 535; //+                                      //??????????
-#define	DEF_SALTERING_POS 415 //
+#define DEF_WORK_POS 20//10;//+ //                               //???????? ?????????
+#define	DEF_BACKWASH_POS 261//261;  //                                   //???????? ????????
+#define	DEF_FORWARD_POS 525//535; //+                                      //??????????
+#define	DEF_SALTERING_POS 415//415 //
 #define	DEF_FILLING_POS 105; //
 
 #define DEF_TASK_RESTART_HOURS 150
@@ -77,4 +77,11 @@
 #define UART_LOG_Q_SIZE 20
 
 #define SOFT_WDT_TIM_VAL_DEF 300
+
+#define DEF_BY_DAY_RESTART 5*24*60*60 //5day*24h*60min*60sec
+#define DEF_BY_HOUR_RESTART 12*60*60 //12h*60min*60sec
+#define DEF_UNIVERSAL_TIME_RESTART 5*24*60*60 //5day*24h*60min*60sec
+#define DEF_UNIVERSAL_WATER_RESTART 3000
+#define DEF_IMMEDIATELY_WATER_RESTART 3000
+
 #endif /* __SETTINGS_H__ */

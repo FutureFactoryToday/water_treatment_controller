@@ -68,32 +68,37 @@ void PL_planer(planer_control_type_t startType) {
   if (sysParams.vars.planer.currentTask != NULL &&
     sysParams.vars.error.flags.PistonFail == 0) {
     if (sysParams.consts.planerConsts.status == PL_NOT_SET ||
-      sysParams.consts.planerConsts.status == PL_SET || 
-		sysParams.consts.planerConsts.status == PL_WAIT_MANUAL) {
+      sysParams.consts.planerConsts.status == PL_SET /*|| 
+			sysParams.consts.planerConsts.status == PL_WAIT_MANUAL*/) {
       switch (startType) {
       case START_NORMAL: {
-				if (sysParams.consts.planerConsts.status != PL_WAIT_MANUAL){
-					if (sysParams.vars.planer.currentTask -> startDateTime >= getRTC()) {
-						sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
-						sysParams.consts.planerConsts.status = PL_SET;
-					} else {
-						if (sysParams.vars.planer.currentTask -> restartDateTime >= 0) {
+//				if (sysParams.consts.planerConsts.status != PL_WAIT_MANUAL){
+//					if (sysParams.vars.planer.currentTask -> startDateTime >= getRTC()) {
+//						sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
+//						sysParams.consts.planerConsts.status = PL_SET;
+//					} else {
+					if (sysParams.vars.planer.currentTask -> restartDateTime >= 0) {
 
-							sysParams.vars.planer.currentTask -> startDateTime = getRTC() + sysParams.vars.planer.currentTask -> restartDateTime;
-							
-							if (sysParams.consts.planerConsts.startType != BY_HOUR){			
-								sysParams.vars.planer.currentTask -> startDateTime = setPreferedTime(sysParams.vars.planer.currentTask -> startDateTime);
-							}
-							
-							sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
-
-							sysParams.consts.planerConsts.currentStepNum = 0;
-
-							sysParams.consts.planerConsts.status = PL_SET;
-
+						sysParams.vars.planer.currentTask -> startDateTime = getRTC() + sysParams.vars.planer.currentTask -> restartDateTime;
+						
+						if (sysParams.consts.planerConsts.startType != BY_HOUR){			
+							sysParams.vars.planer.currentTask -> startDateTime = setPreferedTime(sysParams.vars.planer.currentTask -> startDateTime);
 						}
+						
+						sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
+
+						sysParams.consts.planerConsts.currentStepNum = 0;
+
+						sysParams.consts.planerConsts.status = PL_SET;
+
 					}
-				}
+//					}
+//					sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask -> step;
+
+//					sysParams.consts.planerConsts.currentStepNum = 0;
+
+//					sysParams.consts.planerConsts.status = PL_SET;
+//				}
         break;
       }
       case FORCE_START_NOW: {
@@ -174,9 +179,9 @@ void PL_Interrupt() {
 
   if (sysParams.vars.status.flags.PlanerInited == 1) {
     //Not SET after restart or flash error
-		if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL) {
-			return;
-		}
+//		if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL) {
+//			return;
+//		}
     if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
       //PL_planer(START_NORMAL);
 			PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
@@ -190,16 +195,18 @@ void PL_Interrupt() {
       return;
     }
     //
-    bool start = checkStartConditions();
-    if (sysParams.consts.planerConsts.status == PL_SET && start) {
-      //sysParams.vars.planer.currentTask->startDateTime < getRTC()){
-      sysParams.consts.planerConsts.status = PL_WORKING;
-			forceStart = false;
-      PC_GoToPoz( * (sysParams.vars.planer.currentStep -> poz));
-      sysParams.vars.planer.currentTask -> remainingTime = sysParams.vars.planer.currentStep -> secPause;
-      oldSec = LL_RTC_TIME_Get(RTC);
-      return;
-    }
+    
+    if (sysParams.consts.planerConsts.status == PL_SET) {
+			if (checkStartConditions()){
+				//sysParams.vars.planer.currentTask->startDateTime < getRTC()){
+				sysParams.consts.planerConsts.status = PL_WORKING;
+				forceStart = false;
+				PC_GoToPoz( * (sysParams.vars.planer.currentStep -> poz));
+				sysParams.vars.planer.currentTask -> remainingTime = sysParams.vars.planer.currentStep -> secPause;
+				oldSec = LL_RTC_TIME_Get(RTC);
+				return;
+			}
+		}
 
     if (sysParams.consts.planerConsts.status == PL_WORKING) {
       //Still have time left for the step
@@ -247,17 +254,23 @@ bool checkStartConditions(void) {
   //External Start Command On (Contact closed for 3 sec)
   if (sysParams.consts.ExternalCommandType == EXTERNAL_START) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
+			UL_LogText(ITEM_LOG_TEXT[0],LL_RTC_TIME_Get(RTC));
       return true;
     }
   }
 	if (forceStart){
+		UL_LogText(ITEM_LOG_TEXT[1],LL_RTC_TIME_Get(RTC));
 		return true;
 	}
   switch (sysParams.consts.planerConsts.startType) {
     //Timer condition
   case BY_DAY:
   case BY_HOUR: {
-    return sysParams.vars.planer.currentTask -> startDateTime < getRTC();
+		bool result = sysParams.vars.planer.currentTask -> startDateTime < getRTC();
+		if (result){
+			UL_LogText(ITEM_LOG_TEXT[2],LL_RTC_TIME_Get(RTC));
+		}
+    return result;
     break;
   }
   case UNIVERSAL: {
@@ -266,6 +279,9 @@ bool checkStartConditions(void) {
         sysParams.vars.planer.noWaterUsageCnt++;
         if (sysParams.vars.planer.noWaterUsageCnt >= DEF_NO_WATER_CNT_LIMIT) {
           sysParams.vars.planer.noWaterUsageCnt--;
+					UL_LogText(ITEM_LOG_TEXT[3],LL_RTC_TIME_Get(RTC));
+					UL_LogText(ITEM_LOG_TEXT[4],sysParams.consts.waterFromLastFilter);
+					UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
           return true;
         }
       } else {
@@ -281,14 +297,34 @@ bool checkStartConditions(void) {
       if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
         sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
         result = true;
+				UL_LogText(ITEM_LOG_TEXT[6],LL_RTC_TIME_Get(RTC));
+				UL_LogText(ITEM_LOG_TEXT[4],sysParams.consts.waterFromLastFilter);
+				UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
       }
     }
-    result |= sysParams.vars.planer.currentTask -> startDateTime < getRTC();
+		if (sysParams.vars.planer.currentTask -> startDateTime < getRTC()){
+			result |= true;
+			UL_LogText(ITEM_LOG_TEXT[7],LL_RTC_TIME_Get(RTC));
+		}
     return result;
     break;
   }
   case IMMEDIATELY: {
     return sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle;
+    break;
+  }
+	 case DELAYED: {
+		bool result = false;
+    if (sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle){
+      if (sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
+        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute) {
+        result = true;
+				UL_LogText(ITEM_LOG_TEXT[6],LL_RTC_TIME_Get(RTC));
+				UL_LogText(ITEM_LOG_TEXT[4],sysParams.consts.waterFromLastFilter);
+				UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
+      }
+    }
+		return result;
     break;
   }
   }
@@ -339,4 +375,8 @@ uint8_t PL_getCurrentTaskNum(void) {
       return i;
   }
 
+}
+
+time_t PL_GetStartTime (){
+	return sysParams.vars.planer.currentTask -> startDateTime + sysParams.vars.planer.currentTask -> restartDateTime;
 }

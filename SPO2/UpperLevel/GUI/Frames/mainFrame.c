@@ -299,23 +299,23 @@ void showMessage(void){
 			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
 			shownErrorMessage = false;
 		} else {
-			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
-				if (shownManualMessage == false){
-					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
-					BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-					BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
-					BSP_LCD_SetFont(&Oxygen_Mono_20);
-					BSP_LCD_DisplayStringAt(X_START + 5, Y_START + Y_SIZE/4,"Необходимо запустить промывку вручную", LEFT_MODE);
-					shownManualMessage = true;
-					BSP_LCD_SetFont(oldFont);
-				}
-			} else {
+//			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
+//				if (shownManualMessage == false){
+//					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
+//					BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//					BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
+//					BSP_LCD_SetFont(&Oxygen_Mono_20);
+//					BSP_LCD_DisplayStringAt(X_START + 5, Y_START + Y_SIZE/4,"Необходимо запустить промывку вручную", LEFT_MODE);
+//					shownManualMessage = true;
+//					BSP_LCD_SetFont(oldFont);
+//				}
+//			} else {
 				if (shownManualMessage){
 					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
 				}
 				shownManualMessage = false;
-			}
+//			}
 			
 		}
 	}

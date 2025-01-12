@@ -206,7 +206,7 @@ void Load_Default_Values(void){
 	//copyTasksToFlash();
 	
 	sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;
-	sysParams.consts.planerConsts.status = PL_WAIT_MANUAL;
+	sysParams.consts.planerConsts.status = PL_NOT_SET;//PL_WAIT_MANUAL;
 	sysParams.consts.planerConsts.preferedTimeForWash = (wtc_time_t)DEF_TASK_PREF_TIME_TO_START;
 	sysParams.consts.planerConsts.monthBetweenService = DEF_TASK_MONTH_BETWEN_SERV;
 	sysParams.consts.planerConsts.lastService = 0;

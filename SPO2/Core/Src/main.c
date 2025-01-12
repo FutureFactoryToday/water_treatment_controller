@@ -76,8 +76,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
+   /* USER CODE BEGIN 1 */
 //	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
 	LL_RCC_ClearResetFlags();
 	
@@ -148,7 +147,7 @@ int main(void)
 //	FontTest(&Oxygen_Mono_16);
 //	FontTest(&Oxygen_Mono_20);
 //	FontTest(&Oxygen_Mono_24);
-	
+	showLoadTypeFrame();
 	ShowMainFrame();
 	
   while (1)

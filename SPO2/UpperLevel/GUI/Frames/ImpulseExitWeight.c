@@ -68,21 +68,21 @@ int ShowImpulseWeightChoice(void) {
 		if(goHome) {
 			return -1;
 		}
-		if(menuLine[0].isReleased == true) {
-			if(ShowFilteringFrame() == 1) return 1;
-			createFrame();
-			menuLine[0].isReleased = false;
-		}
-		if(menuLine[1].isReleased == true) {
-			if(ShowSofteningFrame() == 1) return 1;
-			createFrame();
-			menuLine[1].isReleased = false;
-		}
-		if(menuLine[2].isReleased == true) {
-			//            if(ShowManualFilterSettings() == 1) return 1;
-			createFrame();
-			menuLine[2].isReleased = false;
-		}
+//		if(menuLine[0].isReleased == true) {
+//			if(ShowFilteringFrame() == 1) return 1;
+//			createFrame();
+//			menuLine[0].isReleased = false;
+//		}
+//		if(menuLine[1].isReleased == true) {
+//			if(ShowSofteningFrame() == 1) return 1;
+//			createFrame();
+//			menuLine[1].isReleased = false;
+//		}
+//		if(menuLine[2].isReleased == true) {
+//			//            if(ShowManualFilterSettings() == 1) return 1;
+//			createFrame();
+//			menuLine[2].isReleased = false;
+//		}
 		for(uint8_t i = 0; i < LINE_NUM; i++) {
 			if(menuLine[i].isPressed) {
 				drawFillArcRec(menuLine[i].x - 9, menuLine[i].y - 9, menuLine[i].xSize, menuLine[i].ySize + 4, LCD_COLOR_BLUE);
@@ -131,6 +131,7 @@ void markLines() {
 		checkBox[i] = drawFillButton(SCROLLKEYUP_POS_X - 5 - 40, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, 40, 40, status, checked);
 	}
 }
+
 void calcButParam() {
 	TC_clearButtons();
 	for(uint8_t i = 0; i < LINE_NUM; i++) {

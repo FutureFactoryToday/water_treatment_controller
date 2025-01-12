@@ -50,12 +50,12 @@ int ShowWashTimCustFrame(void)
 					createFrame();
         }
         if (okBut.isReleased == true){
-            
-                sysParams.consts.planerConsts.preferedTimeForWash = regTime;
-                FP_SaveParam();
-            
-            okBut.isReleased = false;
-            return 0;
+          sysParams.consts.planerConsts.preferedTimeForWash = regTime;
+					sysParams.consts.planerConsts.status = PL_NOT_SET;
+          FP_SaveParam();
+           
+          okBut.isReleased = false;
+          return 0;
         }
 			
 			}
