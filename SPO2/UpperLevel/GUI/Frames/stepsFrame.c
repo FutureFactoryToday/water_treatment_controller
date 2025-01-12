@@ -17,6 +17,9 @@ piston_poz_t * ShowStepsFrame(void) {
 	stepResult = 0;
 	createFrame();
 	while(1) {
+        if(updateFlags.sec == true) {
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+		}
 		if(menuLines[0].isPressed == true) {
 			//Make it blue
 //			drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
