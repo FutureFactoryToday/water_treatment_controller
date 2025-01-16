@@ -70,7 +70,7 @@ void createFrame(void) {
   BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
   BSP_LCD_SetBackColor(LCD_COLOR_PHANTOMBLUE);
   uint8_t offset = 0;
-  offset = BSP_LCD_DisplayStringAt(X_START + 45, Y_START + Y_SIZE / 4, "+7-", LEFT_MODE);
+  offset = BSP_LCD_DisplayStringAt(X_START + 45, Y_START + Y_SIZE / 4, "+", LEFT_MODE);
   BSP_LCD_DisplayStringAt(X_START + 45 + offset, Y_START + Y_SIZE / 4, intToStr(phone), LEFT_MODE);
   phoneNumber.x = X_START;
   phoneNumber.y = Y_START;
@@ -94,10 +94,10 @@ void createFrame(void) {
   /*Add buttons settings*/
 
   /*Add Buttons*/
-  TC_addButton( & retBut);
-  TC_addButton( & phoneNumber);
-  TC_addButton( & okBut);
-  TC_addButton( & cancelBut);
-  TC_addButton( & homeBut);
+  TC_addButton(& retBut);
+  TC_addButton(& phoneNumber);
+  TC_addButton(& okBut);
+  TC_addButton(& cancelBut);
+  TC_addButton(& homeBut);
   //enableClockDraw = true;
 }

@@ -40,6 +40,10 @@ int showLoadTypeFrame()
 						sysParams.consts.planerConsts.filtroCycle = DEF_IMMEDIATELY_WATER_RESTART;
 						break;
 					}
+					case DELAYED: {
+						sysParams.consts.planerConsts.filtroCycle = DEF_DELAYED_RESTART;
+						break;
+					}
 				}
 				sysParams.consts.planerConsts.status = PL_NOT_SET;
 				FP_SaveParam();
@@ -85,7 +89,7 @@ int showLoadTypeFrame()
 			scrollUpBut.isReleased = false;
 		}
 		if(scrollDwnBut.isReleased == true) {
-			if(firstEl < (sizeof(menuLine)/sizeof(menuLine[0]))) {
+			if(firstEl + 4 < (sizeof(menuLine)/sizeof(menuLine[0]))) {
 				firstEl++;
 				RefreshScrollBar();
 			}
@@ -103,14 +107,15 @@ void createFrame(void) {
 	drawStatusBarOkCancel();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	drawScrollButton(0);
-	calcButParam();
-	for(uint8_t i = 0; i < 4; i++) {
-		menuLine[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_LOAD_TYPE[i+1], LEFT_MODE);
-	}
-	markLines();
-	/*Add buttons parameters*/
-	drawStaticLines();
+	RefreshScrollBar();
+//	drawScrollButton(0);
+//	calcButParam();
+//	for(uint8_t i = 0; i < 4; i++) {
+//		menuLine[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_LOAD_TYPE[i+1], LEFT_MODE);
+//	}
+//	markLines();
+//	/*Add buttons parameters*/
+//	drawStaticLines();
 }
 void markLines() {
 	bool checked;
@@ -127,14 +132,13 @@ void RefreshScrollBar(void) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
-	BSP_LCD_SetFont( &Oxygen_Mono_20);
-	for(uint8_t i = 0; i < 4; i++) {
-		int8_t pozNum = i + firstEl;
-		
-		menuLine[i].xSize = 18 + BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, ITEM_LOAD_TYPE[pozNum], LEFT_MODE);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	for(uint8_t i = firstEl; i < sizeof(menuLine)/sizeof(menuLine[0]) && (i - firstEl) < 4; i++) {
+		menuLine[i - firstEl].xSize = 18 + BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * (i - firstEl) + 3, ITEM_LOAD_TYPE[i+1], LEFT_MODE);
 		//menuLines[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_STEPS[i + firstEl], LEFT_MODE);
-		markLines(i);
+		
 	}
+	markLines();
 	drawScrollButton(0);
 	BSP_LCD_SetFont(oldFont);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
@@ -151,15 +155,15 @@ void calcButParam() {
 		menuLine[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
 		//menuLine[i].xSize = 250;
 		menuLine[i].ySize = 40;
-		TC_addButton( & menuLine[i]);
+		TC_addButton(& menuLine[i]);
 	}
 	for(uint8_t i = 0; i < sizeof(checkBox) / sizeof(checkBox[0]); i++) {
-		TC_addButton( & checkBox[i]);
+		TC_addButton(& checkBox[i]);
 	}
 	  TC_addButton(&scrollUpBut);
   TC_addButton(&scrollDwnBut);
-	TC_addButton( &retBut);
-	TC_addButton( &okBut);
-	TC_addButton( &cancelBut);
-	TC_addButton( &homeBut);
+	TC_addButton(&retBut);
+	TC_addButton(&okBut);
+	TC_addButton(&cancelBut);
+	TC_addButton(&homeBut);
 }

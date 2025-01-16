@@ -94,7 +94,7 @@ int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modabl
 					_tl.poz = ShowStepsFrame();
 					if (_tl.poz > 0){
 						_tl.secPause = 0;
-						if(PL_addTaskLine( & tempTask, _tl)) {
+						if(PL_addTaskLine(& tempTask, _tl)) {
 							taskSize++;
 						}
 					}
@@ -107,7 +107,7 @@ int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modabl
 					task_line_t _tl = tempTask.step[i + firstEl];
 					_tl.poz = ShowStepsFrame();
 					if (_tl.poz > 0){
-						PL_modTaskLine( & tempTask, i + firstEl, _tl);
+						PL_modTaskLine(& tempTask, i + firstEl, _tl);
 					}
 					menuLines[i].isReleased = false;
 					createFrame();
@@ -132,7 +132,7 @@ int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modabl
 		if(modif == true) {
 			for(uint8_t i = 0; i < (taskSize - firstEl) && i < 4; i++) {
 				if(delMenuLines[i].isReleased == true) {
-					if(PL_deleteTaskLine( & tempTask, i + firstEl)) {
+					if(PL_deleteTaskLine(& tempTask, i + firstEl)) {
 						taskSize--;
 					}
 					delMenuLines[i].isReleased = false;
@@ -173,7 +173,7 @@ void RefreshScrollBar(void) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	WTC_FONT_t * oldFont = BSP_LCD_GetFont();
-	BSP_LCD_SetFont( & Oxygen_Mono_20);
+	BSP_LCD_SetFont(& Oxygen_Mono_20);
 	for(uint8_t i = 0; i < 4; i++) {
 		if(i < taskSize - firstEl) {
 			uint8_t step = firstEl + i;
@@ -239,24 +239,24 @@ button_t drawEmptyLine(uint8_t num, bool touch) {
 void calcButParam() {
 	TC_clearButtons();
 	for(uint8_t i = 0; i < (taskSize - firstEl) && i < 4; i++) {
-		TC_addButton( & lineTime[i]);
+		TC_addButton(& lineTime[i]);
 		if(modif == true) {
-			TC_addButton( & delMenuLines[i]);
-			TC_addButton( & menuLines[i]);
+			TC_addButton(& delMenuLines[i]);
+			TC_addButton(& menuLines[i]);
 		}
 	}
 	if(taskSize - firstEl < 4) {
 		if(modif == true) {
-			TC_addButton( & addLine);
+			TC_addButton(& addLine);
 		}
 	}
-	TC_addButton( & okBut);
-	TC_addButton( & cancelBut);
-	TC_addButton( & retBut);
-	TC_addButton( & homeBut);
+	TC_addButton(& okBut);
+	TC_addButton(& cancelBut);
+	TC_addButton(& retBut);
+	TC_addButton(& homeBut);
 	if(taskSize > 3) {
-		TC_addButton( & scrollUpBut);
-		TC_addButton( & scrollDwnBut);
+		TC_addButton(& scrollUpBut);
+		TC_addButton(& scrollDwnBut);
 	}
 }
 button_t drawDelButton(uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t * label, bool isTouch) {

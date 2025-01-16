@@ -130,13 +130,13 @@ void calcButParam() {
 		menuLine[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
 		//menuLine[i].xSize = 250;
 		menuLine[i].ySize = 40;
-		TC_addButton( & menuLine[i]);
+		TC_addButton(& menuLine[i]);
 	}
 	for(uint8_t i = 0; i < sizeof(checkBox) / sizeof(checkBox[0]); i++) {
-		TC_addButton( & checkBox[i]);
+		TC_addButton(& checkBox[i]);
 	}
-	TC_addButton( & retBut);
-	TC_addButton( & okBut);
-	TC_addButton( & cancelBut);
-	TC_addButton( & homeBut);
+	TC_addButton(& retBut);
+	TC_addButton(& okBut);
+	TC_addButton(& cancelBut);
+	TC_addButton(& homeBut);
 }

@@ -162,7 +162,7 @@ time_t setPreferedTime(time_t time) {
   }
   tempTime.tm_hour = sysParams.consts.planerConsts.preferedTimeForWash.hour;
   tempTime.tm_min = sysParams.consts.planerConsts.preferedTimeForWash.minute;
-  addDay += mktime( & tempTime);
+  addDay += mktime(& tempTime);
   return addDay;
 }
 void PL_Interrupt() {

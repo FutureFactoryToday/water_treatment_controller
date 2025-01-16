@@ -93,7 +93,7 @@ void createFrame() {
 
   drawStatusBarOkCancel();
 
-  BSP_LCD_SetFont( & Oxygen_Mono_24);
+  BSP_LCD_SetFont(& Oxygen_Mono_24);
   if (sysParams.consts.planerConsts.startType == BY_DAY ||
     sysParams.consts.planerConsts.startType == UNIVERSAL) {
     periodRegenBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 50, BSP_LCD_GetYSize() / 2 - 65, 100, 60, intToStr(tempTask. restartDateTime / (60 * 60 * 24)));
@@ -129,16 +129,16 @@ void createFrame() {
     BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 + 180, BSP_LCD_GetYSize() / 2 + 40, "Ч", LEFT_MODE);
   }
   
-  BSP_LCD_SetFont( & Oxygen_Mono_20);
+  BSP_LCD_SetFont(& Oxygen_Mono_20);
   BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 190, BSP_LCD_GetYSize() / 2 - 60, "Период проведения", LEFT_MODE);
   BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 190, BSP_LCD_GetYSize() / 2 - 36, "промывки", LEFT_MODE);
   BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 190, BSP_LCD_GetYSize() / 2 + 30, "Оставшееся время", LEFT_MODE);
   BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 190, BSP_LCD_GetYSize() / 2 + 54, "до начала промывки", LEFT_MODE);
 
-  TC_addButton( & periodRegenBut);
+  TC_addButton(& periodRegenBut);
   TC_addButton(&timeBeforeRegenBut);
-  TC_addButton( & retBut);
-  TC_addButton( & homeBut);
-  TC_addButton( & okBut);
-  TC_addButton( & cancelBut);
+  TC_addButton(& retBut);
+  TC_addButton(& homeBut);
+  TC_addButton(& okBut);
+  TC_addButton(& cancelBut);
 }

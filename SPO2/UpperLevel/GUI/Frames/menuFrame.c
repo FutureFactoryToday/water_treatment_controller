@@ -201,11 +201,11 @@ void calcButParam() {
   menuLines[menu_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
 
   for (uint8_t i = menu_frame_Scroll_cnt; i < menu_frame_Scroll_cnt + 4; i++) {
-    TC_addButton( & menuLines[i]);
+    TC_addButton(& menuLines[i]);
   }
-  TC_addButton( & retBut);
-  TC_addButton( & scrollUpBut);
-  TC_addButton( & scrollDwnBut);
-  TC_addButton( & homeBut);
+  TC_addButton(& retBut);
+  TC_addButton(& scrollUpBut);
+  TC_addButton(& scrollDwnBut);
+  TC_addButton(& homeBut);
 
 }

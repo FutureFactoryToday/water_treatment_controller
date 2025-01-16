@@ -147,7 +147,7 @@ int main(void)
 //	FontTest(&Oxygen_Mono_16);
 //	FontTest(&Oxygen_Mono_20);
 //	FontTest(&Oxygen_Mono_24);
-	showLoadTypeFrame();
+//	showLoadTypeFrame();
 	ShowMainFrame();
 	
   while (1)

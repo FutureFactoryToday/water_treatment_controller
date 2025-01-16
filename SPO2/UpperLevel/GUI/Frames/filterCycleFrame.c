@@ -41,7 +41,7 @@ int ShowFilterCycleCustFrame(void) {
 //    }
     if (liters.isReleased == true) {
       sysParams.vars.status.flags.WaterInLiters = true;
-      //BSP_LCD_SetFont( &Oxygen_Mono_24);
+      //BSP_LCD_SetFont(&Oxygen_Mono_24);
 			filterCycleBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 - 50, BSP_LCD_GetYSize() / 2 - 65, 140, 60, intToStr(filterCycle));
 			drawTextLabel(BSP_LCD_GetXSize() / 2 + 100, BSP_LCD_GetYSize() / 2 - 65, 60, 60, "М*3");
       drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 170, BSP_LCD_GetYSize() / 2 - 65, 60, 60, "Л");
@@ -53,7 +53,7 @@ int ShowFilterCycleCustFrame(void) {
       drawLightTextLabel(BSP_LCD_GetXSize() / 2 + 100, BSP_LCD_GetYSize() / 2 - 65, 60, 60, "М*3");
       drawTextLabel(BSP_LCD_GetXSize() / 2 + 170, BSP_LCD_GetYSize() / 2 - 65, 60, 60, "Л");
 			
-			//BSP_LCD_SetFont( &Oxygen_Mono_24);
+			//BSP_LCD_SetFont(&Oxygen_Mono_24);
 			filterCycleBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 - 50, BSP_LCD_GetYSize() / 2 - 65, 140, 60, intToStr(filterCycle/1000));
       mcube.isReleased = false;
     }
@@ -90,7 +90,7 @@ void createFrame() {
 
   drawStatusBarOkCancel();
 
-  BSP_LCD_SetFont( &Oxygen_Mono_24);
+  BSP_LCD_SetFont(&Oxygen_Mono_24);
 	if (!sysParams.vars.status.flags.WaterInLiters){		
 		filterCycleBut = drawLightTextLabel(BSP_LCD_GetXSize() / 2 - 50, BSP_LCD_GetYSize() / 2 - 65, 140, 60, intToStr(filterCycle/1000));
 	} else {
@@ -108,17 +108,17 @@ void createFrame() {
 
   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
   BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-  BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 + 100, BSP_LCD_GetYSize() / 2 + 40, "%", LEFT_MODE);
-  BSP_LCD_SetFont( &Oxygen_Mono_20);
+  //BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 + 100, BSP_LCD_GetYSize() / 2 + 40, "%", LEFT_MODE);
+  BSP_LCD_SetFont(&Oxygen_Mono_20);
   BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 200, BSP_LCD_GetYSize() / 2 - 50, "Фильтроцикл", LEFT_MODE);
-  BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 200, BSP_LCD_GetYSize() / 2 + 30, "Резерв", LEFT_MODE);
+  //BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize() / 2 - 200, BSP_LCD_GetYSize() / 2 + 30, "Резерв", LEFT_MODE);
 
-  TC_addButton( & filterCycleBut);
-//  TC_addButton( & reserveBut);
-  TC_addButton( & mcube);
-  TC_addButton( & liters);
-  TC_addButton( & retBut);
-  TC_addButton( & homeBut);
-  TC_addButton( & okBut);
-  TC_addButton( & cancelBut);
+  TC_addButton(& filterCycleBut);
+//  TC_addButton(& reserveBut);
+  TC_addButton(& mcube);
+  TC_addButton(& liters);
+  TC_addButton(& retBut);
+  TC_addButton(& homeBut);
+  TC_addButton(& okBut);
+  TC_addButton(& cancelBut);
 }
