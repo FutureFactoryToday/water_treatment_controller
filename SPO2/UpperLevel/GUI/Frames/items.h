@@ -21,11 +21,13 @@ extern const uint8_t* ITEM_SERVICE_MENU[];
 #define MODE_HISTORY "История"
 extern const uint8_t* ITEM_HISTORY_ERROR[];
 extern const uint8_t* ITEM_HISTORY_MENU[];
+extern const uint8_t* ITEM_GENERAL_INFO_MENU[];
 //historyMenuItems
 #define MODE_HISTORY_FILTER "Промывки фильтра"
 #define MODE_HISTORY_WATER "Потребления воды"
 #define MODE_HISTORY_MAX_WATER "Максимальный расход"
 #define MODE_HISTORY_ERRORS "Ошибки"
+#define MODE_HISTORY_GENERAL_INFO "Общая информация"
 
 //widgets
 #define NEXT_CYCLE_TIME "ч"

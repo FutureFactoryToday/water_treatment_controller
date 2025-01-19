@@ -228,9 +228,9 @@ void createFrame(void) {
 
   enableClockDraw = true;
 }
-#define X_START 30
-#define Y_START 145
-#define X_SIZE 420
+#define X_START 26
+#define Y_START 150
+#define X_SIZE 428
 #define Y_SIZE 55
 void showMessage(void){
 	bool yesError = false;

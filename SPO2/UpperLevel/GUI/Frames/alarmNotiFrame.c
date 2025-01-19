@@ -37,7 +37,7 @@ void ShowAlarmNotiServiceFrame(void) {
       phoneNumber.isPressed = false;
     }
     if (phoneNumber.isReleased == true) {
-      int64_t temp = ShowKeyboardFrame(1, 9999999999);
+      int64_t temp = ShowKeyboardFrame(1, 999999999999);
       if (temp > 0) {
 				phone = temp;
       }

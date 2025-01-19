@@ -61,9 +61,9 @@ void createFrame()
     drawMainWindow();
     
     BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-		BSP_LCD_DisplayStringAt(400, 140, "Цикл",LEFT_MODE);
-		showRemeiningTime();
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(400, 140, "Цикл",LEFT_MODE);
+	showRemeiningTime();
       
     
     BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
