@@ -94,10 +94,10 @@ void createFrame(void) {
   /*Add buttons settings*/
 
   /*Add Buttons*/
-  TC_addButton( & retBut);
-  TC_addButton( & phoneNumber);
-  TC_addButton( & okBut);
-  TC_addButton( & cancelBut);
-  TC_addButton( & homeBut);
+  TC_addButton(& retBut);
+  TC_addButton(& phoneNumber);
+  TC_addButton(& okBut);
+  TC_addButton(& cancelBut);
+  TC_addButton(& homeBut);
   //enableClockDraw = true;
 }

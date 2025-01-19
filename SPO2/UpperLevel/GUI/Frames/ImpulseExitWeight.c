@@ -68,30 +68,30 @@ int ShowImpulseWeightChoice(void) {
 		if(goHome) {
 			return -1;
 		}
-		if(menuLine[0].isReleased == true) {
-			if(ShowFilteringFrame() == 1) return 1;
-			createFrame();
-			menuLine[0].isReleased = false;
-		}
-		if(menuLine[1].isReleased == true) {
-			if(ShowSofteningFrame() == 1) return 1;
-			createFrame();
-			menuLine[1].isReleased = false;
-		}
-		if(menuLine[2].isReleased == true) {
-			//            if(ShowManualFilterSettings() == 1) return 1;
-			createFrame();
-			menuLine[2].isReleased = false;
-		}
+//		if(menuLine[0].isReleased == true) {
+//			if(ShowFilteringFrame() == 1) return 1;
+//			createFrame();
+//			menuLine[0].isReleased = false;
+//		}
+//		if(menuLine[1].isReleased == true) {
+//			if(ShowSofteningFrame() == 1) return 1;
+//			createFrame();
+//			menuLine[1].isReleased = false;
+//		}
+//		if(menuLine[2].isReleased == true) {
+//			//            if(ShowManualFilterSettings() == 1) return 1;
+//			createFrame();
+//			menuLine[2].isReleased = false;
+//		}
 		for(uint8_t i = 0; i < LINE_NUM; i++) {
-			if(menuLine[i].isPressed) {
-				drawFillArcRec(menuLine[i].x - 9, menuLine[i].y - 9, menuLine[i].xSize, menuLine[i].ySize + 4, LCD_COLOR_BLUE);
-				BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-				BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_IMPULSE_WEIGHT[i], LEFT_MODE);
-				//drawDarkTextLabel(3*GAP + 40 + GAP, BSP_LCD_GetYSize()/2 - 80 + i*50, 250, 40, ITEM_FILTER_SELECTION[i]);
-				menuLine[i].isPressed = false;
-			}
+//			if(menuLine[i].isPressed) {
+//				drawFillArcRec(menuLine[i].x - 9, menuLine[i].y - 9, menuLine[i].xSize, menuLine[i].ySize + 4, LCD_COLOR_BLUE);
+//				BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+//				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//				BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_IMPULSE_WEIGHT[i], LEFT_MODE);
+//				//drawDarkTextLabel(3*GAP + 40 + GAP, BSP_LCD_GetYSize()/2 - 80 + i*50, 250, 40, ITEM_FILTER_SELECTION[i]);
+//				menuLine[i].isPressed = false;
+//			}
 			if(checkBox[i].isPressed) {
 				drawFillButton(checkBox[i].x, checkBox[i].y, checkBox[i].xSize, checkBox[i].ySize, "", true);
 				checkBox[i].isPressed = false;
@@ -131,6 +131,7 @@ void markLines() {
 		checkBox[i] = drawFillButton(SCROLLKEYUP_POS_X - 5 - 40, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, 40, 40, status, checked);
 	}
 }
+
 void calcButParam() {
 	TC_clearButtons();
 	for(uint8_t i = 0; i < LINE_NUM; i++) {
@@ -138,13 +139,13 @@ void calcButParam() {
 		menuLine[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
 		//menuLine[i].xSize = 250;
 		menuLine[i].ySize = 40;
-		TC_addButton( & menuLine[i]);
+		TC_addButton(& menuLine[i]);
 	}
 	for(uint8_t i = 0; i < LINE_NUM; i++) {
-		TC_addButton( & checkBox[i]);
+		TC_addButton(& checkBox[i]);
 	}
-	TC_addButton( & retBut);
-	TC_addButton( & okBut);
-	TC_addButton( & cancelBut);
-	TC_addButton( & homeBut);
+	TC_addButton(& retBut);
+	TC_addButton(& okBut);
+	TC_addButton(& cancelBut);
+	TC_addButton(& homeBut);
 }

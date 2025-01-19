@@ -135,10 +135,10 @@ void calcButParam() {
 		TC_addButton( & menuLine[i]);
 	}
 	for(uint8_t i = 0; i < sizeof(checkBox) / sizeof(checkBox[0]); i++) {
-		TC_addButton( & checkBox[i]);
+		TC_addButton(& checkBox[i]);
 	}
-	TC_addButton( & retBut);
-	TC_addButton( & okBut);
-	TC_addButton( & cancelBut);
-	TC_addButton( & homeBut);
+	TC_addButton(& retBut);
+	TC_addButton(& okBut);
+	TC_addButton(& cancelBut);
+	TC_addButton(& homeBut);
 }

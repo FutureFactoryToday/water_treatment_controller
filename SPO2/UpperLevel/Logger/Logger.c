@@ -245,16 +245,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		} 
 	}
 	
-	if(tempError.flags.mainPowerFail == 1){
-		error.all = 0;
-		error.flags.mainPowerFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vin]})){
-			oldErrors.flags.mainPowerFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	} 
+//	if(tempError.flags.mainPowerFail == 1){
+//		error.all = 0;
+//		error.flags.mainPowerFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vin]})){
+//			oldErrors.flags.mainPowerFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	} 
 	
 	if(tempError.flags.BatteryFail == 1){
 		error.all = 0;
@@ -266,26 +266,26 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 			return HAL_OK;
 		}
 	} 
-	if(tempError.flags._5VPowerFail == 1){
-		error.all = 0;
-		error.flags._5VPowerFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[_5V]})){
-			oldErrors.flags._5VPowerFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	} 
-	if(tempError.flags.RelPowerFail == 1){
-		error.all = 0;
-		error.flags.RelPowerFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[VrelDC]})){
-			oldErrors.flags.RelPowerFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags._5VPowerFail == 1){
+//		error.all = 0;
+//		error.flags._5VPowerFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[_5V]})){
+//			oldErrors.flags._5VPowerFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	} 
+//	if(tempError.flags.RelPowerFail == 1){
+//		error.all = 0;
+//		error.flags.RelPowerFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[VrelDC]})){
+//			oldErrors.flags.RelPowerFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	if(tempError.flags.TempFail == 1){
 		error.all = 0;
 		error.flags.TempFail = 1;
@@ -297,26 +297,26 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		}
 	}
 	
-	if(tempError.flags.Drive1Fail == 1){
-		error.all = 0;
-		error.flags.Drive1Fail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.Drive1Fail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
-	if(tempError.flags.Drive2Fail == 1){
-		error.all = 0;
-		error.flags.Drive2Fail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.Drive2Fail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags.Drive1Fail == 1){
+//		error.all = 0;
+//		error.flags.Drive1Fail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.Drive1Fail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
+//	if(tempError.flags.Drive2Fail == 1){
+//		error.all = 0;
+//		error.flags.Drive2Fail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.Drive2Fail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	if(tempError.flags.MotorFail == 1){
 		error.all = 0;
 		error.flags.MotorFail = 1;
@@ -382,26 +382,26 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		}
 	}
 	
-	if(tempError.flags.TFTFail == 1){
-		error.all = 0;
-		error.flags.TFTFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.TFTFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}	
-	if(tempError.flags.TouchFail == 1){
-		error.all = 0;
-		error.flags.TouchFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.TouchFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags.TFTFail == 1){
+//		error.all = 0;
+//		error.flags.TFTFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.TFTFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}	
+//	if(tempError.flags.TouchFail == 1){
+//		error.all = 0;
+//		error.flags.TouchFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.TouchFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	if(tempError.flags.FRAMFail == 1){
 		error.all = 0;
 		error.flags.FRAMFail = 1;

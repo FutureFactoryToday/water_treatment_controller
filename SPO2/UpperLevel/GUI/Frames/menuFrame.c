@@ -97,7 +97,8 @@ int ShowMenuFrame(void) {
     if (menuLines[1].isReleased == true) {
       menuLines[1].isReleased = false;
       if (sysParams.consts.planerConsts.startType == BY_DAY ||
-        sysParams.consts.planerConsts.startType == UNIVERSAL) {
+        sysParams.consts.planerConsts.startType == UNIVERSAL ||
+			sysParams.consts.planerConsts.startType == DELAYED) {
         ShowWashTimCustFrame();
         createFrame();
       }
@@ -114,7 +115,8 @@ int ShowMenuFrame(void) {
     if (menuLines[3].isReleased == true) {
       menuLines[3].isReleased = false;
       if (sysParams.consts.planerConsts.startType == UNIVERSAL ||
-        sysParams.consts.planerConsts.startType == IMMEDIATELY) {
+        sysParams.consts.planerConsts.startType == IMMEDIATELY ||
+			sysParams.consts.planerConsts.startType == DELAYED) {
         ShowFilterCycleCustFrame();
         createFrame();
       }
@@ -199,11 +201,11 @@ void calcButParam() {
   menuLines[menu_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
 
   for (uint8_t i = menu_frame_Scroll_cnt; i < menu_frame_Scroll_cnt + 4; i++) {
-    TC_addButton( & menuLines[i]);
+    TC_addButton(& menuLines[i]);
   }
-  TC_addButton( & retBut);
-  TC_addButton( & scrollUpBut);
-  TC_addButton( & scrollDwnBut);
-  TC_addButton( & homeBut);
+  TC_addButton(& retBut);
+  TC_addButton(& scrollUpBut);
+  TC_addButton(& scrollDwnBut);
+  TC_addButton(& homeBut);
 
 }

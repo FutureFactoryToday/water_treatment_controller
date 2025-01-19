@@ -38,10 +38,10 @@ void drawDebugInfo(){
 				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Working",LEFT_MODE);
 				break;
 			}
-			case(PL_WAIT_MANUAL):{
-				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Manual",LEFT_MODE);
-				break;
-			}
+//			case(PL_WAIT_MANUAL):{
+//				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Manual",LEFT_MODE);
+//				break;
+//			}
 			default: {
 				offset += BSP_LCD_DisplayStringAt(x1 + offset,y1,"Error",LEFT_MODE);
 			}
@@ -57,8 +57,7 @@ void drawDebugInfo(){
 		BSP_LCD_SetTextColor(oldTextColor);
 	}
 }
-button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch)
-{
+button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch){
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
     uint16_t radius = ySize/4;
@@ -483,25 +482,25 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 //    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
 //    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y);
 		
-		if(sysParams.consts.planerConsts.startType != IMMEDIATELY){
-			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
-				BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"---", LEFT_MODE);
-			} else {
+		if(sysParams.consts.planerConsts.startType != IMMEDIATELY && sysParams.consts.planerConsts.startType != DELAYED){
+//			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
+//				BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+//				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"---", LEFT_MODE);
+//			} else {
 			int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
 			
 			uint32_t remHours = 0;
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			if (sysParams.vars.error.flags.PistonFail != 1 && deltTime >= 0){
+			if (/*sysParams.vars.error.flags.PistonFail != 1 &&*/ deltTime >= 0){
 				remHours = deltTime/(60*60);
 				offset = BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,intToStr(remHours), LEFT_MODE);
 				BSP_LCD_DisplayStringAt(TEXT_X + offset + 5, TEXT_Y , NEXT_CYCLE_TIME, LEFT_MODE);
 			} else {
 				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"", LEFT_MODE); 
 			}
-		}
+//		}
     }
     BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -534,7 +533,7 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 		
 		BSP_LCD_DisplayStringAt(TEXT_X + 120 + offset + 5, TEXT_Y ,CURRENT_WATER_CONSUMPTION_LITERS, LEFT_MODE);
     
-		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL){
+		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL || sysParams.consts.planerConsts.startType == DELAYED){
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			int32_t remWater = sysParams.consts.planerConsts.filtroCycle - sysParams.consts.waterFromLastFilter;

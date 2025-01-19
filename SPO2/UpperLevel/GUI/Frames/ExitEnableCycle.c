@@ -111,7 +111,7 @@ void RefreshScrollBar(void) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
-	BSP_LCD_SetFont( &Oxygen_Mono_20);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
 	for(uint8_t i = 0; i < LINE_NUM; i++) {
 		int8_t pozNum = i + firstEl;
 		if (pozNum == 4) pozNum = 5;

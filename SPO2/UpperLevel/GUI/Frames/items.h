@@ -66,7 +66,7 @@ extern const uint8_t* ITEM_FILTER_SELECTION[];
 #define MODE_REGEN_TIME "Время промывки"
 
 //washingTimeServiceFrame
-#define PERIOD_REGEN "Период промывки"
+#define PERIOD_REGEN "Фильтроцикл"
 
 //quantityCountServiceFrame
 #define MODE_QUANTITY_COUNT "Счетчик воды"

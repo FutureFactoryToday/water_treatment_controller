@@ -219,7 +219,9 @@ void RELAY_AC_CYCLE(void){
 				} else {
 					LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 				}
-			}
+			} else {
+				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+			}				
 		}
 	}
 }

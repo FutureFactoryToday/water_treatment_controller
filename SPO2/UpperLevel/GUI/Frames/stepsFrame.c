@@ -157,11 +157,11 @@ void calcButParam() {
 	menuLines[steps_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
 	menuLines[steps_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
 	for(uint8_t i = steps_frame_Scroll_cnt; i < steps_frame_Scroll_cnt + 4; i++) {
-		TC_addButton( & menuLines[i]);
+		TC_addButton(& menuLines[i]);
 	}
-	TC_addButton( &scrollUpBut);
-	TC_addButton( &scrollDwnBut);
-	TC_addButton( &retBut);
+	TC_addButton(&scrollUpBut);
+	TC_addButton(&scrollDwnBut);
+	TC_addButton(&retBut);
 }
 
 void drawStepName (uint16_t xPos, uint16_t yPos, uint8_t stepName){
