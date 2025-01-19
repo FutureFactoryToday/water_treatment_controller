@@ -46,7 +46,7 @@ int ShowMainMenuFrame(void){
 			createFrame();
 		}
     if (historyBut.isReleased == true){
-      ShowHistoryMenuFrame();
+            ShowHistoryMenuFrame();
 			historyBut.isReleased = false;
             createFrame();
 		}

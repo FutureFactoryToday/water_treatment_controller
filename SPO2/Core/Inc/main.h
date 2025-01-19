@@ -126,6 +126,7 @@ extern "C" {
 #include "GUI/Frames/historyErrorsFrame.h"
 #include "GUI/Frames/historyFilterFrame.h"
 #include "GUI/Frames/historyMaxWaterFrame.h"
+#include "GUI/Frames/historyGeneralInfoFrame.h"
 #include "GUI/Frames/historyMenuFrame.h"
 #include "GUI/Frames/historyWaterFrame.h"
 #include "GUI/Frames/inputOneFrame.h"

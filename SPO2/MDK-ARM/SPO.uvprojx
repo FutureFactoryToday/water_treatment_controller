@@ -2961,6 +2961,11 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\historyWaterFrame.c</FilePath>
             </File>
+            <File>
+              <FileName>historyGeneralInfoFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\historyGeneralInfoFrame.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

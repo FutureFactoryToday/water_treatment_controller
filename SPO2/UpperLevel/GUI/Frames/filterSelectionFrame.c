@@ -82,7 +82,7 @@ int ShowFilterSelectionFrame(void) {
 		}
 		for(uint8_t i = 0; i < sizeof(menuLine) / sizeof(menuLine[0]); i++) {
 			if(menuLine[i].isPressed) {
-				drawFillArcRec(menuLine[i].x - 9, menuLine[i].y - 9, menuLine[i].xSize, menuLine[i].ySize + 4, LCD_COLOR_BLUE);
+				drawFillArcRec(menuLine[i].x - 9, menuLine[i].y - 7, menuLine[i].xSize, menuLine[i].ySize + 4, LCD_COLOR_BLUE);
 				BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
 				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 				BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_FILTER_SELECTION[i], LEFT_MODE);
@@ -107,8 +107,10 @@ void createFrame(void) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	calcButParam();
+
 	for(uint8_t i = 0; i < sizeof(menuLine) / sizeof(menuLine[0]); i++) {
-		menuLine[i].xSize = 18 + BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_FILTER_SELECTION[i], LEFT_MODE);
+        drawTextLabel(menuLine[i].x - 9, menuLine[i].y - 7, menuLine[i].xSize, menuLine[i].ySize + 4,"");
+		BSP_LCD_DisplayStringAt(menuLine[i].x, menuLine[i].y, ITEM_FILTER_SELECTION[i], LEFT_MODE);
 	}
 	markLines();
 	/*Add buttons parameters*/
@@ -128,8 +130,8 @@ void calcButParam() {
 	for(uint8_t i = 0; i < sizeof(menuLine) / sizeof(menuLine[0]); i++) {
 		menuLine[i].x = FIRST_CURSOR_POS_X + 9;
 		menuLine[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
-		//menuLine[i].xSize = 250;
-		menuLine[i].ySize = 40;
+		menuLine[i].xSize = 200;
+		menuLine[i].ySize = 37;
 		TC_addButton( & menuLine[i]);
 	}
 	for(uint8_t i = 0; i < sizeof(checkBox) / sizeof(checkBox[0]); i++) {
