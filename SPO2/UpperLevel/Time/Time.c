@@ -218,6 +218,7 @@ void RTC_Interrupt(){
 	if (sysParams.vars.sysTime.hour == 0 && sysParams.vars.sysTime.minute == 0 && sysParams.vars.sysTime.second == 0){
 		newDay = true;
 	}
+	sysParams.consts.overallWorkingTime++;
 	updateFlags.sec = true;
 }
 struct tm wtcTimeToStdTime (wtc_time_t* time){

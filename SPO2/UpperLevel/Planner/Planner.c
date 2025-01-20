@@ -204,6 +204,8 @@ void PL_Interrupt() {
 				PC_GoToPoz( * (sysParams.vars.planer.currentStep -> poz));
 				sysParams.vars.planer.currentTask -> remainingTime = sysParams.vars.planer.currentStep -> secPause;
 				oldSec = LL_RTC_TIME_Get(RTC);
+				sysParams.consts.overallWashNum++;
+				sysParams.vars.status.flags.LogWash = true;
 				return;
 			}
 		}

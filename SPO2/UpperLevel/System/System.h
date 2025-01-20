@@ -101,6 +101,7 @@ typedef struct{
 	unsigned FlowMeterInt:1;
 	unsigned DebugMode:1;
 	unsigned AllInited:1;
+	unsigned LogWash:1;
 } sys_status_flag_bits_t;
 
 typedef union{
@@ -132,6 +133,9 @@ typedef struct{
 	float adcLimit[Vin+1];
 	float adcLimitDelt[Vin+1];
 	bool ExternalCommandType;
+	time_t overallWorkingTime;
+	uint32_t overallWashNum;
+	
 } sys_const_t;
 
 typedef struct {

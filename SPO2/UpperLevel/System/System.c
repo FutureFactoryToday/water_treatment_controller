@@ -202,7 +202,8 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = NULL;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 0; 	
 	
-	
+	sysParams.consts.overallWorkingTime = 0;
+	sysParams.consts.overallWashNum = 0;
 	//copyTasksToFlash();
 	
 	sysParams.vars.planer.currentStep = sysParams.vars.planer.currentTask->step;

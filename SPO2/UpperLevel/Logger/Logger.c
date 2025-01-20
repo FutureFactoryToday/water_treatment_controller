@@ -423,10 +423,12 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		oldDay = sysParams.vars.sysTime.day; 
 	}
 	
-	if (oldStatus != sysParams.consts.planerConsts.status && sysParams.consts.planerConsts.status == PL_WORKING){
+	//if (oldStatus != sysParams.consts.planerConsts.status && sysParams.consts.planerConsts.status == PL_WORKING){
+	if (sysParams.vars.status.flags.LogWash){
 		if (StoreWashEvent() == HAL_OK){
 			washSave++;
 			oldStatus = sysParams.consts.planerConsts.status;
+			sysParams.vars.status.flags.LogWash = false;
 		}
 	}
 }
