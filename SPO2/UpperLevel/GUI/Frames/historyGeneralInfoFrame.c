@@ -133,9 +133,72 @@ void createFrame(void){
 	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_GENERAL_INFO_MENU[history_general_info_frame_Scroll_cnt + 2],LEFT_MODE);
 	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_GENERAL_INFO_MENU[history_general_info_frame_Scroll_cnt + 3],LEFT_MODE);
     
-	uint32_t water = (uint32_t)sysParams.consts.waterQuantaty;
-    uint16_t offsetFirst = BSP_LCD_DisplayStringAt(250,FIRST_CURSOR_POS_Y + 9,intToStr(sysParams.consts.overallWorkingTime/3600),LEFT_MODE);
-	uint16_t offsetSecond = BSP_LCD_DisplayStringAt(250,SECOND_CURSOR_POS_Y + 9,intToStr(water),LEFT_MODE);
+	
+	
+  uint16_t offsetFirst = BSP_LCD_DisplayStringAt(250,FIRST_CURSOR_POS_Y + 9,intToStr(sysParams.consts.overallWorkingTime/3600),LEFT_MODE);
+	
+	uint32_t water = (uint32_t)(sysParams.consts.waterQuantaty/1000.0);
+	if (water > MAX_OVERALL_WATER_SHOWN_M3)
+	{
+		water = MAX_OVERALL_WATER_SHOWN_M3;
+	}
+	uint32_t waterToPrint = 0;
+	
+	uint16_t offsetSecond = 0;
+	uint32_t mod = 100000000;
+	uint8_t poz = 0;
+	if (water <= 0){
+		offsetSecond = BSP_LCD_DisplayStringAt(250,SECOND_CURSOR_POS_Y + 9,intToStr(0),LEFT_MODE);
+	} else {
+		while (mod > 0){
+			waterToPrint = water/mod;
+			if (poz == 0){
+				if (waterToPrint > 0){
+					offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,intToStr(waterToPrint),LEFT_MODE);
+					poz++;
+				}
+			} else {
+				offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,intToStr(waterToPrint),LEFT_MODE);
+				poz++;
+			}
+			if (poz > 0 && (mod == 1000 || mod == 1000000)){
+				offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," ",LEFT_MODE);
+			}
+			water -= waterToPrint*mod;
+			mod /= 10;
+		}
+	}
+		
+//		if (water >= 1000000){
+//			waterToPrint = water/1000000;
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,intToStr(waterToPrint),LEFT_MODE);
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," ",LEFT_MODE);
+//		}
+//		water -= waterToPrint*1000000;
+//		waterToPrint = 0;
+//		if (water >= 1000 ){
+//			waterToPrint = water/1000;
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,intToStr(waterToPrint),LEFT_MODE);
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," ",LEFT_MODE);
+//		} else {
+//			if (offsetSecond > 0){
+//				offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,"000",LEFT_MODE);
+//			}
+//		}
+//		water -= waterToPrint*1000;
+//		waterToPrint = 0;
+//		if (water >= 1){
+//			waterToPrint = water;
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,intToStr(waterToPrint),LEFT_MODE);
+////			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," ",LEFT_MODE);
+//		} else {
+//			offsetSecond += BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9,"000",LEFT_MODE);
+//		}
+//	}
+	
+	
+	
+	//offsetSecond = BSP_LCD_DisplayStringAt(250,SECOND_CURSOR_POS_Y + 9,intToStr(water),LEFT_MODE);
 	uint16_t offsetThrid = BSP_LCD_DisplayStringAt(250,THRID_CURSOR_POS_Y + 9,intToStr(sysParams.consts.overallWashNum),LEFT_MODE);
 	uint16_t offsetFour = BSP_LCD_DisplayStringAt(250,FOURTH_CURSOR_POS_Y + 9,intToStr(sysParams.consts.sysVersion),LEFT_MODE);
     

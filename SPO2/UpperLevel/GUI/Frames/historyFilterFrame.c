@@ -44,16 +44,17 @@ int ShowHistoryFilterFrame(void) {
     }
 		if (scrollUpBut.isReleased == true) {
       // Make it blue
-			if (firstEl)
+			if (firstEl){
 				firstEl--;
-			RefreshScreen();
+				RefreshScreen();
+			}
       scrollUpBut.isReleased = false;
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
 			if (sysParams.consts.storedWashNum > 4 && firstEl < sysParams.consts.storedWashNum - 4){
 				firstEl++;
-			RefreshScreen();
+				RefreshScreen();
 			}
       scrollDwnBut.isReleased = false;
     }

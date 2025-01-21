@@ -55,6 +55,8 @@ void SYS_init(void){
 	sysParams.consts.storedDayValueNum = 0;
 	sysParams.consts.storedWashNum = 0;
 	#endif
+		
+	
 	LOG_Init();
 	MX_IWDG_Init();
 	PC_Init();
@@ -330,6 +332,8 @@ void SYS_Logic_IT(void){
 			}
 		}
 		oldExternalSignal = externalSignal;
+	} else {
+		sysParams.vars.status.flags.ExternalCommandOn = 0;
 	}
 	//Output DC
 	RELAY_DC_CYCLE();
@@ -338,8 +342,17 @@ void SYS_Logic_IT(void){
 	
 	
 	sysParams.vars.status.flags.RelACOn = !LL_GPIO_IsInputPinSet(REL_AC_FB_GPIO_Port,REL_AC_FB_Pin);
-	sysParams.vars.status.flags.RelDCOn = !LL_GPIO_IsInputPinSet(REL_DC_FB_GPIO_Port,REL_DC_FB_Pin);
-	
+	if (sysParams.vars.error.flags.RelPowerFail != 1){
+		sysParams.vars.status.flags.RelDCOn = !LL_GPIO_IsInputPinSet(REL_DC_FB_GPIO_Port,REL_DC_FB_Pin);
+		if (sysParams.vars.status.flags.RelDCOn == LL_GPIO_IsOutputPinSet(REL_DC_ON_GPIO_Port,REL_DC_ON_Pin)){
+			sysParams.vars.error.flags.RelayDCFail = 0;
+		} else {
+			sysParams.vars.error.flags.RelayDCFail = 1;
+		}
+	} else {
+		sysParams.vars.status.flags.RelDCOn = 0;
+		sysParams.vars.error.flags.RelayDCFail = 0;
+	}
 	if (sysParams.vars.status.flags.RelACOn == LL_GPIO_IsOutputPinSet(REL_AC_ON_GPIO_Port,REL_AC_ON_Pin)){
 		sysParams.vars.error.flags.RelayACFail = 0;
 	} else {
