@@ -342,7 +342,7 @@ void SYS_Logic_IT(void){
 	
 	
 	sysParams.vars.status.flags.RelACOn = !LL_GPIO_IsInputPinSet(REL_AC_FB_GPIO_Port,REL_AC_FB_Pin);
-	if (sysParams.vars.error.flags.RelPowerFail != 1){
+	if (sysParams.vars.error.flags._5VPowerFail != 1){
 		sysParams.vars.status.flags.RelDCOn = !LL_GPIO_IsInputPinSet(REL_DC_FB_GPIO_Port,REL_DC_FB_Pin);
 		if (sysParams.vars.status.flags.RelDCOn == LL_GPIO_IsOutputPinSet(REL_DC_ON_GPIO_Port,REL_DC_ON_Pin)){
 			sysParams.vars.error.flags.RelayDCFail = 0;

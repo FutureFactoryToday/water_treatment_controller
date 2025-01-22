@@ -49,6 +49,10 @@ int ShowUniversalOutputFrame(void) {
 			retBut.isReleased = false;
 			return 0;
 		}
+		if(cancelBut.isReleased == true) {
+			cancelBut.isReleased = false;
+			return 0;
+		}
 		if(homeBut.isReleased == true) {
 			homeBut.isReleased = false;
 			goHome = true;
