@@ -9,8 +9,6 @@ int64_t _min = 0;
 
 int64_t _max = 0;
 
-int64_t result = 0;
-
 button_t _0,_1,_2,_3,_4,_5,_6,_7,_8,_9, delBut;
 
 static void createFrame(void);
@@ -282,8 +280,8 @@ void RefreshKeyboardFrame(void)
 
 void RefreshCursor(uint8_t dx)
 {
-    uint16_t oldTextColor = BSP_LCD_GetTextColor();
-    
+    //uint16_t oldTextColor = BSP_LCD_GetTextColor();
+    //BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
     if(getTime().second%2 == 0)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -292,10 +290,10 @@ void RefreshCursor(uint8_t dx)
     {
         BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     }
-		BSP_LCD_DrawBuffer_Start(CURSOR_POS_X + dx + 9, CURSOR_POS_Y,CURSOR_SIZE_X,CURSOR_SIZE_Y, BSP_LCD_GetBackColor());
+	//BSP_LCD_DrawBuffer_Start(CURSOR_POS_X + dx + 9, CURSOR_POS_Y,CURSOR_SIZE_X,CURSOR_SIZE_Y, BSP_LCD_GetBackColor());
     BSP_LCD_FillRect(CURSOR_POS_X + dx + 9,CURSOR_POS_Y, CURSOR_SIZE_X, CURSOR_SIZE_Y);
-    BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_DrawBuffer_Stop();
+    //BSP_LCD_SetTextColor(oldTextColor);
+	//BSP_LCD_DrawBuffer_Stop();
 }
 
 void createFrame(void)
@@ -307,7 +305,7 @@ void createFrame(void)
     
     drawMainWindow();
     
-    drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "          ");
+    drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "             ");
     BSP_LCD_DisplayStringAt(TEXT_CTRL_POS_X + 300, TEXT_CTRL_POS_Y + 10, "Удалить", LEFT_MODE);
 
     drawStatusBarOkCancel();
@@ -360,11 +358,11 @@ void createFrame(void)
 static int8_t xOff = 5, yOff = 0;
 void PrintResultFromKeyboard(int64_t result)
 {
-    int64_t pre_result = result;
+    int64_t pressed_number = result;
     
-    if(pre_result >= 0 && pre_result <= 9 || (pre_result == 0 && result_keyboard != 0))
+    if(pressed_number >= 0 && pressed_number <= 9 || (pressed_number == 0 && result_keyboard != 0))
     {
-        result_keyboard = (result_keyboard * 10) + pre_result;
+        result_keyboard = (result_keyboard * 10) + pressed_number;
         if(result_keyboard > _max)
         {
             result_keyboard = result_keyboard / 10;
@@ -373,12 +371,12 @@ void PrintResultFromKeyboard(int64_t result)
         {
             if(result_keyboard > 9)
                 dx += 11;
-            else if(result_keyboard == 0)
+            if(result_keyboard == 0)
                 dx = 11;
         }
     }
         
-    if(pre_result == 10)
+    if(pressed_number == 10)
     {
         result_keyboard = result_keyboard / 10;
         if(dx != 0) 
@@ -390,18 +388,18 @@ void PrintResultFromKeyboard(int64_t result)
         }
     }
     
-    if(pre_result == 0 || result_keyboard == 0)
+    if((pressed_number == 0 && result_keyboard == 0) || (pressed_number == 10 && result_keyboard == 0))
     {
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         drawFillArcRec(TEXT_CTRL_POS_X + 9, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
-        BSP_LCD_DisplayStringAt(CURSOR_POS_X, CURSOR_POS_Y + 4, "0", LEFT_MODE);  
+        BSP_LCD_DisplayStringAt(CURSOR_POS_X + 5, CURSOR_POS_Y + 6, "0", LEFT_MODE);  
     }
     if(result_keyboard != 0)
     {       
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
         drawFillArcRec(TEXT_CTRL_POS_X + 9, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
-        BSP_LCD_DisplayStringAt(CURSOR_POS_X + xOff, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);        
+        BSP_LCD_DisplayStringAt(CURSOR_POS_X + 5, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);
     }
 }

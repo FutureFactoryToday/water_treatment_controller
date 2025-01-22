@@ -18,7 +18,7 @@
 /*Public defines */
 
 /*Global params*/
-extern uint8_t numBuf[11];
+extern uint8_t numBuf[12];
 /*Prototypes */
 
 /*Power*/
@@ -26,7 +26,7 @@ uint16_t POWC(uint32_t a,uint8_t b);
 /*Convert number to character (from 0 to 9)*/
 uint8_t intToChar(uint8_t num);
 
-uint8_t* intToStr (int64_t num);
+uint16_t* intToStr (int64_t num);
 
 uint32_t mod(int32_t a);
 
