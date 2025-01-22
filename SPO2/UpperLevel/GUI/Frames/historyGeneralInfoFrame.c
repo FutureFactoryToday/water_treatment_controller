@@ -203,7 +203,7 @@ void createFrame(void){
 	uint16_t offsetFour = BSP_LCD_DisplayStringAt(250,FOURTH_CURSOR_POS_Y + 9,intToStr(sysParams.consts.sysVersion),LEFT_MODE);
     
     BSP_LCD_DisplayStringAt(250 + offsetFirst,FIRST_CURSOR_POS_Y + 9," часов",LEFT_MODE);
-	BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," м^3",LEFT_MODE);
+	BSP_LCD_DisplayStringAt(250 + offsetSecond,SECOND_CURSOR_POS_Y + 9," л",LEFT_MODE);
 	BSP_LCD_DisplayStringAt(250 + offsetThrid,THRID_CURSOR_POS_Y + 9," раз",LEFT_MODE);
 	BSP_LCD_DisplayStringAt(250 + offsetFour,FOURTH_CURSOR_POS_Y + 9," ",LEFT_MODE);
   

@@ -24,7 +24,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint8_t numBuf[11] = {0};
+uint8_t numBuf[12] = {0};
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private user code ---------------------------------------------------------*/
@@ -48,7 +48,7 @@ uint8_t intToChar(uint8_t num){
 	}
 }
 
-uint8_t* intToStr (int64_t num){
+uint16_t* intToStr (int64_t num){
 	for(int i = 0; i <sizeof(numBuf); i++){
 		numBuf[i] = 0;
 	}
