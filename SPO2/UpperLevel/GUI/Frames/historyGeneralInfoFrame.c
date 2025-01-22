@@ -137,10 +137,10 @@ void createFrame(void){
 	
   uint16_t offsetFirst = BSP_LCD_DisplayStringAt(250,FIRST_CURSOR_POS_Y + 9,intToStr(sysParams.consts.overallWorkingTime/3600),LEFT_MODE);
 	
-	uint32_t water = (uint32_t)(sysParams.consts.waterQuantaty/1000.0);
-	if (water > MAX_OVERALL_WATER_SHOWN_M3)
+	uint32_t water = (uint32_t)(sysParams.consts.waterQuantaty);
+	if (water > MAX_OVERALL_WATER_SHOWN_L)
 	{
-		water = MAX_OVERALL_WATER_SHOWN_M3;
+		water = MAX_OVERALL_WATER_SHOWN_L;
 	}
 	uint32_t waterToPrint = 0;
 	
