@@ -15,7 +15,7 @@
 #include "main.h"
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 17
+#define SUB_VERSION 18
 
 
 #define SYSTEM_PO_VERSION (MAIN_VERSION *100) + (SUB_VERSION) 
