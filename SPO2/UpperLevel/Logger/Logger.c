@@ -361,26 +361,26 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		oldErrors.flags.PistonFail = 1;
 	} 		
 	
-	if(tempError.flags.RelayDCFail == 1){
-		error.all = 0;
-		error.flags.RelayDCFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelDCOn})){
-			oldErrors.flags.RelayDCFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
-	if(tempError.flags.RelayACFail == 1){
-		error.all = 0;
-		error.flags.RelayACFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelACOn})){
-			oldErrors.flags.RelayACFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags.RelayDCFail == 1){
+//		error.all = 0;
+//		error.flags.RelayDCFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelDCOn})){
+//			oldErrors.flags.RelayDCFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
+//	if(tempError.flags.RelayACFail == 1){
+//		error.all = 0;
+//		error.flags.RelayACFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelACOn})){
+//			oldErrors.flags.RelayACFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	
 //	if(tempError.flags.TFTFail == 1){
 //		error.all = 0;
