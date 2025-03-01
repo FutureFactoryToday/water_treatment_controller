@@ -146,7 +146,7 @@ int ShowServiceMenuFrame(void)
             createFrame();
          }
          if(menuLines[4].isReleased == true){
-            ShowOutputEnableChoice(ITEM_EL_MAG_FRAME[0],&sysParams.consts.acRelay); 
+            ShowACOutputFrame();
             menuLines[4].isReleased = false;
             createFrame();
          }

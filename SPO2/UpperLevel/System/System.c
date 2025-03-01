@@ -65,7 +65,8 @@ void SYS_init(void){
 	HAL_IWDG_Refresh(&hiwdg);
 	FM_Init();
 	HAL_IWDG_Refresh(&hiwdg);
-	RELAY_Init();
+	DC_RELAY_Init();
+	AC_RELAY_Init();
 	HAL_IWDG_Refresh(&hiwdg);
 	Time_init();
 	HAL_IWDG_Refresh(&hiwdg);
@@ -228,6 +229,7 @@ void Load_Default_Values(void){
 	sysParams.consts.dcRelay.workType = HALT;
 	sysParams.consts.dcRelay.pozEnable = (relay_enable_t){0};
 	sysParams.consts.acRelay.pozEnable = (relay_enable_t){0};
+	sysParams.consts.acRelay.workType = WASH_AC;
 	
 	sysParams.consts.impulseWeight = DEF_IMPULSE_WEIGHT;
 	sysParams.consts.ServicePhoneNumber = DEF_PHONE_NUMBER;

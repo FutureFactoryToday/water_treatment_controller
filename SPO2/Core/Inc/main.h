@@ -137,6 +137,7 @@ extern "C" {
 #include "GUI/Frames/ImpulseExitWeight.h"
 #include "GUI/Frames/ExitEnableCycle.h"
 #include "GUI/Frames/MotorSettingsFrame.h"
+#include "GUI/Frames/ACRelayWorkTypeSelectFrame.h"
 
 /* USER CODE END Includes */
 
