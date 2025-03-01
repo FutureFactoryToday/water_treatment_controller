@@ -35,6 +35,7 @@ homeBut = {HOME_BUT_X,HOME_BUT_Y,40,60,0,0,0,0};
 
 TS_StateTypeDef tsState;
 uint32_t noTouchDelay;
+uint32_t screenSaveDelay;
 uint8_t dropBut;
 uint8_t wrenchBut;
 uint8_t pageBut;
@@ -45,6 +46,7 @@ uint8_t itemIndex;
 update_flag_t updateFlags;
 bool enableClockDraw = false;
 bool goHome;
+bool screenSave;
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
 
@@ -86,7 +88,7 @@ void initGUI(void){
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
-	BSP_BL_Control(100);  
+	BSP_BL_Control(DEF_BL_VALUE);  
 	sysParams.vars.status.flags.TFTInited = 1;
 	frame = 0;
 	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);

@@ -135,7 +135,9 @@ typedef struct{
 	bool ExternalCommandType;
 	time_t overallWorkingTime;
 	uint32_t overallWashNum;
-	
+	uint32_t baseBLValue;
+	uint32_t screenSaveBLValue;
+	uint32_t screenSaveDelayValue;
 } sys_const_t;
 
 typedef struct {

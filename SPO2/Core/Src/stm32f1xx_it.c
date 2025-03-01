@@ -206,6 +206,15 @@ void SysTick_Handler(void)
 	_1ms_cnt++; 
 		
 
+	if (sysParams.vars.status.flags.AllInited){
+		if (screenSaveDelay){
+			screenSaveDelay--;
+			BSP_BL_Control(sysParams.consts.baseBLValue);
+		} else {
+			//screenSave = true;
+			BSP_BL_Control(sysParams.consts.screenSaveBLValue);
+		}	
+	}
 	FM_Meter_Test();
 		
 	if (_1ms_cnt%100 == 0){
@@ -249,6 +258,7 @@ void RTC_IRQHandler(void)
 	} else {
 		goHome = true;
 	}
+	
 	UL_LogCond();
 
 	LL_RTC_ClearFlag_SEC(RTC);

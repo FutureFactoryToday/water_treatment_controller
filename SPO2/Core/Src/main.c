@@ -78,6 +78,9 @@ void SystemClock_Config(void);
 int main(void)
 {
    /* USER CODE BEGIN 1 */
+	#ifdef PROD_TEST
+	#warning "This version is for production test only."
+	#endif
 //	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
 	LL_RCC_ClearResetFlags();
 	

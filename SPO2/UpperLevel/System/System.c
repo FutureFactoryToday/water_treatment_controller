@@ -84,7 +84,7 @@ void SYS_init(void){
 	sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.status.flags.AllInited =1;
-	
+	screenSaveDelay = sysParams.consts.screenSaveDelayValue;
 }
 void Start_ADC(){
 	sysParams.vars.adc.adcCoef[Vbat] = 1/0.877;
@@ -231,6 +231,10 @@ void Load_Default_Values(void){
 	
 	sysParams.consts.impulseWeight = DEF_IMPULSE_WEIGHT;
 	sysParams.consts.ServicePhoneNumber = DEF_PHONE_NUMBER;
+	
+	sysParams.consts.baseBLValue = DEF_BL_VALUE;
+	sysParams.consts.screenSaveBLValue = DEF_SCREEN_SAVE_BL_VALUE;
+	sysParams.consts.screenSaveDelayValue = DEF_SCREEN_SAVE_DELAY_VALUE;
 }
 
 void Start_Logic(){
