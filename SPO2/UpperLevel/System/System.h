@@ -139,7 +139,7 @@ typedef struct{
 } sys_const_t;
 
 typedef struct {
-	uint32_t rawADC[Vin+1];
+	uint16_t rawADC[Vin+1];
 	float adcCoef[Vin+1];
 	float floatParam[Vin+1];
 }adc_params;

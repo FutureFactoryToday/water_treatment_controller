@@ -55,6 +55,7 @@
 /* USER CODE BEGIN PV */
 	volatile uint32_t _1ms_cnt;
 	uint8_t* errorCause;
+	volatile uint8_t memBuf[4096];
 	//filter_t fil;
 	//uint32_t input = 0, output = 0;
 	//uint32_t resetCounter __attribute__ ((section (".noinit")));

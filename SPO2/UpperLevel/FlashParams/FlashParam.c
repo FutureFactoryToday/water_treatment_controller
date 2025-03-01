@@ -308,5 +308,5 @@ void getRAMParam(uint8_t handler){
 	}
 	lockSPI(3);
 	__set_PRIMASK(oldIRQStatus);
-	logger->readData(queue[3].adress, queue[3].buf, queue[3].size);
+	logger->readData(queue[handler].adress, queue[handler].buf, queue[handler].size);
 } 

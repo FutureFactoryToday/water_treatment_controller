@@ -43,6 +43,7 @@ typedef struct {
 	uint32_t endLoadFlag;
 } stored_params_t;
 
+
 typedef struct {
 	bool isCorrect;
 	stored_params_t params;
