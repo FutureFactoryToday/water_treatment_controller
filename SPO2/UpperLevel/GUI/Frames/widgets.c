@@ -429,16 +429,21 @@ void drawMainWindow()
     BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
 }
 
-
-void drawStatusBarOkCancel()
+void drawStatusBarOkCancelCustom(uint8_t* okBut, uint8_t* cancelBut)
 {
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
   BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, CANCEL, LEFT_MODE);
-    BSP_LCD_DisplayStringAt(OK_X, OK_Y, OK, LEFT_MODE);
+  BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, cancelBut, LEFT_MODE);
+  BSP_LCD_DisplayStringAt(OK_X, OK_Y, okBut, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
 }
+
+void drawStatusBarOkCancel()
+{
+	drawStatusBarOkCancelCustom(OK,CANCEL);
+}
+
 
 void drawStatusBarSave(uint8_t* label)
 {

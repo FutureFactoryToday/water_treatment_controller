@@ -173,5 +173,6 @@ extern volatile sys_param_t sysParams;
 /*Prototypes */
 void SYS_init(void);
 void SYS_Logic_IT(void);
+void Load_Default_Values(void);
 #endif /* __SYSTEM_H__ */
 

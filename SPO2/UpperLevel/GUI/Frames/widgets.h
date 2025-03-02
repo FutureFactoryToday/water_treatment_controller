@@ -29,6 +29,8 @@ typedef enum
 
 void drawStatusBarOkCancel(void);
 
+ void drawStatusBarOkCancelCustom(uint8_t* okBut, uint8_t* cancelBut);
+
 void drawStatusBarSave(uint8_t* label);
 
 void drawStatusBarLabel(uint8_t* label);
