@@ -43,7 +43,7 @@ void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
     
-    enteredPin = 1234;
+    enteredPin = sysParams.consts.ServicePinCode;
 
 	createPinFrame();
 	

@@ -82,14 +82,18 @@ int ShowHistoryMenuFrame(void)
              return 0;
          }
          if(scrollUpBut.isReleased == true){
-            if(history_menu_frame_Scroll_cnt > 0){ history_menu_frame_Scroll_cnt--;
+            if(history_menu_frame_Scroll_cnt > 0)
+            { 
+                history_menu_frame_Scroll_cnt--;
                 history_menu_frame_was_Scroll = 1;
                 RefreshScrollBarHistoryMenuFrame();
             }
             scrollUpBut.isReleased = false;
          }
          if(scrollDwnBut.isReleased == true){
-            if(history_menu_frame_Scroll_cnt < 1){ history_menu_frame_Scroll_cnt++;
+            if(history_menu_frame_Scroll_cnt < 1)
+            { 
+                history_menu_frame_Scroll_cnt++;
                 history_menu_frame_was_Scroll = 2;
                 RefreshScrollBarHistoryMenuFrame();
             }

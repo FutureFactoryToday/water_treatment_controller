@@ -31,7 +31,7 @@ static button_t menuLines[4];
 static button_t delMenuLines[4];
 static button_t lineTime[4];
 static button_t addLine;
-static uint8_t scroll_cnt;
+static uint8_t mfs_scroll_cnt;
 static uint8_t firstEl, taskSize;
 static bool modif;
 /* Private function prototypes -----------------------------------------------*/
@@ -43,6 +43,7 @@ button_t drawEmptyLine(uint8_t num, bool touch);
 static uint8_t* str;
 /* Private user code ---------------------------------------------------------*/
 int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modable) {
+    mfs_scroll_cnt = 0;
 	firstEl = 0;
 	taskSize = 0;
 	tempTask = *baseTask;
@@ -141,17 +142,28 @@ int ShowManualFilterSettings(piston_task_t *baseTask, uint8_t* name, bool modabl
 			}
 		}
 		if(scrollUpBut.isReleased == true) {
-			if(firstEl > 0) {
+			if(/*firstEl > 0*/mfs_scroll_cnt > 0) {
 				firstEl--;
+                mfs_scroll_cnt--;
 				RefreshScrollBar();
 			}
 			scrollUpBut.isReleased = false;
 		}
 		if(scrollDwnBut.isReleased == true) {
-			if(firstEl < 4) {
-				firstEl++;
-				RefreshScrollBar();
-			}
+            if(modif) {
+                if(/*firstEl < 4*/mfs_scroll_cnt < (taskSize - 3)) {
+                    firstEl++;
+                    mfs_scroll_cnt++;
+                    RefreshScrollBar();
+                }
+            }
+            else{
+                if(/*firstEl < 4*/mfs_scroll_cnt < (taskSize - 4)) {
+                    firstEl++;
+                    mfs_scroll_cnt++;
+                    RefreshScrollBar();
+                }
+            }
 			scrollDwnBut.isReleased = false;
 		}
 		
@@ -178,16 +190,18 @@ void RefreshScrollBar(void) {
 		if(i < taskSize - firstEl) {
 			uint8_t step = firstEl + i;
 			uint32_t time = tempTask.step[step].secPause;
-			if (*tempTask.step[i + firstEl].poz == sysParams.consts.pistonPositions.filling){
-				float buf = time/SALT_COEF;
-				 time = roundf(buf);
+			if(*tempTask.step[i + firstEl].poz == sysParams.consts.pistonPositions.filling){
+                float buf = time/SALT_COEF;
+				time = roundf(buf);
 			} else {
 				time = time/60;
 			}
 			uint8_t pozNum = PC_pozNum(tempTask.step[step].poz);
 			drawLine(i, pozNum, time, false);
-		} else {
-			if(taskSize < STEP_PER_TASK_NUM) {
+		}
+        else
+        {
+			if(taskSize < STEP_PER_TASK_NUM){
 				drawEmptyLine(i, modif);
 			}
 			break;

@@ -10,7 +10,7 @@ int showServiceInfoFrame()
     {
 			if (updateFlags.sec == true){
 				drawClock();
-        drawMainStatusBar(144, 2305, 16);
+                drawMainStatusBar(144, 2305, 16);
 				updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 			}
 			if (retBut.isReleased == true) {
@@ -57,7 +57,7 @@ void createFrame(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y, ITEM_SERVICE_INFO[1], CENTER_MODE);
-  BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y + 30, ITEM_SERVICE_INFO[2], CENTER_MODE);
+    BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, FIRST_CURSOR_POS_Y + 30, ITEM_SERVICE_INFO[2], CENTER_MODE);
 	wtc_time_t tempDate = intToWTCTime(sysParams.consts.planerConsts.lastService + sysParams.consts.planerConsts.monthBetweenService*30*24*60*60);//*addMonth(&sysParams.consts.planerConsts.lastService,sysParams.consts.planerConsts.monthBetweenService);
 	uint8_t* text = (compareDate(&sysParams.vars.sysTime,&tempDate) < 0)? getFormatedTimeFromSource("DD MMM YYYY", &tempDate):ITEM_SERVICE_INFO[4];
 	
@@ -69,5 +69,5 @@ void createFrame(void)
 	TC_addButton(&okBut);
 	TC_addButton(&retBut);	
 	TC_addButton(&homeBut);
-	 drawClock(); drawMainStatusBar(144, 2305, 16);
+	drawClock(); drawMainStatusBar(144, 2305, 16);
 }
