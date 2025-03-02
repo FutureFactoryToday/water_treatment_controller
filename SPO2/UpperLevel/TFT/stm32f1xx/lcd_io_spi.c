@@ -726,7 +726,7 @@ void LCD_IO_Bl_OnOff(uint8_t B1)
 	if (B1 > 100){
 		B1 = 100;
 	}
-	LL_TIM_OC_SetCompareCH1(BL_TIM,B1*10);
+	LL_TIM_OC_SetCompareCH1(BL_TIM,B1);
 }
 
 //-----------------------------------------------------------------------------

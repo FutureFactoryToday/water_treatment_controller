@@ -55,6 +55,7 @@
 /* USER CODE BEGIN PV */
 	volatile uint32_t _1ms_cnt;
 	uint8_t* errorCause;
+	volatile uint8_t memBuf[4096];
 	//filter_t fil;
 	//uint32_t input = 0, output = 0;
 	//uint32_t resetCounter __attribute__ ((section (".noinit")));
@@ -77,6 +78,9 @@ void SystemClock_Config(void);
 int main(void)
 {
    /* USER CODE BEGIN 1 */
+	#ifdef PROD_TEST
+	#warning "This version is for production test only."
+	#endif
 //	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
 	LL_RCC_ClearResetFlags();
 	
@@ -148,6 +152,7 @@ int main(void)
 //	FontTest(&Oxygen_Mono_20);
 //	FontTest(&Oxygen_Mono_24);
 //	showLoadTypeFrame();
+	
 	ShowMainFrame();
 	
   while (1)

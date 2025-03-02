@@ -20,6 +20,12 @@ typedef enum {
 	MANUAL_ON
 } dc_relay_work_t;
 
+typedef enum {
+	COMPRESSOR_AC,
+	WASH_AC,
+	MANUAL_ON_AC
+} ac_relay_work_t;
+
 typedef struct{
 	uint8_t workType;
 	relay_enable_t pozEnable;
@@ -29,6 +35,7 @@ typedef struct{
 /*Prototypes*/
 void RELAY_DC_CYCLE(void);
 void RELAY_AC_CYCLE(void);
-void RELAY_Init(void);
+void DC_RELAY_Init(void);
+void AC_RELAY_Init(void);
 void RELAY_DC_ChangeType(dc_relay_work_t type);
 #endif //_RELAYS_H_

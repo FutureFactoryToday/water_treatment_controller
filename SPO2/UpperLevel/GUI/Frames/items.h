@@ -129,3 +129,7 @@ extern const uint8_t* ITEM_IMPULSE_WEIGHT[];
 extern const uint8_t* ITEM_MOTOR_SETTINGS[];
 
 extern const uint8_t* ITEM_LOG_TEXT[];
+
+extern const uint8_t* ITEM_AC_OUTPUT_FRAME[];
+
+extern const uint8_t* ITEM_SETTINGS_FLUSH[];

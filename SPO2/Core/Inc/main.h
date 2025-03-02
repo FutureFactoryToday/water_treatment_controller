@@ -138,6 +138,8 @@ extern "C" {
 #include "GUI/Frames/ExitEnableCycle.h"
 #include "GUI/Frames/MotorSettingsFrame.h"
 #include "GUI/Frames/changePinCodeFrame.h"
+#include "GUI/Frames/ACRelayWorkTypeSelectFrame.h"
+#include "GUI/Frames/SettingsFlush.h"
 
 /* USER CODE END Includes */
 

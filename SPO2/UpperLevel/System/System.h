@@ -135,7 +135,9 @@ typedef struct{
 	bool ExternalCommandType;
 	time_t overallWorkingTime;
 	uint32_t overallWashNum;
-	
+	uint32_t baseBLValue;
+	uint32_t screenSaveBLValue;
+	uint32_t screenSaveDelayValue;
 } sys_const_t;
 
 typedef struct {
@@ -171,5 +173,6 @@ extern volatile sys_param_t sysParams;
 /*Prototypes */
 void SYS_init(void);
 void SYS_Logic_IT(void);
+void Load_Default_Values(void);
 #endif /* __SYSTEM_H__ */
 

@@ -453,6 +453,7 @@ uint8_t StoreWashEvent(void){
 	return res;
 
 }
+
 HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	HAL_StatusTypeDef res;
 //	if (processing)

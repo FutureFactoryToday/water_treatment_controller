@@ -8,20 +8,25 @@
 /*Global parameters*/
 
 /*Local prototypes*/
-static uint32_t oldWater;
+static uint32_t oldWaterDC, oldWaterAC;
 static planer_status_t oldStatus;
+static uint32_t waterStartTime;
 uint32_t oldPoz;
 bool pulse ;
 /*Code*/
-void RELAY_Init(void){
+void DC_RELAY_Init(void){
 	LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-	oldWater = (uint32_t)sysParams.consts.waterQuantaty;
+	oldWaterDC = (uint32_t)sysParams.consts.waterQuantaty;
 	pulse = false;
 	oldStatus =	sysParams.consts.planerConsts.status;
 	oldPoz = sysParams.vars.pistonParams.curPoz;
 }
+
+void AC_RELAY_Init(void){
+	LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+}
 void RELAY_DC_ChangeType(dc_relay_work_t type){
-	RELAY_Init();
+	DC_RELAY_Init();
 	sysParams.consts.dcRelay.workType = type;
 }
 void RELAY_DC_CYCLE(void){
@@ -58,42 +63,7 @@ void RELAY_DC_CYCLE(void){
 					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 				}
 			
-//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
-//					sysParams.consts.dcRelay.pozEnable.rabPoz == 1){
-//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//						return;
-//					} else {
-//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//					}
-//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
-//					sysParams.consts.dcRelay.pozEnable.forwardWash == 1){
-//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//						return;
-//					} else {
-//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//					}
-//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
-//					sysParams.consts.dcRelay.pozEnable.backwash == 1){
-//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//						return;
-//					} else {
-//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//					}
-//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
-//					sysParams.consts.dcRelay.pozEnable.saltering == 1){
-//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//						return;
-//					} else {
-//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//					}
-//				if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
-//					sysParams.consts.dcRelay.pozEnable.filling == 1){
-//						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//						return;
-//					} else {
-//						LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
-//					}
-//				}
+
 			break;
 		}
 	
@@ -108,10 +78,10 @@ void RELAY_DC_CYCLE(void){
 						}
 					}
 					
-					if (sysParams.consts.waterQuantaty - oldWater > sysParams.consts.impulseWeight){
+					if (sysParams.consts.waterQuantaty - oldWaterDC > sysParams.consts.impulseWeight){
 						LL_GPIO_SetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
 						sysParams.vars.dcRelayCnt = CYCLE_HZ/TARGET_HZ;
-						oldWater = sysParams.consts.waterQuantaty;
+						oldWaterDC = sysParams.consts.waterQuantaty;
 					} 
 				} else {
 					LL_GPIO_ResetOutputPin(REL_DC_ON_GPIO_Port, REL_DC_ON_Pin);
@@ -159,47 +129,29 @@ void RELAY_DC_CYCLE(void){
 	oldStatus = sysParams.consts.planerConsts.status;
 }
 void RELAY_AC_CYCLE(void){
-//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
-//			sysParams.consts.acRelay.pozEnable.rabPoz == 1){
-//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//				return;
-//			} else {
-//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//			}
-//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.forwardWash && 
-//			sysParams.consts.acRelay.pozEnable.forwardWash == 1){
-//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//				return;
-//			} else {
-//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//			}
-//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.backwash && 
-//			sysParams.consts.acRelay.pozEnable.backwash == 1){
-//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//				return;
-//			} else {
-//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//			}
-//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.saltering && 
-//			sysParams.consts.acRelay.pozEnable.saltering == 1){
-//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//				return;
-//			} else {
-//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//			}
-//		if (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.filling && 
-//			sysParams.consts.acRelay.pozEnable.filling == 1){
-//				LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//				return;
-//			} else {
-//				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
-//			}
+
 	switch(sysParams.consts.acRelay.workType){
 		case (MANUAL_ON):{
-			LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+			//LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 			break;
 		}
-		default:{
+		case (COMPRESSOR_AC):{
+			float speed = FM_getFlowSpeed()*60;
+			if (speed > 0){
+				if (waterStartTime == 0){
+					waterStartTime = sysParams.vars.rtcTime;
+				} else {
+					if (sysParams.vars.rtcTime - waterStartTime > DELAY_FOR_COMPRESSOR_START){
+						LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+					}
+				}
+			} else {
+				waterStartTime = 0;
+				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
+			}
+			break;
+		}
+		case (WASH_AC):{
 			if (sysParams.consts.planerConsts.status == PL_WORKING){
 				bool acOn = false;
 				acOn |= (*sysParams.vars.planer.currentStep->poz == sysParams.consts.pistonPositions.rabPoz && 
@@ -222,6 +174,10 @@ void RELAY_AC_CYCLE(void){
 			} else {
 				LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 			}				
+			break;
+		}
+		default:{
+			
 		}
 	}
 }

@@ -65,7 +65,8 @@ void SYS_init(void){
 	HAL_IWDG_Refresh(&hiwdg);
 	FM_Init();
 	HAL_IWDG_Refresh(&hiwdg);
-	RELAY_Init();
+	DC_RELAY_Init();
+	AC_RELAY_Init();
 	HAL_IWDG_Refresh(&hiwdg);
 	Time_init();
 	HAL_IWDG_Refresh(&hiwdg);
@@ -84,7 +85,7 @@ void SYS_init(void){
 	sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.status.flags.AllInited =1;
-	
+	screenSaveDelay = sysParams.consts.screenSaveDelayValue;
 }
 void Start_ADC(){
 	sysParams.vars.adc.adcCoef[Vbat] = 1/0.877;
@@ -228,9 +229,14 @@ void Load_Default_Values(void){
 	sysParams.consts.dcRelay.workType = HALT;
 	sysParams.consts.dcRelay.pozEnable = (relay_enable_t){0};
 	sysParams.consts.acRelay.pozEnable = (relay_enable_t){0};
+	sysParams.consts.acRelay.workType = WASH_AC;
 	
 	sysParams.consts.impulseWeight = DEF_IMPULSE_WEIGHT;
 	sysParams.consts.ServicePhoneNumber = DEF_PHONE_NUMBER;
+	
+	sysParams.consts.baseBLValue = DEF_BL_VALUE;
+	sysParams.consts.screenSaveBLValue = DEF_SCREEN_SAVE_BL_VALUE;
+	sysParams.consts.screenSaveDelayValue = DEF_SCREEN_SAVE_DELAY_VALUE;
 }
 
 void Start_Logic(){
