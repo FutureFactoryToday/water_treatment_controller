@@ -13,6 +13,7 @@ extern const uint8_t* ITEM_TIME_ruText[];
 extern const uint8_t* ITEM_MENU[];
 //Pincode Frame
 extern const uint8_t* ITEM_PINCODE_FRAME[];
+extern const uint8_t* ITEM_CHANGE_PINCODE_FRAME[];
 //serviceMenuFrame
 #define MODE_SERVICE "Инженер"
 extern const uint8_t* ITEM_SERVICE_MENU[];

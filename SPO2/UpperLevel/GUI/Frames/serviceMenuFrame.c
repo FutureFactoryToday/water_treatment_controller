@@ -28,7 +28,7 @@ int ShowServiceMenuFrame(void)
              drawClock(); drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
          }
-			/*Buttons pressed*/
+		/*Buttons pressed*/
          if(retBut.isPressed == true){
             retBut.isPressed = false;
             //return 0;
@@ -89,22 +89,30 @@ int ShowServiceMenuFrame(void)
             BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[6].y + 9,ITEM_SERVICE_MENU[6],LEFT_MODE);
             menuLines[6].isPressed = false;
          }
-			 if(menuLines[7].isPressed == true){
-									//Make it blue
-							drawFillArcRec(menuLines[7].x, menuLines[7].y, menuLines[7].xSize, menuLines[7].ySize, LCD_COLOR_BLUE);
-							BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-							BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-							BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[7].y + 9,ITEM_SERVICE_MENU[7],LEFT_MODE);
-							menuLines[7].isPressed = false;
-					 }
-			 if(menuLines[8].isPressed == true){
-									//Make it blue
-							drawFillArcRec(menuLines[8].x, menuLines[8].y, menuLines[8].xSize, menuLines[8].ySize, LCD_COLOR_BLUE);
-							BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-							BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-							BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[8].y + 9,ITEM_SERVICE_MENU[8],LEFT_MODE);
-							menuLines[7].isPressed = false;
-					 }
+		 if(menuLines[7].isPressed == true){
+                        //Make it blue
+            drawFillArcRec(menuLines[7].x, menuLines[7].y, menuLines[7].xSize, menuLines[7].ySize, LCD_COLOR_BLUE);
+            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[7].y + 9,ITEM_SERVICE_MENU[7],LEFT_MODE);
+            menuLines[7].isPressed = false;
+         }
+		 if(menuLines[8].isPressed == true){
+                        //Make it blue
+            drawFillArcRec(menuLines[8].x, menuLines[8].y, menuLines[8].xSize, menuLines[8].ySize, LCD_COLOR_BLUE);
+            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[8].y + 9,ITEM_SERVICE_MENU[8],LEFT_MODE);
+            menuLines[8].isPressed = false;
+         }
+         if(menuLines[9].isPressed == true){
+                        //Make it blue
+            drawFillArcRec(menuLines[9].x, menuLines[9].y, menuLines[9].xSize, menuLines[9].ySize, LCD_COLOR_BLUE);
+            BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+            BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+            BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[9].y + 9,ITEM_SERVICE_MENU[9],LEFT_MODE);
+            menuLines[9].isPressed = false;
+         }
          if(scrollUpBut.isPressed == true){
                 //Make it blue
             scrollUpBut.isPressed = false;
@@ -165,9 +173,14 @@ int ShowServiceMenuFrame(void)
             menuLines[7].isReleased = false;
             createFrame();
          } 
-				if(menuLines[8].isReleased == true){
+		 if(menuLines[8].isReleased == true){
             ShowMotorSettings();   
             menuLines[8].isReleased = false;
+            createFrame();
+         }
+         if(menuLines[9].isReleased == true){
+            showChangePinCodeFrame();   
+            menuLines[9].isReleased = false;
             createFrame();
          }
          if(scrollUpBut.isReleased == true){
@@ -178,7 +191,7 @@ int ShowServiceMenuFrame(void)
             scrollUpBut.isReleased = false;
          }
          if(scrollDwnBut.isReleased == true){
-            if(service_menu_frame_Scroll_cnt < 5){ service_menu_frame_Scroll_cnt++;
+            if(service_menu_frame_Scroll_cnt < 6){ service_menu_frame_Scroll_cnt++;
                 service_menu_frame_was_Scroll = 2;
                 RefreshScrollBarServiceMenuFrame();
             }

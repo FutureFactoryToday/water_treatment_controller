@@ -238,9 +238,13 @@ void calcButParam()
 	
 	//invisibleButton = drawFillButton(BSP_LCD_GetXSize() - 2*FOURTH_CURSOR_SIZE_Y, FOURTH_CURSOR_POS_Y, ,FOURTH_CURSOR_SIZE_Y, "", false);
 
-	invisibleButton.x = BSP_LCD_GetXSize() - 2*FOURTH_CURSOR_SIZE_Y;
+//	invisibleButton.x = BSP_LCD_GetXSize() - 2*FOURTH_CURSOR_SIZE_Y;
+//	invisibleButton.y = FOURTH_CURSOR_POS_Y;
+//	invisibleButton.xSize = 2*FOURTH_CURSOR_SIZE_Y;
+//	invisibleButton.ySize = FOURTH_CURSOR_SIZE_Y;
+	invisibleButton.x = FOURTH_CURSOR_POS_X;
 	invisibleButton.y = FOURTH_CURSOR_POS_Y;
-	invisibleButton.xSize = 2*FOURTH_CURSOR_SIZE_Y;
+	invisibleButton.xSize = FOURTH_CURSOR_SIZE_X;
 	invisibleButton.ySize = FOURTH_CURSOR_SIZE_Y;
 	
 	TC_addButton(&invisibleButton);
