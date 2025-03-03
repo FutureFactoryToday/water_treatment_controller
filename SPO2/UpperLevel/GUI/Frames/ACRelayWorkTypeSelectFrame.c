@@ -6,7 +6,7 @@ static void createFrame();
 static void markLines();
 static void calcButParam();
 int ShowACOutputFrame(void) {
-	switch(sysParams.consts.dcRelay.workType) {
+	switch(sysParams.consts.acRelay.workType) {
 		case (COMPRESSOR_AC): {
 			markItem = 1;
 			break;
@@ -54,11 +54,11 @@ int ShowACOutputFrame(void) {
 			
 			switch(markItem) {
 				case (1): {
-					sysParams.consts.dcRelay.workType = COMPRESSOR_AC;
+					sysParams.consts.acRelay.workType = COMPRESSOR_AC;
 					break;
 				}
 				case (2): {
-					sysParams.consts.dcRelay.workType = WASH_AC;
+					sysParams.consts.acRelay.workType = WASH_AC;
 					break;
 				}
 			}
