@@ -30,10 +30,8 @@ uint32_t externalSignalCnt;
 bool oldExternalSignal;
 //extern uint32_t resetCounter;
 /* Private function prototypes -----------------------------------------------*/
-static void Start_ADC();
-static void Start_RTC();
+
 static void Load_Flash_Param();
-static void Start_Logic();
 void Load_Default_Values(void);
 /* Private user code ---------------------------------------------------------*/
 

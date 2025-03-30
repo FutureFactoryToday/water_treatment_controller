@@ -73,11 +73,13 @@ void initGUI(void){
 	}
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	sysParams.vars.status.flags.TouchInited = 1;
+	sysParams.vars.status.flags.TFTInited = 1;
+	BSP_BL_Control(DEF_BL_VALUE);  
+	
+#ifndef PROD_TEST
 	BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
 	BSP_LCD_DrawBitmap(0,0,&LOGO);
-
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-    
 	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
@@ -88,13 +90,12 @@ void initGUI(void){
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
-	BSP_BL_Control(DEF_BL_VALUE);  
-	sysParams.vars.status.flags.TFTInited = 1;
 	frame = 0;
 	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);
 	itemIndex = 0;
 	LL_mDelay(2000);
+#endif	
 }
 
 

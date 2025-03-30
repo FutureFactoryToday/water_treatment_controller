@@ -196,16 +196,21 @@ void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
-	#ifdef ST7796S;
-		if (touchCheckDelay-- > 0){	
-			if (touchCheckDelay == 0){
-				TC_Interrupt(1);
-			}
+#ifdef ST7796S;
+	if (touchCheckDelay > 0){
+		touchCheckDelay--;
+		if (touchCheckDelay == 0){
+			TC_Interrupt(1);
 		}
-	#endif
+	}
+#endif
 	_1ms_cnt++; 
-		
-
+	if (_1ms_cnt%100 == 0){
+		#ifdef ILI9488
+		TC_checkButtons();
+		#endif
+	}
+#ifndef PROD_TEST
 	if (sysParams.vars.status.flags.AllInited){
 		if (screenSaveDelay){
 			screenSaveDelay--;
@@ -215,13 +220,11 @@ void SysTick_Handler(void)
 			BSP_BL_Control(sysParams.consts.screenSaveBLValue);
 		}	
 	}
+	
+#else
+	
+#endif
 	FM_Meter_Test();
-		
-	if (_1ms_cnt%100 == 0){
-		#ifdef ILI9488
-		TC_checkButtons();
-		#endif
-	}
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -247,7 +250,7 @@ void RTC_IRQHandler(void)
 	if (sysParams.vars.status.flags.AllInited == 0){
 		return;
 	}
-	
+#ifndef PROD_TEST
 	FP_SaveParam();
 	LOG_Interrupt();
 	//FP_StartStore();
@@ -258,14 +261,17 @@ void RTC_IRQHandler(void)
 	} else {
 		goHome = true;
 	}
-	
+	UL_LogText("Time:", sysParams.vars.rtcTime);
 	UL_LogCond();
 
-	LL_RTC_ClearFlag_SEC(RTC);
 	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
+#else
+	
+#endif
+	
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-
+	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 1 */
 }
 
@@ -378,8 +384,9 @@ void TIM1_UP_TIM10_IRQHandler(void)
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
 	if (LL_TIM_IsActiveFlag_UPDATE(LOGIC_TIM)){
 		FM_incFlowMeter();
+
 		SYS_Logic_IT();
-		
+
 		LL_TIM_ClearFlag_UPDATE(LOGIC_TIM);
 	}
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
@@ -393,7 +400,12 @@ void TIM1_TRG_COM_TIM11_IRQHandler(void)
   /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 0 */
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM11)){
 			LL_TIM_ClearFlag_UPDATE(TIM11);
+#ifndef PROD_TEST
 			PL_Interrupt();
+#else
+	
+#endif
+			
 			
 		}
   /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
@@ -424,26 +436,32 @@ void TIM4_IRQHandler(void)
   /* USER CODE BEGIN TIM4_IRQn 0 */
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM4)){
 		LL_TIM_ClearFlag_UPDATE(TIM4);
+#ifndef PROD_TEST
 		if (sysParams.vars.status.flags.AllInited){
-			if (sysParams.vars.frameWDTTim){
-				sysParams.vars.frameWDTTim--;
-			} else {
-				while(1);
+				if (sysParams.vars.frameWDTTim){
+					sysParams.vars.frameWDTTim--;
+				} else {
+					while(1);
+				}
+				if (sysParams.vars.secWDTTim){
+					sysParams.vars.secWDTTim--;
+				} else {
+					while(1);
+				}
 			}
-			if (sysParams.vars.secWDTTim){
-				sysParams.vars.secWDTTim--;
-			} else {
-				while(1);
-			}
-		}
+			
+			
+#else
+	
+#endif
+
 		PC_Control();
 		_100HzCnt++;
 		if (_100HzCnt >50){
 			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 			_100HzCnt = 0;
 		}
-		}
-
+	}
   /* USER CODE END TIM4_IRQn 0 */
   /* USER CODE BEGIN TIM4_IRQn 1 */
 
@@ -574,7 +592,6 @@ void TIM8_UP_TIM13_IRQHandler(void)
 			opticCnt--;
 		}
 		PC_OpticTest();
-		
 	}
   /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
 
@@ -620,9 +637,14 @@ void TIM6_IRQHandler(void)
   /* USER CODE END TIM6_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_IRQn 1 */
+#ifndef PROD_TEST
 		if (LL_RCC_IsActiveFlag_IWDGRST()){
 			__NVIC_SystemReset();
 		}
+#else
+	
+#endif
+	
 
   /* USER CODE END TIM6_IRQn 1 */
 }

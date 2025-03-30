@@ -16,7 +16,7 @@ static void partWriteData (SPI_HandleTypeDef *hspi);
 #define SECTOR_SIZE 4096
 #define PACKET_SIZE 256
 #define RESET_DELAY 1
-#define MAX_ADDRES 0xFFFFFF
+
 
 typedef struct{
 	unsigned BUSY:1;

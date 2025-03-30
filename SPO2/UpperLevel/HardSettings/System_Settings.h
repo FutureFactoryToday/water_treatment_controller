@@ -37,6 +37,10 @@
 
 #define NO_TOUCH_DELAY_VALUE 60
 
+#define MAX_FRAM_ADR 			0x7FF
+
+#define MAX_RAM_ADDRESS 0xFFFFFF
+
 #define DEF_SCREEN_SAVE_BL_VALUE 0
 
 #define DEF_BL_VALUE 80

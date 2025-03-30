@@ -127,18 +127,11 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-	//HAL_IWDG_Refresh(&hiwdg);
-//	uint8_t* str = "Test 10";
-//	uint8_t size = 1;
-//	__enable_irq();
-//	while (1)
-//  {
-//		HAL_UART_Transmit_IT(&huart1,
-//				str,
-//				size);
-//		LL_mDelay(500);
-//	}
+#ifndef PROD_TEST
 	SYS_init();
+#else
+	ProductionTest();
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
