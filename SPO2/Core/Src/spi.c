@@ -182,7 +182,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     HAL_NVIC_SetPriority(SPI1_IRQn, 3, 0);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
   /* USER CODE BEGIN SPI1_MspInit 1 */
-
+	LL_GPIO_SetPinPull(MEM_MISO_GPIO_Port,MEM_MISO_Pin, GPIO_PULLDOWN);
   /* USER CODE END SPI1_MspInit 1 */
   }
 }

@@ -155,17 +155,21 @@ const uint8_t* ITEM_PROD_TEST_MAINSCREEN[] = {
 	"Test contains automatic memoty IC tests", //53
 	"Wait until it finishes", //54
 	"Test failed", //55
-	"Couldn't write to FRAM adress: ", //56
-	"Couldn't read from FRAM adress: ", //57
-	"Content in FRAM adress differs from test value.", //58
+	"Couldn't write to FRAM address: ", //56
+	"Couldn't read from FRAM address: ", //57
+	"Content in FRAM address differs from test value.", //58
 	"Expected value: ", //59
 	"Received value: ", //60
-	"Couldn't write to RAM adress: ", //61
-	"Couldn't read from RAM adress: ", //62
+	"Couldn't write to RAM page address: ", //61
+	"Couldn't read from RAM page address: ", //62
 	"Test completed successfully", //63
 	"FRAM read test", //64
 	"FRAM write test", //65
 	"RAM read test", //66
 	"RAM write test", //67
 	"FRAM and RAM simultaneous work",//68
+	"Content in RAM address differs from test value." ,// 69
+	"RAM erasing. Please wait.", //70
+	"FRAM and RAM simultenious work test", //71
+	"FRAM and RAW write/read timeout.", //72
 };

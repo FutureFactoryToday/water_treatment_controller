@@ -1,7 +1,18 @@
 #include "ProdTest.h"
 #define TestFreq 10
 #define HalFreq 1000
-
+#define smallText Oxygen_Mono_16
+#define bigText Oxygen_Mono_20
+#define bufSize 255
+typedef enum {
+	FRAM_WRITE_ERR,
+	FRAM_READ_TIMEOUT_ERR,
+	FRAM_MISMATCH_ERR,
+	RAM_WRITE_ERR,
+	RAM_READ_TIMEOUT_ERR,
+	RAM_MISMATCH_ERR,
+	SIM_TIMEOUT
+} mem_test_error_t;
 static uint16_t x1,y1,yBut,xBut1,xBut2,xBut3,xBut4,xBut5, xButSize, yButSize , xGap, y6,xCur, xSize, ySize, yOffset;
 static uint32_t oldHALTick;
 static uint8_t curScreen;
@@ -10,9 +21,14 @@ static prod_test_t test;
 static bool redrawWindow;
 static bool memTestComplete;
 static bool memTestFail;
-static uint8_t writeTestData[256];
-static uint8_t readTestData[256];
-static uint8_t memTestStep = 0;
+
+uint8_t ramWriteTestData[bufSize+1];
+uint8_t ramReadTestData[bufSize+1];
+static mem_test_error_t memTestErr = 0;
+uint16_t rectSize;
+uint8_t rectWidth = 10;
+uint32_t percent, oldPercent;
+uint32_t failAddress;
 test_result_t PT_DrawMainScreen();
 test_result_t PT_DrawScreenTest();
 test_result_t PT_DrawTouchTest();
@@ -23,6 +39,7 @@ void memInteractionComplete(void);
 test_result_t PT_IOTest();
 test_result_t PT_MemTest();
 
+void drawMemStatus (uint32_t xS, uint32_t ySt, uint32_t adr, uint32_t maxAdr);
 void ProductionTest(){
 	__enable_irq();
 	Start_Logic();
@@ -47,10 +64,25 @@ void ProductionTest(){
 	test.mem = NOT_START;
 	test.io = NOT_START;
 	
-	
+	x1 = 30;
+		y1 = 15;
+		xCur = 0;
+		xSize = BSP_LCD_GetXSize();
+		ySize = BSP_LCD_GetFont()->height;
+		
+		
+		xGap = 15;
+		xButSize = 78;
+		yButSize = 60;
+		xBut1 = xGap;
+		yBut = BSP_LCD_GetYSize() - yButSize - 5;
+		xBut2 = xBut1 + xButSize + xGap;
+		xBut3 = xBut2 + xButSize + xGap;
+		xBut4 = xBut3 + xButSize + xGap;
+		xBut5 = xBut4 + xButSize + xGap;
 		
 	PT_DrawMainScreen();
-	PT_MemTest();
+	//PT_MemTest();
 }
 
 test_result_t PT_DrawMainScreen(){
@@ -497,6 +529,7 @@ test_result_t PT_IOTest(){
 
 test_result_t PT_MemTest(){
 		uint8_t yOffset;
+	rectSize = BSP_LCD_GetXSize()-2*x1;
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
@@ -519,35 +552,40 @@ test_result_t PT_MemTest(){
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
 	
 	//FRAM Wtire test	
-	writeTestData[0] = 1;
+	ramWriteTestData[0] = 1;
 	memTestFail = false;
+	
 	yOffset = y1;
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[65],CENTER_MODE);
 	yOffset += BSP_LCD_GetFont()->height;
-	uint16_t rectSize = BSP_LCD_GetXSize()-2*x1;
-	uint8_t rectWidth = 10;
+
 	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
 	uint32_t startTime = HAL_GetTick();
 	uint16_t xCur = x1;
-	uint16_t percent = 0, oldPercent = 0;
-	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	//BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	//BSP_LCD_SetFont(&Oxygen_Mono_12);
 	uint32_t framAdr = 0;
-	while( framAdr < MAX_FRAM_ADR && !memTestFail){
+	while( framAdr < MAX_FRAM_ADR+1 && !memTestFail){
 		memTestComplete = false;
-		FP_Manual_FRAM_Write(&writeTestData[0],framAdr,1,memInteractionComplete);
+		FP_Manual_FRAM_Write(&ramWriteTestData[0],framAdr,1,memInteractionComplete);
 		while (!memTestComplete){
 			if (HAL_GetTick() - startTime > 1000){
 				memTestFail = true;
+				memTestErr = FRAM_WRITE_ERR;
 				break;
 			}
 		}
-		writeTestData[0]++;
-		if (writeTestData[0] == 0) writeTestData[0] = 1;
+		startTime = HAL_GetTick();
+		ramWriteTestData[0]++;
+		if (ramWriteTestData[0] == 0) ramWriteTestData[0] = 1;
+		//drawMemStatus(x1-1,yOffset-1,framAdr,MAX_FRAM_ADR);
 		percent = rectSize*framAdr/MAX_FRAM_ADR;
 		if (percent != oldPercent){
+			BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			BSP_LCD_FillRect(xCur,yOffset,1,rectWidth);
 			oldPercent = percent;
 			xCur++;
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 		}
 		framAdr++;
 	}
@@ -561,7 +599,7 @@ test_result_t PT_MemTest(){
 		yOffset += BSP_LCD_GetFont()->height;
 		xCur = 0;	
 		xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[56],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(framAdr),LEFT_MODE);
+		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(framAdr-1),LEFT_MODE);
 		yOffset += BSP_LCD_GetFont()->height;				
 		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
 		yOffset += BSP_LCD_GetFont()->height;
@@ -574,39 +612,46 @@ test_result_t PT_MemTest(){
 		}
 	}
 	//FRAM Read test	
-	writeTestData[0] = 1;
+	ramWriteTestData[0] = 1;
+	percent = 0; oldPercent = 0;
 	memTestFail = false;
+	//yOffset += rectWidth + 2 + smallText.height;
 	yOffset += rectWidth + 2;
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[65],CENTER_MODE);
 	yOffset += BSP_LCD_GetFont()->height;
 	rectSize = BSP_LCD_GetXSize()-2*x1;
-	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
+	percent = 0; oldPercent = 0;
 	startTime = HAL_GetTick();
 	xCur = x1;
-	percent = 0, oldPercent = 0;
+	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
 	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 	framAdr = 0;
-	while( framAdr < MAX_FRAM_ADR && !memTestFail){
+	while( framAdr < MAX_FRAM_ADR+1 && !memTestFail){
 		memTestComplete = false;
-		FP_Manual_FRAM_Read(&readTestData[0],framAdr,1,memInteractionComplete);
+		FP_Manual_FRAM_Read(&ramReadTestData[0],framAdr,1,memInteractionComplete);
 		while (!memTestComplete){
 			if (HAL_GetTick() - startTime > 1000){
 				memTestFail = true;
+				memTestErr = FRAM_READ_TIMEOUT_ERR;
 				break;
 			}
 		}
-		if (readTestData[0] != writeTestData[0]){
+		if (ramReadTestData[0] != ramWriteTestData[0]){
 			memTestFail = true;
+			memTestErr = FRAM_MISMATCH_ERR;
 			break;
 		}
-		
-		writeTestData[0]++;
-		if (writeTestData[0] == 0) writeTestData[0] = 1;
+		startTime = HAL_GetTick();
+		ramWriteTestData[0]++;
+		if (ramWriteTestData[0] == 0) ramWriteTestData[0] = 1;
+		//drawMemStatus(x1-1,yOffset-1,framAdr,MAX_FRAM_ADR);
 		percent = rectSize*framAdr/MAX_FRAM_ADR;
 		if (percent != oldPercent){
+			BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			BSP_LCD_FillRect(xCur,yOffset,1,rectWidth);
 			oldPercent = percent;
 			xCur++;
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 		}
 		framAdr++;
 	}
@@ -619,12 +664,26 @@ test_result_t PT_MemTest(){
 		yOffset = y1;	
 		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[55],CENTER_MODE);
 		yOffset += BSP_LCD_GetFont()->height;
-		xCur = 0;	
-		xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[57],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(framAdr),LEFT_MODE);
-		yOffset += BSP_LCD_GetFont()->height;				
-		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
-		yOffset += BSP_LCD_GetFont()->height;
+		xCur = 0;
+		if (memTestErr == FRAM_READ_TIMEOUT_ERR){
+			xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[57],LEFT_MODE);
+			BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(framAdr-1),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;				
+			BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+		} else {
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[58],LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[59],LEFT_MODE);
+			xCur += BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramWriteTestData[0]),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;		
+			xCur = 0;			
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[60],LEFT_MODE);
+			xCur += BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramReadTestData[0]),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;		
+			BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+		}
 		failBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Fail", LCD_COLOR_BLACK, LCD_COLOR_RED);	
 		TC_addButton(&failBut);
 		while(1){
@@ -633,38 +692,65 @@ test_result_t PT_MemTest(){
 			}
 		}
 	}
-	FP_ClearLog();
-	//RAM Wtire test
-	writeTestData[0] = 1;
-	memTestFail = false;
+	//yOffset += rectWidth + 2 + smallText.height;
 	yOffset += rectWidth + 2;
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[70],CENTER_MODE);
+	FP_ClearLog();
+	LL_mDelay(10);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(0,yOffset,480,BSP_LCD_GetFont()->height);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	/**************************************************************************************/
+	//RAM Wtire test
+	/**************************************************************************************/
+	
+	failAddress = 0;
+	memTestFail = false;
+	percent = 0; oldPercent = 0;
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[67],CENTER_MODE);
 	yOffset += BSP_LCD_GetFont()->height;
 
 	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
 	startTime = HAL_GetTick();
 	xCur = x1;
-	percent = 0, oldPercent = 0;
-	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	
+	//BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 	uint32_t ramAdr = 0;
-	while(ramAdr < MAX_RAM_ADDRESS && !memTestFail){
+	for (uint8_t i = 0; i < bufSize; i++){
+		ramWriteTestData[i] = (i==255) ?1:i + 1;
+		ramReadTestData[i] = 0;
+	}
+	
+	while(ramAdr < MAX_RAM_ADDRESS+1 && !memTestFail){
 		memTestComplete = false;
-		FP_Manual_RAM_Write(&writeTestData[0],ramAdr,1,memInteractionComplete);
-//		while (!memTestComplete){
-//			if (HAL_GetTick() - startTime > 1000){
-//				memTestFail = true;
-//				break;
-//			}
-//		}
-		writeTestData[0]++;
-		if (writeTestData[0] == 0) writeTestData[0] = 1;
+		FP_Manual_RAM_Write(&ramWriteTestData,ramAdr,bufSize,memInteractionComplete);
+		while (!memTestComplete){
+			if (HAL_GetTick() - startTime > 2*1000){
+				memTestFail = true;
+				memTestErr = RAM_WRITE_ERR;
+				break;
+			}
+		}
+		startTime = HAL_GetTick();
+		
 		percent = rectSize*ramAdr/MAX_RAM_ADDRESS;
 		if (percent != oldPercent){
+			BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			BSP_LCD_FillRect(xCur,yOffset,1,rectWidth);
 			oldPercent = percent;
 			xCur++;
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 		}
-		ramAdr++;
+//		uint8_t textOffset = x1;
+//		
+//		BSP_LCD_DrawBuffer_Start(textOffset,yOffset + rectWidth + 2,rectSize,BSP_LCD_GetFont()->height,LCD_COLOR_WHITE);
+//		textOffset += BSP_LCD_DisplayStringAt(textOffset,yOffset + rectWidth + 2, "Current address: ", LEFT_MODE);
+//		textOffset += BSP_LCD_DisplayStringAt(textOffset,yOffset + rectWidth + 2, intToStr(ramAdr), LEFT_MODE);
+//		textOffset += BSP_LCD_DisplayStringAt(textOffset,yOffset + rectWidth + 2, " from 16777215", LEFT_MODE);
+//		
+//		BSP_LCD_DrawBuffer_Stop();
+		ramAdr += bufSize+1;
 	}
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
@@ -676,7 +762,7 @@ test_result_t PT_MemTest(){
 		yOffset += BSP_LCD_GetFont()->height;
 		xCur = 0;	
 		xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[61],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramAdr),LEFT_MODE);
+		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramAdr-1),LEFT_MODE);
 		yOffset += BSP_LCD_GetFont()->height;				
 		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
 		yOffset += BSP_LCD_GetFont()->height;
@@ -689,41 +775,51 @@ test_result_t PT_MemTest(){
 		}
 	}
 	//RAM Read test	
-	writeTestData[0] = 1;
+	
 	memTestFail = false;
 	yOffset += rectWidth + 2;
-	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[67],CENTER_MODE);
+	percent = 0; oldPercent = 0;
+	//yOffset += rectWidth + 2 + smallText.height;
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[66],CENTER_MODE);
 	yOffset += BSP_LCD_GetFont()->height;
 	rectSize = BSP_LCD_GetXSize()-2*x1;
 	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
 	startTime = HAL_GetTick();
 	xCur = x1;
-	percent = 0, oldPercent = 0;
+	
 	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 	ramAdr = 0;
-	while( ramAdr < MAX_RAM_ADDRESS && !memTestFail){
+	while( ramAdr < MAX_RAM_ADDRESS+1 && !memTestFail){
 		memTestComplete = false;
-		FP_Manual_RAM_Read(&readTestData[0],ramAdr,1,memInteractionComplete);
-//		while (!memTestComplete){
-//			if (HAL_GetTick() - startTime > 1000){
-//				memTestFail = true;
-//				break;
-//			}
-//		}
-		if (readTestData[0] != writeTestData[0]){
-			memTestFail = true;
-			break;
+		FP_Manual_RAM_Read(&ramReadTestData,ramAdr,bufSize,memInteractionComplete);
+		while (!memTestComplete){
+			if (HAL_GetTick() - startTime > 1000){
+				memTestFail = true;
+				memTestErr = RAM_READ_TIMEOUT_ERR;
+				break;
+			}
+		}
+		startTime = HAL_GetTick();
+		for (uint8_t i = 0; i < bufSize && !memTestFail; i++){
+			if (ramReadTestData[i] != ramWriteTestData[i]){
+				memTestFail = true;
+				memTestErr = RAM_MISMATCH_ERR;
+				failAddress = i;
+				break;
+			}
+			ramReadTestData[i] = 0;
 		}
 		
-		writeTestData[0]++;
-		if (writeTestData[0] == 0) writeTestData[0] = 1;
+		//drawMemStatus(x1-1,yOffset-1,ramAdr,MAX_RAM_ADDRESS);
 		percent = rectSize*ramAdr/MAX_RAM_ADDRESS;
 		if (percent != oldPercent){
+			BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 			BSP_LCD_FillRect(xCur,yOffset,1,rectWidth);
 			oldPercent = percent;
 			xCur++;
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 		}
-		ramAdr++;
+		ramAdr += bufSize+1;
 	}
 	
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
@@ -735,9 +831,119 @@ test_result_t PT_MemTest(){
 		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[55],CENTER_MODE);
 		yOffset += BSP_LCD_GetFont()->height;
 		xCur = 0;	
-		xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[62],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramAdr),LEFT_MODE);
-		yOffset += BSP_LCD_GetFont()->height;				
+		if (memTestErr == RAM_READ_TIMEOUT_ERR){
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[69],LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[59],LEFT_MODE);
+			xCur += BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramWriteTestData[failAddress]),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;		
+			xCur = 0;			
+			BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[60],LEFT_MODE);
+			xCur += BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramReadTestData[failAddress]),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;		
+			BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+		} else {
+			xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[62],LEFT_MODE);
+			BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramAdr + failAddress),LEFT_MODE);
+			yOffset += BSP_LCD_GetFont()->height;				
+			BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
+			yOffset += BSP_LCD_GetFont()->height;
+		}
+		failBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Fail", LCD_COLOR_BLACK, LCD_COLOR_RED);	
+		TC_addButton(&failBut);
+		while(1){
+			if (failBut.isReleased){
+				return TEST_FAIL;
+			}
+		}
+	}
+	
+	
+	
+	//FRAM and RAM Test
+	
+	yOffset += rectWidth + 2;
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[70],CENTER_MODE);
+	FP_ClearLog();
+	LL_mDelay(10);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(0,yOffset,480,BSP_LCD_GetFont()->height);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	memTestFail = false;
+	percent = 0; oldPercent = 0;
+	//yOffset += rectWidth + 2 + smallText.height;
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[71],CENTER_MODE);
+	yOffset += BSP_LCD_GetFont()->height;
+	rectSize = BSP_LCD_GetXSize()-2*x1;
+	BSP_LCD_DrawRect(x1-1,yOffset-1,rectSize+2,rectWidth+2);
+	startTime = HAL_GetTick();
+	xCur = x1;
+	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	ramAdr = 0;
+	framAdr = 0;
+	//for(uint8_t i = 0; i < FLASH_QUEUE_SIZE/4; i++){
+		FP_Manual_FRAM_Write(&ramWriteTestData,framAdr,bufSize+1,NULL);
+		FP_Manual_RAM_Write(&ramWriteTestData,ramAdr,bufSize+1,NULL);
+		FP_Manual_FRAM_Read(&ramReadTestData,framAdr,0x80,NULL);
+		FP_Manual_RAM_Read(&ramReadTestData[0x80],ramAdr,0x80,NULL);
+		framAdr += bufSize+1;
+		ramAdr += bufSize+1;
+		FP_Manual_FRAM_Write(&ramWriteTestData,framAdr,bufSize,NULL);
+		FP_Manual_RAM_Write(&ramWriteTestData,ramAdr,bufSize,NULL);
+		FP_Manual_FRAM_Read(&ramReadTestData,framAdr,0x80,NULL);
+		FP_Manual_RAM_Read(&ramReadTestData[0x80],ramAdr,0x80,NULL);
+		framAdr += bufSize+1;
+		ramAdr += bufSize+1;
+	//}
+		while(!FP_isEmpty()){
+			if (HAL_GetTick() - startTime > 5*1000){
+				memTestFail = true;
+				memTestErr = SIM_TIMEOUT;
+				break;
+			}
+		}
+		for(uint8_t i = 0; i < bufSize&& !memTestFail;i++){
+			if (i < 0x80){
+				if (ramReadTestData[i] != ramWriteTestData[i]){
+					memTestFail = true;
+					memTestErr = FRAM_MISMATCH_ERR;
+				}
+			} else {
+				if (ramReadTestData[i] != ramWriteTestData[i - 0x80]){
+					memTestFail = true;
+					memTestErr = RAM_MISMATCH_ERR;
+				}	
+			}
+		}
+		
+		
+	if (memTestFail){
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_Clear(LCD_COLOR_WHITE);
+		BSP_LCD_SetFont(&Oxygen_Mono_20);
+		yOffset = y1;	
+		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[55],CENTER_MODE);
+		yOffset += BSP_LCD_GetFont()->height;
+		xCur = 0;	
+
+		switch (memTestErr){
+			case (FRAM_MISMATCH_ERR):{
+				xCur += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[58],CENTER_MODE);
+				break;
+			}
+			case (RAM_MISMATCH_ERR):{
+				xCur += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[69],CENTER_MODE);
+				break;
+			}
+			case (SIM_TIMEOUT):{
+				BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[72],CENTER_MODE);
+				break;
+			}
+		}
+		
+		//BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(ramAdr-1),LEFT_MODE);
+		yOffset += BSP_LCD_GetFont()->height;		
 		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
 		yOffset += BSP_LCD_GetFont()->height;
 		failBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Fail", LCD_COLOR_BLACK, LCD_COLOR_RED);	
@@ -748,8 +954,8 @@ test_result_t PT_MemTest(){
 			}
 		}
 	}
-	
-	while(1);
+	/****/
+	//PASSED
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	passBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Pass", LCD_COLOR_BLACK, LCD_COLOR_GREEN);
@@ -762,6 +968,27 @@ test_result_t PT_MemTest(){
 	}	
 }
 
+
+void drawMemStatus (uint32_t xS, uint32_t ySt, uint32_t adr, uint32_t maxAdr){
+	uint32_t percent = 0;
+	BSP_LCD_SetFont(&smallText);
+	percent = rectSize*adr/maxAdr;
+	uint8_t textOffset = xS+1;
+	BSP_LCD_DrawBuffer_Start(xS,ySt,rectSize+2,rectWidth + 2 + BSP_LCD_GetFont()->height,LCD_COLOR_WHITE);
+	BSP_LCD_DrawRect(xS,ySt,rectSize+2,rectWidth+2);
+	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+	BSP_LCD_FillRect(xS+1,ySt+1,percent,rectWidth);
+
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	textOffset += BSP_LCD_DisplayStringAt(textOffset,ySt + 1 + rectWidth + 2, "Current address: ", LEFT_MODE);
+	textOffset += BSP_LCD_DisplayStringAt(textOffset,ySt + 1 + rectWidth + 2, intToStr(adr), LEFT_MODE);
+	textOffset += BSP_LCD_DisplayStringAt(textOffset,ySt + 1 + rectWidth + 2, " from ", LEFT_MODE);
+	textOffset += BSP_LCD_DisplayStringAt(textOffset,ySt + 1 + rectWidth + 2, intToStr(maxAdr-01), LEFT_MODE);
+	BSP_LCD_DrawBuffer_Stop();
+
+
+	BSP_LCD_SetFont(&bigText);
+}
 void memInteractionComplete(void){
 	memTestComplete = true;
 }

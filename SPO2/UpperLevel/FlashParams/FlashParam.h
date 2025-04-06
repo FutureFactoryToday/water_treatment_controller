@@ -31,7 +31,7 @@
 /*Global params*/
 
 typedef enum {
-	READ_FRAM,
+	READ_FRAM = 1,
 	WRITE_FRAM,
 	READ_RAM,
 	WRITE_RAM,
@@ -54,6 +54,7 @@ typedef struct {
 	uint8_t tail;
 	bool empty;
 	bool full;
+	bool isTransmiting;
 } flash_queue_t;
 
 typedef struct {
@@ -82,7 +83,7 @@ uint8_t FP_ClearLog(void);
 HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void));
 HAL_StatusTypeDef FP_GetStoredLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void));
 void FP_StartStore(void);
-
+bool FP_isEmpty();
 uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void));
 uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void));
 uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void));

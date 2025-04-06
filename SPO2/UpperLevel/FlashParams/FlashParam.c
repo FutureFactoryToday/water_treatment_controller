@@ -47,7 +47,7 @@ flash_driver_t *logger = &W25_driver;
 flash_params_t bufFlash[FLASH_SECTORS];
 flash_params_t recBufFlash[FLASH_SECTORS];
 
-flash_queue_t fQueue; 
+volatile flash_queue_t fQueue; 
 uint8_t transmitCnt;
 bool oldIRQStatus;
 int8_t lastBuffer;
@@ -93,6 +93,7 @@ bool FP_Init(void){
 	//Flash queue init
 	fQueue.empty = true;
 	fQueue.full = false;
+	fQueue.isTransmiting = false;
 	fQueue.head = 0;
 	fQueue.tail = 0;
 	for (uint8_t i =0; i < FLASH_QUEUE_SIZE; i++){
@@ -126,7 +127,7 @@ HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *
 	fQueue.msgs[curMsgNum].adress = startAddress;
 	fQueue.msgs[curMsgNum].cb = cb;
 	
-	queueHandler();
+	//queueHandler();
 
 	return HAL_OK;
 }
@@ -236,7 +237,7 @@ uint8_t FP_GetParam(void){
 		fQueue.msgs[curMsgNum].adress = baseAddress[i];
 		fQueue.msgs[curMsgNum].cb = transmitCount;
 		
-		queueHandler();
+		//queueHandler();
 	}
 	
 	while (transmitCnt<3){
@@ -301,7 +302,7 @@ uint8_t FP_SaveParam(void){
 	fQueue.msgs[curMsgNum].adress = baseAddress[lastBuffer];
 	fQueue.msgs[curMsgNum].cb = NULL;
 	
-	queueHandler();
+	//queueHandler();
 }
 
 uint8_t FP_DeleteParam(void){
@@ -327,7 +328,7 @@ uint8_t FP_DeleteParam(void){
 	fQueue.msgs[curMsgNum].adress = 0;
 	fQueue.msgs[curMsgNum].cb = NULL;
 	
-	queueHandler();
+	//queueHandler();
 }
 uint8_t FP_ClearLog(void){
 	if (fQueue.full){
@@ -352,14 +353,20 @@ uint8_t FP_ClearLog(void){
 	fQueue.msgs[curMsgNum].adress = 0;
 	fQueue.msgs[curMsgNum].cb = NULL;
 	
-	queueHandler();
+	//queueHandler();
 }
 
 void endTransmit(void){
 	if (fQueue.msgs[fQueue.tail].cb != NULL)
 		fQueue.msgs[fQueue.tail].cb();	
-	  
+	fQueue.msgs[fQueue.tail].isTransmited = 1; 
+	fQueue.msgs[fQueue.tail].type = 0;
+	fQueue.msgs[fQueue.tail].buf = 0;
+	fQueue.msgs[fQueue.tail].size = 0;
+	fQueue.msgs[fQueue.tail].adress = 0;
+	fQueue.msgs[fQueue.tail].cb = NULL;
 	fQueue.tail++;
+	fQueue.isTransmiting = false;
 	if (fQueue.tail > FLASH_QUEUE_SIZE-1){
 		fQueue.tail = 0;
 	}
@@ -369,7 +376,7 @@ void endTransmit(void){
 	
 	fQueue.full = false;
 	
-	queueHandler();
+	//queueHandler();
 }
 
 void transmitCount(void){
@@ -379,45 +386,56 @@ void transmitCount(void){
 
 
 void queueHandler(void){
+	
 	if (fQueue.empty == true){
 		return;
 	}	
-	if (fQueue.msgs[fQueue.tail].isTransmited == false){
+	if (fQueue.isTransmiting){
 		return;
 	}	
+	
 	switch (fQueue.msgs[fQueue.tail].type){
 		case(READ_FRAM):{
+			fQueue.isTransmiting = true;
 			fram->readData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
 			break;	
 		}
 		case(WRITE_FRAM):{
+			fQueue.isTransmiting = true;
 			fram->writeData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
 			break;	
 		}
 		case(READ_RAM):{
+			fQueue.isTransmiting = true;
 			logger->readData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
 			break;	
 		}
 		case(WRITE_RAM):{
+			fQueue.isTransmiting = true;
 			logger->writeData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
 			break;	
 		}
 		case(CLEAR_LOG):{
 			logger->eraseChip();
+			
 			break;	
 		}
 		case(CLEAR_PARAMS):{
 			fram->eraseChip();
 			break;	
 		}
+		default:{
+			
+		}
 	}
 }
 
 void FP_StartStore(void){
-	if (lock == UNLOCKED){
-		currentHandler = 0;
-		queueHandler();
-	}
+	queueHandler();
 }
 
 uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
@@ -445,8 +463,9 @@ uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = adr;
 	fQueue.msgs[curMsgNum].cb = cb;
-	
-	queueHandler();
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
 
 	return HAL_OK;
 }
@@ -475,8 +494,9 @@ uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = adr;
 	fQueue.msgs[curMsgNum].cb = cb;
-	
-	queueHandler();
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
 
 	return HAL_OK;
 }
@@ -505,8 +525,9 @@ uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = adr;
 	fQueue.msgs[curMsgNum].cb = cb;
-	
-	queueHandler();
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//	queueHandler();
 
 	return HAL_OK;
 }
@@ -535,9 +556,13 @@ uint8_t FP_Manual_RAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = adr;
 	fQueue.msgs[curMsgNum].cb = cb;
-	
-	queueHandler();
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
 
 	return HAL_OK;
 }
 
+bool FP_isEmpty(){
+	return fQueue.empty;
+}

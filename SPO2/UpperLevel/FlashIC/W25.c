@@ -1,5 +1,5 @@
 /*Includes*/
-#include "main.h"
+#include "W25.h"
 
 /*Local prototypes*/
 static HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio_t holdPin, void (*callBack) (void));
@@ -12,59 +12,15 @@ static HAL_StatusTypeDef readStatus(void);
 static bool isBusy (void);
 static void readID(void);
 static void partWriteData (SPI_HandleTypeDef *hspi);
+
+
+
+
 /*Macro and defines*/
 #define SECTOR_SIZE 4096
 #define PACKET_SIZE 256
 #define RESET_DELAY 1
 
-
-typedef struct{
-	unsigned BUSY:1;
-	unsigned WEL:1;
-	unsigned BP0:1;
-	unsigned BP1:1;
-	unsigned BP2:1;
-	unsigned TB:1;
-	unsigned SEC:1;
-	unsigned SRP0:1;
-} w25_status1_bits_t;
-
-typedef struct{
-	unsigned SRP1:1;
-	unsigned QE:1;
-	unsigned R0:1;
-	unsigned LB1:1;
-	unsigned LB2:1;
-	unsigned LB3:1;
-	unsigned CMP:1;
-	unsigned SUS:1;
-} w25_status2_bits_t;
-
-typedef struct{
-	unsigned R1:1;
-	unsigned R2:1;
-	unsigned WPS:1;
-	unsigned R4:1;
-	unsigned R5:1;
-	unsigned DRV0:1;
-	unsigned DRV1:1;
-	unsigned HOLD_RES:1;
-} w25_status3_bits_t;
-
-typedef union{
-	uint32_t all;
-	w25_status1_bits_t bits;
-} w25_status1_t;
-
-typedef union{
-	uint32_t all;
-	w25_status2_bits_t bits;
-} w25_status2_t;
-
-typedef union{
-	uint32_t all;
-	w25_status3_bits_t bits;
-} w25_status3_t;
 
 /*COMMANDS*/
 #define WREN		0x06
@@ -105,7 +61,9 @@ typedef union{
 	static SPI_HandleTypeDef* spi;
 	static gpio_t wpGpio, csGpio, holdGpio;
 	static uint8_t commandBuffer[5];
-	static w25_status1_t status;
+	w25_status1_t w25Status;
+	w25_status2_t w25Status2;
+w25_status3_t w25Status3;
 	static uint32_t ID;
 	static void (*cb) (void);
 	
@@ -143,6 +101,26 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 	} 
 	halSt = HAL_SPI_Receive(spi,&ID,3,10);
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	
+	#ifdef PROD_TEST
+	commandBuffer[0] = WREN;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	
+	commandBuffer[0] = S32ER;
+	commandBuffer[1] = 0x00;
+	commandBuffer[2] = 0x00;
+	commandBuffer[3] = 0x00;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,4,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	
+	while (isBusy()){
+			LL_mDelay(100);
+	}
+	#endif
+	
 	return halSt;
 }
 
@@ -151,8 +129,8 @@ HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	HAL_StatusTypeDef halSt;
 	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
-	if (isBusy())
-		return HAL_BUSY;
+	while((isBusy()));
+//		return HAL_BUSY;
 	
 	commandBuffer[0] = READ;
 	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000) >> 16);
@@ -179,16 +157,16 @@ HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 	HAL_StatusTypeDef halSt;
 	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
 		return HAL_BUSY;
-	if (isBusy())
-		return HAL_BUSY;
+	while (isBusy());
 	
 	addressToContinue = addr;
 	bufStartPtr = buf;
 	remWriteSize = size;
 	
-	halSt = readStatus();
-	if (halSt != HAL_OK)
-		return halSt;
+//	halSt = readStatus();
+//	if (halSt != HAL_OK)
+//		return halSt;
+	while (isBusy());
 	partWriteData(spi);
 	
 	return HAL_OK;
@@ -218,17 +196,17 @@ void partWriteData (SPI_HandleTypeDef *hspi){
 	addressToContinue += size;
 	
 	readStatus();
-	if (status.bits.WEL != 1){
+	if (w25Status.bits.WEL != 1){
 		
 		commandBuffer[0] = WREN;
 		LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 		halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
 		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
 			
-		readStatus();
+		//readStatus();
 	}
 	
-	readStatus();
+	//readStatus();
 	commandBuffer[0] = WRITE;
 	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000) >> 16);
 	commandBuffer[2] = (uint8_t)((addr & 0x0000FF00) >> 8);
@@ -253,7 +231,17 @@ HAL_StatusTypeDef readStatus(void){
 	commandBuffer[0] = RDSR1;
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
-	halSt = HAL_SPI_Receive(spi,&status,1,10);
+	halSt = HAL_SPI_Receive(spi,&w25Status,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	commandBuffer[0] = RDSR2;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	halSt = HAL_SPI_Receive(spi,&w25Status2,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	commandBuffer[0] = RDSR3;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	halSt = HAL_SPI_Receive(spi,&w25Status3,1,10);
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
 	return halSt;
 }
@@ -271,7 +259,7 @@ bool isBusy (void){
 		return true;
 	}
 	
-	return status.bits.BUSY;
+	return w25Status.bits.BUSY;
 }
 
 void readID(void){
