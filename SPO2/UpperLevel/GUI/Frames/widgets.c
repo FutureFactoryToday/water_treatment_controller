@@ -134,22 +134,21 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
     BSP_LCD_SetTextColor(textColor);
 		BSP_LCD_SetBackColor(butColor);
 		
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-		
+    BSP_LCD_DisplayStringAt(xPos + (xSize-42)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+		//    BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
 		BSP_LCD_SetTextColor(oldTextColor);
 		BSP_LCD_SetBackColor(oldBackColor);
 		
 		BSP_LCD_DrawBuffer_Stop();
 		
 		if (pBmp != NULL){
-			BSP_LCD_DrawBitmap(xPos + xSize - 45,yPos + 10, pBmp);
+			BSP_LCD_DrawBitmap(xPos + xSize - 42,yPos + 10, pBmp);
     }
     return but;
 }
 
 
-button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t color)
-{
+button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint16_t color){
 		button_t but;
     uint16_t oldTextColor = BSP_LCD_GetTextColor();
     uint16_t oldBackColor = BSP_LCD_GetBackColor();
@@ -183,8 +182,7 @@ button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
 	
 }
 
-button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label)
-{
+button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
     uint16_t radius = ySize/4;
     
     button_t but;
@@ -233,8 +231,7 @@ button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t y
     return but;
 }
 
-button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label,uint16_t textColor, uint16_t backColor)
-{
+button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label,uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
@@ -289,8 +286,7 @@ button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint
     return but;
 }
 
-button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor)
-{
+button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
@@ -329,8 +325,7 @@ button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
     return but;
 }
 
-button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor)
-{
+button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
@@ -437,8 +432,7 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
     return but;
  }
   
-void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label)
-{
+void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label){
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
     

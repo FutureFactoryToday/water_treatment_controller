@@ -249,6 +249,7 @@ void RTC_IRQHandler(void)
 	RTC_Interrupt();
 	sysParams.vars.rtcTime = LL_RTC_TIME_Get(RTC);
 	if (sysParams.vars.status.flags.AllInited == 0){
+		LL_RTC_ClearFlag_SEC(RTC);
 		return;
 	}
 #ifndef PROD_TEST

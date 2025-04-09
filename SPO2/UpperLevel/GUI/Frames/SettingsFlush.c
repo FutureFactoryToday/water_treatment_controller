@@ -41,8 +41,16 @@ int ShowSettingsFlushFrame(void)
 					BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, BSP_LCD_GetYSize()/2,ITEM_SETTINGS_FLUSH[4],CENTER_MODE);
 					
           Load_Default_Values();
-					sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF*3; 
+					sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
           FP_SaveParam();
+					sysParams.vars.status.flags.AllInited = 0;
+					FP_ClearLog();
+					LL_mDelay(10);
+					
+					while(!FP_isEmpty()){
+						 
+					}
+					sysParams.vars.status.flags.AllInited = 1;
 					while(1);
           okBut.isReleased = false;
           return 0;

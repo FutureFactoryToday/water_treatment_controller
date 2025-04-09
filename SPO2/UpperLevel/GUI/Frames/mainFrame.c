@@ -103,6 +103,7 @@ void ShowMainFrame(void) {
         showStepName();
 
 				enableMenu = false;
+				BSP_LCD_SetFont(&Oxygen_Mono_20);
         drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "СЛЕДУЮЩАЯ", &gImage_DROPBUT,
                              LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
         drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
@@ -114,6 +115,7 @@ void ShowMainFrame(void) {
     } else {
       if (stepShow == true) {
         clearShownStep();
+				BSP_LCD_SetFont(&Oxygen_Mono_20);
         drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
                              LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
         drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ", &gImage_WRENCHBUT,
@@ -211,7 +213,7 @@ void createFrame(void) {
   drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
 
   drawMainWindow();
-
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
   regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
                                   LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
   menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,

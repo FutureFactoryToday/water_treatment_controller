@@ -232,7 +232,7 @@ uint8_t FP_GetParam(void){
 		}
 		
 		fQueue.msgs[curMsgNum].type = READ_FRAM;
-		fQueue.msgs[curMsgNum].buf = &bufFlash[i];
+		fQueue.msgs[curMsgNum].buf = &bufFlash[i].params;
 		fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
 		fQueue.msgs[curMsgNum].adress = baseAddress[i];
 		fQueue.msgs[curMsgNum].cb = transmitCount;
@@ -296,8 +296,8 @@ uint8_t FP_SaveParam(void){
 	bufFlash[lastBuffer].params.sysParConsts = sysParams.consts;
 	bufFlash[lastBuffer].params.timeStamp = wtcTimeToInt(&sysParams.vars.sysTime);
 	
-	fQueue.msgs[curMsgNum].type = READ_FRAM;
-	fQueue.msgs[curMsgNum].buf = &bufFlash[lastBuffer];
+	fQueue.msgs[curMsgNum].type = WRITE_FRAM;
+	fQueue.msgs[curMsgNum].buf = &bufFlash[lastBuffer].params;
 	fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
 	fQueue.msgs[curMsgNum].adress = baseAddress[lastBuffer];
 	fQueue.msgs[curMsgNum].cb = NULL;
