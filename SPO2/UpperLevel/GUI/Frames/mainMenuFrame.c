@@ -74,7 +74,8 @@ void createFrame (void){
 	
 	drawMainStatusBar(144, 2305, 15);
 	
-	drawClock(); drawMainStatusBar(144, 2305, 16);
+	drawClock(); 
+    drawMainStatusBar(144, 2305, 16);
 	
 	/*Add buttons settings*/
 	

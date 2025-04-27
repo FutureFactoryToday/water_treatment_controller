@@ -66,7 +66,7 @@ void createFrame()
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_REGEN_TIME);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[1]);
 	
 	drawStatusBarOkCancel();
 	

@@ -23,7 +23,8 @@ typedef enum {
 typedef enum {
 	COMPRESSOR_AC,
 	WASH_AC,
-	MANUAL_ON_AC
+	MANUAL_ON_AC,
+    NO_ACTIVE
 } ac_relay_work_t;
 
 typedef struct{
