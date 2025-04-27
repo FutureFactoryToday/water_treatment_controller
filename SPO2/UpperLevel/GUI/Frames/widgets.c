@@ -120,9 +120,9 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 	
     BSP_LCD_SetBackColor(backColor);
 	
-		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, backColor);
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, backColor);
 		
-		BSP_LCD_SetTextColor(butColor);
+	BSP_LCD_SetTextColor(butColor);
     BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
     BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
         
@@ -132,17 +132,34 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
     BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
     
     BSP_LCD_SetTextColor(textColor);
-		BSP_LCD_SetBackColor(butColor);
+	BSP_LCD_SetBackColor(butColor);
 		
-    BSP_LCD_DisplayStringAt(xPos + (xSize-42)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-		//    BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
-		BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
+    if(label=="МЕНЮ"){
+        BSP_LCD_DisplayStringAt(xPos + (xSize-60)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+        //BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
+        BSP_LCD_SetTextColor(oldTextColor);
+        BSP_LCD_SetBackColor(oldBackColor);
 		
-		BSP_LCD_DrawBuffer_Stop();
+        BSP_LCD_DrawBuffer_Stop();
+	
+       
+        if (pBmp != NULL){
+		BSP_LCD_DrawBitmap(xPos + xSize - 70,yPos + 10, pBmp);
+        }
+    }
+        
+    else{
+        BSP_LCD_DisplayStringAt(xPos + (xSize-42)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+        //BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
+        BSP_LCD_SetTextColor(oldTextColor);
+        BSP_LCD_SetBackColor(oldBackColor);
 		
-		if (pBmp != NULL){
-			BSP_LCD_DrawBitmap(xPos + xSize - 42,yPos + 10, pBmp);
+        BSP_LCD_DrawBuffer_Stop();
+	
+       
+        if (pBmp != NULL){
+		BSP_LCD_DrawBitmap(xPos + xSize - 50,yPos + 10, pBmp);
+        }
     }
     return but;
 }

@@ -176,10 +176,10 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;// hours * 60 min * 60 sec
 	uint8_t taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 14*60;
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 10*60;
 	
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.forwardWash;
-	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 8*60;
+	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 10*60;
 	
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum].poz = NULL;
 	sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[taskNum++].secPause = 0; 	
@@ -191,16 +191,16 @@ void Load_Default_Values(void){
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].restartDateTime = DEF_TASK_RESTART_HOURS*60*60;
 	taskNum = 0;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.backwash;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 8*60;
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 10*60;
 	
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.saltering;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 60*60;
 	
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.forwardWash;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 6*60; 
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 20*60; 
 	
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = &sysParams.consts.pistonPositions.filling;
-	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 1*SALT_COEF + 1; 
+	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 5*SALT_COEF + 1; 
 		
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum].poz = NULL;
 	sysParams.consts.planerConsts.planerTasks[SOFTENING_TASK_NUM].step[taskNum++].secPause = 0; 	
@@ -229,7 +229,7 @@ void Load_Default_Values(void){
 	sysParams.consts.dcRelay.workType = HALT;
 	sysParams.consts.dcRelay.pozEnable = (relay_enable_t){0};
 	sysParams.consts.acRelay.pozEnable = (relay_enable_t){0};
-	sysParams.consts.acRelay.workType = WASH_AC;
+	sysParams.consts.acRelay.workType = NO_ACTIVE;
 	
 	sysParams.consts.impulseWeight = DEF_IMPULSE_WEIGHT;
 	sysParams.consts.ServicePhoneNumber = DEF_PHONE_NUMBER;

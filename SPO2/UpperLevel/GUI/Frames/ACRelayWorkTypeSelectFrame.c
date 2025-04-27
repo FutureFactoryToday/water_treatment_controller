@@ -1,5 +1,5 @@
 #include "universalOutputFrame.h"
-#define LINE_NUM 2
+#define LINE_NUM 3
 static int8_t markItem = 0;
 static button_t menuLines[LINE_NUM], checkBox[LINE_NUM];
 static void createFrame();
@@ -15,6 +15,10 @@ int ShowACOutputFrame(void) {
 			markItem = 2;
 			break;
 		}
+        case (NO_ACTIVE): {
+            markItem = 3;
+			break;
+        }
 	}
 	/*Static create*/
 	createFrame();
@@ -61,6 +65,10 @@ int ShowACOutputFrame(void) {
 					sysParams.consts.acRelay.workType = WASH_AC;
 					break;
 				}
+                case (3): {
+					sysParams.consts.acRelay.workType = NO_ACTIVE;
+					break;
+				}
 			}
 			LL_GPIO_ResetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 			FP_SaveParam();
@@ -102,7 +110,7 @@ void createFrame(void) {
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	calcButParam();
 	for(uint8_t i = 0; i < LINE_NUM; i++) {
-        if(i == 1 || i == 2)
+        if(i == 1/* || i == 2*/)
             drawTextLabel(menuLines[i].x - 9, menuLines[i].y - 7, menuLines[i].xSize, menuLines[i].ySize + 4,"");
 		BSP_LCD_DisplayStringAt(menuLines[i].x, menuLines[i].y, ITEM_AC_OUTPUT_FRAME[i+1], LEFT_MODE);
 	}

@@ -215,19 +215,19 @@ void RefreshScrollBar(void) {
 	drawStaticLines();
 	calcButParam();
 }
-#define SEC_COL 290
-#define THIRD_COL SEC_COL + 80
+#define SEC_COL 295
+#define THIRD_COL SEC_COL + 75
 static int8_t yOff1 = 18, yOff2 = 0;
 void drawLine(uint8_t num, uint8_t pozNum, uint16_t time, bool touch) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     if (pozNum == 4) pozNum = 5;
-	if (pozNum == 3 || pozNum == 5){
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff1, ITEM_STEPS_WITH_MES[pozNum+1], LEFT_MODE);
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff2, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
+	if (pozNum == 3/* || pozNum == 5*/){
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff1, ITEM_STEPS_WITH_MES[pozNum+1], LEFT_MODE);
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X, STATIC_LINE_Y + STATIC_LINE_SPASER * num + yOff2, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
 		
 	} else {
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 8, ITEM_STEPS_WITH_MES[pozNum], LEFT_MODE);
 	}
 	menuLines[num] = (button_t) {
 		FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, 200, STATIC_LINE_SPASER
@@ -243,9 +243,9 @@ button_t drawEmptyLine(uint8_t num, bool touch) {
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	if(modif == true) {
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3, ITEM_MANUAL_SETTINGS[1], LEFT_MODE);
+		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X, STATIC_LINE_Y + STATIC_LINE_SPASER * num + 8, ITEM_MANUAL_SETTINGS[1], LEFT_MODE);
 	}
-	addLine.x = FIRST_CURSOR_POS_X + 9;
+	addLine.x = FIRST_CURSOR_POS_X;
 	addLine.y = STATIC_LINE_Y + STATIC_LINE_SPASER * num + 3;
 	addLine.xSize = 200;
 	addLine.ySize = STATIC_LINE_SPASER;
