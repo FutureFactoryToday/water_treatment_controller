@@ -55,7 +55,7 @@
 /* USER CODE BEGIN PV */
 	volatile uint32_t _1ms_cnt;
 	uint8_t* errorCause;
-	volatile uint8_t memBuf[4096];
+
 	//filter_t fil;
 	//uint32_t input = 0, output = 0;
 	//uint32_t resetCounter __attribute__ ((section (".noinit")));
@@ -127,18 +127,11 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-	//HAL_IWDG_Refresh(&hiwdg);
-//	uint8_t* str = "Test 10";
-//	uint8_t size = 1;
-//	__enable_irq();
-//	while (1)
-//  {
-//		HAL_UART_Transmit_IT(&huart1,
-//				str,
-//				size);
-//		LL_mDelay(500);
-//	}
+#ifndef PROD_TEST
 	SYS_init();
+#else
+	ProductionTest();
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */

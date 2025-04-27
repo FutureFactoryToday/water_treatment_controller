@@ -278,7 +278,7 @@ uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Li
 	}
 	case RIGHT_MODE:
 	{
-	  refcolumn =  Xpos - size;
+	  refcolumn =  Xpos - size - 1;
 	  break;
 	}    
 	default:
@@ -298,7 +298,7 @@ uint32_t BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Li
 	chWidth = DrawProp.pFont->glyph[index]->width;
 	
 	/* Send the string character by character on lCD */
-	while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= chWidth))
+	while ((*Text != 0) & ((BSP_LCD_GetXSize() - refcolumn - chWidth) >= 0))//chWidth
 	{
 	
 	/* Display one character on LCD */

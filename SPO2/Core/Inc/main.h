@@ -86,6 +86,7 @@ extern "C" {
 #include "PistonControl/PistonControl.h"
 #include "Planner/Planner.h"
 #include "Logger/Logger.h"
+#include "ProductionTest/ProdTest.h"
 
 #include "GUI/TouchController.h"
 #include "GUI/Frames/items.h"

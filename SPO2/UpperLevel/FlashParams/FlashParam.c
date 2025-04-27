@@ -25,7 +25,7 @@
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
-#define QUEUE_SIZE 5
+
 #define FLASH_SECTORS 3
 #define UNLOCKED 0
 #define AUTO_LOCK 1
@@ -46,17 +46,17 @@ flash_driver_t *fram = &FM25_driver;
 flash_driver_t *logger = &W25_driver;
 flash_params_t bufFlash[FLASH_SECTORS];
 flash_params_t recBufFlash[FLASH_SECTORS];
-flash_message_t queue[QUEUE_SIZE]; 
+
+volatile flash_queue_t fQueue; 
+uint8_t transmitCnt;
 bool oldIRQStatus;
 int8_t lastBuffer;
 void (*cbFunc)(void);
 
 /* Private function prototypes -----------------------------------------------*/
 void loadParams(void);
-void unlockSPI(void);
-void lockSPI(uint8_t);
-void manualUnlockSPI(void);
-void manualLockSPI(void);
+void endTransmit(void);
+void transmitCount(void);
 void queueHandler(void);
 void saveFRAMParam(void);
 void saveRAMParam(uint8_t handler);
@@ -74,72 +74,179 @@ bool FP_Init(void){
 	gpio_t logWP = {MEM_WP_GPIO_Port,MEM_WP_Pin};
 	gpio_t logHOLD = {MEM_RES_GPIO_Port,MEM_RES_Pin};
 		
-	if (fram->init(MEM_SPI,framCS, framWP, framHOLD,unlockSPI) == HAL_OK){
+	if (fram->init(MEM_SPI,framCS, framWP, framHOLD,endTransmit) == HAL_OK){
 		sysParams.vars.status.flags.FRAMInited = 1;
 	} else {
 		sysParams.vars.error.flags.FRAMFail = 1;
 	}
-	if (logger->init(MEM_SPI,logCS, logWP, logHOLD,unlockSPI) == HAL_OK){
+	
+	if (logger->init(MEM_SPI,logCS, logWP, logHOLD,endTransmit) == HAL_OK){
 		sysParams.vars.status.flags.RAMInited = 1;
 	} else {
 		sysParams.vars.error.flags.RAMFail = 1;
 	}
+	
 	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
 		baseAddress[i] = i*sizeof(stored_params_t) + i;
 	}
-	for (uint8_t i =0; i < 3; i++){
-		queue[i] = (flash_message_t){0,0,0};
+	
+	//Flash queue init
+	fQueue.empty = true;
+	fQueue.full = false;
+	fQueue.isTransmiting = false;
+	fQueue.head = 0;
+	fQueue.tail = 0;
+	for (uint8_t i =0; i < FLASH_QUEUE_SIZE; i++){
+		fQueue.msgs[i] = (flash_message_t){0,0,0,0,0,true};
 	}
 
 }
-HAL_StatusTypeDef FP_StoreLog(uint8_t handler, uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
-	if(queue[handler].set == 1)
+HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
+	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	if (fQueue.full){
 		return HAL_BUSY;
-	queue[handler].set = 1;
-	queue[handler].adress = startAddress;
-	queue[handler].buf = buf;
-	queue[handler].cb = cb;
-	queue[handler].size = size;
-	queueHandler();
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = WRITE_RAM;
+	fQueue.msgs[curMsgNum].buf = buf;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = startAddress;
+	fQueue.msgs[curMsgNum].cb = cb;
+	
+	//queueHandler();
+
 	return HAL_OK;
 }
 
 HAL_StatusTypeDef FP_GetStoredLog( uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
-	if(queue[3].set == 1)
-		return HAL_BUSY;
-		queue[3].set = 1;
-		queue[3].adress = startAddress;
-		queue[3].buf = buf;
-		queue[3].cb = cb;
-		queue[3].size = size;
-	queueHandler();
-	return HAL_OK;
-}
-uint8_t FP_GetParam(void){
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
-		return HAL_BUSY;
-	}
-	manualLockSPI();
-	__set_PRIMASK(oldIRQStatus);
-	uint8_t timeout;
-	lastBuffer = -1;
-	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
-		manualUnlockSPI();
+	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
 		return HAL_ERROR;
 	}
 	
+	if (fQueue.full){
+		return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = READ_RAM;
+	fQueue.msgs[curMsgNum].buf = buf;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = startAddress;
+	fQueue.msgs[curMsgNum].cb = cb;
+	
+	queueHandler();
+
+	return HAL_OK;
+}
+uint8_t FP_GetParam(void){
+//	oldIRQStatus = __get_PRIMASK(); __disable_irq();
+//	if (lock != UNLOCKED){
+//		__set_PRIMASK(oldIRQStatus);
+//		return HAL_BUSY;
+//	}
+//	manualLockSPI();
+//	__set_PRIMASK(oldIRQStatus);
+//	uint8_t timeout;
+//	lastBuffer = -1;
+//	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
+//		manualUnlockSPI();
+//		return HAL_ERROR;
+//	}
+//	
+//	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
+//		fram->readData(baseAddress[i], &bufFlash[i].params,sizeof(stored_params_t));
+//		LL_mDelay(1);
+//		if (HAL_SPI_GetState(MEM_SPI) == HAL_BUSY){
+//			fram->abortCom();
+//			sysParams.vars.error.flags.FRAMFail = 1;
+//			sysParams.vars.status.flags.StoredParamsLoaded = 0;
+//			manualUnlockSPI();
+//			return HAL_ERROR;
+//		}
+//		if (bufFlash[i].params.startLoadFlag == START_FP_FLAG &&
+//			bufFlash[i].params.endLoadFlag == END_FP_FLAG &&
+//			(bufFlash[i].params.sysParConsts.sysVersion) == (sysVers) ){
+//				bufFlash[i].isCorrect = true;
+//				if (lastBuffer < 0){
+//					lastBuffer = i;
+//				} else {
+//					lastBuffer = (bufFlash[i].params.timeStamp > bufFlash[lastBuffer].params.timeStamp)?i:lastBuffer;
+//				}
+//			}
+//	}
+//	manualUnlockSPI();
+//	if (lastBuffer < 0){
+//		sysParams.vars.status.flags.StoredParamsLoaded = 0;
+//	} else {
+//		flashParams = bufFlash[lastBuffer];
+//		sysParams.vars.status.flags.StoredParamsLoaded = 1;
+//	}
+//	return HAL_OK;
+
+	
+	uint32_t timeoutStart = HAL_GetTick();
+	lastBuffer = -1;
+	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	transmitCnt = 0;
 	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
-		fram->readData(baseAddress[i], &bufFlash[i].params,sizeof(stored_params_t));
-		LL_mDelay(1);
-		if (HAL_SPI_GetState(MEM_SPI) == HAL_BUSY){
-			fram->abortCom();
-			sysParams.vars.error.flags.FRAMFail = 1;
-			sysParams.vars.status.flags.StoredParamsLoaded = 0;
-			manualUnlockSPI();
+		if (fQueue.full){
 			return HAL_ERROR;
 		}
+	
+		fQueue.empty = false;
+		
+		uint8_t curMsgNum = fQueue.head++;
+		
+		if (fQueue.head > FLASH_QUEUE_SIZE-1){
+			fQueue.head = 0;
+		}
+		if (fQueue.head == fQueue.tail){
+			fQueue.full = true;
+		}
+		
+		fQueue.msgs[curMsgNum].type = READ_FRAM;
+		fQueue.msgs[curMsgNum].buf = &bufFlash[i].params;
+		fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
+		fQueue.msgs[curMsgNum].adress = baseAddress[i];
+		fQueue.msgs[curMsgNum].cb = transmitCount;
+		
+		//queueHandler();
+	}
+	
+	while (transmitCnt<3){
+		if (HAL_GetTick() - timeoutStart > 1*1000){
+			return HAL_ERROR;
+		}
+	}
+
+	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
 		if (bufFlash[i].params.startLoadFlag == START_FP_FLAG &&
 			bufFlash[i].params.endLoadFlag == END_FP_FLAG &&
 			(bufFlash[i].params.sysParConsts.sysVersion) == (sysVers) ){
@@ -151,7 +258,7 @@ uint8_t FP_GetParam(void){
 				}
 			}
 	}
-	manualUnlockSPI();
+	
 	if (lastBuffer < 0){
 		sysParams.vars.status.flags.StoredParamsLoaded = 0;
 	} else {
@@ -162,151 +269,300 @@ uint8_t FP_GetParam(void){
 }
 
 uint8_t FP_SaveParam(void){
-	if (queue[0].set == 1)
-		return HAL_BUSY;
-	queue[0].set = 1;
-	queueHandler();
-}
 
-uint8_t FP_DeleteParam(void){
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
+	if (fQueue.full){
 		return HAL_BUSY;
 	}
-	__set_PRIMASK(oldIRQStatus);
-	fram->eraseChip();
-	while (lock	!=	UNLOCKED);
-	return HAL_OK;
-}
-uint8_t FP_ClearLog(void){
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
-		return HAL_BUSY;
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
 	}
-	__set_PRIMASK(oldIRQStatus);
-	logger->eraseChip();
-	while (lock	!=	UNLOCKED);
-	return HAL_OK;
-}
-
-void unlockSPI(void){
-	if (lock == MANUAL_LOCK){
-		return;
-	} else {
-		lock = 0;
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
 	}
-	if (cbFunc != NULL){
-		cbFunc();
-	}
-	queue[currentHandler].set = false;
-	currentHandler++;
-	queueHandler();
-}
-
-void lockSPI(uint8_t lockNum){
-	if (lock == UNLOCKED){
-		lock = AUTO_LOCK;
-	lock2 = lockNum;
-	}
-}
-void manualUnlockSPI(void){
-	lock = UNLOCKED;
-}
-void manualLockSPI(void){
-	lock = MANUAL_LOCK;
-}
-
-void queueHandler(void){
-	if (lock != UNLOCKED){
-		return;
-	}
-	if (queue[currentHandler].set == 1){
-		cbFunc = queue[currentHandler].cb;
-		switch (currentHandler){
-			case (0):{
-				saveFRAMParam();
-				break;
-			}
-			case (1):
-			case (2):
-			case (4):{
-				saveRAMParam(currentHandler);
-				break;
-			}
-			case (3):{
-				getRAMParam(currentHandler);
-				break;
-			}
-		}
-	} else {
-		currentHandler++;	
-		if (currentHandler > QUEUE_SIZE){
-			currentHandler = 0;
-			return;
-		}
-		queueHandler();
-	}
-}
-
-void FP_StartStore(void){
-	if (lock == UNLOCKED){
-		currentHandler = 0;
-		queueHandler();
-	}
-}
-
-void saveFRAMParam(void){
-	if (sysParams.vars.status.flags.FRAMInited != 1 || sysParams.vars.error.flags.FRAMFail == 1)
-		return;
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
-		queue[0].set = true;
-		return;
-	}
-	lockSPI(1);
-	__set_PRIMASK(oldIRQStatus);
-
+	
 	stored_params_t buf = {0};
 	lastBuffer++;
 	if (lastBuffer >= FLASH_SECTORS || lastBuffer < 0){
 		lastBuffer = 0;
 	}
+	
 	bufFlash[lastBuffer].params.startLoadFlag = START_FP_FLAG;
 	bufFlash[lastBuffer].params.endLoadFlag = END_FP_FLAG;
 	bufFlash[lastBuffer].params.sysParConsts = sysParams.consts;
 	bufFlash[lastBuffer].params.timeStamp = wtcTimeToInt(&sysParams.vars.sysTime);
 	
-	fram->writeData(baseAddress[lastBuffer],&bufFlash[lastBuffer].params,sizeof(stored_params_t));
-	return;
+	fQueue.msgs[curMsgNum].type = WRITE_FRAM;
+	fQueue.msgs[curMsgNum].buf = &bufFlash[lastBuffer].params;
+	fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
+	fQueue.msgs[curMsgNum].adress = baseAddress[lastBuffer];
+	fQueue.msgs[curMsgNum].cb = NULL;
+	
+	//queueHandler();
 }
 
-void saveRAMParam(uint8_t handler){
-	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
-		return;
+uint8_t FP_DeleteParam(void){
+	if (fQueue.full){
+			return HAL_BUSY;
 	}
 	
-	if (lock != UNLOCKED){
-		//__set_PRIMASK(oldIRQStatus);
-		return;
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
 	}
-	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-	lockSPI(handler);
-	__set_PRIMASK(oldIRQStatus);
-//	cbFunc = queue[handler].cb;
-	while(logger->writeData(queue[handler].adress, queue[handler].buf, queue[handler].size) == HAL_BUSY);
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	
+	fQueue.msgs[curMsgNum].type = CLEAR_PARAMS;
+	fQueue.msgs[curMsgNum].buf = 0;
+	fQueue.msgs[curMsgNum].size = 0;
+	fQueue.msgs[curMsgNum].adress = 0;
+	fQueue.msgs[curMsgNum].cb = NULL;
+	
+	//queueHandler();
+}
+uint8_t FP_ClearLog(void){
+	if (fQueue.full){
+			return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	
+	fQueue.msgs[curMsgNum].type = CLEAR_LOG;
+	fQueue.msgs[curMsgNum].buf = 0;
+	fQueue.msgs[curMsgNum].size = 0;
+	fQueue.msgs[curMsgNum].adress = 0;
+	fQueue.msgs[curMsgNum].cb = NULL;
+	
+	//queueHandler();
 }
 
-void getRAMParam(uint8_t handler){
-	oldIRQStatus = __get_PRIMASK(); 
-	__disable_irq();
-	if (lock != UNLOCKED){
-		__set_PRIMASK(oldIRQStatus);
-		return;
+void endTransmit(void){
+	if (fQueue.msgs[fQueue.tail].cb != NULL)
+		fQueue.msgs[fQueue.tail].cb();	
+	fQueue.msgs[fQueue.tail].isTransmited = 1; 
+	fQueue.msgs[fQueue.tail].type = 0;
+	fQueue.msgs[fQueue.tail].buf = 0;
+	fQueue.msgs[fQueue.tail].size = 0;
+	fQueue.msgs[fQueue.tail].adress = 0;
+	fQueue.msgs[fQueue.tail].cb = NULL;
+	fQueue.tail++;
+	fQueue.isTransmiting = false;
+	if (fQueue.tail > FLASH_QUEUE_SIZE-1){
+		fQueue.tail = 0;
 	}
-	lockSPI(3);
-	__set_PRIMASK(oldIRQStatus);
-	logger->readData(queue[handler].adress, queue[handler].buf, queue[handler].size);
-} 
+	if (fQueue.head == fQueue.tail){
+		fQueue.empty = true;
+	}
+	
+	fQueue.full = false;
+	
+	//queueHandler();
+}
+
+void transmitCount(void){
+	transmitCnt++;
+}
+
+
+
+void queueHandler(void){
+	
+	if (fQueue.empty == true){
+		return;
+	}	
+	if (fQueue.isTransmiting){
+		return;
+	}	
+	
+	switch (fQueue.msgs[fQueue.tail].type){
+		case(READ_FRAM):{
+			fQueue.isTransmiting = true;
+			fram->readData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
+			break;	
+		}
+		case(WRITE_FRAM):{
+			fQueue.isTransmiting = true;
+			fram->writeData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
+			break;	
+		}
+		case(READ_RAM):{
+			fQueue.isTransmiting = true;
+			logger->readData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
+			break;	
+		}
+		case(WRITE_RAM):{
+			fQueue.isTransmiting = true;
+			logger->writeData(fQueue.msgs[fQueue.tail].adress,fQueue.msgs[fQueue.tail].buf,fQueue.msgs[fQueue.tail].size);
+			
+			break;	
+		}
+		case(CLEAR_LOG):{
+			logger->eraseChip();
+			
+			break;	
+		}
+		case(CLEAR_PARAMS):{
+			fram->eraseChip();
+			break;	
+		}
+		default:{
+			
+		}
+	}
+}
+
+void FP_StartStore(void){
+	queueHandler();
+}
+
+uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
+	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	if (fQueue.full){
+		return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = WRITE_FRAM;
+	fQueue.msgs[curMsgNum].buf = data;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = adr;
+	fQueue.msgs[curMsgNum].cb = cb;
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
+
+	return HAL_OK;
+}
+uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
+		if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	if (fQueue.full){
+		return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = READ_FRAM;
+	fQueue.msgs[curMsgNum].buf = data;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = adr;
+	fQueue.msgs[curMsgNum].cb = cb;
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
+
+	return HAL_OK;
+}
+uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
+		if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	if (fQueue.full){
+		return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = WRITE_RAM;
+	fQueue.msgs[curMsgNum].buf = data;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = adr;
+	fQueue.msgs[curMsgNum].cb = cb;
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//	queueHandler();
+
+	return HAL_OK;
+}
+uint8_t FP_Manual_RAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
+		if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
+		return HAL_ERROR;
+	}
+	
+	if (fQueue.full){
+		return HAL_BUSY;
+	}
+	
+	fQueue.empty = false;
+	
+	uint8_t curMsgNum = fQueue.head++;
+	
+	if (fQueue.head > FLASH_QUEUE_SIZE-1){
+		fQueue.head = 0;
+	}
+	if (fQueue.head == fQueue.tail){
+		fQueue.full = true;
+	}
+	
+	fQueue.msgs[curMsgNum].type = READ_RAM;
+	fQueue.msgs[curMsgNum].buf = data;
+	fQueue.msgs[curMsgNum].size = size;
+	fQueue.msgs[curMsgNum].adress = adr;
+	fQueue.msgs[curMsgNum].cb = cb;
+	fQueue.msgs[curMsgNum].isTransmited = 0;
+//	if (!fQueue.isTransmiting)
+//		queueHandler();
+
+	return HAL_OK;
+}
+
+bool FP_isEmpty(){
+	return fQueue.empty;
+}

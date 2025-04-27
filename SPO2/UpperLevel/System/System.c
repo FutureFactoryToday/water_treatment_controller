@@ -30,10 +30,8 @@ uint32_t externalSignalCnt;
 bool oldExternalSignal;
 //extern uint32_t resetCounter;
 /* Private function prototypes -----------------------------------------------*/
-static void Start_ADC();
-static void Start_RTC();
+
 static void Load_Flash_Param();
-static void Start_Logic();
 void Load_Default_Values(void);
 /* Private user code ---------------------------------------------------------*/
 
@@ -105,6 +103,7 @@ void Start_ADC(){
 void Load_Flash_Param(){
 
 	FP_GetParam();
+	while (!FP_isEmpty());
 	if (sysParams.vars.status.flags.StoredParamsLoaded == 1 /*&& resetCounter < RESET_COUNTER_LIM*/){
 		sysParams.consts = fp->params.sysParConsts;
 		//sysParams.consts.planerConsts.currentStepNum = 0;
@@ -127,6 +126,7 @@ void Load_Flash_Param(){
 		} else {
 		Load_Default_Values();
 		FP_ClearLog();
+		while (!FP_isEmpty());
 		sysParams.consts.storedDayValueNum = 0;
 		sysParams.consts.storedEntryNum = 0;
 		sysParams.consts.storedWashNum = 0;
@@ -141,7 +141,7 @@ void Load_Default_Values(void){
 	sysParams.consts.adcLimit[_5V] = 4.0;
 	sysParams.consts.adcLimit[VrelDC] = 22;
 	sysParams.consts.adcLimit[Temp] = 100.0;
-	sysParams.consts.adcLimit[Vin] = 13.0;
+	sysParams.consts.adcLimit[Vin] = 10.0;
 	
 	sysParams.consts.adcLimitDelt[Vbat] = 1.1;
 	sysParams.consts.adcLimitDelt[_3V3] = 1.1;
@@ -237,6 +237,10 @@ void Load_Default_Values(void){
 	sysParams.consts.baseBLValue = DEF_BL_VALUE;
 	sysParams.consts.screenSaveBLValue = DEF_SCREEN_SAVE_BL_VALUE;
 	sysParams.consts.screenSaveDelayValue = DEF_SCREEN_SAVE_DELAY_VALUE;
+	
+	wtc_time_t defTime = DEFAULT_TIME;
+
+	setSysTime(&defTime);
 }
 
 void Start_Logic(){

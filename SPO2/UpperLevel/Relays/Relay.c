@@ -131,7 +131,7 @@ void RELAY_DC_CYCLE(void){
 void RELAY_AC_CYCLE(void){
 
 	switch(sysParams.consts.acRelay.workType){
-		case (MANUAL_ON):{
+		case (MANUAL_ON_AC):{
 			//LL_GPIO_SetOutputPin(REL_AC_ON_GPIO_Port, REL_AC_ON_Pin);
 			break;
 		}

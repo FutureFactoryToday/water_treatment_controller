@@ -23,8 +23,7 @@ static void commEnd (SPI_HandleTypeDef *hspi);
 
 #define UPPER_QUARTER 0x600
 #define UPPER_HALF 		0x400
-#define MAX_ADR 			0x7FF
-#define MAX_SIZE 			0x1000
+
 
 /*Global parameters*/
 	flash_driver_t FM25_driver = 
@@ -170,7 +169,7 @@ HAL_StatusTypeDef erase (void){
 		commEnd(spi);
 		return 0;
 	} 
-	for (uint16_t i = 0; i < MAX_SIZE; i++){
+	for (uint16_t i = 0; i < MAX_FRAM_ADR; i++){
 		halSt = HAL_SPI_Transmit(spi,&data,1,10);
 		if (halSt != HAL_OK){
 			commEnd(spi);
@@ -180,3 +179,5 @@ HAL_StatusTypeDef erase (void){
 	commEnd(spi);
 	return 1;
 }
+
+

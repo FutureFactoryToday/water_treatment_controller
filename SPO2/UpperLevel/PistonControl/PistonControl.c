@@ -72,8 +72,9 @@ void PC_Control(void){
 //	}
 	//!!!!!!ЗАГЛУШКА!!!!!!//
 	
-	
+#ifndef PROD_TEST	
 	HAL_IWDG_Refresh(&hiwdg);
+#endif
 	#ifdef WDT_TEST_2
 	if (wdt2While){
 				while(1);
@@ -124,7 +125,9 @@ void PC_Control(void){
 				}
 			}
 			if (deltaPoz == 0){
-				sysParams.vars.pistonParams.stallTime--;
+				if (sysParams.vars.pistonParams.stallTime > 0){
+					sysParams.vars.pistonParams.stallTime--;
+				}
 				if (sysParams.vars.pistonParams.stallTime == 0){
 					sysParams.vars.pistonParams.stallTime = 1;
 					MOT_Stop();
@@ -168,10 +171,10 @@ pc_calib_result_t PC_AUTO_CALIBRATE(bool first){
 		sysParams.vars.pistonParams.minPoz = -FULL_LENGTH*2;
 		result = PASSED;
 		sysParams.vars.status.flags.PistonInited = 1;
-//		if (first){
-//			PC_GoToPoz(20);
-//			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
-//		}
+		if (first){
+			PC_GoToPoz(20);
+			while (sysParams.vars.pistonParams.workStatus == PC_IN_PROCESS);
+		}
 		if (sysParams.vars.error.flags.PistonFail == 1){
 			MOT_Stop();
 			result = STALL;
@@ -254,9 +257,14 @@ void PC_Init(void){
 		LL_TIM_ClearFlag_UPDATE(OPTIC_DELAY_TIM);
 		LL_TIM_EnableIT_UPDATE(OPTIC_DELAY_TIM);
 		
-
+#ifndef PROD_TEST		
 		sysParams.vars.pistonParams.calibResult = PC_AUTO_CALIBRATE(true);
-		
+#else
+		sysParams.vars.status.flags.PistonInited = 1;
+		sysParams.vars.pistonParams.destPoz = sysParams.vars.pistonParams.minPoz = sysParams.vars.pistonParams.curPoz = 0;
+		sysParams.vars.pistonParams.calibration = false;
+		sysParams.vars.pistonParams.maxPoz = FULL_LENGTH;
+#endif		
 		if (sysParams.vars.pistonParams.calibResult != PASSED){
 			sysParams.vars.pistonParams.workStatus = PC_ERROR;
 		}

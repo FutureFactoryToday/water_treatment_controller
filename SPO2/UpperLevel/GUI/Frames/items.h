@@ -133,3 +133,5 @@ extern const uint8_t* ITEM_LOG_TEXT[];
 extern const uint8_t* ITEM_AC_OUTPUT_FRAME[];
 
 extern const uint8_t* ITEM_SETTINGS_FLUSH[];
+
+extern const uint8_t* ITEM_PROD_TEST_MAINSCREEN[];
