@@ -241,6 +241,10 @@ void Load_Default_Values(void){
 	wtc_time_t defTime = DEFAULT_TIME;
 
 	setSysTime(&defTime);
+	
+	sysParams.consts.storedDayValueNum = 0;
+	sysParams.consts.storedEntryNum = 0;
+	sysParams.consts.storedWashNum = 0;
 }
 
 void Start_Logic(){
