@@ -245,6 +245,8 @@ void Load_Default_Values(void){
 	sysParams.consts.storedDayValueNum = 0;
 	sysParams.consts.storedEntryNum = 0;
 	sysParams.consts.storedWashNum = 0;
+	
+	sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
 }
 
 void Start_Logic(){

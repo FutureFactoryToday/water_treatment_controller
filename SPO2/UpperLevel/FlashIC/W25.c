@@ -13,8 +13,12 @@ static bool isBusy (void);
 static void readID(void);
 static void partWriteData (SPI_HandleTypeDef *hspi);
 
-
-
+static void writeCheck (SPI_HandleTypeDef *hspi);
+//static void manualWriteData(uint32_t addr, uint8_t data);
+static uint8_t* dataToWrite;
+static uint32_t sizeToWrite;
+static uint32_t adrToWrite;
+static uint8_t checkBuf[128];
 
 /*Macro and defines*/
 #define SECTOR_SIZE 4096
@@ -40,6 +44,7 @@ static void partWriteData (SPI_HandleTypeDef *hspi);
 #define	S64ER		0xD8
 #define READ		0x0B//0x03
 #define WRITE		0x02
+#define ENRES 	0x66
 
 #define MAX
 
@@ -90,8 +95,18 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 	LL_GPIO_SetOutputPin(wpGpio.port,wpGpio.pin);
 	LL_GPIO_SetOutputPin(holdGpio.port,holdGpio.pin);
 	LL_mDelay(10);
+	//Reset
+	while(isBusy());
+	commandBuffer[0] = ENRES;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	commandBuffer[0] = RES;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	LL_mDelay(100);
 	//Read ID
-	
 	commandBuffer[0] = JEDID;
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
@@ -153,6 +168,9 @@ HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	return HAL_OK;
 }
 
+	/*V.1.21.
+	Lets try write with correction
+	*/
 HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 	HAL_StatusTypeDef halSt;
 	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
@@ -162,6 +180,10 @@ HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 	addressToContinue = addr;
 	bufStartPtr = buf;
 	remWriteSize = size;
+	
+	adrToWrite = addr;
+	sizeToWrite = size;
+	dataToWrite = buf;
 	
 //	halSt = readStatus();
 //	if (halSt != HAL_OK)
@@ -218,11 +240,94 @@ void partWriteData (SPI_HandleTypeDef *hspi){
 	if (continueWrite){
 		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, partWriteData);
 	} else {
-		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
+		//HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
+		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, writeCheck);
 	}
 	halSt = HAL_SPI_Transmit_DMA(spi,buf,size);
 	
 	return;
+}
+
+void manualWriteData(uint32_t addr, uint8_t data){
+	HAL_StatusTypeDef halSt;
+	while(spi->State == HAL_BUSY);
+	
+	readStatus();
+	
+	if (w25Status.bits.WEL != 1){
+		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+		commandBuffer[0] = WREN;
+		LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+		halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+			
+		//readStatus();
+	}
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	//readStatus();
+	commandBuffer[0] = WRITE;
+	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000) >> 16);
+	commandBuffer[2] = (uint8_t)((addr & 0x0000FF00) >> 8);
+	commandBuffer[3] = (uint8_t)((addr & 0x000000FF));
+	
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,4,10);
+	if (halSt != HAL_OK){
+		while(1);
+	} 
+	halSt = HAL_SPI_Transmit(spi,&data,1,10);
+	if (halSt != HAL_OK){
+		while(1);
+	} 
+
+}
+void writeCheck (SPI_HandleTypeDef *hspi){
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	uint32_t remainSize = sizeToWrite;
+	HAL_StatusTypeDef halSt;
+	if (HAL_SPI_GetState(spi) != HAL_SPI_STATE_READY)
+		while(1);
+	
+	while(isBusy()){
+		LL_mDelay(1);
+	}
+	while (remainSize > 0){
+		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	
+		commandBuffer[0] = READ;
+		commandBuffer[1] = (uint8_t)((adrToWrite & 0x00FF0000) >> 16);
+		commandBuffer[2] = (uint8_t)((adrToWrite & 0x0000FF00) >> 8);
+		commandBuffer[3] = (uint8_t) (adrToWrite & 0x000000FF);
+		commandBuffer[4] = 0;
+		LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+		if (spi->Lock == HAL_LOCKED && spi->State == HAL_SPI_STATE_READY){
+			spi->Lock = HAL_UNLOCKED;
+		}
+		
+		halSt = HAL_SPI_Transmit(spi,commandBuffer,5,10);
+		if (halSt != HAL_OK){
+			while(1);
+		} 
+		uint8_t size = MIN(128,remainSize);
+		halSt = HAL_SPI_Receive(spi,checkBuf,size,10);
+		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+		if (halSt != HAL_OK){
+			while(1);
+		} 
+		for (uint8_t i = 0; i < size; i++){
+			if (checkBuf[i] != *(dataToWrite + i + (sizeToWrite - remainSize)) && checkBuf[i] == 0xFF){
+				manualWriteData(adrToWrite+i,*(dataToWrite + i + (sizeToWrite - remainSize)));
+			}
+			checkBuf[i] = 0;
+		}
+		
+		adrToWrite += size;
+		remainSize -= size;
+		
+		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+}
+	commEndW25(spi);
 }
 
 HAL_StatusTypeDef readStatus(void){
@@ -231,18 +336,21 @@ HAL_StatusTypeDef readStatus(void){
 	commandBuffer[0] = RDSR1;
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	if (spi->Lock == HAL_LOCKED && spi->State == HAL_SPI_STATE_READY){
+			spi->Lock = HAL_UNLOCKED;
+		}
 	halSt = HAL_SPI_Receive(spi,&w25Status,1,10);
 	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-	commandBuffer[0] = RDSR2;
-	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
-	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
-	halSt = HAL_SPI_Receive(spi,&w25Status2,1,10);
-	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-	commandBuffer[0] = RDSR3;
-	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
-	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
-	halSt = HAL_SPI_Receive(spi,&w25Status3,1,10);
-	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+//	commandBuffer[0] = RDSR2;
+//	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+//	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+//	halSt = HAL_SPI_Receive(spi,&w25Status2,1,10);
+//	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+//	commandBuffer[0] = RDSR3;
+//	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+//	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+//	halSt = HAL_SPI_Receive(spi,&w25Status3,1,10);
+//	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
 	return halSt;
 }
 

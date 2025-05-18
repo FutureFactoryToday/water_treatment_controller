@@ -8,6 +8,11 @@ static HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size);
 static HAL_StatusTypeDef abortCom (void);
 static HAL_StatusTypeDef erase (void);
 static void commEnd (SPI_HandleTypeDef *hspi);
+
+
+
+static bool writeSuccess;
+
 /*Macro and defines*/
 #define WREN	0x06
 #define WRDI	0x04
@@ -69,7 +74,7 @@ HAL_StatusTypeDef init (SPI_HandleTypeDef* SPI, gpio_t csPin, gpio_t wpPin, gpio
 
 bool detect (void){
 	HAL_StatusTypeDef halSt;
-	
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
 	commandBuffer[0] = RDSR;
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
 	
@@ -113,9 +118,10 @@ HAL_StatusTypeDef readData (uint32_t addr, uint8_t* buf, uint32_t size){
 	
 	return HAL_OK;
 }
+HAL_StatusTypeDef halSt1;
 HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
+
 	
-	HAL_StatusTypeDef halSt;
 	if (spi->State == HAL_BUSY)
 		return HAL_BUSY;
 	commandBuffer[0] = WREN;
@@ -126,15 +132,15 @@ HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 	commandBuffer[1] = (uint8_t)((addr & 0xFF00) >> 8);
 	commandBuffer[2] = (uint8_t) (addr & 0x00FF);
 	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
-	halSt = HAL_SPI_Transmit(spi,commandBuffer,3,10);
-	if (halSt != HAL_OK){
+	halSt1 = HAL_SPI_Transmit(spi,commandBuffer,3,10);
+	if (halSt1 != HAL_OK){
 		commEnd(spi);
 		return 0;
 	} 
- 
+
 	HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEnd);
-	halSt = HAL_SPI_Transmit_DMA(spi,buf,size);
-	if (halSt != HAL_OK){
+	halSt1 = HAL_SPI_Transmit_DMA(spi,buf,size);
+	if (halSt1 != HAL_OK){
 		commEnd(spi);
 		return 0;
 	} 

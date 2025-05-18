@@ -16,6 +16,9 @@ int ShowHistoryMaxWaterFrame(void) {
     if (updateFlags.sec == true) {
       drawClock();
       drawMainStatusBar(144, 2305, 16);
+			#if defined(DEBUG)
+			RefreshScreen();
+			#endif
       updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
     }
     /*Buttons pressed*/
@@ -52,7 +55,7 @@ int ShowHistoryMaxWaterFrame(void) {
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (sysParams.consts.storedDayValueNum > 4 && firstEl < sysParams.consts.storedDayValueNum - 4){
+			if (sysParams.consts.storedDayValueNum > 3 && firstEl < sysParams.consts.storedDayValueNum + 1 - 4){
 				firstEl++;
 				RefreshScreen();
 			}

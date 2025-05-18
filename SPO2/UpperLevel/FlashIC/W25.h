@@ -57,6 +57,8 @@ extern flash_driver_t W25_driver;
 extern w25_status1_t w25Status;
 extern w25_status2_t w25Status2;
 extern w25_status3_t w25Status3;
+
 /*Prototypes*/
 
+void manualWriteData(uint32_t addr, uint8_t data);
 #endif //_W25_H_

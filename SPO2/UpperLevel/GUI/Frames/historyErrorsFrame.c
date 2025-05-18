@@ -99,7 +99,7 @@ void createFrame(void) {
 				cause >>= 1;
 				N++;	
 			}
-			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[4+N] ,LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + (i)*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[5+N] ,LEFT_MODE);
 			
 		}
 		drawStaticLines();

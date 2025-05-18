@@ -130,6 +130,7 @@ typedef struct{
 	uint32_t storedDayValueNum;
 	float maxWaterUsage;
 	float dayWaterUsage;
+	uint32_t waterUsageLastTimeSave;
 	float adcLimit[Vin+1];
 	float adcLimitDelt[Vin+1];
 	bool ExternalCommandType;
