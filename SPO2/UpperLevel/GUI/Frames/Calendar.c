@@ -81,12 +81,12 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				setMonth.isReleased = 0;
 			}
 			if (setDay.isReleased == 1){
-				int32_t newDay = ShowKeyboardFrame(1, 31);
-				if (newDay > 0) {
-					if (newDay > maxDayInMonth( displayedTime.month,displayedTime.year)){
+				int32_t newDayNum = ShowKeyboardFrame(1, 31);
+				if (newDayNum > 0) {
+					if (newDayNum > maxDayInMonth( displayedTime.month,displayedTime.year)){
 						displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
 					} else {
-						displayedTime.day = newDay;
+						displayedTime.day = newDayNum;
 					}
 					
 				}
@@ -94,7 +94,7 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				setDay.isReleased = 0;
 			}
 			if (setYear.isReleased == 1){
-				int32_t newYear = ShowKeyboardFrame(2020, 2050);
+				int32_t newYear = ShowKeyboardFrame(2020, 2250);
 				if (newYear > 0) {
 					displayedTime.year = newYear;
 					if (displayedTime.day > maxDayInMonth( displayedTime.month,displayedTime.year)){

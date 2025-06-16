@@ -6,11 +6,7 @@
 #define LOG_DISPLAY_SIZE 4
 
 #define MAX_ADRESS 0xFFFFFF
-#define DAYS_TO_STORE 90
-#define ERROR_SECTOR_ADDR 0x000000
-#define WATER_USAGE_SECTOR_ADDR	MAX_ADRESS - DAYS_TO_STORE*sizeof(log_data_t) //0xFFF5DF
-#define WATER_QUANT_SECTOR_ADDR WATER_USAGE_SECTOR_ADDR - DAYS_TO_STORE*sizeof(log_data_t) // 0xFFEBBF
-#define WASH_SECTOR_ADDR WATER_QUANT_SECTOR_ADDR/2 //0x7FF5DF
+
 
 /*Global parameters*/
 sys_status_flags_t oldFlags;
@@ -25,13 +21,16 @@ static planer_status_t oldStatus;
 uint8_t logBufEntryNum;
 volatile bool processing;
 static uint32_t fifoEntryNum = 0;
-extern bool newDay;
+
+uint8_t memBuf[128];
+uint32_t memAdr, memSize;
 uint8_t washSave;
 volatile ulog_queue_t uLogQ;
-ulog_entry_t logEntry[UART_LOG_Q_SIZE];
+volatile ulog_entry_t logEntry[UART_LOG_Q_SIZE];
 sys_param_t sysParCopy;
 uint8_t transmitStep;
 uint8_t header[2];
+wtc_time_t lastSave;
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
 static void processComplete (void);
@@ -72,6 +71,7 @@ uint8_t LOG_Init(){
 	uLogQ.head = 0;
 	uLogQ.tail = 0;
 	transmitStep = 0;
+	
 	HAL_UART_RegisterCallback(&huart1,HAL_UART_TX_COMPLETE_CB_ID, UL_Continue);
 }
 
@@ -113,15 +113,19 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
+		offset = startEntry;
+		if (offset > 0){
+			offset--;
+		}
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - offset,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
 		offset = size;
 		if (startEntry > 0)
 			offset += startEntry - 1;
-		
-		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeof(log_data_t),offset*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
+		uint32_t sizeOfLog = sizeof(log_data_t);
+		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeOfLog,offset*sizeOfLog,displayData,processComplete) != HAL_OK);
 		while(processing);
 		if (startEntry == 0){
 			displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
@@ -141,7 +145,11 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 	}
 	if (sysParams.consts.storedDayValueNum > 0){
 		processing = true;
-		uint8_t size = MIN(sysParams.consts.storedDayValueNum - startEntry,LOG_DISPLAY_SIZE);
+		offset = startEntry;
+		if (offset > 0){
+			offset--;
+		}
+		uint8_t size = MIN(sysParams.consts.storedDayValueNum - offset,LOG_DISPLAY_SIZE);
 		if (startEntry == 0 && size == 4){
 			size--;
 		}
@@ -211,6 +219,8 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	sys_status_flags_t tempFlags;
 	sys_error_flags_t tempError;
 	sys_error_flags_t error;
+	
+	/**/
 	if (processing){
 		return HAL_BUSY;
 	}
@@ -244,6 +254,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 			return HAL_ERROR;
 		} 
 	}
+	
+	if(tempFlags.flags.AllInited == 1){
+		error.all = 0;
+		cause = error.all;
+		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.rtcTime})){
+			oldFlags.flags.AllInited = 1;
+		} else {
+			return HAL_OK;
+		}
+	} 
 	
 //	if(tempError.flags.mainPowerFail == 1){
 //		error.all = 0;
@@ -349,17 +369,17 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		}
 	}
 	
-	if(tempError.flags.PistonFail == 1){
-		error.all = 0;
-		error.flags.PistonFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
-			oldErrors.flags.PistonFail = 1;
-		} else {
-			return HAL_OK;
-		}
-		oldErrors.flags.PistonFail = 1;
-	} 		
+//	if(tempError.flags.PistonFail == 1){
+//		error.all = 0;
+//		error.flags.PistonFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+//			oldErrors.flags.PistonFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//		oldErrors.flags.PistonFail = 1;
+//	} 		
 	
 //	if(tempError.flags.RelayDCFail == 1){
 //		error.all = 0;
@@ -416,11 +436,14 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	if (fifoEntryNum){
 		SaveErrors(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
 	}
-	
-	if (newDay){
-		StoreDayValues();
-		newDay = false;
-		oldDay = sysParams.vars.sysTime.day; 
+	lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
+	if (sysParams.vars.sysTime.year != lastSave.year ||
+		sysParams.vars.sysTime.month != lastSave.month ||
+	sysParams.vars.sysTime.day != lastSave.day){
+		if (StoreDayValues() == HAL_OK){
+			sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
+			lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
+		}
 	}
 	
 	//if (oldStatus != sysParams.consts.planerConsts.status && sysParams.consts.planerConsts.status == PL_WORKING){
@@ -455,8 +478,6 @@ uint8_t StoreWashEvent(void){
 
 HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	HAL_StatusTypeDef res;
-//	if (processing)
-//		return HAL_BUSY;
 	
 	if (oldErrors.flags.RAMFull == 1 ||
 		oldErrors.flags.RAMFail == 1)
@@ -485,12 +506,12 @@ uint8_t StoreDayValues(void){
 		//sysParams.vars.error.flags.RAMFull = 1;
 		return HAL_ERROR;
 	}
-//	if (processing)
-//		return HAL_BUSY;
+	if (processing)
+		return HAL_BUSY;
 	//while(processing);
 	processing = true;
 	
-	dayValues[1].timeStamp = dayValues[0].timeStamp = LL_RTC_TIME_Get(RTC)-1;
+	dayValues[1].timeStamp = dayValues[0].timeStamp = sysParams.consts.waterUsageLastTimeSave;
 	dayValues[0].param = sysParams.consts.maxWaterUsage;
 	
 	dayValues[1].param = sysParams.consts.dayWaterUsage;
@@ -509,7 +530,8 @@ uint8_t StoreDayValues(void){
 	sysParams.consts.storedDayValueNum++;
 	sysParams.consts.maxWaterUsage = 0;
 	sysParams.consts.dayWaterUsage = 0;
-	
+							
+	return HAL_OK;
 }
 
 uint32_t checkErrorEmptySpace(){
@@ -525,6 +547,7 @@ void processComplete (void){
 }
 
 bool UL_LogText (uint8_t* text, uint32_t data){
+	return 0;
 	if (uLogQ.full){
 		return false;
 	}
@@ -555,6 +578,7 @@ bool UL_LogText (uint8_t* text, uint32_t data){
 }
 
 bool UL_LogCond (void){
+	return 0;
 	if (uLogQ.full){
 		return false;
 	}
@@ -601,6 +625,7 @@ void UL_Start (void){
 }
 
 void UL_Continue (UART_HandleTypeDef *huart){
+	
 	if (uLogQ.msgs[uLogQ.tail].type == MSG){
 		switch (transmitStep){
 			case 0:{
@@ -685,22 +710,80 @@ void UL_Continue (UART_HandleTypeDef *huart){
 			}
 		}
 	}
+	if (uLogQ.msgs[uLogQ.tail].type == DATA){
+		switch (transmitStep){
+			case 0:{
+//				memSize = MIN(256,memAdr - memAdr);
+//				transmitStep = 1;
+				FP_Manual_RAM_Read(&memBuf, memAdr, 256, (void (*)(void))UL_Continue);
+				
+				break;
+			}
+			case 1:{
+				memAdr += memSize;
+				
+				uint8_t res = HAL_UART_Transmit_IT(&huart1,
+				&memBuf,
+				256);
+				
+				if (res == HAL_OK){
+//					if (memAdr + memSize >= MAX_RAM_ADDRESS){
+//						transmitStep = 2;
+//					} else {
+//						transmitStep = 0;
+//					}
+					transmitStep = 2;
+				} else {
+					errorCause = "UART transmit error"; 
+					Error_Handler();
+				}
+				break;
+			}
+			case 2:{
+				uLogQ.tail++;
+				if (uLogQ.tail > UART_LOG_Q_SIZE-1){
+					uLogQ.tail = 0;
+				}
+				if (uLogQ.head == uLogQ.tail){
+					uLogQ.empty = true;
+				}
+				
+				uLogQ.full = false;
+				
+				UL_Start();
+				break;
+			}
+			default:{
+				errorCause = "Wrong transmitStep"; 
+				Error_Handler();
+			}
+		}
+	}
 	return;
+}
+
+bool UL_StartMemoryRead(uint32_t adr){
+	if (uLogQ.full){
+		return false;
+	}
+	uint8_t curMsgNum = uLogQ.head++;
+	uLogQ.empty = false;
+	if (uLogQ.head > UART_LOG_Q_SIZE-1){
+		uLogQ.head = 0;
+	}
+	if (uLogQ.head == uLogQ.tail){
+		uLogQ.full = true;
+	}
+	uLogQ.msgs[curMsgNum].type = DATA;
+	uLogQ.msgs[curMsgNum].size = 512;
+	memAdr = adr;
+	UL_Start();
 }
 	#include "FlashIC/W25.h"
 uint8_t recBuf[24];
 void LOG_Test(){
 	flash_driver_t *drv = &W25_driver;
 	while (1){
-//		LOG_StoreDayValues();
-//		while(processing);
-//		for(uint8_t i = 0; i<12;i++){
-//			recBuf[i] = 0;
-//		}
-//		drv->readData(0xFFFFFF - 24,recBuf,24);
-//		while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//		LOG_GetWater(0);
-//		while(processing);
 		
 		LOG_Interrupt();
 		while(processing);
@@ -714,20 +797,3 @@ void LOG_Test(){
 	}
 }
 
-//	while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->readData(0xFFFFFF-10,recBuf2,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	for(uint8_t i = 0; i<10;i++){
-//		recBuf[i] = i+1;
-//	}
-//	drv->writeData(0,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->writeData(0xFFFFFF-10,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	for(uint8_t i = 0; i<10;i++){
-//		recBuf[i] = 0;
-//	}
-//	drv->readData(0,recBuf,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);
-//	drv->readData(0xFFFFFF-10,recBuf2,10);
-//while (HAL_SPI_GetState(MEM_SPI) != HAL_SPI_STATE_READY);

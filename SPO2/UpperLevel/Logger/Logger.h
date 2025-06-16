@@ -23,16 +23,16 @@ typedef struct{
 	uint32_t data;
 } ulog_entry_t;
 
-
 typedef enum {
 	MSG = 0xA3,
 	STR = 0x5A,
+	DATA = 0x11
 } ulog_msg_type_t;
 
 typedef struct {
 	ulog_msg_type_t type;
 	uint8_t* data;
-	uint8_t size;
+	uint32_t size;
 }ulog_msg_t;
 
 typedef struct {
@@ -45,7 +45,7 @@ typedef struct {
 
 /*Extern parameters*/
 extern volatile log_data_t displayData[];
-
+extern uint8_t memBuf[128];
 /*Prototypes*/
 uint8_t LOG_Init(void);
 uint8_t LOG_Interrupt(void);
@@ -60,5 +60,6 @@ bool UL_LogCond (void);
 
 //void UL_Start (void);
 
+bool UL_StartMemoryRead(uint32_t adr);
 void LOG_Test(void);
 #endif //_LOGGER_H_

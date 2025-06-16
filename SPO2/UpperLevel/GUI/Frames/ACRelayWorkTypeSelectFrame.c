@@ -15,10 +15,10 @@ int ShowACOutputFrame(void) {
 			markItem = 2;
 			break;
 		}
-        case (NO_ACTIVE): {
-            markItem = 3;
+		case (NO_ACTIVE): {
+			markItem = 3;
 			break;
-        }
+		}
 	}
 	/*Static create*/
 	createFrame();

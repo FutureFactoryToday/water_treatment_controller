@@ -210,7 +210,7 @@ void SysTick_Handler(void)
 		TC_checkButtons();
 		#endif
 	}
-#ifndef PROD_TEST
+#if !defined(PROD_TEST) && !defined(DEBUG)
 	if (sysParams.vars.status.flags.AllInited){
 		if (screenSaveDelay){
 			screenSaveDelay--;
@@ -246,13 +246,19 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
+	#if defined(DEBUG)
+	if (wtcTimeToInt(&sysParams.vars.sysTime) > LL_RTC_TIME_Get(RTC)){
+		setSysTime(&sysParams.vars.sysTime);
+	}
+	#endif
 	RTC_Interrupt();
 	sysParams.vars.rtcTime = LL_RTC_TIME_Get(RTC);
+	
 	if (sysParams.vars.status.flags.AllInited == 0){
 		LL_RTC_ClearFlag_SEC(RTC);
 		return;
 	}
-#ifndef PROD_TEST
+#if !defined(PROD_TEST)
 	FP_SaveParam();
 	LOG_Interrupt();
 	//FP_StartStore();
@@ -261,7 +267,9 @@ void RTC_IRQHandler(void)
 	if (noTouchDelay){
 		noTouchDelay--;
 	} else {
+		#if !defined(DEBUG)
 		goHome = true;
+		#endif
 	}
 	UL_LogText("Time:", sysParams.vars.rtcTime);
 	UL_LogCond();
