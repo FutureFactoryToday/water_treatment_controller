@@ -369,17 +369,17 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		}
 	}
 	
-	if(tempError.flags.PistonFail == 1){
-		error.all = 0;
-		error.flags.PistonFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
-			oldErrors.flags.PistonFail = 1;
-		} else {
-			return HAL_OK;
-		}
-		oldErrors.flags.PistonFail = 1;
-	} 		
+//	if(tempError.flags.PistonFail == 1){
+//		error.all = 0;
+//		error.flags.PistonFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+//			oldErrors.flags.PistonFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//		oldErrors.flags.PistonFail = 1;
+//	} 		
 	
 //	if(tempError.flags.RelayDCFail == 1){
 //		error.all = 0;

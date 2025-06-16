@@ -53,6 +53,7 @@ uint32_t memBaseAdr;
 	#ifdef ENABLE_MEM_READ
 	static uint8_t regButCnt = 0;
 	static uint32_t oldTimeRegenBtnTouch;
+	static bool errorSector = false;
 	#endif
 	
 void ShowMainFrame(void) {
@@ -224,7 +225,12 @@ void ShowMainFrame(void) {
 				
 				if (regButCnt > 5){
 					//UL_StartMemoryRead(memBaseAdr);
-					FP_Manual_RAM_Read(&memBuf, WATER_USAGE_SECTOR_ADDR, 128, NULL);
+					if (!errorSector){
+						uint8_t num = (sysParams.consts.storedEntryNum < 10)?0:(sysParams.consts.storedEntryNum - 10);
+						FP_Manual_RAM_Read(&memBuf, ERROR_SECTOR_ADDR + 12*num, 128, NULL);
+					} else {
+						FP_Manual_RAM_Read(&memBuf, WATER_USAGE_SECTOR_ADDR, 128, NULL);
+					}
 				}
 			} else {
 				regButCnt = 0;
@@ -320,10 +326,10 @@ void showMessage(void){
 //	}
 	if (sysParams.vars.error.flags.PistonFail == 1){
 		if (sysParams.vars.error.flags.PistonLongRun){
-			error = 2;
+			error = 14;
 		}
 		if (sysParams.vars.error.flags.PistonStallFail){
-			error = 1;
+			error = 16;
 		}
 		if (!shownErrorMessage || error != oldError){
 					
@@ -332,7 +338,7 @@ void showMessage(void){
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
 			BSP_LCD_SetFont(&Oxygen_Mono_20);
-			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,ITEM_ERRORS[error], LEFT_MODE);
+			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,ITEM_HISTORY_ERROR[error], LEFT_MODE);
 			
 			shownErrorMessage = true;
 		}
