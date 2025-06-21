@@ -88,8 +88,11 @@ void initGUI(void){
 	VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
 	VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
 	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
-	offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
-	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
+    if(SERIAL_VERSION)
+        offset += BSP_LCD_DisplayStringAt(offset, 255, ".0.", LEFT_MODE);
+    else
+        offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+    offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
 	frame = 0;
 	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);

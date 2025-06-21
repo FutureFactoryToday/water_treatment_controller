@@ -237,7 +237,7 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	if (oldDay == 0){
 		oldDay = sysParams.vars.sysTime.day; 
 	}
-	tempFlags.all = oldFlags.all 	^ sysParams.vars.status.all; 
+	tempFlags.all = oldFlags.all ^ sysParams.vars.status.all; 
 	tempError.all = oldErrors.all ^ sysParams.vars.error.all;
 	tempFlags.all = tempFlags.all & sysParams.vars.status.all;
 	tempError.all = tempError.all & sysParams.vars.error.all;
@@ -276,16 +276,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 //		}
 //	} 
 	
-	if(tempError.flags.BatteryFail == 1){
-		error.all = 0;
-		error.flags.BatteryFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vbat]})){
-			oldErrors.flags.BatteryFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	} 
+//	if(tempError.flags.BatteryFail == 1){
+//		error.all = 0;
+//		error.flags.BatteryFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vbat]})){
+//			oldErrors.flags.BatteryFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	} 
 //	if(tempError.flags._5VPowerFail == 1){
 //		error.all = 0;
 //		error.flags._5VPowerFail = 1;
@@ -306,16 +306,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 //			return HAL_OK;
 //		}
 //	}
-	if(tempError.flags.TempFail == 1){
-		error.all = 0;
-		error.flags.TempFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Temp]})){
-			oldErrors.flags.TempFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags.TempFail == 1){
+//		error.all = 0;
+//		error.flags.TempFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Temp]})){
+//			oldErrors.flags.TempFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	
 //	if(tempError.flags.Drive1Fail == 1){
 //		error.all = 0;

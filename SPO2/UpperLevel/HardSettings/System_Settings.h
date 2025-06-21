@@ -14,6 +14,9 @@
 /*Includes */
 #include "main.h"
 
+#define SERIAL_VERSION 1    //If it is 1, then the version is considered a production version
+//#define SERIAL_VERSION 0  //if it is 0, then the version is considered a test version.
+
 #define MAIN_VERSION 1
 #define SUB_VERSION 22
 
@@ -56,14 +59,14 @@
 
 #define MAX_OVERALL_WATER_SHOWN_L 999999999
 
-#define DEF_SERVICE_CODE 1234
-#define DEF_MAX_MOT_SPEED_PERCENT 60
-#define DEF_MIN_MOT_SPEED_PERCENT 40
+#define DEF_SERVICE_CODE 1408
+#define DEF_MAX_MOT_SPEED_PERCENT 50
+#define DEF_MIN_MOT_SPEED_PERCENT 50
 #define DEF_WAIT_STALL_TIME_MS 100
 #define DEF_SEEK_TIME_SECONDS 35
 #define newPositions
 
-#define DEF_WORK_POS 10//20;//+ //                               //???????? ?????????
+#define DEF_WORK_POS 20//10;//+ //                               //???????? ?????????
 #define	DEF_BACKWASH_POS 261//261;  //                                   //???????? ????????
 #define	DEF_FORWARD_POS 500//525; //+                                      //??????????
 #define	DEF_SALTERING_POS 415//415 //
@@ -84,7 +87,7 @@
 #define DEF_EXTERNAL_COM_ENABLE_WASH_DELAY 100*3 //100Hz*3sec
 #define DEF_EXTERNAL_COM_EX_START_DELAY 100*10 //100Hz*10sec
 
-#define DEFAULT_TIME {2024, 03, 01,12,0,0}
+#define DEFAULT_TIME {2025, 07, 01,12,0,0}
 
 #define DEF_PHONE_NUMBER 79876543210
 
