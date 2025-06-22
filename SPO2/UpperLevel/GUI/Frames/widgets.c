@@ -670,6 +670,6 @@ void drawClock(void){
   BSP_LCD_SetBackColor(oldBackColor);
 	BSP_LCD_DrawBuffer_Stop();
 	
-	drawDebugInfo();
+	//drawDebugInfo();
 	//sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
 }
