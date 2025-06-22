@@ -95,7 +95,7 @@ void createFrame(void)
 	TC_clearButtons();
 	//Static refresh
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
-	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_MENU[9]);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SERVICE_MENU[7]);
 	
 	drawStatusBarEmpty();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);

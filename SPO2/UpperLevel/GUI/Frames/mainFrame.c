@@ -62,7 +62,7 @@ void ShowMainFrame(void) {
     errorShown = false;
     shownServiceMessage = false;
     shownErrorMessage = false;
-		shownManualMessage = false;
+	shownManualMessage = false;
     enableMenu = true;
     enableWash = true;
 	#ifdef WDT_TEST_1
@@ -239,8 +239,7 @@ void ShowMainFrame(void) {
 			#endif
       //ShowMainMenuFrame();
 			if (enableMenu){
-				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,
-																	 LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
+				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
 				menuBut.drawPressed = false;
 			}
       menuBut.isReleased = false;
@@ -326,10 +325,10 @@ void showMessage(void){
 //	}
 	if (sysParams.vars.error.flags.PistonFail == 1){
 		if (sysParams.vars.error.flags.PistonLongRun){
-			error = 14;
+			error = 16;
 		}
 		if (sysParams.vars.error.flags.PistonStallFail){
-			error = 16;
+			error = 14;
 		}
 		if (!shownErrorMessage || error != oldError){
 					
@@ -338,8 +337,8 @@ void showMessage(void){
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
 			BSP_LCD_SetFont(&Oxygen_Mono_20);
-			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,ITEM_HISTORY_ERROR[error], LEFT_MODE);
-			
+			BSP_LCD_DisplayStringAt(X_START + X_SIZE/2, Y_START + Y_SIZE/4, ITEM_HISTORY_ERROR[error], CENTER_MODE);
+            
 			shownErrorMessage = true;
 		}
 		oldError = error;
