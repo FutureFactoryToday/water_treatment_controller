@@ -240,8 +240,8 @@ void partWriteData (SPI_HandleTypeDef *hspi){
 	if (continueWrite){
 		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, partWriteData);
 	} else {
-		//HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
-		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, writeCheck);
+		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
+		//HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, writeCheck);
 	}
 	halSt = HAL_SPI_Transmit_DMA(spi,buf,size);
 	

@@ -245,25 +245,25 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	uint32_t timeStamp = LL_RTC_TIME_Get(RTC);
 	uint32_t cause;
 	
-	if(tempError.flags.RAMFull == 1){
-		error.all = 0;
-		error.flags.RAMFull = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.RAMFull = 1;
-			return HAL_ERROR;
-		} 
-	}
+//	if(tempError.flags.RAMFull == 1){
+//		error.all = 0;
+//		error.flags.RAMFull = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.RAMFull = 1;
+//			return HAL_ERROR;
+//		} 
+//	}
 	
-	if(tempFlags.flags.AllInited == 1){
-		error.all = 0;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.rtcTime})){
-			oldFlags.flags.AllInited = 1;
-		} else {
-			return HAL_OK;
-		}
-	} 
+//	if(tempFlags.flags.AllInited == 1){
+//		error.all = 0;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.rtcTime})){
+//			oldFlags.flags.AllInited = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	} 
 	
 //	if(tempError.flags.mainPowerFail == 1){
 //		error.all = 0;
@@ -337,16 +337,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 //			return HAL_OK;
 //		}
 //	}
-	if(tempError.flags.MotorFail == 1){
-		error.all = 0;
-		error.flags.MotorFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.MotorFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	}
+//	if(tempError.flags.MotorFail == 1){
+//		error.all = 0;
+//		error.flags.MotorFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.MotorFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	}
 	
 	if(tempError.flags.PistonStallFail == 1){
 		error.all = 0;
@@ -422,16 +422,16 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 //			return HAL_OK;
 //		}
 //	}
-	if(tempError.flags.FRAMFail == 1){
-		error.all = 0;
-		error.flags.FRAMFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,0})){
-			oldErrors.flags.FRAMFail = 1;
-		} else {
-			return HAL_OK;
-		}
-	} 	
+//	if(tempError.flags.FRAMFail == 1){
+//		error.all = 0;
+//		error.flags.FRAMFail = 1;
+//		cause = error.all;
+//		if (addEntry((log_data_t){timeStamp,cause,0})){
+//			oldErrors.flags.FRAMFail = 1;
+//		} else {
+//			return HAL_OK;
+//		}
+//	} 	
 	
 	if (fifoEntryNum){
 		SaveErrors(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
