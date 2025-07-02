@@ -101,7 +101,7 @@ bool FP_Init(void){
 	}
 
 }
-HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void)){
+HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void), uint32_t baseAdr){
 	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
 		return HAL_ERROR;
 	}
@@ -121,12 +121,47 @@ HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *
 		fQueue.full = true;
 	}
 	
+	__disable_irq();
 	fQueue.msgs[curMsgNum].type = WRITE_RAM;
 	fQueue.msgs[curMsgNum].buf = buf;
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = startAddress;
 	fQueue.msgs[curMsgNum].cb = cb;
 	
+	#if defined (TEST_VERSION)
+	uint32_t num;
+	switch (baseAdr){
+		case (WATER_QUANT_SECTOR_ADDR):{
+			num = sysParams.consts.storedDayValueNum;
+			break;
+		}
+		case (WATER_USAGE_SECTOR_ADDR):{
+			num = sysParams.consts.storedDayValueNum;
+			break;
+		}
+		case (WASH_SECTOR_ADDR):{
+			num = sysParams.consts.storedWashNum;
+			break;
+		}
+		case (0):{
+			num = sysParams.consts.storedEntryNum;
+			break;
+		}
+		default:
+		{
+			while(1);
+		}
+	}
+	
+	if (fQueue.msgs[curMsgNum].adress != baseAdr + sizeof(log_data_t)*num){
+		sysParams.vars.error.flags.PistonFail = 1;
+		MOT_Stop();
+		ErrorMsg(baseAdr + sizeof(log_data_t)*num, fQueue.msgs[curMsgNum].adress);
+		
+	}
+	
+	#endif
+	__enable_irq();
 	//queueHandler();
 
 	return HAL_OK;

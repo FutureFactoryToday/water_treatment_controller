@@ -80,6 +80,11 @@ void BSP_LCD_DrawBuffer_Stop(){
 	bufferLock = false;
 }
 
+void BSP_LCD_DrawBuffer_Flush(){
+
+	bufferLock = false;
+}
+
 void BSP_BL_Control (uint8_t BL){
 	lcd_drv->BLControl(BL);
 }

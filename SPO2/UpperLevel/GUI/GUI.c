@@ -159,3 +159,30 @@ void FontTest(WTC_FONT_t *pFonts){
 	BSP_LCD_SetFont(oldFont);
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 }	
+
+void ErrorMsg(uint32_t par1, uint32_t par2){
+	__enable_irq();
+	BSP_LCD_DrawBuffer_Flush();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	uint16_t yOffset = 0, xOffset = 15;
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, "Adress error", LEFT_MODE);
+	yOffset += BSP_LCD_GetFont()->height;
+	xOffset += BSP_LCD_DisplayStringAt(xOffset, yOffset, "Adress should be: ", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, intToStr(par1), LEFT_MODE);
+	yOffset += BSP_LCD_GetFont()->height;
+	xOffset = 15;
+	xOffset += BSP_LCD_DisplayStringAt(xOffset, yOffset, "Given adress: ", LEFT_MODE);
+
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, intToStr(par2), LEFT_MODE);
+	__disable_irq();
+	while(1){
+		
+//		sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+//		sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
+//		LL_mDelay(10);
+	}
+	
+}

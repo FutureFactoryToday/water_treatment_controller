@@ -80,7 +80,7 @@ uint8_t FP_GetParam(void);
 uint8_t FP_SaveParam(void);
 uint8_t FP_DeleteParam(void);
 uint8_t FP_ClearLog(void);
-HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void));
+HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void), uint32_t baseAdr);
 HAL_StatusTypeDef FP_GetStoredLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void));
 void FP_StartStore(void);
 bool FP_isEmpty();

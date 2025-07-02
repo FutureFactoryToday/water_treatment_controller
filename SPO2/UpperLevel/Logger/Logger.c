@@ -469,7 +469,7 @@ uint8_t StoreWashEvent(void){
 	processing = true;
 	washEvent.timeStamp = LL_RTC_TIME_Get(RTC);
 	washEvent.cause = sysParams.consts.planerConsts.currentTaskNum;
-	res = FP_StoreLog(WASH_SECTOR_ADDR+sysParams.consts.storedWashNum*sizeMul,sizeMul,&washEvent,processComplete);
+	res = FP_StoreLog(WASH_SECTOR_ADDR+sysParams.consts.storedWashNum*sizeMul,sizeMul,&washEvent,processComplete, WASH_SECTOR_ADDR);
 	if (res == HAL_OK){
 		sysParams.consts.storedWashNum++;
 	} 
@@ -486,7 +486,7 @@ HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	if (fifoEntryNum > 0){
 		
 		processing = true;
-		res = FP_StoreLog(adress,size,buf,processComplete);
+		res = FP_StoreLog(adress,size,buf,processComplete, 0);
 		if (res == HAL_OK){
 			sysParams.consts.storedEntryNum += size/sizeMul;
 			if (washSave){
@@ -520,12 +520,14 @@ uint8_t StoreDayValues(void){
 	while(FP_StoreLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
 							sizeof(log_data_t),
 							&dayValues[0],
-							processComplete) != HAL_OK);
+							processComplete,
+							WATER_USAGE_SECTOR_ADDR) != HAL_OK);
 
 	while(FP_StoreLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
 							sizeof(log_data_t),
 							&dayValues[1],
-							processComplete) != HAL_OK);
+							processComplete,
+							WATER_QUANT_SECTOR_ADDR) != HAL_OK);
 							
 	sysParams.consts.storedDayValueNum++;
 	sysParams.consts.maxWaterUsage = 0;

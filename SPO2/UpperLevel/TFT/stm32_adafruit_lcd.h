@@ -186,6 +186,7 @@ void     BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
 void BSP_LCD_DrawBuffer_Start(uint16_t xStart, uint16_t yStart, uint16_t xSize, uint16_t ySize, uint32_t color);
 void BSP_LCD_DrawBuffer_Stop(void);
+void BSP_LCD_DrawBuffer_Flush();
 
 void BSP_BL_Control (uint8_t BL);
 #ifdef __cplusplus

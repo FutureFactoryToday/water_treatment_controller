@@ -82,7 +82,7 @@ void SYS_init(void){
 	#endif
 	sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
 	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
-	sysParams.vars.status.flags.AllInited =1;
+	sysParams.vars.status.flags.AllInited = 1;
 	screenSaveDelay = sysParams.consts.screenSaveDelayValue;
 }
 void Start_ADC(){
