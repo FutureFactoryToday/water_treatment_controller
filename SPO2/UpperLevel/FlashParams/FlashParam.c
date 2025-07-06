@@ -101,7 +101,7 @@ bool FP_Init(void){
 	}
 
 }
-HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *buf, void (*cb)(void), uint32_t baseAdr){
+HAL_StatusTypeDef FP_StoreLog(uint32_t adress, uint32_t size, log_data_t *buf, void (*cb)(void), uint32_t baseAdr){
 	if (sysParams.vars.status.flags.RAMInited != 1 || sysParams.vars.error.flags.RAMFail == 1){
 		return HAL_ERROR;
 	}
@@ -111,7 +111,7 @@ HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *
 	}
 	
 	fQueue.empty = false;
-	
+	__disable_irq();
 	uint8_t curMsgNum = fQueue.head++;
 	
 	if (fQueue.head > FLASH_QUEUE_SIZE-1){
@@ -121,46 +121,14 @@ HAL_StatusTypeDef FP_StoreLog(uint32_t startAddress, uint32_t size, log_data_t *
 		fQueue.full = true;
 	}
 	
-	__disable_irq();
 	fQueue.msgs[curMsgNum].type = WRITE_RAM;
 	fQueue.msgs[curMsgNum].buf = buf;
 	fQueue.msgs[curMsgNum].size = size;
-	fQueue.msgs[curMsgNum].adress = startAddress;
+	fQueue.msgs[curMsgNum].adress = adress;
 	fQueue.msgs[curMsgNum].cb = cb;
 	
-	#if defined (TEST_VERSION)
-	uint32_t num;
-	switch (baseAdr){
-		case (WATER_QUANT_SECTOR_ADDR):{
-			num = sysParams.consts.storedDayValueNum;
-			break;
-		}
-		case (WATER_USAGE_SECTOR_ADDR):{
-			num = sysParams.consts.storedDayValueNum;
-			break;
-		}
-		case (WASH_SECTOR_ADDR):{
-			num = sysParams.consts.storedWashNum;
-			break;
-		}
-		case (0):{
-			num = sysParams.consts.storedEntryNum;
-			break;
-		}
-		default:
-		{
-			while(1);
-		}
-	}
-	
-	if (fQueue.msgs[curMsgNum].adress != baseAdr + sizeof(log_data_t)*num){
-		sysParams.vars.error.flags.PistonFail = 1;
-		MOT_Stop();
-		ErrorMsg(baseAdr + sizeof(log_data_t)*num, fQueue.msgs[curMsgNum].adress);
-		
-	}
-	
-	#endif
+
+
 	__enable_irq();
 	//queueHandler();
 
@@ -177,6 +145,7 @@ HAL_StatusTypeDef FP_GetStoredLog( uint32_t startAddress, uint32_t size, log_dat
 	}
 	
 	fQueue.empty = false;
+		__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -192,8 +161,8 @@ HAL_StatusTypeDef FP_GetStoredLog( uint32_t startAddress, uint32_t size, log_dat
 	fQueue.msgs[curMsgNum].size = size;
 	fQueue.msgs[curMsgNum].adress = startAddress;
 	fQueue.msgs[curMsgNum].cb = cb;
-	
-	queueHandler();
+	__enable_irq();
+	//queueHandler();
 
 	return HAL_OK;
 }
@@ -256,7 +225,8 @@ uint8_t FP_GetParam(void){
 		}
 	
 		fQueue.empty = false;
-		
+		__disable_irq();
+	
 		uint8_t curMsgNum = fQueue.head++;
 		
 		if (fQueue.head > FLASH_QUEUE_SIZE-1){
@@ -271,7 +241,7 @@ uint8_t FP_GetParam(void){
 		fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
 		fQueue.msgs[curMsgNum].adress = baseAddress[i];
 		fQueue.msgs[curMsgNum].cb = transmitCount;
-		
+		__enable_irq();
 		//queueHandler();
 	}
 	
@@ -310,6 +280,7 @@ uint8_t FP_SaveParam(void){
 	}
 	
 	fQueue.empty = false;
+	__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -336,7 +307,7 @@ uint8_t FP_SaveParam(void){
 	fQueue.msgs[curMsgNum].size = sizeof(stored_params_t);
 	fQueue.msgs[curMsgNum].adress = baseAddress[lastBuffer];
 	fQueue.msgs[curMsgNum].cb = NULL;
-	
+	__enable_irq();
 	//queueHandler();
 }
 
@@ -346,6 +317,7 @@ uint8_t FP_DeleteParam(void){
 	}
 	
 	fQueue.empty = false;
+	__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -362,7 +334,7 @@ uint8_t FP_DeleteParam(void){
 	fQueue.msgs[curMsgNum].size = 0;
 	fQueue.msgs[curMsgNum].adress = 0;
 	fQueue.msgs[curMsgNum].cb = NULL;
-	
+	__enable_irq();
 	//queueHandler();
 }
 uint8_t FP_ClearLog(void){
@@ -371,6 +343,7 @@ uint8_t FP_ClearLog(void){
 	}
 	
 	fQueue.empty = false;
+		__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -387,7 +360,7 @@ uint8_t FP_ClearLog(void){
 	fQueue.msgs[curMsgNum].size = 0;
 	fQueue.msgs[curMsgNum].adress = 0;
 	fQueue.msgs[curMsgNum].cb = NULL;
-	
+	__enable_irq();
 	//queueHandler();
 }
 
@@ -483,6 +456,7 @@ uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*
 	}
 	
 	fQueue.empty = false;
+	__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -501,7 +475,7 @@ uint8_t FP_Manual_FRAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*
 	fQueue.msgs[curMsgNum].isTransmited = 0;
 //	if (!fQueue.isTransmiting)
 //		queueHandler();
-
+__enable_irq();
 	return HAL_OK;
 }
 uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
@@ -514,6 +488,7 @@ uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	}
 	
 	fQueue.empty = false;
+		__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -532,7 +507,7 @@ uint8_t FP_Manual_FRAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	fQueue.msgs[curMsgNum].isTransmited = 0;
 //	if (!fQueue.isTransmiting)
 //		queueHandler();
-
+	__enable_irq();
 	return HAL_OK;
 }
 uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
@@ -545,8 +520,9 @@ uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	}
 	
 	fQueue.empty = false;
-	
+	__disable_irq();
 	uint8_t curMsgNum = fQueue.head++;
+		
 	
 	if (fQueue.head > FLASH_QUEUE_SIZE-1){
 		fQueue.head = 0;
@@ -563,7 +539,7 @@ uint8_t FP_Manual_RAM_Write(uint8_t* data, uint32_t adr, uint32_t size, void (*c
 	fQueue.msgs[curMsgNum].isTransmited = 0;
 //	if (!fQueue.isTransmiting)
 //	queueHandler();
-
+	__enable_irq();
 	return HAL_OK;
 }
 uint8_t FP_Manual_RAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb)(void)){
@@ -576,6 +552,7 @@ uint8_t FP_Manual_RAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb
 	}
 	
 	fQueue.empty = false;
+	__disable_irq();
 	
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -594,7 +571,7 @@ uint8_t FP_Manual_RAM_Read(uint8_t* data, uint32_t adr, uint32_t size, void (*cb
 	fQueue.msgs[curMsgNum].isTransmited = 0;
 //	if (!fQueue.isTransmiting)
 //		queueHandler();
-
+	__enable_irq();
 	return HAL_OK;
 }
 
