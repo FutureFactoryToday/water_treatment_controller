@@ -167,7 +167,7 @@ void Load_Default_Values(void){
 	sysParams.consts.loadType = DEF_LOAD_TYPE;
 	//Planner
 	//Filtration
-	sysParams.consts.planerConsts.currentTaskNum = REGENERATION_TASK_NUM;
+	sysParams.consts.planerConsts.currentTaskNum = SOFTENING_TASK_NUM;
 	
 	sysParams.consts.planerConsts.currentStepNum = 0;
 	sysParams.consts.planerConsts.status = PL_NOT_SET;
