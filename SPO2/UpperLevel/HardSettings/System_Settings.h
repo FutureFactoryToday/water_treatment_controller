@@ -14,11 +14,10 @@
 /*Includes */
 #include "main.h"
 
-#define SERIAL_VERSION 1    //If it is 1, then the version is considered a production version
-//#define SERIAL_VERSION 0  //if it is 0, then the version is considered a test version.
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 22
+#define SUB_VERSION 23
+#define TEST_NUM 1
 
 #define ENABLE_MEM_READ
 

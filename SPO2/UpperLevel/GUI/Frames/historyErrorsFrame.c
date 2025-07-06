@@ -52,7 +52,7 @@ int ShowHistoryErrorsFrame(void) {
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (sysParams.consts.storedEntryNum > 4 && firstEl < sysParams.consts.storedEntryNum - 4){
+			if (sysParams.consts.storedEntryNum > 3 && firstEl < sysParams.consts.storedEntryNum - 4){
 				firstEl++;
 				RefreshScreen();
 			}

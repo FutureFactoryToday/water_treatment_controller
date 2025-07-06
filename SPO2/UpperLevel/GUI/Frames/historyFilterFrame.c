@@ -52,7 +52,7 @@ int ShowHistoryFilterFrame(void) {
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (sysParams.consts.storedWashNum > 4 && firstEl < sysParams.consts.storedWashNum + 1 - 4){
+			if (sysParams.consts.storedWashNum > 3 && firstEl < sysParams.consts.storedWashNum - 4){
 				firstEl++;
 				RefreshScreen();
 			}
