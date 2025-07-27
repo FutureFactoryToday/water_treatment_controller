@@ -16,7 +16,7 @@
 
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 23
+#define SUB_VERSION 24
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
