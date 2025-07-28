@@ -246,6 +246,9 @@ void PL_Interrupt() {
 }
 
 bool checkStartConditions(void) {
+	if (sysParams.vars.pistonParams.destComplete != true){
+		return false;
+	}
   //External Enable Command On (Contact closed for 0.1 sec)
   if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
