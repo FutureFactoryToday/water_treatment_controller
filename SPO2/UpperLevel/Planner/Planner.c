@@ -260,7 +260,11 @@ bool checkStartConditions(void) {
   if (sysParams.consts.ExternalCommandType == EXTERNAL_START) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
 			UL_LogText(ITEM_LOG_TEXT[0],LL_RTC_TIME_Get(RTC));
-      return true;
+			if (sysParams.vars.pistonParams.rabPozCnt > RAB_POZ_DELAY*1000){
+				return true;
+			} else {
+				return false;
+			}
     }
   }
 	if (forceStart){
