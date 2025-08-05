@@ -57,6 +57,7 @@ typedef struct {
 	bool autoControl;
 	bool destComplete;
 	bool calibration;
+	uint32_t rabPozCnt;
 } pc_params_t;
 
 typedef struct {

@@ -158,7 +158,15 @@ void PC_Control(void){
 				sysParams.vars.pistonParams.workStatus = PC_READY;
 		 }
 	}
-	
+	if (sysParams.vars.pistonParams.destComplete == true && 
+		sysParams.vars.pistonParams.curPoz == sysParams.consts.pistonPositions.rabPoz){
+			sysParams.vars.pistonParams.rabPozCnt++;
+			if (sysParams.vars.pistonParams.rabPozCnt > RAB_POZ_DELAY*1000 + 1){
+				sysParams.vars.pistonParams.rabPozCnt--;
+			}
+		} else {
+			sysParams.vars.pistonParams.rabPozCnt = 0;
+		}
 	lastPoz = sysParams.vars.pistonParams.curPoz;
 }
 pc_calib_result_t PC_AUTO_CALIBRATE(bool first){

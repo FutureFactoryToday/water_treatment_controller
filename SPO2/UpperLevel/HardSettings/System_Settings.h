@@ -16,7 +16,7 @@
 
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 24
+#define SUB_VERSION 25
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
@@ -105,4 +105,6 @@
 #define DEF_DELAYED_RESTART 3000
 
 #define DELAY_FOR_COMPRESSOR_START 3
+
+#define RAB_POZ_DELAY 2
 #endif /* __SETTINGS_H__ */
