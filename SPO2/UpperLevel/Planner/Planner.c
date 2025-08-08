@@ -33,7 +33,7 @@ uint32_t oldSec;
 static uint32_t oldWater;
 /* Private function prototypes -----------------------------------------------*/
 void PL_ProceedStep(void);
-uint8_t findLastElement(piston_task_t * task);
+uint8_t findLastElement(piston_task_t *task);
 time_t setPreferedTime(time_t time);
 bool checkStartConditions(void);
 bool forceStart;
@@ -51,8 +51,8 @@ void PL_Init() {
   if (sysParams.consts.planerConsts.currentStepNum >= STEP_PER_TASK_NUM) {
     sysParams.consts.planerConsts.currentStepNum = 0;
   }
-  sysParams.vars.planer.currentTask = & sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum];
-  sysParams.vars.planer.currentStep = & sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum].step[sysParams.consts.planerConsts.currentStepNum];
+  sysParams.vars.planer.currentTask = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum];
+  sysParams.vars.planer.currentStep = &sysParams.consts.planerConsts.planerTasks[sysParams.consts.planerConsts.currentTaskNum].step[sysParams.consts.planerConsts.currentStepNum];
   if (sysParams.vars.status.flags.PistonInited == 1)
     sysParams.vars.status.flags.PlanerInited = 1;
   if (sysParams.vars.status.flags.StoredParamsLoaded == 1) {
@@ -343,7 +343,7 @@ wtc_time_t timeRemain(void) {
   return intToWTCTime(sysParams.vars.planer.currentTask -> remainingTime);
 }
 
-bool PL_addTaskLine(piston_task_t * task, task_line_t tl) {
+bool PL_addTaskLine(piston_task_t *task, task_line_t tl) {
   uint8_t lastEl = findLastElement(task);
   if (lastEl < STEP_PER_TASK_NUM - 1) {
     task -> step[lastEl] = tl;
@@ -352,7 +352,7 @@ bool PL_addTaskLine(piston_task_t * task, task_line_t tl) {
   return false;
 }
 
-bool PL_deleteTaskLine(piston_task_t * task, uint8_t line) {
+bool PL_deleteTaskLine(piston_task_t *task, uint8_t line) {
   uint8_t lastEl = findLastElement(task);
   if (line < STEP_PER_TASK_NUM - 1 && line < lastEl) {
     for (uint8_t i = 0; i < lastEl - line; i++) {
@@ -361,7 +361,7 @@ bool PL_deleteTaskLine(piston_task_t * task, uint8_t line) {
   }
 }
 
-bool PL_modTaskLine(piston_task_t * task, uint8_t line, task_line_t tl) {
+bool PL_modTaskLine(piston_task_t *task, uint8_t line, task_line_t tl) {
   uint8_t lastEl = findLastElement(task);
   if (line < lastEl) {
     task -> step[lastEl] = tl;
@@ -370,7 +370,7 @@ bool PL_modTaskLine(piston_task_t * task, uint8_t line, task_line_t tl) {
   return false;
 }
 
-uint8_t findLastElement(piston_task_t * task) {
+uint8_t findLastElement(piston_task_t *task) {
   uint8_t pozN = 0;
   while (task -> step[pozN].poz != NULL) {
     pozN++;
