@@ -2869,6 +2869,11 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\SettingsFlush.c</FilePath>
             </File>
+            <File>
+              <FileName>ScreensaverFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\ScreensaverFrame.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6002,6 +6007,11 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\SettingsFlush.c</FilePath>
             </File>
+            <File>
+              <FileName>ScreensaverFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\ScreensaverFrame.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8982,6 +8992,11 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\SettingsFlush.c</FilePath>
             </File>
+            <File>
+              <FileName>ScreensaverFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\ScreensaverFrame.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11961,6 +11976,11 @@
               <FileName>SettingsFlush.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\Frames\SettingsFlush.c</FilePath>
+            </File>
+            <File>
+              <FileName>ScreensaverFrame.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\Frames\ScreensaverFrame.c</FilePath>
             </File>
           </Files>
         </Group>

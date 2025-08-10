@@ -143,6 +143,7 @@ extern "C" {
 #include "GUI/Frames/changePinCodeFrame.h"
 #include "GUI/Frames/ACRelayWorkTypeSelectFrame.h"
 #include "GUI/Frames/SettingsFlush.h"
+#include "GUI/Frames/ScreensaverFrame.h"
 
 /* USER CODE END Includes */
 
