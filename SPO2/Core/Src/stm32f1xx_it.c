@@ -211,15 +211,15 @@ void SysTick_Handler(void)
 		#endif
 	}
 #if !defined(PROD_TEST) && !defined(DEBUG)
-	if (sysParams.vars.status.flags.AllInited){
-		if (screenSaveDelay){
-			screenSaveDelay--;
-			BSP_BL_Control(sysParams.consts.baseBLValue);
-		} else {
-			//screenSave = true;
-			BSP_BL_Control(sysParams.consts.screenSaveBLValue);
-		}	
-	}
+//	if (sysParams.vars.status.flags.AllInited){
+//		if (screenSaveDelay){
+//			screenSaveDelay--;
+//			BSP_BL_Control(sysParams.consts.baseBLValue);
+//		} else {
+//			//screenSave = true;
+//			BSP_BL_Control(sysParams.consts.screenSaveBLValue);
+//		}	
+//	}
 	
 #else
 	

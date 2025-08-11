@@ -2,6 +2,8 @@
 #define _LAYO_H
 
 #include "main.h"
+#define SCREEN_HEIGHT 320
+#define SCREEN_WIDTH 480
 
 #define GAP 20
 #define TOP_LINE_WIDTH 60

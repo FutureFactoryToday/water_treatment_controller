@@ -2585,6 +2585,11 @@
               <FilePath>..\UpperLevel\TFT\Fonts\oxy_24.c</FilePath>
             </File>
             <File>
+              <FileName>oxy_52.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\TFT\Fonts\oxy_52.c</FilePath>
+            </File>
+            <File>
               <FileName>arrowDownImg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\arrowDownImg.c</FilePath>
@@ -5672,6 +5677,11 @@
               <FilePath>..\UpperLevel\TFT\Fonts\oxy_24.c</FilePath>
             </File>
             <File>
+              <FileName>oxy_52.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\TFT\Fonts\oxy_52.c</FilePath>
+            </File>
+            <File>
               <FileName>arrowDownImg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\arrowDownImg.c</FilePath>
@@ -8708,6 +8718,11 @@
               <FilePath>..\UpperLevel\TFT\Fonts\oxy_24.c</FilePath>
             </File>
             <File>
+              <FileName>oxy_52.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\TFT\Fonts\oxy_52.c</FilePath>
+            </File>
+            <File>
               <FileName>arrowDownImg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\arrowDownImg.c</FilePath>
@@ -11691,6 +11706,11 @@
               <FileName>oxy_24.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\TFT\Fonts\oxy_24.c</FilePath>
+            </File>
+            <File>
+              <FileName>oxy_52.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\TFT\Fonts\oxy_52.c</FilePath>
             </File>
             <File>
               <FileName>arrowDownImg.c</FileName>
