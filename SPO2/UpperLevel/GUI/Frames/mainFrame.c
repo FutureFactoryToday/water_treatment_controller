@@ -83,6 +83,14 @@ void ShowMainFrame(void) {
   while (1) {
 
     if (updateFlags.sec == true) {
+			if (sysParams.vars.status.flags.AllInited){
+					if (screenSaveDelay){
+						screenSaveDelay--;
+					} else {
+						ShowScreensaverFrame();
+						createFrame();
+					}	
+			}
       drawClock();
       drawMainStatusBar(144, 2305, 16);
       if (sysParams.consts.planerConsts.status == PL_WORKING) {
