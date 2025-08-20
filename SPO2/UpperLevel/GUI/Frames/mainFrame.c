@@ -260,6 +260,7 @@ void ShowMainFrame(void) {
 void createFrame(void) {
   goHome = false;
   stepShow = false;
+	shownStep = 0;
   errorShown = false;
   shownServiceMessage = false;
   shownErrorMessage = false;
