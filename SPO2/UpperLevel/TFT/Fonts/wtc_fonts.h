@@ -32,6 +32,7 @@ extern const WTC_FONT_t Oxygen_Mono_12;
 extern const WTC_FONT_t Oxygen_Mono_16;
 extern const WTC_FONT_t Oxygen_Mono_20;
 extern const WTC_FONT_t Oxygen_Mono_24;
+extern const WTC_FONT_t Oxygen_Mono_52;
 /*Prototypes */
 
 
