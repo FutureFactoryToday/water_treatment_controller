@@ -274,7 +274,12 @@ uint8_t FP_GetParam(void){
 }
 
 uint8_t FP_SaveParam(void){
-
+#if defined (TEST_VERSION)&&(SUB_VERSION==28)
+	//Version - 1.28
+	//Remove fast flash to check how slow mem works
+	
+	return 0;
+#endif
 	if (fQueue.full){
 		return HAL_BUSY;
 	}
