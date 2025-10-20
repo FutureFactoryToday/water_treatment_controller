@@ -14,6 +14,9 @@
 /*Includes */
 #include "main.h"
 
+//#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
+#define GEYSER
+//#define GEYSER_MAIN_LOGO
 
 #define MAIN_VERSION 1
 #define SUB_VERSION 29
@@ -88,7 +91,11 @@
 
 #define DEFAULT_TIME {2025,8,01,12,0,0}
 
-#define DEF_PHONE_NUMBER 79876543210
+#if defined (GEYSER)
+	#define DEF_PHONE_NUMBER 78126050055
+#else
+	#define DEF_PHONE_NUMBER 79876543210
+#endif
 
 #define DEF_IMPULSE_WEIGHT 1
 #define FLASH_SECTORS 3

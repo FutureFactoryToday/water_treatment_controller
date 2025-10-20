@@ -450,7 +450,11 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
  }
   
 void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label){
+		#if defined (GEYSER)
+		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+		#else
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+		#endif
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
     
     if(homeBut) {
@@ -463,7 +467,11 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &Logo);
     }
     
-    BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+    #if defined (GEYSER)
+		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+    BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, label, LEFT_MODE);
@@ -478,8 +486,17 @@ void drawMainWindow()
 
 void drawStatusBarOkCancelCustom(uint8_t* okBut, uint8_t* cancelBut)
 {
+	#if defined (GEYSER)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#else
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
-  BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+  #if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
   BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, cancelBut, LEFT_MODE);
   BSP_LCD_DisplayStringAt(OK_X, OK_Y, okBut, LEFT_MODE);
@@ -494,13 +511,26 @@ void drawStatusBarOkCancel()
 
 void drawStatusBarSave(uint8_t* label)
 {
-   BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
+	#if defined (GEYSER)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#else
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
+	#endif
+  
 
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+    #if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
     
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+    #if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
@@ -508,9 +538,17 @@ void drawStatusBarSave(uint8_t* label)
 
 void drawStatusBarLabel(uint8_t* label)
 {
-   BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
+	#if defined (GEYSER)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#else
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
+	#endif
     
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+    #if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
@@ -519,7 +557,11 @@ void drawStatusBarLabel(uint8_t* label)
 
 void drawStatusBarEmpty()
 {
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+    #if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
     BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X, STATUSBAR_SIZE_Y);
 }
 static int16_t xOff = 0;
@@ -529,7 +571,11 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 		uint8_t offset;		
 		BSP_LCD_SetFont(&Oxygen_Mono_20);
 	
+		#if defined (GEYSER)
+		BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_GEYSER_GREEN);
+		#else
     BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_WHITEBLUE);
+		#endif
 
 //    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
 //    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y);
@@ -543,7 +589,12 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 			int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
 			
 			uint32_t remHours = 0;
+			
+			#if defined (GEYSER)
+			BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+			#else
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+			#endif
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			if (/*sysParams.vars.error.flags.PistonFail != 1 &&*/ deltTime >= 0){
 				remHours = deltTime/(60*60);
@@ -554,7 +605,11 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 			}
 //		}
     }
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 		//float speed = sysParams.vars.flowCnt;
 		float speed = FM_getFlowSpeed()*60;
@@ -586,7 +641,11 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 		BSP_LCD_DisplayStringAt(TEXT_X + 120 + offset + 5, TEXT_Y ,CURRENT_WATER_CONSUMPTION_LITERS, LEFT_MODE);
     
 		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL || sysParams.consts.planerConsts.startType == DELAYED){
+			#if defined (GEYSER)
+			BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+			#else
 			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+			#endif
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			int32_t remWater = sysParams.consts.planerConsts.filtroCycle - sysParams.consts.waterFromLastFilter;
 			if (remWater < 0) {
@@ -652,10 +711,19 @@ void drawClock(void){
 	wtc_time_t time = intToWTCTime(rtcTime);
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
 	
+	#if defined (GEYSER)
+	BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#else
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
 	//BSP_LCD_FillRect(HOUR_X,STATUSBAR_POS_Y,100,STATUSBAR_SIZE_Y);
+	#if defined (GEYSER)
+	BSP_LCD_DrawBuffer_Start(HOUR_X, STATUSBAR_POS_Y, 90, STATUSBAR_SIZE_Y,LCD_COLOR_GEYSER_GREEN);
+	#else
 	BSP_LCD_DrawBuffer_Start(HOUR_X, STATUSBAR_POS_Y, 90, STATUSBAR_SIZE_Y,LCD_COLOR_WHITEBLUE);
+	#endif
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	if (getTime().second % 2){
 		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
