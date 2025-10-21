@@ -265,7 +265,6 @@ void createFrame(void) {
   shownServiceMessage = false;
   shownErrorMessage = false;
   TC_clearButtons();
-  menuBut.drawPressed = false;
   drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
 
   drawMainWindow();
@@ -275,7 +274,8 @@ void createFrame(void) {
   menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,
                                  LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
   // contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
-
+	menuBut.drawPressed = false;
+	regenBut.drawPressed = false;
   drawMainStatusBar(144, 2305, 16);
 
   drawClock();
