@@ -351,7 +351,7 @@ void showMessage(void){
 			shownErrorMessage = true;
 		}
 		oldError = error;
-		BSP_LCD_SetFont(oldFont);
+		//BSP_LCD_SetFont(oldFont);
 	}	else {
 		if (shownErrorMessage){
 			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
