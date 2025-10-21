@@ -66,6 +66,8 @@ extern const BITMAPSTRUCT gImage_SMALL_LOGO;
 extern const BITMAPSTRUCT gImage_ARROWUP;
 extern const BITMAPSTRUCT geyser_Logo;
 extern const BITMAPSTRUCT geyser_Logo_mini;
+extern const BITMAPSTRUCT geyser_Home;
+extern const BITMAPSTRUCT geyser_Logo_return;
 //extern const BITMAPSTRUCT gImage_ARROWUP_ghost;
 extern const BITMAPSTRUCT gImage_ARROWDOWN;
 extern const BITMAPSTRUCT gImage_RETURNARROW;

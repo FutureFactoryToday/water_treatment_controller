@@ -2709,6 +2709,16 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_mini.c</FilePath>
             </File>
+            <File>
+              <FileName>geyser_Home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Home.c</FilePath>
+            </File>
+            <File>
+              <FileName>geyser_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5862,6 +5872,16 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_mini.c</FilePath>
             </File>
+            <File>
+              <FileName>geyser_Home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Home.c</FilePath>
+            </File>
+            <File>
+              <FileName>geyser_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8862,6 +8882,16 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_mini.c</FilePath>
             </File>
+            <File>
+              <FileName>geyser_Home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Home.c</FilePath>
+            </File>
+            <File>
+              <FileName>geyser_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11861,6 +11891,16 @@
               <FileName>geyser_Logo_mini.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_mini.c</FilePath>
+            </File>
+            <File>
+              <FileName>geyser_Home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Home.c</FilePath>
+            </File>
+            <File>
+              <FileName>geyser_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
             </File>
           </Files>
         </Group>

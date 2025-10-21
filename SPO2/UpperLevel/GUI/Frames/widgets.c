@@ -431,7 +431,7 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
 //    
 //    if(radius != 0)
 //    {
-	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
+		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
     BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
     BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
@@ -452,30 +452,49 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
 void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label){
 		#if defined (GEYSER)
 		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
 		#else
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
 		#endif
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
     
-    if(homeBut) {
+		#if defined (GEYSER)
+		if(homeBut) {
+        BSP_LCD_DrawBitmap(HOME_BUT_X - 2, HOME_BUT_Y + 7, &geyser_Home);
+    }
+		#else
+	  if(homeBut) {
         BSP_LCD_DrawBitmap(HOME_BUT_X, HOME_BUT_Y + 10, &gImage_HOMEBUT);
     }
-    
+		#endif
+	
+
+		#if defined (GEYSER)
+		if(returnBut)
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 7, &geyser_Logo_return);
+    else {
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &geyser_Logo_mini);
+    }
+		#else
     if(returnBut)
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &gImage_RETURNARROW);
     else {
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &Logo);
     }
+		#endif
     
     #if defined (GEYSER)
-		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
 		#else
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
 		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 
-    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, label, LEFT_MODE);
-
+		#if defined (GEYSER)
+    BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X + 105, MODE_STATUS_TEXT_Y, label, LEFT_MODE);
+		#else
+		BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y, label, LEFT_MODE);
+		#endif
 }
 
 void drawMainWindow()
