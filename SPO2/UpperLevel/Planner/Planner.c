@@ -102,7 +102,7 @@ void PL_planer(planer_control_type_t startType) {
         break;
       }
       case FORCE_START_NOW: {
-				if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+				if (sysParams.consts.ExternalCommandType == EXTERNAL_DISABLE) {
           if (sysParams.vars.status.flags.ExternalCommandOn == true) {
             return;
           }
@@ -116,7 +116,7 @@ void PL_planer(planer_control_type_t startType) {
         break;
       }
       case FORCE_START_NEAREST: {
-				if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+				if (sysParams.consts.ExternalCommandType == EXTERNAL_DISABLE) {
           if (sysParams.vars.status.flags.ExternalCommandOn == true) {
             return;
           }
@@ -134,7 +134,7 @@ void PL_planer(planer_control_type_t startType) {
       return;
     } else {
       if (startType == FORCE_START_NEAREST || startType == FORCE_START_NOW) {
-//        if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+//        if (sysParams.consts.ExternalCommandType == EXTERNAL_DISABLE) {
 //          if (sysParams.vars.status.flags.ExternalCommandOn == true) {
 //            return;
 //          }
@@ -250,7 +250,7 @@ bool checkStartConditions(void) {
 		return false;
 	}
   //External Enable Command On (Contact closed for 0.1 sec)
-  if (sysParams.consts.ExternalCommandType == EXTERNAL_ENABLE) {
+  if (sysParams.consts.ExternalCommandType == EXTERNAL_DISABLE) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
 			forceStart = false;
       return false;
@@ -259,8 +259,8 @@ bool checkStartConditions(void) {
   //External Start Command On (Contact closed for 3 sec)
   if (sysParams.consts.ExternalCommandType == EXTERNAL_START) {
     if (sysParams.vars.status.flags.ExternalCommandOn == true) {
-			UL_LogText(ITEM_LOG_TEXT[0],LL_RTC_TIME_Get(RTC));
 			if (sysParams.vars.pistonParams.rabPozCnt > RAB_POZ_DELAY*1000){
+				UL_LogText(ITEM_LOG_TEXT[0],LL_RTC_TIME_Get(RTC));
 				return true;
 			} else {
 				return false;
@@ -283,22 +283,22 @@ bool checkStartConditions(void) {
     break;
   }
   case UNIVERSAL: {
-    if (sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle) {
-      if (oldWater == (uint32_t)sysParams.consts.waterFromLastFilter) {
-        sysParams.vars.planer.noWaterUsageCnt++;
-        if (sysParams.vars.planer.noWaterUsageCnt >= DEF_NO_WATER_CNT_LIMIT) {
-          sysParams.vars.planer.noWaterUsageCnt--;
-					UL_LogText(ITEM_LOG_TEXT[3],LL_RTC_TIME_Get(RTC));
-					UL_LogText(ITEM_LOG_TEXT[4],sysParams.consts.waterFromLastFilter);
-					UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
-          return true;
-        }
-      } else {
-        oldWater = (uint32_t)sysParams.consts.waterFromLastFilter;
-        sysParams.vars.planer.noWaterUsageCnt = 0;
-      }
-
-    }
+//    if (sysParams.consts.waterFromLastFilter >= sysParams.consts.planerConsts.filtroCycle){					//Old wash logic
+//      if (oldWater == (uint32_t)sysParams.consts.waterFromLastFilter) {														
+//        sysParams.vars.planer.noWaterUsageCnt++;
+//        if (sysParams.vars.planer.noWaterUsageCnt >= DEF_NO_WATER_CNT_LIMIT) {
+//          sysParams.vars.planer.noWaterUsageCnt--;
+//					UL_LogText(ITEM_LOG_TEXT[3],LL_RTC_TIME_Get(RTC));
+//					UL_LogText(ITEM_LOG_TEXT[4],sysParams.consts.waterFromLastFilter);
+//					UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
+//          return true;
+//        }
+//      } 
+//			else {
+//        oldWater = (uint32_t)sysParams.consts.waterFromLastFilter;
+//        sysParams.vars.planer.noWaterUsageCnt = 0;
+//      }
+//    }
     //uint32_t waterLimit = (sysParams.consts.planerConsts.filtroCycle * (100 - sysParams.consts.planerConsts.filtroReserve) / 100);
     bool result = false;
     //if (sysParams.consts.waterFromLastFilter >= waterLimit) {
@@ -311,8 +311,14 @@ bool checkStartConditions(void) {
 				UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
       }
     }
-		if (sysParams.vars.planer.currentTask -> startDateTime < getRTC()){
-			result |= true;
+//		if (sysParams.vars.planer.currentTask->startDateTime < getRTC()){															//Old wash logic
+//			result = true;
+//			UL_LogText(ITEM_LOG_TEXT[7],LL_RTC_TIME_Get(RTC));
+//		}
+		if (sysParams.vars.planer.currentTask->startDateTime < getRTC() &&
+			sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
+        sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute){
+			result = true;
 			UL_LogText(ITEM_LOG_TEXT[7],LL_RTC_TIME_Get(RTC));
 		}
     return result;
