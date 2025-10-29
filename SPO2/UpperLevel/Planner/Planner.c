@@ -311,10 +311,10 @@ bool checkStartConditions(void) {
 				UL_LogText(ITEM_LOG_TEXT[5],sysParams.consts.planerConsts.filtroCycle);
       }
     }
-//		if (sysParams.vars.planer.currentTask->startDateTime < getRTC()){															//Old wash logic
-//			result = true;
-//			UL_LogText(ITEM_LOG_TEXT[7],LL_RTC_TIME_Get(RTC));
-//		}
+		if (sysParams.vars.planer.currentTask->startDateTime < getRTC()){
+			result = true;
+			UL_LogText(ITEM_LOG_TEXT[7],LL_RTC_TIME_Get(RTC));
+		}
 		if (sysParams.vars.planer.currentTask->startDateTime < getRTC() &&
 			sysParams.vars.sysTime.hour == sysParams.consts.planerConsts.preferedTimeForWash.hour &&
         sysParams.vars.sysTime.minute == sysParams.consts.planerConsts.preferedTimeForWash.minute){
