@@ -14,8 +14,8 @@
 /*Includes */
 #include "main.h"
 
-//#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
-#define GEYSER
+#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
+//#define GEYSER
 //#define GEYSER_MAIN_LOGO
 
 #define MAIN_VERSION 1

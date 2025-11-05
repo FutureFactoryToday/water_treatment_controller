@@ -451,9 +451,10 @@ button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint1
   
 void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label){
 		#if defined (GEYSER)
-		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
 		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
 		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
 		#endif
     BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
@@ -486,7 +487,7 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
     #if defined (GEYSER)
 		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
 		#else
-    BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+    BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
 		#endif
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 
