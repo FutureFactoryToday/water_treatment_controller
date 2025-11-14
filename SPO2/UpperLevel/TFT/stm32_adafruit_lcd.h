@@ -86,6 +86,7 @@
 #define LCD_COLOR_DARKBLUE      0x1947
 #define LCD_COLOR_PHANTOMBLUE   0x6b6d
 #define LCD_COLOR_DARKYELLOW 		0xFEA0
+#define LCD_COLOR_GEYSER_GREEN	0x2445
   
 //-----------------------------------------------------------------------------
 /* Interface section (no modify) */   

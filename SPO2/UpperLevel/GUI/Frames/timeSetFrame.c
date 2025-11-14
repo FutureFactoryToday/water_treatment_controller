@@ -183,9 +183,9 @@ void createFrame(){
 }
 button_t drawMidClock (bool checked){
 	
-	uint8_t* formatter = (getTime().second % 2)? "hh:mm " : "hh mm ";
-	return (!checked)? drawTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource(formatter, &displayedTime)):
-									drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource(formatter, &displayedTime)) ;
+	//uint8_t* formatter = (getTime().second % 2)? "hh:mm " : "hh mm ";
+	return (!checked)? drawTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("hh:mm", &displayedTime)):
+									drawDarkTextLabel(BSP_LCD_GetXSize()/2 - 50, MID_CLOCK_Y, 100, BSP_LCD_GetFont()->height + GAP, getFormatedTimeFromSource("hh:mm", &displayedTime)) ;
 }
 
 

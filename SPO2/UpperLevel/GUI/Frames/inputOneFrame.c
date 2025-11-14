@@ -32,7 +32,7 @@ int showInputOneFrame(void)
 				sysParams.consts.ExternalCommandType = EXTERNAL_START;	        
 			}
 			if (markItem == 2){
-				sysParams.consts.ExternalCommandType = EXTERNAL_ENABLE;	        
+				sysParams.consts.ExternalCommandType = EXTERNAL_DISABLE;	        
 			}
 			FP_SaveParam();
 			okBut.isReleased = false;

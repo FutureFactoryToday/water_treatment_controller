@@ -38,7 +38,7 @@
 #define AUTO_CONTROL 1
 
 #define EXTERNAL_START false
-#define EXTERNAL_ENABLE true
+#define EXTERNAL_DISABLE true
 	
 /*Public typedef*/
 typedef enum {

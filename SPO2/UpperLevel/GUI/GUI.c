@@ -77,11 +77,19 @@ void initGUI(void){
 	BSP_BL_Control(DEF_BL_VALUE);  
 	
 #ifndef PROD_TEST
+	#if defined (GEYSER_MAIN_LOGO)
+	BSP_LCD_Clear(LCD_COLOR_GEYSER_GREEN);
+	BSP_LCD_DrawBitmap(65,80,&geyser_Logo);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#else
 	BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
 	BSP_LCD_DrawBitmap(0,0,&LOGO);
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
 	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
 	BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
 	offset = 110;
 	offset += BSP_LCD_DisplayStringAt(offset, 255, "МОЗГИ версия ПО ", LEFT_MODE);
