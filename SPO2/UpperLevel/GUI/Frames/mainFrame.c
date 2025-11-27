@@ -57,14 +57,7 @@ uint32_t memBaseAdr;
 	#endif
 	
 void ShowMainFrame(void) {
-    goHome = false;
-    stepShow = false;
-    errorShown = false;
-    shownServiceMessage = false;
-    shownErrorMessage = false;
-	shownManualMessage = false;
-    enableMenu = true;
-    enableWash = true;
+
 	#ifdef WDT_TEST_1
 		menuButCnt = 0;
 		oldTimeMenuBtnTouch = HAL_GetTick();
@@ -99,6 +92,9 @@ void ShowMainFrame(void) {
 			if (sysParams.vars.status.flags.NeedService == 0){
 				showInOut();
 			}
+//			if (enableMenu == false && sysParams.consts.planerConsts.status != PL_WORKING){
+//			 enableMenu = true;
+//			}
       updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
     }
 		if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
@@ -258,8 +254,11 @@ void ShowMainFrame(void) {
 }
 
 void createFrame(void) {
-  goHome = false;
+	goHome = false;
   stepShow = false;
+	shownManualMessage = false;
+  enableMenu = true;
+  enableWash = true;
 	shownStep = 0;
   errorShown = false;
   shownServiceMessage = false;
