@@ -19,7 +19,7 @@
 //#define GEYSER_MAIN_LOGO
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 32
+#define SUB_VERSION 33
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
