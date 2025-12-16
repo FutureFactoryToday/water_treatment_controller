@@ -46,8 +46,14 @@ void MX_RTC_Init(void)
   NVIC_EnableIRQ(RTC_IRQn);
 
   /* USER CODE BEGIN RTC_Init 1 */
-	if ((RTC->PRLH == 0 && RTC->PRLL == 0) ||
-		LL_RTC_TIME_Get(RTC) == 0){
+//	if ((RTC->PRLH == 0 && RTC->PRLL == 0) ||
+//		LL_RTC_TIME_Get(RTC) == 0){
+	time_t T = LL_RTC_TIME_Get(RTC);
+	struct tm newTime;
+	wtc_time_t defTimeStr = DEFAULT_TIME;
+	newTime = wtcTimeToStdTime(&defTimeStr);
+	time_t defTime = mktime(&newTime);
+	if (T < defTime){
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC and set the Time and Date
