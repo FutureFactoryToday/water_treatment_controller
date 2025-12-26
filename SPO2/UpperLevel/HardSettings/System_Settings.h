@@ -14,12 +14,12 @@
 /*Includes */
 #include "main.h"
 
-#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
-//#define GEYSER
+//#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
+#define GEYSER
 //#define GEYSER_MAIN_LOGO
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 32
+#define SUB_VERSION 34
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
