@@ -20,6 +20,7 @@
 #include "FlashIC/FlashDriver.h"
 #include "FlashIC/FM25.h"
 #include "FlashIC/W25.h"
+
 /* Private includes ----------------------------------------------------------*/
 
 /* Private typedef -----------------------------------------------------------*/
