@@ -87,8 +87,8 @@ void ProductionTest(){
 	
 	
 	
-	//PT_DrawMainScreen();
-	PT_MemTest();
+	PT_DrawMainScreen();
+	//PT_MemTest();
 }
 
 test_result_t PT_DrawMainScreen(){
@@ -553,7 +553,7 @@ test_result_t PT_MemTest(){
 	
 	startBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Start", LCD_COLOR_BLACK, LCD_COLOR_GRAY);
 	TC_addButton(&startBut);
-	//while (!startBut.isReleased);
+	while (!startBut.isReleased);
 	
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
