@@ -87,8 +87,8 @@ void ProductionTest(){
 	
 	
 	
-	//PT_DrawMainScreen();
-	PT_MemTest();
+	PT_DrawMainScreen();
+	//PT_MemTest();
 }
 
 test_result_t PT_DrawMainScreen(){
