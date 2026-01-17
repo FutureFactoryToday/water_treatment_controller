@@ -802,6 +802,10 @@ test_result_t PT_MemTest(){
 	ramAdr = 0;
 	while( ramAdr < MAX_RAM_ADDRESS+1 && !memTestFail){
 		memTestComplete = false;
+		for (uint32_t i = 0; i < bufSize+1; i++){
+			ramReadTestData[i] = 0;
+		}
+		//HAL_Delay(1);
 		FP_Manual_RAM_Read(&ramReadTestData,ramAdr,bufSize+1,memInteractionComplete);
 		while (!memTestComplete){
 			if (HAL_GetTick() - startTime > 1000){
