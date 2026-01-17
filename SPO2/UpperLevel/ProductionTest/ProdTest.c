@@ -266,8 +266,8 @@ test_result_t PT_DrawTouchTest(){
 	
 	testBut.x = 0;
 	testBut.y = 0;
-	testBut.xSize = 48;
-	testBut.ySize = 32;
+	testBut.xSize = 120;
+	testBut.ySize = 53;
 	
 	startBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Start", LCD_COLOR_BLACK, LCD_COLOR_GRAY);
 	TC_addButton(&startBut);
@@ -277,6 +277,8 @@ test_result_t PT_DrawTouchTest(){
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	for (uint8_t col = 0; col < BSP_LCD_GetXSize()/testBut.xSize; col++){
 		for(uint8_t row = 0; row < BSP_LCD_GetYSize()/testBut.ySize; row++){
+			testBut.x = testBut.xSize*col;
+			testBut.y = testBut.ySize*row;
 			testBut = drawCustomTextLabel(testBut.x, testBut.y, testBut.xSize, testBut.ySize, "X", LCD_COLOR_BLACK, LCD_COLOR_GRAY);
 			startTime = HAL_GetTick();
 			testBut.isReleased = false;
@@ -285,12 +287,12 @@ test_result_t PT_DrawTouchTest(){
 					return TEST_FAIL;
 				}
 			}
-			testBut.x = testBut.xSize*col;
-			testBut.y = testBut.ySize*row;
-			drawCustomTextLabel(testBut.x, testBut.y, testBut.xSize, testBut.ySize, "", LCD_COLOR_BLACK, LCD_COLOR_GREEN);
+			drawCustomTextLabel(testBut.x, testBut.y, testBut.xSize, testBut.ySize, "OK", LCD_COLOR_BLACK, LCD_COLOR_GREEN);
+			
+			
 		}
 	}
-	testBut = drawCustomTextLabel(testBut.x, testBut.y, testBut.xSize, testBut.ySize, "X", LCD_COLOR_BLACK, LCD_COLOR_GRAY);
+	//testBut = drawCustomTextLabel(testBut.x, testBut.y, testBut.xSize, testBut.ySize, "X", LCD_COLOR_BLACK, LCD_COLOR_GRAY);
 	startTime = HAL_GetTick();
 	while(!testBut.isReleased){
 		if (HAL_GetTick() - startTime > 10*1000){
