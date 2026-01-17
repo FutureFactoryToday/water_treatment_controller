@@ -329,7 +329,7 @@ test_result_t PT_DrawMotorTest(){
 	
 	sysParams.vars.pistonParams.curPoz = 0;
 	uint8_t positions[] = {20, 100, 50, 0};
-	uint8_t speeds[] = {50, 80, 100};
+	uint8_t speeds[] = {DEF_MAX_MOT_SPEED_PERCENT};
 	BSP_LCD_Clear(LCD_COLOR_WHITE);
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
 	for(uint8_t speedPtr = 0; speedPtr < sizeof(speeds)/sizeof(speeds[0]);speedPtr++){
@@ -348,33 +348,33 @@ test_result_t PT_DrawMotorTest(){
 					xCur += BSP_LCD_DisplayStringAt(x1+xCur,y1 + BSP_LCD_GetFont()->height,intToStr(sysParams.vars.pistonParams.curPoz),LEFT_MODE);
 					BSP_LCD_DrawBuffer_Stop();
 				}
-				if (sysParams.vars.error.flags.PistonFail || 
-					sysParams.vars.error.flags.MotorFail ||
-					sysParams.vars.error.flags.PistonStallFail){
+			}
+			if (sysParams.vars.error.flags.PistonFail || 
+				sysParams.vars.error.flags.MotorFail ||
+				sysParams.vars.error.flags.PistonStallFail){
+				
+				BSP_LCD_Clear(LCD_COLOR_WHITE);
+				BSP_LCD_SetFont(&Oxygen_Mono_20);
+				yOffset = y1;	
+				BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[48],CENTER_MODE);
+				yOffset += BSP_LCD_GetFont()->height;
+				xCur = 0;	
+				xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[49],LEFT_MODE);
+				BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(sysParams.vars.pistonParams.destPoz),LEFT_MODE);
+				
+				yOffset += BSP_LCD_GetFont()->height;
+				xCur = 0;	
+				xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[50],LEFT_MODE);
+				BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(sysParams.vars.pistonParams.curPoz),LEFT_MODE);
+				yOffset += BSP_LCD_GetFont()->height;
 					
-					BSP_LCD_Clear(LCD_COLOR_WHITE);
-					BSP_LCD_SetFont(&Oxygen_Mono_20);
-					yOffset = y1;	
-					BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[48],CENTER_MODE);
-					yOffset += BSP_LCD_GetFont()->height;
-					xCur = 0;	
-					xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[49],LEFT_MODE);
-					BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(sysParams.vars.pistonParams.destPoz),LEFT_MODE);
-					
-					yOffset += BSP_LCD_GetFont()->height;
-					xCur = 0;	
-					xCur += BSP_LCD_DisplayStringAt(x1 + xCur,yOffset,ITEM_PROD_TEST_MAINSCREEN[50],LEFT_MODE);
-					BSP_LCD_DisplayStringAt(x1+xCur,yOffset,intToStr(sysParams.vars.pistonParams.curPoz),LEFT_MODE);
-					yOffset += BSP_LCD_GetFont()->height;
-						
-					BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
-					yOffset += BSP_LCD_GetFont()->height;
-					failBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Fail", LCD_COLOR_BLACK, LCD_COLOR_RED);	
-					TC_addButton(&failBut);
-					while(1){
-						if (failBut.isReleased){
-							return TEST_FAIL;
-						}
+				BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[51],CENTER_MODE);
+				yOffset += BSP_LCD_GetFont()->height;
+				failBut = drawCustomTextLabel(xBut3, yBut, xButSize, yButSize, "Fail", LCD_COLOR_BLACK, LCD_COLOR_RED);	
+				TC_addButton(&failBut);
+				while(1){
+					if (failBut.isReleased){
+						return TEST_FAIL;
 					}
 				}
 			}
