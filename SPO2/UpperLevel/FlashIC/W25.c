@@ -188,7 +188,7 @@ HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 //	halSt = readStatus();
 //	if (halSt != HAL_OK)
 //		return halSt;
-	while (isBusy());
+	
 	partWriteData(spi);
 	
 	return HAL_OK;
@@ -201,7 +201,9 @@ void partWriteData (SPI_HandleTypeDef *hspi){
 	uint8_t* buf;
 	uint32_t size;
 	uint32_t lowAddr;
-	
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	//,LL_mDelay(1);
+	while (isBusy());
 	addr = addressToContinue;
 	lowAddr = addressToContinue&0x000000FF;
 	uint16_t pageRemainSpace;

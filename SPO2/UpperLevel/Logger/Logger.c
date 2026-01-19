@@ -125,7 +125,7 @@ uint8_t LOG_GetWaterUsage(uint16_t startEntry){
 		if (startEntry > 0)
 			offset += startEntry - 1;
 		uint32_t sizeOfLog = sizeof(log_data_t);
-		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeOfLog,offset*sizeOfLog,displayData,processComplete) != HAL_OK);
+		while (FP_GetStoredLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeOfLog,size*sizeOfLog,displayData,processComplete) != HAL_OK);
 		while(processing);
 		if (startEntry == 0){
 			displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);
@@ -156,7 +156,7 @@ uint8_t LOG_GetWaterSpeed(uint16_t startEntry){
 		offset = size;
 		if (startEntry > 0)
 			offset += startEntry - 1;
-		while (FP_GetStoredLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeof(log_data_t),offset*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
+		while (FP_GetStoredLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum - offset)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
 		while(processing);
 		if (startEntry == 0){
 			displayData[size].timeStamp = LL_RTC_TIME_Get(RTC);

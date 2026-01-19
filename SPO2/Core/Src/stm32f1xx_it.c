@@ -246,11 +246,11 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-	#if defined(DEBUG)
+	
 	if (wtcTimeToInt(&sysParams.vars.sysTime) > LL_RTC_TIME_Get(RTC)){
 		setSysTime(&sysParams.vars.sysTime);
 	}
-	#endif
+	
 	RTC_Interrupt();
 	sysParams.vars.rtcTime = LL_RTC_TIME_Get(RTC);
 	
