@@ -265,12 +265,17 @@ void SYS_Logic_IT(void){
 	
 	/*ADC count*/
 	//#ifndef NO_FLOAT
-	sysParams.vars.adc.floatParam[Temp] = ((V25 - sysParams.vars.adc.rawADC[Temp]*LSB)/AVG_SLOPE) + 25;
-	sysParams.vars.adc.floatParam[Vbat] = sysParams.vars.adc.rawADC[Vbat]*LSB*sysParams.vars.adc.adcCoef[Vbat];
-	sysParams.vars.adc.floatParam[_3V3] = sysParams.vars.adc.rawADC[_3V3]*LSB*sysParams.vars.adc.adcCoef[_3V3];
-	sysParams.vars.adc.floatParam[_5V] = sysParams.vars.adc.rawADC[_5V]*LSB*sysParams.vars.adc.adcCoef[_5V];
-	sysParams.vars.adc.floatParam[VrelDC] = sysParams.vars.adc.rawADC[VrelDC]*LSB*sysParams.vars.adc.adcCoef[VrelDC];
-	sysParams.vars.adc.floatParam[Vin] = sysParams.vars.adc.rawADC[Vin]*LSB*sysParams.vars.adc.adcCoef[Vin];
+ sysParams.vars.adc.floatParam[Temp] = ((V25 - sysParams.vars.adc.rawADC[Temp]*LSB)/AVG_SLOPE) + 25;
+ sysParams.vars.adc.floatParam[Vbat] = sysParams.vars.adc.rawADC[Vbat]*LSB*sysParams.vars.adc.adcCoef[Vbat];
+ sysParams.vars.adc.floatParam[_3V3] = sysParams.vars.adc.rawADC[_3V3]*LSB*sysParams.vars.adc.adcCoef[_3V3];
+ sysParams.vars.adc.floatParam[_5V] = sysParams.vars.adc.rawADC[_5V]*LSB*sysParams.vars.adc.adcCoef[_5V];
+ sysParams.vars.adc.floatParam[VrelDC] = sysParams.vars.adc.rawADC[VrelDC]*LSB*sysParams.vars.adc.adcCoef[VrelDC];
+ sysParams.vars.adc.floatParam[Vin] = sysParams.vars.adc.rawADC[Vin]*LSB*sysParams.vars.adc.adcCoef[Vin];
+ 
+ #if defined(WRONG_RES_ON_VOLTAGE)
+ sysParams.vars.adc.floatParam[VrelDC] = (sysParams.vars.adc.floatParam[VrelDC] > 20)? 24 : 0;
+ sysParams.vars.adc.floatParam[Vin] = (sysParams.vars.adc.floatParam[Vin] > 10) ? 15 : 0;
+ #endif
 	
 	/*Errors*/		
 	float limit = sysParams.consts.adcLimit[Temp];
