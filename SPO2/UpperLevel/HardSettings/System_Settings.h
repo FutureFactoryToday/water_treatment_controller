@@ -18,8 +18,10 @@
 //#define GEYSER
 //#define GEYSER_MAIN_LOGO
 
+#define WRONG_RES_ON_VOLTAGE
+
 #define MAIN_VERSION 1
-#define SUB_VERSION 35
+#define SUB_VERSION 36
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
