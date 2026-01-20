@@ -626,7 +626,7 @@ test_result_t PT_MemTest(){
 	memTestFail = false;
 	//yOffset += rectWidth + 2 + smallText.height;
 	yOffset += rectWidth + 2;
-	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[66],CENTER_MODE);
+	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2,yOffset,ITEM_PROD_TEST_MAINSCREEN[65],CENTER_MODE);
 	yOffset += BSP_LCD_GetFont()->height;
 	rectSize = BSP_LCD_GetXSize()-2*x1;
 	percent = 0; oldPercent = 0;
