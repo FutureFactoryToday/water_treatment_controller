@@ -47,7 +47,7 @@ void SYS_init(void){
 	
 	Load_Flash_Param();	
 	
-	#ifdef CLEAR_LOG
+	#ifdef CLEAR_LOG_ON_START
 	FP_ClearLog();
 	sysParams.consts.storedEntryNum = 0;
 	sysParams.consts.storedDayValueNum = 0;

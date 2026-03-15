@@ -55,7 +55,10 @@ uint32_t memBaseAdr;
 	static uint32_t oldTimeRegenBtnTouch;
 	static bool errorSector = false;
 	#endif
-	
+	#ifdef LOG_TEST_FILL
+	static uint8_t oldFillCnt, oldWashNum;
+	static bool enableLogFill = false;
+	#endif
 void ShowMainFrame(void) {
 
 	#ifdef WDT_TEST_1
@@ -69,12 +72,14 @@ void ShowMainFrame(void) {
 		oldTimeRegenBtnTouch = HAL_GetTick();
 	#endif
 		
-	
-		
-    createFrame();
-
-  while (1) {
-
+	#ifdef LOG_TEST_FILL
+	oldFillCnt = sysParams.consts.storedDayValueNum+1;	
+	oldWashNum = sysParams.consts.storedWashNum+1;
+		#endif
+  createFrame();
+  
+	while (1) {
+	  
     if (updateFlags.sec == true) {
 			if (sysParams.vars.status.flags.AllInited){
 					if (screenSaveDelay){
@@ -83,6 +88,16 @@ void ShowMainFrame(void) {
 						ShowScreensaverFrame();
 						createFrame();
 					}	
+			#ifdef 	LOG_TEST_FILL	  
+				if (enableLogFill && sysParams.consts.storedDayValueNum < DAYS_TO_STORE && sysParams.consts.storedDayValueNum != oldFillCnt &&  sysParams.consts.storedWashNum != oldWashNum){
+					sysParams.vars.sysTime = addDay(&sysParams.vars.sysTime,1);
+					sysParams.consts.maxWaterUsage = sysParams.consts.storedDayValueNum;
+					sysParams.consts.dayWaterUsage = sysParams.consts.storedDayValueNum;
+					sysParams.vars.status.flags.LogWash = true;
+					oldFillCnt = sysParams.consts.storedDayValueNum;
+					oldWashNum = sysParams.consts.storedWashNum;
+				}
+			#endif //LOG_TEST_FILL
 			}
       drawClock();
       drawMainStatusBar(144, 2305, 16);
@@ -146,14 +161,19 @@ void ShowMainFrame(void) {
     }
     
     /*Button pressed*/
-    if (enableWash && regenBut.isPressed == true){
-			
-			if (regenBut.pressCnt > NEXT_STEP_DELAY) {
-				PL_planer(FORCE_START_NOW);
-				// drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
-				// true);
-				regenBut.pressCnt = 0;
-				regenBut.isPressed = false;
+	
+    if (regenBut.isPressed == true){
+			#ifdef LOG_TEST_FILL
+					enableLogFill = true;
+			#endif
+			if (enableWash){
+				if (regenBut.pressCnt > NEXT_STEP_DELAY) {
+					PL_planer(FORCE_START_NOW);
+					// drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
+					// true);
+					regenBut.pressCnt = 0;
+					regenBut.isPressed = false;
+				}
 			}
     }
 		if (enableMenu && menuBut.isPressed == true){ 
@@ -169,6 +189,7 @@ void ShowMainFrame(void) {
 				menuBut.isPressed = false;
 				createFrame();
 			}
+			
 		}
 
     /*Buttons releases*/

@@ -13,6 +13,9 @@
 
 /*Includes */
 #include "main.h"
+#ifdef TEST_VERSION
+	#define LOG_TEST_FILL
+#endif
 
 #define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
 //#define GEYSER
