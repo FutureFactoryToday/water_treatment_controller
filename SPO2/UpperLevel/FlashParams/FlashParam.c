@@ -275,7 +275,7 @@ uint8_t FP_GetParam(void){
 }
 
 uint8_t FP_SaveParam(void){
-#if defined (TEST_VERSION)&&(SUB_VERSION==28)
+#if defined (TEST_VERSION)&& defined (DISABLE_FRAM)
 	//Version - 1.28
 	//Remove fast flash to check how slow mem works
 	

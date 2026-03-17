@@ -267,7 +267,7 @@ void RTC_IRQHandler(void)
 	if (noTouchDelay){
 		noTouchDelay--;
 	} else {
-		#if !defined(DEBUG)
+		#if !defined(DEBUG) && !defined (TEST_VERSION)
 		goHome = true;
 		#endif
 	}

@@ -73,6 +73,7 @@ void ShowMainFrame(void) {
 	#endif
 		
 	#ifdef LOG_TEST_FILL
+	sysParams.consts.storedDayValueNum = 43;
 	oldFillCnt = sysParams.consts.storedDayValueNum+1;	
 	oldWashNum = sysParams.consts.storedWashNum+1;
 		#endif
@@ -85,17 +86,21 @@ void ShowMainFrame(void) {
 					if (screenSaveDelay){
 						screenSaveDelay--;
 					} else {
+						#if !defined(TEST_VERSION)
 						ShowScreensaverFrame();
 						createFrame();
+						#endif
 					}	
 			#ifdef 	LOG_TEST_FILL	  
-				if (enableLogFill && sysParams.consts.storedDayValueNum < DAYS_TO_STORE && sysParams.consts.storedDayValueNum != oldFillCnt &&  sysParams.consts.storedWashNum != oldWashNum){
+				if (enableLogFill && sysParams.consts.storedDayValueNum < 46 && sysParams.consts.storedDayValueNum != oldFillCnt &&  sysParams.consts.storedWashNum != oldWashNum){
 					sysParams.vars.sysTime = addDay(&sysParams.vars.sysTime,1);
 					sysParams.consts.maxWaterUsage = sysParams.consts.storedDayValueNum;
 					sysParams.consts.dayWaterUsage = sysParams.consts.storedDayValueNum;
 					sysParams.vars.status.flags.LogWash = true;
 					oldFillCnt = sysParams.consts.storedDayValueNum;
 					oldWashNum = sysParams.consts.storedWashNum;
+				} else {
+					LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
 				}
 			#endif //LOG_TEST_FILL
 			}

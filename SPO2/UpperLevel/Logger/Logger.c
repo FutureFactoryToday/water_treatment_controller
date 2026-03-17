@@ -265,9 +265,10 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 				if (StoreDayValues() == HAL_OK){
 					sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
 					//lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
-					LOG_STEP = 3;
+					
 				}
 			}
+			LOG_STEP = 3;
 			break;
 		}
 		case 3: {
@@ -498,6 +499,8 @@ uint8_t StoreWashEvent(void){
 	if (res == HAL_OK){
 		sysParams.consts.storedWashNum++;
 	} 
+					
+	while (processing);
 	return res;
 }
 
@@ -542,18 +545,19 @@ uint8_t StoreDayValues(void){
 	dayValues[1].param = sysParams.consts.dayWaterUsage;
 	uint8_t size = sizeof(dayValues)/sizeof(log_data_t);
 		
-	while(FP_StoreLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
-							sizeof(log_data_t),
-							&dayValues[0],
-							processComplete,
-							WATER_USAGE_SECTOR_ADDR) != HAL_OK);
-
+//	while(FP_StoreLog(WATER_USAGE_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
+//							sizeof(log_data_t),
+//							&dayValues[0],
+//							processComplete,
+//							WATER_USAGE_SECTOR_ADDR) != HAL_OK);
+							
+	
 	while(FP_StoreLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
 							sizeof(log_data_t),
 							&dayValues[1],
 							processComplete,
 							WATER_QUANT_SECTOR_ADDR) != HAL_OK);
-							
+													
 	sysParams.consts.storedDayValueNum++;
 	sysParams.consts.maxWaterUsage = 0;
 	sysParams.consts.dayWaterUsage = 0;
