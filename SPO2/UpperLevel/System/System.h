@@ -73,7 +73,9 @@ typedef struct{
 	unsigned FRAMFail:1; 	//+
 	unsigned RAMFail:1;
 
-	unsigned RAMFull:1;
+	unsigned RAM_ErrorFull:1;
+	unsigned RAM_WaterFull:1;
+	unsigned RAM_WashFull:1;
 } sys_error_flag_bits_t;
 
 typedef union{
