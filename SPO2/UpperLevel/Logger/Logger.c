@@ -31,14 +31,17 @@ sys_param_t sysParCopy;
 uint8_t transmitStep;
 uint8_t header[2];
 wtc_time_t lastSave;
+
+uint8_t LOG_STEP;
 /*Local prototypes*/
 static bool addEntry (log_data_t entry);
 static void processComplete (void);
 static HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf);
 static uint8_t StoreDayValues(void);
 static uint8_t StoreWashEvent(void);
-static uint32_t checkErrorEmptySpace();
-static uint32_t checkWashEmptySpace();
+static uint32_t waterEmptySpace();
+static uint32_t errorEmptySpace();
+static uint32_t washEmptySpace();
 static void UL_Continue(UART_HandleTypeDef *huart);
 static void UL_Start(void);
 /*Code*/
@@ -71,7 +74,7 @@ uint8_t LOG_Init(){
 	uLogQ.head = 0;
 	uLogQ.tail = 0;
 	transmitStep = 0;
-	
+	LOG_STEP = 0;
 	HAL_UART_RegisterCallback(&huart1,HAL_UART_TX_COMPLETE_CB_ID, UL_Continue);
 }
 
@@ -84,7 +87,7 @@ uint8_t LOG_GetErrors(uint16_t startEntry){
 		uint8_t size = MIN(sysParams.consts.storedEntryNum - startEntry,LOG_DISPLAY_SIZE);
 		
 		while (FP_GetStoredLog(ERROR_SECTOR_ADDR + (sysParams.consts.storedEntryNum - size - startEntry)*sizeof(log_data_t),size*sizeof(log_data_t),displayData,processComplete) != HAL_OK);
-		while(processing);
+		
 
 		return sysParams.consts.storedEntryNum;
 	}
@@ -196,9 +199,9 @@ bool addEntry (log_data_t entry){
 	logFifo[fifoEntryNum] = entry;
 	fifoEntryNum++;
 	uint8_t sizeMul = sizeof(log_data_t);
-	if (checkErrorEmptySpace() - fifoEntryNum == 1){
+	if (errorEmptySpace() - fifoEntryNum == 1){
 		SaveErrors(fifoEntryNum*sizeMul,sysParams.consts.storedEntryNum*sizeMul,logFifo);
-		sysParams.vars.error.flags.RAMFull = 1;
+		sysParams.vars.error.flags.RAM_ErrorFull = 1;
 		return false;
 	}
 	if (fifoEntryNum == (sizeof(logFifo)/sizeof(log_data_t))){
@@ -224,7 +227,9 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	if (processing){
 		return HAL_BUSY;
 	}
-	if (oldErrors.flags.RAMFull == 1 ||
+	if (oldErrors.flags.RAM_ErrorFull == 1 ||
+			oldErrors.flags.RAM_WaterFull == 1 ||
+			oldErrors.flags.RAM_WashFull == 1 ||
 			oldErrors.flags.RAMFail == 1)
 		return HAL_ERROR;
 	
@@ -237,223 +242,247 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 	if (oldDay == 0){
 		oldDay = sysParams.vars.sysTime.day; 
 	}
-	tempFlags.all = oldFlags.all ^ sysParams.vars.status.all; 
-	tempError.all = oldErrors.all ^ sysParams.vars.error.all;
-	tempFlags.all = tempFlags.all & sysParams.vars.status.all;
-	tempError.all = tempError.all & sysParams.vars.error.all;
 	
-	uint32_t timeStamp = LL_RTC_TIME_Get(RTC);
-	uint32_t cause;
-	
-//	if(tempError.flags.RAMFull == 1){
-//		error.all = 0;
-//		error.flags.RAMFull = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.RAMFull = 1;
-//			return HAL_ERROR;
-//		} 
-//	}
-	
-//	if(tempFlags.flags.AllInited == 1){
-//		error.all = 0;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.rtcTime})){
-//			oldFlags.flags.AllInited = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	} 
-	
-//	if(tempError.flags.mainPowerFail == 1){
-//		error.all = 0;
-//		error.flags.mainPowerFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vin]})){
-//			oldErrors.flags.mainPowerFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	} 
-	
-//	if(tempError.flags.BatteryFail == 1){
-//		error.all = 0;
-//		error.flags.BatteryFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vbat]})){
-//			oldErrors.flags.BatteryFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	} 
-//	if(tempError.flags._5VPowerFail == 1){
-//		error.all = 0;
-//		error.flags._5VPowerFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[_5V]})){
-//			oldErrors.flags._5VPowerFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	} 
-//	if(tempError.flags.RelPowerFail == 1){
-//		error.all = 0;
-//		error.flags.RelPowerFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[VrelDC]})){
-//			oldErrors.flags.RelPowerFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-//	if(tempError.flags.TempFail == 1){
-//		error.all = 0;
-//		error.flags.TempFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Temp]})){
-//			oldErrors.flags.TempFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-	
-//	if(tempError.flags.Drive1Fail == 1){
-//		error.all = 0;
-//		error.flags.Drive1Fail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.Drive1Fail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-//	if(tempError.flags.Drive2Fail == 1){
-//		error.all = 0;
-//		error.flags.Drive2Fail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.Drive2Fail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-//	if(tempError.flags.MotorFail == 1){
-//		error.all = 0;
-//		error.flags.MotorFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.MotorFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-	
-	if(tempError.flags.PistonStallFail == 1){
-		error.all = 0;
-		error.flags.PistonStallFail = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
-			oldErrors.flags.PistonStallFail = 1;
-		} else {
-			return HAL_OK;
+	switch (LOG_STEP){
+		case 0: {
+			if (sysParams.vars.status.flags.LogWash){
+				if (StoreWashEvent() == HAL_OK){
+					washSave++;
+					oldStatus = sysParams.consts.planerConsts.status;
+					sysParams.vars.status.flags.LogWash = false;
+				}
+			}
+			LOG_STEP = 2;
+			//break;
 		}
-	}
-	if(tempError.flags.PistonLongRun == 1){
-		error.all = 0;
-		error.flags.PistonLongRun = 1;
-		cause = error.all;
-		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
-			oldErrors.flags.PistonLongRun = 1;
-		} else {
-			return HAL_OK;
+		case 1: {
+			
+			//break;
 		}
-	}
-	
-//	if(tempError.flags.PistonFail == 1){
-//		error.all = 0;
-//		error.flags.PistonFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
-//			oldErrors.flags.PistonFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//		oldErrors.flags.PistonFail = 1;
-//	} 		
-	
-//	if(tempError.flags.RelayDCFail == 1){
-//		error.all = 0;
-//		error.flags.RelayDCFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelDCOn})){
-//			oldErrors.flags.RelayDCFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-//	if(tempError.flags.RelayACFail == 1){
-//		error.all = 0;
-//		error.flags.RelayACFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelACOn})){
-//			oldErrors.flags.RelayACFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-	
-//	if(tempError.flags.TFTFail == 1){
-//		error.all = 0;
-//		error.flags.TFTFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.TFTFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}	
-//	if(tempError.flags.TouchFail == 1){
-//		error.all = 0;
-//		error.flags.TouchFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.TouchFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	}
-//	if(tempError.flags.FRAMFail == 1){
-//		error.all = 0;
-//		error.flags.FRAMFail = 1;
-//		cause = error.all;
-//		if (addEntry((log_data_t){timeStamp,cause,0})){
-//			oldErrors.flags.FRAMFail = 1;
-//		} else {
-//			return HAL_OK;
-//		}
-//	} 	
-	
-	if (fifoEntryNum){
-		SaveErrors(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
-	}
-	lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
-	if (sysParams.vars.sysTime.year != lastSave.year ||
-		sysParams.vars.sysTime.month != lastSave.month ||
-	sysParams.vars.sysTime.day != lastSave.day){
-		if (StoreDayValues() == HAL_OK){
-			sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
+		case 2: {
 			lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
+	
+			if (sysParams.vars.sysTime.year != lastSave.year ||
+				sysParams.vars.sysTime.month != lastSave.month ||
+			sysParams.vars.sysTime.day != lastSave.day){
+				if (StoreDayValues() == HAL_OK){
+					sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
+					//lastSave = intToWTCTime(sysParams.consts.waterUsageLastTimeSave);
+					
+				}
+			}
+			LOG_STEP = 3;
+			//break;
+		}
+		case 3: {
+			tempFlags.all = oldFlags.all ^ sysParams.vars.status.all; 
+			tempError.all = oldErrors.all ^ sysParams.vars.error.all;
+			tempFlags.all = tempFlags.all & sysParams.vars.status.all;
+			tempError.all = tempError.all & sysParams.vars.error.all;
+			
+			uint32_t timeStamp = LL_RTC_TIME_Get(RTC);
+			uint32_t cause;
+			
+		//	if(tempError.flags.RAMFull == 1){
+		//		error.all = 0;
+		//		error.flags.RAMFull = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.RAMFull = 1;
+		//			return HAL_ERROR;
+		//		} 
+		//	}
+			
+		//	if(tempFlags.flags.AllInited == 1){
+		//		error.all = 0;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.rtcTime})){
+		//			oldFlags.flags.AllInited = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	} 
+			
+		//	if(tempError.flags.mainPowerFail == 1){
+		//		error.all = 0;
+		//		error.flags.mainPowerFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vin]})){
+		//			oldErrors.flags.mainPowerFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	} 
+			
+		//	if(tempError.flags.BatteryFail == 1){
+		//		error.all = 0;
+		//		error.flags.BatteryFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Vbat]})){
+		//			oldErrors.flags.BatteryFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	} 
+		//	if(tempError.flags._5VPowerFail == 1){
+		//		error.all = 0;
+		//		error.flags._5VPowerFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[_5V]})){
+		//			oldErrors.flags._5VPowerFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	} 
+		//	if(tempError.flags.RelPowerFail == 1){
+		//		error.all = 0;
+		//		error.flags.RelPowerFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[VrelDC]})){
+		//			oldErrors.flags.RelPowerFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+		//	if(tempError.flags.TempFail == 1){
+		//		error.all = 0;
+		//		error.flags.TempFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.adc.rawADC[Temp]})){
+		//			oldErrors.flags.TempFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+			
+		//	if(tempError.flags.Drive1Fail == 1){
+		//		error.all = 0;
+		//		error.flags.Drive1Fail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.Drive1Fail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+		//	if(tempError.flags.Drive2Fail == 1){
+		//		error.all = 0;
+		//		error.flags.Drive2Fail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.Drive2Fail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+		//	if(tempError.flags.MotorFail == 1){
+		//		error.all = 0;
+		//		error.flags.MotorFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.MotorFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+			
+			if(tempError.flags.PistonStallFail == 1){
+				error.all = 0;
+				error.flags.PistonStallFail = 1;
+				cause = error.all;
+				if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+					oldErrors.flags.PistonStallFail = 1;
+				} else {
+					return HAL_OK;
+				}
+			}
+			if(tempError.flags.PistonLongRun == 1){
+				error.all = 0;
+				error.flags.PistonLongRun = 1;
+				cause = error.all;
+				if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+					oldErrors.flags.PistonLongRun = 1;
+				} else {
+					return HAL_OK;
+				}
+			}
+			
+		//	if(tempError.flags.PistonFail == 1){
+		//		error.all = 0;
+		//		error.flags.PistonFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.pistonParams.curPoz})){
+		//			oldErrors.flags.PistonFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//		oldErrors.flags.PistonFail = 1;
+		//	} 		
+			
+		//	if(tempError.flags.RelayDCFail == 1){
+		//		error.all = 0;
+		//		error.flags.RelayDCFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelDCOn})){
+		//			oldErrors.flags.RelayDCFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+		//	if(tempError.flags.RelayACFail == 1){
+		//		error.all = 0;
+		//		error.flags.RelayACFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,sysParams.vars.status.flags.RelACOn})){
+		//			oldErrors.flags.RelayACFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+			
+		//	if(tempError.flags.TFTFail == 1){
+		//		error.all = 0;
+		//		error.flags.TFTFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.TFTFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}	
+		//	if(tempError.flags.TouchFail == 1){
+		//		error.all = 0;
+		//		error.flags.TouchFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.TouchFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	}
+		//	if(tempError.flags.FRAMFail == 1){
+		//		error.all = 0;
+		//		error.flags.FRAMFail = 1;
+		//		cause = error.all;
+		//		if (addEntry((log_data_t){timeStamp,cause,0})){
+		//			oldErrors.flags.FRAMFail = 1;
+		//		} else {
+		//			return HAL_OK;
+		//		}
+		//	} 	
+			
+			if (fifoEntryNum){
+				SaveErrors(fifoEntryNum*sizeof(log_data_t),sysParams.consts.storedEntryNum*sizeof(log_data_t),logFifo);
+			}
+			LOG_STEP = 0;
+			break;
 		}
 	}
+	
+	
 	
 	//if (oldStatus != sysParams.consts.planerConsts.status && sysParams.consts.planerConsts.status == PL_WORKING){
-	if (sysParams.vars.status.flags.LogWash){
-		if (StoreWashEvent() == HAL_OK){
-			washSave++;
-			oldStatus = sysParams.consts.planerConsts.status;
-			sysParams.vars.status.flags.LogWash = false;
-		}
-	}
+	
 }
 
 uint8_t StoreWashEvent(void){
@@ -461,8 +490,8 @@ uint8_t StoreWashEvent(void){
 //if (processing)
 //	return HAL_BUSY;
 	
-	if (oldErrors.flags.RAMFull == 1 ||
-		oldErrors.flags.RAMFail == 1)
+	if (sysParams.vars.error.flags.RAM_WashFull == 1 ||
+		sysParams.vars.error.flags.RAMFail == 1)
 		return HAL_ERROR;
 	uint8_t sizeMul = sizeof(log_data_t);
 	
@@ -473,14 +502,19 @@ uint8_t StoreWashEvent(void){
 	if (res == HAL_OK){
 		sysParams.consts.storedWashNum++;
 	} 
+					
+	//while (processing);
+	if (washEmptySpace() == 0){
+		sysParams.vars.error.flags.RAM_WashFull = 1;
+	}
 	return res;
 }
 
 HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	HAL_StatusTypeDef res;
 	
-	if (oldErrors.flags.RAMFull == 1 ||
-		oldErrors.flags.RAMFail == 1)
+	if (sysParams.vars.error.flags.RAM_ErrorFull == 1 ||
+		sysParams.vars.error.flags.RAMFail == 1)
 		return HAL_ERROR;
 	uint8_t sizeMul = sizeof(log_data_t);
 	if (fifoEntryNum > 0){
@@ -499,11 +533,11 @@ HAL_StatusTypeDef SaveErrors (uint32_t size, uint32_t adress, uint8_t *buf){
 	return HAL_OK;
 }
 uint8_t StoreDayValues(void){
-	if (sysParams.vars.error.flags.RAMFull == 1 ||
+	if (sysParams.vars.error.flags.RAM_WaterFull == 1 ||
 		sysParams.vars.error.flags.RAMFail == 1)
 		return HAL_ERROR;
 	if (sysParams.consts.storedDayValueNum == DAYS_TO_STORE){
-		//sysParams.vars.error.flags.RAMFull = 1;
+		sysParams.vars.error.flags.RAM_WaterFull = 1;
 		return HAL_ERROR;
 	}
 	if (processing)
@@ -522,13 +556,14 @@ uint8_t StoreDayValues(void){
 							&dayValues[0],
 							processComplete,
 							WATER_USAGE_SECTOR_ADDR) != HAL_OK);
-
+							
+	
 	while(FP_StoreLog(WATER_QUANT_SECTOR_ADDR + (sysParams.consts.storedDayValueNum)*sizeof(log_data_t),
 							sizeof(log_data_t),
 							&dayValues[1],
 							processComplete,
 							WATER_QUANT_SECTOR_ADDR) != HAL_OK);
-							
+													
 	sysParams.consts.storedDayValueNum++;
 	sysParams.consts.maxWaterUsage = 0;
 	sysParams.consts.dayWaterUsage = 0;
@@ -536,13 +571,14 @@ uint8_t StoreDayValues(void){
 	return HAL_OK;
 }
 
-uint32_t checkErrorEmptySpace(){
-	uint32_t res = (WASH_SECTOR_ADDR-ERROR_SECTOR_ADDR)/sizeof(log_data_t) - sysParams.consts.storedEntryNum;
-	return res;
+uint32_t errorEmptySpace(){
+	return (WASH_SECTOR_ADDR/sizeof(log_data_t)) - sysParams.consts.storedEntryNum;
 }
-uint32_t checkWashEmptySpace(){
-	uint32_t res = (WATER_QUANT_SECTOR_ADDR - WASH_SECTOR_ADDR)/sizeof(log_data_t) - sysParams.consts.storedWashNum;
-	return res;
+uint32_t washEmptySpace(){
+	return ((WASH_SECTOR_ADDR-ERROR_SECTOR_ADDR)/sizeof(log_data_t)) - sysParams.consts.storedWashNum;
+}
+uint32_t waterEmptySpace(){
+	return DAYS_TO_STORE - sysParams.consts.storedDayValueNum;
 }
 void processComplete (void){
 	processing = false;
