@@ -51,7 +51,7 @@ void SYS_init(void){
 	FP_ClearLog();
 	Load_Default_Values();
 	sysParams.consts.storedEntryNum = 0;
-	sysParams.consts.storedDayValueNum = 0;
+ 	sysParams.consts.storedDayValueNum = 0;
 	sysParams.consts.storedWashNum = 0;
 	#endif
 		

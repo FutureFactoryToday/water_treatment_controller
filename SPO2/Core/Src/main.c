@@ -76,7 +76,7 @@ void SystemClock_Config(void);
   * @retval int
   */
 int main(void)
-{
+ {
    /* USER CODE BEGIN 1 */
 	#ifdef PROD_TEST
 	#warning "This version is for production test only."

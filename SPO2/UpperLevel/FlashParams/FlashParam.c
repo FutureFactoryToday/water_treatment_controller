@@ -42,6 +42,7 @@ flash_driver_t *fram = &FM25_driver;
 flash_driver_t *logger = &W25_driver;
 flash_params_t bufFlash[FLASH_SECTORS];
 
+
 volatile flash_queue_t fQueue; 
 uint8_t transmitCnt;
 bool oldIRQStatus;
@@ -131,14 +132,14 @@ HAL_StatusTypeDef FP_StoreLog(msg_type_t type, uint32_t entryNum, log_data_t *bu
 		uint32_t secondMsgSize = entryNum - firstMsgSize;
 		curMsgNum = getCurMsgNum();
 		fQueue.msgs[curMsgNum].type = WRITE_RAM;
-		fQueue.msgs[curMsgNum].buf = buf;
+		fQueue.msgs[curMsgNum].buf = buf+firstMsgSize;
 		fQueue.msgs[curMsgNum].size = secondMsgSize*sizeof(log_data_t);
 		fQueue.msgs[curMsgNum].adress = memBuf->startAdr;
 		fQueue.msgs[curMsgNum].cb = cb;
 		
 	}
 	//Check which half of buffer marked
-	if (memBuf->nextEntryPoz < SECTOR_SIZE){
+	if (memBuf->nextEntryPoz < (SECTOR_SIZE/sizeof(log_data_t))){
 		memBuf->firstSectorErased = false;
 	}else {
 		memBuf->secondSectorErased = false;
@@ -200,7 +201,7 @@ HAL_StatusTypeDef FP_GetStoredLog(msg_type_t type, uint32_t readNum, uint32_t of
 		uint32_t secondSize = readNum - firstSize;
 		curMsgNum = getCurMsgNum();
 		fQueue.msgs[curMsgNum].type = READ_RAM;
-		fQueue.msgs[curMsgNum].buf = buf;
+		fQueue.msgs[curMsgNum].buf = buf+firstSize;
 		fQueue.msgs[curMsgNum].size = secondSize*sizeof(log_data_t);
 		fQueue.msgs[curMsgNum].adress = memBuf->startAdr;
 		fQueue.msgs[curMsgNum].cb = cb;
@@ -209,51 +210,7 @@ HAL_StatusTypeDef FP_GetStoredLog(msg_type_t type, uint32_t readNum, uint32_t of
 	return HAL_OK;
 }
 uint8_t FP_GetParam(void){
-//	oldIRQStatus = __get_PRIMASK(); __disable_irq();
-//	if (lock != UNLOCKED){
-//		__set_PRIMASK(oldIRQStatus);
-//		return HAL_BUSY;
-//	}
-//	manualLockSPI();
-//	__set_PRIMASK(oldIRQStatus);
-//	uint8_t timeout;
-//	lastBuffer = -1;
-//	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
-//		manualUnlockSPI();
-//		return HAL_ERROR;
-//	}
-//	
-//	for (uint8_t i = 0; i < FLASH_SECTORS; i++){
-//		fram->readData(baseAddress[i], &bufFlash[i].params,sizeof(stored_params_t));
-//		LL_mDelay(1);
-//		if (HAL_SPI_GetState(MEM_SPI) == HAL_BUSY){
-//			fram->abortCom();
-//			sysParams.vars.error.flags.FRAMFail = 1;
-//			sysParams.vars.status.flags.StoredParamsLoaded = 0;
-//			manualUnlockSPI();
-//			return HAL_ERROR;
-//		}
-//		if (bufFlash[i].params.startLoadFlag == START_FP_FLAG &&
-//			bufFlash[i].params.endLoadFlag == END_FP_FLAG &&
-//			(bufFlash[i].params.sysParConsts.sysVersion) == (sysVers) ){
-//				bufFlash[i].isCorrect = true;
-//				if (lastBuffer < 0){
-//					lastBuffer = i;
-//				} else {
-//					lastBuffer = (bufFlash[i].params.timeStamp > bufFlash[lastBuffer].params.timeStamp)?i:lastBuffer;
-//				}
-//			}
-//	}
-//	manualUnlockSPI();
-//	if (lastBuffer < 0){
-//		sysParams.vars.status.flags.StoredParamsLoaded = 0;
-//	} else {
-//		flashParams = bufFlash[lastBuffer];
-//		sysParams.vars.status.flags.StoredParamsLoaded = 1;
-//	}
-//	return HAL_OK;
 
-	
 	uint32_t timeoutStart = HAL_GetTick();
 	lastBuffer = -1;
 	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){

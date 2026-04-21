@@ -15,7 +15,7 @@
 #include "main.h"
 #ifdef TEST_VERSION
 	#define LOG_TEST_FILL
-	#define CLEAR_LOG_ON_START
+	//#define CLEAR_LOG_ON_START
 #endif
 
 #define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif

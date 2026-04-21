@@ -61,7 +61,8 @@ static uint8_t checkBuf[128];
 		readData,
 		writeData,
 		abortCom,
-		eraseChip
+		eraseChip,
+		eraseSector
 	};
 	
 	static SPI_HandleTypeDef* spi;
