@@ -49,6 +49,7 @@ void SYS_init(void){
 	
 	#ifdef CLEAR_LOG_ON_START
 	FP_ClearLog();
+	Load_Default_Values();
 	sysParams.consts.storedEntryNum = 0;
 	sysParams.consts.storedDayValueNum = 0;
 	sysParams.consts.storedWashNum = 0;
@@ -126,6 +127,7 @@ void Load_Flash_Param(){
 		} else {
 		Load_Default_Values();
 		FP_ClearLog();
+		
 		while (!FP_isEmpty());
 		sysParams.consts.storedDayValueNum = 0;
 		sysParams.consts.storedEntryNum = 0;
@@ -247,6 +249,30 @@ void Load_Default_Values(void){
 	sysParams.consts.storedWashNum = 0;
 	
 	sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
+	
+	sysParams.consts.errorBuf.startAdr = ERROR_SECTOR_ADDR;
+	sysParams.consts.errorBuf.stopAdr = sysParams.consts.errorBuf.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.errorBuf.firstSectorErased = true;
+	sysParams.consts.errorBuf.secondSectorErased = true;
+	sysParams.consts.errorBuf.nextEntryPoz = 0;
+	
+	sysParams.consts.waterUsage.startAdr = WATER_USAGE_SECTOR_ADDR;
+	sysParams.consts.waterUsage.stopAdr = sysParams.consts.waterUsage.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.waterUsage.firstSectorErased = true;
+	sysParams.consts.waterUsage.secondSectorErased = true;
+	sysParams.consts.waterUsage.nextEntryPoz = 0;
+	
+	sysParams.consts.waterQuant.startAdr = WATER_QUANT_SECTOR_ADDR;
+	sysParams.consts.waterQuant.stopAdr = sysParams.consts.waterQuant.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.waterQuant.firstSectorErased = true;
+	sysParams.consts.waterQuant.secondSectorErased = true;
+	sysParams.consts.waterQuant.nextEntryPoz = 0;
+	
+	sysParams.consts.washBuf.startAdr = WASH_SECTOR_ADDR;
+	sysParams.consts.washBuf.stopAdr = sysParams.consts.washBuf.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.washBuf.firstSectorErased = true;
+	sysParams.consts.washBuf.secondSectorErased = true;
+	sysParams.consts.washBuf.nextEntryPoz = 0;
 }
 
 void Start_Logic(){

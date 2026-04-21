@@ -41,6 +41,14 @@
 #define EXTERNAL_DISABLE true
 	
 /*Public typedef*/
+typedef struct{
+	uint32_t startAdr;
+	uint32_t stopAdr;
+	uint32_t nextEntryPoz;
+	bool firstSectorErased;
+	bool secondSectorErased;
+}mem_buffer_t;
+
 typedef enum {
 	Vbat = 0,
 	_3V3,
@@ -73,9 +81,6 @@ typedef struct{
 	unsigned FRAMFail:1; 	//+
 	unsigned RAMFail:1;
 
-	unsigned RAM_ErrorFull:1;
-	unsigned RAM_WaterFull:1;
-	unsigned RAM_WashFull:1;
 } sys_error_flag_bits_t;
 
 typedef union{
@@ -127,12 +132,6 @@ typedef struct{
 	relay_t acRelay;
 	relay_t	dcRelay;
 	uint32_t impulseWeight;
-	uint32_t storedEntryNum;
-	uint32_t storedWashNum;
-	uint32_t storedDayValueNum;
-	float maxWaterUsage;
-	float dayWaterUsage;
-	uint32_t waterUsageLastTimeSave;
 	float adcLimit[Vin+1];
 	float adcLimitDelt[Vin+1];
 	bool ExternalCommandType;
@@ -140,7 +139,17 @@ typedef struct{
 	uint32_t overallWashNum;
 	uint32_t baseBLValue;
 	uint32_t screenSaveBLValue;
-	uint32_t screenSaveDelayValue;
+	uint32_t screenSaveDelayValue;	
+	float maxWaterUsage;
+	float dayWaterUsage;
+	uint32_t waterUsageLastTimeSave;
+	uint32_t storedEntryNum;
+	uint32_t storedWashNum;
+	uint32_t storedDayValueNum;
+	mem_buffer_t errorBuf;
+	mem_buffer_t washBuf;
+	mem_buffer_t waterQuant;
+	mem_buffer_t waterUsage;
 } sys_const_t;
 
 typedef struct {

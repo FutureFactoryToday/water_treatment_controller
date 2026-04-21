@@ -12,6 +12,7 @@
 		HAL_StatusTypeDef (*writeData) (uint32_t addr, uint8_t* buf, uint32_t size);
 		HAL_StatusTypeDef (*abortCom) (void);
 		HAL_StatusTypeDef (*eraseChip)(void);
+		HAL_StatusTypeDef (*eraseSector)(uint32_t addr);
 	} flash_driver_t;
 /*Extern parameters*/
 

@@ -14,8 +14,8 @@
 /*Includes */
 #include "main.h"
 #ifdef TEST_VERSION
-	//#define LOG_TEST_FILL
-	//#define CLEAR_LOG_ON_START
+	#define LOG_TEST_FILL
+	#define CLEAR_LOG_ON_START
 #endif
 
 #define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
@@ -25,7 +25,7 @@
 #define WRONG_RES_ON_VOLTAGE
 
 #define MAIN_VERSION 1
-#define SUB_VERSION 37
+#define SUB_VERSION 39
 #define TEST_NUM 1
 
 #define ENABLE_MEM_READ
@@ -55,9 +55,11 @@
 
 #define DAYS_TO_STORE 90
 #define ERROR_SECTOR_ADDR 0x000000
-#define WATER_USAGE_SECTOR_ADDR	0xFFFB00 
-#define WATER_QUANT_SECTOR_ADDR 0xFFF600
-#define WASH_SECTOR_ADDR 0x800000 
+#define WATER_USAGE_SECTOR_ADDR	0x10000//0xFFFB00 
+#define WATER_QUANT_SECTOR_ADDR 0x20000 //0xFFF600
+#define WASH_SECTOR_ADDR 0x30000//0x800000 
+
+#define SECTOR_SIZE 4096
 
 #define DEF_SCREEN_SAVE_BL_VALUE 0
 

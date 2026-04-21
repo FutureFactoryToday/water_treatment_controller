@@ -9,6 +9,7 @@ typedef struct {
 	uint32_t timeStamp;
 	uint32_t cause;
 	uint32_t param;
+	uint32_t reserv;
 } log_data_t;
 
 typedef enum {

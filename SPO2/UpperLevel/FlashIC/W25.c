@@ -9,6 +9,7 @@ static HAL_StatusTypeDef abortCom (void);
 static void commEndW25 (SPI_HandleTypeDef *hspi);
 static HAL_StatusTypeDef eraseChip (void);
 static HAL_StatusTypeDef readStatus(void);
+static HAL_StatusTypeDef eraseSector (uint32_t addr);
 static bool isBusy (void);
 static void readID(void);
 static void partWriteData (SPI_HandleTypeDef *hspi);
@@ -399,6 +400,30 @@ HAL_StatusTypeDef eraseChip (void){
 		while (isBusy()){
 			LL_mDelay(100);
 		}
+		if (cb != NULL)
+			cb();
+		return HAL_OK;
+	}
+}
+
+HAL_StatusTypeDef eraseSector (uint32_t addr){
+		HAL_StatusTypeDef halSt;
+	
+	commandBuffer[0] = WREN;
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	
+	commandBuffer[0] = S4ER;
+	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000) >> 16);
+	commandBuffer[2] = (uint8_t)((addr & 0x0000FF00) >> 8);
+	commandBuffer[3] = (uint8_t) (addr & 0x000000FF);
+	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
+	halSt = HAL_SPI_Transmit(spi,commandBuffer,4,10);
+	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
+	if (halSt != HAL_OK)
+		return halSt;
+	else {
 		if (cb != NULL)
 			cb();
 		return HAL_OK;
