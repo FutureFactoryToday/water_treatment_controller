@@ -14,7 +14,9 @@
 /*Includes */
 #include "main.h"
 #ifdef TEST_VERSION
-	#define LOG_TEST_FILL
+	//#define BLOCK_SCREEN_SAVE
+	//#define BLOCK_GO_HOME
+	//#define LOG_TEST_FILL
 	//#define CLEAR_LOG_ON_START
 #endif
 
