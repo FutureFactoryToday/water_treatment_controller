@@ -109,7 +109,7 @@ HAL_StatusTypeDef FP_StoreLog(msg_type_t type, uint32_t entryNum, log_data_t *bu
 	mem_buffer_t* memBuf = getMemBuffer(type);
 	//Find limits
 	uint32_t maxEntries = ((memBuf->stopAdr+1) - memBuf->startAdr)/sizeof(log_data_t);
-	oneMsg = (memBuf->nextEntryPoz + entryNum - 1 > maxEntries)?false:true;
+	oneMsg = (memBuf->nextEntryPoz + entryNum - 1 >= maxEntries)?false:true;
 	
 	curMsgNum = getCurMsgNum();
 	//Current msg fits in buffer
@@ -150,19 +150,20 @@ HAL_StatusTypeDef FP_StoreLog(msg_type_t type, uint32_t entryNum, log_data_t *bu
 		memBuf->nextEntryPoz = memBuf->nextEntryPoz - maxEntries;
 	}
 	//Check is it necessary to flush half buffer
-	if (memBuf->firstSectorErased != true && memBuf->nextEntryPoz > DAYS_TO_STORE){
+	if (memBuf->secondSectorErased != true && memBuf->nextEntryPoz > DAYS_TO_STORE && memBuf->nextEntryPoz < (SECTOR_SIZE / sizeof(log_data_t))){
+		curMsgNum = getCurMsgNum();
+		fQueue.msgs[curMsgNum].type = CLEAR_SECTOR;
+		fQueue.msgs[curMsgNum].adress = memBuf->startAdr + SECTOR_SIZE;
+		fQueue.msgs[curMsgNum].cb = cb;
+		memBuf->secondSectorErased = true;
+	}
+	if (memBuf->firstSectorErased != true && 
+    memBuf->nextEntryPoz > DAYS_TO_STORE + (SECTOR_SIZE / sizeof(log_data_t))){
 		curMsgNum = getCurMsgNum();
 		fQueue.msgs[curMsgNum].type = CLEAR_SECTOR;
 		fQueue.msgs[curMsgNum].adress = memBuf->startAdr;
 		fQueue.msgs[curMsgNum].cb = 0;
 		memBuf->firstSectorErased = true;
-	}
-	if (memBuf->secondSectorErased != true && memBuf->nextEntryPoz > DAYS_TO_STORE + SECTOR_SIZE){
-		curMsgNum = getCurMsgNum();
-		fQueue.msgs[curMsgNum].type = CLEAR_SECTOR;
-		fQueue.msgs[curMsgNum].adress = memBuf->startAdr + SECTOR_SIZE;
-		fQueue.msgs[curMsgNum].cb = 0;
-		memBuf->secondSectorErased = true;
 	}
 	return HAL_OK;
 }
@@ -195,7 +196,7 @@ HAL_StatusTypeDef FP_GetStoredLog(msg_type_t type, uint32_t readNum, uint32_t of
 		fQueue.msgs[curMsgNum].type = READ_RAM;
 		fQueue.msgs[curMsgNum].buf = buf;
 		fQueue.msgs[curMsgNum].size = firstSize*sizeof(log_data_t);
-		fQueue.msgs[curMsgNum].adress = memBuf->stopAdr - firstSize*sizeof(log_data_t);
+		fQueue.msgs[curMsgNum].adress = memBuf->stopAdr + 1 - firstSize*sizeof(log_data_t);
 		fQueue.msgs[curMsgNum].cb = 0;
 		
 		uint32_t secondSize = readNum - firstSize;
@@ -213,7 +214,7 @@ uint8_t FP_GetParam(void){
 
 	uint32_t timeoutStart = HAL_GetTick();
 	lastBuffer = -1;
-	if (sysParams.vars.status.flags.FRAMInited != 1 && sysParams.vars.error.flags.FRAMFail == 1){
+	if (sysParams.vars.status.flags.FRAMInited != 1 || sysParams.vars.error.flags.FRAMFail == 1){
 		return HAL_ERROR;
 	}
 	
@@ -461,6 +462,7 @@ void queueHandler(void){
 }
 
 void FP_StartStore(void){
+	W25_Process();   /* продолжить многостраничную запись если нужно */
 	queueHandler();
 }
 
@@ -620,7 +622,7 @@ mem_buffer_t* getMemBuffer(msg_type_t type){
 
 uint8_t getCurMsgNum (void){
 	while(fQueue.full);
-	
+	__disable_irq();
 	fQueue.empty = false;
 	uint8_t curMsgNum = fQueue.head++;
 	
@@ -630,6 +632,6 @@ uint8_t getCurMsgNum (void){
 	if (fQueue.head == fQueue.tail){
 		fQueue.full = true;
 	}
-	
+	__enable_irq();
 	return curMsgNum;
 }

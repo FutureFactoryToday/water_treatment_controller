@@ -14,6 +14,12 @@ static bool isBusy (void);
 static void readID(void);
 static void partWriteData (SPI_HandleTypeDef *hspi);
 
+static void partWriteData_ISR (SPI_HandleTypeDef *hspi);
+
+static void partWriteData_send (void);
+
+void W25_Process (void);
+
 static void writeCheck (SPI_HandleTypeDef *hspi);
 //static void manualWriteData(uint32_t addr, uint8_t data);
 static uint8_t* dataToWrite;
@@ -33,10 +39,10 @@ static uint8_t checkBuf[128];
 #define WRDI		0x04
 #define RDSR1		0x05
 #define WRSR1		0x01
-#define RDSR2		0x05
-#define WRSR2		0x01
-#define RDSR3		0x05
-#define WRSR3		0x01
+#define RDSR2		0x35
+#define WRSR2		0x31
+#define RDSR3		0x15
+#define WRSR3		0x11
 #define CHER		0xC7 //0x60
 #define JEDID		0x9F
 #define RES			0x99
@@ -78,6 +84,8 @@ w25_status3_t w25Status3;
 	static uint8_t* bufStartPtr;
 	static uint32_t remWriteSize; 
 	static SPI_InitTypeDef oldSPIConfig;
+
+static volatile bool writeContinuePending = false;
 /*Code*/
 	HAL_StatusTypeDef abortCom (void){
 	HAL_SPI_Abort(MEM_SPI);
@@ -191,65 +199,71 @@ HAL_StatusTypeDef writeData (uint32_t addr, uint8_t* buf, uint32_t size){
 //	if (halSt != HAL_OK)
 //		return halSt;
 	
-	partWriteData(spi);
+	partWriteData_send();
 	
 	return HAL_OK;
 }
 
-void partWriteData (SPI_HandleTypeDef *hspi){
+/* Вызывается ТОЛЬКО из основного цикла — никаких блокирующих вызовов в ISR! */
+void partWriteData_send (void){
 	HAL_StatusTypeDef halSt;
 	bool continueWrite;
-	uint32_t addr;
-	uint8_t* buf;
-	uint32_t size;
-	uint32_t lowAddr;
-	LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-	//,LL_mDelay(1);
-	while (isBusy());
-	addr = addressToContinue;
-	lowAddr = addressToContinue&0x000000FF;
-	uint16_t pageRemainSpace;
-	
-	pageRemainSpace = 0x100 - lowAddr;
+	uint32_t addr    = addressToContinue;
+	uint32_t lowAddr = addressToContinue & 0x000000FFu;
+	uint16_t pageRemainSpace = (uint16_t)(0x100u - lowAddr);
+	uint8_t* buf  = bufStartPtr;
+	uint32_t size = MIN(pageRemainSpace, remWriteSize);
 
-	
-	buf = bufStartPtr;
-	size = MIN(pageRemainSpace,remWriteSize);
-	remWriteSize -= size;
-	continueWrite = (remWriteSize > 0)?true:false;
-	
-	bufStartPtr = bufStartPtr+size;
+	remWriteSize      -= size;
+	continueWrite      = (remWriteSize > 0u) ? true : false;
+	bufStartPtr       += size;
 	addressToContinue += size;
-	
+
+	/* WREN */
 	readStatus();
 	if (w25Status.bits.WEL != 1){
-		
 		commandBuffer[0] = WREN;
-		LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
-		halSt = HAL_SPI_Transmit(spi,commandBuffer,1,10);
-		LL_GPIO_SetOutputPin(csGpio.port,csGpio.pin);
-			
-		//readStatus();
+		LL_GPIO_ResetOutputPin(csGpio.port, csGpio.pin);
+		HAL_SPI_Transmit(spi, commandBuffer, 1, 10);
+		LL_GPIO_SetOutputPin(csGpio.port, csGpio.pin);
 	}
-	
-	//readStatus();
+
+	/* Команда записи + адрес */
 	commandBuffer[0] = WRITE;
-	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000) >> 16);
-	commandBuffer[2] = (uint8_t)((addr & 0x0000FF00) >> 8);
-	commandBuffer[3] = lowAddr;
-	
-	LL_GPIO_ResetOutputPin(csGpio.port,csGpio.pin);
-	
-	halSt = HAL_SPI_Transmit(spi,commandBuffer,4,10);
+	commandBuffer[1] = (uint8_t)((addr & 0x00FF0000u) >> 16);
+	commandBuffer[2] = (uint8_t)((addr & 0x0000FF00u) >> 8);
+	commandBuffer[3] = (uint8_t)  lowAddr;
+	LL_GPIO_ResetOutputPin(csGpio.port, csGpio.pin);
+	HAL_SPI_Transmit(spi, commandBuffer, 4, 10);
+
+	/* Промежуточная страница: лёгкий ISR; последняя: штатный commEndW25 */
 	if (continueWrite){
-		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, partWriteData);
+		HAL_SPI_RegisterCallback(spi, HAL_SPI_TX_COMPLETE_CB_ID, partWriteData_ISR);
 	} else {
-		HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
-		//HAL_SPI_RegisterCallback(spi,HAL_SPI_TX_COMPLETE_CB_ID, writeCheck);
+		HAL_SPI_RegisterCallback(spi, HAL_SPI_TX_COMPLETE_CB_ID, commEndW25);
 	}
-	halSt = HAL_SPI_Transmit_DMA(spi,buf,size);
-	
-	return;
+	HAL_SPI_Transmit_DMA(spi, buf, size);
+}
+
+/* Лёгкий ISR-callback для промежуточных страниц.
+   ТОЛЬКО снимает CS и выставляет флаг — никаких блокирующих SPI-вызовов! */
+void partWriteData_ISR (SPI_HandleTypeDef *hspi){
+	LL_GPIO_SetOutputPin(csGpio.port, csGpio.pin);
+	writeContinuePending = true;
+}
+
+/* Wrapper для обратной совместимости (вызывается только напрямую, не из ISR) */
+void partWriteData (SPI_HandleTypeDef *hspi){
+	partWriteData_send();
+}
+
+/* Вызывается из основного цикла через FP_StartStore().
+   Ожидает готовности чипа, затем отправляет следующую страницу. */
+void W25_Process (void){
+	if (!writeContinuePending) return;
+	if (isBusy()) return;  /* чип ещё программирует — вернёмся позже */
+	writeContinuePending = false;
+	partWriteData_send();
 }
 
 void manualWriteData(uint32_t addr, uint8_t data){
@@ -425,6 +439,9 @@ HAL_StatusTypeDef eraseSector (uint32_t addr){
 	if (halSt != HAL_OK)
 		return halSt;
 	else {
+		while (isBusy()){
+			LL_mDelay(100);
+		}
 		if (cb != NULL)
 			cb();
 		return HAL_OK;

@@ -14,7 +14,9 @@
 /*Includes */
 #include "main.h"
 #ifdef TEST_VERSION
-	#define LOG_TEST_FILL
+	//#define BLOCK_SCREEN_SAVE
+	//#define BLOCK_GO_HOME
+	//#define LOG_TEST_FILL
 	//#define CLEAR_LOG_ON_START
 #endif
 
@@ -53,7 +55,8 @@
 
 #define MAX_RAM_ADDRESS 0xFFFFFF
 
-#define DAYS_TO_STORE 90
+#define DAYS_TO_STORE 6
+
 #define ERROR_SECTOR_ADDR 0x000000
 #define WATER_USAGE_SECTOR_ADDR	0x10000//0xFFFB00 
 #define WATER_QUANT_SECTOR_ADDR 0x20000 //0xFFF600

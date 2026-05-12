@@ -157,9 +157,9 @@ void Load_Default_Values(void){
 	
 	sysParams.consts.ServicePinCode = DEF_SERVICE_CODE;
 	
-	sysParams.consts.pistonPositions.rabPoz = DEF_WORK_POS; //������
+	sysParams.consts.pistonPositions.rabPoz = DEF_WORK_POS; //������
 	sysParams.consts.pistonPositions.forwardWash = DEF_FORWARD_POS;
-	sysParams.consts.pistonPositions.backwash = DEF_BACKWASH_POS; //��� ����
+	sysParams.consts.pistonPositions.backwash = DEF_BACKWASH_POS; //��� ����
 	sysParams.consts.pistonPositions.saltering = DEF_SALTERING_POS;
 	sysParams.consts.pistonPositions.filling = DEF_FILLING_POS;
 	
@@ -251,25 +251,25 @@ void Load_Default_Values(void){
 	sysParams.consts.waterUsageLastTimeSave = LL_RTC_TIME_Get(RTC);
 	
 	sysParams.consts.errorBuf.startAdr = ERROR_SECTOR_ADDR;
-	sysParams.consts.errorBuf.stopAdr = sysParams.consts.errorBuf.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.errorBuf.stopAdr = sysParams.consts.errorBuf.startAdr+2*SECTOR_SIZE-1; /* последний байт буфера */
 	sysParams.consts.errorBuf.firstSectorErased = true;
 	sysParams.consts.errorBuf.secondSectorErased = true;
 	sysParams.consts.errorBuf.nextEntryPoz = 0;
 	
 	sysParams.consts.waterUsage.startAdr = WATER_USAGE_SECTOR_ADDR;
-	sysParams.consts.waterUsage.stopAdr = sysParams.consts.waterUsage.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.waterUsage.stopAdr = sysParams.consts.waterUsage.startAdr+2*SECTOR_SIZE-1; /* последний байт буфера */
 	sysParams.consts.waterUsage.firstSectorErased = true;
 	sysParams.consts.waterUsage.secondSectorErased = true;
 	sysParams.consts.waterUsage.nextEntryPoz = 0;
 	
 	sysParams.consts.waterQuant.startAdr = WATER_QUANT_SECTOR_ADDR;
-	sysParams.consts.waterQuant.stopAdr = sysParams.consts.waterQuant.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.waterQuant.stopAdr = sysParams.consts.waterQuant.startAdr+2*SECTOR_SIZE-1; /* последний байт буфера */
 	sysParams.consts.waterQuant.firstSectorErased = true;
 	sysParams.consts.waterQuant.secondSectorErased = true;
 	sysParams.consts.waterQuant.nextEntryPoz = 0;
 	
 	sysParams.consts.washBuf.startAdr = WASH_SECTOR_ADDR;
-	sysParams.consts.washBuf.stopAdr = sysParams.consts.washBuf.startAdr+2*SECTOR_SIZE;
+	sysParams.consts.washBuf.stopAdr = sysParams.consts.washBuf.startAdr+2*SECTOR_SIZE-1; /* последний байт буфера */
 	sysParams.consts.washBuf.firstSectorErased = true;
 	sysParams.consts.washBuf.secondSectorErased = true;
 	sysParams.consts.washBuf.nextEntryPoz = 0;
@@ -306,9 +306,9 @@ void SYS_Logic_IT(void){
 	/*Errors*/		
 	float limit = sysParams.consts.adcLimit[Temp];
 	if (sysParams.vars.error.flags.TempFail == 1){
-		limit *= sysParams.consts.adcLimit[Temp]*sysParams.consts.adcLimitDelt[Temp];
+		limit += sysParams.consts.adcLimit[Temp]*sysParams.consts.adcLimitDelt[Temp];
 	}
-	if(sysParams.vars.adc.floatParam[Temp] > sysParams.consts.adcLimit[Temp]){
+	if(sysParams.vars.adc.floatParam[Temp] > limit){
 		sysParams.vars.error.flags.TempFail = 1;
 	} else {
 		sysParams.vars.error.flags.TempFail = 0;
@@ -316,9 +316,9 @@ void SYS_Logic_IT(void){
 	
 	limit = sysParams.consts.adcLimit[Vbat];
 	if (sysParams.vars.error.flags.BatteryFail == 1){
-		limit *= sysParams.consts.adcLimit[Vbat]*sysParams.consts.adcLimitDelt[Vbat];
+		limit += sysParams.consts.adcLimit[Vbat]*sysParams.consts.adcLimitDelt[Vbat];
 	}
-	if(sysParams.vars.adc.floatParam[Vbat] < sysParams.consts.adcLimit[Vbat]){
+	if(sysParams.vars.adc.floatParam[Vbat] < limit){
 		sysParams.vars.error.flags.BatteryFail = 1;
 	} else {
 		sysParams.vars.error.flags.BatteryFail = 0;
@@ -336,9 +336,9 @@ void SYS_Logic_IT(void){
 	
 	limit = sysParams.consts.adcLimit[VrelDC];
 	if (sysParams.vars.error.flags.RelPowerFail == 1){
-		limit *= sysParams.consts.adcLimit[VrelDC]*sysParams.consts.adcLimitDelt[VrelDC];
+		limit += sysParams.consts.adcLimit[VrelDC]*sysParams.consts.adcLimitDelt[VrelDC];
 	}
-	if(sysParams.vars.adc.floatParam[VrelDC] < sysParams.consts.adcLimit[VrelDC]){
+	if(sysParams.vars.adc.floatParam[VrelDC] < limit){
 		sysParams.vars.error.flags.RelPowerFail = 1;
 	} else {
 		sysParams.vars.error.flags.RelPowerFail = 0;
@@ -346,9 +346,9 @@ void SYS_Logic_IT(void){
 	
 	limit = sysParams.consts.adcLimit[Vin];
 	if (sysParams.vars.error.flags.mainPowerFail == 1){
-		limit *= sysParams.consts.adcLimit[Vin]*sysParams.consts.adcLimitDelt[Vin];
+		limit += sysParams.consts.adcLimit[Vin]*sysParams.consts.adcLimitDelt[Vin];
 	}
-	if(sysParams.vars.adc.floatParam[Vin] < sysParams.consts.adcLimit[Vin]){
+	if(sysParams.vars.adc.floatParam[Vin] < limit){
 		sysParams.vars.error.flags.mainPowerFail = 1;
 	} else {
 		sysParams.vars.error.flags.mainPowerFail = 0;
@@ -406,11 +406,11 @@ void SYS_Logic_IT(void){
 		sysParams.vars.error.flags.RelayACFail = 1;
 	}
 	
-	if (sysParams.vars.status.flags.RelDCOn == LL_GPIO_IsOutputPinSet(REL_DC_ON_GPIO_Port,REL_DC_ON_Pin)){
-		sysParams.vars.error.flags.RelayDCFail = 0;
-	} else {
-		sysParams.vars.error.flags.RelayDCFail = 1;
-	}
+//	if (sysParams.vars.status.flags.RelDCOn == LL_GPIO_IsOutputPinSet(REL_DC_ON_GPIO_Port,REL_DC_ON_Pin)){
+//		sysParams.vars.error.flags.RelayDCFail = 0;
+//	} else {
+//		sysParams.vars.error.flags.RelayDCFail = 1;
+//	}
 	
 	time_t now = LL_RTC_TIME_Get(RTC);
 	if (sysParams.consts.planerConsts.monthBetweenService > 0){

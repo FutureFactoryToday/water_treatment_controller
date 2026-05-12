@@ -55,14 +55,17 @@ int ShowHistoryMaxWaterFrame(void) {
     }
     if (scrollDwnBut.isReleased == true) {
       // Make it blue
-			if (sysParams.consts.storedDayValueNum > 3 && firstEl < sysParams.consts.storedDayValueNum + 1 - 4){
-				firstEl++;
-				RefreshScreen();
+			{ uint32_t _avail = MIN(sysParams.consts.storedDayValueNum, DAYS_TO_STORE);
+			  if (_avail > 3 && firstEl < _avail - 3){
+					firstEl++;
+					RefreshScreen();
+				}
 			}
+		}
       scrollDwnBut.isReleased = false;
     }
   }
-}
+
 void createFrame(void) {
   drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY_MAX_WATER);
 	

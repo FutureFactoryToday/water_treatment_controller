@@ -370,7 +370,7 @@ bool PL_deleteTaskLine(piston_task_t *task, uint8_t line) {
 bool PL_modTaskLine(piston_task_t *task, uint8_t line, task_line_t tl) {
   uint8_t lastEl = findLastElement(task);
   if (line < lastEl) {
-    task -> step[lastEl] = tl;
+    task -> step[line] = tl;
     return true;
   }
   return false;

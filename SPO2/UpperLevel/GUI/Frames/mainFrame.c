@@ -86,7 +86,7 @@ void ShowMainFrame(void) {
 					if (screenSaveDelay){
 						screenSaveDelay--;
 					} else {
-						#if !defined(TEST_VERSION)
+						#if !(defined(TEST_VERSION)&&defined(BLOCK_SCREEN_SAVE))
 						ShowScreensaverFrame();
 						createFrame();
 						#endif

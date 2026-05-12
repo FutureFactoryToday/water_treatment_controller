@@ -9319,8 +9319,8 @@
             <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <bUseTDR>0</bUseTDR>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK Utility\ST-LINK_CLI.exe" (-P E:\MyData\Projects\water_treatment_controller\SPO2\MDK-ARM\SPO\SPO.hex -V -Rst)</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -9521,7 +9521,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=16000000,STM32F103xG, _24bit_FORMAT,USE_HAL_DRIVER, NOT_CLEAR_LOG, OPTIC_TEST, TEST_VERSION, CLEAR_LOG_ON_START</Define>
+              <Define>USE_FULL_LL_DRIVER,HSE_VALUE=16000000,STM32F103xG, _24bit_FORMAT,USE_HAL_DRIVER, NOT_CLEAR_LOG, OPTIC_TEST, TEST_VERSION</Define>
               <Undefine></Undefine>
               <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../UserCore;../MidLevel;../Drivers;../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&amp;MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI;../../GUI/Logo;../UpperLevel;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy</IncludePath>
             </VariousControls>
