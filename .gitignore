@@ -205,3 +205,5 @@ WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM4_FP/RTE_Component
 WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM7_SP/RTE_Components.h
 
 WTC_Head_Soft/MDK-ARM/RTE/_WTC_Head_Soft/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_Debug/RTE_Components.h
