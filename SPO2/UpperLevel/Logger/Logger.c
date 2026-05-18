@@ -252,7 +252,6 @@ HAL_StatusTypeDef LOG_Interrupt(void){
 		case 0: {
 			if (sysParams.vars.status.flags.LogWash){
 				if (StoreWashEvent() == HAL_OK){
-						sysParams.consts.storedWashNum++;
 						oldStatus = sysParams.consts.planerConsts.status;
 						sysParams.vars.status.flags.LogWash = false;
 					}
