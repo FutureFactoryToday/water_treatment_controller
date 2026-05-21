@@ -76,12 +76,13 @@ void createFrame(void) {
 
  void RefreshScreen()
 {
-	drawMainWindow();
+	errorsNum = LOG_GetErrors(firstEl);
+	//drawMainWindow();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	uint16_t offset = FIRST_CURSOR_POS_X + 9;
-	BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[0],LEFT_MODE);
-	errorsNum = LOG_GetErrors(firstEl);
+	//BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[0],LEFT_MODE);
+	
 	drawMainWindow();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
