@@ -34,7 +34,7 @@
 /*Global params*/
 
 /*Prototypes */
-int8_t PIN_showFrame();
+int8_t PIN_showFrame(void);
 
 #endif /* __PINCODE_H__ */
 

@@ -7,7 +7,7 @@ static uint8_t* text;
 void ShowWaterCountBeforeRegenFrame(void)
 {
 	
-		waterVal = planner.waterBeforeRegen;
+	waterVal = sysParams.consts.planerConsts.waterBeforeRegen;
 
    createFrame();
     while(1)
@@ -32,14 +32,14 @@ void ShowWaterCountBeforeRegenFrame(void)
 				waterBut.isReleased = false;
 			}
 			if (waterBut.isPressed == true){
-				if (planner.currentTask != NULL){
+				if (sysParams.vars.planer.currentTask != NULL){
 					drawDarkTextLabel(waterBut.x, waterBut.y, waterBut.xSize, waterBut.ySize, text);
 				}
 					waterBut.isPressed = false;
 			}
 			if (okBut.isReleased == true){
-				fp->params.planner.waterBeforeRegen = planner.waterBeforeRegen = waterVal;
-				fp->needToSave = true;
+				sysParams.consts.planerConsts.waterBeforeRegen = waterVal;
+				
 				FP_SaveParam();
 				okBut.isReleased = false;
 				return;
@@ -66,5 +66,6 @@ void createFrame(void)
   TC_addButton(&waterBut);
 	TC_addButton(&okBut);
 	TC_addButton(&retBut);	
-	drawClock();
+	TC_addButton(&cancelBut);
+
 }

@@ -14,15 +14,16 @@
 
 /*Includes */
 #include "main.h"
+#include "System/System.h"
 
 /*Public defines */
-#define MAX_SPEED 120*(MOT_SPEED_PERCENT/100.0)
-#define MIN_SPEED 10
+#define MAX_SPEED 120*(sysParams.consts.maxMotorSpeedPercent/100.0)
+#define MIN_SPEED 120*(sysParams.consts.minMotorSpeedPercent/100.0)
 
 #define MOT_PWM_FREQ 10000
 #define MAX_PRESC UINT16_MAX
-#define FORWARD_CHANNEL LL_TIM_CHANNEL_CH2 //AIN1
-#define REVERSE_CHANNEL LL_TIM_CHANNEL_CH3 //AIN2
+#define FORWARD_CHANNEL LL_TIM_CHANNEL_CH3 //AIN1
+#define REVERSE_CHANNEL LL_TIM_CHANNEL_CH4 //AIN2
 typedef enum {
 	SIMPLE = 0,
 	PWM
@@ -35,6 +36,23 @@ typedef struct {
     unsigned TYPE: 1;
 } mot_control_t;
 
+typedef struct {
+    uint32_t max;
+    uint32_t min;
+    uint32_t freq;
+    uint32_t timFreq;
+    uint32_t presc;
+    uint32_t pwm;
+} tim_settings_t;
+
+typedef struct {
+    TIM_TypeDef *tim;
+    uint32_t speed;
+		
+    tim_settings_t settings;
+    mot_control_t control;
+} motor_struct_t;
+
 /*Global params*/
 
 
@@ -43,7 +61,7 @@ void MOT_Start(void);
 void MOT_Stop(void);
 void MOT_SetDir(uint8_t dir);
 void MOT_SetSpeed(uint8_t speed);
-
+void MOT_ChangeDir(void);
 void MOT_Init(mot_control_type_t type, TIM_TypeDef *TIM);
 void MOT_SetControlType(mot_control_type_t type);
 

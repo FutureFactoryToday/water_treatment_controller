@@ -43,15 +43,15 @@ void pinToStr (uint16_t pin);
 /* Private user code ---------------------------------------------------------*/
 int8_t PIN_showFrame(){
     
-    enteredPin = 1234;
+  enteredPin = 0;
 
 	createPinFrame();
 	
 	while(1)
     { 
         if (updateFlags.sec == true){
-            drawClock();
-            updateFlags.sec = false;
+             drawClock(); drawMainStatusBar(144, 2305, 16);
+            updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }
         if (pinTextArea.isReleased == true){
             int32_t newPin = callKeyboardFromPin(0,9999,"Введите ПИН код");
@@ -71,7 +71,7 @@ int8_t PIN_showFrame(){
         }
         if (enterBut.isReleased == true){
             enterBut.isReleased = false;
-            if (enteredPin == sysParam.SERVICE_CODE){
+            if (enteredPin == sysParams.consts.ServicePinCode){
                 return 1;
             } else {
                 BSP_LCD_SetTextColor(LCD_COLOR_RED);

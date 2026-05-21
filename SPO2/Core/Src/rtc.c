@@ -29,7 +29,7 @@ void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
@@ -42,11 +42,18 @@ void MX_RTC_Init(void)
   LL_RCC_EnableRTC();
 
   /* RTC interrupt Init */
-  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),13, 0));
+  NVIC_SetPriority(RTC_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5, 0));
   NVIC_EnableIRQ(RTC_IRQn);
 
   /* USER CODE BEGIN RTC_Init 1 */
-
+//	if ((RTC->PRLH == 0 && RTC->PRLL == 0) ||
+//		LL_RTC_TIME_Get(RTC) == 0){
+	time_t T = LL_RTC_TIME_Get(RTC);
+	struct tm newTime;
+	wtc_time_t defTimeStr = DEFAULT_TIME;
+	newTime = wtcTimeToStdTime(&defTimeStr);
+	time_t defTime = mktime(&newTime);
+	if (T < defTime){
   /* USER CODE END RTC_Init 1 */
 
   /** Initialize RTC and set the Time and Date
@@ -57,12 +64,22 @@ void MX_RTC_Init(void)
 
   /** Initialize RTC and set the Time and Date
   */
-  RTC_TimeStruct.Hours = 0;
+  RTC_TimeStruct.Hours = 12;
   RTC_TimeStruct.Minutes = 0;
   RTC_TimeStruct.Seconds = 0;
   LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_TimeStruct);
-  /* USER CODE BEGIN RTC_Init 2 */
 
+  /** Initialize RTC and set the Time and Date
+  */
+
+  /** Enable the Alarm A
+  */
+  LL_RTC_EnableIT_ALR(RTC);
+  /* USER CODE BEGIN RTC_Init 2 */
+		wtc_time_t defTime = DEFAULT_TIME;
+
+		setSysTime(&defTime);
+	}
   /* USER CODE END RTC_Init 2 */
 
 }

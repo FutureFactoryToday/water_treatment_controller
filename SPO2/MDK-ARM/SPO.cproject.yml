@@ -1,0 +1,305 @@
+project:
+  packs:
+    - pack: Keil::STM32F1xx_DFP
+    - pack: ARM::CMSIS@5.9.0
+  setups:
+    - setup: Options for SPO
+      for-context: +SPO
+      add-path:
+        - ../Core/Inc
+        - ../Drivers/STM32F1xx_HAL_Driver/Inc
+        - ../Drivers/CMSIS/Device/ST/STM32F1xx/Include
+        - ../Drivers/CMSIS/Include
+        - ../UserCore
+        - ../MidLevel
+        - ../Drivers
+        - ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI
+        - ../../GUI/Logo
+        - ../UpperLevel
+      debug: "on"
+      define:
+        - USE_FULL_LL_DRIVER
+        - HSE_VALUE: "8000000"
+        - STM32F103xG
+        - _24bit_FORMAT
+        - USE_FULL_ASSERT: 1U
+        - HSE_VALUE: "16000000"
+        - HSE_STARTUP_TIMEOUT: "100"
+        - LSE_STARTUP_TIMEOUT: "5000"
+        - LSE_VALUE: "32768"
+        - HSI_VALUE: "8000000"
+        - LSI_VALUE: "40000"
+        - VDD_VALUE: "3300"
+        - PREFETCH_ENABLE: "1"
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -w
+          CPP:
+            - -xc++
+            - -std=c++11
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+    - setup: Options for TestForPCB
+      for-context: +TestForPCB
+      add-path:
+        - ../Core/Inc
+        - ../Drivers/STM32F1xx_HAL_Driver/Inc
+        - ../Drivers/CMSIS/Device/ST/STM32F1xx/Include
+        - ../Drivers/CMSIS/Include
+        - ../UserCore
+        - ../MidLevel
+        - ../Drivers
+        - ../../info/datasheets/4.0inch_SPI_Module_ILI9486_MSP4022&MSP4023_V1.0/1-Demo/Demo_STM32/Demo_STM32F103RCT6_Hardware_SPI
+        - ../../GUI/Logo
+        - ../UpperLevel
+      debug: "on"
+      define:
+        - USE_FULL_LL_DRIVER
+        - HSE_VALUE: "8000000"
+        - STM32F103xG
+        - _24bit_FORMAT
+        - USE_FULL_ASSERT: 1U
+        - HSE_VALUE: "16000000"
+        - HSE_STARTUP_TIMEOUT: "100"
+        - LSE_STARTUP_TIMEOUT: "5000"
+        - LSE_VALUE: "32768"
+        - HSI_VALUE: "8000000"
+        - LSI_VALUE: "40000"
+        - VDD_VALUE: "3300"
+        - PREFETCH_ENABLE: "1"
+        - TEST_FOR_PCB
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -w
+          CPP:
+            - -xc++
+            - -std=c++11
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: SPO_SPO.sct
+      for-context: +SPO
+    - script: SPO_TestForPCB.sct
+      for-context: +TestForPCB
+  groups:
+    - group: Application/MDK-ARM
+      files:
+        - file: startup_stm32f103xg.s
+    - group: Application/User/Core
+      files:
+        - file: ../Core/Src/main.c
+        - file: ../Core/Src/gpio.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/adc.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/rtc.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/spi.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/tim.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/usart.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/stm32f1xx_it.c
+    - group: Drivers/STM32F1xx_HAL_Driver
+      files:
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_gpio.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_adc.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_dma.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_exti.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rtc.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_spi.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_pwr.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c
+        - file: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_usart.c
+    - group: Drivers/CMSIS
+      files:
+        - file: ../Core/Src/system_stm32f1xx.c
+    - group: Settings
+      files:
+        - file: ../UserCore/Settings.h
+    - group: Libs
+      files:
+        - file: ../UserCore/SPI/FIFO.c
+        - file: ../UserCore/Logic/WTC_Logic.c
+        - file: ../UpperLevel/Motor/Motor.c
+        - file: ../UpperLevel/PistonControl/PistonControl.c
+        - file: ../UpperLevel/Time/Time.c
+        - file: ../UpperLevel/FlashParams/FlashParam.c
+        - file: ../UserCore/Util/Util.c
+        - file: ../UpperLevel/Service/Service.c
+        - file: ../UpperLevel/System/System.c
+        - file: ../UpperLevel/Time/Alarm.c
+        - file: ../UpperLevel/FlowMeter/FlowMeter.c
+        - file: ../UpperLevel/Planner/Planner.c
+        - file: ../UpperLevel/Filter/filter.c
+    - group: GUI
+      files:
+        - file: ../../GUI/Logo/smallLogo_16b.c
+        - file: ../../GUI/Logo/LOGO_MAIN2.c
+        - file: ../UpperLevel/GUI/GUI.c
+        - file: ../UpperLevel/TFT/Fonts/oxy_8.c
+        - file: ../UpperLevel/TFT/Fonts/oxy_12.c
+        - file: ../UpperLevel/TFT/Fonts/oxy_16.c
+        - file: ../UpperLevel/TFT/Fonts/oxy_20.c
+        - file: ../UpperLevel/TFT/Fonts/oxy_24.c
+        - file: ../UpperLevel/GUI/PicArrays/arrowDownImg.c
+        - file: ../UpperLevel/GUI/PicArrays/arrowUpImg.c
+        - file: ../UpperLevel/GUI/PicArrays/dropButImg.c
+        - file: ../UpperLevel/GUI/PicArrays/dropButImgRect.c
+        - file: ../UpperLevel/GUI/PicArrays/MAIN_LOGO.c
+        - file: ../UpperLevel/GUI/PicArrays/pageButImg.c
+        - file: ../UpperLevel/GUI/PicArrays/pageButImgRect.c
+        - file: ../UpperLevel/GUI/PicArrays/returnArrowImg.c
+        - file: ../UpperLevel/GUI/PicArrays/wrenchButImg.c
+        - file: ../UpperLevel/GUI/PicArrays/wrenchButPhantom.c
+        - file: ../UpperLevel/GUI/PicArrays/wrenchButImgRect.c
+        - file: ../UpperLevel/GUI/PicArrays/leftArrowImg.c
+        - file: ../UpperLevel/GUI/PicArrays/rightArrowImg.c
+        - file: ../UpperLevel/GUI/PicArrays/arrayPicDay.c
+        - file: ../UpperLevel/GUI/PicArrays/arrayPicList.c
+        - file: ../UpperLevel/GUI/PicArrays/arrayPicNight.c
+        - file: ../UpperLevel/GUI/PicArrays/trashImg.c
+        - file: ../UpperLevel/GUI/Frames/items.c
+        - file: ../UpperLevel/GUI/PicArrays/checkMarkImg.c
+        - file: ../UpperLevel/GUI/Frames/widgets.c
+        - file: ../UpperLevel/GUI/PicArrays/smalLogo.c
+        - file: ../UpperLevel/GUI/Frames/layout.c
+        - file: ../UpperLevel/GUI/PicArrays/TestBMP.c
+        - file: ../UpperLevel/GUI/PicArrays/homeButImg.c
+    - group: LCD
+      files:
+        - file: ../UpperLevel/GUI/TouchController.c
+        - file: ../UpperLevel/TFT/stm32_adafruit_ts.c
+        - file: ../UpperLevel/TFT/lcd/ili9486/ili9486.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../UpperLevel/TFT/stm32f1xx/ts_xpt2046.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../UpperLevel/TFT/stm32f1xx/lcd_io_spi.c
+        - file: ../UpperLevel/TFT/stm32_adafruit_lcd.c
+        - file: ../UpperLevel/TFT/lcd/ili9488/ili9488.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../UpperLevel/TFT/lcd/st7796s/st7796s.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../UpperLevel/TFT/lcd/FT6336/ctpiic.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../UpperLevel/TFT/lcd/FT6336/ft6336.c
+          misc:
+            - CPP:
+                - -xc++
+    - group: CustFrames
+      files:
+        - file: ../UpperLevel/GUI/Frames/mainFrame.c
+        - file: ../UpperLevel/GUI/Frames/keyboardFrame.c
+        - file: ../UpperLevel/GUI/Frames/menuFrame.c
+        - file: ../UpperLevel/GUI/Frames/timeSetFrame.c
+        - file: ../UpperLevel/GUI/Frames/daysBetweenRegenCustomerFrame.c
+        - file: ../UpperLevel/GUI/Frames/delayedRegenCustomerFrame.c
+        - file: ../UpperLevel/GUI/Frames/forcedRegenCustomerFrame.c
+        - file: ../UpperLevel/GUI/Frames/regenServiceFrame.c
+        - file: ../UpperLevel/GUI/Frames/washingTimeCustomerFrame.c
+        - file: ../UpperLevel/GUI/Frames/stepsFrame.c
+        - file: ../UpperLevel/GUI/Frames/Calendar.c
+        - file: ../UpperLevel/GUI/Frames/clockSet.c
+        - file: ../UpperLevel/GUI/Frames/ManualDriveControl.c
+        - file: ../UpperLevel/GUI/Frames/mainMenuFrame.c
+        - file: ../UpperLevel/GUI/Frames/filterCycleFrame.c
+        - file: ../UpperLevel/GUI/Frames/periodRegenFrame.c
+        - file: ../UpperLevel/GUI/Frames/historyErrorsFrame.c
+        - file: ../UpperLevel/GUI/Frames/historyFilterFrame.c
+        - file: ../UpperLevel/GUI/Frames/historyMaxWaterFrame.c
+        - file: ../UpperLevel/GUI/Frames/historyMenuFrame.c
+        - file: ../UpperLevel/GUI/Frames/historyWaterFrame.c
+    - group: ServiceGroup
+      files:
+        - file: ../UpperLevel/GUI/Frames/filteringFrame.c
+        - file: ../UpperLevel/GUI/Frames/filterSelectionFrame.c
+        - file: ../UpperLevel/GUI/Frames/adjustmentFrame.c
+        - file: ../UpperLevel/GUI/Frames/softeningFrame.c
+        - file: ../UpperLevel/GUI/Frames/alarmNotiFrame.c
+        - file: ../UpperLevel/GUI/Frames/alarmListFrame.c
+        - file: ../UpperLevel/GUI/Frames/PinCode.c
+        - file: ../UpperLevel/GUI/Frames/serviceMenuFrame.c
+        - file: ../UpperLevel/GUI/Frames/quantityCountServiceFrame.c
+        - file: ../UpperLevel/GUI/Frames/regenPeriodServiceFrame.c
+        - file: ../UpperLevel/GUI/Frames/washingTimeServiceFrame.c
+        - file: ../UpperLevel/GUI/Frames/ManualFilteringSettings.c
+        - file: ../UpperLevel/GUI/Frames/waterCountBeforeRegen.c
+        - file: ../UpperLevel/GUI/Frames/ServiceInfo.c
+        - file: ../UpperLevel/GUI/Frames/serviceDateSelect.c
+        - file: ../UpperLevel/GUI/Frames/loadTypeFrame.c
+        - file: ../UpperLevel/GUI/Frames/elMagFrame.c
+        - file: ../UpperLevel/GUI/Frames/inputOneFrame.c
+        - file: ../UpperLevel/GUI/Frames/universalOutputFrame.c
+  components:
+    - component: ARM::CMSIS:CORE

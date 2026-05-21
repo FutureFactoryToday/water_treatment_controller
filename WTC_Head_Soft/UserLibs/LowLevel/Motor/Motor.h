@@ -1,0 +1,50 @@
+/**
+  ******************************************************************************
+  * @file    MOTOR.h
+  * @brief   This file contains all the function prototypes for
+  *          the .c file
+  ******************************************************************************
+  
+  ******************************************************************************
+  */
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef _MOTOR_H_
+#define _MOTOR_H_
+
+/*Includes */
+#include "main.h"
+
+/*Public defines */
+#define MAX_SPEED 120*(MAX_MOT_SPEED_PERCENT/100.0)
+#define MIN_SPEED 10
+
+#define MOT_PWM_FREQ 10000
+#define MAX_PRESC UINT16_MAX
+#define FORWARD_CHANNEL 3 //IN1
+#define REVERSE_CHANNEL 4 //IN2
+
+typedef struct {
+    unsigned INITED: 1;
+    unsigned START: 1;
+    unsigned DIR: 1;
+    unsigned TYPE: 1;
+} mot_control_t;
+
+/*Global params*/
+
+
+/*Prototypes */
+void MOT_Start(void);
+void MOT_Stop(void);
+void MOT_SetDir(uint8_t dir);
+void MOT_SetSpeed(uint8_t speed);
+
+void MOT_Init(TIM_HandleTypeDef *TIM);
+
+mot_control_t MOT_GetControl(void);
+
+void MOT_TEST(void);
+
+#endif /* __MOTOR_H__ */
+

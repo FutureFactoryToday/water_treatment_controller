@@ -1,4 +1,6 @@
 #include "filteringFrame.h"
+#define MIN_KEYBOARD_RESULT 0
+#define MAX_KEYBOARD_RESULT 999
 
 uint8_t fitlering_frame_Scroll_cnt = 0;
 uint8_t fitlering_frame_was_Scroll = 0;
@@ -10,19 +12,19 @@ int8_t startFilteringFrame = 0;
 int8_t step = 0;
 static button_t menuLine[2];
 static void createFrame();
-static uint8_t res[2];
+static uint16_t res[2];
 int ShowFilteringFrame(void)
 {
-    res[0] = planner.pistonTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
-    res[1] = planner.pistonTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
+    res[0] = sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[0].secPause/60;
+    res[1] = sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[1].secPause/60;
     fitlering_frame_Scroll_cnt = 0;
     createFrame();
 
     while(1)
     {
         if (updateFlags.sec == true){
-            //drawClock();
-            updateFlags.sec = false;
+            // drawClock(); drawMainStatusBar(144, 2305, 16);
+            updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }
 
         /*Buttons released*/
@@ -32,10 +34,8 @@ int ShowFilteringFrame(void)
         }
         if (okBut.isReleased == true){
             okBut.isReleased = false;
-            planner.pistonTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
-            planner.pistonTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
-            copyTasksToFlash();
-            fp->needToSave = 1;
+            sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[0].secPause = 60 * res[0];
+            sysParams.consts.planerConsts.planerTasks[REGENERATION_TASK_NUM].step[1].secPause = 60 * res[1];
             FP_SaveParam();
             return 0;
         }
@@ -44,20 +44,23 @@ int ShowFilteringFrame(void)
             return 0;
         }
         if (homeBut.isReleased == true){
-            homeBut.isReleased = false;
-            return 1;
-        }
+			homeBut.isReleased = false;
+      goHome = true;
+		}
+		if (goHome){
+			return -1;
+		}
         if(menuLine[0].isReleased == true){
-            uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+            uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[0] = tempRes;
                 createFrame();
             }
             menuLine[0].isReleased = false;
         }
         if(menuLine[1].isReleased == true){
-            uint8_t tempRes = ShowKeyboardFrame(1,150);
-            if (tempRes > 0){
+            uint8_t tempRes = ShowKeyboardFrame(MIN_KEYBOARD_RESULT,MAX_KEYBOARD_RESULT);
+            if (tempRes >= 0){
                 res[1] = tempRes;
                 createFrame();
             }

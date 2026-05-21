@@ -1,359 +1,170 @@
+/*Includes*/
 #include "adjustmentFrame.h"
 
-static void createFrame(void);
-static button_t playBut[7], menuLine[7];
-//int32_t pistonPositions.[] = {0, 0, 0, 0, 0, 0, 0};
-uint32_t *firstEl;
-//char* ITEM_STEPS[] = { "ЗАКРЫТОЕ ПОЛ.", "ОБРАТНАЯ ПРОМЫВКА", "РЕГЕНЕРАЦИЯ", "ЗАПОЛНЕНИЕ", "УМЯГЧЕНИЕ", "ПРОМЫВКА", "ФИЛЬТРАЦИЯ" };
-uint8_t adjustment_frame_Scroll_cnt;
-void ShowAdjustmentFrame(void)
-{
-	adjustment_frame_Scroll_cnt = 0;
-	PC_Restart();
-	createFrame();
-	#ifndef newPositions
-	firstEl = &pistonPositions.closedPosition;
-	#else
-	firstEl = &pistonPositions.rabPoz;	
-	#endif
-	while(1)
-	{
-		if (updateFlags.sec == true){
-				drawClock();
-				updateFlags.sec = false;
-		}
-		if (updateFlags.optic){
-			 AnimatePosMenuFrame();
-			updateFlags.optic = false;
-		}
-		
-		if(retBut.isReleased == true) {
-			retBut.isReleased = false;
-			return;
-		}
-    if (okBut.isReleased == true){
-			fp->needToSave = true;
-	#ifndef newPositions
-			fp->params.pistonPositions.closedPosition = pistonPositions.closedPosition;
-			fp->params.pistonPositions.backwash = pistonPositions.backwash;
-			fp->params.pistonPositions.regeneration = pistonPositions.regeneration;
-			fp->params.pistonPositions.filling = pistonPositions.filling;
-			fp->params.pistonPositions.softening = pistonPositions.softening;
-			fp->params.pistonPositions.flushing = pistonPositions.flushing;
-			fp->params.pistonPositions.filtering = pistonPositions.filtering; 
-#else
-			fp->params.pistonPositions.rabPoz = pistonPositions.rabPoz;
-			fp->params.pistonPositions.forwardWash = pistonPositions.forwardWash;
-			fp->params.pistonPositions.backwash = pistonPositions.backwash;
-			fp->params.pistonPositions.saltering = pistonPositions.saltering;
-			fp->params.pistonPositions.filling = pistonPositions.filling;
+/*Macro and defines*/
+#define LINE_NUM 5
+/*Global parameters*/
+static button_t menuLines[LINE_NUM];
+static button_t playBut[LINE_NUM];
+static uint8_t firstEl;
 
-#endif			
-			FP_SaveParam(); 
-			okBut.isReleased = false;
+/*Local prototypes*/
+static void createFrame(uint8_t *text);
+static void RefreshScrollBar(void);
+static void calcButParam();
+static void markLine(uint8_t i);
+void drawLine(uint8_t num, uint8_t * string, uint16_t time, bool touch);
+uint32_t *pozPtr;
+piston_poz_t tempPoz;
+
+/*Code*/
+uint8_t ShowAdjustmentFrame(){
+	
+	PC_Restart();
+	tempPoz = sysParams.consts.pistonPositions;
+	firstEl = 0;
+	pozPtr = &tempPoz;
+	createFrame(MODE_ADJUSTMENT);
+	while(1) {
+		if(goHome){
+			 PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			return -1;
 		}
-		if (scrollUpBut.isReleased == true){
-			
-			RefreshScrollBarAdjustmentFrame();
+		if(updateFlags.sec == true) {
+			sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF;
+			updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+		}
+		if(okBut.isReleased == true) {
+			okBut.isReleased = false;
+			sysParams.consts.pistonPositions = tempPoz;
+			FP_SaveParam();
+			 PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			return 0;
+		}
+		if(cancelBut.isReleased == true) {
+			 PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			cancelBut.isReleased = false;
+			return 0;
+		}
+		if(retBut.isReleased == true) {
+			 PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			retBut.isReleased = false;
+			return 0;
+		}
+		if(homeBut.isReleased == true) {
+			homeBut.isReleased = false;
+			 PC_GoToPoz(sysParams.consts.pistonPositions.rabPoz);
+			goHome = true;
+		}
+		if(scrollUpBut.isReleased == true) {
+			if(firstEl > 0) {
+				firstEl--;
+				RefreshScrollBar();
+			}
 			scrollUpBut.isReleased = false;
 		}
-		if (scrollDwnBut.isReleased == true){
-			
-			RefreshScrollBarAdjustmentFrame();
+		if(scrollDwnBut.isReleased == true) {
+			if(firstEl < (sizeof(piston_poz_t)/sizeof(uint32_t)) - 4) {
+				firstEl++;
+				RefreshScrollBar();
+			}
 			scrollDwnBut.isReleased = false;
 		}
-        
-		#ifdef newPositions
-        if(menuLine[0].isReleased == true)
-        {
-					pistonPositions.rabPoz = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[0].isReleased = false;
-        }
-        if(menuLine[1].isReleased == true)
-        {
-					pistonPositions.forwardWash = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[1].isReleased = false;
-        }
-        if(menuLine[2].isReleased == true)
-        {
-					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[2].isReleased = false;
-        }
-        if(menuLine[3].isReleased == true)
-        {
-					pistonPositions.saltering = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[3].isReleased = false;
-        }
-        if(menuLine[4].isReleased == true)
-        {
-					pistonPositions.filling = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[4].isReleased = false;
-        }
-				//cycle start
-        if(playBut[0].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.rabPoz);
-
-					playBut[0].isReleased = false;
-					createFrame();
-        }
-        if(playBut[1].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.backwash);
-
-					playBut[1].isReleased = false;
-					createFrame();
-        }
-        if(playBut[2].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.forwardWash);
-
-					playBut[2].isReleased = false;
-					createFrame();
-        }
-        if(playBut[3].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.saltering);
-					playBut[3].isReleased = false;
-					createFrame();
-        }
-        if(playBut[4].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.filling);
-
-					playBut[4].isReleased = false;
-					createFrame();
-        }
-       
-				#else 
-        if(menuLine[0].isReleased == true)
-        {
-					pistonPositions.closedPosition = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[0].isReleased = false;
-        }
-        if(menuLine[1].isReleased == true)
-        {
-					pistonPositions.backwash = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[1].isReleased = false;
-        }
-        if(menuLine[2].isReleased == true)
-        {
-					pistonPositions.regeneration = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[2].isReleased = false;
-        }
-        if(menuLine[3].isReleased == true)
-        {
-					pistonPositions.filling = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[3].isReleased = false;
-        }
-        if(menuLine[4].isReleased == true)
-        {
-					pistonPositions.softening = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[4].isReleased = false;
-        }
-        if(menuLine[5].isReleased == true)
-        {
-					pistonPositions.flushing = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[5].isReleased = false;
-        }
-        if(menuLine[6].isReleased == true)
-        {
-					pistonPositions.filtering = ShowKeyboardFrame(0,99999);
-					createFrame();
-					menuLine[6].isReleased = false;
-        }
-				
-       
-        //cycle start
-        if(playBut[0].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.closedPosition);
-
-					playBut[0].isReleased = false;
-					createFrame();
-        }
-        if(playBut[1].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.backwash);
-
-					playBut[1].isReleased = false;
-					createFrame();
-        }
-        if(playBut[2].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.regeneration);
-
-					playBut[2].isReleased = false;
-					createFrame();
-        }
-        if(playBut[3].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.filling);
-					playBut[3].isReleased = false;
-					createFrame();
-        }
-        if(playBut[4].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.softening);
-
-					playBut[4].isReleased = false;
-					createFrame();
-        }
-        if(playBut[5].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.flushing);
-					
-					playBut[5].isReleased = false;
-					createFrame();
-        }
-        if(playBut[6].isReleased == true)
-        {
-					PC_GoToPoz(pistonPositions.filtering);
-					
-					playBut[6].isReleased = false;
-					createFrame();
-        }
-				 #endif
-    }
+		for (uint8_t i = 0; i < LINE_NUM; i++){
+			if(playBut[i+firstEl].isReleased == true) {
+				PC_GoToPoz(*(pozPtr+i+firstEl));
+				//Make it blue
+//				uint8_t* ptr = &tempEnable;
+//				uint8_t tempResult = *ptr  ^ (0x01 << (i + firstEl));
+//				*ptr = tempResult;
+//				markLine(i);
+				playBut[i+firstEl].isReleased = false;
+			}
+			if (menuLines[i+firstEl].isReleased == true){
+				int32_t temp = ShowKeyboardFrame(0, 999);
+				if (temp >= 0){
+					*(pozPtr+i+firstEl) = temp;
+				}
+				menuLines[i+firstEl].isReleased = false;
+				createFrame(MODE_ADJUSTMENT);
+			}
+		}
+		
+	}
 }
 
-void createFrame(void)
-{
-  TC_clearButtons(); 
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_FillRect(MAINBAR_POS_X,MAINBAR_POS_Y, MAINBAR_SIZE_X, MAINBAR_SIZE_Y);
-	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-	BSP_LCD_FillRect(MAIN_WINDOW_POS_X,MAIN_WINDOW_POS_Y, MAIN_WINDOW_SIZE_X, MAIN_WINDOW_SIZE_Y);
-	
-	BSP_LCD_DrawBitmap(SMALL_LOGO_X, SMALL_LOGO_Y ,&gImage_SMALL_LOGO);
-	
-	BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 20, RETURN_BUT_POS_Y + 11 ,&gImage_RETURNARROW);
-	
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X, MODE_STATUS_TEXT_Y ,MODE_ADJUSTMENT,LEFT_MODE);
-	BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
-	BSP_LCD_DisplayStringAt(RESET_X,RESET_Y,RESET_TEXT,LEFT_MODE);
-	BSP_LCD_DisplayStringAt(POS_VALUE_LABEL_X,POS_VALUE_LABEL_Y,POSITION,LEFT_MODE);
-			
-	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_DrawRect(FIRST_CURSOR_POS_X,FIRST_CURSOR_POS_Y,FIRST_CURSOR_SIZE_X,FIRST_CURSOR_SIZE_Y);
-	BSP_LCD_DrawRect(SECOND_CURSOR_POS_X,SECOND_CURSOR_POS_Y,SECOND_CURSOR_SIZE_X,SECOND_CURSOR_SIZE_Y);
-	BSP_LCD_DrawRect(THRID_CURSOR_POS_X,THRID_CURSOR_POS_Y,THRID_CURSOR_SIZE_X,THRID_CURSOR_SIZE_Y);
-	BSP_LCD_DrawRect(SCROLLBAR_POS_X,SCROLLBAR_POS_Y,SCROLLBAR_SIZE_X,SCROLLBAR_SIZE_Y);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y);
-	BSP_LCD_FillRect(SECOND_CURSOR_VALUE_BOX_X,SECOND_CURSOR_VALUE_BOX_Y, SECOND_CURSOR_VALUE_BOX_SIZE_X, SECOND_CURSOR_VALUE_BOX_SIZE_Y);
-	BSP_LCD_FillRect(THRID_CURSOR_VALUE_BOX_X,THRID_CURSOR_VALUE_BOX_Y, THRID_CURSOR_VALUE_BOX_SIZE_X, THRID_CURSOR_VALUE_BOX_SIZE_Y);
-	
-	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
-	BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
-	
-	BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-	BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
-	BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
-	BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
 
-	BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 12, UP_ARROW_POS_Y + 15 ,&gImage_ARROWUP);
-	BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 12, DOWN_ARROW_POS_Y + 15 ,&gImage_ARROWDOWN);
-	
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-	BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-	BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-	
+/* Private user code ---------------------------------------------------------*/
+void createFrame(uint8_t *text) {
+	TC_clearButtons();
+	//BSP_LCD_Clear(LCD_COLOR_WHITE);
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, text);
+	drawStatusBarOkCancel();
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-	BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt)),LEFT_MODE);
-	BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 1)),LEFT_MODE);
-	BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 2)),LEFT_MODE);
+//	for(uint8_t i = 0; i < 4; i++) {
+//		menuLines[i].x = FIRST_CURSOR_POS_X + 9;
+//		menuLines[i].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9;
+//		//menuLine[i].xSize = 250;
+//		menuLines[i].ySize = 40;
+//	}
 	
-	/*Add Buttons Data*/
+	RefreshScrollBar();
+	/*Add buttons parameters*/
+}
+
+
+void RefreshScrollBar(void) {
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	calcButParam();
+	drawMainWindow();
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	for(uint8_t i = 0; i < 4; i++) {
+		int8_t pozNum = i + firstEl;
+		if (pozNum == 4) pozNum = 5;
+		if (pozNum == 3){
+			BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 18, ITEM_STEPS[pozNum+1], LEFT_MODE);
+			BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i , ITEM_STEPS[pozNum], LEFT_MODE);
+			
+		} else {
+			BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3, ITEM_STEPS[pozNum], LEFT_MODE);
+		}
+		//BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9, STATIC_LINE_Y + i * STATIC_LINE_SPASER + 9, ITEM_STEPS[i + firstEl], LEFT_MODE);
+		drawFillButton(menuLines[i + firstEl].x,menuLines[i + firstEl].y,menuLines[i + firstEl].xSize,menuLines[i + firstEl].ySize,intToStr(*(pozPtr + i + firstEl)),false);
+		drawFillButton(playBut[i + firstEl].x,playBut[i + firstEl].y,playBut[i + firstEl].xSize,playBut[i + firstEl].ySize,"GO",false);
+	}
+	drawScrollButton(0);
+	BSP_LCD_SetFont(oldFont);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 	
-	/*Add Buttons*/
-	for(uint8_t i = 0; i < sizeof (menuLine); i++){
-		 TC_addButton(&menuLine[i]);
+	
+	drawStaticLines();
+	
+}
+
+void calcButParam() {
+	TC_clearButtons();
+	for(uint8_t i = 0; i < 4; i++) {
+		menuLines[i + firstEl].x = SCROLLKEYUP_POS_X - 5 - 40 - 90;
+		menuLines[i + firstEl].y = STATIC_LINE_Y + i * STATIC_LINE_SPASER + 3;
+		menuLines[i + firstEl].xSize = 80;
+		menuLines[i + firstEl].ySize = 40;
+		
+		playBut[i + firstEl].x = SCROLLKEYUP_POS_X - 5 - 40;
+		playBut[i + firstEl].y = STATIC_LINE_Y + STATIC_LINE_SPASER * i + 3;
+		playBut[i + firstEl].xSize = 40;
+		playBut[i + firstEl].ySize = 40;
+		TC_addButton(&playBut[i + firstEl]);
+		TC_addButton(&menuLines[i + firstEl]);
 	}
-	for(uint8_t i = 0; i < sizeof (playBut); i++){
-		 TC_addButton(&playBut[i]);
-	}
-	TC_addButton(&retBut);
 	TC_addButton(&okBut);
+	TC_addButton(&cancelBut);
+	TC_addButton(&retBut);
+	TC_addButton(&homeBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
-
-	//enableClockDraw = true;
-}
-
-void RefreshScrollBarAdjustmentFrame()
-{       
-    AnimateScrollBarKeysAdjustmentFrame();
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_FillRect(FIRST_CURSOR_POS_X + 1,FIRST_CURSOR_POS_Y + 1,FIRST_CURSOR_SIZE_X - 2,FIRST_CURSOR_SIZE_Y - 2);
-    BSP_LCD_FillRect(SECOND_CURSOR_POS_X + 1,SECOND_CURSOR_POS_Y + 1,SECOND_CURSOR_SIZE_X - 2,SECOND_CURSOR_SIZE_Y - 2);
-    BSP_LCD_FillRect(THRID_CURSOR_POS_X + 1,THRID_CURSOR_POS_Y + 1,THRID_CURSOR_SIZE_X - 2,THRID_CURSOR_SIZE_Y - 4);
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_FillRect(FIRST_CURSOR_VALUE_BOX_X,FIRST_CURSOR_VALUE_BOX_Y, FIRST_CURSOR_VALUE_BOX_SIZE_X, FIRST_CURSOR_VALUE_BOX_SIZE_Y);
-    BSP_LCD_FillRect(SECOND_CURSOR_VALUE_BOX_X,SECOND_CURSOR_VALUE_BOX_Y, SECOND_CURSOR_VALUE_BOX_SIZE_X, SECOND_CURSOR_VALUE_BOX_SIZE_Y);
-    BSP_LCD_FillRect(THRID_CURSOR_VALUE_BOX_X,THRID_CURSOR_VALUE_BOX_Y, THRID_CURSOR_VALUE_BOX_SIZE_X, THRID_CURSOR_VALUE_BOX_SIZE_Y);
-        
-    BSP_LCD_SetBackColor(LCD_COLOR_LIGHTGRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(16,FIRST_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt],LEFT_MODE);
-    BSP_LCD_DisplayStringAt(16,SECOND_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 1],LEFT_MODE);
-    BSP_LCD_DisplayStringAt(16,THRID_CURSOR_POS_Y + 17,ITEM_STEPS[adjustment_frame_Scroll_cnt + 2],LEFT_MODE);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_DisplayStringAt(330,FIRST_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,SECOND_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
-    BSP_LCD_DisplayStringAt(330,THRID_CURSOR_POS_Y + 17,START_ENG,LEFT_MODE);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(FIRST_CURSOR_VALUE_BOX_X + 16,FIRST_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt)),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(SECOND_CURSOR_VALUE_BOX_X + 16,SECOND_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 1)),LEFT_MODE);
-    BSP_LCD_DisplayStringAt(THRID_CURSOR_VALUE_BOX_X + 16,THRID_CURSOR_VALUE_BOX_Y + 17,intToStr(*(firstEl + adjustment_frame_Scroll_cnt + 2)),LEFT_MODE);
-    
-    
-}
-
-void AnimateScrollBarKeysAdjustmentFrame(void)
-{
-    BSP_LCD_SetTextColor(LCD_COLOR_LIGHTGRAY);      
-    BSP_LCD_FillRect(SCROLLBAR_POS_X + 1,SCROLLBAR_POS_Y + 51,SCROLLBAR_SIZE_X - 2,SCROLLBAR_SIZE_Y - 98);
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 7) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-    BSP_LCD_FillRect(SCROLLBAR_CURSOR_SLIDER_POS_X,(SCROLLBAR_CURSOR_SLIDER_POS_Y + 14) + (adjustment_frame_Scroll_cnt == 0 ? 0 : adjustment_frame_Scroll_cnt * 19), SCROLLBAR_CURSOR_SLIDER_SIZE_X, SCROLLBAR_CURSOR_SLIDER_SIZE_Y);
-}
-
-void AnimatePosMenuFrame(void)
-{
-	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
-	BSP_LCD_FillRect(POS_VALUE_X, POS_VALUE_Y,RESET_BUTTON_X - POS_VALUE_X,RESET_BUTTON_SIZE_Y);
-    BSP_LCD_SetBackColor(LCD_COLOR_GRAY);
-    BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
-    BSP_LCD_DisplayStringAt(POS_VALUE_X, POS_VALUE_Y, intToStr(PC_GetParams()->curPoz), LEFT_MODE);
-	
 }

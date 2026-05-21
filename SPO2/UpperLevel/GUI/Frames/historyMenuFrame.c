@@ -7,6 +7,7 @@ int8_t startHistoryMenuFrame = 0;
 
 static button_t menuLines[5]; 
 static void createFrame();
+static void RefreshScrollBarHistoryMenuFrame();
 static void calcButParam();
 
 
@@ -19,7 +20,9 @@ int ShowHistoryMenuFrame(void)
     {
 		 if(updateFlags.sec == true){
             drawClock();
+            drawMainStatusBar(144, 2305, 16);
             updateFlags.sec = false;
+            sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
          }
 			/*Buttons pressed*/
          if(retBut.isPressed == true){
@@ -60,14 +63,14 @@ int ShowHistoryMenuFrame(void)
                 BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[3].y + 9,ITEM_HISTORY_MENU[3],LEFT_MODE);
                 menuLines[3].isPressed = false;
          }
-//         if(menuLines[4].isPressed == true){
-//                //Make it blue
-//                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
-//                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-//                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_MENU[4],LEFT_MODE);
-//                menuLines[4].isPressed = false;
-//         }
+         if(menuLines[4].isPressed == true){
+                //Make it blue
+                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
+                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_HISTORY_MENU[4],LEFT_MODE);
+                menuLines[4].isPressed = false;
+         }
          if(scrollUpBut.isPressed == true){
                 //Make it blue
                 scrollUpBut.isPressed = false;
@@ -115,17 +118,17 @@ int ShowHistoryMenuFrame(void)
          }
 				
          if(menuLines[1].isReleased == true){
-                if(ShowHistoryWaterFrame() == 1) return 1;
+                ShowHistoryWaterFrame();
                 menuLines[1].isReleased = false;
                 createFrame();
          }
          if(menuLines[2].isReleased == true){
-                if(ShowHistoryMaxWaterFrame() == 1) return 1;
+                ShowHistoryMaxWaterFrame();
                 menuLines[2].isReleased = false;
                 createFrame();
          }
          if(menuLines[3].isReleased == true){
-                if(ShowHistoryErrorsFrame() == 1) return 1;
+                ShowHistoryErrorsFrame();
                 menuLines[3].isReleased = false;
                 createFrame();
          }
@@ -138,7 +141,7 @@ int ShowHistoryMenuFrame(void)
 	}
 }
 void createFrame(void){
-    
+    if (goHome) return;
     drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY);
     
     drawMainWindow();
@@ -147,9 +150,10 @@ void createFrame(void){
     drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
     
     drawMainStatusBar(144, 2305, 16);
+	
     //drawStatusBarEmpty();
     
-    drawClock();
+    drawClock(); drawMainStatusBar(144, 2305, 16);
     
     drawStaticLines();
     
@@ -166,30 +170,30 @@ void createFrame(void){
   calcButParam();
 }
 
-//void RefreshScrollBarMenuFrame()
-//{       
-//    if(history_menu_frame_was_Scroll == 1 || history_menu_frame_was_Scroll == 2){
-//        calcButParam();
-//        
-//        drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
-//        
-//        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt].x, menuLines[history_menu_frame_Scroll_cnt].y, menuLines[history_menu_frame_Scroll_cnt].xSize, menuLines[history_menu_frame_Scroll_cnt].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 1].x, menuLines[history_menu_frame_Scroll_cnt + 1].y, menuLines[history_menu_frame_Scroll_cnt + 1].xSize, menuLines[history_menu_frame_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 2].x, menuLines[history_menu_frame_Scroll_cnt + 2].y, menuLines[history_menu_frame_Scroll_cnt + 2].xSize, menuLines[history_menu_frame_Scroll_cnt + 2].ySize, LCD_COLOR_WHITE);
-//        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 3].x, menuLines[history_menu_frame_Scroll_cnt + 3].y, menuLines[history_menu_frame_Scroll_cnt + 3].xSize, menuLines[history_menu_frame_Scroll_cnt + 3].ySize, LCD_COLOR_WHITE);
-//        
-//        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-//        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_MENU[history_menu_frame_Scroll_cnt],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_MENU[history_menu_frame_Scroll_cnt + 1],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_MENU[history_menu_frame_Scroll_cnt + 2],LEFT_MODE);
-//        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_MENU[history_menu_frame_Scroll_cnt + 3],LEFT_MODE);
-//        
-//        drawStaticLines();
-//        
-//        history_menu_frame_was_Scroll = 0;
-//    }
-//}
+void RefreshScrollBarHistoryMenuFrame()
+{       
+    if(history_menu_frame_was_Scroll == 1 || history_menu_frame_was_Scroll == 2){
+        calcButParam();
+        
+        drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
+        
+        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt].x, menuLines[history_menu_frame_Scroll_cnt].y, menuLines[history_menu_frame_Scroll_cnt].xSize, menuLines[history_menu_frame_Scroll_cnt].ySize, LCD_COLOR_WHITE);
+        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 1].x, menuLines[history_menu_frame_Scroll_cnt + 1].y, menuLines[history_menu_frame_Scroll_cnt + 1].xSize, menuLines[history_menu_frame_Scroll_cnt + 1].ySize, LCD_COLOR_WHITE);
+        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 2].x, menuLines[history_menu_frame_Scroll_cnt + 2].y, menuLines[history_menu_frame_Scroll_cnt + 2].xSize, menuLines[history_menu_frame_Scroll_cnt + 2].ySize, LCD_COLOR_WHITE);
+        drawFillArcRec(menuLines[history_menu_frame_Scroll_cnt + 3].x, menuLines[history_menu_frame_Scroll_cnt + 3].y, menuLines[history_menu_frame_Scroll_cnt + 3].xSize, menuLines[history_menu_frame_Scroll_cnt + 3].ySize, LCD_COLOR_WHITE);
+        
+        BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+        BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 1],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 2],LEFT_MODE);
+        BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 3],LEFT_MODE);
+        
+        drawStaticLines();
+        
+        history_menu_frame_was_Scroll = 0;
+    }
+}
 
 void calcButParam()
 {

@@ -86,6 +86,124 @@ WTC/NewMem/NewMem/Project Logs for NewMem/
 
 info/Manuals/~$логика платы головы.xlsx
 
+SPO2/MDK-ARM/SPO.uvguix.Andrey
+
+PCB_v3/__Previews/
+
+PCB_v3/Project Logs for WTC_SPI_v2/
+
+PCB_v3/Project Outputs for WTC_SPI_v2/
+
+Vertelka/Vartelka_PCB/Project Logs for Vartelka_PCB/
+
+Vertelka/Vartelka_PCB/__Previews/
+
+PCB_v2_2/__Previews/
+
+PCB_v2_2/Project Logs for WTC_SPI_v2/
+
+PCB_v2_2/Project Outputs for WTC_SPI_v2/
+
+PCB_v3/=CurrentDate/
+
 SPO2/MDK-ARM/SPO/
 
-SPO2/MDK-ARM/SPO.uvguix.Andrey
+~$проблемы с ПО 31.07.2024 (вер 1.8).xlsx
+
+PCB_v3/Project Logs for WTC_SPI_v3/
+
+SPO2/MDK-ARM/SPO.uvoptx
+
+rs232logger/
+
+SPO2/MDK-ARM/SPO.uvguix.bogdanov.ai
+
+
+
+~$проблемы с ПО 26.12.2024 (вер 1.15).xlsx
+
+SPO2/MDK-ARM/SPO.uvguix.Alexandr
+
+SPO2/Core_ProdTest/
+
+SPO2/MDK-ARM/RTE/_Debug/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_GD_Prod_Test/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_ProductionTest/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_Test_Version/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM0/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM3/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM4_FP/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM7_SP/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM0/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM3/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM4_FP/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM7_SP/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM0/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM3/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM4_FP/RTE_Components.h
+
+SPO2/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM7_SP/RTE_Components.h
+
+SPO2/GD32F30x_Firmware_Library_V3.0.2/Template/Keil5_project/RTE/_GD32F30X_CL/RTE_Components.h
+
+SPO2/GD32F30x_Firmware_Library_V3.0.2/Template/Keil5_project/RTE/_GD32F30X_HD/RTE_Components.h
+
+SPO2/GD32F30x_Firmware_Library_V3.0.2/Template/Keil5_project/RTE/_GD32F30X_XD/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_GD_SPO/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_NewPCB/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_SmallSPO/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_SPO/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_Test_Versio/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_Test/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_TestForPCB/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM0/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM3/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM4_FP/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10/RTE/_ARMCM7_SP/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM0/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM3/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM4_FP/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/Examples/ARM/arm_nn_examples/gru/RTE/_ARMCM7_SP/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM0/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM3/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM4_FP/RTE_Components.h
+
+WTC_Head_Soft/Drivers/CMSIS/NN/NN_Lib_Tests/nn_test/RTE/_ARMCM7_SP/RTE_Components.h
+
+WTC_Head_Soft/MDK-ARM/RTE/_WTC_Head_Soft/RTE_Components.h
+
+SPO2/MDK-ARM/RTE/_Debug/RTE_Components.h

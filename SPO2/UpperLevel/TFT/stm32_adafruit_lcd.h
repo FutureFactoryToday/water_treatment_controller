@@ -77,6 +77,7 @@
 #define LCD_COLOR_WHITEBLUE     0x0397  // 0xcf1E
 #define LCD_COLOR_BLUE          0x1147
 #define LCD_COLOR_RED           0xF800
+#define LCD_COLOR_PALERED       0xD902
 #define LCD_COLOR_GREEN         0x07E0
 #define LCD_COLOR_CYAN          0x07FF
 #define LCD_COLOR_MAGENTA       0xF81F
@@ -84,6 +85,8 @@
 #define LCD_COLOR_WHITE         0xFFFF
 #define LCD_COLOR_DARKBLUE      0x1947
 #define LCD_COLOR_PHANTOMBLUE   0x6b6d
+#define LCD_COLOR_DARKYELLOW 		0xFEA0
+#define LCD_COLOR_GEYSER_GREEN	0x2445
   
 //-----------------------------------------------------------------------------
 /* Interface section (no modify) */   
@@ -126,7 +129,7 @@ typedef enum
 #define LCD_ERROR      0x01
 #define LCD_TIMEOUT    0x02
 
-#if LCD_REVERSE == 1
+#if LCD_REVERSE16 == 1
 #define  RC(a)   ((((a) & 0xFF) << 8) | (((a) & 0xFF00) >> 8))
 #else
 #define  RC(a)   a
@@ -156,7 +159,7 @@ void     BSP_LCD_Clear(uint16_t Color);
 void     BSP_LCD_ClearStringLine(uint16_t Line);
 void     BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *ptr);
 uint32_t     BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Line_ModeTypdef Mode);
-void     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar);
+uint32_t     BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t* Ascii, bool ruChar);
 
 void     BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGB_Code);
 void     BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length);
@@ -182,6 +185,9 @@ void     BSP_LCD_DrawRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, ui
 void     BSP_LCD_ReadRGB16Image(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint16_t *pData);
 void     BSP_LCD_Scroll(int16_t Scroll, uint16_t TopFix, uint16_t BottonFix);
 
+void BSP_LCD_DrawBuffer_Start(uint16_t xStart, uint16_t yStart, uint16_t xSize, uint16_t ySize, uint32_t color);
+void BSP_LCD_DrawBuffer_Stop(void);
+void BSP_LCD_DrawBuffer_Flush();
 
 void BSP_BL_Control (uint8_t BL);
 #ifdef __cplusplus

@@ -41,8 +41,8 @@ wtc_time_t CSF_showFrame(wtc_time_t* time){
 	while(1)
     {
         if (updateFlags.sec == true){
-            //drawClock();
-            updateFlags.sec = false;
+            // drawClock(); drawMainStatusBar(144, 2305, 16);
+            updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
         }
         //Pressed
         if (hourBut.isPressed == true){
@@ -56,7 +56,7 @@ wtc_time_t CSF_showFrame(wtc_time_t* time){
         //Released
         if (hourBut.isReleased == true){
             int16_t time = ShowKeyboardFrame(0,23);
-            if (time > 0){
+            if (time >= 0){
                 displayedTime.hour = time;
             }
             hourBut.isReleased = false;
@@ -65,7 +65,7 @@ wtc_time_t CSF_showFrame(wtc_time_t* time){
         
         if (minBut.isReleased == true){
             int16_t time = ShowKeyboardFrame(0,59);
-            if (time > 0){
+            if (time >= 0){
                 displayedTime.minute = time;
             }
             minBut.isReleased = false;

@@ -1,4 +1,8 @@
 #include "mainFrame.h"
+#include "FlashIC/W25.h"
+#define NEXT_STEP_DELAY 2*10
+
+
 uint8_t* FormatTime = "hh:mm";
 int32_t remainingDays;
 bool showDays;
@@ -6,128 +10,484 @@ uint8_t hwndMainFrameControl = 0;
 int8_t startMainFrame = 1;
 uint8_t* dayText;
 uint8_t* timeText;
-uint8_t* valText, *unitsText;
-task_line_t *shownStep;
+uint8_t *valText, *unitsText;
+bool shownServiceMessage;
+bool shownErrorMessage;
+bool shownManualMessage;
+uint32_t shownStep;
 static time_t displayedTime;
 bool update;
-bool stepShow;
-static button_t regenBut, menuBut, contactsBut; 
-static void createFrame (void);
+bool stepShow, errorShown;
+static button_t regenBut, menuBut, contactsBut;
+static void createFrame(void);
 void updateRemTime(void);
 void showStepName(void);
 void clearShownStep(void);
-//void RefreshMainFrame(void);
+void showInOut(void);
+void showMessage(void);
 
-void ShowMainFrame(void)
-{
-	stepShow = false;
-//	dayText = ITEM_MAIN_FRAME[DELAY_REGEN_UNITS];
-//	timeText = ITEM_MAIN_FRAME[TIME_UNITS];
-	//shownStep = planner.currentStep;
-	createFrame();
+// void RefreshMainFrame(void);
+extern uint8_t frameBuffer[];
+static bool enableMenu, enableWash; 
+uint32_t color, c; 
+uint32_t error = 0, oldError;
+uint32_t memBaseAdr;
+	#ifdef WDT_TEST_1
+	static uint8_t menuButCnt = 0;
+	static uint32_t oldTimeMenuBtnTouch;
+	bool wdt1While;
+	#endif
 	
-	while(1)
-	{		
-		if (updateFlags.sec == true){
-			drawClock();
-			if (planner.status == PL_WORKING){
-				updateRemTime();
+	#ifdef WDT_TEST_2
+	static uint8_t regButCnt = 0;
+	static uint32_t oldTimeRegenBtnTouch;
+	bool wdt2While;
+	#endif
+	
+	#ifdef WDT_TEST_2
+	static uint8_t regButCnt = 0;
+	static uint32_t oldTimeRegenBtnTouch;
+	bool wdt2While;
+	#endif
+	
+	#ifdef ENABLE_MEM_READ
+	static uint8_t regButCnt = 0;
+	static uint32_t oldTimeRegenBtnTouch;
+	static bool errorSector = false;
+	#endif
+	#ifdef LOG_TEST_FILL
+	static uint8_t oldFillCnt, oldWashNum;
+	static bool enableLogFill = false;
+	#endif
+void ShowMainFrame(void) {
+
+	#ifdef WDT_TEST_1
+		menuButCnt = 0;
+		oldTimeMenuBtnTouch = HAL_GetTick();
+		wdt1While = false;
+	#endif
+	
+	#ifdef ENABLE_MEM_READ
+		uint8_t regButCnt = 0;
+		oldTimeRegenBtnTouch = HAL_GetTick();
+	#endif
+		
+	#ifdef LOG_TEST_FILL
+	sysParams.consts.storedDayValueNum = 0;
+	oldFillCnt = sysParams.consts.storedDayValueNum+1;	
+	oldWashNum = sysParams.consts.storedWashNum+1;
+		#endif
+  createFrame();
+  
+	while (1) {
+	  
+    if (updateFlags.sec == true) {
+			if (sysParams.vars.status.flags.AllInited){
+					if (screenSaveDelay){
+						screenSaveDelay--;
+					} else {
+						#if !(defined(TEST_VERSION)&&defined(BLOCK_SCREEN_SAVE))
+						ShowScreensaverFrame();
+						createFrame();
+						#endif
+					}	
+			#ifdef 	LOG_TEST_FILL	  
+				if (enableLogFill && sysParams.consts.storedDayValueNum < DAYS_TO_STORE && sysParams.consts.storedDayValueNum != oldFillCnt &&  sysParams.consts.storedWashNum != oldWashNum){
+					sysParams.vars.sysTime = addDay(&sysParams.vars.sysTime,1);
+					sysParams.consts.maxWaterUsage = sysParams.consts.storedDayValueNum;
+					sysParams.consts.dayWaterUsage = sysParams.consts.storedDayValueNum;
+					sysParams.vars.status.flags.LogWash = true;
+					oldFillCnt = sysParams.consts.storedDayValueNum;
+					oldWashNum = sysParams.consts.storedWashNum;
+				}
+				if (sysParams.consts.storedDayValueNum >= DAYS_TO_STORE){
+					LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+				}
+			#endif //LOG_TEST_FILL
 			}
-			updateFlags.sec = false;
-		}
-		if (planner.status == PL_WORKING){
-			if (planner.currentStep != shownStep){
-//                if((planner.currentStep+1) != NULL){
-//                    showStepName();
-//                    updateRemTime();
-//                }
-				TC_clearButtons();
-				TC_addButton(&regenBut);
-                drawFillCustomButton(25, 80, 200, 60, "СЛЕДУЮЩАЯ", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
-				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, false);
-				shownStep = planner.currentStep;
-				stepShow = true;
+      drawClock();
+      drawMainStatusBar(144, 2305, 16);
+      if (sysParams.consts.planerConsts.status == PL_WORKING) {
+        updateRemTime();
+      }
+			if (sysParams.vars.status.flags.NeedService == 0){
+				showInOut();
 			}
+//			if (enableMenu == false && sysParams.consts.planerConsts.status != PL_WORKING){
+//			 enableMenu = true;
+//			}
+      updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+    }
+		if (sysParams.consts.planerConsts.status == PL_NOT_SET) {
+//			if (enableWash == true){
+//				drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
+//                             LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE, false);
+//			}
+			enableWash = false;
 		} else {
-			if (stepShow == true){
-				clearShownStep();
-                //drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
-				//drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, false);
-				TC_addButton(&menuBut);
-				stepShow = false;
-                createFrame();
+//			if (enableWash == false){
+//				drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
+//                             LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, false);
+//			}
+			enableWash = true;
+		}
+    if (sysParams.consts.planerConsts.status == PL_WORKING) {
+      if (*sysParams.vars.planer.currentStep->poz != shownStep) {
+        shownStep = *sysParams.vars.planer.currentStep->poz;
+				if (shownManualMessage){ 
+					clearShownStep();
+					shownManualMessage = false;
+				}
+        showStepName();
+
+				enableMenu = false;
+				BSP_LCD_SetFont(&Oxygen_Mono_20);
+        drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "СЛЕДУЮЩАЯ", &gImage_DROPBUT,
+                             LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+        drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
+                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,
+                             false);
+
+        stepShow = true;
+      }
+    } else {
+      if (stepShow == true) {
+        clearShownStep();
+				BSP_LCD_SetFont(&Oxygen_Mono_20);
+        drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
+                             LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+        drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ", &gImage_WRENCHBUT,
+                             LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+        enableMenu = true;
+        stepShow = false;
+				shownStep = 0;
+        // createFrame();
+      }
+			showMessage();
+    }
+    
+    /*Button pressed*/
+	
+    if (regenBut.isPressed == true){
+			#ifdef LOG_TEST_FILL
+					enableLogFill = true;
+			#endif
+			if (enableWash){
+				if (regenBut.pressCnt > NEXT_STEP_DELAY) {
+					PL_planer(FORCE_START_NOW);
+					// drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
+					// true);
+					regenBut.pressCnt = 0;
+					regenBut.isPressed = false;
+				}
 			}
+    }
+		if (enableMenu && menuBut.isPressed == true){ 
+			if (menuBut.drawPressed == false){
+				drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
+                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
+				menuBut.drawPressed = true;
+			}
+			if (menuBut.pressCnt > NEXT_STEP_DELAY) {
+				goHome = false;
+				ShowMainMenuFrame();
+				// drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_DROPBUT, true);
+				menuBut.isPressed = false;
+				createFrame();
+			}
+			
 		}
+
+    /*Buttons releases*/
+    if (regenBut.isReleased == true ) {
+      #ifdef WDT_TEST_2
+			uint32_t time2 = HAL_GetTick();
+			if (time2 - oldTimeRegenBtnTouch < 400){
+				regButCnt++;
+				
+				if (regButCnt > 5){
+					wdt2While = true;
+				}
+			} else {
+				regButCnt = 0;
+			}
+			oldTimeRegenBtnTouch = HAL_GetTick();
+			#endif
+			#ifdef ENABLE_MEM_READ
+			uint32_t time2 = HAL_GetTick();
+			if (time2 - oldTimeRegenBtnTouch < 400){
+				regButCnt++;
+				
+				if (regButCnt > 5){
+					//UL_StartMemoryRead(memBaseAdr);
+
+					FP_Manual_RAM_Read(&memBuf, WATER_QUANT_SECTOR_ADDR, 128, NULL);
+				}
+			} else {
+				regButCnt = 0;
+			}
+			oldTimeRegenBtnTouch = HAL_GetTick();
+			#endif
+      regenBut.isReleased = false;
+      // createFrame();
 		
-		
-		/*Button pressed*/
-        if (regenBut.isPressed == true){
-			//drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT, true);
-			regenBut.isPressed = false;
+    }
+    if (menuBut.isReleased == true) {
+			#ifdef WDT_TEST_1
+			uint32_t time1 = HAL_GetTick();
+			if (time1 - oldTimeMenuBtnTouch < 400){
+				menuButCnt++;
+				
+				if (menuButCnt > 5){
+					wdt1While = true;
+				}
+			} else {
+				menuButCnt = 0;
+			}
+			oldTimeMenuBtnTouch = HAL_GetTick();
+			if (wdt1While){
+				while(1);
+			}
+			#endif
+			#ifdef ENABLE_MEM_READ
+			uint32_t time2 = HAL_GetTick();
+			if (time2 - oldTimeRegenBtnTouch < 400){
+				regButCnt++;
+				
+				if (regButCnt > 5){
+					//UL_StartMemoryRead(memBaseAdr);
+					if (!errorSector){
+						uint8_t num = (sysParams.consts.storedEntryNum < 10)?0:(sysParams.consts.storedEntryNum - 10);
+						FP_Manual_RAM_Read(&memBuf, ERROR_SECTOR_ADDR + 12*num, 128, NULL);
+					} else {
+						FP_Manual_RAM_Read(&memBuf, WATER_USAGE_SECTOR_ADDR, 128, NULL);
+					}
+				}
+			} else {
+				regButCnt = 0;
+			}
+			oldTimeRegenBtnTouch = HAL_GetTick();
+			#endif
+      //ShowMainMenuFrame();
+			if (enableMenu){
+				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
+				menuBut.drawPressed = false;
+			}
+      menuBut.isReleased = false;
+      //createFrame();
+    }
+
+  }
+}
+
+void createFrame(void) {
+	goHome = false;
+  stepShow = false;
+	shownManualMessage = false;
+  enableMenu = true;
+  enableWash = true;
+	shownStep = 0;
+  errorShown = false;
+  shownServiceMessage = false;
+  shownErrorMessage = false;
+  TC_clearButtons();
+  drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
+
+  drawMainWindow();
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+  regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
+                                  LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+  menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,
+                                 LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+  // contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
+	menuBut.drawPressed = false;
+	regenBut.drawPressed = false;
+  drawMainStatusBar(144, 2305, 16);
+
+  drawClock();
+  showInOut();
+  /*Add Buttons*/
+  TC_addButton(&regenBut);
+  TC_addButton(&menuBut);
+
+  enableClockDraw = true;
+}
+#define X_START 26
+#define Y_START 150
+#define X_SIZE 428
+#define Y_SIZE 55
+void showMessage(void){
+	bool yesError = false;
+	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
+	 BSP_LCD_SetFont(&Oxygen_Mono_20);
+	if (sysParams.vars.status.flags.NeedService == 1){
+		if (shownServiceMessage == false){
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			drawFillArcRec(X_START, 215, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
+			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+			BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
+
+			BSP_LCD_DisplayStringAt(X_START + 50, 215,"Необходимо провести сервисное", LEFT_MODE);
+			uint32_t offset = BSP_LCD_DisplayStringAt(X_START + 70, 215 + 25,"обслуживание! +", LEFT_MODE);
+			BSP_LCD_DisplayStringAt(X_START + 70 + offset, 215 + 25,intToStr(sysParams.consts.ServicePhoneNumber), LEFT_MODE);
+			shownServiceMessage = true;
 		}
-		if (menuBut.isPressed == true){
-			//drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_DROPBUT, true);
-			menuBut.isPressed = false;
+		BSP_LCD_SetFont(oldFont);
+	} else {
+		if (shownServiceMessage == true){
+			drawFillArcRec(X_START, 215, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+			shownServiceMessage = false;
 		}
-        if (contactsBut.isPressed == true){
-			//drawFillButton(260, 200, 200, 60, "Контакты", true);
-			contactsBut.isPressed = false;
+	}		
+	//One Message
+//	if ((sysParams.vars.error.flags.PistonFail == 1 || sysParams.vars.error.flags.MotorFail == 1)){
+//		if (!shownErrorMessage){
+//			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_PALERED);
+//			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
+//			BSP_LCD_SetFont(&Oxygen_Mono_20);
+//			BSP_LCD_DisplayStringAt(X_START + 30, Y_START + Y_SIZE/4,"ОТСУТСТВИЕ ВРАЩЕНИЯ ШЕСТЕРНИ", LEFT_MODE);
+//			
+//			shownErrorMessage = true;
+//		}
+//		BSP_LCD_SetFont(oldFont);
+//	}	else {
+//		if (shownErrorMessage){
+//			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+//			shownErrorMessage = false;
+//		}
+//	}
+	if (sysParams.vars.error.flags.PistonFail == 1){
+		if (sysParams.vars.error.flags.PistonLongRun){
+			error = 16;
 		}
-       
-        
-		/*Buttons releases*/
-        if (regenBut.isReleased == true){
-			PL_Planner(FORCE_START_NOW);
-			regenBut.isReleased = false;
-			createFrame();
+		if (sysParams.vars.error.flags.PistonStallFail){
+			error = 14;
 		}
-		if (menuBut.isReleased == true){
-            ShowMainMenuFrame();
-			menuBut.isReleased = false;
-			createFrame();
+		if (!shownErrorMessage || error != oldError){
+					
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_PALERED);
+			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
+			BSP_LCD_SetFont(&Oxygen_Mono_20);
+			BSP_LCD_DisplayStringAt(X_START + X_SIZE/2, Y_START + Y_SIZE/4, ITEM_HISTORY_ERROR[error], CENTER_MODE);
+            
+			shownErrorMessage = true;
 		}
-        if (contactsBut.isReleased == true){
-            ShowAlarmNotiServiceFrame();   
-			contactsBut.isReleased = false;
-            createFrame();
+		oldError = error;
+		//BSP_LCD_SetFont(oldFont);
+	}	else {
+		if (shownErrorMessage){
+			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+			shownErrorMessage = false;
+		} else {
+//			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
+//				if (shownManualMessage == false){
+//					BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+//					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
+//					BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+//					BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
+//					BSP_LCD_SetFont(&Oxygen_Mono_20);
+//					BSP_LCD_DisplayStringAt(X_START + 5, Y_START + Y_SIZE/4,"Необходимо запустить промывку вручную", LEFT_MODE);
+//					shownManualMessage = true;
+//					BSP_LCD_SetFont(oldFont);
+//				}
+//			} else {
+				if (shownManualMessage){
+					drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+				}
+				shownManualMessage = false;
+//			}
+			
 		}
 	}
+//	if (shownMessage != 0){
+//		drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_WHITE);
+//		shownMessage = 0;
+//	}
+}
+void showInOut(void) {
+  uint8_t offset = X_START;
+
+  //if (sysParams.vars.status.flags.ExternalCommandOn == 1) {
+	if((!LL_GPIO_IsInputPinSet(DP_SWITCH_GPIO_Port, DP_SWITCH_Pin)&&!sysParams.vars.error.flags._5VPowerFail)){
+		if (LL_RTC_TIME_Get(RTC)&0x01){
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK,
+                        LCD_COLOR_YELLOW);
+		} else {
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+		}
+  } else {
+    drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+  }
+  offset += 60 + 20;
+  if (sysParams.vars.status.flags.RelDCOn == 1) {
+		if (LL_RTC_TIME_Get(RTC)&0x01){
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_BLACK,
+                        LCD_COLOR_WHITEBLUE);
+		} else {
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+		}
+  } else {
+    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+  }
+  offset += 60 + 20;
+  if (sysParams.vars.status.flags.RelACOn == 1) {
+		if (LL_RTC_TIME_Get(RTC)&0x01){
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
+                        LCD_COLOR_BLUE);
+		} else {
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+		}
+  } else {
+    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
+                        LCD_COLOR_WHITE);
+  }
 }
 
-void createFrame (void){
-	TC_clearButtons();
+void updateRemTime(void) {
+//  wtc_time_t remTime =
+//      intToWTCTime(sysParams.vars.planer.currentTask->remainingTime);
+	uint32_t time;
+	uint8_t* text;
+	if (sysParams.vars.planer.currentTask->remainingTime > 60){
+		time = sysParams.vars.planer.currentTask->remainingTime/60;
+		text = " мин";
+	} else {
+		time = sysParams.vars.planer.currentTask->remainingTime;
+		text = " сек";
+	}
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	drawFillArcRec(355, 145, 100, 60, LCD_COLOR_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetBackColor(LCD_COLOR_GREEN);
 	
-	drawMainBar(false, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
-	
-	drawMainWindow();
-	
-	regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT, LCD_COLOR_DARKBLUE, false);
-	menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, false);
-	//contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
-	
-	drawMainStatusBar(144, 2305, 16);
-	
-	drawClock();
-	
-	/*Add Buttons*/
-	TC_addButton(&regenBut);
-	TC_addButton(&menuBut);
-	
-	enableClockDraw = true;
+	uint8_t offset = BSP_LCD_DisplayStringAt(400, 160, intToStr(time), RIGHT_MODE);
+	BSP_LCD_DisplayStringAt(400, 160,text, LEFT_MODE);
+//  drawCustomTextLabel(355, 145, 100, 60, intToStr(time),
+//                      //getFormatedTimeFromSource("mm:ss", &remTime),
+//                      LCD_COLOR_BLACK, LCD_COLOR_GREEN);
 }
 
-
-void updateRemTime(void){
-	wtc_time_t remTime = intToWTCTime(planner.currentTask->startDateTime - getRTC());
-	drawCustomTextLabel(355, 160, 100, 60, getFormatedTimeFromSource("mm:ss",&remTime),LCD_COLOR_BLACK,LCD_COLOR_GREEN);
+void showStepName(void) {
+  int8_t pozNum = PC_pozNum(sysParams.vars.planer.currentStep->poz);
+	if (pozNum == 4) pozNum = 5;
+	if (pozNum == 3){
+		drawCustom2TextLabel(25, 145, 300, 60, ITEM_STEPS[pozNum],ITEM_STEPS[pozNum+1], LCD_COLOR_BLACK, LCD_COLOR_GREEN);	
+	} else {
+		drawCustomTextLabel(25, 145, 300, 60, ITEM_STEPS[pozNum], LCD_COLOR_BLACK, LCD_COLOR_GREEN);
+	}
+ 
 }
 
-void showStepName(void){
-    int8_t poz_t = PC_pozNum(planner.currentStep->poz);
-    drawCustomTextLabel(25, 160, 300, 60, ITEM_STEPS[poz_t],LCD_COLOR_BLACK,LCD_COLOR_GREEN);
-}
-
-void clearShownStep(void){
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_FillRect(25,160,450,61);
+void clearShownStep(void) {
+  BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+  BSP_LCD_FillRect(25, 145, 450, 61);
 }

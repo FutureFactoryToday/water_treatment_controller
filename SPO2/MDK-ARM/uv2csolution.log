@@ -1,0 +1,9 @@
+2 out of 2 target(s) converted
+Created solution: E:/MyData/Projects/water_treatment_controller/SPO2/MDK-ARM/SPO.csolution.yml
+With projects:
+- E:/MyData/Projects/water_treatment_controller/SPO2/MDK-ARM/SPO.cproject.yml
+Error: 0 error(s), 2 warning(s):
+Warnings:
+	<Target> "SPO" File 'E:/MyData/Projects/water_treatment_controller/SPO2/MidLevel' not matched
+	<Target> "TestForPCB" File 'E:/MyData/Projects/water_treatment_controller/SPO2/MidLevel' not matched
+Process failed with exit code 1

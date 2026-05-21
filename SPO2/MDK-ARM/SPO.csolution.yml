@@ -1,0 +1,13 @@
+solution:
+  created-by: uv2csolution@1.3.0
+  created-for: CMSIS-Toolbox@2.2.0
+  compiler: AC6@6.21.0
+  target-types:
+    - type: SPO
+      device: STM32F103RG
+      optimize: none
+    - type: TestForPCB
+      device: STM32F103RG
+      optimize: none
+  projects:
+    - project: SPO.cproject.yml

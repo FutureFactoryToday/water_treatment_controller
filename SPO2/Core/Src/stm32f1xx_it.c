@@ -41,7 +41,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+bool oddSec;
+uint8_t _100HzCnt;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,7 +56,17 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern DMA_HandleTypeDef hdma_adc1;
+extern DMA_HandleTypeDef hdma_adc3;
+extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc3;
+extern I2C_HandleTypeDef hi2c2;
+extern DMA_HandleTypeDef hdma_spi1_rx;
+extern DMA_HandleTypeDef hdma_spi1_tx;
+extern SPI_HandleTypeDef hspi1;
+extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim12;
+extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -71,6 +82,7 @@ void NMI_Handler(void)
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
+  HAL_RCC_NMI_IRQHandler();
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   while (1)
   {
@@ -183,26 +195,39 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	if (touchDelay)
-		touchDelay--;
-	#ifdef ST7796S;
-		if (touchCheckDelay-- > 0){	
-			if (touchCheckDelay == 0){
-				TC_Interrupt(1);
-			}
+
+#ifdef ST7796S;
+	if (touchCheckDelay > 0){
+		touchCheckDelay--;
+		if (touchCheckDelay == 0){
+			TC_Interrupt(1);
 		}
-	#endif
+	}
+#endif
 	_1ms_cnt++; 
-//	if (_1ms_cnt%500 == 0){
-//		LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
-//	}
 	if (_1ms_cnt%100 == 0){
 		#ifdef ILI9488
 		TC_checkButtons();
 		#endif
 	}
+#if !defined(PROD_TEST) && !defined(DEBUG)
+//	if (sysParams.vars.status.flags.AllInited){
+//		if (screenSaveDelay){
+//			screenSaveDelay--;
+//			BSP_BL_Control(sysParams.consts.baseBLValue);
+//		} else {
+//			//screenSave = true;
+//			BSP_BL_Control(sysParams.consts.screenSaveBLValue);
+//		}	
+//	}
+	
+#else
+	
+#endif
+	FM_Meter_Test();
+	FP_StartStore();
   /* USER CODE END SysTick_IRQn 0 */
-
+  HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -221,46 +246,120 @@ void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-	updateFlags.sec = true;
-	RTC_Interrupt();
-	LL_RTC_ClearFlag_SEC(RTC);
 	
- PL_Interrupt();
-	//FM_incFlowMeter();
-//	if (enableClockDraw){
-//		//drawClock();
-//	}
+	if (wtcTimeToInt(&sysParams.vars.sysTime) > LL_RTC_TIME_Get(RTC)){
+		setSysTime(&sysParams.vars.sysTime);
+	}
+	
+	RTC_Interrupt();
+	sysParams.vars.rtcTime = LL_RTC_TIME_Get(RTC);
+	
+	if (sysParams.vars.status.flags.AllInited == 0){
+		LL_RTC_ClearFlag_SEC(RTC);
+		return;
+	}
+#if !defined(PROD_TEST)
+	FP_SaveParam();
+	LOG_Interrupt();
+	//FP_StartStore();
+	
+	//noTouchDelay++;
+	if (noTouchDelay){
+		noTouchDelay--;
+	} else {
+		#if !defined(DEBUG) && !(defined (TEST_VERSION) && defined (BLOCK_GO_HOME))
+		goHome = true;
+		#endif
+	}
+	UL_LogText("Time:", sysParams.vars.rtcTime);
+	UL_LogCond();
+
+	sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
+#else
+	
+#endif
+	
   /* USER CODE END RTC_IRQn 0 */
   /* USER CODE BEGIN RTC_IRQn 1 */
-//	if (LL_RTC_IsActiveFlag_ALR(RTC)){
-//		ALARM_INTERRUPT();
-//		LL_RTC_ClearFlag_ALR(RTC);
-//	}
-  
+
+	LL_RTC_ClearFlag_SEC(RTC);
   /* USER CODE END RTC_IRQn 1 */
 }
 
 /**
-  * @brief This function handles EXTI line3 interrupt.
+  * @brief This function handles EXTI line2 interrupt.
   */
-void EXTI3_IRQHandler(void)
+void EXTI2_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
 
-  /* USER CODE END EXTI3_IRQn 0 */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
+  /* USER CODE END EXTI2_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_2) != RESET)
   {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
-    /* USER CODE BEGIN LL_EXTI_LINE_3 */
-		#ifdef ILI9488
-		TC_Interrupt(0);
-		#endif
-   
-    /* USER CODE END LL_EXTI_LINE_3 */
-  }
-  /* USER CODE BEGIN EXTI3_IRQn 1 */
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_2);
+    /* USER CODE BEGIN LL_EXTI_LINE_2 */
 
-  /* USER CODE END EXTI3_IRQn 1 */
+    /* USER CODE END LL_EXTI_LINE_2 */
+  }
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel1 global interrupt.
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel2 global interrupt.
+  */
+void DMA1_Channel2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel2_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_spi1_rx);
+  /* USER CODE BEGIN DMA1_Channel2_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel3 global interrupt.
+  */
+void DMA1_Channel3_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel3_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel3_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_spi1_tx);
+  /* USER CODE BEGIN DMA1_Channel3_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC1 and ADC2 global interrupts.
+  */
+void ADC1_2_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_2_IRQn 0 */
+
+  /* USER CODE END ADC1_2_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_2_IRQn 1 */
+
+  /* USER CODE END ADC1_2_IRQn 1 */
 }
 
 /**
@@ -275,15 +374,33 @@ void EXTI9_5_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
-		#ifdef ST7796S
 		TC_Interrupt(0);
-		#endif
-	
+		
     /* USER CODE END LL_EXTI_LINE_6 */
   }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
   /* USER CODE END EXTI9_5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM1 update interrupt and TIM10 global interrupt.
+  */
+void TIM1_UP_TIM10_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 0 */
+
+  /* USER CODE END TIM1_UP_TIM10_IRQn 0 */
+
+  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
+	if (LL_TIM_IsActiveFlag_UPDATE(LOGIC_TIM)){
+		FM_incFlowMeter();
+
+		SYS_Logic_IT();
+
+		LL_TIM_ClearFlag_UPDATE(LOGIC_TIM);
+	}
+  /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
 }
 
 /**
@@ -294,13 +411,114 @@ void TIM1_TRG_COM_TIM11_IRQHandler(void)
   /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 0 */
 	if(LL_TIM_IsActiveFlag_UPDATE(TIM11)){
 			LL_TIM_ClearFlag_UPDATE(TIM11);
-			PC_Control();
+#ifndef PROD_TEST
+			PL_Interrupt();
+#else
+	
+#endif
+			
+			
 		}
   /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
 
   /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 1 */
 
   /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM3 global interrupt.
+  */
+void TIM3_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM3_IRQn 0 */
+
+  /* USER CODE END TIM3_IRQn 0 */
+  /* USER CODE BEGIN TIM3_IRQn 1 */
+
+  /* USER CODE END TIM3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM4 global interrupt.
+  */
+void TIM4_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM4_IRQn 0 */
+	if(LL_TIM_IsActiveFlag_UPDATE(TIM4)){
+		LL_TIM_ClearFlag_UPDATE(TIM4);
+#ifndef PROD_TEST
+		if (sysParams.vars.status.flags.AllInited){
+				if (sysParams.vars.frameWDTTim){
+					sysParams.vars.frameWDTTim--;
+				} else {
+					while(1);
+				}
+				if (sysParams.vars.secWDTTim){
+					sysParams.vars.secWDTTim--;
+				} else {
+					while(1);
+				}
+			}
+			
+			
+#else
+	
+#endif
+
+		PC_Control();
+		_100HzCnt++;
+		if (_100HzCnt >50){
+			LL_GPIO_TogglePin(ILED_GPIO_Port,ILED_Pin);
+			_100HzCnt = 0;
+		}
+	}
+  /* USER CODE END TIM4_IRQn 0 */
+  /* USER CODE BEGIN TIM4_IRQn 1 */
+
+  /* USER CODE END TIM4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles I2C2 event interrupt.
+  */
+void I2C2_EV_IRQHandler(void)
+{
+  /* USER CODE BEGIN I2C2_EV_IRQn 0 */
+
+  /* USER CODE END I2C2_EV_IRQn 0 */
+  HAL_I2C_EV_IRQHandler(&hi2c2);
+  /* USER CODE BEGIN I2C2_EV_IRQn 1 */
+
+  /* USER CODE END I2C2_EV_IRQn 1 */
+}
+
+/**
+  * @brief This function handles I2C2 error interrupt.
+  */
+void I2C2_ER_IRQHandler(void)
+{
+  /* USER CODE BEGIN I2C2_ER_IRQn 0 */
+
+  /* USER CODE END I2C2_ER_IRQn 0 */
+  HAL_I2C_ER_IRQHandler(&hi2c2);
+  /* USER CODE BEGIN I2C2_ER_IRQn 1 */
+
+  /* USER CODE END I2C2_ER_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SPI1 global interrupt.
+  */
+void SPI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN SPI1_IRQn 0 */
+
+  /* USER CODE END SPI1_IRQn 0 */
+  HAL_SPI_IRQHandler(&hspi1);
+  /* USER CODE BEGIN SPI1_IRQn 1 */
+
+  /* USER CODE END SPI1_IRQn 1 */
 }
 
 /**
@@ -317,30 +535,60 @@ void SPI2_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line[15:10] interrupts.
   */
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
   /* USER CODE END EXTI15_10_IRQn 0 */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_10) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_10);
-    /* USER CODE BEGIN LL_EXTI_LINE_10 */
-		
-    /* USER CODE END LL_EXTI_LINE_10 */
-  }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_11) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_11);
     /* USER CODE BEGIN LL_EXTI_LINE_11 */
 		
-		PC_GetParams()->opticInt = LL_GPIO_IsInputPinSet(OPTIC_GPIO_GPIO_Port, OPTIC_GPIO_Pin);
+		sysParams.vars.pistonParams.opticInt = LL_GPIO_IsInputPinSet(OPTIC_IRQ_GPIO_Port, OPTIC_IRQ_Pin);
     /* USER CODE END LL_EXTI_LINE_11 */
+  }
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15) != RESET)
+  {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
+    /* USER CODE BEGIN LL_EXTI_LINE_15 */
+		sysParams.vars.status.flags.FlowMeterInt = LL_GPIO_IsInputPinSet(METER_IRQ_GPIO_Port, METER_IRQ_Pin);
+
+		//FM_Sense_Interrupt();
+    /* USER CODE END LL_EXTI_LINE_15 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 break interrupt and TIM12 global interrupt.
+  */
+void TIM8_BRK_TIM12_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 0 */
+
+  /* USER CODE END TIM8_BRK_TIM12_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim12);
+  /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 1 */
+
+  /* USER CODE END TIM8_BRK_TIM12_IRQn 1 */
 }
 
 /**
@@ -349,8 +597,8 @@ void EXTI15_10_IRQHandler(void)
 void TIM8_UP_TIM13_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
-	if (LL_TIM_IsActiveFlag_UPDATE(OpticDelayTim)){
-		LL_TIM_ClearFlag_UPDATE(OpticDelayTim);
+	if (LL_TIM_IsActiveFlag_UPDATE(OPTIC_DELAY_TIM)){
+		LL_TIM_ClearFlag_UPDATE(OPTIC_DELAY_TIM);
 		if (opticCnt > 0){
 			opticCnt--;
 		}
@@ -363,10 +611,83 @@ void TIM8_UP_TIM13_IRQHandler(void)
   /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles TIM8 trigger and commutation interrupts and TIM14 global interrupt.
+  */
+void TIM8_TRG_COM_TIM14_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 0 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 0 */
+
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC3 global interrupt.
+  */
+void ADC3_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC3_IRQn 0 */
+
+  /* USER CODE END ADC3_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc3);
+  /* USER CODE BEGIN ADC3_IRQn 1 */
+
+  /* USER CODE END ADC3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt.
+  */
+void TIM6_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_IRQn 0 */
+  /* USER CODE END TIM6_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_IRQn 1 */
+#ifndef PROD_TEST
+		if (LL_RCC_IsActiveFlag_IWDGRST()){
+			__NVIC_SystemReset();
+		}
+#else
+	
+#endif
+	
+
+  /* USER CODE END TIM6_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM7 global interrupt.
+  */
 void TIM7_IRQHandler(void)
 {
-	//FM_OVF_Interrupt();
+  /* USER CODE BEGIN TIM7_IRQn 0 */
+	FM_OVF_Interrupt();
 	LL_TIM_ClearFlag_UPDATE(FLOW_TIM);
+  /* USER CODE END TIM7_IRQn 0 */
+  /* USER CODE BEGIN TIM7_IRQn 1 */
+
+  /* USER CODE END TIM7_IRQn 1 */
 }
+
+/**
+  * @brief This function handles DMA2 channel4 and channel5 global interrupts.
+  */
+void DMA2_Channel4_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Channel4_5_IRQn 0 */
+
+  /* USER CODE END DMA2_Channel4_5_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc3);
+  /* USER CODE BEGIN DMA2_Channel4_5_IRQn 1 */
+
+  /* USER CODE END DMA2_Channel4_5_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+
 /* USER CODE END 1 */

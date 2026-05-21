@@ -52,9 +52,9 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 	while(1)
     {	
 			if (updateFlags.sec){
-				displayedTime = *addSec(&displayedTime,1);
-				//drawClock();
-				updateFlags.sec = false;
+				displayedTime = addSec(&displayedTime,1);
+				// drawClock(); drawMainStatusBar(144, 2305, 16);
+				updateFlags.sec = false; sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
 			} 
 			if (setMonth.isPressed == 1){
 				drawDarkTextLabel(BSP_LCD_GetXSize()/2 + GAP, BSP_LCD_GetYSize()/2 - 10, 150, 40,getFormatedTimeFromSource("MM",&displayedTime));
@@ -81,12 +81,12 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				setMonth.isReleased = 0;
 			}
 			if (setDay.isReleased == 1){
-				int32_t newDay = ShowKeyboardFrame(1, 31);
-				if (newDay > 0) {
-					if (newDay > maxDayInMonth( displayedTime.month,displayedTime.year)){
-						 displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
+				int32_t newDayNum = ShowKeyboardFrame(1, 31);
+				if (newDayNum > 0) {
+					if (newDayNum > maxDayInMonth( displayedTime.month,displayedTime.year)){
+						displayedTime.day = maxDayInMonth(  displayedTime.month,displayedTime.year);
 					} else {
-						displayedTime.day = newDay;
+						displayedTime.day = newDayNum;
 					}
 					
 				}
@@ -94,7 +94,7 @@ wtc_time_t CAL_showFrame(wtc_time_t* time){
 				setDay.isReleased = 0;
 			}
 			if (setYear.isReleased == 1){
-				int32_t newYear = ShowKeyboardFrame(2020, 2050);
+				int32_t newYear = ShowKeyboardFrame(2020, 2250);
 				if (newYear > 0) {
 					displayedTime.year = newYear;
 					if (displayedTime.day > maxDayInMonth( displayedTime.month,displayedTime.year)){
@@ -126,7 +126,7 @@ void createFrame (void){
 
 	TC_clearButtons();
 	BSP_LCD_Clear(MID_COLOR);
-	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
+	drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_MENU[0]);
 	
 	drawStatusBarOkCancel();
 	
@@ -139,6 +139,7 @@ void createFrame (void){
 	TC_addButton(&retBut);
 	TC_addButton(&cancelBut);
 	TC_addButton(&okBut);
+	TC_addButton(&cancelBut);
 }
 
 void drawMonth(){

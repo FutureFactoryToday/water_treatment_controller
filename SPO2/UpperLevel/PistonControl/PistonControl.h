@@ -14,34 +14,20 @@
 
 /*Includes */
 #include "main.h"
+#include "Motor/Motor.h"
 
 /*Public defines */
 //Направление движения штока
 #define OUT 1
 #define IN 0
 
-#define STALL_TIME 500 //мс
-#define LONG_STALL_TIME 1500
+//#define STALL_TIME 500 //мс
+#define LONG_STALL_TIME 1600
 #define FULL_LENGTH 560 //обороты
-#define SEEK_TIME 30 //сек
+//#define SEEK_TIME 30 //сек
 #define PISTON_MOVE_MIN 100 //обороты
-#define SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
+#define PISTON_SPEED 37.7 //37,9 //Оборотов/сек при полном напряжении
 
-#ifndef newPositions
-#define DEF_CLOSED_POS 26;                                //???????? ?????????
-#define	DEF_BACKWASH_POS 261;  //                                   //???????? ????????
-#define	DEF_REGENERATION_POS 20;                                  //???????????
-#define	DEF_FILLING_POS 132;                                       //??????????
-#define	DEF_SOFTENNING_POS 384;                                     //?????????
-#define	DEF_FLUSHING_POS 50;                                      //????????
-#define	DEF_FILTERING_POS 487; 
-#else
-#define DEF_WORK_POS 5;//+ //                               //???????? ?????????
-#define	DEF_BACKWASH_POS 261;  //                                   //???????? ????????
-#define	DEF_FORWARD_POS 500; //+                                      //??????????
-#define	DEF_SALTERING_POS 415 //
-#define	DEF_FILLING_POS 105; //
-#endif
 typedef enum {
 	 PC_ERROR = 1,
 	 PC_IN_PROCESS,
@@ -65,10 +51,13 @@ typedef struct {
 	int16_t curPoz;
 	int32_t maxPoz;
 	int32_t minPoz;
+	uint32_t stallTime;
+	motor_struct_t mot;
 	bool opticInt;
 	bool autoControl;
 	bool destComplete;
 	bool calibration;
+	uint32_t rabPozCnt;
 } pc_params_t;
 
 typedef struct {
@@ -80,7 +69,6 @@ typedef struct {
 } piston_poz_t;
 
 /*Global params*/
-extern piston_poz_t pistonPositions;
 extern uint32_t intPoz;
 extern int8_t opticCnt;
 /*Prototypes */
@@ -92,11 +80,11 @@ pc_params_t* PC_GetParams(void);
 int16_t PC_GetCurPoz(void);
 void PC_Control(void);
 //Если калибровка прошла успещно вернется 2, иначе что-то не нашли
-pc_calib_result_t PC_AUTO_CALIBRATE(void);
+pc_calib_result_t PC_AUTO_CALIBRATE(bool first);
 void PC_Stop(void);
 void PC_Restart (void);
-bool PC_isBusy();
+bool PC_isBusy(void);
 int8_t PC_pozNum (uint32_t* poz);
-void PC_OpticTest();
+void PC_OpticTest(void);
 #endif /* __PISTON_CONTROL_H__ */
 

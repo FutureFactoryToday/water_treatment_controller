@@ -19,6 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "crc.h"
+#include "dma.h"
+#include "i2c.h"
+#include "iwdg.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -38,6 +42,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,9 +53,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-	uint32_t _1ms_cnt;
+	volatile uint32_t _1ms_cnt;
 	uint8_t* errorCause;
 
+	//filter_t fil;
+	//uint32_t input = 0, output = 0;
+	//uint32_t resetCounter __attribute__ ((section (".noinit")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,7 +69,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -69,8 +76,14 @@ void SystemClock_Config(void);
   * @retval int
   */
 int main(void)
-{
-  /* USER CODE BEGIN 1 */
+ {
+   /* USER CODE BEGIN 1 */
+	#ifdef PROD_TEST
+	#warning "This version is for production test only."
+	#endif
+//	resetCounter += LL_RCC_IsActiveFlag_PINRST()?1:0;
+	LL_RCC_ClearResetFlags();
+	
 	_1ms_cnt = 0;
 	__disable_irq();
   /* USER CODE END 1 */
@@ -78,18 +91,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
-  /* SysTick_IRQn interrupt configuration */
-  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),14, 0));
-
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-  */
-  LL_GPIO_AF_Remap_SWJ_NOJTAG();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 	
@@ -104,49 +106,51 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
+  MX_DMA_Init();
   MX_RTC_Init();
+  MX_ADC1_Init();
+  MX_I2C2_Init();
+  MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_SPI3_Init();
   MX_TIM3_Init();
-  MX_TIM4_Init();
   MX_TIM8_Init();
   MX_USART1_UART_Init();
-  MX_TIM14_Init();
+  MX_ADC3_Init();
   MX_TIM11_Init();
   MX_TIM13_Init();
+  MX_TIM14_Init();
+  MX_CRC_Init();
+  MX_TIM10_Init();
+  MX_TIM7_Init();
+  MX_TIM4_Init();
+  //MX_IWDG_Init();
+  MX_TIM6_Init();
+  MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-	
-
-
-	FP_GetParam();
-	System_init();
-	Time_init();
-	LL_RTC_EnableIT_SEC(RTC);
-	LL_SYSTICK_EnableIT();
-	
-	initGUI();
-	PC_Init();
-	PL_Init();
-	FM_Init();
-	
-	
-	LL_mDelay(500);
-
-	FP_SaveParam();
-	__enable_irq();
-	//ShowManualDriveControl();
-	//ShowForcedRegenCustFrame();
-  ShowMainFrame();
-	//MOT_Start();
+#ifndef PROD_TEST
+	SYS_init();
+#else
+	ProductionTest();
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	uint32_t cnt = 1;
+
+	noTouchDelay = 1000;
+	
+//	FontTest(&Oxygen_Mono_8);
+//	FontTest(&Oxygen_Mono_12);
+//	FontTest(&Oxygen_Mono_16);
+//	FontTest(&Oxygen_Mono_20);
+//	FontTest(&Oxygen_Mono_24);
+//	showLoadTypeFrame();
+	
+	ShowMainFrame();
+	
   while (1)
   {
+	
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -160,56 +164,52 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_2);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_2)
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE
+                              |RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
+    Error_Handler();
   }
-  LL_RCC_HSE_Enable();
 
-   /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1)
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
-
+    Error_Handler();
   }
-  LL_PWR_EnableBkUpAccess();
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
-    LL_RCC_ForceBackupDomainReset();
-    LL_RCC_ReleaseBackupDomainReset();
+    Error_Handler();
   }
-  LL_RCC_LSE_Enable();
 
-   /* Wait till LSE is ready */
-  while(LL_RCC_LSE_IsReady() != 1)
-  {
-
-  }
-  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSE)
-  {
-    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
-  }
-  LL_RCC_EnableRTC();
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_2, LL_RCC_PLL_MUL_9);
-  LL_RCC_PLL_Enable();
-
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-
-  }
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-
-  }
-  LL_Init1msTick(72000000);
-  LL_SetSystemCoreClock(72000000);
-  LL_RCC_SetADCClockSource(LL_RCC_ADC_CLKSRC_PCLK2_DIV_6);
+  /** Enables the Clock Security System
+  */
+  HAL_RCC_EnableCSS();
 }
 
 /* USER CODE BEGIN 4 */
@@ -228,6 +228,7 @@ void Error_Handler(void)
   while (1)
   {
   }
+
   /* USER CODE END Error_Handler_Debug */
 }
 

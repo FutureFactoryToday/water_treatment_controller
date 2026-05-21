@@ -26,11 +26,16 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-button_t retBut = {RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y,0,0,0,0}, okBut = {OK_X,OK_Y,100,50,0,0,0,0}, cancelBut = {CANCEL_X,CANCEL_Y,100,50,0,0,0,0}, scrollUpBut = {UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y,0,0,0,0}, scrollDwnBut = {DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y,0,0,0,0}, homeBut = {HOME_BUT_X,HOME_BUT_Y,40,60,0,0,0,0};
+button_t retBut = {RETURN_BUT_POS_X,RETURN_BUT_POS_Y,RETURN_BUT_SIZE_X,RETURN_BUT_SIZE_Y,0,0,0,0}, 
+okBut = {OK_X,OK_Y,100,50,0,0,0,0}, cancelBut = {CANCEL_X,CANCEL_Y,100,50,0,0,0,0}, 
+scrollUpBut = {UP_ARROW_POS_X,UP_ARROW_POS_Y,UP_ARROW_SIZE_X,UP_ARROW_SIZE_Y,0,0,0,0}, 
+scrollDwnBut = {DOWN_ARROW_POS_X,DOWN_ARROW_POS_Y,DOWN_ARROW_SIZE_X,DOWN_ARROW_SIZE_Y,0,0,0,0}, 
+homeBut = {HOME_BUT_X,HOME_BUT_Y,40,60,0,0,0,0};
 
 
 TS_StateTypeDef tsState;
-uint32_t touchDelay;
+uint32_t noTouchDelay;
+uint32_t screenSaveDelay;
 uint8_t dropBut;
 uint8_t wrenchBut;
 uint8_t pageBut;
@@ -40,7 +45,8 @@ uint8_t frame = 0;
 uint8_t itemIndex;
 update_flag_t updateFlags;
 bool enableClockDraw = false;
-
+bool goHome;
+bool screenSave;
 uint8_t* hour = "hh";
 uint8_t* minute = "mm";
 
@@ -57,51 +63,137 @@ char* ITEM_MENU_FILTERING[] = { "aaa", "sss", "ddd" };
 void DrawOpticStatus(void);
 /* Private user code ---------------------------------------------------------*/
 void initGUI(void){
-	
+	uint16_t offset;
+	uint16_t VersHigh, VersLow;
  	redraw = 0;
-	BSP_LCD_Init();
+	if (BSP_LCD_Init() == LCD_OK){
+		sysParams.vars.status.flags.TFTInited = 1;
+	} else {
+		sysParams.vars.error.flags.TFTFail = 1;
+	}
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	sysParams.vars.status.flags.TouchInited = 1;
+	sysParams.vars.status.flags.TFTInited = 1;
+	BSP_BL_Control(DEF_BL_VALUE);  
+	
+#ifndef PROD_TEST
+	#if defined (GEYSER_MAIN_LOGO)
+	BSP_LCD_Clear(LCD_COLOR_GEYSER_GREEN);
+	BSP_LCD_DrawBitmap(65,80,&geyser_Logo);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#else
 	BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
 	BSP_LCD_DrawBitmap(0,0,&LOGO);
-    BSP_BL_Control(100);
-
-	//LL_mDelay(3000);
-    
 	BSP_LCD_SetFont(&Oxygen_Mono_24);
-    
 	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-	BSP_LCD_DisplayStringAt(160, 225, "ГОЛОВА КМ1", LEFT_MODE);
-	BSP_LCD_DisplayStringAt(110, 270, "МОЗГИ версия ПО 1.0", LEFT_MODE);
-	
+	#endif
+	BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
+	offset = 110;
+	offset += BSP_LCD_DisplayStringAt(offset, 255, "МОЗГИ версия ПО ", LEFT_MODE);
+	VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
+	VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
+	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
+  #if defined(SERIAL_VERSION)
+        offset += BSP_LCD_DisplayStringAt(offset, 255, ".0.", LEFT_MODE);
+  #else
+        offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+				offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(TEST_NUM), LEFT_MODE);
+				offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+	#endif
+    offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
 	frame = 0;
-	
+	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
+	offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);
 	itemIndex = 0;
+	LL_mDelay(2000);
+#endif	
 }
 
-void drawClock(void){
-    
-    uint16_t oldTextColor = BSP_LCD_GetTextColor();
-    uint16_t oldBackColor = BSP_LCD_GetBackColor();
-    
-	BSP_LCD_SetFont(&Oxygen_Mono_20);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-	BSP_LCD_DisplayStringAt(HOUR_X, CLOCK_Y, getFormatedTime("hh"),LEFT_MODE);
-	BSP_LCD_DisplayStringAt(MINUTE_X, CLOCK_Y, getFormatedTime("mm"),LEFT_MODE);
-	if (getTime()->second % 2){
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
-		
-	} else {
-		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
-	}
-    
-    BSP_LCD_SetTextColor(oldTextColor);
-    BSP_LCD_SetBackColor(oldBackColor);
-}
+
 
 
 uint8_t isInRectangle (uint16_t x, uint16_t y, uint16_t xS, uint16_t yS, uint16_t xSize, uint16_t ySize){
 	
 	return x < xS+xSize && x > xS && y < yS+ySize && y > yS;
+}
+
+void FontTest(WTC_FONT_t *pFonts){
+	  char engStart = ' ';
+    char engEnd = '~';
+	char *rusText[] = {"а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я",
+		"А","Б","В","Г","Д","Е","Ё","Ж","З","И","Й","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я"};
+	uint32_t	size = 0;
+	char str[2] = {0,0};
+	uint32_t yStart = 0;
+	button_t button;
+	
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	WTC_FONT_t *oldFont = BSP_LCD_GetFont();
+	uint32_t oldMainColor = BSP_LCD_GetTextColor();
+	uint32_t oldBackColor = BSP_LCD_GetBackColor();
+	
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetFont(pFonts);
+	button.x = 0;
+	button.y = 0;
+	button.xSize = BSP_LCD_GetXSize();
+	button.ySize = BSP_LCD_GetYSize();
+	
+	TC_addButton(&button);
+	
+	for(char ch = engStart; ch < engEnd; ch++){
+		if (size > BSP_LCD_GetXSize() - 30){
+			yStart += BSP_LCD_GetFont()->height;
+			size = 0;
+		}
+		str[0] = ch;
+		size += BSP_LCD_DisplayStringAt(size,yStart,str,LEFT_MODE);
+	}		
+	uint32_t rusSize = sizeof(rusText);
+	for(char ch = 0; ch < rusSize/4; ch++){
+		if (size > BSP_LCD_GetXSize() - 30){
+			yStart += BSP_LCD_GetFont()->height;
+			size = 0;
+		}
+		size += BSP_LCD_DisplayStringAt(size,yStart,rusText[ch],LEFT_MODE);
+	}		
+	
+	while (button.pressCnt < 100);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	TC_clearButtons();
+	BSP_LCD_SetFont(oldFont);
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+}	
+
+void ErrorMsg(uint32_t par1, uint32_t par2){
+	__enable_irq();
+	BSP_LCD_DrawBuffer_Flush();
+	BSP_LCD_Clear(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	uint16_t yOffset = 0, xOffset = 15;
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, "Adress error", LEFT_MODE);
+	yOffset += BSP_LCD_GetFont()->height;
+	xOffset += BSP_LCD_DisplayStringAt(xOffset, yOffset, "Adress should be: ", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, intToStr(par1), LEFT_MODE);
+	yOffset += BSP_LCD_GetFont()->height;
+	xOffset = 15;
+	xOffset += BSP_LCD_DisplayStringAt(xOffset, yOffset, "Given adress: ", LEFT_MODE);
+
+	BSP_LCD_DisplayStringAt(xOffset, yOffset, intToStr(par2), LEFT_MODE);
+	__disable_irq();
+	while(1){
+		
+//		sysParams.vars.frameWDTTim = SOFT_WDT_TIM_VAL_DEF; 
+//		sysParams.vars.secWDTTim = SOFT_WDT_TIM_VAL_DEF;
+//		LL_mDelay(10);
+	}
+	
 }

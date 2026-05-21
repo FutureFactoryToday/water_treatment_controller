@@ -4,7 +4,7 @@
 	#include "main.h"
 	#define _TOUCH_CONTROLLER_H_
 	#define MAX_BUT_NUM 20
-	#define BUT_MAX_PRESS 30//Press time = 0.1s*BUT_MAX_PRESS
+	#define BUT_MAX_PRESS 101//Press time = 0.1s*(BUT_MAX_PRESS - 1)
 	typedef struct {
 		uint8_t butNum;
 		button_t* buttons[MAX_BUT_NUM];
