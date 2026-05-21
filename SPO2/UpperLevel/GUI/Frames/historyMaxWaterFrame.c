@@ -176,34 +176,33 @@ void createFrame(void){
 
 void calcButParam()
 {
-    TC_clearButtons();
-   
-        //Setting for key "0"
-    menuLines[history_maxwater_frame_Scroll_cnt].x = FIRST_CURSOR_POS_X;
-    menuLines[history_maxwater_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
-    menuLines[history_maxwater_frame_Scroll_cnt].xSize = FIRST_CURSOR_SIZE_X;
-    menuLines[history_maxwater_frame_Scroll_cnt].ySize = FIRST_CURSOR_SIZE_Y;
-		
-		//Setting for key "1"
-    menuLines[history_maxwater_frame_Scroll_cnt + 1].x = SECOND_CURSOR_POS_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y;
-    menuLines[history_maxwater_frame_Scroll_cnt + 1].xSize = SECOND_CURSOR_SIZE_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 1].ySize = SECOND_CURSOR_SIZE_Y;
-    
-		//Setting for key "2"
-    menuLines[history_maxwater_frame_Scroll_cnt + 2].x = THRID_CURSOR_POS_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y;
-    menuLines[history_maxwater_frame_Scroll_cnt + 2].xSize = THRID_CURSOR_SIZE_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 2].ySize = THRID_CURSOR_SIZE_Y;
-    
-		//Setting for key "3"
-    menuLines[history_maxwater_frame_Scroll_cnt + 3].x = FOURTH_CURSOR_POS_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
-    menuLines[history_maxwater_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
-    menuLines[history_maxwater_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
-    
-    for (uint8_t i = history_maxwater_frame_Scroll_cnt; i < history_maxwater_frame_Scroll_cnt + 4; i++){
-			TC_addButton(&menuLines[i]);
+	//drawMainWindow();
+	errorsNum = LOG_GetWaterSpeed(firstEl);
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	uint8_t offset = FIRST_CURSOR_POS_X + 9;
+	//BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[0],LEFT_MODE);
+	
+	drawMainWindow();
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	if (errorsNum){
+		drawScrollButton(0);
+		uint8_t max = MIN(errorsNum,4);
+		for(uint8_t i = 0; i < max; i++){
+			offset = FIRST_CURSOR_POS_X + 9;
+						wtc_time_t time = intToWTCTime(displayData[max - i - 1].timeStamp);
+			
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, getFormatedTimeFromSource("YYYY.MM.DD - ",&time),LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, intToStr(displayData[max - i - 1].param) ,LEFT_MODE);
+			offset += BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + i*STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[4] ,LEFT_MODE);
+			
+		}
+		drawStaticLines();
+	} else {
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_DisplayStringAt(offset,STATIC_LINE_Y + STATIC_LINE_SPASER + 9, ITEM_HISTORY_ERROR[1],LEFT_MODE);
 	}
 	TC_addButton(&retBut);
 	TC_addButton(&scrollUpBut);
