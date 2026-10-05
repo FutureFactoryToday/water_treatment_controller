@@ -38,7 +38,8 @@ static bool writeSuccess;
 		readData,
 		writeData,
 		abortCom,
-		erase
+		erase,
+		0
 	};
 	
 	static SPI_HandleTypeDef* spi;

@@ -33,14 +33,12 @@ int ShowHistoryMenuFrame(void)
                 drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
                 BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
                 BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-								#if defined (TEST_VERSION) // read commit 693cccd1595a929db412d0dd847f2670ceb3255f
+								
 								BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[0].y + 9,ITEM_HISTORY_MENU[0],LEFT_MODE);
-								#else
-								BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[0].y + 9,ITEM_HISTORY_MENU[4],LEFT_MODE);
-								#endif
+								
                 menuLines[0].isPressed = false;
          }
-				 #if defined (TEST_VERSION)
+				 
          if(menuLines[1].isPressed == true){
                 //Make it blue
                 drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
@@ -81,13 +79,12 @@ int ShowHistoryMenuFrame(void)
                 //Make it blue
                 scrollDwnBut.isPressed = false;
          }
-				#endif
         /*Buttons released*/
          if (retBut.isReleased == true){
              retBut.isReleased = false;
              return 0;
          }
-				 #if defined (TEST_VERSION)
+				 
          if(scrollUpBut.isReleased == true){
             if(history_menu_frame_Scroll_cnt > 0)
             { 
@@ -106,7 +103,7 @@ int ShowHistoryMenuFrame(void)
             }
             scrollDwnBut.isReleased = false;
          }   
-				 #endif
+				
          if (homeBut.isReleased == true){
 						homeBut.isReleased = false;
             goHome = true;
@@ -115,15 +112,11 @@ int ShowHistoryMenuFrame(void)
 			return -1;
 		}
          if(menuLines[0].isReleased == true){                
-								#if defined (TEST_VERSION)
                 ShowHistoryFilterFrame();
-								#else
-								ShowHistoryGeneralInfoFrame();
-								#endif
                 menuLines[0].isReleased = false;
                 createFrame();
          }
-				 #if defined (TEST_VERSION)
+				
          if(menuLines[1].isReleased == true){
                 ShowHistoryWaterFrame();
                 menuLines[1].isReleased = false;
@@ -144,7 +137,7 @@ int ShowHistoryMenuFrame(void)
                 menuLines[4].isReleased = false;
                 createFrame();
          }
-				#endif
+				
 	}
 }
 void createFrame(void){
@@ -153,9 +146,8 @@ void createFrame(void){
     
     drawMainWindow();
     
-		#if defined (TEST_VERSION)
+		
     drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
-		#endif
     
     drawMainStatusBar(144, 2305, 16);
 	
@@ -168,14 +160,11 @@ void createFrame(void){
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     
-		#if defined (TEST_VERSION)
+		
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt],LEFT_MODE);
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 1],LEFT_MODE);
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 2],LEFT_MODE);
 		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 3],LEFT_MODE);
-		#else
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[4],LEFT_MODE);
-		#endif
   
 	/*Add buttons parameters*/
   calcButParam();
@@ -240,6 +229,6 @@ void calcButParam()
 	TC_addButton(&retBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
-    TC_addButton(&homeBut);
+  TC_addButton(&homeBut);
     
 }
