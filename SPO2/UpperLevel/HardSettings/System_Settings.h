@@ -20,9 +20,12 @@
 	//#define CLEAR_LOG_ON_START
 #endif
 
-#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
+//#define PROMEI //#if defined (MARCO) ... #endif //#if defined (MARCO) ...#else... #endif //#if defined (MARCO) ...#elif defined (MACRO)... #endif
 //#define GEYSER
 //#define GEYSER_MAIN_LOGO
+
+//#define KEB
+#define KEB_MAIN_LOGO
 
 #define WRONG_RES_ON_VOLTAGE
 

@@ -78,37 +78,44 @@ void initGUI(void){
 	
 #ifndef PROD_TEST
 	#if defined (GEYSER_MAIN_LOGO)
-	BSP_LCD_Clear(LCD_COLOR_GEYSER_GREEN);
-	BSP_LCD_DrawBitmap(65,80,&geyser_Logo);
-	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		BSP_LCD_Clear(LCD_COLOR_GEYSER_GREEN);
+		BSP_LCD_DrawBitmap(65,80,&geyser_Logo);
+		BSP_LCD_SetFont(&Oxygen_Mono_24);
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#elif defined (KEB_MAIN_LOGO)
+		BSP_LCD_Clear(LCD_COLOR_KEB_ORANGE);
+		BSP_LCD_DrawBitmap(135,40,&keb_Logo);
+		BSP_LCD_SetFont(&Oxygen_Mono_24);
+		BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	#else
-	BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
-	BSP_LCD_DrawBitmap(0,0,&LOGO);
-	BSP_LCD_SetFont(&Oxygen_Mono_24);
-	BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		BSP_LCD_Clear(LCD_COLOR_DARKBLUE);
+		BSP_LCD_DrawBitmap(0,0,&LOGO);
+		BSP_LCD_SetFont(&Oxygen_Mono_24);
+		BSP_LCD_SetBackColor(LCD_COLOR_DARKBLUE);
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	#endif
-	BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
-	offset = 110;
-	offset += BSP_LCD_DisplayStringAt(offset, 255, "МОЗГИ версия ПО ", LEFT_MODE);
-	VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
-	VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
-	offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
+		//BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
+		offset = 85;
+		offset += BSP_LCD_DisplayStringAt(offset, 255, "Версия ПО ", LEFT_MODE);
+		VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
+		VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
+		offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
   #if defined(SERIAL_VERSION)
-        offset += BSP_LCD_DisplayStringAt(offset, 255, ".0.", LEFT_MODE);
+    offset += BSP_LCD_DisplayStringAt(offset, 255, ".0.", LEFT_MODE);
   #else
-        offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
-				offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(TEST_NUM), LEFT_MODE);
-				offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(TEST_NUM), LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 	#endif
     offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
-	frame = 0;
-	BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
-	offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);
-	itemIndex = 0;
-	LL_mDelay(2000);
+		frame = 0;
+		//BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
+		//offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset + 55, 255, "КЭБ КМ1", CENTER_MODE);
+		itemIndex = 0;
+		LL_mDelay(2000);
 #endif	
 }
 
