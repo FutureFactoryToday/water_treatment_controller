@@ -98,22 +98,22 @@ void initGUI(void){
 	#endif
 		//BSP_LCD_DisplayStringAt(160, 220, "КЛАП'С КМ1", LEFT_MODE);
 		offset = 85;
-		offset += BSP_LCD_DisplayStringAt(offset, 255, "Версия ПО ", LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset, 245, "Версия ПО ", LEFT_MODE);
 		VersHigh = MAIN_VERSION;//(0xFFFF0000&sysParams.consts.sysVersion)>>16;
 		VersLow = SUB_VERSION;//(0xFFFE&sysParams.consts.sysVersion)>>1;
-		offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersHigh), LEFT_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset, 245, intToStr(VersHigh), LEFT_MODE);
   #if defined(SERIAL_VERSION)
-    offset += BSP_LCD_DisplayStringAt(offset, 255, ".0.", LEFT_MODE);
+    offset += BSP_LCD_DisplayStringAt(offset, 245, ".0.", LEFT_MODE);
   #else
 		offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 		offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(TEST_NUM), LEFT_MODE);
 		offset += BSP_LCD_DisplayStringAt(offset, 255, ".", LEFT_MODE);
 	#endif
-    offset += BSP_LCD_DisplayStringAt(offset, 255, intToStr(VersLow), LEFT_MODE);
+    offset += BSP_LCD_DisplayStringAt(offset, 245, intToStr(VersLow), LEFT_MODE);
 		frame = 0;
 		//BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 		//offset += BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, 285, "Загрузка настроек и инициализация", CENTER_MODE);
-		offset += BSP_LCD_DisplayStringAt(offset + 55, 255, "КЭБ КМ1", CENTER_MODE);
+		offset += BSP_LCD_DisplayStringAt(offset + 55, 245, "КЭБ КМ1", CENTER_MODE);
 		itemIndex = 0;
 		LL_mDelay(2000);
 #endif	

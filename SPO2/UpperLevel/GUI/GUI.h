@@ -70,8 +70,11 @@ extern const BITMAPSTRUCT geyser_Home;
 extern const BITMAPSTRUCT geyser_Logo_return;
 
 extern const BITMAPSTRUCT keb_Logo;
-extern const BITMAPSTRUCT keb_Logo_Home;
+extern const BITMAPSTRUCT keb_Logo_home;
 extern const BITMAPSTRUCT keb_Logo_return;
+extern const BITMAPSTRUCT keb_Logo_return;
+extern const BITMAPSTRUCT keb_Logo_arrow_up;
+extern const BITMAPSTRUCT keb_Logo_arrow_down;
 
 //extern const BITMAPSTRUCT gImage_ARROWUP_ghost;
 extern const BITMAPSTRUCT gImage_ARROWDOWN;

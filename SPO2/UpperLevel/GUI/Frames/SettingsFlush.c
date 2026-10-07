@@ -67,7 +67,11 @@ void createFrame()
 	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, ITEM_SETTINGS_FLUSH[0]);
 	
 	drawStatusBarOkCancelCustom(ITEM_SETTINGS_FLUSH[2],ITEM_SETTINGS_FLUSH[3]);
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+	#endif
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	
 	BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2, BSP_LCD_GetYSize()/2,ITEM_SETTINGS_FLUSH[1],CENTER_MODE);

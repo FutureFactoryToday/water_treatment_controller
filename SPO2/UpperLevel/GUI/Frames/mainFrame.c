@@ -142,11 +142,18 @@ void ShowMainFrame(void) {
 
 				enableMenu = false;
 				BSP_LCD_SetFont(&Oxygen_Mono_20);
+				#if defined (KEB)
+        drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "СЛЕДУЮЩАЯ", NULL,
+                             LCD_COLOR_KEB_YELLOW, LCD_COLOR_WHITE, LCD_COLOR_BLACK,false);
+        drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ", NULL,
+                             LCD_COLOR_KEB_ALPFA_GREEN, LCD_COLOR_WHITE, LCD_COLOR_BLACK, false);				
+				#else
         drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "СЛЕДУЮЩАЯ", &gImage_DROPBUT,
                              LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
         drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
-                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,
-                             false);
+                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE, false);				
+				#endif
+
 
         stepShow = true;
       }
@@ -154,10 +161,17 @@ void ShowMainFrame(void) {
       if (stepShow == true) {
         clearShownStep();
 				BSP_LCD_SetFont(&Oxygen_Mono_20);
+				#if defined (KEB)
+        drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", NULL,
+                             LCD_COLOR_KEB_YELLOW, LCD_COLOR_WHITE, LCD_COLOR_BLACK, false);
+        drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ", NULL,
+                             LCD_COLOR_KEB_GREEN, LCD_COLOR_WHITE, LCD_COLOR_BLACK, false);
+				#else
         drawFillCustomButton(regenBut.x, regenBut.y, regenBut.xSize, regenBut.ySize, "ПРОМЫВКА", &gImage_DROPBUT,
                              LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
         drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ", &gImage_WRENCHBUT,
-                             LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+                             LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);				
+				#endif
         enableMenu = true;
         stepShow = false;
 				shownStep = 0;
@@ -184,8 +198,13 @@ void ShowMainFrame(void) {
     }
 		if (enableMenu && menuBut.isPressed == true){ 
 			if (menuBut.drawPressed == false){
+				#if defined (KEB)
 				drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
-                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
+                             NULL, LCD_COLOR_KEB_ALPFA_GREEN, LCD_COLOR_WHITE, LCD_COLOR_BLACK,false);
+				#else
+				drawFillCustomButton(menuBut.x, menuBut.y, menuBut.xSize, menuBut.ySize, "МЕНЮ",
+                             &gImage_WRENCHBUT_PHANTOM, LCD_COLOR_PHANTOMBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);			
+				#endif
 				menuBut.drawPressed = true;
 			}
 			if (menuBut.pressCnt > NEXT_STEP_DELAY) {
@@ -270,7 +289,11 @@ void ShowMainFrame(void) {
 			#endif
       //ShowMainMenuFrame();
 			if (enableMenu){
-				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE,false);
+				#if defined (KEB)
+				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", NULL, LCD_COLOR_KEB_GREEN, LCD_COLOR_WHITE, LCD_COLOR_BLACK, false);
+				#else
+				drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT, LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE,LCD_COLOR_WHITE, false);
+				#endif
 				menuBut.drawPressed = false;
 			}
       menuBut.isReleased = false;
@@ -295,10 +318,17 @@ void createFrame(void) {
 
   drawMainWindow();
 	BSP_LCD_SetFont(&Oxygen_Mono_20);
-  regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
+	#if defined (KEB)
+  regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", NULL,
+                                  LCD_COLOR_KEB_YELLOW, LCD_COLOR_WHITE, LCD_COLOR_BLACK,false);
+  menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", NULL,
+                                 LCD_COLOR_KEB_GREEN, LCD_COLOR_WHITE, LCD_COLOR_BLACK,false);
+	#else
+	regenBut = drawFillCustomButton(25, 80, 200, 60, "ПРОМЫВКА", &gImage_DROPBUT,
                                   LCD_COLOR_DARKBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
   menuBut = drawFillCustomButton(255, 80, 200, 60, "МЕНЮ", &gImage_WRENCHBUT,
                                  LCD_COLOR_WHITEBLUE, LCD_COLOR_WHITE, LCD_COLOR_WHITE,false);
+	#endif
   // contactsBut = drawTextLabel(260, 200, 200, 60, "Контакты");
 	menuBut.drawPressed = false;
 	regenBut.drawPressed = false;
@@ -323,9 +353,16 @@ void showMessage(void){
 	if (sysParams.vars.status.flags.NeedService == 1){
 		if (shownServiceMessage == false){
 			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			#if defined (KEB)
+			drawFillArcRec(X_START, 215, X_SIZE, Y_SIZE, LCD_COLOR_KEB_ORANGE);
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+			#else
 			drawFillArcRec(X_START, 215, X_SIZE, Y_SIZE, LCD_COLOR_DARKYELLOW);
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 			BSP_LCD_SetBackColor(LCD_COLOR_DARKYELLOW);
+			#endif
+
 
 			BSP_LCD_DisplayStringAt(X_START + 50, 215,"Необходимо провести сервисное", LEFT_MODE);
 			uint32_t offset = BSP_LCD_DisplayStringAt(X_START + 70, 215 + 25,"обслуживание! +", LEFT_MODE);
@@ -368,9 +405,15 @@ void showMessage(void){
 		if (!shownErrorMessage || error != oldError){
 					
 			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_PALERED);
+			drawFillArcRec(X_START, Y_START, X_SIZE, Y_SIZE, LCD_COLOR_RED);
+			
+			#if defined (KEB)
+			BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+			#elif
 			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			BSP_LCD_SetBackColor(LCD_COLOR_PALERED);
+			#endif
+			
+			BSP_LCD_SetBackColor(LCD_COLOR_RED);
 			BSP_LCD_SetFont(&Oxygen_Mono_20);
 			BSP_LCD_DisplayStringAt(X_START + X_SIZE/2, Y_START + Y_SIZE/4, ITEM_HISTORY_ERROR[error], CENTER_MODE);
             
@@ -414,41 +457,48 @@ void showInOut(void) {
   //if (sysParams.vars.status.flags.ExternalCommandOn == 1) {
 	if((!LL_GPIO_IsInputPinSet(DP_SWITCH_GPIO_Port, DP_SWITCH_Pin)&&!sysParams.vars.error.flags._5VPowerFail)){
 		if (LL_RTC_TIME_Get(RTC)&0x01){
-			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK,
-                        LCD_COLOR_YELLOW);
+			#if defined (KEB)
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK, LCD_COLOR_KEB_YELLOW);
+			#else
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK, LCD_COLOR_YELLOW);
+			#endif
 		} else {
-			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
 		}
   } else {
-    drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+    drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
   }
+	
   offset += 60 + 20;
+	
   if (sysParams.vars.status.flags.RelDCOn == 1) {
 		if (LL_RTC_TIME_Get(RTC)&0x01){
-			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_BLACK,
-                        LCD_COLOR_WHITEBLUE);
+			#if defined (KEB)
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK, LCD_COLOR_KEB_YELLOW);
+			#else
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_BLACK, LCD_COLOR_WHITEBLUE);
+			#endif
 		} else {
-			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
 		}
   } else {
-    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ1", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
   }
+	
   offset += 60 + 20;
+	
   if (sysParams.vars.status.flags.RelACOn == 1) {
 		if (LL_RTC_TIME_Get(RTC)&0x01){
-			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
-                        LCD_COLOR_BLUE);
+			#if defined (KEB)
+			drawCustomTextLabel(offset, 215, 60, 55, "ВХ1", LCD_COLOR_BLACK, LCD_COLOR_KEB_YELLOW);
+			#else
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE, LCD_COLOR_BLUE);
+			#endif
 		} else {
-			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+			drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
 		}
   } else {
-    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE,
-                        LCD_COLOR_WHITE);
+    drawCustomTextLabel(offset, 215, 60, 55, "ВЫХ2", LCD_COLOR_WHITE, LCD_COLOR_WHITE);
   }
 }
 

@@ -10,14 +10,14 @@
       <TargetName>SPO</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103RG</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.1</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20017FFF) IROM(0x8000000-0x80FFFFF) CLOCK(16000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -2719,6 +2719,31 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
             </File>
+            <File>
+              <FileName>keb_Logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_up.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3026,8 +3051,8 @@
         <TargetCommonOption>
           <Device>STM32F103RG</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.1</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20017FFF) IROM(0x8000000-0x80FFFFF) CLOCK(16000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -3065,7 +3090,7 @@
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>C:\Users\Andrey\Documents\</ListingPath>
+          <ListingPath>C:\Users\DEVEL_Sasha\Documents\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -5882,6 +5907,31 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
             </File>
+            <File>
+              <FileName>keb_Logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_up.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6189,8 +6239,8 @@
         <TargetCommonOption>
           <Device>STM32F103RG</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.1</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20017FFF) IROM(0x8000000-0x80FFFFF) CLOCK(16000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -8892,6 +8942,31 @@
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
             </File>
+            <File>
+              <FileName>keb_Logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_up.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9199,8 +9274,8 @@
         <TargetCommonOption>
           <Device>STM32F103RG</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.4.1</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F1xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20017FFF) IROM(0x8000000-0x80FFFFF) CLOCK(16000000) CPUTYPE("Cortex-M3") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -11901,6 +11976,31 @@
               <FileName>geyser_Logo_return.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_up.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -14911,6 +15011,31 @@
               <FileName>geyser_Logo_return.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UpperLevel\GUI\PicArrays\geyser_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_home.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_home.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_return.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_return.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>keb_Logo_arrow_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UpperLevel\GUI\PicArrays\keb_Logo_arrow_up.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -73,26 +73,36 @@ int ShowHistoryGeneralInfoFrame(void)
 	}
 }
 void createFrame(void){
-    if (goHome) return;
-    
-    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY_GENERAL_INFO);
-    
-    drawMainWindow();
-    
-    //drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
-    
-    drawMainStatusBar(144, 2305, 16);
-    //drawStatusBarEmpty();
-    
-    drawClock();
-    drawMainStatusBar(144, 2305, 16);
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+	if (goHome) return;
+	
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY_GENERAL_INFO);
+	
+	drawMainWindow();
+	
+	//drawScrollButton(menu_frame_Scroll_cnt == 0 ? 0 : (menu_frame_Scroll_cnt == 1 ? 2 : 1));
+	
+	drawMainStatusBar(144, 2305, 16);
+	//drawStatusBarEmpty();
+	
+	drawClock();
+	drawMainStatusBar(144, 2305, 16);
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y, 448);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y+1, 448);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER, 448);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER+1, 448);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2, 448);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2+1, 448);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3, 448);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3+1, 448);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4, 448);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4+1, 448);
     
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

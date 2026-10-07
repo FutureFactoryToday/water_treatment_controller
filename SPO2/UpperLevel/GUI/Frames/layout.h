@@ -49,7 +49,15 @@
 #define OK_X 290
 #define OK_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 5
 
+#if defined (KEB)
+#define TEXT_X 10
+#define TEXT_SPEED_OFFSET_X 95
+#define TEXT_REMWATER_OFFSET_X 250
+#else
 #define TEXT_X 30
+#define TEXT_SPEED_OFFSET_X 110
+#define TEXT_REMWATER_OFFSET_X 330
+#endif
 #define TEXT_Y TOP_LINE_WIDTH + MED_LINE_WIDTH + 5
 
 //Public defines main window sizers

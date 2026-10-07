@@ -60,108 +60,130 @@ void drawDebugInfo(){
 button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, bool isTouch){
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
-    
-    if(isTouch)
-    {
-        BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-        BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-    }
-    else
-    {
-        BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-        BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-    }
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
+	
+	if(isTouch)
+	{
+		#if defined (KEB)
+			BSP_LCD_SetTextColor(LCD_COLOR_KEB_GREEN);
+			BSP_LCD_SetBackColor(LCD_COLOR_KEB_GREEN);
+		#else
+			BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+			BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+		#endif
+	}
+	else
+	{
+		#if defined (KEB)
+			BSP_LCD_SetTextColor(LCD_COLOR_KEB_ALPFA_GREEN);
+			BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+		#else
+			BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
+	}
 
-		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
-		
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-        
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-		BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
-		
-		BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
+	
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+			
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+	BSP_LCD_SetTextColor(oldTextColor);
+	BSP_LCD_SetBackColor(oldBackColor);
+	
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
 }
 
 button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label, uint8_t *pBmp, uint16_t butColor, uint16_t backColor, uint16_t textColor, bool isTouch)
 {
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
+	uint16_t radius = ySize/4;
 	
-    BSP_LCD_SetBackColor(backColor);
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
+
+	BSP_LCD_SetBackColor(backColor);
 	
 	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, backColor);
 		
 	BSP_LCD_SetTextColor(butColor);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-        
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-    
-    BSP_LCD_SetTextColor(textColor);
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+			
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+	
+	BSP_LCD_SetTextColor(textColor);
 	BSP_LCD_SetBackColor(butColor);
 		
-    if(label=="МЕНЮ"){
-        BSP_LCD_DisplayStringAt(xPos + (xSize-60)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-        //BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
-        BSP_LCD_SetTextColor(oldTextColor);
-        BSP_LCD_SetBackColor(oldBackColor);
+	if(label=="МЕНЮ"){
+		if(pBmp == NULL){
+			BSP_LCD_DisplayStringAt(xPos + (xSize)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+		}
+		else{
+			BSP_LCD_DisplayStringAt(xPos + (xSize-60)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+		}
+		//BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
+		BSP_LCD_SetTextColor(oldTextColor);
+		BSP_LCD_SetBackColor(oldBackColor);
+
+		BSP_LCD_DrawBuffer_Stop();
 		
-        BSP_LCD_DrawBuffer_Stop();
-	
-       
-        if (pBmp != NULL){
-		BSP_LCD_DrawBitmap(xPos + xSize - 70,yPos + 10, pBmp);
-        }
-    }
+		if (pBmp != NULL){
+			BSP_LCD_DrawBitmap(xPos + xSize - 70,yPos + 10, pBmp);
+		}
+	}
         
-    else{
-        BSP_LCD_DisplayStringAt(xPos + (xSize-42)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-        //BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
-        BSP_LCD_SetTextColor(oldTextColor);
-        BSP_LCD_SetBackColor(oldBackColor);
-		
-        BSP_LCD_DrawBuffer_Stop();
-	
-       
-        if (pBmp != NULL){
-		BSP_LCD_DrawBitmap(xPos + xSize - 50,yPos + 10, pBmp);
-        }
+  else{
+		if(pBmp == NULL){
+			BSP_LCD_DisplayStringAt(xPos + (xSize)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+		}
+		else{
+			BSP_LCD_DisplayStringAt(xPos + (xSize-42)/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+		}
+		//BSP_LCD_DisplayStringAt(xPos, yPos + ySize/2 - 15, label, LEFT_MODE);
+		BSP_LCD_SetTextColor(oldTextColor);
+		BSP_LCD_SetBackColor(oldBackColor);
+
+		BSP_LCD_DrawBuffer_Stop();
+	      
+    if (pBmp != NULL){
+			BSP_LCD_DrawBitmap(xPos + xSize - 50,yPos + 10, pBmp);
     }
-    return but;
+	}
+	return but;
 }
 
 
@@ -200,83 +222,88 @@ button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
 }
 
 button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
-    
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
+	
 //    
 //    if(radius != 0)
 //    {
-		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize+1, LCD_COLOR_WHITE);
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize+1, LCD_COLOR_WHITE);
+
+
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_KEB_ALPFA_GREEN);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
 	
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-   
-    
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_FillRect(xPos + 1, yPos + radius + 1, xSize - 2, ySize - radius * 2 - 2);
-    BSP_LCD_FillRect(xPos + radius + 1, yPos + 1, xSize - radius * 2 - 2, ySize - 1);
-    
-    BSP_LCD_FillCircle(xPos + radius + 1, yPos + radius + 1, radius);
-    BSP_LCD_FillCircle(xPos + radius + 1, (yPos + ySize) - radius - 1, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius - 1, (yPos + ySize) - radius - 1, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius - 1, yPos + radius + 1, radius);
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+ 
+	
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_FillRect(xPos + 1, yPos + radius + 1, xSize - 2, ySize - radius * 2 - 2);
+	BSP_LCD_FillRect(xPos + radius + 1, yPos + 1, xSize - radius * 2 - 2, ySize - 1);
+	
+	BSP_LCD_FillCircle(xPos + radius + 1, yPos + radius + 1, radius);
+	BSP_LCD_FillCircle(xPos + radius + 1, (yPos + ySize) - radius - 1, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius - 1, (yPos + ySize) - radius - 1, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius - 1, yPos + radius + 1, radius);
 //    }
 //    else
 //    {
 //        BSP_LCD_FillRect(xPos, yPos, xSize, ySize);
 //    }
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    
-		BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+	
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
 }
 
 button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label,uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
     
 //    
 //    if(radius != 0)
 //    {
-		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
-		
-    BSP_LCD_SetTextColor(backColor);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
+	
+	BSP_LCD_SetTextColor(backColor);
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+	
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
    
     
 //    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
@@ -292,167 +319,190 @@ button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint
 //    {
 //        BSP_LCD_FillRect(xPos, yPos, xSize, ySize);
 //    }
-    BSP_LCD_SetBackColor(backColor);
-    BSP_LCD_SetTextColor(textColor);
-    BSP_LCD_SetFont(&Oxygen_Mono_20);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    BSP_LCD_SetFont(&Oxygen_Mono_24);
-    BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
-		BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_SetBackColor(backColor);
+	BSP_LCD_SetTextColor(textColor);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	BSP_LCD_SetTextColor(oldTextColor);
+	BSP_LCD_SetBackColor(oldBackColor);
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
 }
 
 button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
     
 	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
 	
-    BSP_LCD_SetTextColor(backColor);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-   
-    BSP_LCD_SetBackColor(backColor);
-    BSP_LCD_SetTextColor(textColor);
-    BSP_LCD_SetFont(&Oxygen_Mono_20);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25 + 18, label2, CENTER_MODE);
-		BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25, label1, CENTER_MODE);
-    BSP_LCD_SetFont(&Oxygen_Mono_24);
-    BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
-		BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_SetTextColor(backColor);
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+	
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+ 
+	BSP_LCD_SetBackColor(backColor);
+	BSP_LCD_SetTextColor(textColor);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25 + 18, label2, CENTER_MODE);
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25, label1, CENTER_MODE);
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	BSP_LCD_SetTextColor(oldTextColor);
+	BSP_LCD_SetBackColor(oldBackColor);
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
 }
 
 button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label1, uint8_t* label2, uint16_t textColor, uint16_t backColor){
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
-    uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
     
 	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
 	
-    BSP_LCD_SetTextColor(backColor);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-   
-    BSP_LCD_SetBackColor(backColor);
-    BSP_LCD_SetTextColor(textColor);
-    
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25 + 18, label2, CENTER_MODE);
-		BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25, label1, CENTER_MODE);
-    
-    BSP_LCD_SetTextColor(oldTextColor);
-		BSP_LCD_SetBackColor(oldBackColor);
-		BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_SetTextColor(backColor);
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+	
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+ 
+	BSP_LCD_SetBackColor(backColor);
+	BSP_LCD_SetTextColor(textColor);
+	
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25 + 18, label2, CENTER_MODE);
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 25, label1, CENTER_MODE);
+	
+	BSP_LCD_SetTextColor(oldTextColor);
+	BSP_LCD_SetBackColor(oldBackColor);
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
 }
 
  button_t drawDarkTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
-	     uint16_t radius = ySize/4;
-    
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
-    
-//    
-//    if(radius != 0)
-//    {
-	 BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-   
-   
-    BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    BSP_LCD_DrawBuffer_Stop();
-    return but;
+	uint16_t radius = ySize/4;
+	
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
+
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_KEB_GREEN);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
+	#endif
+	
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+	
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+ 
+ 
+ 	#if defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
  }
  
 button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
 	uint16_t radius = ySize/4;
     
-    button_t but;
-    but.x = xPos;
-    but.y = yPos;
-    but.xSize = xSize;
-    but.ySize = ySize; 
-    but.isPressed = false;
-    but.wasPressed = false;
-    but.isReleased = false;
-    but.pressCnt = false;
+	button_t but;
+	but.x = xPos;
+	but.y = yPos;
+	but.xSize = xSize;
+	but.ySize = ySize; 
+	but.isPressed = false;
+	but.wasPressed = false;
+	but.isReleased = false;
+	but.pressCnt = false;
     
 //    
 //    if(radius != 0)
 //    {
-		BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
-    BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
-    BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
-    
-    BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
-    BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
-    BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
-   
-   
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
-    BSP_LCD_DrawBuffer_Stop();
-    return but;
+	BSP_LCD_DrawBuffer_Start(xPos,yPos,xSize,ySize, LCD_COLOR_WHITE);
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_KEB_ALPFA_GREEN);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+	BSP_LCD_FillRect(xPos, yPos + radius, xSize, ySize - radius * 2);
+	BSP_LCD_FillRect(xPos + radius, yPos, xSize - radius * 2, ySize + 1);
+	
+	BSP_LCD_FillCircle(xPos + radius, yPos + radius, radius);
+	BSP_LCD_FillCircle(xPos + radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, (yPos + ySize) - radius, radius);
+	BSP_LCD_FillCircle((xPos + xSize) - radius, yPos + radius, radius);
+ 
+ 
+ 	#if defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+ 
+	BSP_LCD_DisplayStringAt(xPos + xSize/2, yPos + ySize/2 - 15, label, CENTER_MODE);
+	BSP_LCD_DrawBuffer_Stop();
+	return but;
  }
   
 void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosLogo, uint8_t* label){
 		#if defined (GEYSER)
 		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
 		BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
+		#elif defined (KEB)
+		BSP_LCD_SetBackColor(LCD_COLOR_KEB_WHITEBLUE);
+		BSP_LCD_SetTextColor(LCD_COLOR_KEB_WHITEBLUE);
 		#else
 		BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
     BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
@@ -462,6 +512,10 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
 		#if defined (GEYSER)
 		if(homeBut) {
         BSP_LCD_DrawBitmap(HOME_BUT_X - 2, HOME_BUT_Y + 7, &geyser_Home);
+    }
+		#elif defined (KEB)
+		if(homeBut) {
+        BSP_LCD_DrawBitmap(HOME_BUT_X - 20, HOME_BUT_Y + 1, &keb_Logo_home);
     }
 		#else
 	  if(homeBut) {
@@ -476,6 +530,9 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
     else {
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &geyser_Logo_mini);
     }
+		#elif defined (KEB)
+		if(returnBut)
+        BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 1, &keb_Logo_return);		
 		#else
     if(returnBut)
         BSP_LCD_DrawBitmap(RETURN_BUT_POS_X + 10, RETURN_BUT_POS_Y + 10, &gImage_RETURNARROW);
@@ -486,10 +543,13 @@ void drawMainBar(bool returnBut, bool homeBut, uint16_t xPosLogo, uint16_t yPosL
     
     #if defined (GEYSER)
 		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#elif defined (KEB)
+		BSP_LCD_SetBackColor(LCD_COLOR_KEB_WHITEBLUE);
 		#else
     BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
 		#endif
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
 		#if defined (GEYSER)
     BSP_LCD_DisplayStringAt(MODE_STATUS_TEXT_X + 105, MODE_STATUS_TEXT_Y, label, LEFT_MODE);
@@ -508,16 +568,26 @@ void drawStatusBarOkCancelCustom(uint8_t* okBut, uint8_t* cancelBut)
 {
 	#if defined (GEYSER)
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
 	#endif
 	
   #if defined (GEYSER)
 	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	
   BSP_LCD_DisplayStringAt(CANCEL_X, CANCEL_Y, cancelBut, LEFT_MODE);
   BSP_LCD_DisplayStringAt(OK_X, OK_Y, okBut, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
@@ -533,26 +603,43 @@ void drawStatusBarSave(uint8_t* label)
 {
 	#if defined (GEYSER)
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
 	#endif
   
 
-    #if defined (GEYSER)
-		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-		#else
-		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-		#endif
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
-    
-    #if defined (GEYSER)
-		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-		#else
-		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-		#endif
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
+	#if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	BSP_LCD_DisplayStringAt(SAVE_X,SAVE_Y,SAVE,LEFT_MODE);
+	
+	#if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	
+	BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
 }
 
@@ -560,82 +647,112 @@ void drawStatusBarLabel(uint8_t* label)
 {
 	#if defined (GEYSER)
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X,STATUSBAR_SIZE_Y, LCD_COLOR_WHITEBLUE);
 	#endif
     
-    #if defined (GEYSER)
-		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-		#else
-		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-		#endif
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
+	#if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	
+	BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,label, LEFT_MODE);
 	BSP_LCD_DrawBuffer_Stop();
 }
 
 
 void drawStatusBarEmpty()
 {
-    #if defined (GEYSER)
-		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-		#else
-		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-		#endif
-    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X, STATUSBAR_SIZE_Y);
+	#if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y,STATUSBAR_SIZE_X, STATUSBAR_SIZE_Y);
 }
 static int16_t xOff = 0;
+
 void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumption, uint16_t amountOfWater)
 {
+	uint8_t offset;		
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
 
-		uint8_t offset;		
-		BSP_LCD_SetFont(&Oxygen_Mono_20);
-	
-		#if defined (GEYSER)
-		BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_GEYSER_GREEN);
-		#else
-    BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_WHITEBLUE);
-		#endif
+	#if defined (GEYSER)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_DrawBuffer_Start(STATUSBAR_POS_X, STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y,LCD_COLOR_WHITEBLUE);
+	#endif
 
 //    BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
 //    BSP_LCD_FillRect(STATUSBAR_POS_X,STATUSBAR_POS_Y, CLOCK_X, STATUSBAR_SIZE_Y);
 		
-		if(sysParams.consts.planerConsts.startType != IMMEDIATELY && sysParams.consts.planerConsts.startType != DELAYED){
-//			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
-//				BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-//				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"---", LEFT_MODE);
-//			} else {
-			int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
-			
-			uint32_t remHours = 0;
-			
-			#if defined (GEYSER)
-			BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-			#else
-			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-			#endif
-			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			if (/*sysParams.vars.error.flags.PistonFail != 1 &&*/ deltTime >= 0){
-				remHours = deltTime/(60*60);
-				offset = BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,intToStr(remHours), LEFT_MODE);
-				BSP_LCD_DisplayStringAt(TEXT_X + offset + 5, TEXT_Y , NEXT_CYCLE_TIME, LEFT_MODE);
-			} else {
-				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"", LEFT_MODE); 
-			}
-//		}
-    }
+	if(sysParams.consts.planerConsts.startType != IMMEDIATELY && sysParams.consts.planerConsts.startType != DELAYED){
+	//			if (sysParams.consts.planerConsts.status == PL_WAIT_MANUAL){
+	//				BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	//				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	//				BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"---", LEFT_MODE);
+	//			} else {
+		int32_t deltTime = sysParams.vars.planer.currentTask->startDateTime - getRTC();
+		
+		uint32_t remHours = 0;
+		
 		#if defined (GEYSER)
 		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#elif defined (KEB)
+		BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
 		#else
 		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 		#endif
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-		//float speed = sysParams.vars.flowCnt;
-		float speed = FM_getFlowSpeed()*60;
-		offset = 0;
-		if (speed > 0){
-	/*Float output*/
+		
+		#if defined (KEB)
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		#else
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		#endif
+		
+		if (/*sysParams.vars.error.flags.PistonFail != 1 &&*/ deltTime >= 0){
+			remHours = deltTime/(60*60);
+			offset = BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,intToStr(remHours), LEFT_MODE);
+			BSP_LCD_DisplayStringAt(TEXT_X + offset + 5, TEXT_Y , NEXT_CYCLE_TIME, LEFT_MODE);
+		} else {
+			BSP_LCD_DisplayStringAt(TEXT_X, TEXT_Y ,"", LEFT_MODE); 
+		}
+//		}
+	}
+	#if defined (GEYSER)
+	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+	
+	//float speed = sysParams.vars.flowCnt;
+	float speed = FM_getFlowSpeed()*60;
+	offset = 0;
+	if (speed > 0){
+/*Float output*/
 //			uint32_t a = (int) speed;
 //			speed = speed - a;
 //			speed = speed * 100;
@@ -643,73 +760,90 @@ void drawMainStatusBar(uint16_t nextСycleTime, uint16_t сurrentWaterConsumptio
 //			BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(a), RIGHT_MODE);
 //			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
 //			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
-			
-		/*Int output*/
-			uint32_t a = (uint32_t) round(speed);
-
-			BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(a), RIGHT_MODE);
-			//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
-			//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
-		} else {
-			offset += BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(0), LEFT_MODE);
-		}
 		
+	/*Int output*/
+		uint32_t a = (uint32_t) round(speed);
+
+		BSP_LCD_DisplayStringAt(TEXT_X + TEXT_SPEED_OFFSET_X, TEXT_Y ,intToStr(a), RIGHT_MODE);
+		//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,",", LEFT_MODE);
+		//offset += BSP_LCD_DisplayStringAt(TEXT_X + 110 + offset, TEXT_Y ,intToStr(b), LEFT_MODE);
+	} else {
+		offset += BSP_LCD_DisplayStringAt(TEXT_X + TEXT_SPEED_OFFSET_X, TEXT_Y ,intToStr(0), LEFT_MODE);
+	}
+	
 //		offset = BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 - 2, TEXT_Y ,intToStr(sysParams.vars.flowImpulseCnt), RIGHT_MODE);
 //		BSP_LCD_DisplayStringAt(BSP_LCD_GetXSize()/2 + 2, TEXT_Y ,"имп", LEFT_MODE);
-    //offset = BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(FM_getFlowHzInt()), LEFT_MODE);
+	//offset = BSP_LCD_DisplayStringAt(TEXT_X + 110, TEXT_Y ,intToStr(FM_getFlowHzInt()), LEFT_MODE);
+	
+	BSP_LCD_DisplayStringAt(TEXT_X + TEXT_SPEED_OFFSET_X + 10 + offset + 5, TEXT_Y ,CURRENT_WATER_CONSUMPTION_LITERS, LEFT_MODE);
+	
+	if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL || sysParams.consts.planerConsts.startType == DELAYED){
+		#if defined (GEYSER)
+		BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+		#elif defined (KEB)
+		BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
+		#else
+		BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
+		#endif
 		
-		BSP_LCD_DisplayStringAt(TEXT_X + 120 + offset + 5, TEXT_Y ,CURRENT_WATER_CONSUMPTION_LITERS, LEFT_MODE);
-    
-		if(sysParams.consts.planerConsts.startType == IMMEDIATELY || sysParams.consts.planerConsts.startType == UNIVERSAL || sysParams.consts.planerConsts.startType == DELAYED){
-			#if defined (GEYSER)
-			BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
-			#else
-			BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
-			#endif
-			BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			int32_t remWater = sysParams.consts.planerConsts.filtroCycle - sysParams.consts.waterFromLastFilter;
-			if (remWater < 0) {
-				remWater = 0;
-			}
-			if (sysParams.vars.status.flags.WaterInLiters == true){
-				BSP_LCD_DisplayStringAt(TEXT_X + 330 - 2 + xOff, TEXT_Y ,intToStr(remWater), RIGHT_MODE);
-				BSP_LCD_DisplayStringAt(TEXT_X + 330 + 2 + xOff, TEXT_Y ,LITERS, LEFT_MODE);
-			} else {
-				BSP_LCD_DisplayStringAt(TEXT_X + 330 - 2 + xOff, TEXT_Y ,intToStr(remWater/1000), RIGHT_MODE);
-				BSP_LCD_DisplayStringAt(TEXT_X + 330 + 2 + xOff, TEXT_Y ,M_CUBE, LEFT_MODE);
-			}
+		#if defined (KEB)
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		#else
+		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+		#endif
+		
+		int32_t remWater = sysParams.consts.planerConsts.filtroCycle - sysParams.consts.waterFromLastFilter;
+		if (remWater < 0) {
+			remWater = 0;
 		}
-		BSP_LCD_DrawBuffer_Stop();
+		if (sysParams.vars.status.flags.WaterInLiters == true){
+			BSP_LCD_DisplayStringAt(TEXT_X + TEXT_REMWATER_OFFSET_X - 2 + xOff, TEXT_Y ,intToStr(remWater), RIGHT_MODE);
+			BSP_LCD_DisplayStringAt(TEXT_X + TEXT_REMWATER_OFFSET_X + 2 + xOff, TEXT_Y ,LITERS, LEFT_MODE);
+		} else {
+			BSP_LCD_DisplayStringAt(TEXT_X + TEXT_REMWATER_OFFSET_X - 2 + xOff, TEXT_Y ,intToStr(remWater/1000), RIGHT_MODE);
+			BSP_LCD_DisplayStringAt(TEXT_X + TEXT_REMWATER_OFFSET_X + 2 + xOff, TEXT_Y ,M_CUBE, LEFT_MODE);
+		}
+	}
+	BSP_LCD_DrawBuffer_Stop();
 }
 
 void drawScrollButton (uint16_t scPos)
 {
-   uint16_t scrollPos = scPos * 45;
-   BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+	uint16_t scrollPos = scPos * 45;
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
+	#endif
 	
-  BSP_LCD_DrawBuffer_Start(SCROLLKEYUP_POS_X, SCROLLKEYUP_POS_Y, SCROLLKEYUP_SIZE_X, SCROLLKEYUP_SIZE_Y + 1,LCD_COLOR_WHITE);
-	
-   BSP_LCD_FillRect(SCROLLKEYUP_POS_X, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLKEYUP_SIZE_X, SCROLLKEYUP_SIZE_Y - SCROLLBAR_RADIUS * 2);
-   BSP_LCD_FillRect(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y, SCROLLKEYUP_SIZE_X - SCROLLBAR_RADIUS * 2, SCROLLKEYUP_SIZE_Y + 1);
-    
-   BSP_LCD_FillCircle(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, (SCROLLKEYUP_POS_Y + SCROLLKEYUP_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle((SCROLLKEYUP_POS_X + SCROLLKEYUP_SIZE_X) - SCROLLBAR_RADIUS, (SCROLLKEYUP_POS_Y + SCROLLKEYUP_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle((SCROLLKEYUP_POS_X + SCROLLKEYUP_SIZE_X) - SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	#if defined (KEB)
+	BSP_LCD_DrawBitmap(UP_ARROW_POS_X, UP_ARROW_POS_Y, &keb_Logo_arrow_up);
+	BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X, DOWN_ARROW_POS_Y - 10, &keb_Logo_arrow_down);
+	#else
+	BSP_LCD_DrawBuffer_Start(SCROLLKEYUP_POS_X, SCROLLKEYUP_POS_Y, SCROLLKEYUP_SIZE_X, SCROLLKEYUP_SIZE_Y + 1,LCD_COLOR_WHITE);
+
+	BSP_LCD_FillRect(SCROLLKEYUP_POS_X, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLKEYUP_SIZE_X, SCROLLKEYUP_SIZE_Y - SCROLLBAR_RADIUS * 2);
+	BSP_LCD_FillRect(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y, SCROLLKEYUP_SIZE_X - SCROLLBAR_RADIUS * 2, SCROLLKEYUP_SIZE_Y + 1);
+
+	BSP_LCD_FillCircle(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle(SCROLLKEYUP_POS_X + SCROLLBAR_RADIUS, (SCROLLKEYUP_POS_Y + SCROLLKEYUP_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle((SCROLLKEYUP_POS_X + SCROLLKEYUP_SIZE_X) - SCROLLBAR_RADIUS, (SCROLLKEYUP_POS_Y + SCROLLKEYUP_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle((SCROLLKEYUP_POS_X + SCROLLKEYUP_SIZE_X) - SCROLLBAR_RADIUS, SCROLLKEYUP_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
 	BSP_LCD_DrawBuffer_Stop();
-   BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 13, UP_ARROW_POS_Y + 10 ,&gImage_ARROWUP);
-    
-  BSP_LCD_DrawBuffer_Start(SCROLLKEYDOWN_POS_X, SCROLLKEYDOWN_POS_Y, SCROLLKEYDOWN_SIZE_X, SCROLLKEYDOWN_SIZE_Y + 1,LCD_COLOR_WHITE); 
-   BSP_LCD_FillRect(SCROLLKEYDOWN_POS_X, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLKEYDOWN_SIZE_X, SCROLLKEYDOWN_SIZE_Y - SCROLLBAR_RADIUS * 2);
-   BSP_LCD_FillRect(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y, SCROLLKEYDOWN_SIZE_X - SCROLLBAR_RADIUS * 2, SCROLLKEYDOWN_SIZE_Y + 1);
-    
-   BSP_LCD_FillCircle(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, (SCROLLKEYDOWN_POS_Y + SCROLLKEYDOWN_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle((SCROLLKEYDOWN_POS_X + SCROLLKEYDOWN_SIZE_X) - SCROLLBAR_RADIUS, (SCROLLKEYDOWN_POS_Y + SCROLLKEYDOWN_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
-   BSP_LCD_FillCircle((SCROLLKEYDOWN_POS_X + SCROLLKEYDOWN_SIZE_X) - SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_DrawBitmap(UP_ARROW_POS_X + 13, UP_ARROW_POS_Y + 10 ,&gImage_ARROWUP);
+
+	BSP_LCD_DrawBuffer_Start(SCROLLKEYDOWN_POS_X, SCROLLKEYDOWN_POS_Y, SCROLLKEYDOWN_SIZE_X, SCROLLKEYDOWN_SIZE_Y + 1,LCD_COLOR_WHITE); 
+	BSP_LCD_FillRect(SCROLLKEYDOWN_POS_X, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLKEYDOWN_SIZE_X, SCROLLKEYDOWN_SIZE_Y - SCROLLBAR_RADIUS * 2);
+	BSP_LCD_FillRect(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y, SCROLLKEYDOWN_SIZE_X - SCROLLBAR_RADIUS * 2, SCROLLKEYDOWN_SIZE_Y + 1);
+
+	BSP_LCD_FillCircle(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle(SCROLLKEYDOWN_POS_X + SCROLLBAR_RADIUS, (SCROLLKEYDOWN_POS_Y + SCROLLKEYDOWN_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle((SCROLLKEYDOWN_POS_X + SCROLLKEYDOWN_SIZE_X) - SCROLLBAR_RADIUS, (SCROLLKEYDOWN_POS_Y + SCROLLKEYDOWN_SIZE_Y) - SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
+	BSP_LCD_FillCircle((SCROLLKEYDOWN_POS_X + SCROLLKEYDOWN_SIZE_X) - SCROLLBAR_RADIUS, SCROLLKEYDOWN_POS_Y + SCROLLBAR_RADIUS, SCROLLBAR_RADIUS);
 	BSP_LCD_DrawBuffer_Stop();
-   BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 13, DOWN_ARROW_POS_Y + 10 ,&gImage_ARROWDOWN);
- }
+	BSP_LCD_DrawBitmap(DOWN_ARROW_POS_X + 13, DOWN_ARROW_POS_Y + 10 ,&gImage_ARROWDOWN);
+	#endif
+}
 
 //Private func
 
@@ -717,10 +851,19 @@ void drawStaticLines()
 {
 	BSP_LCD_SetTextColor(LCD_COLOR_GRAY);
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y+1, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER+1, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*2+1, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*3+1, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	
 	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
+	BSP_LCD_DrawHLine(STATIC_LINE_X, STATIC_LINE_Y + STATIC_LINE_SPASER*4+1, FIRST_CURSOR_SIZE_X - FIRST_CURSOR_POS_X);
   
 }
 void drawClock(void){
@@ -734,23 +877,40 @@ void drawClock(void){
 	#if defined (GEYSER)
 	BSP_LCD_SetTextColor(LCD_COLOR_GEYSER_GREEN);
 	BSP_LCD_SetBackColor(LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_KEB_ORANGE);
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITEBLUE);
 	BSP_LCD_SetBackColor(LCD_COLOR_WHITEBLUE);
 	#endif
+	
 	//BSP_LCD_FillRect(HOUR_X,STATUSBAR_POS_Y,100,STATUSBAR_SIZE_Y);
 	#if defined (GEYSER)
 	BSP_LCD_DrawBuffer_Start(HOUR_X, STATUSBAR_POS_Y, 90, STATUSBAR_SIZE_Y,LCD_COLOR_GEYSER_GREEN);
+	#elif defined (KEB)
+	BSP_LCD_DrawBuffer_Start(HOUR_X, STATUSBAR_POS_Y, 90, STATUSBAR_SIZE_Y,LCD_COLOR_KEB_ORANGE);
 	#else
 	BSP_LCD_DrawBuffer_Start(HOUR_X, STATUSBAR_POS_Y, 90, STATUSBAR_SIZE_Y,LCD_COLOR_WHITEBLUE);
 	#endif
+	
+	#if defined (KEB)
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	#else
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	#endif
+		
 	if (getTime().second % 2){
 		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, getFormatedTime(" "),LEFT_MODE);
 		
 	} else {
 		BSP_LCD_DisplayStringAt(DIV_X, CLOCK_Y, ":",LEFT_MODE);
 	}
+	
+//	#if defined (KEB)
+//	BSP_LCD_DisplayStringAt(DIV_X - 30, CLOCK_Y, getFormatedTimeFromSource("DD", &time),LEFT_MODE);
+//	#endif
+		
   BSP_LCD_DisplayStringAt(DIV_X - 3, CLOCK_Y, getFormatedTimeFromSource("hh", &time),RIGHT_MODE);
 	BSP_LCD_DisplayStringAt(DIV_X + 7, CLOCK_Y, getFormatedTimeFromSource("mm", &time),LEFT_MODE);
 	
