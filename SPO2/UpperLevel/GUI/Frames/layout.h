@@ -147,12 +147,22 @@
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_X TOP_LINE_WIDTH - 10
 #define SCROLLBAR_CURSOR_SLIDER_SIZE_Y 5
 
+//Date defines
+#if defined (KEB)
+#define DATE_POS_X 305
+#define DATE_DOT_POS_X DATE_POS_X + 21
+#define MOUNTH_POS_X DATE_DOT_POS_X + 5
+#define MOUNTH_DOT_POS_X MOUNTH_POS_X + 22
+#define YEAR_POS_X MOUNTH_DOT_POS_X + 5
+#endif
+
 //Clock defines
-#define CLOCK_X 390
+#define CLOCK_X 410
 #define CLOCK_Y TEXT_Y //+ 24
 #define HOUR_X CLOCK_X
 #define MINUTE_X CLOCK_X + 2 * 15 + 10
 #define DIV_X CLOCK_X + 2 * 15
+#define CLOCK_BUFF_LENGTH_X 480 - CLOCK_X
 
 //keyboard defines
 #define TEXT_CTRL_POS_X 40
