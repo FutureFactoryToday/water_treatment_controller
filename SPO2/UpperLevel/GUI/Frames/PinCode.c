@@ -138,17 +138,28 @@ void pinToStr (uint16_t pin){
 	if (pin == 0){
 		 pinString[0] = 0;
 	}
-	
+	uint8_t leadZero = 0;
+	if (pin < 1000) leadZero++;
+	if (pin < 100) leadZero++;
+	if (pin < 10) leadZero++;
+	if (pin < 1) leadZero++;
 	uint8_t i = 0;
 	uint8_t* edPin = intToStr(pin);
-	while (*edPin != 0){
+
+	while (*edPin != 0 && i < MAX_PIN_CHAR - 1){
+		if (leadZero > 0) {
+			pinString[i++] = '0';
+			leadZero--;
+		} else {
 		pinString[i++] = *edPin;
+		edPin++;
+		}
 		if (i < MAX_PIN_CHAR - 1){
 			pinString[i++] = ' ';
 			pinString[i++] = '-';
 			pinString[i++] = ' ';	
 		}			
-		edPin++;
+		
 	}
 	if (i == MAX_PIN_CHAR - 1){
 		pinString[i] = 0;

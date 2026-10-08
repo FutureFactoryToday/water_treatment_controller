@@ -231,8 +231,11 @@ static  uint16_t  xStart, xEnd, yStart, yEnd;
 void st7796s_DrawBuffer (uint16_t xStart,uint16_t yStart, uint16_t xSize, uint16_t ySize, uint8_t *buf){
 	
 	st7796s_SetDisplayWindow(xStart, yStart, xSize, ySize);
+	#ifdef _565_FORMAT
+	LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, buf, xSize*ySize*2);
+	#else
 	LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, buf, xSize*ySize*3);
-	
+	#endif
 	
 }
 
@@ -337,9 +340,12 @@ void st7796s_Init(void)
   // Power Control 3 (Vcom)
   LCD_IO_WriteCmd8MultipleData8(ST7796S_VMCTR1, (uint8_t *)"\x00\x12\x80", 3);
   LCD_Delay(5);
-  
-  LCD_IO_WriteCmd8(ST7796S_PIXFMT); LCD_IO_WriteData8(0x66); // Interface Pixel Format (24 bit)
-  #if LCD_SPI_MODE != 2
+  #if ST7796S_DATA_SIZE == 1
+  LCD_IO_WriteCmd8(ST7796S_PIXFMT); LCD_IO_WriteData8(0x06); // Interface Pixel Format (24 bit)
+  #else
+	LCD_IO_WriteCmd8(ST7796S_PIXFMT); LCD_IO_WriteData8(0x05); //Interface Pixel Format (16 bit)
+	#endif
+	#if LCD_SPI_MODE != 2
   // LCD_IO_WriteCmd8(0xFB); LCD_IO_WriteData8(0x80);
   LCD_IO_WriteCmd8(ST7796S_RGB_INTERFACE); LCD_IO_WriteData8(0x80); // Interface Mode Control (SDO NOT USE)
   #else
@@ -467,14 +473,23 @@ void st7796s_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysi
 {
 	while (LCD_IO_isBusy()){
 	}
-  uint8_t tempCol[3];
+	uint8_t tempCol[3];
+	#if ST7796S_DATA_SIZE == 1
+ 
 	tempCol[0]=((RGBCode & 0xF800) >> 8);
   tempCol[1]=((RGBCode & 0x07E0) >> 3);
   tempCol[2]=((RGBCode & 0x001F) << 3);
 	uint32_t XYsize = Xsize * Ysize;
   st7796s_SetDisplayWindow(Xpos,Ypos,Xsize,Ysize);
   LCD_IO_WriteCmd8DataFill8(ST7796S_RAMWR, tempCol, XYsize);
-  
+  #else 
+	tempCol[0]=((RGBCode & 0xFF00) >> 8);
+  tempCol[1]=((RGBCode & 0x00FF));
+	uint32_t XYsize = Xsize * Ysize;
+  st7796s_SetDisplayWindow(Xpos,Ypos,Xsize,Ysize);
+	//LCD_IO_WriteCmd8MultipleData16(ST7796S_RAMWR, &RGBCode, XYsize);
+  LCD_IO_WriteCmd8DataFill8(ST7796S_RAMWR, tempCol, XYsize);
+	#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -493,13 +508,13 @@ void st7796s_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp)
 	pbmp += sizeof(BITMAPINFOHEADER);
   size = ptr->dataSize;
 	Xpos += ptr->biHeight;
-	
-
-  
   LCD_IO_WriteCmd8(ST7796S_MADCTL); LCD_IO_WriteData8(ST7796S_MAD_COLORMODE | ST7796S_MAD_X_RIGHT | ST7796S_MAD_Y_UP | ST7796S_MAD_VERTICAL);
   LCD_IO_WriteCmd8(ST7796S_PASET); LCD_IO_WriteData16_to_2x8(ST7796S_SIZE_Y - 1 - yEnd); LCD_IO_WriteData16_to_2x8(ST7796S_SIZE_Y - 1 - yStart);
-  LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, (uint8_t *)pbmp, size*3);
-  
+  #if ST7796S_DATA_SIZE == 1
+	LCD_IO_WriteCmd8MultipleData8(ST7796S_RAMWR, (uint8_t *)pbmp, size*3);
+  #else
+	LCD_IO_WriteCmd8MultipleData16(ST7796S_RAMWR, (uint8_t *)pbmp, size);
+	#endif
 }
 
 //-----------------------------------------------------------------------------
