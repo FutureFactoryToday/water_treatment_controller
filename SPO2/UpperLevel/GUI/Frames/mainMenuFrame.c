@@ -68,9 +68,9 @@ void createFrame (void){
 	
 	drawMainWindow();
 	
-	customerBut = drawFillButton(140, 70, 200, 60, "ПОЛЬЗОВАТЕЛЬ", false);
-	serviceBut = drawFillButton(140, 140, 200, 60, "ИНЖЕНЕР", false);
-	historyBut = drawFillButton(140, 210, 200, 60, "ИСТОРИЯ", false);
+	customerBut = drawFillButton(140, 70, 200, 60, "ПОЛЬЗОВАТЕЛЬ", true);
+	serviceBut = drawFillButton(140, 140, 200, 60, "ИНЖЕНЕР", true);
+	historyBut = drawFillButton(140, 210, 200, 60, "ИСТОРИЯ", true);
 	
 	drawMainStatusBar(144, 2305, 15);
 	

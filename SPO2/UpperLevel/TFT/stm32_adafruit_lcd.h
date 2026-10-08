@@ -93,7 +93,12 @@
 #define LCD_COLOR_KEB_GREEN 		0x6DAE
 #define LCD_COLOR_KEB_ALPFA_GREEN  0xB6D7
 #define LCD_COLOR_KEB_YELLOW  	0xFE60
-  
+
+/* systems colors */
+#define LCD_KEB_COLOR_FONT         LCD_COLOR_BLACK
+#define LCD_KEB_COLOR_BACKGROUND   LCD_COLOR_KEB_GREEN
+#define LCD_KEB_COLOR_BACKGROUND   LCD_COLOR_KEB_GREEN
+
 //-----------------------------------------------------------------------------
 /* Interface section (no modify) */   
 

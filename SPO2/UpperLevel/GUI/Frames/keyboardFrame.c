@@ -301,40 +301,40 @@ void createFrame(void)
     //BSP_LCD_SetFont(&Oxygen_Mono_24);
 	TC_clearButtons();
 
-    drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
-    
-    drawMainWindow();
-    
-    drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "             ");
-    BSP_LCD_DisplayStringAt(TEXT_CTRL_POS_X + 300, TEXT_CTRL_POS_Y + 10, "Удалить", LEFT_MODE);
+	drawMainBar(true, false, SMALL_LOGO_X, SMALL_LOGO_Y, " ");
+	
+	drawMainWindow();
+	
+	drawTextLabel(TEXT_CTRL_POS_X, TEXT_CTRL_POS_Y, TEXT_CTRL_SIZE_X, TEXT_CTRL_SIZE_Y, "             ");
+	BSP_LCD_DisplayStringAt(TEXT_CTRL_POS_X + 300, TEXT_CTRL_POS_Y + 10, "Удалить", LEFT_MODE);
 
-    drawStatusBarOkCancel();
+	drawStatusBarOkCancel();
     
 	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);	
-    ////uint32_t dy = (BSP_LCD_GetYSize() - LINE_KEYS_POS_Y - 40);   //////// 
-    //BSP_LCD_FillRect(0, LINE_KEYS_POS_Y, BSP_LCD_GetXSize(),111);
+	////uint32_t dy = (BSP_LCD_GetYSize() - LINE_KEYS_POS_Y - 40);   //////// 
+	//BSP_LCD_FillRect(0, LINE_KEYS_POS_Y, BSP_LCD_GetXSize(),111);
 
-    BSP_LCD_SetFont(&Oxygen_Mono_24);
-    _1 = drawFillButton(43, LINE_KEYS_POS_Y + 5, 70, 46, "1", false);
-    _2 = drawFillButton(123, LINE_KEYS_POS_Y + 5, 70, 46, "2", false);
-    _3 = drawFillButton(203, LINE_KEYS_POS_Y + 5, 70, 46, "3", false);
-    _4 = drawFillButton(283, LINE_KEYS_POS_Y + 5, 70, 46, "4", false);
-    _5 = drawFillButton(363, LINE_KEYS_POS_Y + 5, 70, 46, "5", false);
-    _6 = drawFillButton(43, LINE_KEYS_POS_Y + 58, 70, 46, "6", false);
-    _7 = drawFillButton(123, LINE_KEYS_POS_Y + 58, 70, 46, "7", false);
-    _8 = drawFillButton(203, LINE_KEYS_POS_Y + 58, 70, 46, "8", false);
-    _9 = drawFillButton(283, LINE_KEYS_POS_Y + 58, 70, 46, "9", false);
-    _0 = drawFillButton(363, LINE_KEYS_POS_Y + 58, 70, 46, "0", false);
-    BSP_LCD_SetFont(&Oxygen_Mono_20);
-    
-    BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    
-		//Setting for key "delete"
-    delBut.xSize = 100;//
-    delBut.x = TEXT_CTRL_POS_X + 300;
-    delBut.y = TEXT_CTRL_POS_Y;
-    delBut.ySize = 60;
+	BSP_LCD_SetFont(&Oxygen_Mono_24);
+	_1 = drawFillButton(43, LINE_KEYS_POS_Y + 5, 70, 46, "1", false);
+	_2 = drawFillButton(123, LINE_KEYS_POS_Y + 5, 70, 46, "2", false);
+	_3 = drawFillButton(203, LINE_KEYS_POS_Y + 5, 70, 46, "3", false);
+	_4 = drawFillButton(283, LINE_KEYS_POS_Y + 5, 70, 46, "4", false);
+	_5 = drawFillButton(363, LINE_KEYS_POS_Y + 5, 70, 46, "5", false);
+	_6 = drawFillButton(43, LINE_KEYS_POS_Y + 58, 70, 46, "6", false);
+	_7 = drawFillButton(123, LINE_KEYS_POS_Y + 58, 70, 46, "7", false);
+	_8 = drawFillButton(203, LINE_KEYS_POS_Y + 58, 70, 46, "8", false);
+	_9 = drawFillButton(283, LINE_KEYS_POS_Y + 58, 70, 46, "9", false);
+	_0 = drawFillButton(363, LINE_KEYS_POS_Y + 58, 70, 46, "0", false);
+	BSP_LCD_SetFont(&Oxygen_Mono_20);
+	
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	//Setting for key "delete"
+	delBut.xSize = 100;//
+	delBut.x = TEXT_CTRL_POS_X + 300;
+	delBut.y = TEXT_CTRL_POS_Y;
+	delBut.ySize = 60;
     
 	TC_addButton(&_0);
 	TC_addButton(&_1);
@@ -348,10 +348,10 @@ void createFrame(void)
 	TC_addButton(&_9);
 	TC_addButton(&delBut);
 	TC_addButton(&okBut);
-    TC_addButton(&cancelBut);
+  TC_addButton(&cancelBut);
 	TC_addButton(&retBut);
 	
-    PrintResultFromKeyboard(0);
+  PrintResultFromKeyboard(0);
 	
 	enableClockDraw = false;
 }
@@ -392,14 +392,14 @@ void PrintResultFromKeyboard(int64_t result)
     {
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        drawFillArcRec(TEXT_CTRL_POS_X + 9, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
+        drawFillArcRec(TEXT_CTRL_POS_X + 10, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 4, LCD_COLOR_WHITE);
         BSP_LCD_DisplayStringAt(CURSOR_POS_X + 5, CURSOR_POS_Y + 6, "0", LEFT_MODE);  
     }
     if(result_keyboard != 0)
     {       
         BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
         BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-        drawFillArcRec(TEXT_CTRL_POS_X + 9, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 3, LCD_COLOR_WHITE);
+        drawFillArcRec(TEXT_CTRL_POS_X + 10, TEXT_CTRL_POS_Y + 2, TEXT_CTRL_SIZE_X - 120,  TEXT_CTRL_SIZE_Y - 4, LCD_COLOR_WHITE);
         BSP_LCD_DisplayStringAt(CURSOR_POS_X + 5, CURSOR_POS_Y + 6, intToStr(result_keyboard), LEFT_MODE);
     }
 }

@@ -62,7 +62,13 @@ button_t drawFillButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 	
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -127,7 +133,13 @@ button_t drawFillCustomButton (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 	uint16_t oldTextColor = BSP_LCD_GetTextColor();
 
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -203,7 +215,13 @@ button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
     
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -238,7 +256,13 @@ button_t drawFillArcRec (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t 
 button_t drawTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
 
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -299,7 +323,13 @@ button_t drawCustomTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -358,7 +388,13 @@ button_t drawCustom2TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -401,7 +437,13 @@ button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 	uint16_t oldBackColor = BSP_LCD_GetBackColor();
 	
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -442,7 +484,13 @@ button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
  button_t drawDarkTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
 
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
@@ -489,7 +537,13 @@ button_t drawCustom3TextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uin
 button_t drawLightTextLabel (uint16_t xPos, uint16_t yPos, uint16_t xSize, uint16_t ySize, uint8_t* label){
 
 	#if defined (KEB)
-	uint16_t radius = ySize/3;
+	uint16_t radius;
+	if(ySize < 45) {
+		radius = ySize/2; 
+	}
+	else {
+		radius = ySize/3; 
+	}
 	#else
 	uint16_t radius = ySize/4;
 	#endif
