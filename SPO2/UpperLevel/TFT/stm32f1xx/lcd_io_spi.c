@@ -17,8 +17,14 @@
 #include "lcd_io_spi.h"
 
 #define DMA_MAXSIZE           0xFFFE
+
 #define FILL_BUF_SIZE 1
-volatile uint8_t fillBuf[FILL_BUF_SIZE*3];
+#ifdef _565_FORMAT
+#define SIZE_MULT 2
+#else 
+#define SIZE_MULT 3
+#endif
+volatile uint8_t fillBuf[FILL_BUF_SIZE*SIZE_MULT];
 volatile uint8_t watch[5];
 //-----------------------------------------------------------------------------
 /* Link function for LCD peripheral */
@@ -406,7 +412,6 @@ void DMAX_CHANNEL_IRQHANDLER(LCD_DMA_TX)(void)
 //-----------------------------------------------------------------------------
 void LCD_IO_WriteMultiData(void * pData, uint32_t Size, uint32_t dmacr)
 {
-	
   DMAX(LCD_DMA_TX)->IFCR = DMAX_IFCR_CGIF(LCD_DMA_TX);
   LL_SPI_Disable(SPIX);//SPIX->CR1 &= ~SPI_CR1_SPE;           /* SPI stop */
   DMAX_CHANNEL(LCD_DMA_TX)->CCR = 0;   /* DMA stop */
@@ -938,13 +943,20 @@ void LCD_IO_WriteCmd8DataFill8(uint8_t Cmd, uint8_t* Data, uint32_t Size){
 		isDmaCircMode = true;
 		dmaCircCnt = Size/FILL_BUF_SIZE - 1;
 	}
-	for(uint32_t i = 0; i < FILL_BUF_SIZE*3; i+=3){
+	#ifdef _565_FORMAT
+	for(uint32_t i = 0; i < FILL_BUF_SIZE*SIZE_MULT; i+=SIZE_MULT){
+		fillBuf[i] = *Data;
+		fillBuf[i+1] = *(Data+1);
+	}
+	#else
+	for(uint32_t i = 0; i < FILL_BUF_SIZE*SIZE_MULT; i+=3){
 		fillBuf[i] = *Data;
 		fillBuf[i+1] = *(Data+1);
 		fillBuf[i+2] = *(Data+2);
 	}
+	#endif
 	LCD_IO_DmaTransferStatus = 1;
-  LCD_IO_WriteMultiData((void *)fillBuf, FILL_BUF_SIZE*3, dmacr);
+  LCD_IO_WriteMultiData((void *)fillBuf, FILL_BUF_SIZE*SIZE_MULT, dmacr);
 	
 //	while(Size)
 //  {
