@@ -29,48 +29,81 @@ int ShowHistoryMenuFrame(void)
             retBut.isPressed = false;
          }
          if(menuLines[0].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-								
-								BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[0].y + 9,ITEM_HISTORY_MENU[0],LEFT_MODE);
-								
-                menuLines[0].isPressed = false;
-         }
-				 
+            //Make it blue
+						#if defined (KEB)
+						drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetTextColor(LCD_COLOR_BLACK);							
+						BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FIRST_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[0],CENTER_MODE);
+						#else
+						drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
+						BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+						BSP_LCD_SetTextColor(LCD_COLOR_WHITE);							
+						BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[0].y + 9,ITEM_HISTORY_MENU[0],LEFT_MODE);					 
+					  #endif
+						menuLines[0].isPressed = false;
+         }				 
          if(menuLines[1].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[1].y + 9,ITEM_HISTORY_MENU[1],LEFT_MODE);
-                menuLines[1].isPressed = false;
+						//Make it blue
+						#if defined (KEB)
+						drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetTextColor(LCD_COLOR_BLACK);							
+						BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, SECOND_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[1],CENTER_MODE);						
+						#else
+						drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
+						BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+						BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+						BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[1].y + 9,ITEM_HISTORY_MENU[1],LEFT_MODE);
+					  #endif
+						menuLines[1].isPressed = false;
          }
          if(menuLines[2].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[2].y + 9,ITEM_HISTORY_MENU[2],LEFT_MODE);
-                menuLines[2].isPressed = false;
+						//Make it blue
+						#if defined (KEB)
+						drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetTextColor(LCD_COLOR_BLACK);							
+						BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, THRID_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[2],CENTER_MODE);	
+						#else
+						drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_BLUE);
+						BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+						BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+						BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[2].y + 9,ITEM_HISTORY_MENU[2],LEFT_MODE);				 
+						#endif
+						menuLines[2].isPressed = false;
          }
          if(menuLines[3].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[3].y + 9,ITEM_HISTORY_MENU[3],LEFT_MODE);
-                menuLines[3].isPressed = false;
+						//Make it blue
+						#if defined (KEB)
+						drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetTextColor(LCD_COLOR_BLACK);							
+						BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FOURTH_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[3],CENTER_MODE);
+						#else
+						drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_BLUE);
+						BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+						BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+						BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[3].y + 9,ITEM_HISTORY_MENU[3],LEFT_MODE);
+						#endif
+						menuLines[3].isPressed = false;
          }
          if(menuLines[4].isPressed == true){
-                //Make it blue
-                drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
-                BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-                BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-                BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_HISTORY_MENU[4],LEFT_MODE);
-                menuLines[4].isPressed = false;
+						//Make it blue
+						#if defined (KEB)
+						drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
+						BSP_LCD_SetTextColor(LCD_COLOR_BLACK);							
+						BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FIVE_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[4],CENTER_MODE);						
+					  #else
+						drawFillArcRec(menuLines[4].x, menuLines[4].y, menuLines[4].xSize, menuLines[4].ySize, LCD_COLOR_BLUE);
+						BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+						BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+						BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,menuLines[4].y + 9,ITEM_HISTORY_MENU[4],LEFT_MODE);
+						#endif
+						menuLines[4].isPressed = false;
          }
+				 #if !defined (KEB)
          if(scrollUpBut.isPressed == true){
                 //Make it blue
                 scrollUpBut.isPressed = false;
@@ -79,12 +112,14 @@ int ShowHistoryMenuFrame(void)
                 //Make it blue
                 scrollDwnBut.isPressed = false;
          }
+				 #endif
         /*Buttons released*/
          if (retBut.isReleased == true){
              retBut.isReleased = false;
              return 0;
          }
 				 
+				 #if !defined (KEB)
          if(scrollUpBut.isReleased == true){
             if(history_menu_frame_Scroll_cnt > 0)
             { 
@@ -103,6 +138,7 @@ int ShowHistoryMenuFrame(void)
             }
             scrollDwnBut.isReleased = false;
          }   
+				 #endif
 				
          if (homeBut.isReleased == true){
 						homeBut.isReleased = false;
@@ -115,8 +151,7 @@ int ShowHistoryMenuFrame(void)
                 ShowHistoryFilterFrame();
                 menuLines[0].isReleased = false;
                 createFrame();
-         }
-				
+         }		
          if(menuLines[1].isReleased == true){
                 ShowHistoryWaterFrame();
                 menuLines[1].isReleased = false;
@@ -141,30 +176,49 @@ int ShowHistoryMenuFrame(void)
 	}
 }
 void createFrame(void){
-    if (goHome) return;
-    drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY);
-    
-    drawMainWindow();
-    
-		
-    drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
-    
-    drawMainStatusBar(144, 2305, 16);
+	if (goHome) return;
+	drawMainBar(true, true, SMALL_LOGO_X, SMALL_LOGO_Y, MODE_HISTORY);
 	
-    //drawStatusBarEmpty();
-    
-    drawClock(); drawMainStatusBar(144, 2305, 16);
-    
-    drawStaticLines();
-    
-		BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    
-		
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 1],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 2],LEFT_MODE);
-		BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 3],LEFT_MODE);
+	drawMainWindow();
+	
+	#if !defined (KEB)	
+	drawScrollButton(history_menu_frame_Scroll_cnt == 0 ? 0 : (history_menu_frame_Scroll_cnt == 1 ? 2 : 1));
+	#endif
+	
+	drawMainStatusBar(144, 2305, 16);
+
+	//drawStatusBarEmpty();
+	
+	drawClock(); //drawMainStatusBar(144, 2305, 16);
+	
+	#if !defined (KEB)
+	drawStaticLines();
+	#endif
+	
+	#if defined (KEB)
+	drawFillArcRec(HISTORY_MENU_BUTTON_POS_X, FIRST_HISTORY_MENU_BUTTON_POS_Y, HISTORY_MENU_BUTTON_SIZE_X, HISTORY_MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
+	drawFillArcRec(HISTORY_MENU_BUTTON_POS_X, SECOND_HISTORY_MENU_BUTTON_POS_Y, HISTORY_MENU_BUTTON_SIZE_X, HISTORY_MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
+	drawFillArcRec(HISTORY_MENU_BUTTON_POS_X, THRID_HISTORY_MENU_BUTTON_POS_Y, HISTORY_MENU_BUTTON_SIZE_X, HISTORY_MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
+	drawFillArcRec(HISTORY_MENU_BUTTON_POS_X, FOURTH_HISTORY_MENU_BUTTON_POS_Y, HISTORY_MENU_BUTTON_SIZE_X, HISTORY_MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
+	drawFillArcRec(HISTORY_MENU_BUTTON_POS_X, FIVE_HISTORY_MENU_BUTTON_POS_Y, HISTORY_MENU_BUTTON_SIZE_X, HISTORY_MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
+	
+	BSP_LCD_SetBackColor(LCD_COLOR_KEB_GREEN);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FIRST_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[0],CENTER_MODE);
+	BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, SECOND_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[1],CENTER_MODE);
+	BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, THRID_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[2],CENTER_MODE);
+	BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FOURTH_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[3],CENTER_MODE);
+	BSP_LCD_DisplayStringAt(HISTORY_MENU_BUTTON_POS_X + HISTORY_MENU_BUTTON_SIZE_X/2, FIVE_HISTORY_MENU_BUTTON_POS_Y + 4,ITEM_HISTORY_MENU[4],CENTER_MODE);
+	#else
+	BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FIRST_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,SECOND_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 1],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,THRID_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 2],LEFT_MODE);
+	BSP_LCD_DisplayStringAt(FIRST_CURSOR_POS_X + 9,FOURTH_CURSOR_POS_Y + 9,ITEM_HISTORY_MENU[history_menu_frame_Scroll_cnt + 3],LEFT_MODE);
+	#endif
   
 	/*Add buttons parameters*/
   calcButParam();
@@ -197,38 +251,76 @@ void RefreshScrollBarHistoryMenuFrame()
 
 void calcButParam()
 {
-    TC_clearButtons();
-   
-        //Setting for key "0"
-    menuLines[history_menu_frame_Scroll_cnt].x = FIRST_CURSOR_POS_X;
-    menuLines[history_menu_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
-    menuLines[history_menu_frame_Scroll_cnt].xSize = FIRST_CURSOR_SIZE_X;
-    menuLines[history_menu_frame_Scroll_cnt].ySize = FIRST_CURSOR_SIZE_Y;
-		
-		//Setting for key "1"
-    menuLines[history_menu_frame_Scroll_cnt + 1].x = SECOND_CURSOR_POS_X;
-    menuLines[history_menu_frame_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y;
-    menuLines[history_menu_frame_Scroll_cnt + 1].xSize = SECOND_CURSOR_SIZE_X;
-    menuLines[history_menu_frame_Scroll_cnt + 1].ySize = SECOND_CURSOR_SIZE_Y;
-    
-		//Setting for key "2"
-    menuLines[history_menu_frame_Scroll_cnt + 2].x = THRID_CURSOR_POS_X;
-    menuLines[history_menu_frame_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y;
-    menuLines[history_menu_frame_Scroll_cnt + 2].xSize = THRID_CURSOR_SIZE_X;
-    menuLines[history_menu_frame_Scroll_cnt + 2].ySize = THRID_CURSOR_SIZE_Y;
-    
-		//Setting for key "3"
-    menuLines[history_menu_frame_Scroll_cnt + 3].x = FOURTH_CURSOR_POS_X;
-    menuLines[history_menu_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
-    menuLines[history_menu_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
-    menuLines[history_menu_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
-    
-    for (uint8_t i = history_menu_frame_Scroll_cnt; i < history_menu_frame_Scroll_cnt + 4; i++){
-			TC_addButton(&menuLines[i]);
+	TC_clearButtons();
+ 
+	#if defined (KEB)
+	//Setting for key "0"
+	menuLines[0].x = HISTORY_MENU_BUTTON_POS_X;
+	menuLines[0].y = FIRST_HISTORY_MENU_BUTTON_POS_Y;
+	menuLines[0].xSize = HISTORY_MENU_BUTTON_SIZE_X;
+	menuLines[0].ySize = HISTORY_MENU_BUTTON_SIZE_Y;
+	
+	//Setting for key "1"
+	menuLines[1].x = HISTORY_MENU_BUTTON_POS_X;
+	menuLines[1].y = SECOND_HISTORY_MENU_BUTTON_POS_Y;
+	menuLines[1].xSize = HISTORY_MENU_BUTTON_SIZE_X;
+	menuLines[1].ySize = HISTORY_MENU_BUTTON_SIZE_Y;
+	
+	//Setting for key "2"
+	menuLines[2].x = HISTORY_MENU_BUTTON_POS_X;
+	menuLines[2].y = THRID_HISTORY_MENU_BUTTON_POS_Y;
+	menuLines[2].xSize = HISTORY_MENU_BUTTON_SIZE_X;
+	menuLines[2].ySize = HISTORY_MENU_BUTTON_SIZE_Y;
+	
+	//Setting for key "3"
+	menuLines[3].x = HISTORY_MENU_BUTTON_POS_X;
+	menuLines[3].y = FOURTH_HISTORY_MENU_BUTTON_POS_Y;
+	menuLines[3].xSize = HISTORY_MENU_BUTTON_SIZE_X;
+	menuLines[3].ySize = HISTORY_MENU_BUTTON_SIZE_Y;
+	
+	//Setting for key "4"
+	menuLines[4].x = HISTORY_MENU_BUTTON_POS_X;
+	menuLines[4].y = FIVE_HISTORY_MENU_BUTTON_POS_Y;
+	menuLines[4].xSize = HISTORY_MENU_BUTTON_SIZE_X;
+	menuLines[4].ySize = HISTORY_MENU_BUTTON_SIZE_Y;
+	
+	for (uint8_t i = 0; i < 5; i++){
+		TC_addButton(&menuLines[i]);
+	}
+	TC_addButton(&retBut);
+  TC_addButton(&homeBut);
+	#else
+	//Setting for key "0"
+	menuLines[history_menu_frame_Scroll_cnt].x = FIRST_CURSOR_POS_X;
+	menuLines[history_menu_frame_Scroll_cnt].y = FIRST_CURSOR_POS_Y;
+	menuLines[history_menu_frame_Scroll_cnt].xSize = FIRST_CURSOR_SIZE_X;
+	menuLines[history_menu_frame_Scroll_cnt].ySize = FIRST_CURSOR_SIZE_Y;
+	
+	//Setting for key "1"
+	menuLines[history_menu_frame_Scroll_cnt + 1].x = SECOND_CURSOR_POS_X;
+	menuLines[history_menu_frame_Scroll_cnt + 1].y = SECOND_CURSOR_POS_Y;
+	menuLines[history_menu_frame_Scroll_cnt + 1].xSize = SECOND_CURSOR_SIZE_X;
+	menuLines[history_menu_frame_Scroll_cnt + 1].ySize = SECOND_CURSOR_SIZE_Y;
+	
+	//Setting for key "2"
+	menuLines[history_menu_frame_Scroll_cnt + 2].x = THRID_CURSOR_POS_X;
+	menuLines[history_menu_frame_Scroll_cnt + 2].y = THRID_CURSOR_POS_Y;
+	menuLines[history_menu_frame_Scroll_cnt + 2].xSize = THRID_CURSOR_SIZE_X;
+	menuLines[history_menu_frame_Scroll_cnt + 2].ySize = THRID_CURSOR_SIZE_Y;
+	
+	//Setting for key "3"
+	menuLines[history_menu_frame_Scroll_cnt + 3].x = FOURTH_CURSOR_POS_X;
+	menuLines[history_menu_frame_Scroll_cnt + 3].y = FOURTH_CURSOR_POS_Y;
+	menuLines[history_menu_frame_Scroll_cnt + 3].xSize = FOURTH_CURSOR_SIZE_X;
+	menuLines[history_menu_frame_Scroll_cnt + 3].ySize = FOURTH_CURSOR_SIZE_Y;
+	
+	for (uint8_t i = history_menu_frame_Scroll_cnt; i < history_menu_frame_Scroll_cnt + 4; i++){
+		TC_addButton(&menuLines[i]);
 	}
 	TC_addButton(&retBut);
 	TC_addButton(&scrollUpBut);
 	TC_addButton(&scrollDwnBut);
   TC_addButton(&homeBut);
+	#endif
     
 }

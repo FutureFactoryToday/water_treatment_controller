@@ -30,7 +30,7 @@ int ShowMenuFrame(void) {
       drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
       BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
       BSP_LCD_SetTextColor(LCD_KEB_COLOR_FONT);
-      BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, FIRST_MENU_BUTTON_POS_Y + 4, ITEM_MENU[0], LEFT_MODE);
+      BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 50, FIRST_MENU_BUTTON_POS_Y + 4, ITEM_MENU[0], LEFT_MODE);
 			#else
 			drawFillArcRec(menuLines[0].x, menuLines[0].y, menuLines[0].xSize, menuLines[0].ySize, LCD_COLOR_BLUE);
       BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -47,7 +47,7 @@ int ShowMenuFrame(void) {
         drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetTextColor(LCD_KEB_COLOR_FONT);
-        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, SECOND_MENU_BUTTON_POS_Y + 4, ITEM_MENU[1], LEFT_MODE);
+        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 50, SECOND_MENU_BUTTON_POS_Y + 4, ITEM_MENU[1], LEFT_MODE);
 				#else
 				drawFillArcRec(menuLines[1].x, menuLines[1].y, menuLines[1].xSize, menuLines[1].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -66,7 +66,7 @@ int ShowMenuFrame(void) {
         drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetTextColor(LCD_KEB_COLOR_FONT);
-        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, THRID_MENU_BUTTON_POS_Y + 4, ITEM_MENU[2], LEFT_MODE);
+        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 50, THRID_MENU_BUTTON_POS_Y + 4, ITEM_MENU[2], LEFT_MODE);
 				#else
 				drawFillArcRec(menuLines[2].x, menuLines[2].y, menuLines[2].xSize, menuLines[2].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -84,7 +84,7 @@ int ShowMenuFrame(void) {
         drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetBackColor(LCD_COLOR_KEB_ALPFA_GREEN);
         BSP_LCD_SetTextColor(LCD_KEB_COLOR_FONT);
-        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, FOURTH_MENU_BUTTON_POS_Y + 4, ITEM_MENU[3], LEFT_MODE);
+        BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 50, FOURTH_MENU_BUTTON_POS_Y + 4, ITEM_MENU[3], LEFT_MODE);
 				#else
 				drawFillArcRec(menuLines[3].x, menuLines[3].y, menuLines[3].xSize, menuLines[3].ySize, LCD_COLOR_BLUE);
         BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
@@ -163,7 +163,9 @@ void createFrame(void) {
   drawClock();
   drawMainStatusBar(144, 2305, 16);
 
-  //drawStaticLines();
+	#if !defined (KEB)
+  drawStaticLines();
+	#endif
 
 	#if defined (KEB)
 	drawFillArcRec(MENU_BUTTON_POS_X, FIRST_MENU_BUTTON_POS_Y, MENU_BUTTON_SIZE_X, MENU_BUTTON_SIZE_Y, LCD_COLOR_KEB_GREEN);
@@ -173,10 +175,10 @@ void createFrame(void) {
 	
 	BSP_LCD_SetBackColor(LCD_COLOR_KEB_GREEN);
   BSP_LCD_SetTextColor(LCD_KEB_COLOR_FONT);
-	BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, FIRST_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt], LEFT_MODE);
-  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, SECOND_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 1], LEFT_MODE);
-  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, THRID_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 2], LEFT_MODE);
-  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + 70, FOURTH_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 3], LEFT_MODE);
+	BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + MENU_BUTTON_SIZE_X/2, FIRST_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt], CENTER_MODE);
+  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + MENU_BUTTON_SIZE_X/2, SECOND_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 1], CENTER_MODE);
+  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + MENU_BUTTON_SIZE_X/2, THRID_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 2], CENTER_MODE);
+  BSP_LCD_DisplayStringAt(MENU_BUTTON_POS_X + MENU_BUTTON_SIZE_X/2, FOURTH_MENU_BUTTON_POS_Y + 4, ITEM_MENU[menu_frame_Scroll_cnt + 3], CENTER_MODE);
 	#else
   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
   BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
